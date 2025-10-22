@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(IsRestoring))
+            {
+                writer.WritePropertyName("isRestoring"u8);
+                writer.WriteBooleanValue(IsRestoring.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(FileSystemId))
@@ -182,10 +187,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection, options);
             }
-            if (Optional.IsDefined(IsRestoring))
+            if (Optional.IsDefined(AcceptGrowCapacityPoolForShortTermCloneSplit))
             {
-                writer.WritePropertyName("isRestoring"u8);
-                writer.WriteBooleanValue(IsRestoring.Value);
+                writer.WritePropertyName("acceptGrowCapacityPoolForShortTermCloneSplit"u8);
+                writer.WriteStringValue(AcceptGrowCapacityPoolForShortTermCloneSplit.Value.ToString());
             }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
@@ -424,6 +429,18 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("originatingResourceId");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
+            {
+                if (InheritedSizeInBytes != null)
+                {
+                    writer.WritePropertyName("inheritedSizeInBytes"u8);
+                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("inheritedSizeInBytes");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -433,7 +450,7 @@ namespace Azure.ResourceManager.NetApp.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -467,6 +484,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceType? type = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
+            bool? isRestoring = default;
             Guid? fileSystemId = default;
             string creationToken = default;
             NetAppFileServiceLevel? serviceLevel = default;
@@ -486,7 +504,7 @@ namespace Azure.ResourceManager.NetApp.Models
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
             NetAppVolumeDataProtection dataProtection = default;
-            bool? isRestoring = default;
+            AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default;
             bool? snapshotDirectoryVisible = default;
             bool? kerberosEnabled = default;
             NetAppVolumeSecurityStyle? securityStyle = default;
@@ -523,6 +541,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
+            long? inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -576,6 +595,15 @@ namespace Azure.ResourceManager.NetApp.Models
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("isRestoring"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRestoring = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -746,13 +774,13 @@ namespace Azure.ResourceManager.NetApp.Models
                             dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("isRestoring"u8))
+                        if (property0.NameEquals("acceptGrowCapacityPoolForShortTermCloneSplit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            isRestoring = property0.Value.GetBoolean();
+                            acceptGrowCapacityPoolForShortTermCloneSplit = new AcceptGrowCapacityPoolForShortTermCloneSplit(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("snapshotDirectoryVisible"u8))
@@ -1090,6 +1118,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("inheritedSizeInBytes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                inheritedSizeInBytes = null;
+                                continue;
+                            }
+                            inheritedSizeInBytes = property0.Value.GetInt64();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1124,6 +1162,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
                 volumeType,
                 dataProtection,
+                acceptGrowCapacityPoolForShortTermCloneSplit,
                 isRestoring,
                 snapshotDirectoryVisible,
                 kerberosEnabled,
@@ -1161,6 +1200,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 provisionedAvailabilityZone,
                 isLargeVolume,
                 originatingResourceId,
+                inheritedSizeInBytes,
                 serializedAdditionalRawData);
         }
 
@@ -1171,7 +1211,7 @@ namespace Azure.ResourceManager.NetApp.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support writing '{options.Format}' format.");
             }
@@ -1185,7 +1225,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
                     }
                 default:

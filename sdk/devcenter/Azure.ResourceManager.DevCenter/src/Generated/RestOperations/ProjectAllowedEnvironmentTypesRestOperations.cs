@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         AllowedEnvironmentTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AllowedEnvironmentTypeListResult.DeserializeAllowedEnvironmentTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         AllowedEnvironmentTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AllowedEnvironmentTypeListResult.DeserializeAllowedEnvironmentTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         AllowedEnvironmentTypeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         AllowedEnvironmentTypeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         AllowedEnvironmentTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AllowedEnvironmentTypeListResult.DeserializeAllowedEnvironmentTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         AllowedEnvironmentTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AllowedEnvironmentTypeListResult.DeserializeAllowedEnvironmentTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

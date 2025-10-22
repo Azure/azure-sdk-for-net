@@ -1,185 +1,180 @@
 {
- "$id": "1",
- "Name": "Authentication.OAuth2",
- "ApiVersions": [],
- "Enums": [],
- "Models": [
-  {
-   "$id": "2",
-   "kind": "model",
-   "name": "InvalidAuth",
-   "clientNamespace": "Authentication.OAuth2",
-   "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
-   "usage": "Error,Json,Exception",
-   "decorators": [],
-   "properties": [
+  "name": "Authentication.OAuth2",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [],
+  "models": [
     {
-     "$id": "3",
-     "kind": "property",
-     "name": "error",
-     "serializedName": "error",
-     "type": {
+      "$id": "1",
+      "kind": "model",
+      "name": "InvalidAuth",
+      "namespace": "Authentication.OAuth2",
+      "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
+      "usage": "Json,Exception",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "2",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "type": {
+            "$id": "3",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
       "$id": "4",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth.error",
-     "serializationOptions": {
-      "$id": "5",
-      "json": {
-       "$id": "6",
-       "name": "error"
-      }
-     }
-    }
-   ]
-  }
- ],
- "Clients": [
-  {
-   "$id": "7",
-   "Name": "OAuth2Client",
-   "ClientNamespace": "Authentication.OAuth2",
-   "Doc": "Illustrates clients generated with OAuth2 authentication.",
-   "Operations": [
-    {
-     "$id": "8",
-     "Name": "valid",
-     "ResourceName": "OAuth2",
-     "Doc": "Check whether client is authenticated",
-     "Accessibility": "public",
-     "Parameters": [],
-     "Responses": [
-      {
-       "$id": "9",
-       "StatusCodes": [
-        204
-       ],
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/authentication/oauth2/valid",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Authentication.OAuth2.valid",
-     "Decorators": []
-    },
-    {
-     "$id": "10",
-     "Name": "invalid",
-     "ResourceName": "OAuth2",
-     "Doc": "Check whether client is authenticated. Will return an invalid bearer error.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "11",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "12",
-        "kind": "constant",
-        "valueType": {
-         "$id": "13",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+      "kind": "client",
+      "name": "OAuth2Client",
+      "namespace": "Authentication.OAuth2",
+      "doc": "Illustrates clients generated with OAuth2 authentication.",
+      "methods": [
+        {
+          "$id": "5",
+          "kind": "basic",
+          "name": "valid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check whether client is authenticated",
+          "operation": {
+            "$id": "6",
+            "name": "valid",
+            "resourceName": "OAuth2",
+            "doc": "Check whether client is authenticated",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/authentication/oauth2/valid",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Authentication.OAuth2.valid",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Authentication.OAuth2.valid"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "14",
-       "StatusCodes": [
-        204
-       ],
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/authentication/oauth2/invalid",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Authentication.OAuth2.invalid",
-     "Decorators": []
+        {
+          "$id": "7",
+          "kind": "basic",
+          "name": "invalid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check whether client is authenticated. Will return an invalid bearer error.",
+          "operation": {
+            "$id": "8",
+            "name": "invalid",
+            "resourceName": "OAuth2",
+            "doc": "Check whether client is authenticated. Will return an invalid bearer error.",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/authentication/oauth2/invalid",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Authentication.OAuth2.invalid",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Authentication.OAuth2.invalid"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "9",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "10",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "11",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Authentication.OAuth2.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Authentication.OAuth2",
+      "apiVersions": []
     }
-   ],
-   "Protocol": {
-    "$id": "15"
-   },
-   "Parameters": [
-    {
-     "$id": "16",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "17",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "18",
-      "Type": {
-       "$id": "19",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://security.microsoft.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
     }
-   ],
-   "Decorators": []
   }
- ],
- "Auth": {
-  "$id": "20",
-  "OAuth2": {
-   "$id": "21",
-   "Scopes": [
-    "https://security.microsoft.com/.default"
-   ]
-  }
- }
 }

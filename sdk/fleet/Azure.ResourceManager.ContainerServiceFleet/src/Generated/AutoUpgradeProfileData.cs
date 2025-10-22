@@ -72,8 +72,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
         /// By default, this is set to False.
         /// </param>
+        /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
+        /// <param name="targetKubernetesVersion">
+        ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
+        ///   By default, this is empty.
+        ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
+        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
+        /// </param>
+        /// <param name="longTermSupport">
+        ///   If upgrade channel is not TargetKubernetesVersion, this field must be False.
+        ///   If set to True: Fleet auto upgrade will continue generate update runs for patches of minor versions earlier than N-2
+        ///   (where N is the latest supported minor version) if those minor versions support Long-Term Support (LTS).
+        ///   By default, this is set to False.
+        ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, AutoUpgradeProfileStatus autoUpgradeProfileStatus, string targetKubernetesVersion, bool? longTermSupport, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -81,6 +95,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Channel = channel;
             NodeImageSelection = nodeImageSelection;
             Disabled = disabled;
+            AutoUpgradeProfileStatus = autoUpgradeProfileStatus;
+            TargetKubernetesVersion = targetKubernetesVersion;
+            LongTermSupport = longTermSupport;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -111,5 +128,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// By default, this is set to False.
         /// </summary>
         public bool? Disabled { get; set; }
+        /// <summary> The status of the auto upgrade profile. </summary>
+        public AutoUpgradeProfileStatus AutoUpgradeProfileStatus { get; set; }
+        /// <summary>
+        ///   This is the target Kubernetes version for auto-upgrade. The format must be `{major version}.{minor version}`. For example, "1.30".
+        ///   By default, this is empty.
+        ///   If upgrade channel is set to TargetKubernetesVersion, this field must not be empty.
+        ///   If upgrade channel is Rapid, Stable or NodeImage, this field must be empty.
+        /// </summary>
+        public string TargetKubernetesVersion { get; set; }
+        /// <summary>
+        ///   If upgrade channel is not TargetKubernetesVersion, this field must be False.
+        ///   If set to True: Fleet auto upgrade will continue generate update runs for patches of minor versions earlier than N-2
+        ///   (where N is the latest supported minor version) if those minor versions support Long-Term Support (LTS).
+        ///   By default, this is set to False.
+        ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
+        /// </summary>
+        public bool? LongTermSupport { get; set; }
     }
 }

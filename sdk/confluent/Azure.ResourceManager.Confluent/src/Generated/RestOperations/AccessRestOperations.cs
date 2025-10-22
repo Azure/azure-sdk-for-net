@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessUserListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessUserListResult.DeserializeAccessUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessUserListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessUserListResult.DeserializeAccessUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessServiceAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessServiceAccountListResult.DeserializeAccessServiceAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessServiceAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessServiceAccountListResult.DeserializeAccessServiceAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessInvitationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessInvitationListResult.DeserializeAccessInvitationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessInvitationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessInvitationListResult.DeserializeAccessInvitationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessInvitationRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessInvitationRecord.DeserializeAccessInvitationRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessInvitationRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessInvitationRecord.DeserializeAccessInvitationRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessEnvironmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessEnvironmentListResult.DeserializeAccessEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessEnvironmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessEnvironmentListResult.DeserializeAccessEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessClusterListResult.DeserializeAccessClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessClusterListResult.DeserializeAccessClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessRoleBindingListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessRoleBindingListResult.DeserializeAccessRoleBindingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessRoleBindingListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessRoleBindingListResult.DeserializeAccessRoleBindingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessRoleBindingRecord value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessRoleBindingRecord.DeserializeAccessRoleBindingRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessRoleBindingRecord value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessRoleBindingRecord.DeserializeAccessRoleBindingRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessRoleBindingNameListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessRoleBindingNameListResult.DeserializeAccessRoleBindingNameListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         AccessRoleBindingNameListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessRoleBindingNameListResult.DeserializeAccessRoleBindingNameListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

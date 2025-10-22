@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
+            if (Optional.IsDefined(AutoPauseDelay))
+            {
+                writer.WritePropertyName("autoPauseDelay"u8);
+                writer.WriteNumberValue(AutoPauseDelay.Value);
+            }
             if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
@@ -146,6 +151,7 @@ namespace Azure.ResourceManager.Sql
             ElasticPoolLicenseType? licenseType = default;
             ResourceIdentifier maintenanceConfigurationId = default;
             int? highAvailabilityReplicaCount = default;
+            int? autoPauseDelay = default;
             SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
             SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -299,6 +305,15 @@ namespace Azure.ResourceManager.Sql
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("autoPauseDelay"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoPauseDelay = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("preferredEnclaveType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -344,6 +359,7 @@ namespace Azure.ResourceManager.Sql
                 licenseType,
                 maintenanceConfigurationId,
                 highAvailabilityReplicaCount,
+                autoPauseDelay,
                 preferredEnclaveType,
                 availabilityZone,
                 serializedAdditionalRawData);
@@ -639,6 +655,21 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoPauseDelay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    autoPauseDelay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoPauseDelay))
+                {
+                    builder.Append("    autoPauseDelay: ");
+                    builder.AppendLine($"{AutoPauseDelay.Value}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredEnclaveType), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -681,7 +712,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -697,7 +728,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticPoolData(document.RootElement, options);
                     }
                 default:

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareConsumerInvitationResource : IJsonModel<DataShareConsumerInvitationData>
     {
+        private static DataShareConsumerInvitationData s_dataDeserializationInstance;
+        private static DataShareConsumerInvitationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataShareConsumerInvitationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataShareConsumerInvitationData>)Data).Write(writer, options);
 
-        DataShareConsumerInvitationData IJsonModel<DataShareConsumerInvitationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareConsumerInvitationData>)Data).Create(ref reader, options);
+        DataShareConsumerInvitationData IJsonModel<DataShareConsumerInvitationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareConsumerInvitationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataShareConsumerInvitationData>(Data, options, AzureResourceManagerDataShareContext.Default);
 
-        DataShareConsumerInvitationData IPersistableModel<DataShareConsumerInvitationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareConsumerInvitationData>(data, options);
+        DataShareConsumerInvitationData IPersistableModel<DataShareConsumerInvitationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareConsumerInvitationData>(data, options, AzureResourceManagerDataShareContext.Default);
 
-        string IPersistableModel<DataShareConsumerInvitationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareConsumerInvitationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataShareConsumerInvitationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareConsumerInvitationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

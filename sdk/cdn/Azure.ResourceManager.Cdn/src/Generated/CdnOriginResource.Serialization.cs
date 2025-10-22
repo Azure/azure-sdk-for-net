@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnOriginResource : IJsonModel<CdnOriginData>
     {
+        private static CdnOriginData s_dataDeserializationInstance;
+        private static CdnOriginData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CdnOriginData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CdnOriginData>)Data).Write(writer, options);
 
-        CdnOriginData IJsonModel<CdnOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnOriginData>)Data).Create(ref reader, options);
+        CdnOriginData IJsonModel<CdnOriginData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnOriginData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnOriginData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        CdnOriginData IPersistableModel<CdnOriginData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnOriginData>(data, options);
+        CdnOriginData IPersistableModel<CdnOriginData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnOriginData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<CdnOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnOriginData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CdnOriginData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnOriginData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

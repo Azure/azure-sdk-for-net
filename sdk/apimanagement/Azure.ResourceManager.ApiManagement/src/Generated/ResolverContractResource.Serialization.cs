@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ResolverContractResource : IJsonModel<ResolverContractData>
     {
+        private static ResolverContractData s_dataDeserializationInstance;
+        private static ResolverContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResolverContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResolverContractData>)Data).Write(writer, options);
 
-        ResolverContractData IJsonModel<ResolverContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResolverContractData>)Data).Create(ref reader, options);
+        ResolverContractData IJsonModel<ResolverContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResolverContractData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResolverContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResolverContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResolverContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ResolverContractData IPersistableModel<ResolverContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResolverContractData>(data, options);
+        ResolverContractData IPersistableModel<ResolverContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResolverContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ResolverContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResolverContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResolverContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResolverContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

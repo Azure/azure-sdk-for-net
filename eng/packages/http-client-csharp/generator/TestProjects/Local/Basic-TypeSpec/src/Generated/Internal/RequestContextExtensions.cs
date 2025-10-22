@@ -13,13 +13,14 @@ namespace BasicTypeSpec
 {
     internal static partial class RequestContextExtensions
     {
-        public static ValueTuple<CancellationToken, ErrorOptions> Parse(this RequestContext requestContext)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        public static ValueTuple<CancellationToken, ErrorOptions> Parse(this RequestContext context)
         {
-            if (requestContext == null)
+            if (context == null)
             {
                 return (CancellationToken.None, ErrorOptions.Default);
             }
-            return (requestContext.CancellationToken, requestContext.ErrorOptions);
+            return (context.CancellationToken, context.ErrorOptions);
         }
     }
 }

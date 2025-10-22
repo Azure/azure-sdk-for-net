@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeStoreAccountInformationResource : IJsonModel<DataLakeStoreAccountInformationData>
     {
+        private static DataLakeStoreAccountInformationData s_dataDeserializationInstance;
+        private static DataLakeStoreAccountInformationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeStoreAccountInformationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreAccountInformationData>)Data).Write(writer, options);
 
-        DataLakeStoreAccountInformationData IJsonModel<DataLakeStoreAccountInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreAccountInformationData>)Data).Create(ref reader, options);
+        DataLakeStoreAccountInformationData IJsonModel<DataLakeStoreAccountInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreAccountInformationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeStoreAccountInformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeStoreAccountInformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreAccountInformationData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        DataLakeStoreAccountInformationData IPersistableModel<DataLakeStoreAccountInformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreAccountInformationData>(data, options);
+        DataLakeStoreAccountInformationData IPersistableModel<DataLakeStoreAccountInformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreAccountInformationData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        string IPersistableModel<DataLakeStoreAccountInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreAccountInformationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeStoreAccountInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreAccountInformationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

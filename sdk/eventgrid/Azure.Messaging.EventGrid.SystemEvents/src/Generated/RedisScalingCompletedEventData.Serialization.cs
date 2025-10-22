@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class RedisScalingCompletedEventData : IUtf8JsonSerializable, IJsonModel<RedisScalingCompletedEventData>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ScalingCompleted event. </summary>
+    [JsonConverter(typeof(RedisScalingCompletedEventDataConverter))]
+    public partial class RedisScalingCompletedEventData : IJsonModel<RedisScalingCompletedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisScalingCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisScalingCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisScalingCompletedEventData)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
@@ -49,13 +50,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -66,22 +67,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        RedisScalingCompletedEventData IJsonModel<RedisScalingCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisScalingCompletedEventData IJsonModel<RedisScalingCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedisScalingCompletedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisScalingCompletedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRedisScalingCompletedEventData(document.RootElement, options);
         }
 
-        internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,60 +95,66 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DateTimeOffset? timestamp = default;
             string name = default;
             string status = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"u8))
+                if (prop.NameEquals("timestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timestamp = property.Value.GetDateTimeOffset("O");
+                    timestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RedisScalingCompletedEventData(timestamp, name, status, serializedAdditionalRawData);
+            return new RedisScalingCompletedEventData(timestamp, name, status, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<RedisScalingCompletedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedisScalingCompletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RedisScalingCompletedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisScalingCompletedEventData IPersistableModel<RedisScalingCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisScalingCompletedEventData IPersistableModel<RedisScalingCompletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedisScalingCompletedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisScalingCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRedisScalingCompletedEventData(document.RootElement, options);
                     }
                 default:
@@ -150,22 +162,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedisScalingCompletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RedisScalingCompletedEventData FromResponse(Response response)
+        internal partial class RedisScalingCompletedEventDataConverter : JsonConverter<RedisScalingCompletedEventData>
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRedisScalingCompletedEventData(document.RootElement);
-        }
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, RedisScalingCompletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<RedisScalingCompletedEventData>>(model, ModelSerializationExtensions.WireOptions);
+            }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override RedisScalingCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRedisScalingCompletedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

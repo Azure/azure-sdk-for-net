@@ -1,6 +1,19 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.0 (2025-06-10)
+
+### Features Added
+- Updated service API version to use API version 2023-10-31 by default.
 
 ### Breaking changes
 

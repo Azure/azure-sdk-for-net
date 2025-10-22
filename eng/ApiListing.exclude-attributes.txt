@@ -1,3 +1,4 @@
+T:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute
 T:System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute
 T:System.Runtime.CompilerServices.AsyncStateMachineAttribute
 T:System.Runtime.CompilerServices.CompilerGeneratedAttribute
@@ -14,3 +15,7 @@ T:Azure.Core.CodeGenMemberSerializationAttribute
 T:Azure.Core.CodeGenMemberSerializationHooksAttribute
 T:Azure.Core.CodeGenSuppressAttribute
 T:Azure.Core.CodeGenSuppressTypeAttribute
+T:Azure.Core.CodeGenSerializationAttribute
+T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute
+T:Azure.Monitor.Query.Logs.CodeGenSuppressAttribute
+T:Azure.Monitor.Query.Metrics.CodeGenSuppressAttribute

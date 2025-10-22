@@ -363,6 +363,47 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(BlobCheckpointStoreInternal.NoOffsetPlaceholderText)]
+        public async Task GetCheckpointIgnoresPlaceholderOffsets(string placeholderOffset)
+        {
+            var expectedSequence = 133;
+            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
+            var partition = Guid.NewGuid().ToString();
+
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, placeholderOffset},
+                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                           })
+            };
+
+            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
+
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+
+            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+
+            var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
+            Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was not set.");
+            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
         public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenNoSequenceNumberIsPresent()
         {
             var expectedOffset = "13";
@@ -548,13 +589,13 @@ namespace Azure.Messaging.EventHubs.Tests
             containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
             {
                 client.Content = Encoding.UTF8.GetBytes("{" +
-                                                            "\"PartitionId\":\"0\"," +
-                                                            "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
-                                                            "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
-                                                            "\"Epoch\":386," +
-                                                            "\"Offset\":\"13\"," +
-                                                            "\"SequenceNumber\":960180" +
-                                                            "}");
+                                                          "\"PartitionId\":\"0\"," +
+                                                          "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                          "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                          "\"Epoch\":386," +
+                                                          "\"Offset\":\"13\"," +
+                                                          "\"SequenceNumber\":960180" +
+                                                        "}");
             });
 
             var target = new BlobCheckpointStoreInternal(containerClient, initializeWithLegacyCheckpoints: true);
@@ -563,6 +604,44 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been returned.");
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public async Task GetCheckpointLegacyCheckpointWithoutOffset(string offsetValue)
+        {
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot")
+            };
+
+            var offsetJsonValue = offsetValue is null ? "null" : $"\"{offsetValue}\"";
+            var containerClient = new MockBlobContainerClient() { Blobs = blobList };
+
+            containerClient.AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/0", client =>
+            {
+                client.Content = Encoding.UTF8.GetBytes("{" +
+                                                          "\"PartitionId\":\"0\"," +
+                                                          "\"Owner\":\"681d365b-de1b-4288-9733-76294e17daf0\"," +
+                                                          "\"Token\":\"2d0c4276-827d-4ca4-a345-729caeca3b82\"," +
+                                                          "\"Epoch\":386," +
+                                                          $"\"Offset\":{offsetJsonValue}," +
+                                                          "\"SequenceNumber\":960180" +
+                                                        "}");
+            });
+
+            var target = new BlobCheckpointStoreInternal(containerClient, initializeWithLegacyCheckpoints: true);
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
+
+            Assert.That(checkpoint, Is.Null, "A checkpoint should have not been returned.");
         }
 
         /// <summary>

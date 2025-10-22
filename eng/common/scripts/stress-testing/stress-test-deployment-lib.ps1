@@ -48,7 +48,15 @@ function Login([string]$subscription, [string]$tenant, [string]$clusterGroup, [s
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
-        RunOrExitOnFailure az login --allow-no-subscriptions --tenant $tenant
+        Run az login --allow-no-subscriptions --tenant $tenant
+        if ($LASTEXITCODE) {
+            throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
+        }
+    }
+
+    $subscriptions = (Run az account list -o json) | ConvertFrom-Json
+    if ($subscriptions.Length -eq 0) {
+        throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
     }
 
     # Discover cluster name, only one cluster per group is expected
@@ -115,8 +123,8 @@ function DeployStressTests(
             Write-Warning "Overriding cluster group and subscription with defaults for 'pg' environment."
         }
         $clusterGroup = 'rg-stress-cluster-pg'
-        $subscription = 'Azure SDK Developer Playground'
-        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
@@ -147,7 +155,7 @@ function DeployStressTests(
         }
         RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
     } else {
-        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://azuresdkartifacts.z5.web.core.windows.net/stress/
     }
 
     Run helm repo update

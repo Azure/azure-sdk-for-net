@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerAdvisorResource : IJsonModel<SqlAdvisorData>
     {
+        private static SqlAdvisorData s_dataDeserializationInstance;
+        private static SqlAdvisorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlAdvisorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlAdvisorData>)Data).Write(writer, options);
 
-        SqlAdvisorData IJsonModel<SqlAdvisorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlAdvisorData>)Data).Create(ref reader, options);
+        SqlAdvisorData IJsonModel<SqlAdvisorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlAdvisorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlAdvisorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlAdvisorData IPersistableModel<SqlAdvisorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAdvisorData>(data, options);
+        SqlAdvisorData IPersistableModel<SqlAdvisorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAdvisorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlAdvisorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlAdvisorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlAdvisorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlAdvisorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

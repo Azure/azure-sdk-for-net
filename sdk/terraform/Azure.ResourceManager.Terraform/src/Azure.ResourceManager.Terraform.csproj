@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Version>1.0.0-beta.2</Version>
-    <PackageId>Azure.ResourceManager.Terraform</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider terraform.</Description>
-    <PackageTags>azure;management;arm;resource manager;terraform</PackageTags>
+  <Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <Version>1.0.0-beta.3</Version>
+      <PackageId>Azure.ResourceManager.Terraform</PackageId>
+      <Description>Azure Resource Manager client SDK for Azure resource provider terraform.</Description>
+      <PackageTags>azure;management;arm;resource manager;terraform</PackageTags>
+      <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
-</Project>
+  </Project>

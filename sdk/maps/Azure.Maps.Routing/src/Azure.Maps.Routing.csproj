@@ -6,13 +6,17 @@
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Routing</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>
+      $(NoWarn);
+      AZC0012;
+      AZC0035; <!-- Missing model factory methods.  #51231 -->
+    </NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

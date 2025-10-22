@@ -32,8 +32,110 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-02";
+            _apiVersion = apiVersion ?? "2025-01-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByRestorePointRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(vmRestorePointName, true);
+            uri.AppendPath("/diskRestorePoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByRestorePointRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(vmRestorePointName, true);
+            uri.AppendPath("/diskRestorePoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DiskRestorePointList>> ListByRestorePointAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+
+            using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DiskRestorePointList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
+        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DiskRestorePointList> ListByRestorePoint(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+
+            using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DiskRestorePointList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
@@ -79,11 +181,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get disk restorePoint resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -102,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskRestorePointData.DeserializeDiskRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -114,11 +216,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get disk restorePoint resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -137,114 +239,12 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskRestorePointData.DeserializeDiskRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
                     return Response.FromValue((DiskRestorePointData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByRestorePointRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
-            uri.AppendPath(restorePointGroupName, true);
-            uri.AppendPath("/restorePoints/", false);
-            uri.AppendPath(vmRestorePointName, true);
-            uri.AppendPath("/diskRestorePoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByRestorePointRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
-            uri.AppendPath(restorePointGroupName, true);
-            uri.AppendPath("/restorePoints/", false);
-            uri.AppendPath(vmRestorePointName, true);
-            uri.AppendPath("/diskRestorePoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DiskRestorePointList>> ListByRestorePointAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
-            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
-
-            using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DiskRestorePointList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DiskRestorePointList> ListByRestorePoint(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
-            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
-
-            using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DiskRestorePointList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="data"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/> or <paramref name="data"/> is null. </exception>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="data"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/> or <paramref name="data"/> is null. </exception>
@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a diskRestorePoint. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -434,11 +434,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a diskRestorePoint. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -486,8 +486,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,8 +519,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="restorePointGroupName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         DiskRestorePointList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskRestorePointList.DeserializeDiskRestorePointList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
-#if NET6_0_OR_GREATER
+#if NET
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : BaseLiveTest
@@ -50,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        public async Task VerifyDistro()
+        public async Task VerifyDistro_UseAzureMonitor()
         {
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var builder = WebApplication.CreateBuilder();
@@ -181,30 +182,27 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        public async Task VerifySendingToTwoResources_UsingDistroWithExporter()
+        public async Task VerifyExporter_UseAzureMonitorExporter()
         {
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var builder = WebApplication.CreateBuilder();
+
+            builder.WebHost.UseUrls(TestServerUrl);
+
             builder.Logging.ClearProviders();
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
             builder.Services.AddOpenTelemetry()
-                .UseAzureMonitor(options =>
+                .UseAzureMonitorExporter(options =>
                 {
                     options.EnableLiveMetrics = false;
                     options.ConnectionString = TestEnvironment.ConnectionString;
                 })
-                .WithTracing(builder =>
-                {
-                    builder.AddAzureMonitorTraceExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
-                })
-                .WithMetrics(builder =>
-                {
-                    builder.AddAzureMonitorMetricExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
-                })
-                .WithLogging(builder =>
-                {
-                    builder.AddAzureMonitorLogExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
-                })
+                .WithTracing(builder => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation())
+                .WithMetrics(builder => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation())
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
 
@@ -217,7 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 return "Response from Test Server";
             });
 
-            _ = app.RunAsync(TestServerUrl);
+            await app.StartAsync().ConfigureAwait(false); // Start HostedServices
 
             // ACT
             using var httpClient = new HttpClient();
@@ -237,7 +235,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             // ASSERT
             await VerifyTelemetry(workspaceId: TestEnvironment.WorkspaceId);
-            await VerifyTelemetry(workspaceId: TestEnvironment.SecondaryWorkspaceId);
         }
 
         private async Task VerifyTelemetry(string workspaceId)

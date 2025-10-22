@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         private const string TrustedLaunchValue = "TrustedLaunch";
         private const string StandardValue = "Standard";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Trusted Launch is a security type that secures generation 2 virtual machines. </summary>
         public static ServiceFabricManagedClusterSecurityType TrustedLaunch { get; } = new ServiceFabricManagedClusterSecurityType(TrustedLaunchValue);
         /// <summary> Standard is the default security type for all machines. </summary>
         public static ServiceFabricManagedClusterSecurityType Standard { get; } = new ServiceFabricManagedClusterSecurityType(StandardValue);
+        /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
+        public static ServiceFabricManagedClusterSecurityType ConfidentialVm { get; } = new ServiceFabricManagedClusterSecurityType(ConfidentialVmValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are not the same. </summary>

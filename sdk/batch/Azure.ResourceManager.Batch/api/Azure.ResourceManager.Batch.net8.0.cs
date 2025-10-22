@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Batch
 {
+    public partial class AzureResourceManagerBatchContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerBatchContext() { }
+        public static Azure.ResourceManager.Batch.AzureResourceManagerBatchContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BatchAccountCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchAccountCertificateResource>, System.Collections.IEnumerable
     {
         protected BatchAccountCertificateCollection() { }

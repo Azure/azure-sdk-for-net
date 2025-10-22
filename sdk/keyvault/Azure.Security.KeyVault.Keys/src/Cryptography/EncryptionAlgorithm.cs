@@ -24,7 +24,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string A128CbcPadValue = "A128CBCPAD";
         internal const string A192CbcPadValue = "A192CBCPAD";
         internal const string A256CbcPadValue = "A256CBCPAD";
-
         private readonly string _value;
 
         /// <summary>

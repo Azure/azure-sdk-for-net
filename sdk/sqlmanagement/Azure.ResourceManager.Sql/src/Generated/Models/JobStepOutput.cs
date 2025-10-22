@@ -49,19 +49,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> The output destination server name. </param>
         /// <param name="databaseName"> The output destination database. </param>
         /// <param name="tableName"> The output destination table. </param>
-        /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/> or <paramref name="credential"/> is null. </exception>
-        public JobStepOutput(string serverName, string databaseName, string tableName, string credential)
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="tableName"/> is null. </exception>
+        public JobStepOutput(string serverName, string databaseName, string tableName)
         {
             Argument.AssertNotNull(serverName, nameof(serverName));
             Argument.AssertNotNull(databaseName, nameof(databaseName));
             Argument.AssertNotNull(tableName, nameof(tableName));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             ServerName = serverName;
             DatabaseName = databaseName;
             TableName = tableName;
-            Credential = credential;
         }
 
         /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>

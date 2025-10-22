@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Support
                 case 201:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Support
                 case 201:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

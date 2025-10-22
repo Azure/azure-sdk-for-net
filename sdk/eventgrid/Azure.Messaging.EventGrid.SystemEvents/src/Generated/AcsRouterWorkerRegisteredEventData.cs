@@ -7,62 +7,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerRegistered event. </summary>
     public partial class AcsRouterWorkerRegisteredEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
-        /// <param name="queueAssignments"> Router Worker Registered Queue Info. </param>
-        /// <param name="channelConfigurations"> Router Worker Registered Channel Configuration. </param>
-        /// <param name="labels"> Router Worker Registered Labels. </param>
-        /// <param name="tags"> Router Worker Registered Tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueAssignments"/>, <paramref name="channelConfigurations"/>, <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
-        internal AcsRouterWorkerRegisteredEventData(IEnumerable<AcsRouterQueueDetails> queueAssignments, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags)
+        internal AcsRouterWorkerRegisteredEventData()
         {
-            Argument.AssertNotNull(queueAssignments, nameof(queueAssignments));
-            Argument.AssertNotNull(channelConfigurations, nameof(channelConfigurations));
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            QueueAssignments = queueAssignments.ToList();
-            ChannelConfigurations = channelConfigurations.ToList();
-            Labels = labels;
-            Tags = tags;
+            QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
+            ChannelConfigurations = new ChangeTrackingList<AcsRouterChannelConfiguration>();
+            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
@@ -72,8 +32,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="totalCapacity"> Router Worker Register Total Capacity. </param>
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkerId = workerId;
             QueueAssignments = queueAssignments;
@@ -81,24 +41,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TotalCapacity = totalCapacity;
             Labels = labels;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/> for deserialization. </summary>
-        internal AcsRouterWorkerRegisteredEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Router Worker Registered Worker Id. </summary>
         public string WorkerId { get; }
+
         /// <summary> Router Worker Registered Queue Info. </summary>
         public IReadOnlyList<AcsRouterQueueDetails> QueueAssignments { get; }
+
         /// <summary> Router Worker Registered Channel Configuration. </summary>
         public IReadOnlyList<AcsRouterChannelConfiguration> ChannelConfigurations { get; }
+
         /// <summary> Router Worker Register Total Capacity. </summary>
         public int? TotalCapacity { get; }
+
         /// <summary> Router Worker Registered Labels. </summary>
         public IReadOnlyDictionary<string, string> Labels { get; }
+
         /// <summary> Router Worker Registered Tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }

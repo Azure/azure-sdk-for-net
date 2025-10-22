@@ -34,20 +34,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 throw new FormatException($"The model {nameof(PrivateLinkResources)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,17 +84,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             IReadOnlyList<RecoveryServicesPrivateLinkResourceData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<RecoveryServicesPrivateLinkResourceData> array = new List<RecoveryServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,7 +101,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateLinkResources(value ?? new ChangeTrackingList<RecoveryServicesPrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
+            return new PrivateLinkResources(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResources>.Write(ModelReaderWriterOptions options)
@@ -127,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateLinkResources)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrivateLinkResources(document.RootElement, options);
                     }
                 default:

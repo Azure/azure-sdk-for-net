@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -138,6 +138,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("defaultDataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
             }
+            if (Optional.IsDefined(Replication))
+            {
+                writer.WritePropertyName("replication"u8);
+                writer.WriteObjectValue(Replication, options);
+            }
+            if (Optional.IsDefined(Failover))
+            {
+                writer.WritePropertyName("failover"u8);
+                writer.WriteObjectValue(Failover, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -181,6 +191,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
             OperationalInsightsWorkspaceFeatures features = default;
             ResourceIdentifier defaultDataCollectionRuleResourceId = default;
+            OperationalInsightsWorkspaceReplicationProperties replication = default;
+            OperationalInsightsWorkspaceFailoverProperties failover = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerOperationalInsightsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -238,7 +250,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationalInsightsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -373,6 +385,24 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             defaultDataCollectionRuleResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("replication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replication = OperationalInsightsWorkspaceReplicationProperties.DeserializeOperationalInsightsWorkspaceReplicationProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("failover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            failover = OperationalInsightsWorkspaceFailoverProperties.DeserializeOperationalInsightsWorkspaceFailoverProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -402,6 +432,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
                 features,
                 defaultDataCollectionRuleResourceId,
+                replication,
+                failover,
                 etag,
                 serializedAdditionalRawData);
         }
@@ -745,6 +777,36 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Replication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Replication))
+                {
+                    builder.Append("    replication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Replication, options, 4, false, "    replication: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Failover), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    failover: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Failover))
+                {
+                    builder.Append("    failover: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Failover, options, 4, false, "    failover: ");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -757,7 +819,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -773,7 +835,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
                     }
                 default:

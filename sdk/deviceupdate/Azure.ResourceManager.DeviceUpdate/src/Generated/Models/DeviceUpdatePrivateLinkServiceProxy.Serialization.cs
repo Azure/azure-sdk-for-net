@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
-                JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
+                ((IJsonModel<SubResource>)RemotePrivateEndpointConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupConnectivityInformation))
             {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateEndpointConnection = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    remotePrivateEndpointConnection = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDeviceUpdateContext.Default);
                     continue;
                 }
                 if (property.NameEquals("groupConnectivityInformation"u8))
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support writing '{options.Format}' format.");
             }
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceUpdatePrivateLinkServiceProxy(document.RootElement, options);
                     }
                 default:

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -207,6 +209,134 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Hops))
+                {
+                    if (Hops.Any())
+                    {
+                        builder.Append("  hops: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Hops)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  hops: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkConnectionStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectionStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkConnectionStatus))
+                {
+                    builder.Append("  connectionStatus: ");
+                    builder.AppendLine($"'{NetworkConnectionStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvgLatencyInMs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  avgLatencyInMs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AvgLatencyInMs))
+                {
+                    builder.Append("  avgLatencyInMs: ");
+                    builder.AppendLine($"{AvgLatencyInMs.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinLatencyInMs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minLatencyInMs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinLatencyInMs))
+                {
+                    builder.Append("  minLatencyInMs: ");
+                    builder.AppendLine($"{MinLatencyInMs.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxLatencyInMs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxLatencyInMs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxLatencyInMs))
+                {
+                    builder.Append("  maxLatencyInMs: ");
+                    builder.AppendLine($"{MaxLatencyInMs.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbesSent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probesSent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbesSent))
+                {
+                    builder.Append("  probesSent: ");
+                    builder.AppendLine($"{ProbesSent.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbesFailed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probesFailed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbesFailed))
+                {
+                    builder.Append("  probesFailed: ");
+                    builder.AppendLine($"{ProbesFailed.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ConnectivityInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,7 +344,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support writing '{options.Format}' format.");
             }
@@ -228,7 +360,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectivityInformation(document.RootElement, options);
                     }
                 default:

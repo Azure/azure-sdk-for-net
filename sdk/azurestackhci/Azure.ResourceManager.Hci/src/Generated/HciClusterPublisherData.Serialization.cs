@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHciContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Hci
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHciClusterPublisherData(document.RootElement, options);
                     }
                 default:

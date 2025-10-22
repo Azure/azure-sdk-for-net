@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Formats.Cbor;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ namespace Azure.Security.CodeTransparency
     /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry"/>
     /// or <see cref="CodeTransparencyClient.CreateEntryAsync"/> until completion.
     /// </summary>
-    internal class CreateEntryOperation : Operation<GetOperationResult>, IOperation
+    internal class CreateEntryOperation : Operation<BinaryData>, IOperation
     {
         private readonly CodeTransparencyClient _client;
         private readonly OperationInternal _operationInternal;
@@ -58,35 +60,59 @@ namespace Azure.Security.CodeTransparency
         public override bool HasValue => _operationInternal.HasCompleted && _operationInternal.RawResponse != null;
 
         /// <inheritdoc />
-        public override GetOperationResult Value => Response.FromValue(GetOperationResult.FromResponse(_operationInternal.RawResponse), _operationInternal.RawResponse);
+        public override BinaryData Value => _operationInternal.RawResponse.Content;
 
         // Part of IOperation which is used in _operationInternal
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _client.GetEntryStatusAsync(
+                ? await _client.GetOperationAsync(
                         Id,
                         new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
                     .ConfigureAwait(false)
-                : _client.GetEntryStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+                : _client.GetOperation(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
-            if (response.Status != (int)HttpStatusCode.OK)
+            if (response.Status != (int)HttpStatusCode.OK &&
+                response.Status != (int)HttpStatusCode.Created &&
+                response.Status != (int)HttpStatusCode.Accepted)
             {
                 RequestFailedException ex = new(response);
                 return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
             }
-            Response<GetOperationResult> result = Response.FromValue(GetOperationResult.FromResponse(response), response);
 
-            if (result.Value.Status == OperationStatus.Failed)
+            // The content of the response may be empty if we check the OperationStatus immediately after submitting an entry
+            if (response.Content == null || response.Content.ToArray().Length == 0)
             {
-                return OperationState.Failure(response, new RequestFailedException(result.Value.Error));
-            } else if (result.Value.Status == OperationStatus.Succeeded)
-            {
-                return OperationState.Success(response);
-            } else
-            {
+                RequestFailedException ex = new(response);
                 return OperationState.Pending(response);
             }
+
+            string status = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "Status");
+
+            if (!Enum.TryParse(status, true, out CodeTransparencyOperationStatus parsedStatus))
+            {
+                RequestFailedException ex = new(response);
+                return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
+            }
+            else
+            {
+                switch (parsedStatus)
+                {
+                    case CodeTransparencyOperationStatus.Succeeded:
+                        return OperationState.Success(response);
+                    case CodeTransparencyOperationStatus.Failed:
+                        return OperationState.Failure(response, new RequestFailedException($"Operation failed. OperationId '{Id}'"));
+                    case CodeTransparencyOperationStatus.Running:
+                        return OperationState.Pending(response);
+                    default:
+                        RequestFailedException ex = new(response);
+                        return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. Unknown Status: '{status}' OperationId '{Id}'", ex));
+                }
+            }
         }
+
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
     }
 }

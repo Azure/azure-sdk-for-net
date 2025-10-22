@@ -1,8 +1,13 @@
 # Azure AI Projects client library for .NET
-Use the AI Projects client library to:
+The AI Projects client library is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
-* **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
-* **Enumerate connections** in your Azure AI Foundry project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
+* **Create and run Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Enumerate AI Models** deployed to your Foundry Project using the `Deployments` operations.
+* **Enumerate connected Azure resources** in your Foundry project using the `Connections` operations.
+* **Upload documents and create Datasets** to reference them using the `Datasets` operations.
+* **Create and enumerate Search Indexes** using the `Indexes` operations.
+
+The client library uses version `v1` of the AI Foundry [data plane REST APIs](https://aka.ms/azsdk/azure-ai-projects/ga-rest-api-reference).
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -18,19 +23,13 @@ Use the AI Projects client library to:
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
-  - [Agents](#agents)
-    - [Create an Agent](#create-an-agent)
-      - [Create thread](#create-thread)
-      - [Create message](#create-message)
-      - [Create and execute run](#create-and-execute-run)
-      - [Retrieve messages](#retrieve-messages)
-    - [File search](#file-search)
-    - [Enterprise File Search](#create-agent-with-enterprise-file-search)
-    - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
-    - [Function call](#function-call)
-    - [Azure function call](#azure-function-call)
-    - [Azure Function Call](#create-agent-with-azure-function-call)
-    - [OpenAPI](#create-agent-with-openapi)
+  - [Performing Agent operations](#performing-agent-operations)
+  - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
+  - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
+  - [Deployments operations](#deployments-operations)
+  - [Connections operations](#connections-operations)
+  - [Dataset operations](#dataset-operations)
+  - [Indexes operations](#indexes-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -63,89 +62,72 @@ dotnet add package Azure.Identity
 
 To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
-```C# Snippet:OverviewCreateClient
-var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
+```C# Snippet:AI_Projects_OverviewCreateClient
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
-Once the `AIProjectClient` is created, you can call methods in the form of `GetXxxClient()` on this client to retrieve instances of specific sub-clients.
+**Note:** Support for project connection string and hub-based projects has been discontinued. We recommend creating a new Azure AI Foundry resource utilizing project endpoint. If this is not possible, please pin the version of `Azure.AI.Projects` to version `1.0.0-beta.8` or earlier.
+
+Once the `AIProjectClient` is created, you can use properties such as `.Datasets` and `.Indexes` on this client to perform relevant operations.
 
 ## Examples
 
-### Agents
+### Performing Agent operations
 
-Agents in the Azure AI Projects client library are designed to facilitate various interactions and operations within your AI projects. They serve as the core components that manage and execute tasks, leveraging different tools and resources to achieve specific goals. The following steps outline the typical sequence for interacting with agents:
+The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
-#### Create an Agent
+The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
+```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
-First, you need to create an `AgentsClient`
-```C# Snippet:OverviewCreateAgentClient
-var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
-```
-
-With an authenticated client, an agent can be created:
-```C# Snippet:OverviewCreateAgent
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4-1106-preview",
+// Step 1: Create an agent
+PersistentAgent agent = agentsClient.Administration.CreateAgent(
+    model: modelDeploymentName,
     name: "Math Tutor",
-    instructions: "You are a personal math tutor. Write and run code to answer math questions.",
-    tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
-Agent agent = agentResponse.Value;
-```
+    instructions: "You are a personal math tutor. Write and run code to answer math questions."
+);
 
-#### Create thread
+// Step 2: Create a thread
+PersistentAgentThread thread = agentsClient.Threads.CreateThread();
 
-Next, create a thread:
-```C# Snippet:OverviewCreateThread
-Response<AgentThread> threadResponse = await client.CreateThreadAsync();
-AgentThread thread = threadResponse.Value;
-```
-
-#### Create message
-
-With a thread created, messages can be created on it:
-```C# Snippet:OverviewCreateMessage
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+// Step 3: Add a message to a thread
+PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
-ThreadMessage message = messageResponse.Value;
-```
 
-#### Create and execute run
+// Intermission: message is now correlated with thread
+// Intermission: listing messages will retrieve the message just added
 
-A run can then be started that evaluates the thread against an agent:
-```C# Snippet:OverviewCreateRun
-Response<ThreadRun> runResponse = await client.CreateRunAsync(
+List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
+Assert.AreEqual(message.Id, messagesList[0].Id);
+
+// Step 4: Run the agent
+ThreadRun run = agentsClient.Runs.CreateRun(
     thread.Id,
     agent.Id,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
-ThreadRun run = runResponse.Value;
-```
-
-Once the run has started, it should then be polled until it reaches a terminal status:
-```C# Snippet:OverviewWaitForRun
 do
 {
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    Thread.Sleep(TimeSpan.FromMilliseconds(500));
+    run = agentsClient.Runs.GetRun(thread.Id, run.Id);
 }
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress);
-```
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
 
-#### Retrieve messages
+Pageable<PersistentThreadMessage> messages
+    = agentsClient.Messages.GetMessages(
+        threadId: thread.Id, order: ListSortOrder.Ascending);
 
-Assuming the run successfully completed, listing messages from the thread that was run will now reflect new information
-added by the agent:
-```C# Snippet:OverviewListUpdatedMessages
-Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-    = await client.GetMessagesAsync(thread.Id);
-IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
-
-// Note: messages iterate from newest to oldest, with the messages[0] being the most recent
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -161,618 +143,227 @@ foreach (ThreadMessage threadMessage in messages)
         Console.WriteLine();
     }
 }
+
+agentsClient.Threads.DeleteThread(threadId: thread.Id);
+agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 ```
 
-Example output from this sequence:
-```
- 2024-10-15 23:12:59 - assistant: Yes, Jane Doe, the solution to the equation \(3x + 11 = 14\) is \(x = 1\).
- 2024-10-15 23:12:51 - user: I need to solve the equation `3x + 11 = 14`. Can you help me?
-```
+### Get an authenticated AzureOpenAI client
 
-#### File search
+Your Azure AI Foundry project may have one or more OpenAI models deployed that support chat completions. Use the code below to get an authenticated ChatClient from the [Azure.AI.OpenAI](https://learn.microsoft.com/dotnet/api/overview/azure/ai.openai-readme?view=azure-dotnet) package, and execute a chat completions call.
 
-Files can be uploaded and then referenced by agents or messages. First, use the generalized upload API with a
-purpose of 'agents' to make a file ID available:
-```C# Snippet:UploadAgentFilesToUse
-// Upload a file and wait for it to be processed
-File.WriteAllText(
-    path: "sample_file_for_upload.txt",
-    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-Response<AgentFile> uploadAgentFileResponse = await client.UploadFileAsync(
-    filePath: "sample_file_for_upload.txt",
-    purpose: AgentFilePurpose.Agents);
+The code below assumes `modelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
 
-AgentFile uploadedAgentFile = uploadAgentFileResponse.Value;
-```
+You can update the `connectionName` with one of the connections in your Foundry project, and you can update the `apiVersion` value with one found in the "Data plane - inference" row [in this table](https://learn.microsoft.com/azure/ai-services/openai/reference#api-specs).
 
-Once uploaded, the file ID can then be provided to create a vector store for it
-```C# Snippet:CreateVectorStore
-// Create a vector store with the file and wait for it to be processed.
-// If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
-VectorStore vectorStore = await client.CreateVectorStoreAsync(
-    fileIds:  new List<string> { uploadedAgentFile.Id },
-    name: "my_vector_store");
-```
+```C# Snippet:AI_Projects_AzureOpenAIChatSync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
+Console.WriteLine("Create the Azure OpenAI chat client");
+var credential = new DefaultAzureCredential();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
 
-The vectorStore ID can then be provided to an agent upon creation. Note that file search will only be used if an appropriate tool like Code Interpreter is enabled. Also, you do not need to provide toolResources if you did not create a vector store above
-```C# Snippet:CreateAgentWithFiles
-FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
-fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
+ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-// Create an agent with toolResources and process assistant run
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-        model: "gpt-4-1106-preview",
-        name: "SDK Test Agent - Retrieval",
-        instructions: "You are a helpful agent that can help fetch data from files you know about.",
-        tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
-        toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
-Agent agent = agentResponse.Value;
-```
-
-With a file ID association and a supported tool enabled, the agent will then be able to consume the associated
-data when running threads.
-
-#### Create Agent with Enterprise File Search
-
-We can upload file to Azure as it is shown in the example, or use the existing Azure blob storage. In the code below we demonstrate how this can be achieved. First we upload file to azure and create `VectorStoreDataSource`, which then is used to create vector store. This vector store is then given to the `FileSearchTool` constructor.
-
-```C# Snippet:CreateVectorStoreBlob
-var ds = new VectorStoreDataSource(
-    assetIdentifier: blobURI,
-    assetType: VectorStoreDataSourceAssetType.UriAsset
-);
-var vectorStoreTask = await client.CreateVectorStoreAsync(
-    name: "sample_vector_store",
-    storeConfiguration: new VectorStoreConfiguration(
-        dataSources: new List<VectorStoreDataSource> { ds }
-    )
-);
-var vectorStore = vectorStoreTask.Value;
-
-FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
-
-List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: modelName,
-    name: "my-assistant",
-    instructions: "You are helpful assistant.",
-    tools: tools,
-    toolResources: new ToolResources() { FileSearch = fileSearchResource }
-);
-```
-
-We also can attach files to the existing vector store. In the code snippet below, we first create an empty vector store and add file to it.
-
-```C# Snippet:BatchFileAttachment
-var ds = new VectorStoreDataSource(
-    assetIdentifier: blobURI,
-    assetType: VectorStoreDataSourceAssetType.UriAsset
-);
-var vectorStoreTask = await client.CreateVectorStoreAsync(
-    name: "sample_vector_store"
-);
-var vectorStore = vectorStoreTask.Value;
-
-var uploadTask = await client.CreateVectorStoreFileBatchAsync(
-    vectorStoreId: vectorStore.Id,
-    dataSources: new List<VectorStoreDataSource> { ds }
-);
-Console.WriteLine($"Created vector store file batch, vector store file batch ID: {uploadTask.Value.Id}");
-
-FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
-```
-
-#### Create Message with Code Interpreter Attachment
-
-To attach a file with the context to the message, use the `MessageAttachment` class. To be able to process the attached file contents we need to provide the `List` with the single element `CodeInterpreterToolDefinition` as a `tools` parameter to both `CreateAgent` method and `MessageAttachment` class constructor.
-
-Here is an example to pass `CodeInterpreterTool` as tool:
-
-```C# Snippet:CreateAgentWithInterpreterTool
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
-
-List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: modelName,
-    name: "my-assistant",
-    instructions: "You are helpful assistant.",
-    tools: tools
-);
-Agent agent = agentResponse.Value;
-
-var fileResponse = await client.UploadFileAsync(filePath, AgentFilePurpose.Agents);
-var fileId = fileResponse.Value.Id;
-
-var attachment = new MessageAttachment(
-    fileId: fileId,
-    tools: tools
-);
-
-Response<AgentThread> threadResponse = await client.CreateThreadAsync();
-AgentThread thread = threadResponse.Value;
-
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
-    threadId: thread.Id,
-    role: MessageRole.User,
-    content: "What does the attachment say?",
-    attachments: new List< MessageAttachment > { attachment}
-    );
-ThreadMessage message = messageResponse.Value;
-```
-
-Azure blob storage can be used as a message attachment. In this case, use `VectorStoreDataSource` as a data source:
-
-```C# Snippet:CreateMessageAttachmentWithBlobStore
-var ds = new VectorStoreDataSource(
-    assetIdentifier: blobURI,
-    assetType: VectorStoreDataSourceAssetType.UriAsset
-);
-
-var attachment = new MessageAttachment(
-    ds: ds,
-    tools: tools
-);
-```
-
-#### Function call
-
-Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
-dynamically resolve and disambiguate during a run.
-
-Here, outlined is a simple agent that "knows how to," via caller-provided functions:
-
-1. Get the user's favorite city
-1. Get a nickname for a given city
-1. Get the current weather, optionally with a temperature unit, in a city
-
-To do this, begin by defining the functions to use -- the actual implementations here are merely representative stubs.
-
-```C# Snippet:FunctionsDefineFunctionTools
-// Example of a function that defines no parameters
-string GetUserFavoriteCity() => "Seattle, WA";
-FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
-// Example of a function with a single required parameter
-string GetCityNickname(string location) => location switch
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
 {
-    "Seattle, WA" => "The Emerald City",
-    _ => throw new NotImplementedException(),
+    throw new InvalidOperationException("Invalid URI.");
+}
+uri = new Uri($"https://{uri.Host}");
+
+AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
+ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
+
+Console.WriteLine("Complete a chat");
+ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
+Console.WriteLine(result.Content[0].Text);
+```
+
+### Deployments operations
+
+The code below shows some Deployments operations, which allow you to enumerate the AI models deployed to your AI Foundry Projects. These models can be seen in the "Models + endpoints" tab in your AI Foundry Project. Full samples can be found under the "Deployment" folder in the [package samples][samples].
+
+```C# Snippet:AI_Projects_DeploymentExampleSync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
+
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+Console.WriteLine("List all deployments:");
+foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
+{
+    Console.WriteLine(deployment);
+}
+
+Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
+foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+{
+    Console.WriteLine(deployment);
+}
+
+Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
+ModelDeployment deploymentDetails = (ModelDeployment)projectClient.Deployments.GetDeployment(modelDeploymentName);
+Console.WriteLine(deploymentDetails);
+```
+
+### Connections operations
+
+The code below shows some Connection operations, which allow you to enumerate the Azure Resources connected to your AI Foundry Projects. These connections can be seen in the "Management Center", in the "Connected resources" tab in your AI Foundry Project. Full samples can be found under the "Connections" folder in the [package samples][samples].
+
+```C# Snippet:AI_Projects_ConnectionsExampleSync
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+Console.WriteLine("List the properties of all connections:");
+foreach (AIProjectConnection connection in projectClient.Connections.GetConnections())
+{
+    Console.WriteLine(connection);
+    Console.WriteLine(connection.Name);
+}
+
+Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
+foreach (AIProjectConnection connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
+{
+    Console.WriteLine(connection);
+}
+
+Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
+AIProjectConnection specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
+Console.WriteLine(specificConnection);
+
+Console.WriteLine("Get the properties of a connection with credentials:");
+AIProjectConnection specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
+Console.WriteLine(specificConnectionCredentials);
+
+Console.WriteLine($"Get the properties of the default connection:");
+AIProjectConnection defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
+Console.WriteLine(defaultConnection);
+
+Console.WriteLine($"Get the properties of the default connection with credentials:");
+AIProjectConnection defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
+Console.WriteLine(defaultConnectionCredentials);
+```
+
+### Dataset operations
+
+The code below shows some Dataset operations. Full samples can be found under the "Datasets" folder in the [package samples][samples].
+
+```C# Snippet:AI_Projects_DatasetsExampleSync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
+var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
+var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
+var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
+var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
+var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
+
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
+FileDataset fileDataset = projectClient.Datasets.UploadFile(
+    name: datasetName,
+    version: datasetVersion1,
+    filePath: filePath,
+    connectionName: connectionName
+    );
+Console.WriteLine(fileDataset);
+
+Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
+FolderDataset folderDataset = projectClient.Datasets.UploadFolder(
+    name: datasetName,
+    version: datasetVersion2,
+    folderPath: folderPath,
+    connectionName: connectionName,
+    filePattern: new Regex(".*\\.txt")
+);
+Console.WriteLine(folderDataset);
+
+Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
+AIProjectDataset dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
+Console.WriteLine(dataset.Id);
+
+Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
+DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
+Console.WriteLine(credentials);
+
+Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
+foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersions(datasetName))
+{
+    Console.WriteLine(ds);
+    Console.WriteLine(ds.Version);
+}
+
+Console.WriteLine($"Listing latest versions for all datasets:");
+foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasets())
+{
+    Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
+}
+
+Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
+projectClient.Datasets.Delete(datasetName, datasetVersion1);
+
+projectClient.Datasets.Delete(datasetName, datasetVersion2);
+```
+
+### Indexes operations
+
+The code below shows some Indexes operations. Full samples can be found under the "Indexes" folder in the [package samples][samples].
+
+```C# Snippet:AI_Projects_IndexesExampleSync
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
+var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
+var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
+var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+Console.WriteLine("Create a local Index with configurable data, referencing an existing AI Search resource");
+AzureAISearchIndex searchIndex = new AzureAISearchIndex(aiSearchConnectionName, aiSearchIndexName)
+{
+    Description = "Sample Index for testing"
 };
-FunctionToolDefinition getCityNicknameTool = new(
-    name: "getCityNickname",
-    description: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
-    parameters: BinaryData.FromObjectAsJson(
-        new
-        {
-            Type = "object",
-            Properties = new
-            {
-                Location = new
-                {
-                    Type = "string",
-                    Description = "The city and state, e.g. San Francisco, CA",
-                },
-            },
-            Required = new[] { "location" },
-        },
-        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-// Example of a function with one required and one optional, enum parameter
-string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
-{
-    "Seattle, WA" => temperatureUnit == "f" ? "70f" : "21c",
-    _ => throw new NotImplementedException()
-};
-FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
-    name: "getCurrentWeatherAtLocation",
-    description: "Gets the current weather at a provided location.",
-    parameters: BinaryData.FromObjectAsJson(
-        new
-        {
-            Type = "object",
-            Properties = new
-            {
-                Location = new
-                {
-                    Type = "string",
-                    Description = "The city and state, e.g. San Francisco, CA",
-                },
-                Unit = new
-                {
-                    Type = "string",
-                    Enum = new[] { "c", "f" },
-                },
-            },
-            Required = new[] { "location" },
-        },
-        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-```
 
-With the functions defined in their appropriate tools, an agent can be now created that has those tools enabled:
-
-```C# Snippet:FunctionsCreateAgentWithFunctionTools
-// note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: modelName,
-    name: "SDK Test Agent - Functions",
-        instructions: "You are a weather bot. Use the provided functions to help answer questions. "
-            + "Customize your responses to the user's preferences as much as possible and use friendly "
-            + "nicknames for cities whenever possible.",
-    tools: new List<ToolDefinition> { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
-    );
-Agent agent = agentResponse.Value;
-```
-
-If the agent calls tools, the calling code will need to resolve `ToolCall` instances into matching
-`ToolOutput` instances. For convenience, a basic example is extracted here:
-
-```C# Snippet:FunctionsHandleFunctionCalls
-ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
-{
-    if (toolCall is RequiredFunctionToolCall functionToolCall)
-    {
-        if (functionToolCall.Name == getUserFavoriteCityTool.Name)
-        {
-            return new ToolOutput(toolCall, GetUserFavoriteCity());
-        }
-        using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
-        if (functionToolCall.Name == getCityNicknameTool.Name)
-        {
-            string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-            return new ToolOutput(toolCall, GetCityNickname(locationArgument));
-        }
-        if (functionToolCall.Name == getCurrentWeatherAtLocationTool.Name)
-        {
-            string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-            if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
-            {
-                string unitArgument = unitElement.GetString();
-                return new ToolOutput(toolCall, GetWeatherAtLocation(locationArgument, unitArgument));
-            }
-            return new ToolOutput(toolCall, GetWeatherAtLocation(locationArgument));
-        }
-    }
-    return null;
-}
-```
-
-To handle user input like "what's the weather like right now in my favorite city?", polling the response for completion
-should be supplemented by a `RunStatus` check for `RequiresAction` or, in this case, the presence of the
-`RequiredAction` property on the run. Then, the collection of `ToolOutputSubmissions` should be submitted to the
-run via the `SubmitRunToolOutputs` method so that the run can continue:
-
-```C# Snippet:FunctionsHandlePollingWithRequiredAction
-do
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
-
-    if (runResponse.Value.Status == RunStatus.RequiresAction
-        && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
-    {
-        List<ToolOutput> toolOutputs = new();
-        foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
-        {
-            toolOutputs.Add(GetResolvedToolOutput(toolCall));
-        }
-        runResponse = await client.SubmitToolOutputsToRunAsync(runResponse.Value, toolOutputs);
-    }
-}
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress);
-```
-
-Calling function with streaming requires small modification of the code above. Streaming updates contain one ToolOutput per update and now the GetResolvedToolOutput function will look like it is shown on the code snippet below:
-
-```C# Snippet:FunctionsWithStreamingUpdateHandling
-ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string functionArguments)
-{
-    if (functionName == getUserFavoriteCityTool.Name)
-    {
-        return new ToolOutput(toolCallId, GetUserFavoriteCity());
-    }
-    using JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
-    if (functionName == getCityNicknameTool.Name)
-    {
-        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-        return new ToolOutput(toolCallId, GetCityNickname(locationArgument));
-    }
-    if (functionName == getCurrentWeatherAtLocationTool.Name)
-    {
-        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-        if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
-        {
-            string unitArgument = unitElement.GetString();
-            return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument, unitArgument));
-        }
-        return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument));
-    }
-    return null;
-}
-```
-
-We parse streaming updates in two cycles. One iterates over the streaming run outputs and when we are getting update, requiring the action, we are starting the second cycle, which iterates over the outputs of the same run, after submission of the local functions calls results.
-
-```C# Snippet:FunctionsWithStreamingUpdateCycle
-List<ToolOutput> toolOutputs = new();
-ThreadRun streamRun = null;
-await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
-{
-    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
-    {
-        Console.WriteLine("--- Run started! ---");
-    }
-    else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-    {
-        streamRun = submitToolOutputsUpdate.Value;
-        RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-        while (streamRun.Status == RunStatus.RequiresAction) {
-            toolOutputs.Add(
-                GetResolvedToolOutput(
-                    newActionUpdate.FunctionName,
-                    newActionUpdate.ToolCallId,
-                    newActionUpdate.FunctionArguments
-            ));
-            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
-            {
-                if (actionUpdate is MessageContentUpdate contentUpdate)
-                {
-                    Console.Write(contentUpdate.Text);
-                }
-                else if (actionUpdate is RequiredActionUpdate newAction)
-                {
-                    newActionUpdate = newAction;
-                }
-                else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
-            streamRun = client.GetRun(thread.Id, streamRun.Id);
-            toolOutputs.Clear();
-        }
-        break;
-    }
-    else if (streamingUpdate is MessageContentUpdate contentUpdate)
-    {
-        Console.Write(contentUpdate.Text);
-    }
-}
-```
-
-#### Azure function call
-
-We also can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
-```C# Snippet:AzureFunctionsDefineFunctionTools
-AzureFunctionToolDefinition azureFnTool = new(
-    name: "foo",
-    description: "Get answers from the foo bot.",
-    inputBinding: new AzureFunctionBinding(
-        new AzureFunctionStorageQueue(
-            queueName: "azure-function-foo-input",
-            storageServiceEndpoint: storageQueueUri
-        )
-    ),
-    outputBinding: new AzureFunctionBinding(
-        new AzureFunctionStorageQueue(
-            queueName: "azure-function-tool-output",
-            storageServiceEndpoint: storageQueueUri
-        )
-    ),
-    parameters: BinaryData.FromObjectAsJson(
-            new
-            {
-                Type = "object",
-                Properties = new
-                {
-                    query = new
-                    {
-                        Type = "string",
-                        Description = "The question to ask.",
-                    },
-                    outputqueueuri = new
-                    {
-                        Type = "string",
-                        Description = "The full output queue uri."
-                    }
-                },
-            },
-        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
-    )
+Console.WriteLine($"Create the Project Index named `{indexName}` using the previously created local object:");
+searchIndex = (AzureAISearchIndex)projectClient.Indexes.CreateOrUpdate(
+    name: indexName,
+    version: indexVersion,
+    index: searchIndex
 );
-```
+Console.WriteLine(searchIndex);
 
-Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
-```C# Snippet:AzureFunctionsCreateAgentWithFunctionTools
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
-    name: "azure-function-agent-foo",
-        instructions: "You are a helpful support agent. Use the provided function any "
-        + "time the prompt contains the string 'What would foo say?'. When you invoke "
-        + "the function, ALWAYS specify the output queue uri parameter as "
-        + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
-        + "\"Foo says\" and then the response from the tool.",
-    tools: new List<ToolDefinition> { azureFnTool }
-    );
-Agent agent = agentResponse.Value;
-```
+Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
+AIProjectIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+Console.WriteLine(retrievedIndex);
 
-After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
-```C# Snippet:AzureFunctionsHandlePollingWithRequiredAction
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
-    thread.Id,
-    MessageRole.User,
-    "What is the most prevalent element in the universe? What would foo say?");
-ThreadMessage message = messageResponse.Value;
-
-Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
-
-do
+Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
+foreach (AIProjectIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
 {
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    Console.WriteLine(version);
 }
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress
-    || runResponse.Value.Status == RunStatus.RequiresAction);
-```
 
-To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the code above.
-
-```C#
-namespace FunctionProj
+Console.WriteLine($"Listing all Indices:");
+foreach (AIProjectIndex version in projectClient.Indexes.GetIndexes())
 {
-    public class Response
-    {
-        public required string Value { get; set; }
-        public required string CorrelationId { get; set; }
-    }
-
-    public class Arguments
-    {
-        public required string OutputQueueUri { get; set; }
-        public required string CorrelationId { get; set; }
-    }
-
-    public class Foo
-    {
-        private readonly ILogger<Foo> _logger;
-
-        public Foo(ILogger<Foo> logger)
-        {
-            _logger = logger;
-        }
-
-        [Function("Foo")]
-        public void Run([QueueTrigger("azure-function-foo-input")] Arguments input, FunctionContext executionContext)
-        {
-            var logger = executionContext.GetLogger("Foo");
-            logger.LogInformation("C# Queue function processed a request.");
-
-            // We have to provide the Managed identity for function resource
-            // and allow this identity a Queue Data Contributor role on the storage account.
-            var cred = new DefaultAzureCredential();
-            var queueClient = new QueueClient(new Uri(input.OutputQueueUri), cred,
-                    new QueueClientOptions { MessageEncoding = QueueMessageEncoding.Base64 });
-
-            var response = new Response
-            {
-                Value = "Bar",
-                // Important! Correlation ID must match the input correlation ID.
-                CorrelationId = input.CorrelationId
-            };
-
-            var jsonResponse = JsonSerializer.Serialize(response);
-            queueClient.SendMessage(jsonResponse);
-        }
-    }
+    Console.WriteLine(version);
 }
-```
 
-In this code we define function input and output class: `Arguments` and `Response` respectively. These two data classes will be serialized in JSON. It is important that these both contain field `CorrelationId`, which is the same between input and output.
-
-In our example the function will be stored in the storage account, created with the AI hub. For that we need to allow key access to that storage. In Azure portal go to Storage account > Settings > Configuration and set "Allow storage account key access" to Enabled. If it is not done, the error will be displayed "The remote server returned an error: (403) Forbidden." To create the function resource that will host our function, install azure-cli python package and run the next command:
-
-```shell
-pip install -U azure-cli
-az login
-az functionapp create --resource-group your-resource-group --consumption-plan-location region --runtime dotnet-isolated --functions-version 4 --name function_name --storage-account storage_account_already_present_in_resource_group --app-insights existing_or_new_application_insights_name
-```
-
-This function writes data to the output queue and hence needs to be authenticated to Azure, so we will need to assign the function system identity and provide it `Storage Queue Data Contributor`. To do that in Azure portal select the function, located in `your-resource-group` resource group and in Settings>Identity, switch it on and click Save. After that assign the `Storage Queue Data Contributor` permission on storage account used by our function (`storage_account_already_present_in_resource_group` in the script above) for just assigned System Managed identity.
-
-Now we will create the function itself. Install [.NET](https://dotnet.microsoft.com/download) and [Core Tools](https://go.microsoft.com/fwlink/?linkid=2174087) and create the function project using next commands. 
-```
-func init FunctionProj --worker-runtime dotnet-isolated --target-framework net8.0
-cd FunctionProj
-func new --name foo --template "HTTP trigger" --authlevel "anonymous"
-dotnet add package Azure.Identity
-dotnet add package Microsoft.Azure.Functions.Worker.Extensions.Storage.Queues --prerelease
-```
-
-**Note:** There is a "Azure Queue Storage trigger", however the attempt to use it results in error for now.
-We have created a project, containing HTTP-triggered azure function with the logic in `Foo.cs` file. As far as we need to trigger Azure function by a new message in the queue, we will replace the content of a Foo.cs by the C# sample code above. 
-To deploy the function run the command from dotnet project folder:
-
-```
-func azure functionapp publish function_name
-```
-
-In the `storage_account_already_present_in_resource_group` select the `Queue service` and create two queues: `azure-function-foo-input` and `azure-function-tool-output`. Note that the same queues are used in our sample. To check that the function is working, place the next message into the `azure-function-foo-input` and replace `storage_account_already_present_in_resource_group` by the actual resource group name, or just copy the output queue address.
-```json
-{
-  "OutputQueueUri": "https://storage_account_already_present_in_resource_group.queue.core.windows.net/azure-function-tool-output",
-  "CorrelationId": "42"
-}
-```
-
-Next, we will monitor the output queue or the message. You should receive the next message.
-```json
-{
-  "Value": "Bar",
-  "CorrelationId": "42"
-}
-```
-Please note that the input `CorrelationId` is the same as output.
-*Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open and hit the refresh button on the portal user interface, so that you will not miss the message. If the message instead went to `azure-function-foo-input-poison` queue, the function completed with error, please check your setup.
-After we have tested the function and made sure it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
-
-
-#### Create Agent With OpenAPI
-
-OpenAPI specifications describe REST operations against a specific endpoint. Agents SDK can read an OpenAPI spec, create a function from it, and call that function against the REST endpoint without additional client-side execution.
-
-Here is an example creating an OpenAPI tool (using anonymous authentication):
-```C# Snippet:OpenAPIDefineFunctionTools
-OpenApiAnonymousAuthDetails oaiAuth = new();
-OpenApiToolDefinition openapiTool = new(
-    name: "get_weather",
-    description: "Retrieve weather information for a location",
-    spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
-    auth: oaiAuth
-);
-
-Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
-    name: "azure-function-agent-foo",
-    instructions: "You are a helpful assistant.",
-    tools: new List<ToolDefinition> { openapiTool }
-    );
-Agent agent = agentResponse.Value;
-```
-
-In this example we are using the `weather_openapi.json` file and agent will request the wttr.in website for the weather in a location fron the prompt.
-```C# Snippet:OpenAPIHandlePollingWithRequiredAction
-Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
-    thread.Id,
-    MessageRole.User,
-    "What's the weather in Seattle?");
-ThreadMessage message = messageResponse.Value;
-
-Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
-
-do
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
-}
-while (runResponse.Value.Status == RunStatus.Queued
-    || runResponse.Value.Status == RunStatus.InProgress
-    || runResponse.Value.Status == RunStatus.RequiresAction);
+Console.WriteLine("Delete the Index version created above:");
+projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 ```
 
 ## Troubleshooting
 
 Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
 
-```C# Snippet:Readme_Troubleshooting
+```C# Snippet:AI_Projects_Readme_Troubleshooting
 try
 {
-    client.CreateMessage(
-    "1234",
-    MessageRole.User,
-    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+    projectClient.Datasets.GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
 }
-catch (RequestFailedException ex) when (ex.Status == 404)
+catch (ClientResultException ex) when (ex.Status == 404)
 {
     Console.WriteLine($"Exception status code: {ex.Status}");
     Console.WriteLine($"Exception message: {ex.Message}");
@@ -780,6 +371,10 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 ```
 
 To further diagnose and troubleshoot issues, you can enable logging following the [Azure SDK logging documentation](https://learn.microsoft.com/dotnet/azure/sdk/logging). This allows you to capture additional insights into request and response details, which can be particularly helpful when diagnosing complex issues.
+
+### Reporting issues
+
+To report an issue with the client library, or request additional features, please open a [GitHub issue here](https://github.com/Azure/azure-sdk-for-net/issues). Mention the package name "Azure.AI.Projects" in the title or content.
 
 ## Next steps
 

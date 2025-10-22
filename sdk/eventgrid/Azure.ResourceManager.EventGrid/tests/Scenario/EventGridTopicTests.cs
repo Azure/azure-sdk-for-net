@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
@@ -24,6 +23,17 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
         }
 
+        private const string EnvTag = "env";
+        private const string OwnerTag = "owner";
+        private const string TestTag = "test";
+        private const string SdkTestTag = "sdk-test";
+        private const string StickerTagKey = "stickerKey";
+        private const string StickerTagValue = "stickerValue";
+        private const string RemoveStickerTagKey = "removeSticker";
+        public const string RemoveStickerTagValue = "removeMe";
+        public const string TeamTagKey = "team";
+        public const string TeamTagValue = "sdk";
+
         [SetUp]
         public async Task TestSetUp()
         {
@@ -32,86 +42,128 @@ namespace Azure.ResourceManager.EventGrid.Tests
             _eventGridTopicCollection = _resourceGroup.GetEventGridTopics();
         }
 
-        [RecordedTest]
-        public async Task CreateOrUpdate()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            ValidateEventGridTopic(topic, topicName);
-        }
-
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            await CreateEventGridTopic(_resourceGroup, topicName);
-            bool flag = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsTrue(flag);
-        }
-
-        [RecordedTest]
-        public async Task Get()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            await CreateEventGridTopic(_resourceGroup, topicName);
-            var topic = await _eventGridTopicCollection.GetAsync(topicName);
-            ValidateEventGridTopic(topic, topicName);
-        }
-
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            await CreateEventGridTopic(_resourceGroup, topicName);
-            var list = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            ValidateEventGridTopic(list.First(item => item.Data.Name == topicName), topicName);
-        }
-
-        [RecordedTest]
-        public async Task Delete()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            bool flag = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsTrue(flag);
-
-            await topic.DeleteAsync(WaitUntil.Completed);
-            flag = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsFalse(flag);
-        }
-
-        [TestCase(null)]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task AddRemoveTag(bool? useTagResource)
-        {
-            SetTagResourceUsage(Client, useTagResource);
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-
-            // AddTag
-            await topic.AddTagAsync("addtagkey", "addtagvalue");
-            topic = await _eventGridTopicCollection.GetAsync(topicName);
-            Assert.AreEqual(1, topic.Data.Tags.Count);
-            KeyValuePair<string, string> tag = topic.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
-
-            // RemoveTag
-            await topic.RemoveTagAsync("addtagkey");
-            topic = await _eventGridTopicCollection.GetAsync(topicName);
-            Assert.AreEqual(0, topic.Data.Tags.Count);
-        }
-
-        private void ValidateEventGridTopic(EventGridTopicResource topic, string topicName)
+        private void ValidateEventGridTopic(EventGridTopicResource topic, string expectedName)
         {
             Assert.IsNotNull(topic);
+            Assert.IsNotNull(topic.Data);
             Assert.IsNotNull(topic.Data.Id);
-            Assert.AreEqual(topicName, topic.Data.Name);
+            Assert.AreEqual(expectedName, topic.Data.Name);
             Assert.AreEqual("Microsoft.EventGrid/topics", topic.Data.ResourceType.ToString());
             Assert.AreEqual("Succeeded", topic.Data.ProvisioningState.ToString());
             Assert.AreEqual(_resourceGroup.Data.Location, topic.Data.Location);
+        }
+
+        [Test]
+        public async Task TopicLifecycleCreateGetUpdateDelete()
+        {
+            string topicName = Recording.GenerateAssetName("EventGridTopic");
+            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
+            ValidateEventGridTopic(topic, topicName);
+
+            // Get
+            var getTopic = await _eventGridTopicCollection.GetAsync(topicName);
+            ValidateEventGridTopic(getTopic, topicName);
+
+            // Update
+            var patch = new EventGridTopicPatch
+            {
+                Tags = { { EnvTag, TestTag }, { OwnerTag, SdkTestTag } }
+            };
+            await topic.UpdateAsync(WaitUntil.Completed, patch);
+            var updatedTopic = await _eventGridTopicCollection.GetAsync(topicName);
+            Assert.IsTrue(updatedTopic.Value.Data.Tags.ContainsKey(EnvTag));
+
+            // AddTag
+            var addTagResult = await topic.AddTagAsync(StickerTagKey, StickerTagValue);
+            Assert.IsNotNull(addTagResult);
+            Assert.IsNotNull(addTagResult.Value);
+            Assert.IsTrue(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey));
+            Assert.AreEqual(StickerTagValue, addTagResult.Value.Data.Tags[StickerTagKey]);
+
+            // SetTags
+            var tags = new Dictionary<string, string> { { EnvTag, TestTag }, { TeamTagKey, TeamTagValue }, { StickerTagKey, StickerTagValue } };
+            var setTagsResult = await topic.SetTagsAsync(tags);
+            Assert.IsNotNull(setTagsResult);
+            Assert.IsNotNull(setTagsResult.Value);
+            Assert.IsTrue(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey));
+            Assert.AreEqual(StickerTagValue, setTagsResult.Value.Data.Tags[StickerTagKey]);
+
+            // RemoveTag
+            await topic.AddTagAsync(RemoveStickerTagKey, RemoveStickerTagValue);
+            var removeTagResult = await topic.RemoveTagAsync(RemoveStickerTagKey);
+            Assert.IsNotNull(removeTagResult);
+            Assert.IsNotNull(removeTagResult.Value);
+            Assert.IsFalse(removeTagResult.Value.Data.Tags.ContainsKey(RemoveStickerTagKey));
+
+            // Exists
+            bool exists = await _eventGridTopicCollection.ExistsAsync(topicName);
+            Assert.IsTrue(exists);
+
+            // GetAll
+            var topicsInResourceGroup = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(topicsInResourceGroup);
+            Assert.IsTrue(topicsInResourceGroup.Any(t => t.Data.Name == topicName));
+            var topicsInSubscription = await DefaultSubscription.GetEventGridTopicsAsync().ToEnumerableAsync();
+            Assert.NotNull(topicsInSubscription);
+            Assert.IsTrue(topicsInSubscription.Any(t => t.Data.Name == topicName));
+
+            // ListSharedAccessKeys
+            var keys = await topic.GetSharedAccessKeysAsync();
+            Assert.IsNotNull(keys);
+
+            // RegenerateSharedAccessKey
+            var key = await topic.RegenerateKeyAsync(WaitUntil.Completed, new TopicRegenerateKeyContent("key1"));
+            Assert.IsNotNull(key);
+
+            // GetAsync
+            var getAsyncResult = await topic.GetAsync();
+            Assert.IsNotNull(getAsyncResult);
+            Assert.AreEqual(topic.Data.Name, getAsyncResult.Value.Data.Name);
+
+            // Delete
+            await topic.DeleteAsync(WaitUntil.Completed);
+            bool existsAfterDelete = await _eventGridTopicCollection.ExistsAsync(topicName);
+            Assert.IsFalse(existsAfterDelete);
+        }
+
+        [Test]
+        public async Task TopicNegativeScenarios()
+        {
+            string topicName = Recording.GenerateAssetName("EventGridTopic");
+            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await topic.GetTopicEventSubscriptionAsync("nonexistent-subscription");
+            });
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await topic.GetTopicNetworkSecurityPerimeterConfigurationAsync("perimeter-guid", "association");
+            });
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await topic.GetEventGridTopicPrivateEndpointConnectionAsync("pec-name");
+            });
+
+            await topic.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task PrivateLinkResourcesGetAndList()
+        {
+            string topicName = Recording.GenerateAssetName("EventGridTopic");
+            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
+            ValidateEventGridTopic(topic, topicName);
+            // get private link resources
+            var linkResource = await topic.GetEventGridTopicPrivateLinkResourceAsync("topic");
+            Assert.IsNotNull(linkResource);
+            // list all private link resources
+            System.Collections.Generic.List<EventGridTopicPrivateLinkResource> list = await topic.GetEventGridTopicPrivateLinkResources().ToEnumerableAsync();
+            Assert.NotNull(list);
+
+            await topic.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

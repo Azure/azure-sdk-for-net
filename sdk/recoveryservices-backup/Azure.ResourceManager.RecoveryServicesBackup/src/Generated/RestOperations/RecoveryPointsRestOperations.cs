@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Lists the backup copies for the backed up item. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item whose backup copies are to be fetched. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         RecoveryPointResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryPointResourceList.DeserializeRecoveryPointResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Lists the backup copies for the backed up item. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item whose backup copies are to be fetched. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         RecoveryPointResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryPointResourceList.DeserializeRecoveryPointResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Provides the information of the backed up data identified using RecoveryPointID. This is an asynchronous operation.
         /// To know the status of the operation, call the GetProtectedItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with backed up item. </param>
-        /// <param name="containerName"> Container name associated with backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item name whose backup data needs to be fetched. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is null. </exception>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupRecoveryPointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupRecoveryPointData.DeserializeBackupRecoveryPointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,12 +260,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Provides the information of the backed up data identified using RecoveryPointID. This is an asynchronous operation.
         /// To know the status of the operation, call the GetProtectedItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with backed up item. </param>
-        /// <param name="containerName"> Container name associated with backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item name whose backup data needs to be fetched. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is null. </exception>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupRecoveryPointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupRecoveryPointData.DeserializeBackupRecoveryPointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -322,12 +322,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Lists the backup copies for the backed up item. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item whose backup copies are to be fetched. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         RecoveryPointResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RecoveryPointResourceList.DeserializeRecoveryPointResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -360,12 +360,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Lists the backup copies for the backed up item. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item whose backup copies are to be fetched. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         RecoveryPointResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RecoveryPointResourceList.DeserializeRecoveryPointResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

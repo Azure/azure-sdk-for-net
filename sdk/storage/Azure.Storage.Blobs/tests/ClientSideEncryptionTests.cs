@@ -25,7 +25,6 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using static Azure.Storage.Constants.ClientSideEncryption;
 using static Azure.Storage.Test.Shared.ClientSideEncryptionTestExtensions;
-using static Moq.It;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -132,11 +131,11 @@ namespace Azure.Storage.Blobs.Test
         {
             if (IsAsync)
             {
-                keyMock.Verify(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                keyMock.Verify(k => k.UnwrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
             }
             else
             {
-                keyMock.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()), Times.Once);
+                keyMock.Verify(k => k.UnwrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()), Times.Once);
             }
         }
 
@@ -375,6 +374,18 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+
+                // can't get a block blob client with CSE enabled. Get fresh client without CSE options.
+                BlockBlobClient asBlockBlob = InstrumentClient(BlobsClientBuilder.GetServiceClient_SharedKey()
+                    .GetBlobContainerClient(disposable.Container.Name)
+                    .GetBlockBlobClient(blobName));
+                BlockList list = (await asBlockBlob.GetBlockListAsync()).Value;
+                if (list.CommittedBlocks.Count() > 1)
+                {
+                    int nonFinalBlockCount = list.CommittedBlocks.Count() - 1;
+                    Assert.That(list.CommittedBlocks.Take(nonFinalBlockCount).Select(bb => bb.Size).ToList(),
+                        Is.EquivalentTo(Enumerable.Repeat(bufferSize, nonFinalBlockCount)));
+                }
             }
         }
 
@@ -1397,9 +1408,9 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             if (IsAsync)
             {
-                mockKey1.Verify(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
-                mockKey1.Verify(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
-                mockKey2.Verify(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.WrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.UnwrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey2.Verify(k => k.WrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
 
                 var mockKey1_firstInvocation = mockKey1.Invocations.First();
                 var mockKey1_lastInvocation = mockKey1.Invocations.Last();
@@ -1410,9 +1421,9 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                mockKey1.Verify(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
-                mockKey1.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
-                mockKey2.Verify(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.WrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.UnwrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey2.Verify(k => k.WrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
 
                 var mockKey1_firstInvocation = mockKey1.Invocations.First();
                 var mockKey1_lastInvocation = mockKey1.Invocations.Last();

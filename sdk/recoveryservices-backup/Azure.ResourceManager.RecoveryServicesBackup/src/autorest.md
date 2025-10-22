@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# tag: package-2023-06
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec238f30bd6d4a0681b691908fe00b54868467de/specification/recoveryservicesbackup/resource-manager/readme.md
+# tag: package-2025-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/8960d93f363955d7dc079a90248e6addd30afd31/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -98,6 +98,7 @@ rename-mapping:
   AzureVmWorkloadProtectedItem: VmWorkloadProtectedItem
   AzureVmWorkloadProtectedItemExtendedInfo: VmWorkloadProtectedItemExtendedInfo
   AzureVmWorkloadProtectionPolicy: VmWorkloadProtectionPolicy
+  AzureVmWorkloadSAPAseDatabaseProtectableItem: VmWorkloadSapAseDatabaseProtectableItem
   AzureVmWorkloadSAPAseDatabaseProtectedItem: VmWorkloadSapAseDatabaseProtectedItem
   AzureVmWorkloadSAPAseDatabaseWorkloadItem: VmWorkloadSapAseDatabaseWorkloadItem
   AzureVmWorkloadSAPAseSystemProtectableItem: VmWorkloadSapAseSystemProtectableItem
@@ -143,6 +144,10 @@ rename-mapping:
   AzureWorkloadSQLRecoveryPointExtendedInfo: WorkloadSqlRecoveryPointExtendedInfo
   AzureWorkloadSQLRestoreRequest: WorkloadSqlRestoreContent
   AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateContent
+  AzureWorkloadSAPAsePointInTimeRecoveryPoint: WorkloadSapAsePointInTimeRecoveryPoint
+  AzureWorkloadSAPAsePointInTimeRestoreRequest: WorkloadSapAsePointInTimeRestoreContent
+  AzureWorkloadSAPAseRecoveryPoint: WorkloadSapAseRecoveryPoint
+  AzureWorkloadSAPAseRestoreRequest: WorkloadSapAseRestoreContent
   BackupRequest: BackupContent
   BackupRequestResource: TriggerBackupContent
   BackupStatusResponse: BackupStatusResult
@@ -154,7 +159,6 @@ rename-mapping:
   DedupState: VaultDedupState
   EncryptionAtRestType: BackupEncryptionAtRestType
   EncryptionDetails: VmEncryptionDetails
-  ErrorDetail: BackupErrorDetail
   ExtendedProperties: IaasVmBackupExtendedProperties
   FabricName: BackupFabricName
   FetchTieringCostInfoForRehydrationRequest: FetchTieringCostInfoForRehydrationContent
@@ -249,7 +253,7 @@ rename-mapping:
   BackupResourceEncryptionConfigExtended.userAssignedIdentity: -|arm-id
   RestoreRequest: RestoreContent
   RestoreRequestResource: TriggerRestoreContent
-  RecoveryPointProperties.expiryTime: ExpireOn
+  RecoveryPointProperties.expiryTime: ExpireOn|datetime
   DataSourceType.SQLDataBase: SqlDatabase
   BackupItemType.SQLDataBase: SqlDatabase
   WorkloadType.SQLDataBase: SqlDatabase
@@ -298,6 +302,11 @@ rename-mapping:
   TargetDiskNetworkAccessOption: BackupTargetDiskNetworkAccessOption
   TargetDiskNetworkAccessSettings: BackupTargetDiskNetworkAccessSettings
   TargetDiskNetworkAccessSettings.targetDiskAccessId: -|arm-id
+  AzureIaaSVMJobExtendedInfo.estimatedRemainingDuration: estimatedRemainingDurationValue
+  ClientDiscoveryForLogSpecification.blobDuration: -|duration
+  TieringPolicy.duration: durationValue
+  RecoveryPointRehydrationInfo.rehydrationRetentionDuration: -|duration
+  BMSBackupSummariesQueryObject.type: BackupManagementType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -387,19 +396,6 @@ directive:
   - remove-operation: BackupOperationStatuses_Get
   - remove-operation: ProtectionPolicyOperationStatuses_Get
   - remove-operation: TieringCostOperationStatus_Get
-  - from: bms.json
-    where: $.definitions
-    transform: >
-      $.TieringPolicy.properties.duration['x-ms-client-name'] = 'durationValue';
-      $.AzureIaaSVMJobExtendedInfo.properties.estimatedRemainingDuration['x-ms-client-name'] = 'estimatedRemainingDurationValue';
-      $.BMSBackupSummariesQueryObject.properties.type['x-ms-client-name'] = 'BackupManagementType';
-      $.BMSBackupSummariesQueryObject.properties.type['x-ms-enum']['name'] = 'BackupManagementType';
-      $.RecoveryPointRehydrationInfo.properties.rehydrationRetentionDuration['format'] = 'duration';
-  - from: bms.json
-    where: $.parameters
-    transform: >
-      $.AzureRegion['x-ms-format'] = 'azure-location';
-      $.AzureRegion['x-ms-client-name'] = 'location';
   # Autorest.CSharp can't find `nextLink` from parent (allOf), so here workaround.
   # Issues filed here: https://github.com/Azure/autorest.csharp/issues/2740.
   - from: bms.json
@@ -469,7 +465,7 @@ directive:
   # Issue filed here: https://github.com/Azure/autorest.csharp/issues/2741.
   # This directive just pass the build, but the operation may still not work.
   - from: bms.json
-    where: $.paths['/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig']
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig']
     transform: >
       $.patch.responses['200'] = {
             'description': 'OK',
@@ -482,11 +478,6 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
     transform: >
       $.get['operationId'] = 'ResourceGuardProxy_List';
-  # Here the format date-time isn't specified in swagger, hence adding it explicitly
-  - from: bms.json
-    where: $.definitions.RecoveryPointProperties.properties.expiryTime
-    transform: >
-      $["format"] = "date-time";
   # TODO: Remove this workaround once we have the swagger issue fixed
   - from: bms.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
@@ -496,4 +487,20 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}']
     transform: >
       $.put['x-ms-long-running-operation'] = true;
+  - from: bms.json
+    where: $.definitions.RecoveryPointTierStatus
+    transform: >
+      $['x-ms-enum']['modelAsString'] = false;
+  # Here the parameter format isn't specified in swagger, hence adding it explicitly
+  - from: bms.json
+    where: $.paths..parameters[?(@.name == 'azureRegion')]
+    transform: >
+      $["x-ms-format"] = 'azure-location';
+      $['x-ms-client-name'] = 'location';
+  # Rename ErrorDetail to BackupErrorDetail. (FYI: not working in rename-mapping section)
+  - from: bms.json
+    where: $.definitions
+    transform: >
+      $.ErrorDetail['x-ms-client-name'] = 'BackupErrorDetail';
+
 ```

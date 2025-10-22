@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.Health.Deidentification
 {
     /// <summary> A job containing a batch of documents to de-identify. </summary>
     public partial class DeidentificationJob
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
@@ -59,8 +31,8 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
-        /// <param name="name"> The name of a job. </param>
-        /// <param name="operation"> Operation to perform on the input documents. </param>
+        /// <param name="jobName"> The name of a job. </param>
+        /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
@@ -68,19 +40,19 @@ namespace Azure.Health.Deidentification
         /// <param name="error"> Error when job fails in it's entirety. </param>
         /// <param name="lastUpdatedAt">
         /// Date and time when the job was completed.
-        ///
+        /// 
         /// If the job is canceled, this is the time when the job was canceled.
-        ///
+        /// 
         /// If the job failed, this is the time when the job failed.
         /// </param>
         /// <param name="createdAt"> Date and time when the job was created. </param>
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(string name, DeidentificationOperationType? operation, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DeidentificationJobCustomizationOptions customizations, OperationState status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, DeidentificationJobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeidentificationJob(string jobName, DeidentificationOperationType? operationType, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DeidentificationJobCustomizationOptions customizations, OperationStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, DeidentificationJobSummary summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Operation = operation;
+            JobName = jobName;
+            OperationType = operationType;
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
             Customizations = customizations;
@@ -90,40 +62,45 @@ namespace Azure.Health.Deidentification
             CreatedAt = createdAt;
             StartedAt = startedAt;
             Summary = summary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/> for deserialization. </summary>
-        internal DeidentificationJob()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of a job. </summary>
-        public string Name { get; }
+        public string JobName { get; }
+
         /// <summary> Operation to perform on the input documents. </summary>
-        public DeidentificationOperationType? Operation { get; set; }
+        public DeidentificationOperationType? OperationType { get; set; }
+
         /// <summary> Storage location to perform the operation on. </summary>
         public SourceStorageLocation SourceLocation { get; set; }
+
         /// <summary> Target location to store output of operation. </summary>
         public TargetStorageLocation TargetLocation { get; set; }
+
         /// <summary> Customization parameters to override default service behaviors. </summary>
         public DeidentificationJobCustomizationOptions Customizations { get; set; }
+
         /// <summary> Current status of a job. </summary>
-        public OperationState Status { get; }
+        public OperationStatus Status { get; }
+
         /// <summary> Error when job fails in it's entirety. </summary>
         public ResponseError Error { get; }
+
         /// <summary>
         /// Date and time when the job was completed.
-        ///
+        /// 
         /// If the job is canceled, this is the time when the job was canceled.
-        ///
+        /// 
         /// If the job failed, this is the time when the job failed.
         /// </summary>
         public DateTimeOffset LastUpdatedAt { get; }
+
         /// <summary> Date and time when the job was created. </summary>
         public DateTimeOffset CreatedAt { get; }
+
         /// <summary> Date and time when the job was started. </summary>
         public DateTimeOffset? StartedAt { get; }
+
         /// <summary> Summary of a job. Exists only when the job is completed. </summary>
         public DeidentificationJobSummary Summary { get; }
     }

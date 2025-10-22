@@ -30,7 +30,7 @@ namespace Azure.Communication.Rooms
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ParticipantsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-04-15")
+        public ParticipantsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-03-13")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -72,7 +72,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         ParticipantsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ParticipantsCollection.DeserializeParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,7 +99,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         ParticipantsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ParticipantsCollection.DeserializeParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -156,7 +156,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         object value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
@@ -184,7 +184,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         object value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         ParticipantsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ParticipantsCollection.DeserializeParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         ParticipantsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ParticipantsCollection.DeserializeParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -11,16 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
+    /// <summary></summary>
     public partial class DeviceRegistryBillingContainerResource : IJsonModel<DeviceRegistryBillingContainerData>
     {
+        private static IJsonModel<DeviceRegistryBillingContainerData> s_dataDeserializationInstance;
+
+        private static IJsonModel<DeviceRegistryBillingContainerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceRegistryBillingContainerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryBillingContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryBillingContainerData>)Data).Write(writer, options);
 
-        DeviceRegistryBillingContainerData IJsonModel<DeviceRegistryBillingContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryBillingContainerData>)Data).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryBillingContainerData IJsonModel<DeviceRegistryBillingContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceRegistryBillingContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryBillingContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistryBillingContainerData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        DeviceRegistryBillingContainerData IPersistableModel<DeviceRegistryBillingContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryBillingContainerData>(data, options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryBillingContainerData IPersistableModel<DeviceRegistryBillingContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryBillingContainerData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        string IPersistableModel<DeviceRegistryBillingContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryBillingContainerData>)Data).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistryBillingContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -1,14 +1,60 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.1 (2025-10-21)
 
 ### Features Added
 
-### Breaking Changes
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`).
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
+* Added new performance monitoring capabilities to help track application health and resource usage. Newly added metrics:
+  - `\.NET CLR Exceptions(??APP_CLR_PROC??)\# of Exceps Thrown / sec`
+  - `\ASP.NET Applications(??APP_W3SVC_PROC??)\Requests/Sec`;
+  - `\Process(??APP_WIN32_PROC??)\% Processor Time"`
+  - `\Process(??APP_WIN32_PROC??)\% Processor Time Normalized`
+  - `\Process(??APP_WIN32_PROC??)\Private Bytes`
+  ([#52705](https://github.com/Azure/azure-sdk-for-net/pull/52705))
+* Added built-in monitoring to track SDK performance and health. Emitted metrics:
+  - `preview.item.success.count`
+  - `preview.item.dropped.count`
+  - `preview.item.retry.count`
+  ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
+* Add `enduser.pseudo.id` as ai.user.id 
+([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
+* Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 
-### Bugs Fixed
+## 1.3.0 (2025-05-09)
 
 ### Other Changes
+
+* Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.11.0-beta.2](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Resources.Azure-1.11.0-beta.2/src/OpenTelemetry.Resources.Azure).
+  ([#49351](https://github.com/Azure/azure-sdk-for-net/pull/49351))
+
+* Update OpenTelemetry dependencies
+  ([#49861](https://github.com/Azure/azure-sdk-for-net/pull/49861))
+  - OpenTelemetry 1.12.0
+  - OpenTelemetry.Extensions.Hosting 1.12.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.12.0
+  - OpenTelemetry.Instrumentation.Http 1.12.0
+
+## 1.3.0-beta.3 (2025-04-08)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#48574](https://github.com/Azure/azure-sdk-for-net/pull/48574))
+  - OpenTelemetry 1.11.2
+  - OpenTelemetry.Extensions.Hosting 1.11.2
+  - OpenTelemetry.Instrumentation.AspNetCore 1.11.1
+  - OpenTelemetry.Instrumentation.Http 1.11.1
 
 ## 1.3.0-beta.2 (2024-10-11)
 
@@ -234,7 +280,6 @@
 - Update OpenTelemetry dependencies
   ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
   - OpenTelemetry 1.7.0
-  - OpenTelemetry.Extensions.Hosting 1.7.0
   - NEW: OpenTelemetry.Instrumentation.AspNetCore 1.7.0
   - NEW: OpenTelemetry.Instrumentation.Http 1.7.0
 

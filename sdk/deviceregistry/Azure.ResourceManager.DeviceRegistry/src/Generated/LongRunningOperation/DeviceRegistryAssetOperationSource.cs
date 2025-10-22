@@ -8,30 +8,41 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
-    internal class DeviceRegistryAssetOperationSource : IOperationSource<DeviceRegistryAssetResource>
+    /// <summary></summary>
+    internal partial class DeviceRegistryAssetOperationSource : IOperationSource<DeviceRegistryAssetResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DeviceRegistryAssetOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DeviceRegistryAssetResource IOperationSource<DeviceRegistryAssetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(document.RootElement);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DeviceRegistryAssetData data = DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceRegistryAssetResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DeviceRegistryAssetResource> IOperationSource<DeviceRegistryAssetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DeviceRegistryAssetData data = DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceRegistryAssetResource(_client, data);
         }
     }

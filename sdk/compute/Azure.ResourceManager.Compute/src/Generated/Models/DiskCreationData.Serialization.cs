@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityDataUri"u8);
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(SecurityMetadataUri))
+            {
+                writer.WritePropertyName("securityMetadataUri"u8);
+                writer.WriteStringValue(SecurityMetadataUri.AbsoluteUri);
+            }
             if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
                 writer.WritePropertyName("performancePlus"u8);
@@ -96,6 +101,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("provisionedBandwidthCopySpeed"u8);
                 writer.WriteStringValue(ProvisionedBandwidthCopySpeed.Value.ToString());
             }
+            if (Optional.IsDefined(InstantAccessDurationMinutes))
+            {
+                writer.WritePropertyName("instantAccessDurationMinutes"u8);
+                writer.WriteNumberValue(InstantAccessDurationMinutes.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -143,9 +153,11 @@ namespace Azure.ResourceManager.Compute.Models
             long? uploadSizeBytes = default;
             int? logicalSectorSize = default;
             Uri securityDataUri = default;
+            Uri securityMetadataUri = default;
             bool? performancePlus = default;
             ResourceIdentifier elasticSanResourceId = default;
             ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default;
+            long? instantAccessDurationMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,6 +244,15 @@ namespace Azure.ResourceManager.Compute.Models
                     securityDataUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("securityMetadataUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityMetadataUri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("performancePlus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -259,6 +280,15 @@ namespace Azure.ResourceManager.Compute.Models
                     provisionedBandwidthCopySpeed = new ProvisionedBandwidthCopyOption(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("instantAccessDurationMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instantAccessDurationMinutes = property.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -276,9 +306,11 @@ namespace Azure.ResourceManager.Compute.Models
                 uploadSizeBytes,
                 logicalSectorSize,
                 securityDataUri,
+                securityMetadataUri,
                 performancePlus,
                 elasticSanResourceId,
                 provisionedBandwidthCopySpeed,
+                instantAccessDurationMinutes,
                 serializedAdditionalRawData);
         }
 
@@ -289,7 +321,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskCreationData)} does not support writing '{options.Format}' format.");
             }
@@ -303,7 +335,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskCreationData(document.RootElement, options);
                     }
                 default:

@@ -8,6 +8,8 @@
     <PackageTags>Microsoft Azure Document Intelligence Cognitive Services Applied AI Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +19,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

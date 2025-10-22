@@ -34,105 +34,129 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(OracleDBSystemShapeProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(ShapeFamily))
+            if (Optional.IsDefined(ShapeFamily))
             {
                 writer.WritePropertyName("shapeFamily"u8);
                 writer.WriteStringValue(ShapeFamily);
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("availableCoreCount"u8);
-                writer.WriteNumberValue(AvailableCoreCount);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MinimumCoreCount))
+            writer.WritePropertyName("shapeName"u8);
+            writer.WriteStringValue(ShapeName);
+            writer.WritePropertyName("availableCoreCount"u8);
+            writer.WriteNumberValue(AvailableCoreCount);
+            if (Optional.IsDefined(MinimumCoreCount))
             {
                 writer.WritePropertyName("minimumCoreCount"u8);
                 writer.WriteNumberValue(MinimumCoreCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuntimeMinimumCoreCount))
+            if (Optional.IsDefined(RuntimeMinimumCoreCount))
             {
                 writer.WritePropertyName("runtimeMinimumCoreCount"u8);
                 writer.WriteNumberValue(RuntimeMinimumCoreCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CoreCountIncrement))
+            if (Optional.IsDefined(CoreCountIncrement))
             {
                 writer.WritePropertyName("coreCountIncrement"u8);
                 writer.WriteNumberValue(CoreCountIncrement.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinStorageCount))
+            if (Optional.IsDefined(MinStorageCount))
             {
                 writer.WritePropertyName("minStorageCount"u8);
                 writer.WriteNumberValue(MinStorageCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxStorageCount))
+            if (Optional.IsDefined(MaxStorageCount))
             {
                 writer.WritePropertyName("maxStorageCount"u8);
                 writer.WriteNumberValue(MaxStorageCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableDataStoragePerServerInTbs))
+            if (Optional.IsDefined(AvailableDataStoragePerServerInTbs))
             {
                 writer.WritePropertyName("availableDataStoragePerServerInTbs"u8);
                 writer.WriteNumberValue(AvailableDataStoragePerServerInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryPerNodeInGbs))
+            if (Optional.IsDefined(AvailableMemoryPerNodeInGbs))
             {
                 writer.WritePropertyName("availableMemoryPerNodeInGbs"u8);
                 writer.WriteNumberValue(AvailableMemoryPerNodeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableDBNodePerNodeInGbs))
+            if (Optional.IsDefined(AvailableDBNodePerNodeInGbs))
             {
                 writer.WritePropertyName("availableDbNodePerNodeInGbs"u8);
                 writer.WriteNumberValue(AvailableDBNodePerNodeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinCoreCountPerNode))
+            if (Optional.IsDefined(MinCoreCountPerNode))
             {
                 writer.WritePropertyName("minCoreCountPerNode"u8);
                 writer.WriteNumberValue(MinCoreCountPerNode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryInGbs))
+            if (Optional.IsDefined(AvailableMemoryInGbs))
             {
                 writer.WritePropertyName("availableMemoryInGbs"u8);
                 writer.WriteNumberValue(AvailableMemoryInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinMemoryPerNodeInGbs))
+            if (Optional.IsDefined(MinMemoryPerNodeInGbs))
             {
                 writer.WritePropertyName("minMemoryPerNodeInGbs"u8);
                 writer.WriteNumberValue(MinMemoryPerNodeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableDBNodeStorageInGbs))
+            if (Optional.IsDefined(AvailableDBNodeStorageInGbs))
             {
                 writer.WritePropertyName("availableDbNodeStorageInGbs"u8);
                 writer.WriteNumberValue(AvailableDBNodeStorageInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinDBNodeStoragePerNodeInGbs))
+            if (Optional.IsDefined(MinDBNodeStoragePerNodeInGbs))
             {
                 writer.WritePropertyName("minDbNodeStoragePerNodeInGbs"u8);
                 writer.WriteNumberValue(MinDBNodeStoragePerNodeInGbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableDataStorageInTbs))
+            if (Optional.IsDefined(AvailableDataStorageInTbs))
             {
                 writer.WritePropertyName("availableDataStorageInTbs"u8);
                 writer.WriteNumberValue(AvailableDataStorageInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinDataStorageInTbs))
+            if (Optional.IsDefined(MinDataStorageInTbs))
             {
                 writer.WritePropertyName("minDataStorageInTbs"u8);
                 writer.WriteNumberValue(MinDataStorageInTbs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinimumNodeCount))
+            if (Optional.IsDefined(MinimumNodeCount))
             {
                 writer.WritePropertyName("minimumNodeCount"u8);
                 writer.WriteNumberValue(MinimumNodeCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaximumNodeCount))
+            if (Optional.IsDefined(MaximumNodeCount))
             {
                 writer.WritePropertyName("maximumNodeCount"u8);
                 writer.WriteNumberValue(MaximumNodeCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableCoreCountPerNode))
+            if (Optional.IsDefined(AvailableCoreCountPerNode))
             {
                 writer.WritePropertyName("availableCoreCountPerNode"u8);
                 writer.WriteNumberValue(AvailableCoreCountPerNode.Value);
+            }
+            if (Optional.IsDefined(ComputeModel))
+            {
+                writer.WritePropertyName("computeModel"u8);
+                writer.WriteStringValue(ComputeModel.Value.ToString());
+            }
+            if (Optional.IsDefined(AreServerTypesSupported))
+            {
+                writer.WritePropertyName("areServerTypesSupported"u8);
+                writer.WriteBooleanValue(AreServerTypesSupported.Value);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(ShapeAttributes))
+            {
+                writer.WritePropertyName("shapeAttributes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ShapeAttributes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -142,7 +166,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -172,6 +196,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string shapeFamily = default;
+            string shapeName = default;
             int availableCoreCount = default;
             int? minimumCoreCount = default;
             int? runtimeMinimumCoreCount = default;
@@ -180,17 +205,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? maxStorageCount = default;
             double? availableDataStoragePerServerInTbs = default;
             int? availableMemoryPerNodeInGbs = default;
-            int? availableDBNodePerNodeInGbs = default;
+            int? availableDbNodePerNodeInGbs = default;
             int? minCoreCountPerNode = default;
             int? availableMemoryInGbs = default;
             int? minMemoryPerNodeInGbs = default;
-            int? availableDBNodeStorageInGbs = default;
-            int? minDBNodeStoragePerNodeInGbs = default;
+            int? availableDbNodeStorageInGbs = default;
+            int? minDbNodeStoragePerNodeInGbs = default;
             int? availableDataStorageInTbs = default;
             int? minDataStorageInTbs = default;
             int? minimumNodeCount = default;
             int? maximumNodeCount = default;
             int? availableCoreCountPerNode = default;
+            OracleDatabaseComputeModel? computeModel = default;
+            bool? areServerTypesSupported = default;
+            string displayName = default;
+            IReadOnlyList<string> shapeAttributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,6 +227,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 if (property.NameEquals("shapeFamily"u8))
                 {
                     shapeFamily = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("shapeName"u8))
+                {
+                    shapeName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("availableCoreCount"u8))
@@ -274,7 +308,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    availableDBNodePerNodeInGbs = property.Value.GetInt32();
+                    availableDbNodePerNodeInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minCoreCountPerNode"u8))
@@ -310,7 +344,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    availableDBNodeStorageInGbs = property.Value.GetInt32();
+                    availableDbNodeStorageInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minDbNodeStoragePerNodeInGbs"u8))
@@ -319,7 +353,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    minDBNodeStoragePerNodeInGbs = property.Value.GetInt32();
+                    minDbNodeStoragePerNodeInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("availableDataStorageInTbs"u8))
@@ -367,6 +401,43 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     availableCoreCountPerNode = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("computeModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("areServerTypesSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    areServerTypesSupported = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("shapeAttributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    shapeAttributes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -375,6 +446,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new OracleDBSystemShapeProperties(
                 shapeFamily,
+                shapeName,
                 availableCoreCount,
                 minimumCoreCount,
                 runtimeMinimumCoreCount,
@@ -383,17 +455,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 maxStorageCount,
                 availableDataStoragePerServerInTbs,
                 availableMemoryPerNodeInGbs,
-                availableDBNodePerNodeInGbs,
+                availableDbNodePerNodeInGbs,
                 minCoreCountPerNode,
                 availableMemoryInGbs,
                 minMemoryPerNodeInGbs,
-                availableDBNodeStorageInGbs,
-                minDBNodeStoragePerNodeInGbs,
+                availableDbNodeStorageInGbs,
+                minDbNodeStoragePerNodeInGbs,
                 availableDataStorageInTbs,
                 minDataStorageInTbs,
                 minimumNodeCount,
                 maximumNodeCount,
                 availableCoreCountPerNode,
+                computeModel,
+                areServerTypesSupported,
+                displayName,
+                shapeAttributes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -404,7 +480,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OracleDBSystemShapeProperties)} does not support writing '{options.Format}' format.");
             }
@@ -418,7 +494,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleDBSystemShapeProperties(document.RootElement, options);
                     }
                 default:

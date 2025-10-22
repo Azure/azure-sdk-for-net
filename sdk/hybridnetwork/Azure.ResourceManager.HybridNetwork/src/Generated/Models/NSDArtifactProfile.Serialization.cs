@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactStoreReference))
             {
                 writer.WritePropertyName("artifactStoreReference"u8);
-                JsonSerializer.Serialize(writer, ArtifactStoreReference);
+                ((IJsonModel<WritableSubResource>)ArtifactStoreReference).Write(writer, options);
             }
             if (Optional.IsDefined(ArtifactName))
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStoreReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    artifactStoreReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("artifactName"u8))
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNSDArtifactProfile(document.RootElement, options);
                     }
                 default:

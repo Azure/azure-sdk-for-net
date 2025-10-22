@@ -60,8 +60,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="runningState"> Object representing RunningState for Managed CCF. </param>
         /// <param name="provisioningState"> Provisioning state of Managed CCF Resource. </param>
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
+        /// <param name="enclavePlatform"> Enclave platform of Managed CCF. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, ConfidentialLedgerEnclavePlatform? enclavePlatform, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppName = appName;
             AppUri = appUri;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             RunningState = runningState;
             ProvisioningState = provisioningState;
             NodeCount = nodeCount;
+            EnclavePlatform = enclavePlatform;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,5 +92,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
         /// <summary> Number of CCF nodes in the Managed CCF. </summary>
         public int? NodeCount { get; set; }
+        /// <summary> Enclave platform of Managed CCF. </summary>
+        public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; set; }
     }
 }

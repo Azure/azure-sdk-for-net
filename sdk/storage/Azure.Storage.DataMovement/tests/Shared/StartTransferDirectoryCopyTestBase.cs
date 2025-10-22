@@ -42,6 +42,11 @@ namespace Azure.Storage.DataMovement.Tests
             Preserve = 1,
             NoPreserve = 2,
             NewProperties = 3,
+            PreserveNoPermissions = 4,
+            PreserveNfs = 5,
+            PreserveNfsNoPermissions = 6,
+            PreserveNfsToSmb = 7,
+            PreserveSmbToNfs = 8,
         }
 
         /// <summary>
@@ -72,9 +77,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         #region Service-Specific Methods
         /// <summary>
-        /// Gets the service client using OAuth to authenticate.
+        /// Gets a disposing container client with OAuth. The container is created with this call.
         /// </summary>
-        protected abstract TSourceContainerClient GetOAuthSourceContainerClient(string containerName);
+        protected abstract Task<IDisposingContainer<TSourceContainerClient>> GetSourceDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
@@ -125,6 +132,13 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Gets a disposing container client with OAuth. The container is created with this call.
+        /// </summary>
+        protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
         /// </summary>
         /// <param name="service">Optionally specified service client to get container from.</param>
@@ -133,11 +147,6 @@ namespace Azure.Storage.DataMovement.Tests
             TDestinationServiceClient service = default,
             string containerName = default,
             CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Gets the service client using OAuth to authenticate.
-        /// </summary>
-        protected abstract TDestinationContainerClient GetOAuthDestinationContainerClient(string containerName);
 
         /// <summary>
         /// Gets the specific storage resource from the given TDestinationObjectClient
@@ -256,7 +265,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             // Assert
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+            using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventFailed,
@@ -381,7 +390,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -581,24 +590,59 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [TestCase("source=path@#%")]
+        [TestCase("source%21path%40%23%25")]
+        public async Task DirectoryToDirectory_SpecialChars(string prefix)
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            long size = DataMovementTestConstants.KB;
+
+            await CreateDirectoryInSourceAsync(source.Container, prefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, prefix);
+
+            string itemName1 = string.Join("/", prefix, "file=test!@#$%");
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            string itemName2 = string.Join("/", prefix, "file%3Dtest%26"); // Already encoded
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
+
+            string subDirName = string.Join("/", prefix, "folder=bar");
+            await CreateDirectoryInSourceAsync(source.Container, subDirName);
+            string itemName3 = string.Join("/", subDirName, "subfile=test!@#$%");
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
+            string itemName4 = string.Join("/", subDirName, "subfile%3Dtest%26");
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
+            string subDirName2 = string.Join("/", prefix, "space folder");
+            await CreateDirectoryInSourceAsync(source.Container, subDirName2);
+            string itemName5 = string.Join("/", subDirName2, "space file");
+
+            // Act
+            await CopyDirectoryAndVerifyAsync(
+                source.Container,
+                destination.Container,
+                prefix,
+                prefix,
+                itemTransferCount: 4).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
             long size = DataMovementTestConstants.KB;
-            int waitTimeInSec = 20;
+            int waitTimeInSec = 30;
             string sourceContainerName = GetNewObjectName();
             string destContainerName = GetNewObjectName();
-            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync(containerName: sourceContainerName);
-            TSourceContainerClient oauthSourceContainer = GetOAuthSourceContainerClient(containerName: sourceContainerName);
-
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync(containerName: destContainerName);
-            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: destContainerName);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerOauthAsync(containerName: sourceContainerName);
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerOauthAsync(containerName: destContainerName);
 
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destFolder";
 
-            await CreateDirectoryInSourceAsync(oauthSourceContainer, sourcePrefix);
-            await CreateDirectoryInDestinationAsync(oauthDestinationContainer, destinationPrefix);
+            await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, destinationPrefix);
 
             string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
             await CreateObjectInSourceAsync(source.Container, size, itemName1);
@@ -617,8 +661,8 @@ namespace Azure.Storage.DataMovement.Tests
             await CreateObjectInSourceAsync(source.Container, size, itemName4);
 
             await CopyDirectoryAndVerifyAsync(
-                oauthSourceContainer,
-                oauthDestinationContainer,
+                source.Container,
+                destination.Container,
                 sourcePrefix,
                 destinationPrefix,
                 4,
@@ -626,7 +670,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         #region Single Concurrency
-        internal async Task CreateDirectoryTree(
+        internal async Task CreateDirectoryTreeAsync(
             TSourceContainerClient client,
             string sourcePrefix,
             int size)
@@ -660,7 +704,7 @@ namespace Azure.Storage.DataMovement.Tests
             string destPrefix = "destFolder";
             await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
             await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
-            await CreateDirectoryTree(sourceContainer, sourcePrefix, size);
+            await CreateDirectoryTreeAsync(sourceContainer, sourcePrefix, size);
 
             // Create storage resource containers
             StorageResourceContainer sourceResource = GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);
@@ -705,7 +749,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -741,7 +785,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -779,7 +823,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -819,7 +863,7 @@ namespace Azure.Storage.DataMovement.Tests
                 size: DataMovementTestConstants.KB * 4);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -830,7 +874,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            if (!testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage))
+            {
+                Assert.Fail($"Did not throw the expected exception. Actual exception thrown: {testEventsRaised.FailedEvents.First().Exception}");
+            }
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
@@ -880,7 +927,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options).ConfigureAwait(false);
 
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,

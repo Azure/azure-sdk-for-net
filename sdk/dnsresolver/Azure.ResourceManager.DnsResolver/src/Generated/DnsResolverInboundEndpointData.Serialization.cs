@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.DnsResolver
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsResolverInboundEndpointData)} does not support writing '{options.Format}' format.");
             }
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDnsResolverInboundEndpointData(document.RootElement, options);
                     }
                 default:

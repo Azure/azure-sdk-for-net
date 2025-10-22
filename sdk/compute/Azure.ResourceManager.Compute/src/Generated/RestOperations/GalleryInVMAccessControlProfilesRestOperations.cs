@@ -36,6 +36,204 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByGalleryRequestUri(string subscriptionId, string resourceGroupName, string galleryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/inVMAccessControlProfiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByGalleryRequest(string subscriptionId, string resourceGroupName, string galleryName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/inVMAccessControlProfiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List gallery inVMAccessControlProfiles in a gallery. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GalleryInVmAccessControlProfileList>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+
+            using var message = CreateListByGalleryRequest(subscriptionId, resourceGroupName, galleryName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GalleryInVmAccessControlProfileList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List gallery inVMAccessControlProfiles in a gallery. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GalleryInVmAccessControlProfileList> ListByGallery(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+
+            using var message = CreateListByGalleryRequest(subscriptionId, resourceGroupName, galleryName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GalleryInVmAccessControlProfileList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/inVMAccessControlProfiles/", false);
+            uri.AppendPath(inVmAccessControlProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/inVMAccessControlProfiles/", false);
+            uri.AppendPath(inVmAccessControlProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieves information about a gallery inVMAccessControlProfile. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GalleryInVmAccessControlProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+            Argument.AssertNotNullOrEmpty(inVmAccessControlProfileName, nameof(inVmAccessControlProfileName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, inVmAccessControlProfileName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GalleryInVmAccessControlProfileData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((GalleryInVmAccessControlProfileData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves information about a gallery inVMAccessControlProfile. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GalleryInVmAccessControlProfileData> Get(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+            Argument.AssertNotNullOrEmpty(inVmAccessControlProfileName, nameof(inVmAccessControlProfileName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, inVmAccessControlProfileName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GalleryInVmAccessControlProfileData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((GalleryInVmAccessControlProfileData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName, GalleryInVmAccessControlProfileData data)
         {
             var uri = new RawRequestUriBuilder();
@@ -79,10 +277,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery in which the InVMAccessControlProfile is to be created. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="data"> Parameters supplied to the create or update gallery inVMAccessControlProfile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="inVmAccessControlProfileName"/> or <paramref name="data"/> is null. </exception>
@@ -108,10 +306,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery in which the InVMAccessControlProfile is to be created. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="data"> Parameters supplied to the create or update gallery inVMAccessControlProfile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="inVmAccessControlProfileName"/> or <paramref name="data"/> is null. </exception>
@@ -179,10 +377,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery in which the InVMAccessControlProfile is to be updated. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="patch"> Parameters supplied to the update gallery inVMAccessControlProfile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="inVmAccessControlProfileName"/> or <paramref name="patch"/> is null. </exception>
@@ -207,10 +405,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery in which the InVMAccessControlProfile is to be updated. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="patch"> Parameters supplied to the update gallery inVMAccessControlProfile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="inVmAccessControlProfileName"/> or <paramref name="patch"/> is null. </exception>
@@ -229,110 +427,6 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
-            uri.AppendPath(galleryName, true);
-            uri.AppendPath("/inVMAccessControlProfiles/", false);
-            uri.AppendPath(inVmAccessControlProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
-            uri.AppendPath(galleryName, true);
-            uri.AppendPath("/inVMAccessControlProfiles/", false);
-            uri.AppendPath(inVmAccessControlProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieves information about a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be retrieved. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GalleryInVmAccessControlProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(inVmAccessControlProfileName, nameof(inVmAccessControlProfileName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, inVmAccessControlProfileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GalleryInVmAccessControlProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GalleryInVmAccessControlProfileData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieves information about a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be retrieved. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GalleryInVmAccessControlProfileData> Get(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(inVmAccessControlProfileName, nameof(inVmAccessControlProfileName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, inVmAccessControlProfileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GalleryInVmAccessControlProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GalleryInVmAccessControlProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -377,10 +471,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> he name of the Shared Image Gallery in which the InVMAccessControlProfile resides. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -404,10 +498,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery inVMAccessControlProfile. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> he name of the Shared Image Gallery in which the InVMAccessControlProfile resides. </param>
-        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="inVmAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="inVmAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -425,100 +519,6 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByGalleryRequestUri(string subscriptionId, string resourceGroupName, string galleryName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
-            uri.AppendPath(galleryName, true);
-            uri.AppendPath("/inVMAccessControlProfiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByGalleryRequest(string subscriptionId, string resourceGroupName, string galleryName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
-            uri.AppendPath(galleryName, true);
-            uri.AppendPath("/inVMAccessControlProfiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List gallery inVMAccessControlProfiles in a gallery. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be listed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GalleryInVmAccessControlProfileList>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-
-            using var message = CreateListByGalleryRequest(subscriptionId, resourceGroupName, galleryName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GalleryInVmAccessControlProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List gallery inVMAccessControlProfiles in a gallery. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be listed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GalleryInVmAccessControlProfileList> ListByGallery(string subscriptionId, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-
-            using var message = CreateListByGalleryRequest(subscriptionId, resourceGroupName, galleryName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GalleryInVmAccessControlProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List gallery inVMAccessControlProfiles in a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be listed. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -579,9 +579,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List gallery inVMAccessControlProfiles in a gallery. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Shared Image Gallery from which the InVMAccessControlProfiles are to be listed. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

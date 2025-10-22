@@ -77,7 +77,7 @@ public partial class IPv6FirewallRule : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
     public IPv6FirewallRule(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -98,6 +98,11 @@ public partial class IPv6FirewallRule : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

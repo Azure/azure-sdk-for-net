@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobCredentialResource : IJsonModel<SqlServerJobCredentialData>
     {
+        private static SqlServerJobCredentialData s_dataDeserializationInstance;
+        private static SqlServerJobCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerJobCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobCredentialData>)Data).Write(writer, options);
 
-        SqlServerJobCredentialData IJsonModel<SqlServerJobCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobCredentialData>)Data).Create(ref reader, options);
+        SqlServerJobCredentialData IJsonModel<SqlServerJobCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobCredentialData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobCredentialData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobCredentialData IPersistableModel<SqlServerJobCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobCredentialData>(data, options);
+        SqlServerJobCredentialData IPersistableModel<SqlServerJobCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobCredentialData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobCredentialData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerJobCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

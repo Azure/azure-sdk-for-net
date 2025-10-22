@@ -43,7 +43,11 @@ namespace Azure.Identity.Tests
             assertionAudienceBuilder.AppendPath("/oauth2/v2.0/token", escape: false);
             var assertionAudience = assertionAudienceBuilder.ToString();
 
+#if NET9_0_OR_GREATER
+            var assertionCert = X509CertificateLoader.LoadCertificateFromFile(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#else
             var assertionCert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#endif
 
             string tokenFilePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 

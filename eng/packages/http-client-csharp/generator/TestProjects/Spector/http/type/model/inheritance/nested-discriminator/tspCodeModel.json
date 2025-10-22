@@ -1,843 +1,1109 @@
 {
- "$id": "1",
- "Name": "Type.Model.Inheritance.NestedDiscriminator",
- "ApiVersions": [],
- "Enums": [],
- "Models": [
-  {
-   "$id": "2",
-   "kind": "model",
-   "name": "Fish",
-   "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish",
-   "usage": "Input,Output,Json",
-   "doc": "This is base model for polymorphic multiple levels inheritance with a discriminator.",
-   "decorators": [],
-   "discriminatorProperty": {
-    "$id": "3",
-    "kind": "property",
-    "name": "kind",
-    "serializedName": "kind",
-    "doc": "Discriminator property for Fish.",
-    "type": {
-     "$id": "4",
-     "kind": "string",
-     "name": "string",
-     "crossLanguageDefinitionId": "TypeSpec.string",
-     "decorators": []
-    },
-    "optional": false,
-    "readOnly": false,
-    "discriminator": true,
-    "flatten": false,
-    "decorators": [],
-    "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish.kind",
-    "serializationOptions": {
-     "$id": "5",
-     "json": {
-      "$id": "6",
-      "name": "kind"
-     }
-    }
-   },
-   "properties": [
+  "name": "Type.Model.Inheritance.NestedDiscriminator",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
     {
-     "$ref": "3"
-    },
-    {
-     "$id": "7",
-     "kind": "property",
-     "name": "age",
-     "serializedName": "age",
-     "type": {
-      "$id": "8",
-      "kind": "int32",
-      "name": "int32",
-      "crossLanguageDefinitionId": "TypeSpec.int32",
+      "$id": "1",
+      "kind": "constant",
+      "name": "SharkKind",
+      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+      "usage": "Input,Output,Json",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "shark",
       "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish.age",
-     "serializationOptions": {
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "SawSharkSharktype",
+      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+      "usage": "Input,Output,Json",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "saw",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "GoblinSharkSharktype",
+      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+      "usage": "Input,Output,Json",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "goblin",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "SalmonKind",
+      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+      "usage": "Input,Output,Json",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "salmon",
+      "decorators": []
+    },
+    {
       "$id": "9",
-      "json": {
-       "$id": "10",
-       "name": "age"
-      }
-     }
-    }
-   ],
-   "discriminatedSubtypes": {
-    "$id": "11",
-    "shark": {
-     "$id": "12",
-     "kind": "model",
-     "name": "Shark",
-     "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark",
-     "usage": "Input,Output,Json",
-     "doc": "The second level model in polymorphic multiple levels inheritance and it defines a new discriminator.",
-     "discriminatorValue": "shark",
-     "decorators": [],
-     "discriminatorProperty": {
+      "kind": "constant",
+      "name": "getModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "putModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
       "$id": "13",
-      "kind": "property",
-      "name": "sharktype",
-      "serializedName": "sharktype",
-      "type": {
-       "$id": "14",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string",
-       "decorators": []
+      "kind": "constant",
+      "name": "getRecursiveModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
       },
-      "optional": false,
-      "readOnly": false,
-      "discriminator": true,
-      "flatten": false,
-      "decorators": [],
-      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark.sharktype",
-      "serializationOptions": {
-       "$id": "15",
-       "json": {
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "putRecursiveModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
         "$id": "16",
-        "name": "sharktype"
-       }
-      }
-     },
-     "baseModel": {
-      "$ref": "2"
-     },
-     "properties": [
-      {
-       "$id": "17",
-       "kind": "property",
-       "name": "kind",
-       "serializedName": "kind",
-       "type": {
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "17",
+      "kind": "constant",
+      "name": "getMissingDiscriminatorContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
         "$id": "18",
-        "kind": "constant",
-        "valueType": {
-         "$id": "19",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "shark",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
-       },
-       "optional": false,
-       "readOnly": false,
-       "discriminator": true,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark.kind",
-       "serializationOptions": {
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "19",
+      "kind": "constant",
+      "name": "getWrongDiscriminatorContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
         "$id": "20",
-        "json": {
-         "$id": "21",
-         "name": "kind"
-        }
-       }
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
       },
-      {
-       "$ref": "13"
-      }
-     ],
-     "discriminatedSubtypes": {
-      "$id": "22",
-      "saw": {
-       "$id": "23",
-       "kind": "model",
-       "name": "SawShark",
-       "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark",
-       "usage": "Input,Output,Json",
-       "doc": "The third level model SawShark in polymorphic multiple levels inheritance.",
-       "discriminatorValue": "saw",
-       "decorators": [],
-       "baseModel": {
-        "$ref": "12"
-       },
-       "properties": [
-        {
-         "$id": "24",
-         "kind": "property",
-         "name": "sharktype",
-         "serializedName": "sharktype",
-         "type": {
-          "$id": "25",
-          "kind": "constant",
-          "valueType": {
-           "$id": "26",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "saw",
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "21",
+      "kind": "model",
+      "name": "Fish",
+      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish",
+      "usage": "Input,Output,Json",
+      "doc": "This is base model for polymorphic multiple levels inheritance with a discriminator.",
+      "decorators": [],
+      "discriminatorProperty": {
+        "$id": "22",
+        "kind": "property",
+        "name": "kind",
+        "serializedName": "kind",
+        "doc": "Discriminator property for Fish.",
+        "type": {
+          "$id": "23",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
           "decorators": []
-         },
-         "optional": false,
-         "readOnly": false,
-         "discriminator": true,
-         "flatten": false,
-         "decorators": [],
-         "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark.sharktype",
-         "serializationOptions": {
-          "$id": "27",
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": true,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish.kind",
+        "serializationOptions": {
           "json": {
-           "$id": "28",
-           "name": "sharktype"
+            "name": "kind"
           }
-         }
-        }
-       ]
+        },
+        "isHttpMetadata": false
       },
-      "goblin": {
-       "$id": "29",
-       "kind": "model",
-       "name": "GoblinShark",
-       "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark",
-       "usage": "Input,Output,Json",
-       "doc": "The third level model GoblinShark in polymorphic multiple levels inheritance.",
-       "discriminatorValue": "goblin",
-       "decorators": [],
-       "baseModel": {
-        "$ref": "12"
-       },
-       "properties": [
+      "properties": [
         {
-         "$id": "30",
-         "kind": "property",
-         "name": "sharktype",
-         "serializedName": "sharktype",
-         "type": {
-          "$id": "31",
-          "kind": "constant",
-          "valueType": {
-           "$id": "32",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
+          "$ref": "22"
+        },
+        {
+          "$id": "24",
+          "kind": "property",
+          "name": "age",
+          "serializedName": "age",
+          "type": {
+            "$id": "25",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
           },
-          "value": "goblin",
-          "decorators": []
-         },
-         "optional": false,
-         "readOnly": false,
-         "discriminator": true,
-         "flatten": false,
-         "decorators": [],
-         "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark.sharktype",
-         "serializationOptions": {
-          "$id": "33",
-          "json": {
-           "$id": "34",
-           "name": "sharktype"
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish.age",
+          "serializationOptions": {
+            "json": {
+              "name": "age"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ],
+      "discriminatedSubtypes": {
+        "shark": {
+          "$id": "26",
+          "kind": "model",
+          "name": "Shark",
+          "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark",
+          "usage": "Input,Output,Json",
+          "doc": "The second level model in polymorphic multiple levels inheritance and it defines a new discriminator.",
+          "discriminatorValue": "shark",
+          "decorators": [],
+          "discriminatorProperty": {
+            "$id": "27",
+            "kind": "property",
+            "name": "sharktype",
+            "serializedName": "sharktype",
+            "type": {
+              "$id": "28",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": true,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark.sharktype",
+            "serializationOptions": {
+              "json": {
+                "name": "sharktype"
+              }
+            },
+            "isHttpMetadata": false
+          },
+          "baseModel": {
+            "$ref": "21"
+          },
+          "properties": [
+            {
+              "$id": "29",
+              "kind": "property",
+              "name": "kind",
+              "serializedName": "kind",
+              "type": {
+                "$ref": "1"
+              },
+              "optional": false,
+              "readOnly": false,
+              "discriminator": true,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark.kind",
+              "serializationOptions": {
+                "json": {
+                  "name": "kind"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$ref": "27"
+            }
+          ],
+          "discriminatedSubtypes": {
+            "saw": {
+              "$id": "30",
+              "kind": "model",
+              "name": "SawShark",
+              "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark",
+              "usage": "Input,Output,Json",
+              "doc": "The third level model SawShark in polymorphic multiple levels inheritance.",
+              "discriminatorValue": "saw",
+              "decorators": [],
+              "baseModel": {
+                "$ref": "26"
+              },
+              "properties": [
+                {
+                  "$id": "31",
+                  "kind": "property",
+                  "name": "sharktype",
+                  "serializedName": "sharktype",
+                  "type": {
+                    "$ref": "3"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": true,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark.sharktype",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "sharktype"
+                    }
+                  },
+                  "isHttpMetadata": false
+                }
+              ]
+            },
+            "goblin": {
+              "$id": "32",
+              "kind": "model",
+              "name": "GoblinShark",
+              "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark",
+              "usage": "Input,Output,Json",
+              "doc": "The third level model GoblinShark in polymorphic multiple levels inheritance.",
+              "discriminatorValue": "goblin",
+              "decorators": [],
+              "baseModel": {
+                "$ref": "26"
+              },
+              "properties": [
+                {
+                  "$id": "33",
+                  "kind": "property",
+                  "name": "sharktype",
+                  "serializedName": "sharktype",
+                  "type": {
+                    "$ref": "5"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": true,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark.sharktype",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "sharktype"
+                    }
+                  },
+                  "isHttpMetadata": false
+                }
+              ]
+            }
           }
-         }
+        },
+        "salmon": {
+          "$id": "34",
+          "kind": "model",
+          "name": "Salmon",
+          "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon",
+          "usage": "Input,Output,Json",
+          "doc": "The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances.",
+          "discriminatorValue": "salmon",
+          "decorators": [],
+          "baseModel": {
+            "$ref": "21"
+          },
+          "properties": [
+            {
+              "$id": "35",
+              "kind": "property",
+              "name": "kind",
+              "serializedName": "kind",
+              "type": {
+                "$ref": "7"
+              },
+              "optional": false,
+              "readOnly": false,
+              "discriminator": true,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.kind",
+              "serializationOptions": {
+                "json": {
+                  "name": "kind"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$id": "36",
+              "kind": "property",
+              "name": "friends",
+              "serializedName": "friends",
+              "type": {
+                "$id": "37",
+                "kind": "array",
+                "name": "ArrayFish",
+                "valueType": {
+                  "$ref": "21"
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": false,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.friends",
+              "serializationOptions": {
+                "json": {
+                  "name": "friends"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$id": "38",
+              "kind": "property",
+              "name": "hate",
+              "serializedName": "hate",
+              "type": {
+                "$id": "39",
+                "kind": "dict",
+                "keyType": {
+                  "$id": "40",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "valueType": {
+                  "$ref": "21"
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": false,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.hate",
+              "serializationOptions": {
+                "json": {
+                  "name": "hate"
+                }
+              },
+              "isHttpMetadata": false
+            },
+            {
+              "$id": "41",
+              "kind": "property",
+              "name": "partner",
+              "serializedName": "partner",
+              "type": {
+                "$ref": "21"
+              },
+              "optional": true,
+              "readOnly": false,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.partner",
+              "serializationOptions": {
+                "json": {
+                  "name": "partner"
+                }
+              },
+              "isHttpMetadata": false
+            }
+          ]
         }
-       ]
       }
-     }
     },
-    "salmon": {
-     "$id": "35",
-     "kind": "model",
-     "name": "Salmon",
-     "clientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon",
-     "usage": "Input,Output,Json",
-     "doc": "The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances.",
-     "discriminatorValue": "salmon",
-     "decorators": [],
-     "baseModel": {
-      "$ref": "2"
-     },
-     "properties": [
-      {
-       "$id": "36",
-       "kind": "property",
-       "name": "kind",
-       "serializedName": "kind",
-       "type": {
-        "$id": "37",
-        "kind": "constant",
-        "valueType": {
-         "$id": "38",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "salmon",
-        "decorators": []
-       },
-       "optional": false,
-       "readOnly": false,
-       "discriminator": true,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.kind",
-       "serializationOptions": {
-        "$id": "39",
-        "json": {
-         "$id": "40",
-         "name": "kind"
-        }
-       }
-      },
-      {
-       "$id": "41",
-       "kind": "property",
-       "name": "friends",
-       "serializedName": "friends",
-       "type": {
-        "$id": "42",
-        "kind": "array",
-        "name": "ArrayFish",
-        "valueType": {
-         "$ref": "2"
-        },
-        "crossLanguageDefinitionId": "TypeSpec.Array",
-        "decorators": []
-       },
-       "optional": true,
-       "readOnly": false,
-       "discriminator": false,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.friends",
-       "serializationOptions": {
-        "$id": "43",
-        "json": {
-         "$id": "44",
-         "name": "friends"
-        }
-       }
-      },
-      {
-       "$id": "45",
-       "kind": "property",
-       "name": "hate",
-       "serializedName": "hate",
-       "type": {
-        "$id": "46",
-        "kind": "dict",
-        "keyType": {
-         "$id": "47",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "valueType": {
-         "$ref": "2"
-        },
-        "decorators": []
-       },
-       "optional": true,
-       "readOnly": false,
-       "discriminator": false,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.hate",
-       "serializationOptions": {
-        "$id": "48",
-        "json": {
-         "$id": "49",
-         "name": "hate"
-        }
-       }
-      },
-      {
-       "$id": "50",
-       "kind": "property",
-       "name": "partner",
-       "serializedName": "partner",
-       "type": {
-        "$ref": "2"
-       },
-       "optional": true,
-       "readOnly": false,
-       "discriminator": false,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.partner",
-       "serializationOptions": {
-        "$id": "51",
-        "json": {
-         "$id": "52",
-         "name": "partner"
-        }
-       }
-      }
-     ]
+    {
+      "$ref": "26"
+    },
+    {
+      "$ref": "30"
+    },
+    {
+      "$ref": "32"
+    },
+    {
+      "$ref": "34"
     }
-   }
-  },
-  {
-   "$ref": "12"
-  },
-  {
-   "$ref": "23"
-  },
-  {
-   "$ref": "29"
-  },
-  {
-   "$ref": "35"
-  }
- ],
- "Clients": [
-  {
-   "$id": "53",
-   "Name": "NestedDiscriminatorClient",
-   "ClientNamespace": "Type.Model.Inheritance.NestedDiscriminator",
-   "Doc": "Illustrates multiple level inheritance with multiple discriminators.",
-   "Operations": [
+  ],
+  "clients": [
     {
-     "$id": "54",
-     "Name": "getModel",
-     "ResourceName": "NestedDiscriminator",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "55",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "56",
-        "kind": "constant",
-        "valueType": {
-         "$id": "57",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+      "$id": "42",
+      "kind": "client",
+      "name": "NestedDiscriminatorClient",
+      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+      "doc": "Illustrates multiple level inheritance with multiple discriminators.",
+      "methods": [
+        {
+          "$id": "43",
+          "kind": "basic",
+          "name": "getModel",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "44",
+            "name": "getModel",
+            "resourceName": "NestedDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "45",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "9"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "21"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/nested-discriminator/model",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "46",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "21"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "58",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/nested-discriminator/model",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel",
-     "Decorators": []
-    },
-    {
-     "$id": "59",
-     "Name": "putModel",
-     "ResourceName": "NestedDiscriminator",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "60",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "Body parameter's content type. Known values are application/json",
-       "Type": {
-        "$id": "61",
-        "kind": "constant",
-        "valueType": {
-         "$id": "62",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        {
+          "$id": "47",
+          "kind": "basic",
+          "name": "putModel",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "48",
+            "name": "putModel",
+            "resourceName": "NestedDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "49",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "11"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel.contentType"
+              },
+              {
+                "$id": "50",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "21"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/nested-discriminator/model",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "51",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "21"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "52",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "11"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "63",
-       "Name": "input",
-       "NameInRequest": "input",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "64",
-       "StatusCodes": [
-        204
-       ],
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/nested-discriminator/model",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel",
-     "Decorators": []
-    },
-    {
-     "$id": "65",
-     "Name": "getRecursiveModel",
-     "ResourceName": "NestedDiscriminator",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "66",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "67",
-        "kind": "constant",
-        "valueType": {
-         "$id": "68",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        {
+          "$id": "53",
+          "kind": "basic",
+          "name": "getRecursiveModel",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "54",
+            "name": "getRecursiveModel",
+            "resourceName": "NestedDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "55",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "13"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "21"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/nested-discriminator/recursivemodel",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "56",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "13"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "21"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "69",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/nested-discriminator/recursivemodel",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel",
-     "Decorators": []
-    },
-    {
-     "$id": "70",
-     "Name": "putRecursiveModel",
-     "ResourceName": "NestedDiscriminator",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "71",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "Body parameter's content type. Known values are application/json",
-       "Type": {
-        "$id": "72",
-        "kind": "constant",
-        "valueType": {
-         "$id": "73",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        {
+          "$id": "57",
+          "kind": "basic",
+          "name": "putRecursiveModel",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "58",
+            "name": "putRecursiveModel",
+            "resourceName": "NestedDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "59",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "15"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel.contentType"
+              },
+              {
+                "$id": "60",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "21"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/nested-discriminator/recursivemodel",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "61",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "21"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "62",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "15"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "74",
-       "Name": "input",
-       "NameInRequest": "input",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "75",
-       "StatusCodes": [
-        204
-       ],
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/nested-discriminator/recursivemodel",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel",
-     "Decorators": []
-    },
-    {
-     "$id": "76",
-     "Name": "getMissingDiscriminator",
-     "ResourceName": "NestedDiscriminator",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "77",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "78",
-        "kind": "constant",
-        "valueType": {
-         "$id": "79",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        {
+          "$id": "63",
+          "kind": "basic",
+          "name": "getMissingDiscriminator",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "64",
+            "name": "getMissingDiscriminator",
+            "resourceName": "NestedDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "65",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "17"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "21"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/nested-discriminator/missingdiscriminator",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "66",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "17"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "21"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "80",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/nested-discriminator/missingdiscriminator",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator",
-     "Decorators": []
-    },
-    {
-     "$id": "81",
-     "Name": "getWrongDiscriminator",
-     "ResourceName": "NestedDiscriminator",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "82",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "83",
-        "kind": "constant",
-        "valueType": {
-         "$id": "84",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "85",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/nested-discriminator/wrongdiscriminator",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator",
-     "Decorators": []
+        {
+          "$id": "67",
+          "kind": "basic",
+          "name": "getWrongDiscriminator",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "68",
+            "name": "getWrongDiscriminator",
+            "resourceName": "NestedDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "69",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "19"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "21"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/nested-discriminator/wrongdiscriminator",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "70",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "19"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "21"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "71",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "72",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "73",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator",
+      "apiVersions": []
     }
-   ],
-   "Protocol": {
-    "$id": "86"
-   },
-   "Parameters": [
-    {
-     "$id": "87",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "88",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "89",
-      "Type": {
-       "$id": "90",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": []
-  }
- ]
+  ]
 }

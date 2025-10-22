@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class DataPolicyManifestResource : IJsonModel<DataPolicyManifestData>
     {
+        private static DataPolicyManifestData s_dataDeserializationInstance;
+        private static DataPolicyManifestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataPolicyManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataPolicyManifestData>)Data).Write(writer, options);
 
-        DataPolicyManifestData IJsonModel<DataPolicyManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataPolicyManifestData>)Data).Create(ref reader, options);
+        DataPolicyManifestData IJsonModel<DataPolicyManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataPolicyManifestData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
-        DataPolicyManifestData IPersistableModel<DataPolicyManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataPolicyManifestData>(data, options);
+        DataPolicyManifestData IPersistableModel<DataPolicyManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataPolicyManifestData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<DataPolicyManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataPolicyManifestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataPolicyManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataPolicyManifestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

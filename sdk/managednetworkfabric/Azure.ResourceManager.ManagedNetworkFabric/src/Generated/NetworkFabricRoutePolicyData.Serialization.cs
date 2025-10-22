@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedNetworkFabricContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyData)} does not support writing '{options.Format}' format.");
             }
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkFabricRoutePolicyData(document.RootElement, options);
                     }
                 default:

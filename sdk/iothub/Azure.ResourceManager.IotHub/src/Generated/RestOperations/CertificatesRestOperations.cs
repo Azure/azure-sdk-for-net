@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateListDescription value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubCertificateListDescription.DeserializeIotHubCertificateListDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateListDescription value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubCertificateListDescription.DeserializeIotHubCertificateListDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateDescriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateDescriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.IotHub
                 case 201:
                     {
                         IotHubCertificateDescriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.IotHub
                 case 201:
                     {
                         IotHubCertificateDescriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateWithNonceDescription value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubCertificateWithNonceDescription.DeserializeIotHubCertificateWithNonceDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateWithNonceDescription value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubCertificateWithNonceDescription.DeserializeIotHubCertificateWithNonceDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateDescriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubCertificateDescriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

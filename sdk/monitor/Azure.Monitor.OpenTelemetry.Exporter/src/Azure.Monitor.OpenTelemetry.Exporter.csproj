@@ -2,14 +2,15 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.4.0-beta.3</Version>
+    <Version>1.5.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.3.0</ApiCompatVersion>
+    <ApiCompatVersion>1.4.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
-    <!--NET6 is added here for trimming compatibility. This includes necessary annotations and System.Text.Json's "Source Generation" feature.-->
-    <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <AotCompatOptOut>true</AotCompatOptOut>
     <DefineConstants>$(DefineConstants);AZURE_MONITOR_EXPORTER;</DefineConstants>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +19,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.PersistentStorage.FileSystem" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -25,6 +27,12 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\**\*.cs" Exclude="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Generated\Models\AzureMonitorOpenTelemetryLiveMetricsContext.cs" LinkBase="Shared\LiveMetrics" />
+    <Compile Remove="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Properties\AssemblyInfo.cs" />
   </ItemGroup>
 
 </Project>

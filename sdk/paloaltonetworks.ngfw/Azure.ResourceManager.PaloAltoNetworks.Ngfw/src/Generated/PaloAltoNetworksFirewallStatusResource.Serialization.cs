@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class PaloAltoNetworksFirewallStatusResource : IJsonModel<PaloAltoNetworksFirewallStatusData>
     {
+        private static PaloAltoNetworksFirewallStatusData s_dataDeserializationInstance;
+        private static PaloAltoNetworksFirewallStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PaloAltoNetworksFirewallStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PaloAltoNetworksFirewallStatusData>)Data).Write(writer, options);
 
-        PaloAltoNetworksFirewallStatusData IJsonModel<PaloAltoNetworksFirewallStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PaloAltoNetworksFirewallStatusData>)Data).Create(ref reader, options);
+        PaloAltoNetworksFirewallStatusData IJsonModel<PaloAltoNetworksFirewallStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PaloAltoNetworksFirewallStatusData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PaloAltoNetworksFirewallStatusData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        PaloAltoNetworksFirewallStatusData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PaloAltoNetworksFirewallStatusData>(data, options);
+        PaloAltoNetworksFirewallStatusData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PaloAltoNetworksFirewallStatusData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<PaloAltoNetworksFirewallStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PaloAltoNetworksFirewallStatusData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PaloAltoNetworksFirewallStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PaloAltoNetworksFirewallStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

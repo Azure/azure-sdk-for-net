@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncDatabaseIdListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncDatabaseIdListResult.DeserializeSyncDatabaseIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncDatabaseIdListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncDatabaseIdListResult.DeserializeSyncDatabaseIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal RequestUriBuilder CreateRefreshHubSchemaRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -132,115 +132,12 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/refreshHubSchema", false);
+            uri.AppendPath("/syncGroups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateRefreshHubSchemaRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/refreshHubSchema", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Refreshes a hub database schema. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RefreshHubSchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-
-            using var message = CreateRefreshHubSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Refreshes a hub database schema. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RefreshHubSchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-
-            using var message = CreateRefreshHubSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListHubSchemasRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/hubSchemas", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListHubSchemasRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -255,9 +152,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/hubSchemas", false);
+            uri.AppendPath("/syncGroups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -265,32 +160,30 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a collection of hub database schemas. </summary>
+        /// <summary> Lists sync groups under a hub database. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncFullSchemaPropertiesListResult>> ListHubSchemasAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SyncGroupListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
-            using var message = CreateListHubSchemasRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SyncFullSchemaPropertiesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
+                        SyncGroupListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -298,368 +191,32 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a collection of hub database schemas. </summary>
+        /// <summary> Lists sync groups under a hub database. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncFullSchemaPropertiesListResult> ListHubSchemas(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SyncGroupListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
-            using var message = CreateListHubSchemasRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SyncFullSchemaPropertiesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
+                        SyncGroupListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListLogsRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/logs", false);
-            uri.AppendQuery("startTime", startTime, true);
-            uri.AppendQuery("endTime", endTime, true);
-            uri.AppendQuery("type", type.ToString(), true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListLogsRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/logs", false);
-            uri.AppendQuery("startTime", startTime, true);
-            uri.AppendQuery("endTime", endTime, true);
-            uri.AppendQuery("type", type.ToString(), true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets a collection of sync group logs. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="startTime"> Get logs generated after this time. </param>
-        /// <param name="endTime"> Get logs generated before this time. </param>
-        /// <param name="type"> The types of logs to retrieve. </param>
-        /// <param name="continuationToken"> The continuation token for this operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncGroupLogListResult>> ListLogsAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNull(startTime, nameof(startTime));
-            Argument.AssertNotNull(endTime, nameof(endTime));
-
-            using var message = CreateListLogsRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, startTime, endTime, type, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SyncGroupLogListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncGroupLogListResult.DeserializeSyncGroupLogListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a collection of sync group logs. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="startTime"> Get logs generated after this time. </param>
-        /// <param name="endTime"> Get logs generated before this time. </param>
-        /// <param name="type"> The types of logs to retrieve. </param>
-        /// <param name="continuationToken"> The continuation token for this operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncGroupLogListResult> ListLogs(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNull(startTime, nameof(startTime));
-            Argument.AssertNotNull(endTime, nameof(endTime));
-
-            using var message = CreateListLogsRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, startTime, endTime, type, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SyncGroupLogListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncGroupLogListResult.DeserializeSyncGroupLogListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCancelSyncRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cancelSync", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCancelSyncRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cancelSync", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Cancels a sync group synchronization. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelSyncAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-
-            using var message = CreateCancelSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Cancels a sync group synchronization. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CancelSync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-
-            using var message = CreateCancelSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateTriggerSyncRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/triggerSync", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateTriggerSyncRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/triggerSync", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Triggers a sync group synchronization. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerSyncAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-
-            using var message = CreateTriggerSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Triggers a sync group synchronization. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TriggerSync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-
-            using var message = CreateTriggerSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -731,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -766,7 +323,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncGroupData.DeserializeSyncGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -924,6 +481,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(syncGroupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1096,7 +654,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        internal RequestUriBuilder CreateCancelSyncRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1108,12 +666,114 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups", false);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cancelSync", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        internal HttpMessage CreateCancelSyncRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cancelSync", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Cancels a sync group synchronization. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CancelSyncAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateCancelSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Cancels a sync group synchronization. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CancelSync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateCancelSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListHubSchemasRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/hubSchemas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListHubSchemasRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1128,7 +788,9 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups", false);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/hubSchemas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1136,30 +798,32 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists sync groups under a hub database. </summary>
+        /// <summary> Gets a collection of hub database schemas. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncGroupListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SyncFullSchemaPropertiesListResult>> ListHubSchemasAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
-            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
+            using var message = CreateListHubSchemasRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SyncGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
+                        SyncFullSchemaPropertiesListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1167,32 +831,372 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists sync groups under a hub database. </summary>
+        /// <summary> Gets a collection of hub database schemas. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncGroupListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SyncFullSchemaPropertiesListResult> ListHubSchemas(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
-            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
+            using var message = CreateListHubSchemasRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SyncGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
+                        SyncFullSchemaPropertiesListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListLogsRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/logs", false);
+            uri.AppendQuery("startTime", startTime, true);
+            uri.AppendQuery("endTime", endTime, true);
+            uri.AppendQuery("type", type.ToString(), true);
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListLogsRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/logs", false);
+            uri.AppendQuery("startTime", startTime, true);
+            uri.AppendQuery("endTime", endTime, true);
+            uri.AppendQuery("type", type.ToString(), true);
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets a collection of sync group logs. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="startTime"> Get logs generated after this time. </param>
+        /// <param name="endTime"> Get logs generated before this time. </param>
+        /// <param name="type"> The types of logs to retrieve. </param>
+        /// <param name="continuationToken"> The continuation token for this operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SyncGroupLogListResult>> ListLogsAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNull(endTime, nameof(endTime));
+
+            using var message = CreateListLogsRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, startTime, endTime, type, continuationToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SyncGroupLogListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SyncGroupLogListResult.DeserializeSyncGroupLogListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets a collection of sync group logs. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="startTime"> Get logs generated after this time. </param>
+        /// <param name="endTime"> Get logs generated before this time. </param>
+        /// <param name="type"> The types of logs to retrieve. </param>
+        /// <param name="continuationToken"> The continuation token for this operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SyncGroupLogListResult> ListLogs(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNull(endTime, nameof(endTime));
+
+            using var message = CreateListLogsRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, startTime, endTime, type, continuationToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SyncGroupLogListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SyncGroupLogListResult.DeserializeSyncGroupLogListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateRefreshHubSchemaRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/refreshHubSchema", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateRefreshHubSchemaRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/refreshHubSchema", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Refreshes a hub database schema. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RefreshHubSchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateRefreshHubSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Refreshes a hub database schema. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response RefreshHubSchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateRefreshHubSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateTriggerSyncRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/triggerSync", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateTriggerSyncRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/triggerSync", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Triggers a sync group synchronization. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> TriggerSyncAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateTriggerSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Triggers a sync group synchronization. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response TriggerSync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateTriggerSyncRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1239,7 +1243,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncDatabaseIdListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncDatabaseIdListResult.DeserializeSyncDatabaseIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1267,8 +1271,96 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncDatabaseIdListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncDatabaseIdListResult.DeserializeSyncDatabaseIdListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists sync groups under a hub database. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SyncGroupListResult>> ListByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SyncGroupListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists sync groups under a hub database. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SyncGroupListResult> ListByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SyncGroupListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1324,7 +1416,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1359,7 +1451,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1422,7 +1514,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncGroupLogListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncGroupLogListResult.DeserializeSyncGroupLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1463,96 +1555,8 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncGroupLogListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncGroupLogListResult.DeserializeSyncGroupLogListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists sync groups under a hub database. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncGroupListResult>> ListByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SyncGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists sync groups under a hub database. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncGroupListResult> ListByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SyncGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncGroupListResult.DeserializeSyncGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -19,10 +19,6 @@ pr:
       - eng/scripts/typespec
 
 parameters:
-  - name: BuildPrereleaseVersion
-    displayName: "Build prerelease version"
-    type: boolean
-    default: true
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"
     type: boolean
@@ -39,23 +35,44 @@ parameters:
     displayName: "Regenerate clients"
     type: boolean
     default: false
+  - name: PublishNugetPackages
+    displayName: "Publish NuGet package artifacts"
+    type: boolean
+    default: false
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
+    InitializationSteps:
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+    EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
+    EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
-    BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
+    BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      ShouldPublish: ${{ parameters.ShouldPublish }}
-      PublishPublic: ${{ parameters.PublishPublic }}
-      PublishDependsOnTest: ${{ parameters.PublishPublic }}
-      ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
+      ${{ if eq(variables['Build.Reason'], 'Manual') }}:
+        ShouldPublish: ${{ parameters.ShouldPublish }}
+        ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
+        HasNugetPackages: ${{ parameters.PublishNugetPackages }}
+        ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR ref's can't be published to public, even in a manual run
+          PublishPublic: false
+          PublishDependsOnTest: false
+        ${{ else }}: # Any other manual run can go to public
+           PublishPublic: ${{ parameters.PublishPublic }}
+           PublishDependsOnTest: ${{ parameters.PublishPublic }}
+      ${{ else }}: # All automatic runs publish, but only CI of main goes public
+        ShouldPublish: true
+        ShouldRegenerate: true
+        PublishDependsOnTest: false
+        PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
+        HasNugetPackages: true
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true

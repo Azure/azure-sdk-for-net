@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.IO;
+using Azure.Core;
 
 namespace Azure.Generator.Providers
 {
@@ -26,6 +27,15 @@ namespace Azure.Generator.Providers
 
         public override ScopedApi<Stream> ContentStream()
             => Original.Property(nameof(Response.ContentStream)).As<Stream>();
+
+        public override ScopedApi<bool> TryGetHeader(string name, out ScopedApi<string>? value)
+        {
+            var result = Original.Property(nameof(Response.Headers))
+                .Invoke(nameof(ResponseHeaders.TryGetValue), Snippet.Literal(name),
+                    new DeclarationExpression(typeof(string), "value", out var valueVariable, isOut: true)).As<bool>();
+            value = valueVariable.As<string>();
+            return result;
+        }
 
         public override HttpResponseApi FromExpression(ValueExpression original)
             => new AzureResponseProvider(original);

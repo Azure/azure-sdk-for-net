@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchGetAsync(limit, offset, sort, ignoreTermsAndCategories, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossary> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasGlossary> array = new List<AtlasGlossary>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchGet(limit, offset, sort, ignoreTermsAndCategories, context);
             IReadOnlyList<AtlasGlossary> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasGlossary> array = new List<AtlasGlossary>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateCategoriesAsync(content, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -333,7 +333,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateCategories(content, context);
             IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -984,7 +984,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelatedCategoriesAsync(categoryId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             Dictionary<string, IList<AtlasRelatedCategoryHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
             foreach (var property in document.RootElement.EnumerateObject())
             {
@@ -1025,7 +1025,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelatedCategories(categoryId, limit, offset, sort, context);
             IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             Dictionary<string, IList<AtlasRelatedCategoryHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedCategoryHeader>>();
             foreach (var property in document.RootElement.EnumerateObject())
             {
@@ -1151,7 +1151,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoryTermsAsync(categoryId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1177,7 +1177,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategoryTerms(categoryId, limit, offset, sort, context);
             IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1843,7 +1843,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTermsAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1867,7 +1867,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTerms(content, includeTermHierarchy, context);
             IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1976,7 +1976,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyList<AtlasRelatedObjectId> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasRelatedObjectId> array = new List<AtlasRelatedObjectId>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -2005,7 +2005,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEntitiesAssignedWithTerm(termId, limit, offset, sort, context);
             IReadOnlyList<AtlasRelatedObjectId> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasRelatedObjectId> array = new List<AtlasRelatedObjectId>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -2386,7 +2386,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelatedTermsAsync(termId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             Dictionary<string, IList<AtlasRelatedTermHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
             foreach (var property in document.RootElement.EnumerateObject())
             {
@@ -2427,7 +2427,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelatedTerms(termId, limit, offset, sort, context);
             IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             Dictionary<string, IList<AtlasRelatedTermHeader>> dictionary = new Dictionary<string, IList<AtlasRelatedTermHeader>>();
             foreach (var property in document.RootElement.EnumerateObject())
             {
@@ -2864,7 +2864,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoriesAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -2893,7 +2893,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategories(glossaryId, limit, offset, sort, context);
             IReadOnlyList<AtlasGlossaryCategory> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasGlossaryCategory> array = new List<AtlasGlossaryCategory>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3010,7 +3010,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyList<AtlasRelatedCategoryHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3039,7 +3039,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategoriesHeaders(glossaryId, limit, offset, sort, context);
             IReadOnlyList<AtlasRelatedCategoryHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3460,7 +3460,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermsAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3489,7 +3489,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTerms(glossaryId, limit, offset, sort, context);
             IReadOnlyList<AtlasGlossaryTerm> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasGlossaryTerm> array = new List<AtlasGlossaryTerm>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3606,7 +3606,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermHeadersAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
             IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3635,7 +3635,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTermHeaders(glossaryId, limit, offset, sort, context);
             IReadOnlyList<AtlasRelatedTermHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -3855,7 +3855,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -4002,7 +4001,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -4090,7 +4088,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(termId, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4108,7 +4105,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(termId, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4191,7 +4187,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

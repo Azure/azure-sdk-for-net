@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteObjectValue(ExecutionContext, options);
             writer.WritePropertyName("report"u8);
             writer.WriteObjectValue(Report, options);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(StorageTaskAssignmentProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(StorageTaskAssignmentProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(RunStatus))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
             string description = default;
             StorageTaskAssignmentExecutionContext executionContext = default;
             StorageTaskAssignmentReport report = default;
-            StorageProvisioningState? provisioningState = default;
+            StorageTaskAssignmentProvisioningState? provisioningState = default;
             StorageTaskReportProperties runStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToStorageProvisioningState();
+                    provisioningState = new StorageTaskAssignmentProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("runStatus"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageTaskAssignmentProvisioningState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(ProvisioningState))
+                if (Optional.IsDefined(StorageTaskAssignmentProvisioningState))
                 {
                     builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{StorageTaskAssignmentProvisioningState.Value.ToString()}'");
                 }
             }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageTaskAssignmentProperties(document.RootElement, options);
                     }
                 default:

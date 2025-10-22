@@ -1,15 +1,66 @@
 # Release History
 
-## 12.24.0-beta.2 (Unreleased)
+## 12.27.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added the following Client Builders: `AddBlobServiceClient(Uri, Azure.SasCredential)`, `AddBlobServiceClient(Uri, TokenCredential)`
+- Added support for service version 2026-02-06.
+- Added support for the StartFrom parameter on BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync().
+- Added support for Principal-Bound Identity User Delegation SAS
+- Added support for conditional headers on BlobBaseClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.26.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
+
+## 12.25.1 (2025-09-24)
+
+### Bugs Fixed
+- Fixed bug for processing partitioned downloads for empty blobs with content validation enabled.
+
+## 12.25.0 (2025-07-14)
+
+### Features Added
+- Includes all features from 12.25.0-beta.1
+- Includes all features from 12.24.1
+
+## 12.26.0-beta.1 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- AppendBlobClient.AppendBlobFromUri(), .AppendBlockFromUriAsync(), BlobBaseClient.StartCopyFromUri(), .StartCopyFromUriAsync(), SyncCopyFromUri(), .SyncCopyFromUriAsync(), BlockBlobClient.StageBlockFromUri(), .StageBlockFromUriAsync(), PageBlobClient.UploadPagesFromUri(), and .UploadPagesFromUri() will now return CopySourceStatusCode, CopySourceErrorCode, and CopySourceErrorMessage as part of error responses.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+### Other Changes
+- Changed BlobServiceClient.AccountName to be virtual so that it can be overridden and mocked.
+
+## 12.24.1 (2025-06-10)
+
+### Features Added
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
+
+## 12.25.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added support for the `SourceShareTokenIntent` parameter to `AppendBlobClient.AppendBlockFromUri()`, `.AppendBlockFromUriAsync()`, `BlockBlobClient.StageBlockFromUri()`, `.StageBlockFromUriAsync()`, `BlockBlobClient.SyncUploadFromUri()`, `.SyncUploadFromUriAsync()`, `BlobBaseClient.SyncCopyFromUri()`, `.SyncCopyFromUriAsync()`, `PageBlobClient.UploadPagesFromUri()`, `.UploadPagesFromUriAsync()`,
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` to `PageBlobClient.Create(..)` overloads.
+
+## 12.24.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+- Added the following Client Builders: `AddBlobServiceClient(Uri, Azure.SasCredential)`, `AddBlobServiceClient(Uri, TokenCredential)`
+
+### Bugs Fixed
+- Fixed bug where a `BlobServiceClient`, `BlobContainerClient`, `BlobBaseClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `BlobServiceClient`, `BlobContainerClient`, `BlobBaseClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
 ## 12.24.0-beta.1 (2025-02-11)
 

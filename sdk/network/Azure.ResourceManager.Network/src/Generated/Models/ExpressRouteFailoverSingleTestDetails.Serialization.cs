@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -231,6 +233,203 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  peeringLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeeringLocation))
+                {
+                    builder.Append("  peeringLocation: ");
+                    if (PeeringLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PeeringLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PeeringLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTimeUtc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartTimeUtc))
+                {
+                    builder.Append("  startTimeUtc: ");
+                    if (StartTimeUtc.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartTimeUtc}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartTimeUtc}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTimeUtc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndTimeUtc))
+                {
+                    builder.Append("  endTimeUtc: ");
+                    if (EndTimeUtc.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndTimeUtc}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndTimeUtc}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedundantRoutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  redundantRoutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RedundantRoutes))
+                {
+                    if (RedundantRoutes.Any())
+                    {
+                        builder.Append("  redundantRoutes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RedundantRoutes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  redundantRoutes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonRedundantRoutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nonRedundantRoutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NonRedundantRoutes))
+                {
+                    if (NonRedundantRoutes.Any())
+                    {
+                        builder.Append("  nonRedundantRoutes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NonRedundantRoutes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WasSimulationSuccessful), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  wasSimulationSuccessful: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WasSimulationSuccessful))
+                {
+                    builder.Append("  wasSimulationSuccessful: ");
+                    var boolValue = WasSimulationSuccessful.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverConnectionDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failoverConnectionDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FailoverConnectionDetails))
+                {
+                    if (FailoverConnectionDetails.Any())
+                    {
+                        builder.Append("  failoverConnectionDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FailoverConnectionDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  failoverConnectionDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteFailoverSingleTestDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,7 +437,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support writing '{options.Format}' format.");
             }
@@ -252,7 +453,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExpressRouteFailoverSingleTestDetails(document.RootElement, options);
                     }
                 default:

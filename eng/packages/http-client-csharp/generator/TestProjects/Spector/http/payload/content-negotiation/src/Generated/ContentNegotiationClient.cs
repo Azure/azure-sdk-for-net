@@ -7,6 +7,8 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Payload.ContentNegotiation._DifferentBody;
+using Payload.ContentNegotiation._SameBody;
 
 namespace Payload.ContentNegotiation
 {
@@ -16,7 +18,7 @@ namespace Payload.ContentNegotiation
 
         public ContentNegotiationClient(Uri endpoint, ContentNegotiationClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual SameBody GetSameBodyClient() => throw null;
 

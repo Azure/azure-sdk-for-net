@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServices
 {
     public partial class RecoveryServicesVaultResource : IJsonModel<RecoveryServicesVaultData>
     {
+        private static RecoveryServicesVaultData s_dataDeserializationInstance;
+        private static RecoveryServicesVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RecoveryServicesVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesVaultData>)Data).Write(writer, options);
 
-        RecoveryServicesVaultData IJsonModel<RecoveryServicesVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesVaultData>)Data).Create(ref reader, options);
+        RecoveryServicesVaultData IJsonModel<RecoveryServicesVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesVaultData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoveryServicesVaultData>(Data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
-        RecoveryServicesVaultData IPersistableModel<RecoveryServicesVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesVaultData>(data, options);
+        RecoveryServicesVaultData IPersistableModel<RecoveryServicesVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesVaultData>(data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
-        string IPersistableModel<RecoveryServicesVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesVaultData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RecoveryServicesVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

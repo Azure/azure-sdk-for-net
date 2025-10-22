@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringData.DeserializePeeringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringData.DeserializePeeringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Peering
                 case 201:
                     {
                         PeeringData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringData.DeserializePeeringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Peering
                 case 201:
                     {
                         PeeringData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringData.DeserializePeeringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringData.DeserializePeeringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringData.DeserializePeeringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         PeeringListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PeeringListResult.DeserializePeeringListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

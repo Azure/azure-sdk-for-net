@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkToNetworkInterconnectResource IOperationSource<NetworkToNetworkInterconnectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkToNetworkInterconnectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return new NetworkToNetworkInterconnectResource(_client, data);
         }
 
         async ValueTask<NetworkToNetworkInterconnectResource> IOperationSource<NetworkToNetworkInterconnectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
-            return new NetworkToNetworkInterconnectResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkToNetworkInterconnectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            return await Task.FromResult(new NetworkToNetworkInterconnectResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

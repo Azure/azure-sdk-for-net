@@ -108,6 +108,46 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(ServicePrincipalId))
+            {
+                writer.WritePropertyName("servicePrincipalId"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalId);
+            }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            }
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
+            {
+                writer.WritePropertyName("servicePrincipalCredentialType"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalCredentialType);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCert))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCert"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalEmbeddedCert);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCertPassword))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCertPassword"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalEmbeddedCertPassword);
+            }
+            if (Optional.IsDefined(Tenant))
+            {
+                writer.WritePropertyName("tenant"u8);
+                JsonSerializer.Serialize(writer, Tenant);
+            }
+            if (Optional.IsDefined(AzureCloudType))
+            {
+                writer.WritePropertyName("azureCloudType"u8);
+                JsonSerializer.Serialize(writer, AzureCloudType);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -115,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -163,6 +203,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> encoding = default;
             DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
+            DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalEmbeddedCert = default;
+            DataFactorySecret servicePrincipalEmbeddedCertPassword = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryElement<string> azureCloudType = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -357,6 +405,78 @@ namespace Azure.ResourceManager.DataFactory.Models
                             encryptedCredential = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("servicePrincipalId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalKey"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalCredentialType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalCredentialType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalEmbeddedCert"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalEmbeddedCert = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalEmbeddedCertPassword"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalEmbeddedCertPassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("tenant"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("azureCloudType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureCloudType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -384,7 +504,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 timezone,
                 encoding,
                 password,
-                encryptedCredential);
+                encryptedCredential,
+                servicePrincipalId,
+                servicePrincipalKey,
+                servicePrincipalCredentialType,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
+                tenant,
+                azureCloudType,
+                credential);
         }
 
         BinaryData IPersistableModel<AzurePostgreSqlLinkedService>.Write(ModelReaderWriterOptions options)
@@ -394,7 +522,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzurePostgreSqlLinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -408,7 +536,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzurePostgreSqlLinkedService(document.RootElement, options);
                     }
                 default:

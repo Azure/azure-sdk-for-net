@@ -1,15 +1,47 @@
 # Release History
 
-## 12.22.0-beta.2 (Unreleased)
+## 12.25.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2026-02-06.
+- Added support for User Delegation SAS.
+- Added support for Principal-Bound Identity User Delegation SAS.
+- Added support for the ShareServiceProperties.Protocol.SMB.EncryptionInTransit parameter on ShareServiceClient.SetProperties() and .SetPropertiesAsync().
+- Added support for uploading data with the new Content parameter on ShareFileClient.Create() and .CreateAsync().
+- Added support for the PropertySemantics parameter on ShareFileClient.Create(), .CreateAsync(), ShareDirectoryClient.Create(), and .CreateAsync().
+
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+
+## 12.23.0 (2025-07-14)
+
+### Features Added
+- Includes all features from 12.23.0-beta.1
+
+## 12.24.0-beta.1 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added `ShareErrorCode.ShareSnapshotNotFound`.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+## 12.23.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added the `ShareFileClient.CreateSymbolicLink()`, `.CreateSymbolicLinkAsync()`, `.GetSymbolicLink()`, and `.GetSymbolicLinkAsync()` APIs.
+
+## 12.22.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.22.0-beta.1
 - Added the following Client Builders: `AddShareServiceClient(Uri, Azure.SasCredential)`, `AddShareServiceClient(Uri, TokenCredential)`
-- 
-### Breaking Changes
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed bug where a `ShareServiceClient`, `ShareClient`, `ShareDirectoryClient`, `ShareFileClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `ShareServiceClient`, `ShareClient`, `ShareDirectoryClient`, `ShareFileClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
 ## 12.22.0-beta.1 (2025-02-11)
 
@@ -30,7 +62,7 @@
 ## 12.21.0 (2024-11-12)
 
 ### Features Added
-- Includes all features from 12.21.0-beta.1 and 12.21.0-beta..
+- Includes all features from 12.21.0-beta.1 and 12.21.0-beta.
 
 ## 12.21.0-beta.2 (2024-10-10)
 

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in LinkedServers)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Redis
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerRedisContext.Default));
                             }
                             linkedServers = array;
                             continue;
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Redis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.Redis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisData(document.RootElement, options);
                     }
                 default:

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmRegionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmRegionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmRegionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmRegionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Provides a pageable list of jobs. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupJobListResult.DeserializeBackupJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Provides a pageable list of jobs. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupJobListResult.DeserializeBackupJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Provides a pageable list of jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupJobListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupJobListResult.DeserializeBackupJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Provides a pageable list of jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupJobListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupJobListResult.DeserializeBackupJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

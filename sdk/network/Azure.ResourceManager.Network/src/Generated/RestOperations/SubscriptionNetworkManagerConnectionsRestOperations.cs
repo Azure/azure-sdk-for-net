@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         NetworkManagerConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         NetworkManagerConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkManagerConnectionListResult.DeserializeNetworkManagerConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkManagerConnectionListResult.DeserializeNetworkManagerConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkManagerConnectionListResult.DeserializeNetworkManagerConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkManagerConnectionListResult.DeserializeNetworkManagerConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

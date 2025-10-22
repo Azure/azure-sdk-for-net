@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Grafana.Models;
@@ -37,21 +38,20 @@ namespace Azure.ResourceManager.Grafana
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
         }
 
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Grafana
             {
                 return null;
             }
-            ManagedGrafanaSku sku = default;
             ManagedGrafanaProperties properties = default;
+            ManagedGrafanaSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -88,15 +88,6 @@ namespace Azure.ResourceManager.Grafana
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,14 +97,22 @@ namespace Azure.ResourceManager.Grafana
                     properties = ManagedGrafanaProperties.DeserializeManagedGrafanaProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerGrafanaContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.Grafana
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGrafanaContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,8 +171,8 @@ namespace Azure.ResourceManager.Grafana
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
                 properties,
+                sku,
                 identity,
                 serializedAdditionalRawData);
         }
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Grafana
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedGrafanaData)} does not support writing '{options.Format}' format.");
             }
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedGrafanaData(document.RootElement, options);
                     }
                 default:

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     {
                         AppServicePlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppService
                 case 202:
                     {
                         AppServicePlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceSkuCapability> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceSkuCapability> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionData.DeserializeHybridConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionData.DeserializeHybridConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionKey value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionKey.DeserializeHybridConnectionKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionKey value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionKey.DeserializeHybridConnectionKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionLimitData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionLimitData.DeserializeHybridConnectionLimitData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionLimitData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionLimitData.DeserializeHybridConnectionLimitData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1281,7 +1281,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1496,7 +1496,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1694,7 +1694,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmUsageQuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CsmUsageQuotaListResult.DeserializeCsmUsageQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1724,7 +1724,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmUsageQuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CsmUsageQuotaListResult.DeserializeCsmUsageQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1789,7 +1789,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceVirtualNetworkData> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1823,7 +1823,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceVirtualNetworkData> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1897,7 +1897,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2007,7 +2007,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkGatewayData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkGatewayData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2125,7 +2125,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkGatewayData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2160,7 +2160,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkGatewayData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceVirtualNetworkGatewayData.DeserializeAppServiceVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2231,7 +2231,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceVirtualNetworkRoute> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -2267,7 +2267,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceVirtualNetworkRoute> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -2353,7 +2353,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkRoute value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2388,7 +2388,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkRoute value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2567,7 +2567,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkRoute value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2602,7 +2602,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceVirtualNetworkRoute value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2747,7 +2747,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2778,7 +2778,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2829,7 +2829,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2858,7 +2858,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServicePlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServicePlanListResult.DeserializeAppServicePlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2915,7 +2915,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2950,7 +2950,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3003,7 +3003,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3034,7 +3034,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         HybridConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridConnectionListResult.DeserializeHybridConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3090,7 +3090,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3124,7 +3124,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3178,7 +3178,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmUsageQuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CsmUsageQuotaListResult.DeserializeCsmUsageQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3210,7 +3210,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         CsmUsageQuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CsmUsageQuotaListResult.DeserializeCsmUsageQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

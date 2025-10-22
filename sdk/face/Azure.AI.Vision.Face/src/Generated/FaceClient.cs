@@ -123,7 +123,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectFromUrlImplAsync(detectFromUrlRequest.ToRequestContent(), detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
             IReadOnlyList<FaceDetectionResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -153,7 +153,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectFromUrlImpl(detectFromUrlRequest.ToRequestContent(), detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
             IReadOnlyList<FaceDetectionResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -273,7 +273,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectImplAsync(content, detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
             IReadOnlyList<FaceDetectionResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -303,7 +303,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectImpl(content, detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
             IReadOnlyList<FaceDetectionResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -420,7 +420,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await FindSimilarAsync(findSimilarRequest.ToRequestContent(), context).ConfigureAwait(false);
             IReadOnlyList<FaceFindSimilarResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<FaceFindSimilarResult> array = new List<FaceFindSimilarResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -447,7 +447,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = FindSimilar(findSimilarRequest.ToRequestContent(), context);
             IReadOnlyList<FaceFindSimilarResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<FaceFindSimilarResult> array = new List<FaceFindSimilarResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -768,7 +768,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await FindSimilarFromLargeFaceListAsync(findSimilarFromLargeFaceListRequest.ToRequestContent(), context).ConfigureAwait(false);
             IReadOnlyList<FaceFindSimilarResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<FaceFindSimilarResult> array = new List<FaceFindSimilarResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -795,7 +795,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = FindSimilarFromLargeFaceList(findSimilarFromLargeFaceListRequest.ToRequestContent(), context);
             IReadOnlyList<FaceFindSimilarResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<FaceFindSimilarResult> array = new List<FaceFindSimilarResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -901,7 +901,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await IdentifyFromLargePersonGroupAsync(identifyFromLargePersonGroupRequest.ToRequestContent(), context).ConfigureAwait(false);
             IReadOnlyList<FaceIdentificationResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<FaceIdentificationResult> array = new List<FaceIdentificationResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -929,7 +929,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = IdentifyFromLargePersonGroup(identifyFromLargePersonGroupRequest.ToRequestContent(), context);
             IReadOnlyList<FaceIdentificationResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<FaceIdentificationResult> array = new List<FaceIdentificationResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CommitmentPlanAccountAssociationResource IOperationSource<CommitmentPlanAccountAssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
+            var data = ModelReaderWriter.Read<CommitmentPlanAccountAssociationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new CommitmentPlanAccountAssociationResource(_client, data);
         }
 
         async ValueTask<CommitmentPlanAccountAssociationResource> IOperationSource<CommitmentPlanAccountAssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
-            return new CommitmentPlanAccountAssociationResource(_client, data);
+            var data = ModelReaderWriter.Read<CommitmentPlanAccountAssociationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            return await Task.FromResult(new CommitmentPlanAccountAssociationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

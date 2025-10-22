@@ -30,12 +30,7 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: servicebus
-    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.ServiceBus
       safeName: AzureMessagingServiceBus
-    CheckAotCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Messaging.ServiceBus
-      ExpectedWarningsFilepath: None

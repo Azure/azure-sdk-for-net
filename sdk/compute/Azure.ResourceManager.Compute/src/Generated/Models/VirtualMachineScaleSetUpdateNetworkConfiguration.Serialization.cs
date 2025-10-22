@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -41,6 +42,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Primary))
@@ -66,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
+                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
@@ -127,6 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             bool? primary = default;
             bool? enableAcceleratedNetworking = default;
@@ -146,6 +159,20 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -208,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            networkSecurityGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
@@ -283,6 +310,7 @@ namespace Azure.ResourceManager.Compute.Models
                 id,
                 serializedAdditionalRawData,
                 name,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 primary,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,
@@ -303,7 +331,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -317,7 +345,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineScaleSetUpdateNetworkConfiguration(document.RootElement, options);
                     }
                 default:

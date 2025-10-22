@@ -49,24 +49,30 @@ namespace Azure.ResourceManager.EventGrid.Models
         public CustomJwtAuthenticationSettings()
         {
             IssuerCertificates = new ChangeTrackingList<IssuerCertificateInfo>();
+            EncodedIssuerCertificates = new ChangeTrackingList<EncodedIssuerCertificateInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomJwtAuthenticationSettings"/>. </summary>
         /// <param name="tokenIssuer"> Expected JWT token issuer. </param>
-        /// <param name="issuerCertificates"> Information about the certificate that is used for token validation. We currently support maximum 2 certificates. </param>
+        /// <param name="issuerCertificates"> Information about the certificates that are used for token validation. We currently support maximum 2 certificates. </param>
+        /// <param name="encodedIssuerCertificates"> Information about the encoded public certificates that are used for custom authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomJwtAuthenticationSettings(string tokenIssuer, IList<IssuerCertificateInfo> issuerCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomJwtAuthenticationSettings(string tokenIssuer, IList<IssuerCertificateInfo> issuerCertificates, IList<EncodedIssuerCertificateInfo> encodedIssuerCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TokenIssuer = tokenIssuer;
             IssuerCertificates = issuerCertificates;
+            EncodedIssuerCertificates = encodedIssuerCertificates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Expected JWT token issuer. </summary>
         [WirePath("tokenIssuer")]
         public string TokenIssuer { get; set; }
-        /// <summary> Information about the certificate that is used for token validation. We currently support maximum 2 certificates. </summary>
+        /// <summary> Information about the certificates that are used for token validation. We currently support maximum 2 certificates. </summary>
         [WirePath("issuerCertificates")]
         public IList<IssuerCertificateInfo> IssuerCertificates { get; }
+        /// <summary> Information about the encoded public certificates that are used for custom authentication. </summary>
+        [WirePath("encodedIssuerCertificates")]
+        public IList<EncodedIssuerCertificateInfo> EncodedIssuerCertificates { get; }
     }
 }

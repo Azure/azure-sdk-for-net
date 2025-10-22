@@ -54,6 +54,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
+            if (Optional.IsCollectionDefined(Services))
+            {
+                writer.WritePropertyName("services"u8);
+                writer.WriteStartArray();
+                foreach (var item in Services)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ServiceName))
+            {
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
             if (Optional.IsDefined(ProviderVersion))
             {
                 writer.WritePropertyName("providerVersion"u8);
@@ -99,13 +114,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(CrossTenantTokenValidation))
+            {
+                writer.WritePropertyName("crossTenantTokenValidation"u8);
+                writer.WriteStringValue(CrossTenantTokenValidation.Value.ToString());
+            }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                using (JsonDocument document = JsonDocument.Parse(Metadata, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -116,6 +136,128 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("templateDeploymentOptions"u8);
                 writer.WriteObjectValue(TemplateDeploymentOptions, options);
             }
+            if (Optional.IsCollectionDefined(GlobalNotificationEndpoints))
+            {
+                writer.WritePropertyName("globalNotificationEndpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in GlobalNotificationEndpoints)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EnableTenantLinkedNotification))
+            {
+                if (EnableTenantLinkedNotification != null)
+                {
+                    writer.WritePropertyName("enableTenantLinkedNotification"u8);
+                    writer.WriteBooleanValue(EnableTenantLinkedNotification.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableTenantLinkedNotification");
+                }
+            }
+            if (Optional.IsCollectionDefined(Notifications))
+            {
+                writer.WritePropertyName("notifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in Notifications)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LinkedNotificationRules))
+            {
+                writer.WritePropertyName("linkedNotificationRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedNotificationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceProviderAuthorizationRules))
+            {
+                writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
+                writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
+            }
+            if (Optional.IsDefined(DstsConfiguration))
+            {
+                writer.WritePropertyName("dstsConfiguration"u8);
+                writer.WriteObjectValue(DstsConfiguration, options);
+            }
+            if (Optional.IsDefined(NotificationOptions))
+            {
+                writer.WritePropertyName("notificationOptions"u8);
+                writer.WriteStringValue(NotificationOptions.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ResourceHydrationAccounts))
+            {
+                writer.WritePropertyName("resourceHydrationAccounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceHydrationAccounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NotificationSettings))
+            {
+                writer.WritePropertyName("notificationSettings"u8);
+                writer.WriteObjectValue(NotificationSettings, options);
+            }
+            if (Optional.IsCollectionDefined(ManagementGroupGlobalNotificationEndpoints))
+            {
+                writer.WritePropertyName("managementGroupGlobalNotificationEndpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagementGroupGlobalNotificationEndpoints)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OptionalFeatures))
+            {
+                writer.WritePropertyName("optionalFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in OptionalFeatures)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceGroupLockOptionDuringMove))
+            {
+                writer.WritePropertyName("resourceGroupLockOptionDuringMove"u8);
+                writer.WriteObjectValue(ResourceGroupLockOptionDuringMove, options);
+            }
+            if (Optional.IsDefined(ResponseOptions))
+            {
+                writer.WritePropertyName("responseOptions"u8);
+                writer.WriteObjectValue(ResponseOptions, options);
+            }
+            if (Optional.IsDefined(LegacyNamespace))
+            {
+                writer.WritePropertyName("legacyNamespace"u8);
+                writer.WriteStringValue(LegacyNamespace);
+            }
+            if (Optional.IsCollectionDefined(LegacyRegistrations))
+            {
+                writer.WritePropertyName("legacyRegistrations"u8);
+                writer.WriteStartArray();
+                foreach (var item in LegacyRegistrations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CustomManifestVersion))
+            {
+                writer.WritePropertyName("customManifestVersion"u8);
+                writer.WriteStringValue(CustomManifestVersion);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,7 +266,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -156,15 +298,34 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceProviderAuthentication providerAuthentication = default;
             IList<ResourceProviderAuthorization> providerAuthorizations = default;
             string @namespace = default;
+            IList<ResourceProviderService> services = default;
+            string serviceName = default;
             string providerVersion = default;
             ResourceProviderType? providerType = default;
             IList<string> requiredFeatures = default;
-            FeaturesRule featuresRule = default;
-            RequestHeaderOptions requestHeaderOptions = default;
+            ProviderFeaturesRule featuresRule = default;
+            ProviderRequestHeaderOptions requestHeaderOptions = default;
             ResourceProviderManagement management = default;
             IList<ResourceProviderCapabilities> capabilities = default;
+            CrossTenantTokenValidation? crossTenantTokenValidation = default;
             BinaryData metadata = default;
             TemplateDeploymentOptions templateDeploymentOptions = default;
+            IList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
+            bool? enableTenantLinkedNotification = default;
+            IList<ProviderNotification> notifications = default;
+            IList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
+            ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
+            ProviderNotificationOption? notificationOptions = default;
+            IList<ResourceHydrationAccount> resourceHydrationAccounts = default;
+            ResourceProviderManifestNotificationSettings notificationSettings = default;
+            IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints = default;
+            IList<string> optionalFeatures = default;
+            ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove = default;
+            ResourceProviderManifestResponseOptions responseOptions = default;
+            string legacyNamespace = default;
+            IList<string> legacyRegistrations = default;
+            string customManifestVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,6 +356,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("services"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceProviderService> array = new List<ResourceProviderService>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceProviderService.DeserializeResourceProviderService(item, options));
+                    }
+                    services = array;
+                    continue;
+                }
+                if (property.NameEquals("serviceName"u8))
+                {
+                    serviceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("providerVersion"u8))
@@ -231,7 +411,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestHeaderOptions"u8))
@@ -240,7 +420,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("management"u8))
@@ -266,6 +446,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     capabilities = array;
                     continue;
                 }
+                if (property.NameEquals("crossTenantTokenValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossTenantTokenValidation = new CrossTenantTokenValidation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -284,6 +473,178 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("globalNotificationEndpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceProviderEndpoint> array = new List<ResourceProviderEndpoint>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceProviderEndpoint.DeserializeResourceProviderEndpoint(item, options));
+                    }
+                    globalNotificationEndpoints = array;
+                    continue;
+                }
+                if (property.NameEquals("enableTenantLinkedNotification"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableTenantLinkedNotification = null;
+                        continue;
+                    }
+                    enableTenantLinkedNotification = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("notifications"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProviderNotification> array = new List<ProviderNotification>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProviderNotification.DeserializeProviderNotification(item, options));
+                    }
+                    notifications = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedNotificationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FanoutLinkedNotificationRule> array = new List<FanoutLinkedNotificationRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FanoutLinkedNotificationRule.DeserializeFanoutLinkedNotificationRule(item, options));
+                    }
+                    linkedNotificationRules = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceProviderAuthorizationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("dstsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("notificationOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notificationOptions = new ProviderNotificationOption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceHydrationAccounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceHydrationAccount> array = new List<ResourceHydrationAccount>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceHydrationAccount.DeserializeResourceHydrationAccount(item, options));
+                    }
+                    resourceHydrationAccounts = array;
+                    continue;
+                }
+                if (property.NameEquals("notificationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notificationSettings = ResourceProviderManifestNotificationSettings.DeserializeResourceProviderManifestNotificationSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("managementGroupGlobalNotificationEndpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceProviderEndpoint> array = new List<ResourceProviderEndpoint>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceProviderEndpoint.DeserializeResourceProviderEndpoint(item, options));
+                    }
+                    managementGroupGlobalNotificationEndpoints = array;
+                    continue;
+                }
+                if (property.NameEquals("optionalFeatures"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    optionalFeatures = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceGroupLockOptionDuringMove"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGroupLockOptionDuringMove = ResourceProviderManifestResourceGroupLockOptionDuringMove.DeserializeResourceProviderManifestResourceGroupLockOptionDuringMove(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("responseOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseOptions = ResourceProviderManifestResponseOptions.DeserializeResourceProviderManifestResponseOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("legacyNamespace"u8))
+                {
+                    legacyNamespace = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("legacyRegistrations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    legacyRegistrations = array;
+                    continue;
+                }
+                if (property.NameEquals("customManifestVersion"u8))
+                {
+                    customManifestVersion = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -294,6 +655,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerAuthentication,
                 providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
                 @namespace,
+                services ?? new ChangeTrackingList<ResourceProviderService>(),
+                serviceName,
                 providerVersion,
                 providerType,
                 requiredFeatures ?? new ChangeTrackingList<string>(),
@@ -301,8 +664,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 requestHeaderOptions,
                 management,
                 capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
+                crossTenantTokenValidation,
                 metadata,
                 templateDeploymentOptions,
+                globalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
+                enableTenantLinkedNotification,
+                notifications ?? new ChangeTrackingList<ProviderNotification>(),
+                linkedNotificationRules ?? new ChangeTrackingList<FanoutLinkedNotificationRule>(),
+                resourceProviderAuthorizationRules,
+                dstsConfiguration,
+                notificationOptions,
+                resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>(),
+                notificationSettings,
+                managementGroupGlobalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
+                optionalFeatures ?? new ChangeTrackingList<string>(),
+                resourceGroupLockOptionDuringMove,
+                responseOptions,
+                legacyNamespace,
+                legacyRegistrations ?? new ChangeTrackingList<string>(),
+                customManifestVersion,
                 serializedAdditionalRawData);
         }
 
@@ -313,7 +693,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceProviderManifestProperties)} does not support writing '{options.Format}' format.");
             }
@@ -327,7 +707,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceProviderManifestProperties(document.RootElement, options);
                     }
                 default:

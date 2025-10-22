@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
         public NetworkSecurityPerimeterLoggingConfigurationData()
         {
+            EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
@@ -61,19 +61,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the NSP logging configuration. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
+        /// <param name="version"> The version of the NSP logging configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLoggingConfigurationProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> enabledLogCategories, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
-            ETag = etag;
+            EnabledLogCategories = enabledLogCategories;
+            Version = version;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Properties of the NSP logging configuration. </summary>
-        public NetworkSecurityPerimeterLoggingConfigurationProperties Properties { get; set; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        /// <summary> The log categories to enable in the NSP logging configuration. </summary>
+        [WirePath("properties.enabledLogCategories")]
+        public IList<string> EnabledLogCategories { get; }
+        /// <summary> The version of the NSP logging configuration. </summary>
+        [WirePath("properties.version")]
+        public string Version { get; set; }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = default;
-            PostgreSqlConnectionInfo targetConnectionInfo = default;
-            PostgreSqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationPostgreSqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo = default;
             string encryptedKeyForSecureFields = default;
             DateTimeOffset? startedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptedKeyForSecureFields"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support writing '{options.Format}' format.");
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(document.RootElement, options);
                     }
                 default:

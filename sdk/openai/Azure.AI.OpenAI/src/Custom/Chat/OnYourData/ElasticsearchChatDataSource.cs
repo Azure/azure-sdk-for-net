@@ -8,12 +8,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("ElasticsearchChatDataSource")]
+[CodeGenType("ElasticsearchChatDataSource")]
+[CodeGenSuppress(nameof(ElasticsearchChatDataSource), typeof(InternalElasticsearchChatDataSourceParameters))]
 [Experimental("AOAI001")]
 #if AZURE_OPENAI_GA
 [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
-public partial class ElasticsearchChatDataSource : ChatDataSource
+public partial class ElasticsearchChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalElasticsearchChatDataSourceParameters InternalParameters { get; }
@@ -21,21 +22,21 @@ public partial class ElasticsearchChatDataSource : ChatDataSource
 #if !AZURE_OPENAI_GA
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.Endpoint"/>
-    required public Uri Endpoint
+    public Uri Endpoint
     {
         get => InternalParameters.Endpoint;
         set => InternalParameters.Endpoint = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.IndexName"/>
-    required public string IndexName
+    public string IndexName
     {
         get => InternalParameters.IndexName;
         set => InternalParameters.IndexName = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.Authentication"/>
-    required public DataSourceAuthentication Authentication
+    public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
         set => InternalParameters.Authentication = value;
@@ -104,11 +105,13 @@ public partial class ElasticsearchChatDataSource : ChatDataSource
         set => InternalParameters.VectorizationSource = value;
     }
 
-    public ElasticsearchChatDataSource() : base(type: "elasticsearch", serializedAdditionalRawData: null)
+    /// <summary>
+    /// Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>.
+    /// </summary>
+    public ElasticsearchChatDataSource() : base(InternalAzureChatDataSourceKind.Elasticsearch, null)
     {
         InternalParameters = new();
     }
-
 #else
     public ElasticsearchChatDataSource()
     {
@@ -116,25 +119,14 @@ public partial class ElasticsearchChatDataSource : ChatDataSource
     }
 #endif
 
-    // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>
-    /// <param name="internalParameters"> The parameter information to control the use of the Elasticsearch data source. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
-    internal ElasticsearchChatDataSource(InternalElasticsearchChatDataSourceParameters internalParameters)
-        : this()
-    {
-        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
-        InternalParameters = internalParameters;
-    }
-
-    /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>
-    /// <param name="type"></param>
-    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="kind"></param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal ElasticsearchChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalElasticsearchChatDataSourceParameters internalParameters)
-        : base(type, serializedAdditionalRawData)
+    internal ElasticsearchChatDataSource(InternalAzureChatDataSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalElasticsearchChatDataSourceParameters internalParameters)
+        : base(kind, additionalBinaryDataProperties)
     {
-        InternalParameters = internalParameters;
+        InternalParameters = internalParameters ?? new();
     }
 }

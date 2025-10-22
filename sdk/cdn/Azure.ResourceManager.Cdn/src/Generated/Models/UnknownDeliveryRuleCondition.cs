@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class UnknownDeliveryRuleCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleCondition"/>. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownDeliveryRuleCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, serializedAdditionalRawData)
         {

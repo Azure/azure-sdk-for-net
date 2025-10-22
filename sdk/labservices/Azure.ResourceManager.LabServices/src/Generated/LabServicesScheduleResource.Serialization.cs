@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabServicesScheduleResource : IJsonModel<LabServicesScheduleData>
     {
+        private static LabServicesScheduleData s_dataDeserializationInstance;
+        private static LabServicesScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LabServicesScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LabServicesScheduleData>)Data).Write(writer, options);
 
-        LabServicesScheduleData IJsonModel<LabServicesScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabServicesScheduleData>)Data).Create(ref reader, options);
+        LabServicesScheduleData IJsonModel<LabServicesScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabServicesScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LabServicesScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LabServicesScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LabServicesScheduleData>(Data, options, AzureResourceManagerLabServicesContext.Default);
 
-        LabServicesScheduleData IPersistableModel<LabServicesScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabServicesScheduleData>(data, options);
+        LabServicesScheduleData IPersistableModel<LabServicesScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabServicesScheduleData>(data, options, AzureResourceManagerLabServicesContext.Default);
 
-        string IPersistableModel<LabServicesScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabServicesScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LabServicesScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabServicesScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -151,6 +151,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ExtendedAccessibilityInfo))
+            {
+                writer.WritePropertyName("extendedAccessibilityInfo"u8);
+                writer.WriteObjectValue(ExtendedAccessibilityInfo, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -202,6 +207,7 @@ namespace Azure.ResourceManager.Sql
             string lastBackupName = default;
             ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
             bool? isLedgerOn = default;
+            ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +252,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -440,6 +446,15 @@ namespace Azure.ResourceManager.Sql
                             isLedgerOn = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("extendedAccessibilityInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            extendedAccessibilityInfo = ManagedDatabaseExtendedAccessibilityInfo.DeserializeManagedDatabaseExtendedAccessibilityInfo(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -478,6 +493,7 @@ namespace Azure.ResourceManager.Sql
                 lastBackupName,
                 crossSubscriptionTargetManagedInstanceId,
                 isLedgerOn,
+                extendedAccessibilityInfo,
                 serializedAdditionalRawData);
         }
 
@@ -963,6 +979,21 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedAccessibilityInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    extendedAccessibilityInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtendedAccessibilityInfo))
+                {
+                    builder.Append("    extendedAccessibilityInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedAccessibilityInfo, options, 4, false, "    extendedAccessibilityInfo: ");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -975,7 +1006,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -991,7 +1022,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedDatabaseData(document.RootElement, options);
                     }
                 default:

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using OpenAI.Files;
 using OpenAI.TestFramework;
 
+using Azure.AI.OpenAI.Files;
+
 namespace Azure.AI.OpenAI.Tests;
 
 public class FileTests : AoaiTestBase<OpenAIFileClient>
@@ -38,6 +40,12 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
         FileDeletionResult deletionResult = await client.DeleteFileAsync(file.Id);
         Assert.That(deletionResult.FileId, Is.EqualTo(file.Id));
         Assert.IsTrue(deletionResult.Deleted);
+
+        file = await client.UploadFileAsync(
+            BinaryData.FromString(@"{""text"":""hello, world!""}"),
+            "test_file_delete_me.jsonl",
+            FileUploadPurpose.Batch);
+        Validate(file);
     }
 
     [RecordedTest]
@@ -54,6 +62,21 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
         OpenAIFileClient client = GetTestClient(GetTestClientOptions(version));
         OpenAIFileCollection files = await client.GetFilesAsync();
         Assert.That(files, Has.Count.GreaterThan(0));
+    }
+
+    [RecordedTest]
+    [TestCase(null)]
+    public async Task CanUploadWithExpiration(AzureOpenAIClientOptions.ServiceVersion? version)
+    {
+        OpenAIFileClient client = GetTestClient(GetTestClientOptions(version));
+        AzureFileExpirationOptions expirationOptions = new(3600, AzureFileExpirationAnchor.CreatedAt);
+        OpenAIFile file = await client.UploadFileAsync(
+            BinaryData.FromString(@"{""text"":""hello, there, world!""}"),
+            "test_file_delete_me_please.jsonl",
+            FileUploadPurpose.Batch,
+            expirationOptions);
+        Validate(file);
+        Assert.That(file.GetAzureOpenAIFileStatus(), Is.EqualTo(AzureOpenAIFileStatus.Processed));
     }
 
     private static TestClientOptions GetTestClientOptions(AzureOpenAIClientOptions.ServiceVersion? version)

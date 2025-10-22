@@ -7,21 +7,21 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [Experimental("AOAI001")]
-[CodeGenModel("ElasticsearchChatDataSourceParameters")]
+[CodeGenType("ElasticsearchChatDataSourceParameters")]
 internal partial class InternalElasticsearchChatDataSourceParameters
 {
     [CodeGenMember("IncludeContexts")]
-    private IList<string> _internalIncludeContexts = new ChangeTrackingList<string>();
+    private IList<string> InternalIncludeContexts { get; set; }
     private DataSourceOutputContexts? _outputContexts;
 
     /// <inheritdoc cref="DataSourceOutputContexts"/>
     public DataSourceOutputContexts? OutputContexts
     {
-        get => DataSourceOutputContextsExtensions.FromStringList(_internalIncludeContexts);
+        get => DataSourceOutputContextsExtensions.FromStringList(InternalIncludeContexts);
         internal set
         {
             _outputContexts = value;
-            _internalIncludeContexts = _outputContexts?.ToStringList();
+            InternalIncludeContexts = _outputContexts?.ToStringList();
         }
     }
 

@@ -9,54 +9,35 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Configuration of live transcription. </summary>
-    internal partial class TranscriptionOptionsInternal
+    /// <summary>
+    /// Options for live transcription.
+    /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
+    /// </summary>
+    internal abstract partial class TranscriptionOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
-        /// <param name="transportUrl"> Transport URL for live transcription. </param>
-        /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
-        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
-        /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> or <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, bool startTranscription)
+        /// <param name="locale"> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
+        protected TranscriptionOptionsInternal(string locale)
         {
-            Argument.AssertNotNull(transportUrl, nameof(transportUrl));
             Argument.AssertNotNull(locale, nameof(locale));
 
-            TransportUrl = transportUrl;
-            TransportType = transportType;
             Locale = locale;
-            StartTranscription = startTranscription;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
-        /// <param name="transportUrl"> Transport URL for live transcription. </param>
-        /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
-        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
-        /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
-        /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
-        /// <param name="enableIntermediateResults"> Enables intermediate results for the transcribed speech. </param>
-        internal TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, string speechRecognitionModelEndpointId, bool startTranscription, bool? enableIntermediateResults)
+        /// <param name="transportType"> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </param>
+        /// <param name="locale"> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </param>
+        internal TranscriptionOptionsInternal(StreamingTransport transportType, string locale)
         {
-            TransportUrl = transportUrl;
             TransportType = transportType;
             Locale = locale;
-            SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
-            StartTranscription = startTranscription;
-            EnableIntermediateResults = enableIntermediateResults;
         }
 
-        /// <summary> Transport URL for live transcription. </summary>
-        public string TransportUrl { get; }
-        /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
-        public TranscriptionTransport TransportType { get; }
-        /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>
+        /// <summary> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </summary>
+        internal StreamingTransport TransportType { get; set; }
+        /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
         public string Locale { get; }
-        /// <summary> Endpoint where the custom model was deployed. </summary>
-        public string SpeechRecognitionModelEndpointId { get; set; }
-        /// <summary> Determines if the transcription should be started immediately after call is answered or not. </summary>
-        public bool StartTranscription { get; }
-        /// <summary> Enables intermediate results for the transcribed speech. </summary>
-        public bool? EnableIntermediateResults { get; set; }
     }
 }

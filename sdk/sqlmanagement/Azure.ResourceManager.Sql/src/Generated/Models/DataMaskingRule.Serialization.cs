@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AliasName))
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
-                writer.WritePropertyName("aliasName"u8);
-                writer.WriteStringValue(AliasName);
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(RuleId);
             }
             if (Optional.IsDefined(RuleState))
             {
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
+            }
+            if (Optional.IsDefined(AliasName))
+            {
+                writer.WritePropertyName("aliasName"u8);
+                writer.WriteStringValue(AliasName);
             }
             if (Optional.IsDefined(MaskingFunction))
             {
@@ -133,11 +138,12 @@ namespace Azure.ResourceManager.Sql.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string aliasName = default;
+            string id0 = default;
             DataMaskingRuleState? ruleState = default;
             string schemaName = default;
             string tableName = default;
             string columnName = default;
+            string aliasName = default;
             DataMaskingFunction? maskingFunction = default;
             string numberFrom = default;
             string numberTo = default;
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -195,9 +201,9 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("aliasName"u8))
+                        if (property0.NameEquals("id"u8))
                         {
-                            aliasName = property0.Value.GetString();
+                            id0 = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("ruleState"u8))
@@ -222,6 +228,11 @@ namespace Azure.ResourceManager.Sql.Models
                         if (property0.NameEquals("columnName"u8))
                         {
                             columnName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("aliasName"u8))
+                        {
+                            aliasName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("maskingFunction"u8))
@@ -274,11 +285,12 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 location,
                 kind,
-                aliasName,
+                id0,
                 ruleState,
                 schemaName,
                 tableName,
                 columnName,
+                aliasName,
                 maskingFunction,
                 numberFrom,
                 numberTo,
@@ -392,25 +404,25 @@ namespace Azure.ResourceManager.Sql.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    aliasName: ");
+                builder.Append("    id: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(AliasName))
+                if (Optional.IsDefined(RuleId))
                 {
-                    builder.Append("    aliasName: ");
-                    if (AliasName.Contains(Environment.NewLine))
+                    builder.Append("    id: ");
+                    if (RuleId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{AliasName}'''");
+                        builder.AppendLine($"{RuleId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{AliasName}'");
+                        builder.AppendLine($"'{RuleId}'");
                     }
                 }
             }
@@ -495,6 +507,29 @@ namespace Azure.ResourceManager.Sql.Models
                     else
                     {
                         builder.AppendLine($"'{ColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    aliasName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AliasName))
+                {
+                    builder.Append("    aliasName: ");
+                    if (AliasName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AliasName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AliasName}'");
                     }
                 }
             }
@@ -641,7 +676,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -657,7 +692,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataMaskingRule(document.RootElement, options);
                     }
                 default:

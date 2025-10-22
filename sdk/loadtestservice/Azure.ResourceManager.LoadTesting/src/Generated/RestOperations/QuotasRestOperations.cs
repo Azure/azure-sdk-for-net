@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LoadTestingQuotaListResult.DeserializeLoadTestingQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LoadTestingQuotaListResult.DeserializeLoadTestingQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LoadTestingQuotaData.DeserializeLoadTestingQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LoadTestingQuotaData.DeserializeLoadTestingQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LoadTestingQuotaAvailabilityResult.DeserializeLoadTestingQuotaAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LoadTestingQuotaAvailabilityResult.DeserializeLoadTestingQuotaAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LoadTestingQuotaListResult.DeserializeLoadTestingQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case 200:
                     {
                         LoadTestingQuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LoadTestingQuotaListResult.DeserializeLoadTestingQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

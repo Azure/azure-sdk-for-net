@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01-preview";
+            _apiVersion = apiVersion ?? "2024-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         AccessInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessInformationListResult.DeserializeAccessInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         AccessInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessInformationListResult.DeserializeAccessInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoSecretsDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TenantAccessInfoSecretsDetails.DeserializeTenantAccessInfoSecretsDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         TenantAccessInfoSecretsDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TenantAccessInfoSecretsDetails.DeserializeTenantAccessInfoSecretsDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         AccessInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessInformationListResult.DeserializeAccessInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         AccessInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessInformationListResult.DeserializeAccessInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

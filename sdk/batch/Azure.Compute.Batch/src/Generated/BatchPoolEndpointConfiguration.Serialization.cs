@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,17 +78,17 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<InboundNatPool> inboundNATPools = default;
+            IList<BatchInboundNatPool> inboundNATPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNATPools"u8))
                 {
-                    List<InboundNatPool> array = new List<InboundNatPool>();
+                    List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatPool.DeserializeInboundNatPool(item, options));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item, options));
                     }
                     inboundNATPools = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolEndpointConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -123,7 +123,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchPoolEndpointConfiguration(document.RootElement, options);
                     }
                 default:
@@ -137,7 +137,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchPoolEndpointConfiguration FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchPoolEndpointConfiguration(document.RootElement);
         }
 

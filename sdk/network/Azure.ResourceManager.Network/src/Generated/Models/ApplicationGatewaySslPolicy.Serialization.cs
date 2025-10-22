@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -185,6 +187,112 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisabledSslProtocols), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disabledSslProtocols: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DisabledSslProtocols))
+                {
+                    if (DisabledSslProtocols.Any())
+                    {
+                        builder.Append("  disabledSslProtocols: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DisabledSslProtocols)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  policyType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyType))
+                {
+                    builder.Append("  policyType: ");
+                    builder.AppendLine($"'{PolicyType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  policyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyName))
+                {
+                    builder.Append("  policyName: ");
+                    builder.AppendLine($"'{PolicyName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuites), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cipherSuites: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CipherSuites))
+                {
+                    if (CipherSuites.Any())
+                    {
+                        builder.Append("  cipherSuites: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CipherSuites)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProtocolVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minProtocolVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinProtocolVersion))
+                {
+                    builder.Append("  minProtocolVersion: ");
+                    builder.AppendLine($"'{MinProtocolVersion.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationGatewaySslPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,7 +300,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support writing '{options.Format}' format.");
             }
@@ -206,7 +316,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplicationGatewaySslPolicy(document.RootElement, options);
                     }
                 default:

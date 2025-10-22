@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
-#if !NETFRAMEWORK
+#if NET
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public abstract class BaseLiveTest : RecordedTestBase<AzureMonitorTestEnvironment>
@@ -48,6 +48,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Diagnostics = { IsLoggingContentEnabled = true }
                 })
             ));
+        }
+
+        public override void GlobalTimeoutTearDown()
+        {
+            // Turn off global timeout errors because these tests can be slower
+            // base.GlobalTimeoutTearDown();
         }
 
         internal async Task QueryAndVerifyDependency(string workspaceId, string description, string query, ExpectedAppDependency expectedAppDependency)

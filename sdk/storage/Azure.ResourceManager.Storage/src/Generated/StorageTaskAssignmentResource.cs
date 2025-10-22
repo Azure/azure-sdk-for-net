@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageTaskAssignmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation(_storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageArmOperation(_storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageTaskAssignmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageArmOperation(_storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageArmOperation(_storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageTaskAssignmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageTaskAssignmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
-        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReportsAsync(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
@@ -391,12 +391,12 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
-        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReports(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)

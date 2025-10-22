@@ -37,6 +37,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("snapshotVolumes"u8);
             writer.WriteBooleanValue(IsSnapshotVolumesEnabled);
+            if (Optional.IsCollectionDefined(IncludedVolumeTypes))
+            {
+                writer.WritePropertyName("includedVolumeTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in IncludedVolumeTypes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
             if (Optional.IsCollectionDefined(IncludedNamespaces))
@@ -122,6 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             bool snapshotVolumes = default;
+            IList<DataProtectionAksVolumeType> includedVolumeTypes = default;
             bool includeClusterScopeResources = default;
             IList<string> includedNamespaces = default;
             IList<string> excludedNamespaces = default;
@@ -137,6 +148,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 if (property.NameEquals("snapshotVolumes"u8))
                 {
                     snapshotVolumes = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("includedVolumeTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataProtectionAksVolumeType> array = new List<DataProtectionAksVolumeType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new DataProtectionAksVolumeType(item.GetString()));
+                    }
+                    includedVolumeTypes = array;
                     continue;
                 }
                 if (property.NameEquals("includeClusterScopeResources"u8))
@@ -243,6 +268,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 objectType,
                 serializedAdditionalRawData,
                 snapshotVolumes,
+                includedVolumeTypes ?? new ChangeTrackingList<DataProtectionAksVolumeType>(),
                 includeClusterScopeResources,
                 includedNamespaces ?? new ChangeTrackingList<string>(),
                 excludedNamespaces ?? new ChangeTrackingList<string>(),
@@ -259,7 +285,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support writing '{options.Format}' format.");
             }
@@ -273,7 +299,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKubernetesClusterBackupDataSourceSettings(document.RootElement, options);
                     }
                 default:

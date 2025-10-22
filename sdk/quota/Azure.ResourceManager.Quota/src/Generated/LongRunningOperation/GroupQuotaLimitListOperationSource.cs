@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Quota
 
         GroupQuotaLimitListResource IOperationSource<GroupQuotaLimitListResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GroupQuotaLimitListData.DeserializeGroupQuotaLimitListData(document.RootElement);
+            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new GroupQuotaLimitListResource(_client, data);
         }
 
         async ValueTask<GroupQuotaLimitListResource> IOperationSource<GroupQuotaLimitListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GroupQuotaLimitListData.DeserializeGroupQuotaLimitListData(document.RootElement);
-            return new GroupQuotaLimitListResource(_client, data);
+            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            return await Task.FromResult(new GroupQuotaLimitListResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

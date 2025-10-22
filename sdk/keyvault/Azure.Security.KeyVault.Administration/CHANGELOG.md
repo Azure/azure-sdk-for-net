@@ -1,6 +1,6 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
+## 4.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version is now `2025-07-01`.
+
+## 4.6.0 (2025-06-16)
+
+### Other Changes
+
+- Service version is now `7.6`.
+
+## 4.6.0-beta.1 (2025-04-08)
+
+### Features Added
+
+- Added `StartPreRestore` and `StartPreBackup` operations to the `KeyVaultBackupClient`.
+
+### Other Changes
+
+- The default service version is now "7.6-preview.2".
 
 ## 4.5.0 (2024-10-14)
 

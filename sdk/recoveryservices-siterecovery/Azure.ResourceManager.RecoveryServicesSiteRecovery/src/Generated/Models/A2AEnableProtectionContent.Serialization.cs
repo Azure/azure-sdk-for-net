@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("multiVmGroupId"u8);
                 writer.WriteStringValue(MultiVmGroupId);
             }
+            if (Optional.IsDefined(ProtectionClusterId))
+            {
+                writer.WritePropertyName("protectionClusterId"u8);
+                writer.WriteStringValue(ProtectionClusterId);
+            }
             if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
             string multiVmGroupName = default;
             string multiVmGroupId = default;
+            ResourceIdentifier protectionClusterId = default;
             ResourceIdentifier recoveryBootDiagStorageAccountId = default;
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             string recoveryAvailabilityZone = default;
@@ -265,6 +271,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (property.NameEquals("multiVmGroupId"u8))
                 {
                     multiVmGroupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("protectionClusterId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionClusterId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryBootDiagStorageAccountId"u8))
@@ -364,6 +379,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
                 multiVmGroupName,
                 multiVmGroupId,
+                protectionClusterId,
                 recoveryBootDiagStorageAccountId,
                 diskEncryptionInfo,
                 recoveryAvailabilityZone,
@@ -382,7 +398,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(A2AEnableProtectionContent)} does not support writing '{options.Format}' format.");
             }
@@ -396,7 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeA2AEnableProtectionContent(document.RootElement, options);
                     }
                 default:

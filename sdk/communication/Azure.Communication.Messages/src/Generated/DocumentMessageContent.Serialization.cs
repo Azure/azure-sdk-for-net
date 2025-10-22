@@ -91,7 +91,7 @@ namespace Azure.Communication.Messages
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentMessageContent)} does not support writing '{options.Format}' format.");
             }
@@ -105,7 +105,7 @@ namespace Azure.Communication.Messages
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentMessageContent(document.RootElement, options);
                     }
                 default:
@@ -119,7 +119,7 @@ namespace Azure.Communication.Messages
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new DocumentMessageContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentMessageContent(document.RootElement);
         }
 

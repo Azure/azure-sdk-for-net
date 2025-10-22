@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of server trust certificates that were uploaded from box to the given Sql Managed Instance. </summary>
+        /// <summary> Gets a list of the server trust certificates used to secure communication between SQL Server and the specified SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerTrustCertificatesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerTrustCertificatesListResult.DeserializeServerTrustCertificatesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of server trust certificates that were uploaded from box to the given Sql Managed Instance. </summary>
+        /// <summary> Gets a list of the server trust certificates used to secure communication between SQL Server and the specified SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerTrustCertificatesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerTrustCertificatesListResult.DeserializeServerTrustCertificatesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a server trust certificate that was uploaded from box to Sql Managed Instance. </summary>
+        /// <summary> Gets a server trust certificate that was uploaded from SQL Server to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerTrustCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerTrustCertificateData.DeserializeServerTrustCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a server trust certificate that was uploaded from box to Sql Managed Instance. </summary>
+        /// <summary> Gets a server trust certificate that was uploaded from SQL Server to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerTrustCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerTrustCertificateData.DeserializeServerTrustCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Uploads a server trust certificate from box to Sql Managed Instance. </summary>
+        /// <summary> Uploads a server trust certificate from SQL Server to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Uploads a server trust certificate from box to Sql Managed Instance. </summary>
+        /// <summary> Uploads a server trust certificate from SQL Server to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -369,11 +369,12 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(certificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Deletes a server trust certificate that was uploaded from box to Sql Managed Instance. </summary>
+        /// <summary> Deletes a server trust certificate that was uploaded from SQL Server to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -401,7 +402,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Deletes a server trust certificate that was uploaded from box to Sql Managed Instance. </summary>
+        /// <summary> Deletes a server trust certificate that was uploaded from SQL Server to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -451,7 +452,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of server trust certificates that were uploaded from box to the given Sql Managed Instance. </summary>
+        /// <summary> Gets a list of the server trust certificates used to secure communication between SQL Server and the specified SQL Managed Instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -473,7 +474,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerTrustCertificatesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerTrustCertificatesListResult.DeserializeServerTrustCertificatesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -482,7 +483,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of server trust certificates that were uploaded from box to the given Sql Managed Instance. </summary>
+        /// <summary> Gets a list of the server trust certificates used to secure communication between SQL Server and the specified SQL Managed Instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -504,7 +505,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerTrustCertificatesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerTrustCertificatesListResult.DeserializeServerTrustCertificatesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

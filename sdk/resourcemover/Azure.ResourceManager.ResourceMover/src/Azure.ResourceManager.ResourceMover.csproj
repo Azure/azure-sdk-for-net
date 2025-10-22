@@ -1,10 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.2-beta.2</Version>
+    <Version>1.1.2-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ResourceMover</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Migrate.</Description>
     <PackageTags>azure;management;arm;resource manager;migrate</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>

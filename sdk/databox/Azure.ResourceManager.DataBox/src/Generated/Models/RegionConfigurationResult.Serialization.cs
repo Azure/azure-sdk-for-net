@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("datacenterAddressResponse"u8);
                 writer.WriteObjectValue(DataCenterAddressResponse, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(DeviceCapabilityResponse))
+            {
+                writer.WritePropertyName("deviceCapabilityResponse"u8);
+                writer.WriteObjectValue(DeviceCapabilityResponse, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,7 +93,8 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             ScheduleAvailabilityResponse scheduleAvailabilityResponse = default;
             TransportAvailabilityResponse transportAvailabilityResponse = default;
-            DataCenterAddressResult dataCenterAddressResponse = default;
+            DataCenterAddressResult datacenterAddressResponse = default;
+            DeviceCapabilityResponse deviceCapabilityResponse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +123,16 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    datacenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("deviceCapabilityResponse"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceCapabilityResponse = DeviceCapabilityResponse.DeserializeDeviceCapabilityResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +141,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, dataCenterAddressResponse, serializedAdditionalRawData);
+            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, datacenterAddressResponse, deviceCapabilityResponse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationResult>.Write(ModelReaderWriterOptions options)
@@ -136,7 +151,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegionConfigurationResult)} does not support writing '{options.Format}' format.");
             }
@@ -150,7 +165,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRegionConfigurationResult(document.RootElement, options);
                     }
                 default:

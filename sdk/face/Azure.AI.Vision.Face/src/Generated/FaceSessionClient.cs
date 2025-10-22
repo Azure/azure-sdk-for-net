@@ -405,7 +405,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLivenessSessionsAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LivenessSessionItem> array = new List<LivenessSessionItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -426,7 +426,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLivenessSessions(start, top, context);
             IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LivenessSessionItem> array = new List<LivenessSessionItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -525,7 +525,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLivenessSessionAuditEntriesAsync(sessionId, start, top, context).ConfigureAwait(false);
             IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -550,7 +550,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLivenessSessionAuditEntries(sessionId, start, top, context);
             IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1051,7 +1051,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLivenessWithVerifySessionsAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LivenessSessionItem> array = new List<LivenessSessionItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1072,7 +1072,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLivenessWithVerifySessions(start, top, context);
             IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LivenessSessionItem> array = new List<LivenessSessionItem>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1171,7 +1171,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLivenessWithVerifySessionAuditEntriesAsync(sessionId, start, top, context).ConfigureAwait(false);
             IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1196,7 +1196,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLivenessWithVerifySessionAuditEntries(sessionId, start, top, context);
             IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1311,7 +1311,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectFromSessionImageAsync(detectFromSessionImageRequest.ToRequestContent(), detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
             IReadOnlyList<FaceDetectionResult> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1342,7 +1342,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectFromSessionImage(detectFromSessionImageRequest.ToRequestContent(), detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
             IReadOnlyList<FaceDetectionResult> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1583,7 +1583,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/detectLiveness/singleModal/sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1697,7 +1696,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

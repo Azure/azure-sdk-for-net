@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.VoiceServices
 {
+    public partial class AzureResourceManagerVoiceServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerVoiceServicesContext() { }
+        public static Azure.ResourceManager.VoiceServices.AzureResourceManagerVoiceServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class VoiceServicesCommunicationsGatewayCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>, System.Collections.IEnumerable
     {
         protected VoiceServicesCommunicationsGatewayCollection() { }

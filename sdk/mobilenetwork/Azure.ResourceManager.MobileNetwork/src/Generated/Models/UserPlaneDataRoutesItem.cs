@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The UserPlaneDataRoutesItem.
-    /// Serialized Name: UserPlaneDataRoutesItem
-    /// </summary>
+    /// <summary> The UserPlaneDataRoutesItem. </summary>
     public partial class UserPlaneDataRoutesItem
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserPlaneDataRoutesItem"/>. </summary>
-        /// <param name="attachedDataNetwork">
-        /// Reference to an attached data network resource.
-        /// Serialized Name: UserPlaneDataRoutesItem.attachedDataNetwork
-        /// </param>
-        /// <param name="routes">
-        /// A list of IPv4 routes.
-        /// Serialized Name: UserPlaneDataRoutesItem.routes
-        /// </param>
+        /// <param name="attachedDataNetwork"> Reference to an attached data network resource. </param>
+        /// <param name="routes"> A list of IPv4 routes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserPlaneDataRoutesItem(WritableSubResource attachedDataNetwork, IList<MobileNetworkIPv4Route> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,10 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Reference to an attached data network resource.
-        /// Serialized Name: UserPlaneDataRoutesItem.attachedDataNetwork
-        /// </summary>
+        /// <summary> Reference to an attached data network resource. </summary>
         internal WritableSubResource AttachedDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("attachedDataNetwork.id")]
@@ -91,10 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary>
-        /// A list of IPv4 routes.
-        /// Serialized Name: UserPlaneDataRoutesItem.routes
-        /// </summary>
+        /// <summary> A list of IPv4 routes. </summary>
         [WirePath("routes")]
         public IList<MobileNetworkIPv4Route> Routes { get; }
     }

@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: Support
 namespace: Azure.ResourceManager.Support
-require: https://github.com/Azure/azure-rest-api-specs/blob/a013dabbe84aeb3f5d48b0e30d15fdfbb6a8d062/specification/support/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9edc30686813e52c7f027eb8ea1c56c3d6dc5d1f/specification/support/resource-manager/readme.md
 #tag: package-preview-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -88,17 +88,8 @@ rename-mapping:
   Consent: AdvancedDiagnosticConsent
   MessageProperties: ChatTranscriptMessageProperties
   UploadFile: UploadFileContent
-  LookUpResourceIdResponse: LookUpResourceIdResult
-  LookUpResourceIdResponse.resourceId: -|arm-id
-  ServiceClassificationRequest: ServiceClassificationContent
-  ResourceType: SupportResourceTypeName
-  LookUpResourceIdRequest.type: ResourceType
-  ProblemClassificationsClassificationInput: ServiceProblemClassificationContent
-  ProblemClassificationsClassificationOutput: ServiceProblemClassificationListResult
-  ProblemClassificationsClassificationResult: ServiceProblemClassificationResult
-  ProblemClassificationsClassificationResult.serviceId: -|arm-id
-  ProblemClassificationsClassificationResult.relatedService.serviceId: RelatedServiceId
-  ClassificationService.resourceTypes: -|resource-type
+  ProblemClassification.properties.secondaryConsentEnabled: SecondaryConsentEnabledInfo
+  Service.properties.resourceTypes: ArmResourceTypes
 
 models-to-treat-empty-string-as-null:
   - LookUpResourceIdResult
@@ -108,7 +99,16 @@ models-to-treat-empty-string-as-null:
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability
   SupportTickets_CheckNameAvailability: CheckSupportTicketNameAvailability
-  LookUpResourceId_Post: LookUpResourceId
-  ProblemClassificationsNoSubscription_classifyProblems: ClassifyServiceProblem
-  ProblemClassifications_classifyProblems: ClassifyServiceProblem
+
+directive:
+  # It was found during the Swagger comparison that the contentType is missing the 'x-ms-enum' object content,
+  # so it is supplemented here.
+  - from: support.json
+    where: $.definitions
+    transform: >
+      $.MessageProperties['properties']['contentType']['x-ms-enum'] = {
+          name: 'TranscriptContentType',
+          modelAsString: true
+      };
+ 
 ```

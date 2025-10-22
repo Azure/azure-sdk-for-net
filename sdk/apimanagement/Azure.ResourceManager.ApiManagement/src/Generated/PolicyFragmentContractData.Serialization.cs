@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WriteEndObject();
         }
 
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
             string value = default;
             string description = default;
             PolicyFragmentContentFormat? format = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -141,6 +147,11 @@ namespace Azure.ResourceManager.ApiManagement
                             format = new PolicyFragmentContentFormat(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -158,6 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
                 value,
                 description,
                 format,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -288,6 +300,29 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -300,7 +335,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -316,7 +351,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePolicyFragmentContractData(document.RootElement, options);
                     }
                 default:

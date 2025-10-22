@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -74,6 +75,26 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
+            if (options.Format != "W" && Optional.IsDefined(QueuedTime))
+            {
+                writer.WritePropertyName("queuedTime"u8);
+                writer.WriteStringValue(QueuedTime);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BlobUri))
+            {
+                writer.WritePropertyName("blobUri"u8);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -108,6 +129,9 @@ namespace Azure.ResourceManager.Sql.Models
             string databaseName = default;
             string status = default;
             string errorMessage = default;
+            string queuedTime = default;
+            Uri blobUri = default;
+            IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -184,6 +208,34 @@ namespace Azure.ResourceManager.Sql.Models
                             errorMessage = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("queuedTime"u8))
+                        {
+                            queuedTime = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("blobUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            blobUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PrivateEndpointConnectionRequestStatus> array = new List<PrivateEndpointConnectionRequestStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PrivateEndpointConnectionRequestStatus.DeserializePrivateEndpointConnectionRequestStatus(item, options));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -205,6 +257,9 @@ namespace Azure.ResourceManager.Sql.Models
                 databaseName,
                 status,
                 errorMessage,
+                queuedTime,
+                blobUri,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>(),
                 serializedAdditionalRawData);
         }
 
@@ -427,6 +482,67 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueuedTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    queuedTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueuedTime))
+                {
+                    builder.Append("    queuedTime: ");
+                    if (QueuedTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QueuedTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QueuedTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    blobUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BlobUri))
+                {
+                    builder.Append("    blobUri: ");
+                    builder.AppendLine($"'{BlobUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -439,7 +555,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -455,7 +571,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeImportExportExtensionsOperationResult(document.RootElement, options);
                     }
                 default:

@@ -15,7 +15,7 @@ internal class AzureOpenAIPipelineMessageBuilder
     private readonly Uri _endpoint;
     private readonly string _deploymentName;
     private string[] _pathComponents;
-    private readonly List<KeyValuePair<string, string>> _queryStringParameters = [];
+    private readonly List<QueryStringParameterWrapper> _queryStringParameters = [];
     private string _method;
     private BinaryContent _content;
     private readonly Dictionary<string, string> _headers = [];
@@ -35,7 +35,7 @@ internal class AzureOpenAIPipelineMessageBuilder
         _pipeline = pipeline;
         _endpoint = endpoint;
         _deploymentName = deploymentName;
-        _queryStringParameters.Add(new KeyValuePair<string, string>("api-version", apiVersion));
+        _queryStringParameters.Add(new("api-version", apiVersion));
     }
 
     public AzureOpenAIPipelineMessageBuilder WithPath(params string[] pathComponents)
@@ -44,16 +44,16 @@ internal class AzureOpenAIPipelineMessageBuilder
         return this;
     }
 
-    public AzureOpenAIPipelineMessageBuilder WithOptionalQueryParameter(string name, string value)
+    public AzureOpenAIPipelineMessageBuilder WithOptionalQueryParameter(string name, string value, bool escape = true)
     {
         if (!string.IsNullOrEmpty(value))
         {
-            _queryStringParameters.Add(new(name, value));
+            _queryStringParameters.Add(new(name, value, escape));
         }
         return this;
     }
 
-    public AzureOpenAIPipelineMessageBuilder WithOptionalQueryParameter<T>(string name, T? value)
+    public AzureOpenAIPipelineMessageBuilder WithOptionalQueryParameter<T>(string name, T? value, bool escape = true)
         where T : struct, IConvertible
             => WithOptionalQueryParameter(name, value.HasValue ? Convert.ChangeType(value.Value, typeof(string)).ToString() : null);
 
@@ -111,7 +111,7 @@ internal class AzureOpenAIPipelineMessageBuilder
 
     public PipelineMessage Build()
     {
-        Argument.AssertNotNullOrWhiteSpace(_method, nameof(_method));
+        Argument.AssertNotNullOrEmpty(_method, nameof(_method));
 
         PipelineMessage message = _pipeline.CreateMessage();
         message.ResponseClassifier = _classifier ?? AzureOpenAIClient.PipelineMessageClassifier;
@@ -154,12 +154,22 @@ internal class AzureOpenAIPipelineMessageBuilder
             uriBuilder.AppendPath(pathComponent, escape: true);
         }
 
-        foreach (KeyValuePair<string, string> queryStringPair in _queryStringParameters)
+        foreach (QueryStringParameterWrapper queryStringParameter in _queryStringParameters)
         {
-            uriBuilder.AppendQuery(queryStringPair.Key, queryStringPair.Value, escape: true);
+            uriBuilder.AppendQuery(
+                queryStringParameter.Key,
+                queryStringParameter.Value,
+                queryStringParameter.ShouldEscape);
         }
 
         request.Uri = uriBuilder.ToUri();
+    }
+
+    private class QueryStringParameterWrapper(string key, string value, bool shouldEscape = true)
+    {
+        public string Key { get; set; } = key;
+        public string Value { get; set; } = value;
+        public bool ShouldEscape { get; set; } = shouldEscape;
     }
 
     private static readonly string s_OpenAIBetaFeatureHeader = "OpenAI-Beta";

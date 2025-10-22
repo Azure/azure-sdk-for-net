@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         AstroOrganizationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AstroOrganizationData.DeserializeAstroOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         AstroOrganizationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AstroOrganizationData.DeserializeAstroOrganizationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Astro
                 case 200:
                     {
                         OrganizationResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrganizationResourceListResult.DeserializeOrganizationResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

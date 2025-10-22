@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-09-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppCheckAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppCheckAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppCheckAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppCheckAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppCheckAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppCheckAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetAppCheckAvailabilityResult.DeserializeNetAppCheckAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppRegionInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetAppRegionInfo.DeserializeNetAppRegionInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetAppRegionInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetAppRegionInfo.DeserializeNetAppRegionInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetworkSiblingSet value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkSiblingSet.DeserializeNetworkSiblingSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         NetworkSiblingSet value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkSiblingSet.DeserializeNetworkSiblingSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

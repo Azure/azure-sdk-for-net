@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         EncryptionProtectorResource IOperationSource<EncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new EncryptionProtectorResource(_client, data);
         }
 
         async ValueTask<EncryptionProtectorResource> IOperationSource<EncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
-            return new EncryptionProtectorResource(_client, data);
+            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new EncryptionProtectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

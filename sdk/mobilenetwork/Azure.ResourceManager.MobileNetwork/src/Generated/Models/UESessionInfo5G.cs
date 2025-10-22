@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// UE Session Info for 5G.
-    /// Serialized Name: UeSessionInfo5G
-    /// </summary>
+    /// <summary> UE Session Info for 5G. </summary>
     public partial class UESessionInfo5G
     {
         /// <summary>
@@ -50,31 +47,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UESessionInfo5G"/>. </summary>
-        /// <param name="pduSessionId">
-        /// PDU session identifier
-        /// Serialized Name: UeSessionInfo5G.pduSessionId
-        /// </param>
-        /// <param name="dnn">
-        /// Data network name
-        /// Serialized Name: UeSessionInfo5G.dnn
-        /// </param>
-        /// <param name="pdnType">
-        /// Packet Data Network Type
-        /// Serialized Name: UeSessionInfo5G.pdnType
-        /// </param>
-        /// <param name="qosFlow"> Serialized Name: UeSessionInfo5G.qosFlow. </param>
-        /// <param name="uplink">
-        /// Uplink bit rate.
-        /// Serialized Name: UeSessionInfo5G.ambr.uplink
-        /// </param>
-        /// <param name="downlink">
-        /// Downlink bit rate.
-        /// Serialized Name: UeSessionInfo5G.ambr.downlink
-        /// </param>
-        /// <param name="sst">
-        /// Slice/service type (SST).
-        /// Serialized Name: UeSessionInfo5G.snssai.sst
-        /// </param>
+        /// <param name="pduSessionId"> PDU session identifier. </param>
+        /// <param name="dnn"> Data network name. </param>
+        /// <param name="pdnType"> Packet Data Network Type. </param>
+        /// <param name="qosFlow"></param>
+        /// <param name="uplink"> Uplink bit rate. </param>
+        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <param name="sst"> Slice/service type (SST). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnn"/>, <paramref name="qosFlow"/>, <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
         public UESessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IEnumerable<UEQosFlow> qosFlow, string uplink, string downlink, int sst)
         {
@@ -93,39 +72,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UESessionInfo5G"/>. </summary>
-        /// <param name="pduSessionId">
-        /// PDU session identifier
-        /// Serialized Name: UeSessionInfo5G.pduSessionId
-        /// </param>
-        /// <param name="dnn">
-        /// Data network name
-        /// Serialized Name: UeSessionInfo5G.dnn
-        /// </param>
-        /// <param name="pdnType">
-        /// Packet Data Network Type
-        /// Serialized Name: UeSessionInfo5G.pdnType
-        /// </param>
-        /// <param name="qosFlow"> Serialized Name: UeSessionInfo5G.qosFlow. </param>
-        /// <param name="uplink">
-        /// Uplink bit rate.
-        /// Serialized Name: UeSessionInfo5G.ambr.uplink
-        /// </param>
-        /// <param name="downlink">
-        /// Downlink bit rate.
-        /// Serialized Name: UeSessionInfo5G.ambr.downlink
-        /// </param>
-        /// <param name="ipV4Addr">
-        /// IPv4 address.
-        /// Serialized Name: UeSessionInfo5G.ueIpAddress.ipV4Addr
-        /// </param>
-        /// <param name="sst">
-        /// Slice/service type (SST).
-        /// Serialized Name: UeSessionInfo5G.snssai.sst
-        /// </param>
-        /// <param name="sd">
-        /// Slice differentiator (SD).
-        /// Serialized Name: UeSessionInfo5G.snssai.sd
-        /// </param>
+        /// <param name="pduSessionId"> PDU session identifier. </param>
+        /// <param name="dnn"> Data network name. </param>
+        /// <param name="pdnType"> Packet Data Network Type. </param>
+        /// <param name="qosFlow"></param>
+        /// <param name="uplink"> Uplink bit rate. </param>
+        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <param name="ipV4Addr"> IPv4 address. </param>
+        /// <param name="sst"> Slice/service type (SST). </param>
+        /// <param name="sd"> Slice differentiator (SD). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UESessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IList<UEQosFlow> qosFlow, string uplink, string downlink, string ipV4Addr, int sst, string sd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -146,55 +101,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// PDU session identifier
-        /// Serialized Name: UeSessionInfo5G.pduSessionId
-        /// </summary>
+        /// <summary> PDU session identifier. </summary>
         [WirePath("pduSessionId")]
         public int PduSessionId { get; set; }
-        /// <summary>
-        /// Data network name
-        /// Serialized Name: UeSessionInfo5G.dnn
-        /// </summary>
+        /// <summary> Data network name. </summary>
         [WirePath("dnn")]
         public string Dnn { get; set; }
-        /// <summary>
-        /// Packet Data Network Type
-        /// Serialized Name: UeSessionInfo5G.pdnType
-        /// </summary>
+        /// <summary> Packet Data Network Type. </summary>
         [WirePath("pdnType")]
         public PdnType PdnType { get; set; }
-        /// <summary> Serialized Name: UeSessionInfo5G.qosFlow. </summary>
+        /// <summary> Gets the qos flow. </summary>
         [WirePath("qosFlow")]
         public IList<UEQosFlow> QosFlow { get; }
-        /// <summary>
-        /// Uplink bit rate.
-        /// Serialized Name: UeSessionInfo5G.ambr.uplink
-        /// </summary>
+        /// <summary> Uplink bit rate. </summary>
         [WirePath("ambr.uplink")]
         public string Uplink { get; set; }
-        /// <summary>
-        /// Downlink bit rate.
-        /// Serialized Name: UeSessionInfo5G.ambr.downlink
-        /// </summary>
+        /// <summary> Downlink bit rate. </summary>
         [WirePath("ambr.downlink")]
         public string Downlink { get; set; }
-        /// <summary>
-        /// IPv4 address.
-        /// Serialized Name: UeSessionInfo5G.ueIpAddress.ipV4Addr
-        /// </summary>
+        /// <summary> IPv4 address. </summary>
         [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
-        /// <summary>
-        /// Slice/service type (SST).
-        /// Serialized Name: UeSessionInfo5G.snssai.sst
-        /// </summary>
+        /// <summary> Slice/service type (SST). </summary>
         [WirePath("snssai.sst")]
         public int Sst { get; set; }
-        /// <summary>
-        /// Slice differentiator (SD).
-        /// Serialized Name: UeSessionInfo5G.snssai.sd
-        /// </summary>
+        /// <summary> Slice differentiator (SD). </summary>
         [WirePath("snssai.sd")]
         public string Sd { get; set; }
     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlUserDefinedFunctionResource IOperationSource<CosmosDBSqlUserDefinedFunctionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBSqlUserDefinedFunctionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CosmosDBSqlUserDefinedFunctionResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlUserDefinedFunctionResource> IOperationSource<CosmosDBSqlUserDefinedFunctionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(document.RootElement);
-            return new CosmosDBSqlUserDefinedFunctionResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBSqlUserDefinedFunctionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            return await Task.FromResult(new CosmosDBSqlUserDefinedFunctionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

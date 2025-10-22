@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedServices.Models;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.ManagedServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedServicesRegistrationAssignmentData(document.RootElement, options);
                     }
                 default:

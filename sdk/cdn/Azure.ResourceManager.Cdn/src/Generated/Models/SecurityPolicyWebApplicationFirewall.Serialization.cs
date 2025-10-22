@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy"u8);
-                JsonSerializer.Serialize(writer, WafPolicy);
+                ((IJsonModel<WritableSubResource>)WafPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Associations))
             {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    wafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("associations"u8))
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support writing '{options.Format}' format.");
             }
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityPolicyWebApplicationFirewall(document.RootElement, options);
                     }
                 default:

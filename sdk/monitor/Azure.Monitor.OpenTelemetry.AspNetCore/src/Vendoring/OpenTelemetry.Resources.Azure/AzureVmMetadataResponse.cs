@@ -80,6 +80,8 @@ internal sealed class AzureVmMetadataResponse
             case ResourceAttributeConstants.AzureVmSku:
                 amsValue = this.Sku;
                 break;
+            default:
+                break;
         }
 
         amsValue ??= string.Empty;

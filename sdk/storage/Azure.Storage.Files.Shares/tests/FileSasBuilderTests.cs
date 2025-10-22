@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -27,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
-            ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath);
+            ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath, includeDelegatedUserObjectId: false);
             var signature = BuildSignature(includeFilePath: true, constants, shareName, filePath);
 
             string stringToSign = null;
@@ -58,7 +61,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
-            ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath);
+            ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath, includeDelegatedUserObjectId: false);
 
             // Act
             Assert.Throws<ArgumentNullException>(() => fileSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
@@ -243,7 +246,95 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        private ShareSasBuilder BuildFileSasBuilder(bool includeFilePath, TestConstants constants, string shareName, string filePath)
+        [RecordedTest]
+        public async Task SasCredentialRequiresUriWithoutSasError_RedactedSasUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSasBuilder fileSasBuilder = new ShareSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                ShareName = test.Share.Name
+            };
+
+            fileSasBuilder.SetPermissions(
+                rawPermissions: "LDWCR",
+                normalize: true);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            ShareUriBuilder fileUriBuilder = new ShareUriBuilder(test.Share.Uri)
+            {
+                Sas = fileSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            Uri sasUri = fileUriBuilder.ToUri();
+
+            UriBuilder uriBuilder = new UriBuilder(sasUri);
+            uriBuilder.Query = "[REDACTED]";
+            string redactedUri = uriBuilder.Uri.ToString();
+
+            ArgumentException ex = Errors.SasCredentialRequiresUriWithoutSas<ShareUriBuilder>(sasUri);
+
+            // Assert
+            Assert.IsTrue(ex.Message.Contains(redactedUri));
+            Assert.IsFalse(ex.Message.Contains("st="));
+            Assert.IsFalse(ex.Message.Contains("se="));
+            Assert.IsFalse(ex.Message.Contains("sig="));
+        }
+
+        [RecordedTest]
+        public void ShareSasBuilder_ToSasQuerParameters_IdentitySas()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string shareName = GetNewShareName();
+            string filePath = GetNewDirectoryName();
+            ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath, includeDelegatedUserObjectId: true);
+            string signature = BuildUserDelegationSasSignature(includeFilePath: true, constants, shareName, filePath);
+            string stringToSign = null;
+
+            // Act
+            ShareSasQueryParameters sasQueryParameters = fileSasBuilder.ToSasQueryParameters(
+                GetUserDelegationKey(constants),
+                constants.Sas.Account,
+                out stringToSign);
+
+            // Assert
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
+            Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
+            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
+            Assert.AreEqual(string.Empty, sasQueryParameters.Identifier);
+            Assert.AreEqual(constants.Sas.KeyObjectId, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTenantId, sasQueryParameters.KeyTenantId);
+            Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStartsOn);
+            Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
+            Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
+            Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
+            Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
+            Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);
+            Assert.AreEqual(constants.Sas.ContentEncoding, sasQueryParameters.ContentEncoding);
+            Assert.AreEqual(constants.Sas.ContentLanguage, sasQueryParameters.ContentLanguage);
+            Assert.AreEqual(constants.Sas.ContentType, sasQueryParameters.ContentType);
+            Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
+            Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
+            Assert.AreEqual(signature, sasQueryParameters.Signature);
+            Assert.IsNotNull(stringToSign);
+        }
+
+        private ShareSasBuilder BuildFileSasBuilder(
+            bool includeFilePath,
+            TestConstants constants,
+            string shareName,
+            string filePath,
+            bool includeDelegatedUserObjectId)
         {
             var fileSasBuilder = new ShareSasBuilder
             {
@@ -266,6 +357,11 @@ namespace Azure.Storage.Files.Shares.Tests
             if (includeFilePath)
             {
                 fileSasBuilder.FilePath = filePath;
+            }
+
+            if (includeDelegatedUserObjectId)
+            {
+                fileSasBuilder.DelegatedUserObjectId = constants.Sas.DelegatedObjectId;
             }
 
             return fileSasBuilder;
@@ -296,5 +392,60 @@ namespace Azure.Storage.Files.Shares.Tests
 
             return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
+
+        private string BuildUserDelegationSasSignature(
+            bool includeFilePath,
+            TestConstants constants,
+            string shareName,
+            string filePath)
+        {
+            string canonicalName = "/file/" + constants.Sas.Account + "/" + shareName;
+            if (includeFilePath)
+            {
+                canonicalName += "/" + filePath;
+            }
+
+            string stringToSign = string.Join("\n",
+                Permissions,
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.StartTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
+                canonicalName,
+                constants.Sas.KeyObjectId,
+                constants.Sas.KeyTenantId,
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyStart),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
+                constants.Sas.KeyService,
+                constants.Sas.KeyVersion,
+                null,
+                constants.Sas.DelegatedObjectId,
+                constants.Sas.IPRange.ToString(),
+                SasExtensions.ToProtocolString(constants.Sas.Protocol),
+                SasQueryParametersInternals.DefaultSasVersionInternal,
+                constants.Sas.CacheControl,
+                constants.Sas.ContentDisposition,
+                constants.Sas.ContentEncoding,
+                constants.Sas.ContentLanguage,
+                constants.Sas.ContentType);
+
+            return ComputeHMACSHA256(constants.Sas.KeyValue, stringToSign);
+        }
+
+        private string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
+            Convert.ToBase64String(
+                new HMACSHA256(
+                    Convert.FromBase64String(userDelegationKeyValue))
+                .ComputeHash(Encoding.UTF8.GetBytes(message)));
+
+        private static UserDelegationKey GetUserDelegationKey(TestConstants constants)
+            => new UserDelegationKey
+            {
+                SignedObjectId = constants.Sas.KeyObjectId,
+                SignedTenantId = constants.Sas.KeyTenantId,
+                SignedStartsOn = constants.Sas.KeyStart,
+                SignedExpiresOn = constants.Sas.KeyExpiry,
+                SignedService = constants.Sas.KeyService,
+                SignedVersion = constants.Sas.KeyVersion,
+                Value = constants.Sas.KeyValue
+            };
     }
 }

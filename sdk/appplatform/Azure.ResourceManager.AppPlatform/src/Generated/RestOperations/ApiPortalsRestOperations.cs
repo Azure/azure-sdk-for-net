@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformApiPortalData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformApiPortalData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiPortalResourceList.DeserializeApiPortalResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiPortalResourceList.DeserializeApiPortalResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformCustomDomainValidateResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformCustomDomainValidateResult.DeserializeAppPlatformCustomDomainValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformCustomDomainValidateResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformCustomDomainValidateResult.DeserializeAppPlatformCustomDomainValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApiPortalResourceList.DeserializeApiPortalResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ApiPortalResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApiPortalResourceList.DeserializeApiPortalResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

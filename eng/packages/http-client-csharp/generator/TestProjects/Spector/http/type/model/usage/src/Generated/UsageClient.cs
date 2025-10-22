@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Usage.Models;
 
 namespace _Type.Model.Usage
 {
@@ -21,7 +20,7 @@ namespace _Type.Model.Usage
 
         public UsageClient(Uri endpoint, UsageClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Input(RequestContent content, RequestContext context = null) => throw null;
 

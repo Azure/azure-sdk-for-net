@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBox
 {
     public partial class DataBoxJobResource : IJsonModel<DataBoxJobData>
     {
+        private static DataBoxJobData s_dataDeserializationInstance;
+        private static DataBoxJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoxJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxJobData>)Data).Write(writer, options);
 
-        DataBoxJobData IJsonModel<DataBoxJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxJobData>)Data).Create(ref reader, options);
+        DataBoxJobData IJsonModel<DataBoxJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxJobData>(Data, options, AzureResourceManagerDataBoxContext.Default);
 
-        DataBoxJobData IPersistableModel<DataBoxJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxJobData>(data, options);
+        DataBoxJobData IPersistableModel<DataBoxJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxJobData>(data, options, AzureResourceManagerDataBoxContext.Default);
 
-        string IPersistableModel<DataBoxJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

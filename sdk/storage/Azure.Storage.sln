@@ -133,8 +133,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs", "Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj", "{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement", "Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj", "{85A1E33C-4E4C-4B18-B441-FA08404983F4}"
@@ -155,9 +153,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Files.Shares.Samples.Tests", "Azure.Storage.DataMovement.Files.Shares\samples\Azure.Storage.DataMovement.Files.Shares.Samples.Tests.csproj", "{A564BB94-1867-4D43-98AB-F3C38E9AFA30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Files.Shares\BlobToFileSharesTests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{B08F17FE-7AFA-4777-B179-0FE15883EA50}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Storage", "Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj", "{6EA8939A-537F-475E-B16C-F9E80825C6AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Blobs.Files.Shares\tests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -293,10 +291,6 @@ Global
 		{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9607DA57-CA64-4CE4-9BB4-938C3EBBC9D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -337,14 +331,14 @@ Global
 		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

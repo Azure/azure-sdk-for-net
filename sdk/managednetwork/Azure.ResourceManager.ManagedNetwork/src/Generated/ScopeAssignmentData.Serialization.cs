@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScopeAssignmentData)} does not support writing '{options.Format}' format.");
             }
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScopeAssignmentData(document.RootElement, options);
                     }
                 default:

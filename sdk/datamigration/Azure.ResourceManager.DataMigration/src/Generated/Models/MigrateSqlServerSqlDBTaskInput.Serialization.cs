@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
-                writer.WriteStringValue(StartedOn);
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = default;
             MigrationValidationOptions validationOptions = default;
-            string startedOn = default;
+            DateTimeOffset? startedOn = default;
             string encryptedKeyForSecureFields = default;
-            SqlConnectionInfo sourceConnectionInfo = default;
-            SqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("startedOn"u8))
                 {
-                    startedOn = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("encryptedKeyForSecureFields"u8))
@@ -120,12 +124,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskInput)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlDBTaskInput(document.RootElement, options);
                     }
                 default:

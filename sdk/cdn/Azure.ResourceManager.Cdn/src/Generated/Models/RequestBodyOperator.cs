@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: RequestBodyOperator
+    /// </summary>
     public readonly partial struct RequestBodyOperator : IEquatable<RequestBodyOperator>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: RequestBodyOperator.Any
+        /// </summary>
         public static RequestBodyOperator Any { get; } = new RequestBodyOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: RequestBodyOperator.Equal
+        /// </summary>
         public static RequestBodyOperator Equal { get; } = new RequestBodyOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: RequestBodyOperator.Contains
+        /// </summary>
         public static RequestBodyOperator Contains { get; } = new RequestBodyOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: RequestBodyOperator.BeginsWith
+        /// </summary>
         public static RequestBodyOperator BeginsWith { get; } = new RequestBodyOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: RequestBodyOperator.EndsWith
+        /// </summary>
         public static RequestBodyOperator EndsWith { get; } = new RequestBodyOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: RequestBodyOperator.LessThan
+        /// </summary>
         public static RequestBodyOperator LessThan { get; } = new RequestBodyOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: RequestBodyOperator.LessThanOrEqual
+        /// </summary>
         public static RequestBodyOperator LessThanOrEqual { get; } = new RequestBodyOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: RequestBodyOperator.GreaterThan
+        /// </summary>
         public static RequestBodyOperator GreaterThan { get; } = new RequestBodyOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: RequestBodyOperator.GreaterThanOrEqual
+        /// </summary>
         public static RequestBodyOperator GreaterThanOrEqual { get; } = new RequestBodyOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: RequestBodyOperator.RegEx
+        /// </summary>
         public static RequestBodyOperator RegEx { get; } = new RequestBodyOperator(RegExValue);
         /// <summary> Determines if two <see cref="RequestBodyOperator"/> values are the same. </summary>
         public static bool operator ==(RequestBodyOperator left, RequestBodyOperator right) => left.Equals(right);

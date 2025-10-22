@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionResource : IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>
     {
+        private static DeviceProvisioningServicesPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static DeviceProvisioningServicesPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        DeviceProvisioningServicesPrivateEndpointConnectionData IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        DeviceProvisioningServicesPrivateEndpointConnectionData IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServicesPrivateEndpointConnectionData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        DeviceProvisioningServicesPrivateEndpointConnectionData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(data, options);
+        DeviceProvisioningServicesPrivateEndpointConnectionData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        string IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

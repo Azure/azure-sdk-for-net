@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthcareApisWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthcareApisWorkspacePatch(document.RootElement, options);
                     }
                 default:

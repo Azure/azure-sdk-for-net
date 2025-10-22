@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class IscsiPathResource : IJsonModel<IscsiPathData>
     {
+        private static IscsiPathData s_dataDeserializationInstance;
+        private static IscsiPathData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IscsiPathData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IscsiPathData>)Data).Write(writer, options);
 
-        IscsiPathData IJsonModel<IscsiPathData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IscsiPathData>)Data).Create(ref reader, options);
+        IscsiPathData IJsonModel<IscsiPathData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IscsiPathData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IscsiPathData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IscsiPathData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IscsiPathData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        IscsiPathData IPersistableModel<IscsiPathData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IscsiPathData>(data, options);
+        IscsiPathData IPersistableModel<IscsiPathData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IscsiPathData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<IscsiPathData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IscsiPathData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IscsiPathData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IscsiPathData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

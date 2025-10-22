@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_11_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_11_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_08_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -241,7 +241,7 @@ namespace Azure.Search.Documents.Tests.Samples
                                 new SearchableField("StreetAddress"),
                                 new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                                 new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                                new SearchableField("Country") { SynonymMapNames = new[] { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                                new SearchableField("Country") { SynonymMapNames = { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
                                 new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
                             }
                         }

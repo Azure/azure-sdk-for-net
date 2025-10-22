@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-02-preview";
+            _apiVersion = apiVersion ?? "2025-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Get a AutoUpgradeProfile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Get a AutoUpgradeProfile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Create a AutoUpgradeProfile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Create a AutoUpgradeProfile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Delete a AutoUpgradeProfile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Delete a AutoUpgradeProfile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         AutoUpgradeProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

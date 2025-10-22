@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Marketplace
 {
+    public partial class AzureResourceManagerMarketplaceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMarketplaceContext() { }
+        public static Azure.ResourceManager.Marketplace.AzureResourceManagerMarketplaceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MarketplaceAdminApprovalRequestCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>, System.Collections.IEnumerable
     {
         protected MarketplaceAdminApprovalRequestCollection() { }

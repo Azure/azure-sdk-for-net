@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <PackageIcon>Icon.png</PackageIcon>
-    <RequiredTargetFrameworks>net6.0</RequiredTargetFrameworks>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     <Version>1.0.0-beta.1</Version>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,9 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="System.Formats.Asn1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
     <PackageReference Include="System.ServiceModel.Primitives" GeneratePathProperty="true" />
   </ItemGroup>
 

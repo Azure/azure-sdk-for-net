@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafRankingGroupBy. </summary>
+    /// <summary>
+    /// The WafRankingGroupBy.
+    /// Serialized Name: WafRankingGroupBy
+    /// </summary>
     public readonly partial struct WafRankingGroupBy : IEquatable<WafRankingGroupBy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpStatusCodeValue = "httpStatusCode";
         private const string CustomDomainValue = "customDomain";
 
-        /// <summary> httpStatusCode. </summary>
+        /// <summary>
+        /// httpStatusCode
+        /// Serialized Name: WafRankingGroupBy.httpStatusCode
+        /// </summary>
         public static WafRankingGroupBy HttpStatusCode { get; } = new WafRankingGroupBy(HttpStatusCodeValue);
-        /// <summary> customDomain. </summary>
+        /// <summary>
+        /// customDomain
+        /// Serialized Name: WafRankingGroupBy.customDomain
+        /// </summary>
         public static WafRankingGroupBy CustomDomain { get; } = new WafRankingGroupBy(CustomDomainValue);
         /// <summary> Determines if two <see cref="WafRankingGroupBy"/> values are the same. </summary>
         public static bool operator ==(WafRankingGroupBy left, WafRankingGroupBy right) => left.Equals(right);

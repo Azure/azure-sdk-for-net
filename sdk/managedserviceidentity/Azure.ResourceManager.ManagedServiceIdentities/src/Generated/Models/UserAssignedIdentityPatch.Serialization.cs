@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
             }
+            if (Optional.IsDefined(IsolationScope))
+            {
+                writer.WritePropertyName("isolationScope"u8);
+                writer.WriteStringValue(IsolationScope.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             Guid? tenantId = default;
             Guid? principalId = default;
             Guid? clientId = default;
+            IsolationScope? isolationScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +137,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedServiceIdentitiesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -170,6 +176,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                             clientId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("isolationScope"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isolationScope = new IsolationScope(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -189,6 +204,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 tenantId,
                 principalId,
                 clientId,
+                isolationScope,
                 serializedAdditionalRawData);
         }
 
@@ -352,6 +368,21 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsolationScope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isolationScope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsolationScope))
+                {
+                    builder.Append("    isolationScope: ");
+                    builder.AppendLine($"'{IsolationScope.Value.ToString()}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -364,7 +395,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -380,7 +411,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUserAssignedIdentityPatch(document.RootElement, options);
                     }
                 default:

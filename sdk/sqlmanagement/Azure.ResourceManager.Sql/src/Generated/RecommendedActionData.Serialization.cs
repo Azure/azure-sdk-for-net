@@ -181,26 +181,14 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ActionDetails))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
-                foreach (var item in Details)
+                foreach (var item in ActionDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -255,7 +243,7 @@ namespace Azure.ResourceManager.Sql
             IReadOnlyList<RecommendedActionImpactRecord> observedImpact = default;
             IReadOnlyList<RecommendedActionMetricInfo> timeSeries = default;
             IReadOnlyList<string> linkedObjects = default;
-            IReadOnlyDictionary<string, BinaryData> details = default;
+            IReadOnlyDictionary<string, string> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +283,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -527,17 +515,10 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
                             details = dictionary;
                             continue;
@@ -580,7 +561,7 @@ namespace Azure.ResourceManager.Sql
                 observedImpact ?? new ChangeTrackingList<RecommendedActionImpactRecord>(),
                 timeSeries ?? new ChangeTrackingList<RecommendedActionMetricInfo>(),
                 linkedObjects ?? new ChangeTrackingList<string>(),
-                details ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                details ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
@@ -1082,7 +1063,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionDetails), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    details: ");
@@ -1090,13 +1071,13 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsCollectionDefined(Details))
+                if (Optional.IsCollectionDefined(ActionDetails))
                 {
-                    if (Details.Any())
+                    if (ActionDetails.Any())
                     {
                         builder.Append("    details: ");
                         builder.AppendLine("{");
-                        foreach (var item in Details)
+                        foreach (var item in ActionDetails)
                         {
                             builder.Append($"        '{item.Key}': ");
                             if (item.Value == null)
@@ -1104,7 +1085,15 @@ namespace Azure.ResourceManager.Sql
                                 builder.Append("null");
                                 continue;
                             }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
                         }
                         builder.AppendLine("    }");
                     }
@@ -1123,7 +1112,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1139,7 +1128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRecommendedActionData(document.RootElement, options);
                     }
                 default:

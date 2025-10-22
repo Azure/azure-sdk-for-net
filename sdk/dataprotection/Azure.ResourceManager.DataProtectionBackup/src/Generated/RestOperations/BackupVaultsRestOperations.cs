@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns a resource belonging to a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupVaultData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns a resource belonging to a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupVaultData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Creates or updates a BackupVault resource belonging to a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Creates or updates a BackupVault resource belonging to a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -388,92 +388,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                 case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vaultName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
-            uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vaultName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
-            uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes a BackupVault resource from the resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a BackupVault resource from the resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -525,7 +439,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Updates a BackupVault resource belonging to a resource group. For example, updating tags for a resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -553,7 +467,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Updates a BackupVault resource belonging to a resource group. For example, updating tags for a resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the backup vault. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
         /// <param name="patch"> Request body for operation. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -572,6 +486,92 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 case 200:
                 case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a BackupVault resource from the resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a BackupVault resource from the resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> API to check for resource name availability. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProtectionBackupNameAvailabilityResult.DeserializeDataProtectionBackupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> API to check for resource name availability. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProtectionBackupNameAvailabilityResult.DeserializeDataProtectionBackupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BackupVaultResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupVaultResourceList.DeserializeBackupVaultResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

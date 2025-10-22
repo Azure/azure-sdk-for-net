@@ -6,45 +6,49 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.Vision.ImageAnalysis;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="ImageAnalysisClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class AIVisionImageAnalysisClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="ImageAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ImageAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
-        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public static IAzureClientBuilder<ImageAnalysisClient, ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<ImageAnalysisClient, ImageAnalysisClientOptions>((options) => new ImageAnalysisClient(endpoint, credential, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<ImageAnalysisClient, ImageAnalysisClientOptions>(options => new ImageAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="ImageAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ImageAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
-        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<ImageAnalysisClient, ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<ImageAnalysisClient, ImageAnalysisClientOptions>((options, cred) => new ImageAnalysisClient(endpoint, cred, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<ImageAnalysisClient, ImageAnalysisClientOptions>((options, credential) => new ImageAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="ImageAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ImageAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<ImageAnalysisClient, ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ImageAnalysisClient, ImageAnalysisClientOptions>(configuration);
         }

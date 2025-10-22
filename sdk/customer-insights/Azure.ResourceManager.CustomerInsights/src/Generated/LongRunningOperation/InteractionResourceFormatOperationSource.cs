@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CustomerInsights
 
         InteractionResourceFormatResource IOperationSource<InteractionResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(document.RootElement);
+            var data = ModelReaderWriter.Read<InteractionResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
             return new InteractionResourceFormatResource(_client, data);
         }
 
         async ValueTask<InteractionResourceFormatResource> IOperationSource<InteractionResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(document.RootElement);
-            return new InteractionResourceFormatResource(_client, data);
+            var data = ModelReaderWriter.Read<InteractionResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
+            return await Task.FromResult(new InteractionResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

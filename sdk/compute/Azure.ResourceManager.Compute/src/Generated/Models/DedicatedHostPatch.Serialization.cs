@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             virtualMachines = array;
                             continue;
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DedicatedHostPatch)} does not support writing '{options.Format}' format.");
             }
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDedicatedHostPatch(document.RootElement, options);
                     }
                 default:

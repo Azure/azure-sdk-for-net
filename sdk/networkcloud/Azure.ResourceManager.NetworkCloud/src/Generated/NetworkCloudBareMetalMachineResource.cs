@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,9 +193,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -203,8 +205,8 @@ namespace Azure.ResourceManager.NetworkCloud
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -239,9 +241,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -249,8 +253,8 @@ namespace Azure.ResourceManager.NetworkCloud
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +322,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,7 +365,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,7 +408,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,7 +451,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -489,7 +493,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -531,7 +535,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -574,7 +578,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -617,7 +621,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -659,7 +663,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -701,7 +705,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -747,7 +751,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -793,7 +797,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -802,19 +806,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="bareMetalMachineRunDataExtractsParameters"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(bareMetalMachineRunDataExtractsParameters, nameof(bareMetalMachineRunDataExtractsParameters));
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -839,7 +843,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -848,19 +852,111 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="bareMetalMachineRunDataExtractsParameters"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtracts(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsParameters"/> is null. </exception>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtracts(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(bareMetalMachineRunDataExtractsParameters, nameof(bareMetalMachineRunDataExtractsParameters));
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtracts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtracts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Run one or more restricted data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtractsRestricted</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachines_RunDataExtractsRestricted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="bareMetalMachineRunDataExtractsRestrictedParameters"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsRestrictedParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsRestrictedAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(bareMetalMachineRunDataExtractsRestrictedParameters, nameof(bareMetalMachineRunDataExtractsRestrictedParameters));
+
+            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestrictedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Run one or more restricted data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtractsRestricted</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachines_RunDataExtractsRestricted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="bareMetalMachineRunDataExtractsRestrictedParameters"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsRestrictedParameters"/> is null. </exception>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtractsRestricted(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(bareMetalMachineRunDataExtractsRestrictedParameters, nameof(bareMetalMachineRunDataExtractsRestrictedParameters));
+
+            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestricted(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -885,7 +981,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -931,7 +1027,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -977,7 +1073,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1019,7 +1115,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1061,7 +1157,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1103,7 +1199,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1145,7 +1241,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1207,7 +1303,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1269,7 +1365,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1326,7 +1422,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1383,7 +1479,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1443,7 +1539,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

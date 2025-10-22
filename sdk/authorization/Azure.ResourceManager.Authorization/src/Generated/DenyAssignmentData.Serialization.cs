@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAuthorizationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Authorization
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDenyAssignmentData(document.RootElement, options);
                     }
                 default:

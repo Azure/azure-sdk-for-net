@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the PacketCoreDataPlane data model.
     /// Packet core data plane resource. Must be created in the same location as its parent packet core control plane.
-    /// Serialized Name: PacketCoreDataPlane
     /// </summary>
     public partial class PacketCoreDataPlaneData : TrackedResourceData
     {
@@ -54,10 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreDataPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="userPlaneAccessInterface">
-        /// The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessInterface
-        /// </param>
+        /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneAccessInterface"/> is null. </exception>
         public PacketCoreDataPlaneData(AzureLocation location, MobileNetworkInterfaceProperties userPlaneAccessInterface) : base(location)
         {
@@ -74,18 +70,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet core data plane resource.
-        /// Serialized Name: PacketCoreDataPlane.properties.provisioningState
-        /// </param>
-        /// <param name="userPlaneAccessInterface">
-        /// The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessInterface
-        /// </param>
-        /// <param name="userPlaneAccessVirtualIPv4Addresses">
-        /// The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessVirtualIpv4Addresses
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core data plane resource. </param>
+        /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
+        /// <param name="userPlaneAccessVirtualIPv4Addresses"> The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface, IList<string> userPlaneAccessVirtualIPv4Addresses, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -100,22 +87,13 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary>
-        /// The provisioning state of the packet core data plane resource.
-        /// Serialized Name: PacketCoreDataPlane.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the packet core data plane resource. </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessInterface
-        /// </summary>
+        /// <summary> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </summary>
         [WirePath("properties.userPlaneAccessInterface")]
         public MobileNetworkInterfaceProperties UserPlaneAccessInterface { get; set; }
-        /// <summary>
-        /// The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty.
-        /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessVirtualIpv4Addresses
-        /// </summary>
+        /// <summary> The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty. </summary>
         [WirePath("properties.userPlaneAccessVirtualIpv4Addresses")]
         public IList<string> UserPlaneAccessVirtualIPv4Addresses { get; }
     }

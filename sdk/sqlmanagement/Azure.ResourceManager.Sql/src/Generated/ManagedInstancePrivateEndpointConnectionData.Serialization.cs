@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerSqlContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

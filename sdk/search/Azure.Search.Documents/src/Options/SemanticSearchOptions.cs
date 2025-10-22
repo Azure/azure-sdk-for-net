@@ -44,14 +44,11 @@ namespace Azure.Search.Documents.Models
         internal string SemanticFieldsRaw
         {
             get => SemanticFields.CommaJoin();
-            set => SemanticFields = SearchExtensions.CommaSplit(value);
+            set => SemanticFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </summary>
         public string SemanticQuery { get; set; }
-
-        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
-        public QueryDebugMode? Debug { get; set; }
 
         /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
         public SemanticErrorMode? ErrorMode { get; set; }

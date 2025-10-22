@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 throw new FormatException($"The model {nameof(VaultPropertiesRedundancySettings)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(StandardTierStorageRedundancy))
+            if (Optional.IsDefined(StandardTierStorageRedundancy))
             {
                 writer.WritePropertyName("standardTierStorageRedundancy"u8);
                 writer.WriteStringValue(StandardTierStorageRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CrossRegionRestore))
+            if (Optional.IsDefined(CrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestore"u8);
                 writer.WriteStringValue(CrossRegionRestore.Value.ToString());
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VaultPropertiesRedundancySettings)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVaultPropertiesRedundancySettings(document.RootElement, options);
                     }
                 default:

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,6 +205,153 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetResourceId))
+                {
+                    builder.Append("  targetResourceId: ");
+                    builder.AppendLine($"'{TargetResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TrafficAnalyticsConfiguration", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  flowAnalyticsConfiguration: ");
+                builder.AppendLine("{");
+                builder.Append("    networkWatcherFlowAnalyticsConfiguration: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FlowAnalyticsConfiguration))
+                {
+                    builder.Append("  flowAnalyticsConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FlowAnalyticsConfiguration, options, 2, false, "  flowAnalyticsConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageId))
+                {
+                    builder.Append("    storageId: ");
+                    builder.AppendLine($"'{StorageId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledFilteringCriteria), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabledFilteringCriteria: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnabledFilteringCriteria))
+                {
+                    builder.Append("    enabledFilteringCriteria: ");
+                    if (EnabledFilteringCriteria.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnabledFilteringCriteria}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnabledFilteringCriteria}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("    enabled: ");
+                var boolValue = Enabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    retentionPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionPolicy))
+                {
+                    builder.Append("    retentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RetentionPolicy, options, 4, false, "    retentionPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    format: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Format))
+                {
+                    builder.Append("    format: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Format, options, 4, false, "    format: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FlowLogInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlowLogInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -211,7 +359,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlowLogInformation)} does not support writing '{options.Format}' format.");
             }
@@ -225,7 +375,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFlowLogInformation(document.RootElement, options);
                     }
                 default:

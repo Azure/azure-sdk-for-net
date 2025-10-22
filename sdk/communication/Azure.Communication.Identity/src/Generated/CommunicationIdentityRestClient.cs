@@ -20,7 +20,7 @@ namespace Azure.Communication.Identity
     internal partial class CommunicationIdentityRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Communication.Identity
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-10-01")
+        public CommunicationIdentityRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-03-02-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -40,13 +40,13 @@ namespace Azure.Communication.Identity
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
+        internal HttpMessage CreateCreateRequest(string customId, IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/identities", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -54,6 +54,7 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Content-Type", "application/json");
             CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest()
             {
+                CustomId = customId,
                 ExpiresInMinutes = expiresInMinutes
             };
             if (createTokenWithScopes != null)
@@ -70,20 +71,21 @@ namespace Azure.Communication.Identity
             return message;
         }
 
-        /// <summary> Create a new identity, and optionally, an access token. </summary>
+        /// <summary> Create a new identity with an optional customId mapping, and optionally, an access token. If called again with the same customId, the returned identity will be the same as the one returned previously. </summary>
+        /// <param name="customId"> Set to tag the identity with your own id, Maximum length is 256 characters. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(string customId = null, IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
+            using var message = CreateCreateRequest(customId, createTokenWithScopes, expiresInMinutes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 201:
                     {
                         CommunicationUserIdentifierAndToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationUserIdentifierAndToken.DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -92,20 +94,21 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary> Create a new identity, and optionally, an access token. </summary>
+        /// <summary> Create a new identity with an optional customId mapping, and optionally, an access token. If called again with the same customId, the returned identity will be the same as the one returned previously. </summary>
+        /// <param name="customId"> Set to tag the identity with your own id, Maximum length is 256 characters. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationUserIdentifierAndToken> Create(string customId = null, IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
+            using var message = CreateCreateRequest(customId, createTokenWithScopes, expiresInMinutes);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 201:
                     {
                         CommunicationUserIdentifierAndToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationUserIdentifierAndToken.DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,7 +123,7 @@ namespace Azure.Communication.Identity
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -173,13 +176,82 @@ namespace Azure.Communication.Identity
             }
         }
 
+        internal HttpMessage CreateGetRequest(string id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/identities/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get an identity by its id. </summary>
+        /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<CommunicationIdentity>> GetAsync(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationIdentity value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CommunicationIdentity.DeserializeCommunicationIdentity(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get an identity by its id. </summary>
+        /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<CommunicationIdentity> Get(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationIdentity value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CommunicationIdentity.DeserializeCommunicationIdentity(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateRevokeAccessTokensRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/:revokeAccessTokens", false);
@@ -239,7 +311,7 @@ namespace Azure.Communication.Identity
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/teamsUser/:exchangeAccessToken", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -252,10 +324,10 @@ namespace Azure.Communication.Identity
             return message;
         }
 
-        /// <summary> Exchange an Azure Active Directory (Azure AD) access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
-        /// <param name="token"> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </param>
-        /// <param name="appId"> Client ID of an Azure AD application to be verified against the appid claim in the Azure AD access token. </param>
-        /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
+        /// <summary> Exchange an Entra ID access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
+        /// <param name="token"> Entra ID access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <param name="appId"> Client ID of an Entra ID application to be verified against the appid claim in the Entra ID access token. </param>
+        /// <param name="userId"> Object ID of an Entra ID user (Teams User) to be verified against the oid claim in the Entra ID access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
         public async Task<Response<CommunicationIdentityAccessToken>> ExchangeTeamsUserAccessTokenAsync(string token, string appId, string userId, CancellationToken cancellationToken = default)
@@ -280,7 +352,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,10 +361,10 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary> Exchange an Azure Active Directory (Azure AD) access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
-        /// <param name="token"> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </param>
-        /// <param name="appId"> Client ID of an Azure AD application to be verified against the appid claim in the Azure AD access token. </param>
-        /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
+        /// <summary> Exchange an Entra ID access token of a Teams user for a new Communication Identity access token with a matching expiration time. </summary>
+        /// <param name="token"> Entra ID access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <param name="appId"> Client ID of an Entra ID application to be verified against the appid claim in the Entra ID access token. </param>
+        /// <param name="userId"> Object ID of an Entra ID user (Teams User) to be verified against the oid claim in the Entra ID access token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
         public Response<CommunicationIdentityAccessToken> ExchangeTeamsUserAccessToken(string token, string appId, string userId, CancellationToken cancellationToken = default)
@@ -317,7 +389,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +404,7 @@ namespace Azure.Communication.Identity
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/identities/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/:issueAccessToken", false);
@@ -374,7 +446,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +479,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

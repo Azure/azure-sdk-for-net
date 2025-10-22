@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids. </summary>
-        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids. </summary>
-        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Get problem classification details for a specific Azure service. </summary>
-        /// <param name="serviceName"> Name of the Azure service available for support. </param>
+        /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="problemClassificationName"/> is null. </exception>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProblemClassificationData.DeserializeProblemClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Get problem classification details for a specific Azure service. </summary>
-        /// <param name="serviceName"> Name of the Azure service available for support. </param>
+        /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="problemClassificationName"/> is null. </exception>
@@ -191,12 +191,88 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProblemClassificationData.DeserializeProblemClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
                     return Response.FromValue((ProblemClassificationData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string serviceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ProblemClassificationsListResult>> ListNextPageAsync(string nextLink, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            using var message = CreateListNextPageRequest(nextLink, serviceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ProblemClassificationsListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ProblemClassificationsListResult> ListNextPage(string nextLink, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            using var message = CreateListNextPageRequest(nextLink, serviceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ProblemClassificationsListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkResourceListResult.DeserializeSynapsePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkResourceListResult.DeserializeSynapsePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkResourceData.DeserializeSynapsePrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkResourceData.DeserializeSynapsePrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapsePrivateLinkResourceListResult.DeserializeSynapsePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapsePrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapsePrivateLinkResourceListResult.DeserializeSynapsePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

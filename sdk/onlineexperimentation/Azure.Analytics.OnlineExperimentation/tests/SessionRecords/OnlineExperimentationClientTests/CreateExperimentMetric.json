@@ -1,0 +1,108 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metri?api-version=2025-05-31-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4e9eb4e7c0817913a050af726574a0b8-0d9d032eb31cd1e5-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Date": "Thu, 01 May 2025 04:34:32 GMT",
+        "mise-correlation-id": "3073a779-d95e-4999-9eff-f9efacec3357",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "114f5894-a411-48bc-bb56-d1c3734d90b0",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metri?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "229",
+        "Content-Type": "application/merge-patch+json",
+        "If-None-Match": "*",
+        "traceparent": "00-bb00d379819ea24afcfef2349cc99090-dc833f107f9285f9-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "New Test Metric",
+        "description": "A metric created for testing purposes",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "326",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:34:33 GMT",
+        "ETag": "\"YG7X7NypAo8=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:34:33 GMT",
+        "Location": "/workspaces/3498ec60-ff3f-4fb4-8064-bfcf8de553aa/experiment-metrics/test_metri",
+        "mise-correlation-id": "ea5e0d65-2288-4248-aacc-2e983d295d0e",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "4168a057-71ec-4b13-a12e-87ee888660e6",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metri",
+        "displayName": "New Test Metric",
+        "description": "A metric created for testing purposes",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"YG7X7NypAo8=\"",
+        "lastModifiedAt": "2025-05-01T04:34:33.0330161+00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "1970534699"
+  }
+}

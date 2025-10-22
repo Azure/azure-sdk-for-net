@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-08-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryRecoveryPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryRecoveryPlanListResult.DeserializeSiteRecoveryRecoveryPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryRecoveryPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryRecoveryPlanListResult.DeserializeSiteRecoveryRecoveryPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryRecoveryPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryRecoveryPlanData.DeserializeSiteRecoveryRecoveryPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryRecoveryPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryRecoveryPlanData.DeserializeSiteRecoveryRecoveryPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return message;
         }
 
-        /// <summary> The operation to reprotect(reverse replicate) a recovery plan. </summary>
+        /// <summary> The operation to reprotect(reverse replicate) a recovery plan. This api is for deprecated scenarios and no longer works. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        /// <summary> The operation to reprotect(reverse replicate) a recovery plan. </summary>
+        /// <summary> The operation to reprotect(reverse replicate) a recovery plan. This api is for deprecated scenarios and no longer works. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryRecoveryPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryRecoveryPlanListResult.DeserializeSiteRecoveryRecoveryPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1290,7 +1290,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryRecoveryPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryRecoveryPlanListResult.DeserializeSiteRecoveryRecoveryPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

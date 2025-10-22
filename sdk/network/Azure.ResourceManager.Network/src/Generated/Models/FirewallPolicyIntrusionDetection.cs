@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Intrusion detection general state. When attached to a parent policy, the firewall's effective IDPS mode is the stricter mode of the two. </summary>
+        [WirePath("mode")]
         public FirewallPolicyIntrusionDetectionStateType? Mode { get; set; }
         /// <summary> IDPS profile name. When attached to a parent policy, the firewall's effective profile is the profile name of the parent policy. </summary>
+        [WirePath("profile")]
         public FirewallPolicyIntrusionDetectionProfileType? Profile { get; set; }
         /// <summary> Intrusion detection configuration properties. </summary>
+        [WirePath("configuration")]
         public FirewallPolicyIntrusionDetectionConfiguration Configuration { get; set; }
     }
 }

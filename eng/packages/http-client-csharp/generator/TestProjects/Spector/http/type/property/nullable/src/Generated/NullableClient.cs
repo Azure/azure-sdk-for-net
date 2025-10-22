@@ -16,7 +16,7 @@ namespace _Type.Property.Nullable
 
         public NullableClient(Uri endpoint, NullableClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual String GetStringClient() => throw null;
 

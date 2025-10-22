@@ -1,71 +1,81 @@
 {
- "$id": "1",
- "Name": "Server.Endpoint.NotDefined",
- "ApiVersions": [],
- "Enums": [],
- "Models": [],
- "Clients": [
-  {
-   "$id": "2",
-   "Name": "NotDefinedClient",
-   "ClientNamespace": "Server.Endpoint.NotDefined",
-   "Doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
-   "Operations": [
+  "name": "Server.Endpoint.NotDefined",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [],
+  "models": [],
+  "clients": [
     {
-     "$id": "3",
-     "Name": "valid",
-     "ResourceName": "NotDefined",
-     "Accessibility": "public",
-     "Parameters": [],
-     "Responses": [
-      {
-       "$id": "4",
-       "StatusCodes": [
-        200
-       ],
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "HEAD",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/server/endpoint/not-defined/valid",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
-     "Decorators": []
+      "$id": "1",
+      "kind": "client",
+      "name": "NotDefinedClient",
+      "namespace": "Server.Endpoint.NotDefined",
+      "doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
+      "methods": [
+        {
+          "$id": "2",
+          "kind": "basic",
+          "name": "valid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "3",
+            "name": "valid",
+            "resourceName": "NotDefined",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "HEAD",
+            "uri": "{endpoint}",
+            "path": "/server/endpoint/not-defined/valid",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "4",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "5",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
+      "apiVersions": []
     }
-   ],
-   "Protocol": {
-    "$id": "5"
-   },
-   "Parameters": [
-    {
-     "$id": "6",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "7",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client"
-    }
-   ],
-   "Decorators": []
-  }
- ]
+  ]
 }

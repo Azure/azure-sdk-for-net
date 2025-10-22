@@ -74,6 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteObjectValue<object>(ArtifactId);
             }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -104,6 +109,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 writer.WriteObjectValue(ServicePrincipalCredential);
             }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -127,12 +137,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IList<object> annotations = default;
             object workspaceId = default;
             object artifactId = default;
+            LakehouseAuthenticationType? authenticationType = default;
             object servicePrincipalId = default;
             SecretBase servicePrincipalKey = default;
             object tenant = default;
             string encryptedCredential = default;
             object servicePrincipalCredentialType = default;
             SecretBase servicePrincipalCredential = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -223,6 +235,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             artifactId = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationType = new LakehouseAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("servicePrincipalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -273,6 +294,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             servicePrincipalCredential = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -289,19 +319,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties,
                 workspaceId,
                 artifactId,
+                authenticationType,
                 servicePrincipalId,
                 servicePrincipalKey,
                 tenant,
                 encryptedCredential,
                 servicePrincipalCredentialType,
-                servicePrincipalCredential);
+                servicePrincipalCredential,
+                credential);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new LakeHouseLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLakeHouseLinkedService(document.RootElement);
         }
 

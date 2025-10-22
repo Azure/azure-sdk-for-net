@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         DeleteInvoiceSectionEligibilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeleteInvoiceSectionEligibilityResult.DeserializeDeleteInvoiceSectionEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         DeleteInvoiceSectionEligibilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeleteInvoiceSectionEligibilityResult.DeserializeDeleteInvoiceSectionEligibilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingInvoiceSectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingInvoiceSectionData.DeserializeBillingInvoiceSectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingInvoiceSectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingInvoiceSectionData.DeserializeBillingInvoiceSectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InvoiceSectionListResult.DeserializeInvoiceSectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InvoiceSectionListResult.DeserializeInvoiceSectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InvoiceSectionListResult.DeserializeInvoiceSectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         InvoiceSectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InvoiceSectionListResult.DeserializeInvoiceSectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Grafana
 
         ManagedPrivateEndpointModelResource IOperationSource<ManagedPrivateEndpointModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return new ManagedPrivateEndpointModelResource(_client, data);
         }
 
         async ValueTask<ManagedPrivateEndpointModelResource> IOperationSource<ManagedPrivateEndpointModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(document.RootElement);
-            return new ManagedPrivateEndpointModelResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            return await Task.FromResult(new ManagedPrivateEndpointModelResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

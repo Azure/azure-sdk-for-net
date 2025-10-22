@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMaintenanceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.Maintenance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
             }
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMaintenanceConfigurationData(document.RootElement, options);
                     }
                 default:

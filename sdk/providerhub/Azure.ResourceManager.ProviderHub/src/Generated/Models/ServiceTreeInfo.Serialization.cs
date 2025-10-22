@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
             }
+            if (Optional.IsDefined(Readiness))
+            {
+                writer.WritePropertyName("readiness"u8);
+                writer.WriteStringValue(Readiness.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string serviceId = default;
             string componentId = default;
+            ServiceTreeReadiness? readiness = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,13 +103,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     componentId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("readiness"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    readiness = new ServiceTreeReadiness(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceTreeInfo(serviceId, componentId, serializedAdditionalRawData);
+            return new ServiceTreeInfo(serviceId, componentId, readiness, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTreeInfo>.Write(ModelReaderWriterOptions options)
@@ -113,7 +128,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support writing '{options.Format}' format.");
             }
@@ -127,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceTreeInfo(document.RootElement, options);
                     }
                 default:

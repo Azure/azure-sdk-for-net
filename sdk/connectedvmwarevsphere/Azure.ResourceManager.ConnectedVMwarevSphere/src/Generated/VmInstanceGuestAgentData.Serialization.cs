@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support writing '{options.Format}' format.");
             }
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVmInstanceGuestAgentData(document.RootElement, options);
                     }
                 default:

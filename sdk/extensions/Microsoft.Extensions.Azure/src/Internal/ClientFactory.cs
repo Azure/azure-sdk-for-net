@@ -10,6 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Azure.Core;
 using Azure.Identity;
+using Microsoft.Extensions.Azure.Internal;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.Azure
@@ -30,14 +31,14 @@ namespace Microsoft.Extensions.Azure
         {
             List<object> arguments = new List<object>();
             // Handle single values as connection strings
-            if (configuration is IConfigurationSection section && section.Value != null)
+            if (configuration is IConfigurationSection section && (!string.IsNullOrEmpty(section.Value)))
             {
                 var connectionString = section.Value;
                 configuration = new ConfigurationBuilder()
-                    .AddInMemoryCollection(new[]
-                    {
+                    .AddInMemoryCollection(
+                    [
                         new KeyValuePair<string, string>(ConnectionStringParameterName, connectionString)
-                    })
+                    ])
                     .Build();
             }
             foreach (var constructor in clientType.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
@@ -96,15 +97,21 @@ namespace Microsoft.Extensions.Azure
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
+            var serviceConnectionId = configuration["serviceConnectionId"];
             var resourceId = configuration["managedIdentityResourceId"];
             var objectId = configuration["managedIdentityObjectId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
+            var systemAccessToken = configuration["systemAccessToken"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
             var tokenFilePath = configuration["tokenFilePath"];
+            var azureCloud = configuration["azureCloud"];
+            var managedIdentityClientId = configuration["managedIdentityClientId"];
+
             IEnumerable<string> additionallyAllowedTenantsList = null;
+
             if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
             {
                 // not relying on StringSplitOptions.RemoveEmptyEntries as we want to remove leading/trailing whitespace between entries
@@ -115,15 +122,7 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
-                int idCount = 0;
-                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
-                idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
-                idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
-
-                if (idCount > 1)
-                {
-                    throw new ArgumentException("Only one of either 'clientId', 'managedIdentityResourceId', or 'managedIdentityObjectId' can be specified for managed identity.");
-                }
+                AssertSingleManagedIdentityIdentifier(clientId, managedIdentityClientId, resourceId, objectId, isFederated: false);
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
@@ -135,6 +134,11 @@ namespace Microsoft.Extensions.Azure
                     return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedObjectId(objectId));
                 }
 
+                if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
+                {
+                    return new ManagedIdentityCredential(managedIdentityClientId);
+                }
+
                 return new ManagedIdentityCredential(clientId);
             }
 
@@ -143,6 +147,7 @@ namespace Microsoft.Extensions.Azure
                 // The WorkloadIdentityCredentialOptions object initialization populates its instance members
                 // from the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_FEDERATED_TOKEN_FILE
                 var workloadIdentityOptions = new WorkloadIdentityCredentialOptions();
+
                 if (!string.IsNullOrWhiteSpace(tenantId))
                 {
                     workloadIdentityOptions.TenantId = tenantId;
@@ -158,6 +163,14 @@ namespace Microsoft.Extensions.Azure
                     workloadIdentityOptions.TokenFilePath = tokenFilePath;
                 }
 
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        workloadIdentityOptions.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(workloadIdentityOptions.TenantId) &&
                     !string.IsNullOrWhiteSpace(workloadIdentityOptions.ClientId) &&
                     !string.IsNullOrWhiteSpace(workloadIdentityOptions.TokenFilePath))
@@ -168,11 +181,62 @@ namespace Microsoft.Extensions.Azure
                 throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
             }
 
+            if (string.Equals(credentialType, "managedidentityasfederatedidentity", StringComparison.OrdinalIgnoreCase))
+            {
+                AssertSingleManagedIdentityIdentifier(clientId, managedIdentityClientId, resourceId, objectId, isFederated: true);
+
+                if (string.IsNullOrWhiteSpace(tenantId) ||
+                    string.IsNullOrWhiteSpace(clientId) ||
+                    string.IsNullOrWhiteSpace(azureCloud))
+                {
+                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'resourceId', 'objectId'] must be specified via environment variables or the configuration.");
+                }
+
+                if (!string.IsNullOrWhiteSpace(resourceId))
+                {
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(resourceId)), azureCloud, additionallyAllowedTenantsList);
+                }
+
+                if (!string.IsNullOrWhiteSpace(objectId))
+                {
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedObjectId(objectId), azureCloud, additionallyAllowedTenantsList);
+                }
+
+                if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
+                {
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedClientId(managedIdentityClientId), azureCloud, additionallyAllowedTenantsList);
+                }
+            }
+
+            if (string.Equals(credentialType, "azurepipelines", StringComparison.OrdinalIgnoreCase))
+            {
+                if (string.IsNullOrWhiteSpace(tenantId) ||
+                    string.IsNullOrWhiteSpace(clientId) ||
+                    string.IsNullOrWhiteSpace(serviceConnectionId) ||
+                    string.IsNullOrWhiteSpace(systemAccessToken))
+                {
+                    throw new ArgumentException("For Azure Pipelines, 'tenantId', 'clientId', 'serviceConnectionId', and 'systemAccessToken' must be specified via the configuration.");
+                }
+
+                var options = new AzurePipelinesCredentialOptions();
+
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+
+                return new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
+            }
+
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
             {
                 var options = new ClientSecretCredentialOptions();
+
                 if (additionallyAllowedTenantsList != null)
                 {
                     foreach (string tenant in additionallyAllowedTenantsList)
@@ -224,8 +288,6 @@ namespace Microsoft.Extensions.Azure
                 return credential;
             }
 
-            // TODO: More logging
-
             if (!string.IsNullOrWhiteSpace(objectId))
             {
                 throw new ArgumentException("'managedIdentityObjectId' is only supported when the credential type is 'managedidentity'.");
@@ -234,9 +296,11 @@ namespace Microsoft.Extensions.Azure
             if (additionallyAllowedTenantsList != null
                 || !string.IsNullOrWhiteSpace(tenantId)
                 || !string.IsNullOrWhiteSpace(clientId)
+                || !string.IsNullOrWhiteSpace(managedIdentityClientId)
                 || !string.IsNullOrWhiteSpace(resourceId))
             {
                 var options = new DefaultAzureCredentialOptions();
+
                 if (additionallyAllowedTenantsList != null)
                 {
                     foreach (string tenant in additionallyAllowedTenantsList)
@@ -250,7 +314,11 @@ namespace Microsoft.Extensions.Azure
                     options.TenantId = tenantId;
                 }
 
-                if (!string.IsNullOrWhiteSpace(clientId))
+                if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
+                {
+                    options.ManagedIdentityClientId = managedIdentityClientId;
+                }
+                else if (!string.IsNullOrWhiteSpace(clientId))
                 {
                     options.ManagedIdentityClientId = clientId;
                 }
@@ -329,6 +397,34 @@ namespace Microsoft.Extensions.Azure
             }
 
             return Activator.CreateInstance(optionsType, constructorArguments);
+        }
+
+        private static void AssertSingleManagedIdentityIdentifier(string clientId, string managedIdentityClientId, string resourceId, string objectId, bool isFederated = false)
+        {
+            var idCount = 0;
+
+            if (!isFederated)
+            {
+                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
+            }
+
+            idCount += string.IsNullOrWhiteSpace(managedIdentityClientId) ? 0 : 1;
+            idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
+            idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
+
+            var validIdentifiers = isFederated
+                ? "'clientId', 'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'"
+                : "'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'";
+
+            if (idCount > 1)
+            {
+                throw new ArgumentException($"Only one of [{validIdentifiers}] can be specified for managed identity.");
+            }
+
+            if (isFederated && idCount < 1)
+            {
+                throw new ArgumentException($"At least one of [{validIdentifiers}] must be specified for managed identity.");
+            }
         }
 
         private static bool IsServiceVersionParameter(ParameterInfo parameter) =>

@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSearchArmClient.GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchArmClient.GetSearchServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public static NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static SearchServiceNetworkSecurityPerimeterConfigurationResource GetSearchServiceNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSearchArmClient(client).GetNetworkSecurityPerimeterConfigurationResource(id);
+            return GetMockableSearchArmClient(client).GetSearchServiceNetworkSecurityPerimeterConfigurationResource(id);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets the quota usage for a search sku in the given subscription.
+        /// Gets the quota usage for a search SKU in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets the quota usage for a search sku in the given subscription.
+        /// Gets the quota usage for a search SKU in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>

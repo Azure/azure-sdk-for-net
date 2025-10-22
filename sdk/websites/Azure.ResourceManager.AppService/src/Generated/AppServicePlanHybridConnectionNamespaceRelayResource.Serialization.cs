@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppServicePlanHybridConnectionNamespaceRelayResource : IJsonModel<HybridConnectionData>
     {
+        private static HybridConnectionData s_dataDeserializationInstance;
+        private static HybridConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionData>)Data).Write(writer, options);
 
-        HybridConnectionData IJsonModel<HybridConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionData>)Data).Create(ref reader, options);
+        HybridConnectionData IJsonModel<HybridConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridConnectionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        HybridConnectionData IPersistableModel<HybridConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionData>(data, options);
+        HybridConnectionData IPersistableModel<HybridConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<HybridConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

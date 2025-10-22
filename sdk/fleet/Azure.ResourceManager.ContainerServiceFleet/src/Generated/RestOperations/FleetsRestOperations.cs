@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-02-preview";
+            _apiVersion = apiVersion ?? "2025-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Lists fleets in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Lists fleets in the specified subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Lists fleets in the specified subscription and resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Lists fleets in the specified subscription and resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Gets a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetData.DeserializeContainerServiceFleetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Gets a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetData.DeserializeContainerServiceFleetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Creates or updates a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Creates or updates a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Update a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Update a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Delete a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Delete a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Lists the user credentials of a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetCredentialResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FleetCredentialResults.DeserializeFleetCredentialResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Lists the user credentials of a Fleet. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         FleetCredentialResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FleetCredentialResults.DeserializeFleetCredentialResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> Lists fleets in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> Lists fleets in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> Lists fleets in the specified subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> Lists fleets in the specified subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case 200:
                     {
                         ContainerServiceFleetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerServiceFleetListResult.DeserializeContainerServiceFleetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

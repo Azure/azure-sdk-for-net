@@ -7,8 +7,8 @@
       projects in a more simplified way.
     -->
     <!--
-    <ExternalOpenAILibrary>../../external/netstandard2.0/OpenAI.dll</ExternalOpenAILibrary>
     <GAServiceVersionLabel>2024_10_21</GAServiceVersionLabel>
+    <UseExternalOpenAILibrary>true</UseExternalOpenAILibrary>
     <SystemClientModelVersion>1.1.0-beta.5</SystemClientModelVersion>
     <ExternalOpenAISource>../../external/OpenAI/src/OpenAI.csproj</ExternalOpenAISource>
     <ExternalAzureCoreSource>$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.csproj</ExternalAzureCoreSource>

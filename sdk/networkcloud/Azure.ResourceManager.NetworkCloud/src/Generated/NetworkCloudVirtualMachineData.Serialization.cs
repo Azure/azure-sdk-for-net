@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,8 +38,18 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
@@ -64,6 +75,11 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
+            }
+            if (Optional.IsDefined(ConsoleExtendedLocation))
+            {
+                writer.WritePropertyName("consoleExtendedLocation"u8);
+                writer.WriteObjectValue(ConsoleExtendedLocation, options);
             }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
@@ -98,6 +114,11 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("networkData"u8);
                 writer.WriteStringValue(NetworkData);
+            }
+            if (Optional.IsDefined(NetworkDataContent))
+            {
+                writer.WritePropertyName("networkDataContent"u8);
+                writer.WriteStringValue(NetworkDataContent);
             }
             if (Optional.IsCollectionDefined(PlacementHints))
             {
@@ -135,6 +156,11 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
+            }
+            if (Optional.IsDefined(UserDataContent))
+            {
+                writer.WritePropertyName("userDataContent"u8);
+                writer.WriteStringValue(UserDataContent);
             }
             if (Optional.IsDefined(VirtioInterface))
             {
@@ -191,7 +217,9 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
+            ETag? etag = default;
             ExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -204,6 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
             VirtualMachineBootMethod? bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
             ResourceIdentifier clusterId = default;
+            ExtendedLocation consoleExtendedLocation = default;
             long cpuCores = default;
             VirtualMachineDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -211,12 +240,14 @@ namespace Azure.ResourceManager.NetworkCloud
             long memorySizeGB = default;
             IList<NetworkAttachment> networkAttachments = default;
             string networkData = default;
+            string networkDataContent = default;
             IList<VirtualMachinePlacementHint> placementHints = default;
             VirtualMachinePowerState? powerState = default;
             VirtualMachineProvisioningState? provisioningState = default;
             IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             NetworkCloudStorageProfile storageProfile = default;
             string userData = default;
+            string userDataContent = default;
             VirtualMachineVirtioInterfaceType? virtioInterface = default;
             VirtualMachineDeviceModelType? vmDeviceModel = default;
             string vmImage = default;
@@ -226,9 +257,27 @@ namespace Azure.ResourceManager.NetworkCloud
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -271,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -325,6 +374,15 @@ namespace Azure.ResourceManager.NetworkCloud
                             clusterId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("consoleExtendedLocation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            consoleExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("cpuCores"u8))
                         {
                             cpuCores = property0.Value.GetInt64();
@@ -375,6 +433,11 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("networkData"u8))
                         {
                             networkData = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("networkDataContent"u8))
+                        {
+                            networkDataContent = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("placementHints"u8))
@@ -431,6 +494,11 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("userData"u8))
                         {
                             userData = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("userDataContent"u8))
+                        {
+                            userDataContent = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("virtioInterface"u8))
@@ -502,13 +570,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
                 extendedLocation,
+                identity,
                 adminUsername,
                 availabilityZone,
                 bareMetalMachineId,
                 bootMethod,
                 cloudServicesNetworkAttachment,
                 clusterId,
+                consoleExtendedLocation,
                 cpuCores,
                 detailedStatus,
                 detailedStatusMessage,
@@ -516,12 +587,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 memorySizeGB,
                 networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
                 networkData,
+                networkDataContent,
                 placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(),
                 powerState,
                 provisioningState,
                 sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(),
                 storageProfile,
                 userData,
+                userDataContent,
                 virtioInterface,
                 vmDeviceModel,
                 vmImage,
@@ -537,7 +610,7 @@ namespace Azure.ResourceManager.NetworkCloud
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineData)} does not support writing '{options.Format}' format.");
             }
@@ -551,7 +624,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudVirtualMachineData(document.RootElement, options);
                     }
                 default:

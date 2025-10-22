@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NewRelicObservability
 {
     public partial class NewRelicMonitoredSubscriptionResource : IJsonModel<NewRelicMonitoredSubscriptionData>
     {
+        private static NewRelicMonitoredSubscriptionData s_dataDeserializationInstance;
+        private static NewRelicMonitoredSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NewRelicMonitoredSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicMonitoredSubscriptionData>)Data).Write(writer, options);
 
-        NewRelicMonitoredSubscriptionData IJsonModel<NewRelicMonitoredSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicMonitoredSubscriptionData>)Data).Create(ref reader, options);
+        NewRelicMonitoredSubscriptionData IJsonModel<NewRelicMonitoredSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicMonitoredSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NewRelicMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NewRelicMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NewRelicMonitoredSubscriptionData>(Data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        NewRelicMonitoredSubscriptionData IPersistableModel<NewRelicMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(data, options);
+        NewRelicMonitoredSubscriptionData IPersistableModel<NewRelicMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        string IPersistableModel<NewRelicMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicMonitoredSubscriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NewRelicMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicMonitoredSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

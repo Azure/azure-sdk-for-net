@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ConnectionMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ConnectionMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ConnectionMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ConnectionMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -544,194 +544,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
-            uri.AppendPath(networkWatcherName, true);
-            uri.AppendPath("/connectionMonitors/", false);
-            uri.AppendPath(connectionMonitorName, true);
-            uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
-            uri.AppendPath(networkWatcherName, true);
-            uri.AppendPath("/connectionMonitors/", false);
-            uri.AppendPath(connectionMonitorName, true);
-            uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Starts the specified connection monitor. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
-        /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
-        /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-
-            using var message = CreateStartRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Starts the specified connection monitor. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
-        /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
-        /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Start(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-
-            using var message = CreateStartRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateQueryRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
-            uri.AppendPath(networkWatcherName, true);
-            uri.AppendPath("/connectionMonitors/", false);
-            uri.AppendPath(connectionMonitorName, true);
-            uri.AppendPath("/query", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateQueryRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
-            uri.AppendPath(networkWatcherName, true);
-            uri.AppendPath("/connectionMonitors/", false);
-            uri.AppendPath(connectionMonitorName, true);
-            uri.AppendPath("/query", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Query a snapshot of the most recent connection states. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
-        /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
-        /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> QueryAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-
-            using var message = CreateQueryRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Query a snapshot of the most recent connection states. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
-        /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
-        /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Query(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-
-            using var message = CreateQueryRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string networkWatcherName)
         {
             var uri = new RawRequestUriBuilder();
@@ -788,7 +600,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ConnectionMonitorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -817,7 +629,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ConnectionMonitorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

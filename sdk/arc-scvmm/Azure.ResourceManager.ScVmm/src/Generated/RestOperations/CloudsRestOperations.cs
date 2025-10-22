@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmCloudData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScVmmCloudData.DeserializeScVmmCloudData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmCloudData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScVmmCloudData.DeserializeScVmmCloudData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         CloudListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudListResult.DeserializeCloudListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

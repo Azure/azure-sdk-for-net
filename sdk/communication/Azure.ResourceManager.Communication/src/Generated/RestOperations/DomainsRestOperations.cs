@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationDomainResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         CommunicationDomainResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         DomainResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DomainResourceList.DeserializeDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         DomainResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DomainResourceList.DeserializeDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         DomainResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DomainResourceList.DeserializeDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Communication
                 case 200:
                     {
                         DomainResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DomainResourceList.DeserializeDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

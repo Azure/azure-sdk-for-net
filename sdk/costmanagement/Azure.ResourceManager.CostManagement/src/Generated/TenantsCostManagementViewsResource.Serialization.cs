@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class TenantsCostManagementViewsResource : IJsonModel<CostManagementViewData>
     {
+        private static CostManagementViewData s_dataDeserializationInstance;
+        private static CostManagementViewData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CostManagementViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementViewData>)Data).Write(writer, options);
 
-        CostManagementViewData IJsonModel<CostManagementViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementViewData>)Data).Create(ref reader, options);
+        CostManagementViewData IJsonModel<CostManagementViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementViewData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CostManagementViewData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
-        CostManagementViewData IPersistableModel<CostManagementViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementViewData>(data, options);
+        CostManagementViewData IPersistableModel<CostManagementViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementViewData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
-        string IPersistableModel<CostManagementViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementViewData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CostManagementViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementViewData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

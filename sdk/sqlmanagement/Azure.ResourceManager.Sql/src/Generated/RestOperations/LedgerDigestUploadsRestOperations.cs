@@ -32,8 +32,110 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/ledgerDigestUploads", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/ledgerDigestUploads", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets all ledger digest upload settings on a database. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<LedgerDigestUploadsListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LedgerDigestUploadsListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = LedgerDigestUploadsListResult.DeserializeLedgerDigestUploadsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets all ledger digest upload settings on a database. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<LedgerDigestUploadsListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LedgerDigestUploadsListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = LedgerDigestUploadsListResult.DeserializeLedgerDigestUploadsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, LedgerDigestUploadsName ledgerDigestUploads)
@@ -101,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         LedgerDigestUploadData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +237,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         LedgerDigestUploadData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -247,108 +349,6 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                 case 202:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/ledgerDigestUploads", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/ledgerDigestUploads", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets all ledger digest upload settings on a database. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LedgerDigestUploadsListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LedgerDigestUploadsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LedgerDigestUploadsListResult.DeserializeLedgerDigestUploadsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all ledger digest upload settings on a database. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LedgerDigestUploadsListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LedgerDigestUploadsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LedgerDigestUploadsListResult.DeserializeLedgerDigestUploadsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         LedgerDigestUploadsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LedgerDigestUploadsListResult.DeserializeLedgerDigestUploadsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         LedgerDigestUploadsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LedgerDigestUploadsListResult.DeserializeLedgerDigestUploadsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

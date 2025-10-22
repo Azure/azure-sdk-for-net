@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
+            if (Optional.IsDefined(AutoPauseDelay))
+            {
+                writer.WritePropertyName("autoPauseDelay"u8);
+                writer.WriteNumberValue(AutoPauseDelay.Value);
+            }
             if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -144,6 +149,7 @@ namespace Azure.ResourceManager.Sql.Models
             ElasticPoolLicenseType? licenseType = default;
             ResourceIdentifier maintenanceConfigurationId = default;
             int? highAvailabilityReplicaCount = default;
+            int? autoPauseDelay = default;
             SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
             SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -245,6 +251,15 @@ namespace Azure.ResourceManager.Sql.Models
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("autoPauseDelay"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoPauseDelay = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("preferredEnclaveType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -282,6 +297,7 @@ namespace Azure.ResourceManager.Sql.Models
                 licenseType,
                 maintenanceConfigurationId,
                 highAvailabilityReplicaCount,
+                autoPauseDelay,
                 preferredEnclaveType,
                 availabilityZone,
                 serializedAdditionalRawData);
@@ -294,7 +310,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support writing '{options.Format}' format.");
             }
@@ -308,7 +324,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticPoolPatch(document.RootElement, options);
                     }
                 default:

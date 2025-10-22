@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServiceManagedClusterResource IOperationSource<ContainerServiceManagedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerServiceManagedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
             return new ContainerServiceManagedClusterResource(_client, data);
         }
 
         async ValueTask<ContainerServiceManagedClusterResource> IOperationSource<ContainerServiceManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
-            return new ContainerServiceManagedClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerServiceManagedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
+            return await Task.FromResult(new ContainerServiceManagedClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

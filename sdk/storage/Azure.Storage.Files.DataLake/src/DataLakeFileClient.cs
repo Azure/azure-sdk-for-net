@@ -155,7 +155,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, StorageSharedKeyCredential credential)
-            : this(fileUri, credential.AsPolicy(), null, credential)
+            : base(fileUri, credential)
         {
         }
 
@@ -444,6 +444,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<PathInfo> Create(
             DataLakePathCreateOptions options = default,
@@ -492,6 +494,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<PathInfo>> CreateAsync(
             DataLakePathCreateOptions options = default,
@@ -564,6 +568,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -646,6 +652,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -707,6 +715,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<PathInfo> CreateIfNotExists(
             DataLakePathCreateOptions options = default,
@@ -754,6 +764,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
             DataLakePathCreateOptions options = default,
@@ -821,6 +833,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -896,6 +910,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -957,6 +973,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response Delete(
             DataLakeRequestConditions conditions = default,
@@ -1006,6 +1024,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             DataLakeRequestConditions conditions = default,
@@ -1058,6 +1078,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             DataLakeRequestConditions conditions = default,
@@ -1107,6 +1129,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             DataLakeRequestConditions conditions = default,
@@ -1168,6 +1192,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public new virtual Response<DataLakeFileClient> Rename(
             string destinationPath,
@@ -1235,6 +1261,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public new virtual async Task<Response<DataLakeFileClient>> RenameAsync(
             string destinationPath,
@@ -1305,6 +1333,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override Response<PathAccessControl> GetAccessControl(
             bool? userPrincipalName = default,
@@ -1364,6 +1394,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override async Task<Response<PathAccessControl>> GetAccessControlAsync(
             bool? userPrincipalName = default,
@@ -1427,6 +1459,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetAccessControlList(
@@ -1492,6 +1526,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetAccessControlListAsync(
@@ -1560,6 +1596,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetPermissions(
@@ -1625,6 +1663,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
@@ -1686,6 +1726,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public virtual Response<PathProperties> GetProperties(
@@ -1739,6 +1781,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override async Task<Response<PathProperties>> GetPropertiesAsync(
             DataLakeRequestConditions conditions = default,
@@ -1795,6 +1839,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override Response<PathInfo> SetHttpHeaders(
             PathHttpHeaders httpHeaders = default,
@@ -1850,6 +1896,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override async Task<Response<PathInfo>> SetHttpHeadersAsync(
             PathHttpHeaders httpHeaders = default,
@@ -1907,6 +1955,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override Response<PathInfo> SetMetadata(
             Metadata metadata,
@@ -1961,6 +2011,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public override async Task<Response<PathInfo>> SetMetadataAsync(
             Metadata metadata,
@@ -2026,6 +2078,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response Append(
             Stream content,
@@ -2078,6 +2132,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> AppendAsync(
             Stream content,
@@ -2141,6 +2197,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2217,6 +2275,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2309,6 +2369,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response> AppendInternal(
             Stream content,
@@ -2440,6 +2502,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<PathInfo> Flush(
             long position,
@@ -2506,6 +2570,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2558,6 +2624,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<PathInfo>> FlushAsync(
             long position,
@@ -2624,6 +2692,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2714,6 +2784,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<PathInfo>> FlushInternal(
             long position,
@@ -2841,6 +2913,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read()
@@ -2884,6 +2958,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync()
@@ -2932,6 +3008,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
@@ -2980,6 +3058,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
@@ -3046,6 +3126,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3120,6 +3202,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3182,6 +3266,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileDownloadInfo> Read(
@@ -3237,6 +3323,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync(
@@ -3287,6 +3375,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming()
         {
@@ -3330,6 +3420,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync()
         {
@@ -3378,6 +3470,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
             CancellationToken cancellationToken)
@@ -3427,6 +3521,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
             CancellationToken cancellationToken)
@@ -3480,6 +3576,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
             DataLakeFileReadOptions options,
@@ -3534,6 +3632,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
             DataLakeFileReadOptions options,
@@ -3582,6 +3682,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileReadResult> ReadContent()
         {
@@ -3625,6 +3727,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync()
         {
@@ -3673,6 +3777,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileReadResult> ReadContent(
             CancellationToken cancellationToken)
@@ -3722,6 +3828,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
             CancellationToken cancellationToken)
@@ -3775,6 +3883,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileReadResult> ReadContent(
             DataLakeFileReadOptions options,
@@ -3829,6 +3939,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
             DataLakeFileReadOptions options,
@@ -3883,6 +3995,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response ReadTo(
             Stream destination,
@@ -3932,6 +4046,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response ReadTo(
             string path,
@@ -3981,6 +4097,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> ReadToAsync(
             Stream destination,
@@ -4031,6 +4149,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> ReadToAsync(
             string path,
@@ -4086,6 +4206,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -4149,6 +4271,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -4212,6 +4336,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -4276,6 +4402,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -4343,6 +4471,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<PathInfo> Upload(
             Stream content,
@@ -4391,6 +4521,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PathInfo> Upload(
@@ -4434,6 +4566,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Upload(
@@ -4475,6 +4609,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
@@ -4513,6 +4649,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
@@ -4563,6 +4701,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<PathInfo>> UploadAsync(
@@ -4607,6 +4747,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -4649,6 +4791,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
@@ -4687,6 +4831,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
@@ -4738,6 +4884,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -4789,6 +4937,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -4831,6 +4981,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
@@ -4869,6 +5021,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
@@ -4925,6 +5079,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -4969,6 +5125,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -5011,6 +5169,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
@@ -5046,6 +5206,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<PathInfo>> StagedUploadInternal(
             Stream content,
@@ -5094,6 +5256,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<PathInfo>> StagedUploadInternal(
             string path,
@@ -5130,6 +5294,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<PathInfo> ScheduleDeletion(
             DataLakeFileScheduleDeletionOptions options,
@@ -5156,6 +5322,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
             DataLakeFileScheduleDeletionOptions options,
@@ -5184,6 +5352,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<PathInfo>> ScheduleDeletionInternal(
             DataLakeFileScheduleDeletionOptions options,
@@ -5291,6 +5461,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         /// <returns>
         /// A <see cref="Response{FileDownloadInfo}"/>.
@@ -5341,6 +5513,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         /// <returns>
         /// A <see cref="Response{FileDownloadInfo}"/>.
@@ -5394,6 +5568,8 @@ namespace Azure.Storage.Files.DataLake
         /// </returns>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -5436,6 +5612,8 @@ namespace Azure.Storage.Files.DataLake
         /// </returns>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -5487,6 +5665,8 @@ namespace Azure.Storage.Files.DataLake
         /// </returns>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -5542,6 +5722,8 @@ namespace Azure.Storage.Files.DataLake
         /// </returns>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -5599,6 +5781,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -5655,6 +5839,8 @@ namespace Azure.Storage.Files.DataLake
         /// </returns>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -5706,6 +5892,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
@@ -5739,6 +5927,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
@@ -5775,6 +5965,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
             bool overwrite,

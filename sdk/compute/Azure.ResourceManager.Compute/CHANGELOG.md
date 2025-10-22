@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.2 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,30 +10,90 @@
 
 ### Other Changes
 
+## 1.12.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-04-01'
+- Added `VirtualMachineScaleSet.ScaleOut` Operation.
+- Added `Tags` to `VirtualMachineScaleSetNetworkConfiguration`, `VirtualMachineScaleSetIPConfiguration`, `VirtualMachineScaleSetPublicIPAddressConfiguration` and `VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings` classes.
+- Added `Placement` property to `VirtualMachineScaleSet` class.
+- Added `ZoneAllocationPolicy` property to `ResiliencyPolicy` class.
+- Added `MaxInstancePercentPerZonePolicy` property to `AutomaticZoneRebalancingPolicy` class.
+- Added `ReservationType` property to `CapacityReservationGroup` class.
+- Added `ScheduleProfile` property to `CapacityReservation` class.
+- Added `AddProxyAgentExtension` property to `ProxyAgentSettings` class.
+- Added `ScriptShellTypes` enum to `RunCommandScriptSource` class.
+- Added `GalleryScriptReferenceId` property to `RunCommandScriptSource` class.
+- Added `AllInstancesDown` property to `ScheduledEventsPolicy` class.
+- Added `ScheduledEventsApiVersion` property to `EventGridAndResourceGraph` class.
+- Added `AutomaticZoneRebalancing` property to `OrchetrationServiceNames` class.
+- Added `highSpeedInterconnectPlacement` property to `VirtualMachineScaleSetProperties` class.
+- Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
+
+
+## 1.11.0 (2025-08-12)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Compute` AOT-compatible
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f03ae6d4107a964b20a48aa87fa520052750bb9/specification/compute/resource-manager/readme.md.
+  - Added new classes: `SupportedSecurityOption`, `AvailabilityPolicyDiskDelay`, `SnapshotAccessState`, `AvailabilityPolicy`.
+  - Added `SecurityMetadataUri` and `InstantAccessDurationMinutes` properties to `DiskCreationData` class.
+  - Added `SecurityMetadataAccessSas` property to `AccessUri` class.
+  - Added `AvailabilityPolicy` property to `ManagedDiskData` and `ManagedDiskUpdateData` classes.
+  - Added `SupportedSecurityOption` property to `SupportedCapabilities` class.
+  - Added `SnapshotAccessState` to `SnapshotData` and `SnapshotUpdateData` classes.
+
+### Breaking Changes
+
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+
+## 1.10.0 (2025-06-30)
+
+### Features Added
+
+- Added `Properties` property in `VirtualMachineScaleSetVmData` class.
+  - This property contains the properties of the VirtualMachineScaleSetVm. It supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
+  - Please use the properties in `VirtualMachineScaleSetVmData.Properties` to set the properties of the VirtualMachineScaleSetVm, instead of using those properties at the root level of `VirtualMachineScaleSetVmData` class.
+
+## 1.9.0 (2025-03-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-11-04' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-sdk-for-net/blob/6b1e2c24d807ffb6faf338f670cca5f35b01428c/sdk/compute/Azure.ResourceManager.Compute/src/autorest.md.
+  - Added operation `AvailabilitySets.StartMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.CancelMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.ValidateMigrationToVirtualMachineScaleSet`.
+  - Added operation `AvailabilitySets.ConvertToVirtualMachineScaleSet`.
+  - Added operation `GetVirtualMachineImagesWithProperties`
+  - Added operation `VirtualMachines.MigrateToVirtualMachineScaleSet`.
+  - Added new classes :`AutomaticZoneRebalancingPolicy`, `ConvertToVirtualMachineScaleSetContent`, `HostEndpointSettings`, `MigrateToVirtualMachineScaleSetInput`, `MigrateVmToVirtualMachineScaleSetContent`, `VmssRebalanceStrategy`, `VmssRebalanceBehavior`, `SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions`, `VirtualMachineImagesWithPropertiesListResult`, `VirtualMachineScaleSetMigrationInfo`,
+
 ## 1.9.0-beta.1 (2025-02-22)
 
 ### Features Added
 
-- Enabled AnyZone Capability preview. 
+- Enabled AnyZone Capability preview.
 
 ## 1.8.0 (2025-02-05)
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-2024-11-03' to 'package-2024-11-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md. 
+- Upgraded api-version tag from 'package-2024-11-03' to 'package-2024-11-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md.
 - Added a new property named `IsBootstrapCertificate` to `CloudServiceRoleProfile` class.
 
 ### Bugs Fixed
 
 - Change a few parameters in one of the overload of `ArmComputeModelFactory.VirtualMachineScaleSetData` to required to reduce the possibility of ambiguous invocation.
- 
+
 ## 1.7.0 (2024-12-29)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-11-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b09c9ec927456021dc549e111fa2cac3b4b00659/specification/compute/resource-manager/readme.md.
     - Added new classes named `GalleryInVmAccessControlProfileCollection`, `ComputeGalleryValidationProfile`, `GalleryImageExecutedValidation`, `AdditionalReplicaSet`, `GallerySoftDeleted`, `GallerySoftDeletedResourceList`, `ComputeGalleryEndpointAccess`, `ComputeGalleryEndpointTypes`, and `ComputeGalleryPlatformAttribute`.
-    - Added a new property named `IsBlockedDeletionBeforeEndOfLife` to `GalleryImageVersionSafertyProfile` class.
+    - Added a new property named `IsBlockedDeletionBeforeEndOfLife` to `GalleryImageVersionSafetyProfile` class.
     - Added a new property named `StartsAtVersion` to `GalleryImageFeature` class.
     - Added a new property named `AllowUpdateImage` to `GalleryImageData` class.
     - Added new properties named `ValidationsProfile` and `EnableRestore` to `GalleryImageVersionData` class.

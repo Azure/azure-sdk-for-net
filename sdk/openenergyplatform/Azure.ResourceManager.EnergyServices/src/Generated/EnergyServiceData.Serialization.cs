@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.EnergyServices.Models;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.EnergyServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEnergyServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.EnergyServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEnergyServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EnergyServiceData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.EnergyServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEnergyServiceData(document.RootElement, options);
                     }
                 default:

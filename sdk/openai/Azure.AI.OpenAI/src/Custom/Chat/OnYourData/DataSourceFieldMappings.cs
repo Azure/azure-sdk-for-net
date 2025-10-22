@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureSearchChatDataSourceParametersFieldsMapping")]
+[CodeGenType("AzureSearchChatDataSourceParametersFieldsMapping")]
 [Experimental("AOAI001")]
 public partial class DataSourceFieldMappings
 {
@@ -49,7 +49,7 @@ public partial class DataSourceFieldMappings
     /// </para>
     /// </remarks>
     [CodeGenMember("ContentFields")]
-    public IList<string> ContentFieldNames { get; } = new ChangeTrackingList<string>();
+    public IList<string> ContentFieldNames { get; }
 
     /// <summary> The separator pattern that content fields should use. </summary>
     /// <remarks>
@@ -73,18 +73,12 @@ public partial class DataSourceFieldMappings
     /// </para>
     /// </remarks>
     [CodeGenMember("VectorFields")]
-    public IList<string> VectorFieldNames { get; } = new ChangeTrackingList<string>();
+    public IList<string> VectorFieldNames { get; }
 
     /// <summary> The names of fields that represent image vector data. </summary>
     /// <remarks>
     /// This configuration is only applicable to <see cref="AzureSearchChatDataSource"/>.
     /// </remarks>
     [CodeGenMember("ImageVectorFields")]
-    public IList<string> ImageVectorFieldNames { get; } = new ChangeTrackingList<string>();
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="DataSourceFieldMappings"/>.
-    /// </summary>
-    public DataSourceFieldMappings()
-    {}
+    public IList<string> ImageVectorFieldNames { get; }
 }

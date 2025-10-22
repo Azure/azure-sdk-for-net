@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,6 +118,90 @@ namespace Azure.ResourceManager.Network.Models
             return new AadAuthenticationParameters(aadTenant, aadAudience, aadIssuer, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadTenant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aadTenant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadTenant))
+                {
+                    builder.Append("  aadTenant: ");
+                    if (AadTenant.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AadTenant}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AadTenant}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadAudience), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aadAudience: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadAudience))
+                {
+                    builder.Append("  aadAudience: ");
+                    if (AadAudience.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AadAudience}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AadAudience}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadIssuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aadIssuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadIssuer))
+                {
+                    builder.Append("  aadIssuer: ");
+                    if (AadIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AadIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AadIssuer}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AadAuthenticationParameters>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
@@ -124,7 +209,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support writing '{options.Format}' format.");
             }
@@ -138,7 +225,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAadAuthenticationParameters(document.RootElement, options);
                     }
                 default:

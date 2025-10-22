@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default;
             string characterSet = default;
             float? computeCount = default;
-            AutonomousDatabaseComputeModel? computeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             int? cpuCoreCount = default;
             IList<OracleCustomerContact> customerContacts = default;
             int? dataStorageSizeInTbs = default;
@@ -72,12 +72,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            IReadOnlyList<string> peerDBIds = default;
-            string peerDBId = default;
+            IReadOnlyList<string> peerDbIds = default;
+            string peerDbId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isRemoteDataGuardEnabled = default;
             DisasterRecoveryType? localDisasterRecoveryType = default;
-            AutonomousDatabaseStandbySummary localStandbyDB = default;
+            DateTimeOffset? timeDisasterRecoveryRoleChanged = default;
+            DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default;
+            AutonomousDatabaseStandbySummary localStandbyDb = default;
             int? failedDataRecoveryInSeconds = default;
             bool? isMtlsConnectionRequired = default;
             bool? isPreviewVersionWithServiceTermsAccepted = default;
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             OracleDatabaseProvisioningState? provisioningState = default;
             AutonomousDatabaseLifecycleState? lifecycleState = default;
-            ScheduledOperationsType scheduledOperations = default;
+            IList<ScheduledOperationsType> scheduledOperationsList = default;
             string privateEndpointIP = default;
             string privateEndpointLabel = default;
             Uri ociUrl = default;
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DateTimeOffset? timeReclamationOfFreeAutonomousDatabase = default;
             int? usedDataStorageSizeInGbs = default;
             int? usedDataStorageSizeInTbs = default;
-            ResourceIdentifier ocid = default;
+            string ocid = default;
             int? backupRetentionPeriodInDays = default;
             IList<string> whitelistedIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -175,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cpuCoreCount"u8))
@@ -267,12 +269,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         array.Add(item.GetString());
                     }
-                    peerDBIds = array;
+                    peerDbIds = array;
                     continue;
                 }
                 if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDBId = property.Value.GetString();
+                    peerDbId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLocalDataGuardEnabled"u8))
@@ -302,13 +304,31 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     localDisasterRecoveryType = new DisasterRecoveryType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("timeDisasterRecoveryRoleChanged"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeDisasterRecoveryRoleChanged = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("remoteDisasterRecoveryConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteDisasterRecoveryConfiguration = DisasterRecoveryConfigurationDetails.DeserializeDisasterRecoveryConfigurationDetails(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("localStandbyDb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localStandbyDB = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
+                    localStandbyDb = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failedDataRecoveryInSeconds"u8))
@@ -375,13 +395,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     lifecycleState = new AutonomousDatabaseLifecycleState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduledOperations"u8))
+                if (property.NameEquals("scheduledOperationsList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsType.DeserializeScheduledOperationsType(property.Value, options);
+                    List<ScheduledOperationsType> array = new List<ScheduledOperationsType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ScheduledOperationsType.DeserializeScheduledOperationsType(item, options));
+                    }
+                    scheduledOperationsList = array;
                     continue;
                 }
                 if (property.NameEquals("privateEndpointIp"u8))
@@ -763,11 +788,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ocid = new ResourceIdentifier(property.Value.GetString());
+                    ocid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("backupRetentionPeriodInDays"u8))
@@ -815,12 +836,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds ?? new ChangeTrackingList<string>(),
-                peerDBId,
+                peerDbIds ?? new ChangeTrackingList<string>(),
+                peerDbId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
                 localDisasterRecoveryType,
-                localStandbyDB,
+                timeDisasterRecoveryRoleChanged,
+                remoteDisasterRecoveryConfiguration,
+                localStandbyDb,
                 failedDataRecoveryInSeconds,
                 isMtlsConnectionRequired,
                 isPreviewVersionWithServiceTermsAccepted,
@@ -829,7 +852,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
+                scheduledOperationsList ?? new ChangeTrackingList<ScheduledOperationsType>(),
                 privateEndpointIP,
                 privateEndpointLabel,
                 ociUrl,
@@ -885,7 +908,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutonomousDatabaseBaseProperties)} does not support writing '{options.Format}' format.");
             }
@@ -899,7 +922,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutonomousDatabaseBaseProperties(document.RootElement, options);
                     }
                 default:

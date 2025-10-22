@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace Azure.Identity
 {
@@ -33,6 +32,8 @@ namespace Azure.Identity
         public static string AzureRegionalAuthorityName => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_REGIONAL_AUTHORITY_NAME"));
 
         public static string AzureFederatedTokenFile => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE"));
+
+        public static string CredentialSelection => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"));
 
         private static string GetNonEmptyStringOrNull(string str)
         {

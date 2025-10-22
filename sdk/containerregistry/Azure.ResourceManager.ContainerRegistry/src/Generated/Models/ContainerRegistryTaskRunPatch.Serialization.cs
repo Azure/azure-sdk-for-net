@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerRegistryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTaskRunPatch)} does not support writing '{options.Format}' format.");
             }
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryTaskRunPatch(document.RootElement, options);
                     }
                 default:

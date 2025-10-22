@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password"> Password to access the SAP server where the table is located. </param>
         /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncMode"> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </param>
+        /// <param name="sncFlag"> SNC activation flag (Boolean) to access the SAP server where the table is located. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="sncMyName"> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="sncPartnerName"> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="sncLibraryPath"> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="subscriberName"> The subscriber name. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SapOdpLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<string> sncMode, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> x509CertificatePath, DataFactoryElement<string> logonGroup, DataFactoryElement<string> subscriberName, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapOdpLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<bool> sncFlag, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> x509CertificatePath, DataFactoryElement<string> logonGroup, DataFactoryElement<string> subscriberName, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             MessageServer = messageServer;
             MessageServerService = messageServerService;
-            SncMode = sncMode;
+            SncFlag = sncFlag;
             SncMyName = sncMyName;
             SncPartnerName = sncPartnerName;
             SncLibraryPath = sncLibraryPath;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> MessageServer { get; set; }
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MessageServerService { get; set; }
-        /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SncMode { get; set; }
+        /// <summary> SNC activation flag (Boolean) to access the SAP server where the table is located. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> SncFlag { get; set; }
         /// <summary> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SncMyName { get; set; }
         /// <summary> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>

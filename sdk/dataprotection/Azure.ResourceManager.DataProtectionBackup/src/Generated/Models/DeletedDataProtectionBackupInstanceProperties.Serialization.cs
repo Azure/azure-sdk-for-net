@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    protectionErrorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataProtectionBackupContext.Default);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeletedDataProtectionBackupInstanceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeletedDataProtectionBackupInstanceProperties(document.RootElement, options);
                     }
                 default:

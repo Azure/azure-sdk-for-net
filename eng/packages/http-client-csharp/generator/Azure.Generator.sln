@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.StubLibrary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Spector.Tests", "TestProjects\Spector.Tests\TestProjects.Spector.Tests.csproj", "{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests.Common", "Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj", "{A6033231-E5D9-E23A-F126-F68C2F3DBA51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

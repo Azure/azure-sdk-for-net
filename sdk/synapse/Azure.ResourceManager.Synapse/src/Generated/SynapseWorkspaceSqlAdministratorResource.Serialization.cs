@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkspaceSqlAdministratorResource : IJsonModel<SynapseWorkspaceAadAdminInfoData>
     {
+        private static SynapseWorkspaceAadAdminInfoData s_dataDeserializationInstance;
+        private static SynapseWorkspaceAadAdminInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseWorkspaceAadAdminInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceAadAdminInfoData>)Data).Write(writer, options);
 
-        SynapseWorkspaceAadAdminInfoData IJsonModel<SynapseWorkspaceAadAdminInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceAadAdminInfoData>)Data).Create(ref reader, options);
+        SynapseWorkspaceAadAdminInfoData IJsonModel<SynapseWorkspaceAadAdminInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceAadAdminInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseWorkspaceAadAdminInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseWorkspaceAadAdminInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseWorkspaceAadAdminInfoData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseWorkspaceAadAdminInfoData IPersistableModel<SynapseWorkspaceAadAdminInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkspaceAadAdminInfoData>(data, options);
+        SynapseWorkspaceAadAdminInfoData IPersistableModel<SynapseWorkspaceAadAdminInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkspaceAadAdminInfoData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseWorkspaceAadAdminInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkspaceAadAdminInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseWorkspaceAadAdminInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkspaceAadAdminInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkBatchJobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkBatchJobCollection.DeserializeSparkBatchJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkBatchJobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkBatchJobCollection.DeserializeSparkBatchJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkBatchJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkBatchJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkBatchJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +260,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     {
                         SparkBatchJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

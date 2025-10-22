@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -71,12 +72,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
             }
         }
 
@@ -107,6 +113,7 @@ namespace Azure.ResourceManager.Compute
             IList<string> zones = default;
             ExtendedLocation extendedLocation = default;
             string etag = default;
+            VirtualMachinePlacement placement = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -173,12 +180,21 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = VirtualMachinePlacement.DeserializeVirtualMachinePlacement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -221,7 +237,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -244,6 +260,7 @@ namespace Azure.ResourceManager.Compute
                 zones ?? new ChangeTrackingList<string>(),
                 extendedLocation,
                 etag,
+                placement,
                 serializedAdditionalRawData);
         }
 
@@ -254,7 +271,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetData)} does not support writing '{options.Format}' format.");
             }
@@ -268,7 +285,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineScaleSetData(document.RootElement, options);
                     }
                 default:

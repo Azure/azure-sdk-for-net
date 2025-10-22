@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ServiceFabric
 
         ServiceFabricApplicationTypeVersionResource IOperationSource<ServiceFabricApplicationTypeVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ServiceFabricApplicationTypeVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricContext.Default);
             return new ServiceFabricApplicationTypeVersionResource(_client, data);
         }
 
         async ValueTask<ServiceFabricApplicationTypeVersionResource> IOperationSource<ServiceFabricApplicationTypeVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
-            return new ServiceFabricApplicationTypeVersionResource(_client, data);
+            var data = ModelReaderWriter.Read<ServiceFabricApplicationTypeVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricContext.Default);
+            return await Task.FromResult(new ServiceFabricApplicationTypeVersionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

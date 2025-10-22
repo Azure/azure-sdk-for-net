@@ -41,30 +41,30 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CollectDatabases))
+            if (Optional.IsDefined(ShouldCollectDatabases))
             {
                 writer.WritePropertyName("collectDatabases"u8);
-                writer.WriteBooleanValue(CollectDatabases.Value);
+                writer.WriteBooleanValue(ShouldCollectDatabases.Value);
             }
-            if (Optional.IsDefined(CollectLogins))
+            if (Optional.IsDefined(ShouldCollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
-                writer.WriteBooleanValue(CollectLogins.Value);
+                writer.WriteBooleanValue(ShouldCollectLogins.Value);
             }
-            if (Optional.IsDefined(CollectAgentJobs))
+            if (Optional.IsDefined(ShouldCollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
-                writer.WriteBooleanValue(CollectAgentJobs.Value);
+                writer.WriteBooleanValue(ShouldCollectAgentJobs.Value);
             }
-            if (Optional.IsDefined(CollectTdeCertificateInfo))
+            if (Optional.IsDefined(ShouldCollectTdeCertificateInfo))
             {
                 writer.WritePropertyName("collectTdeCertificateInfo"u8);
-                writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
+                writer.WriteBooleanValue(ShouldCollectTdeCertificateInfo.Value);
             }
-            if (Optional.IsDefined(ValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ShouldValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
-                writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
+                writer.WriteBooleanValue(ShouldValidateSsisCatalogOnly.Value);
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            SqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
             ServerLevelPermissionsGroup? checkPermissionsGroup = default;
             bool? collectDatabases = default;
             bool? collectLogins = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("checkPermissionsGroup"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support writing '{options.Format}' format.");
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectToSourceSqlServerTaskInput(document.RootElement, options);
                     }
                 default:

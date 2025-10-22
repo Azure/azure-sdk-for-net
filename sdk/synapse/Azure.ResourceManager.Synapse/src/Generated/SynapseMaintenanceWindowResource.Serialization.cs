@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseMaintenanceWindowResource : IJsonModel<SynapseMaintenanceWindowData>
     {
+        private static SynapseMaintenanceWindowData s_dataDeserializationInstance;
+        private static SynapseMaintenanceWindowData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseMaintenanceWindowData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMaintenanceWindowData>)Data).Write(writer, options);
 
-        SynapseMaintenanceWindowData IJsonModel<SynapseMaintenanceWindowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMaintenanceWindowData>)Data).Create(ref reader, options);
+        SynapseMaintenanceWindowData IJsonModel<SynapseMaintenanceWindowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMaintenanceWindowData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseMaintenanceWindowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseMaintenanceWindowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseMaintenanceWindowData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseMaintenanceWindowData IPersistableModel<SynapseMaintenanceWindowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseMaintenanceWindowData>(data, options);
+        SynapseMaintenanceWindowData IPersistableModel<SynapseMaintenanceWindowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseMaintenanceWindowData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseMaintenanceWindowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseMaintenanceWindowData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseMaintenanceWindowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseMaintenanceWindowData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

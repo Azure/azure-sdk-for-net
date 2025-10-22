@@ -3,7 +3,6 @@
 
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
@@ -103,18 +102,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(9, errorMessage);
 
         [NonEvent]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                AccessingEnvironmentVariableFailedWarning(environmentVariable, ex.FlattenException().ToInvariantString());
-            }
-        }
-
-        [Event(10, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(10, environmentVariable, exceptionMessage);
-
-        [NonEvent]
         public void SdkVersionCreateFailed(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
@@ -141,121 +128,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(13, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
         public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(13, typeName, exceptionMessage);
 
-        [Event(14, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
-        public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(14, credentialTypeName, scope);
+        [Event(14, Message = "Invalid sampler type '{0}'. Supported values: microsoft.rate_limited, microsoft.fixed_percentage", Level = EventLevel.Warning)]
+        public void InvalidSamplerType(string samplerType) => WriteEvent(14, samplerType);
 
-        [NonEvent]
-        public void PingFailed(Response response, string configuredEndpoint, string actualEndpoint)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailed(name: "Ping", response.Status, response.ReasonPhrase, configuredEndpoint, actualEndpoint);
-            }
-        }
-
-        [NonEvent]
-        public void PostFailed(Response response, string configuredEndpoint, string actualEndpoint)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailed(name: "Post", response.Status, response.ReasonPhrase, configuredEndpoint, actualEndpoint);
-            }
-        }
-
-        [NonEvent]
-        public void PingFailedWithUnknownException(System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailedWithUnknownException(name: "Ping", ex.ToInvariantString());
-            }
-        }
-
-        [NonEvent]
-        public void PostFailedWithUnknownException(System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailedWithUnknownException(name: "Post", ex.ToInvariantString());
-            }
-        }
-
-        [NonEvent]
-        public void PingFailedWithServiceError(int statusCode, ServiceError serviceError)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
-            }
-        }
-
-        [NonEvent]
-        public void PostFailedWithServiceError(int statusCode, ServiceError serviceError)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                ServiceCallFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
-            }
-        }
-
-        [Event(15, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2} Configured Endpoint: {3} Actual Endpoint: {4}", Level = EventLevel.Error)]
-        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase, string configuredEndpoint, string actualEndpoint) => WriteEvent(15, name, statusCode, reasonPhrase, configuredEndpoint, actualEndpoint);
-
-        [Event(16, Message = "Service call failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
-        public void ServiceCallFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(16, name, exceptionMessage);
-
-        [Event(17, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
-        public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(17, name, statusCode, code, message, exception);
-
-        [NonEvent]
-        public void StateMachineFailedWithUnknownException(System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                StateMachineFailedWithUnknownException(ex.ToInvariantString());
-            }
-        }
-
-        [Event(18, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
-        public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(18, exceptionMessage);
-
-        [NonEvent]
-        public void DroppedDocument(DocumentType documentType)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                DroppedDocument(documentType.ToString());
-            }
-        }
-
-        [Event(19, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
-        public void DroppedDocument(string documentType) => WriteEvent(19, documentType);
-
-        [Event(20, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
-        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(20, previousCollectedTime, recentCollectedTime);
-
-        [Event(21, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {0}. Not user actionable.", Level = EventLevel.Error)]
-        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(21, previousCollectedValue, recentCollectedValue);
-
-        [Event(22, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
-        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(22, period, diffValue, calculatedValue, processorCount, normalizedValue);
-
-        [NonEvent]
-        public void FailedToCreateTelemetryDocument(string documentTypeName, System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                FailedToCreateTelemetryDocument(documentTypeName, ex.ToInvariantString());
-            }
-        }
-
-        [Event(23, Message = "Failed to create telemetry document due to an exception. DocumentType: {0}. Exception: {1}", Level = EventLevel.Error)]
-        public void FailedToCreateTelemetryDocument(string documentTypeName, string exceptionMessage) => WriteEvent(23, documentTypeName, exceptionMessage);
-
-        [Event(24, Message = "Redirect received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
-        public void LiveMetricsRedirectReceived(string redirectUri) => WriteEvent(24, redirectUri);
-
-        [Event(25, Message = "Polling Interval received from LiveMetrics service: {0}", Level = EventLevel.Informational)]
-        public void LiveMetricsPolingIntervalReceived(int pollingInterval) => WriteEvent(25, pollingInterval);
+        [Event(15, Message = "Invalid sampler argument '{1}' for sampler '{0}'. Ignoring.", Level = EventLevel.Warning)]
+        public void InvalidSamplerArgument(string samplerType, string samplerArg) => WriteEvent(15, samplerType, samplerArg);
     }
 }

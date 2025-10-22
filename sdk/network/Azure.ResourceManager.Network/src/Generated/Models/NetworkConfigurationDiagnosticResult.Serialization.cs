@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -114,6 +115,51 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkConfigurationDiagnosticResult(profile, networkSecurityGroupResult, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Profile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  profile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Profile))
+                {
+                    builder.Append("  profile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Profile, options, 2, false, "  profile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityGroupResult), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkSecurityGroupResult: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkSecurityGroupResult))
+                {
+                    builder.Append("  networkSecurityGroupResult: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkSecurityGroupResult, options, 2, false, "  networkSecurityGroupResult: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,7 +167,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticResult)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkConfigurationDiagnosticResult(document.RootElement, options);
                     }
                 default:

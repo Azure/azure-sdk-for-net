@@ -39,7 +39,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ErrorData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeErrorData(document.RootElement);
         }
     }

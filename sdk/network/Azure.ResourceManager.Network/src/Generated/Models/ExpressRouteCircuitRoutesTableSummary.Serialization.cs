@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -153,6 +154,120 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Neighbor), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  neighbor: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Neighbor))
+                {
+                    builder.Append("  neighbor: ");
+                    if (Neighbor.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Neighbor}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Neighbor}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(V), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  v: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(V))
+                {
+                    builder.Append("  v: ");
+                    builder.AppendLine($"{V.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(As), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  as: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(As))
+                {
+                    builder.Append("  as: ");
+                    builder.AppendLine($"{As.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpDown), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upDown: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpDown))
+                {
+                    builder.Append("  upDown: ");
+                    if (UpDown.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UpDown}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UpDown}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatePfxRcd), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  statePfxRcd: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StatePfxRcd))
+                {
+                    builder.Append("  statePfxRcd: ");
+                    if (StatePfxRcd.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StatePfxRcd}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StatePfxRcd}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteCircuitRoutesTableSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,7 +275,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support writing '{options.Format}' format.");
             }
@@ -174,7 +291,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExpressRouteCircuitRoutesTableSummary(document.RootElement, options);
                     }
                 default:

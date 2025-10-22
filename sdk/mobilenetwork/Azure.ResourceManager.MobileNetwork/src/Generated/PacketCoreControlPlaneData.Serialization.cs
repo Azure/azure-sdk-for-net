@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartArray();
             foreach (var item in Sites)
             {
-                JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(InteropSettings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(InteropSettings))
+                using (JsonDocument document = JsonDocument.Parse(InteropSettings, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default));
                             }
                             sites = array;
                             continue;
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.MobileNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePacketCoreControlPlaneData(document.RootElement, options);
                     }
                 default:

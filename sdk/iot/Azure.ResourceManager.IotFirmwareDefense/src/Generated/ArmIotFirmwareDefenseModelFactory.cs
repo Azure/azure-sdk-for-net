@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,183 +17,30 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIotFirmwareDefenseModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
-        /// <param name="architecture"> The architecture of the uploaded firmware. </param>
-        /// <param name="filePath"> The executable path. </param>
-        /// <param name="class"> The executable class to indicate 32 or 64 bit. </param>
-        /// <param name="runpath"> The runpath of the uploaded firmware. </param>
-        /// <param name="rpath"> The rpath of the uploaded firmware. </param>
-        /// <param name="nxFlag"> NX (no-execute) flag. </param>
-        /// <param name="pieFlag"> PIE (position independent executable) flag. </param>
-        /// <param name="relroFlag"> RELRO (relocation read-only) flag. </param>
-        /// <param name="canaryFlag"> Canary (stack canaries) flag. </param>
-        /// <param name="strippedFlag"> Stripped flag. </param>
-        /// <returns> A new <see cref="Models.BinaryHardeningResult"/> instance for mocking. </returns>
-        public static BinaryHardeningResult BinaryHardeningResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string binaryHardeningId = null, string architecture = null, string filePath = null, string @class = null, string runpath = null, string rpath = null, bool? nxFlag = null, bool? pieFlag = null, bool? relroFlag = null, bool? canaryFlag = null, bool? strippedFlag = null)
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IotFirmwareDefenseSku sku = null, FirmwareProvisioningState? provisioningState = null)
         {
-            return new BinaryHardeningResult(
+            tags ??= new Dictionary<string, string>();
+
+            return new FirmwareAnalysisWorkspaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                binaryHardeningId,
-                architecture,
-                filePath,
-                @class,
-                runpath,
-                rpath,
-                nxFlag,
-                pieFlag,
-                relroFlag,
-                canaryFlag,
-                strippedFlag,
+                tags,
+                location,
+                sku,
+                provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cryptoCertId"> ID for the certificate result. </param>
-        /// <param name="namePropertiesName"> Name of the certificate. </param>
-        /// <param name="subject"> Subject information of the certificate. </param>
-        /// <param name="issuer"> Issuer information of the certificate. </param>
-        /// <param name="issuedOn"> Issue date for the certificate. </param>
-        /// <param name="expireOn"> Expiration date for the certificate. </param>
-        /// <param name="role"> Role of the certificate (Root CA, etc). </param>
-        /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
-        /// <param name="keySize"> Size of the certificate's key in bits. </param>
-        /// <param name="keyAlgorithm"> Key algorithm used in the certificate. </param>
-        /// <param name="encoding"> Encoding used for the certificate. </param>
-        /// <param name="serialNumber"> Serial number of the certificate. </param>
-        /// <param name="fingerprint"> Fingerprint of the certificate. </param>
-        /// <param name="usage"> List of functions the certificate can fulfill. </param>
-        /// <param name="filePaths"> List of files where this certificate was found. </param>
-        /// <param name="pairedKey"> A matching paired private key. </param>
-        /// <param name="isExpired"> Indicates if the certificate is expired. </param>
-        /// <param name="isSelfSigned"> Indicates if the certificate is self-signed. </param>
-        /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
-        /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoCertificateResult"/> instance for mocking. </returns>
-        public static CryptoCertificateResult CryptoCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoCertId = null, string namePropertiesName = null, CryptoCertificateEntity subject = null, CryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isExpired = null, bool? isSelfSigned = null, bool? isWeakSignature = null, bool? isShortKeySize = null)
-        {
-            usage ??= new List<string>();
-            filePaths ??= new List<string>();
-
-            return new CryptoCertificateResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                cryptoCertId,
-                namePropertiesName,
-                subject,
-                issuer,
-                issuedOn,
-                expireOn,
-                role,
-                signatureAlgorithm,
-                keySize,
-                keyAlgorithm,
-                encoding,
-                serialNumber,
-                fingerprint,
-                usage?.ToList(),
-                filePaths?.ToList(),
-                pairedKey,
-                isExpired,
-                isSelfSigned,
-                isWeakSignature,
-                isShortKeySize,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoKeyResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cryptoKeyId"> ID for the key result. </param>
-        /// <param name="keyType"> Type of the key (public or private). </param>
-        /// <param name="keySize"> Size of the key in bits. </param>
-        /// <param name="keyAlgorithm"> Key algorithm name. </param>
-        /// <param name="usage"> Functions the key can fulfill. </param>
-        /// <param name="filePaths"> List of files where this key was found. </param>
-        /// <param name="pairedKey"> A matching paired key or certificate. </param>
-        /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoKeyResult"/> instance for mocking. </returns>
-        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoKeyId = null, string keyType = null, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null)
-        {
-            usage ??= new List<string>();
-            filePaths ??= new List<string>();
-
-            return new CryptoKeyResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                cryptoKeyId,
-                keyType,
-                keySize,
-                keyAlgorithm,
-                usage?.ToList(),
-                filePaths?.ToList(),
-                pairedKey,
-                isShortKeySize,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cveId"> ID of the CVE result. </param>
-        /// <param name="component"> The SBOM component for the CVE. </param>
-        /// <param name="severity"> Severity of the CVE. </param>
-        /// <param name="namePropertiesName"> Name of the CVE. </param>
-        /// <param name="cvssScore"> A single CVSS score to represent the CVE. If a V3 score is specified, then it will use the V3 score. Otherwise if the V2 score is specified it will be the V2 score. </param>
-        /// <param name="cvssVersion"> CVSS version of the CVE. </param>
-        /// <param name="cvssV2Score"> CVSS V2 score of the CVE. </param>
-        /// <param name="cvssV3Score"> CVSS V3 score of the CVE. </param>
-        /// <param name="links"> The list of reference links for the CVE. </param>
-        /// <param name="description"> The CVE description. </param>
-        /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
-        public static CveResult CveResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cveId = null, CveComponent component = null, string severity = null, string namePropertiesName = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, IEnumerable<CveLink> links = null, string description = null)
-        {
-            links ??= new List<CveLink>();
-
-            return new CveResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                cveId,
-                component,
-                severity,
-                namePropertiesName,
-                cvssScore,
-                cvssVersion,
-                cvssV2Score,
-                cvssV3Score,
-                links?.ToList(),
-                description,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
-        /// <param name="href"> The destination of the reference link. </param>
-        /// <param name="label"> The label of the reference link. </param>
-        /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
-        public static CveLink CveLink(Uri href = null, string label = null)
-        {
-            return new CveLink(href, label, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.IotFirmwareData"/>. </summary>
@@ -259,12 +107,196 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareUriToken"/>. </summary>
-        /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
-        /// <returns> A new <see cref="Models.FirmwareUriToken"/> instance for mocking. </returns>
-        public static FirmwareUriToken FirmwareUriToken(Uri uri = null)
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
+        /// <param name="securityHardeningFeatures"> The security hardening features of the binary. </param>
+        /// <param name="executableArchitecture"> The architecture of the binary being reported on. </param>
+        /// <param name="filePath"> The path to the binary in the firmware. </param>
+        /// <param name="executableClass"> The executable class to indicate 32 or 64 bit. </param>
+        /// <param name="runpath"> The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime. </param>
+        /// <param name="rpath"> The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.BinaryHardeningResult"/> instance for mocking. </returns>
+        public static BinaryHardeningResult BinaryHardeningResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string binaryHardeningId = null, BinaryHardeningFeatures securityHardeningFeatures = null, string executableArchitecture = null, string filePath = null, ExecutableClass? executableClass = null, string runpath = null, string rpath = null, FirmwareProvisioningState? provisioningState = null)
         {
-            return new FirmwareUriToken(uri, serializedAdditionalRawData: null);
+            return new BinaryHardeningResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                binaryHardeningId,
+                securityHardeningFeatures,
+                executableArchitecture,
+                filePath,
+                executableClass,
+                runpath,
+                rpath,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="cryptoCertId"> ID for the certificate result. </param>
+        /// <param name="certificateName"> Name of the certificate. </param>
+        /// <param name="subject"> Subject information of the certificate. </param>
+        /// <param name="issuer"> Issuer information of the certificate. </param>
+        /// <param name="issuedOn"> Issue date for the certificate. </param>
+        /// <param name="expireOn"> Expiration date for the certificate. </param>
+        /// <param name="certificateRole"> Role of the certificate (Root CA, etc). </param>
+        /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
+        /// <param name="certificateKeySize"> Size of the certificate's key in bits. </param>
+        /// <param name="certificateKeyAlgorithm"> Key algorithm used in the certificate. </param>
+        /// <param name="encoding"> Encoding used for the certificate. </param>
+        /// <param name="serialNumber"> Serial number of the certificate. </param>
+        /// <param name="fingerprint"> Fingerprint of the certificate. </param>
+        /// <param name="certificateUsage"> List of functions the certificate can fulfill. </param>
+        /// <param name="filePaths"> List of files where this certificate was found. </param>
+        /// <param name="pairedKey"> A matching paired private key. </param>
+        /// <param name="isExpired"> Indicates if the certificate is expired. </param>
+        /// <param name="isSelfSigned"> Indicates if the certificate is self-signed. </param>
+        /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure according to NIST guidance. </param>
+        /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.CryptoCertificateResult"/> instance for mocking. </returns>
+        public static CryptoCertificateResult CryptoCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoCertId = null, string certificateName = null, CryptoCertificateEntity subject = null, CryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string certificateRole = null, string signatureAlgorithm = null, long? certificateKeySize = null, string certificateKeyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<CertificateUsage> certificateUsage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isExpired = null, bool? isSelfSigned = null, bool? isWeakSignature = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
+        {
+            certificateUsage ??= new List<CertificateUsage>();
+            filePaths ??= new List<string>();
+
+            return new CryptoCertificateResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cryptoCertId,
+                certificateName,
+                subject,
+                issuer,
+                issuedOn,
+                expireOn,
+                certificateRole,
+                signatureAlgorithm,
+                certificateKeySize,
+                certificateKeyAlgorithm,
+                encoding,
+                serialNumber,
+                fingerprint,
+                certificateUsage?.ToList(),
+                filePaths?.ToList(),
+                pairedKey,
+                isExpired,
+                isSelfSigned,
+                isWeakSignature,
+                isShortKeySize,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CryptoKeyResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="cryptoKeyId"> ID for the key result. </param>
+        /// <param name="cryptoKeyType"> Type of the key (public or private). </param>
+        /// <param name="cryptoKeySize"> Size of the key in bits. </param>
+        /// <param name="keyAlgorithm"> Key algorithm name. </param>
+        /// <param name="cryptoKeyUsage"> Functions the key can fulfill. </param>
+        /// <param name="filePaths"> List of files where this key was found. </param>
+        /// <param name="pairedKey"> A matching paired key or certificate. </param>
+        /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm according to NIST guidance. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.CryptoKeyResult"/> instance for mocking. </returns>
+        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoKeyId = null, CryptoKeyType? cryptoKeyType = null, long? cryptoKeySize = null, string keyAlgorithm = null, IEnumerable<string> cryptoKeyUsage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
+        {
+            cryptoKeyUsage ??= new List<string>();
+            filePaths ??= new List<string>();
+
+            return new CryptoKeyResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cryptoKeyId,
+                cryptoKeyType,
+                cryptoKeySize,
+                keyAlgorithm,
+                cryptoKeyUsage?.ToList(),
+                filePaths?.ToList(),
+                pairedKey,
+                isShortKeySize,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="cveId"> ID of the CVE result. </param>
+        /// <param name="componentId"> ID of the affected SBOM component. </param>
+        /// <param name="componentName"> Name of the affected SBOM component. </param>
+        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
+        /// <param name="severity"> Severity of the CVE. </param>
+        /// <param name="cveName"> Name of the CVE. </param>
+        /// <param name="component"> Legacy property for what is now componentName. </param>
+        /// <param name="cvssScore"> Legacy property for the effective CVE score. </param>
+        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. </param>
+        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. </param>
+        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property. </param>
+        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
+        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
+        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
+        /// <param name="links"> The list of reference links for the CVE. </param>
+        /// <param name="description"> The CVE description. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
+        public static CveResult CveResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, CveComponent component = null, string cvssScore = null, string cvssV2Score = null, string cvssV3Score = null, string cvssVersion = null, float? effectiveCvssScore = null, int? effectiveCvssVersion = null, IEnumerable<CvssScore> cvssScores = null, IEnumerable<CveLink> links = null, string description = null, FirmwareProvisioningState? provisioningState = null)
+        {
+            cvssScores ??= new List<CvssScore>();
+            links ??= new List<CveLink>();
+
+            return new CveResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cveId,
+                componentId,
+                componentName,
+                componentVersion,
+                severity,
+                cveName,
+                component,
+                cvssScore,
+                cvssV2Score,
+                cvssV3Score,
+                cvssVersion,
+                effectiveCvssScore,
+                effectiveCvssVersion,
+                cvssScores?.ToList(),
+                links?.ToList(),
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
+        /// <param name="href"> The destination of the reference link. </param>
+        /// <param name="label"> The label of the reference link. </param>
+        /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
+        public static CveLink CveLink(Uri href = null, string label = null)
+        {
+            return new CveLink(href, label, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResult"/>. </summary>
@@ -279,8 +311,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="context"> Context of password hash. </param>
         /// <param name="username"> User name of password hash. </param>
         /// <param name="algorithm"> Algorithm of the password hash. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.PasswordHashResult"/> instance for mocking. </returns>
-        public static PasswordHashResult PasswordHashResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null)
+        public static PasswordHashResult PasswordHashResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null, FirmwareProvisioningState? provisioningState = null)
         {
             return new PasswordHashResult(
                 id,
@@ -294,6 +327,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 context,
                 username,
                 algorithm,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -306,9 +340,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
         /// <param name="license"> License for the component. </param>
-        /// <param name="filePaths"> File paths related to the component. </param>
+        /// <param name="filePaths"> File paths related to the component. Note, relatedFiles should be used instead of this property. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.SbomComponentResult"/> instance for mocking. </returns>
-        public static SbomComponentResult SbomComponentResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null)
+        public static SbomComponentResult SbomComponentResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null, FirmwareProvisioningState? provisioningState = null)
         {
             filePaths ??= new List<string>();
 
@@ -322,6 +357,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 version,
                 license,
                 filePaths?.ToList(),
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -331,9 +367,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
-        /// Properties of an analysis summary.
-        /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveSummary"/> and <see cref="Models.FirmwareSummary"/>.
+        /// The resource-specific properties for this resource.
+        /// Please note <see cref="Models.FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/> and <see cref="Models.FirmwareSummary"/>.
         /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisSummaryData"/> instance for mocking. </returns>
         public static FirmwareAnalysisSummaryData FirmwareAnalysisSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirmwareAnalysisSummaryProperties properties = null)
@@ -347,39 +383,143 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisSummaryProperties"/>. </summary>
+        /// <param name="summaryType"> The type of summary. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.FirmwareAnalysisSummaryProperties"/> instance for mocking. </returns>
+        public static FirmwareAnalysisSummaryProperties FirmwareAnalysisSummaryProperties(string summaryType = null, FirmwareProvisioningState? provisioningState = null)
+        {
+            return new UnknownSummaryResourceProperties(summaryType == null ? default : new FirmwareAnalysisSummaryType(summaryType), provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareUriToken"/>. </summary>
+        /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
+        /// <returns> A new <see cref="Models.FirmwareUriToken"/> instance for mocking. </returns>
+        public static FirmwareUriToken FirmwareUriToken(Uri uri = null)
+        {
+            return new FirmwareUriToken(uri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.UsageMetricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FirmwareProvisioningState? provisioningState = null)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="IotFirmwareDefense.UsageMetricData"/> instance for mocking. </returns>
+        public static UsageMetricData UsageMetricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, UsageMetricProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new FirmwareAnalysisWorkspaceData(
+            return new UsageMetricData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState = null)
+        /// <summary> Initializes a new instance of <see cref="Models.UsageMetricProperties"/>. </summary>
+        /// <param name="monthlyFirmwareUploadCount"> The number of firmware analysis jobs that have been submitted in the current month. </param>
+        /// <param name="totalFirmwareCount"> The total number of firmwares that are in the workspace. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.UsageMetricProperties"/> instance for mocking. </returns>
+        public static UsageMetricProperties UsageMetricProperties(long monthlyFirmwareUploadCount = default, long totalFirmwareCount = default, FirmwareProvisioningState? provisioningState = null)
         {
-            return new FirmwareAnalysisWorkspacePatch(provisioningState, serializedAdditionalRawData: null);
+            return new UsageMetricProperties(monthlyFirmwareUploadCount, totalFirmwareCount, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummary"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
+        /// <param name="notExecutableStackCount"> Total number of analyzed files that were found to have a nonexecutable stack. </param>
+        /// <param name="positionIndependentExecutableCount"> Total number of analyzed files that were compiled to be a position independent executable. </param>
+        /// <param name="relocationReadOnlyCount"> Total number of analyzed files that have enabled relocation read-only protections. </param>
+        /// <param name="stackCanaryCount"> Total number of analyzed files that have stack canaries enabled. </param>
+        /// <param name="strippedBinaryCount"> Total number of analyzed files that have debug symbols stripped. </param>
+        /// <returns> A new <see cref="Models.BinaryHardeningSummary"/> instance for mocking. </returns>
+        public static BinaryHardeningSummary BinaryHardeningSummary(FirmwareProvisioningState? provisioningState = null, long? totalFiles = null, long? notExecutableStackCount = null, long? positionIndependentExecutableCount = null, long? relocationReadOnlyCount = null, long? stackCanaryCount = null, long? strippedBinaryCount = null)
+        {
+            return new BinaryHardeningSummary(
+                FirmwareAnalysisSummaryType.BinaryHardening,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                totalFiles,
+                notExecutableStackCount,
+                positionIndependentExecutableCount,
+                relocationReadOnlyCount,
+                stackCanaryCount,
+                strippedBinaryCount);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateSummary"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="totalCertificateCount"> Total number of certificates found. </param>
+        /// <param name="pairedKeyCount"> Total number of paired private keys found for the certificates. </param>
+        /// <param name="expiredCertificateCount"> Total number of expired certificates found. </param>
+        /// <param name="expiringSoonCertificateCount"> Total number of nearly expired certificates found. </param>
+        /// <param name="weakSignatureCount"> Total number of certificates found using a weak signature algorithm. </param>
+        /// <param name="selfSignedCertificateCount"> Total number of certificates found that are self-signed. </param>
+        /// <param name="shortKeySizeCount"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
+        /// <returns> A new <see cref="Models.CryptoCertificateSummary"/> instance for mocking. </returns>
+        public static CryptoCertificateSummary CryptoCertificateSummary(FirmwareProvisioningState? provisioningState = null, long? totalCertificateCount = null, long? pairedKeyCount = null, long? expiredCertificateCount = null, long? expiringSoonCertificateCount = null, long? weakSignatureCount = null, long? selfSignedCertificateCount = null, long? shortKeySizeCount = null)
+        {
+            return new CryptoCertificateSummary(
+                FirmwareAnalysisSummaryType.CryptoCertificate,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                totalCertificateCount,
+                pairedKeyCount,
+                expiredCertificateCount,
+                expiringSoonCertificateCount,
+                weakSignatureCount,
+                selfSignedCertificateCount,
+                shortKeySizeCount);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CryptoKeySummary"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="totalKeyCount"> Total number of cryptographic keys found. </param>
+        /// <param name="publicKeyCount"> Total number of (non-certificate) public keys found. </param>
+        /// <param name="privateKeyCount"> Total number of private keys found. </param>
+        /// <param name="pairedKeyCount"> Total number of keys found that have a matching paired key or certificate. </param>
+        /// <param name="shortKeySizeCount"> Total number of keys found that have an insecure key size for the algorithm. </param>
+        /// <returns> A new <see cref="Models.CryptoKeySummary"/> instance for mocking. </returns>
+        public static CryptoKeySummary CryptoKeySummary(FirmwareProvisioningState? provisioningState = null, long? totalKeyCount = null, long? publicKeyCount = null, long? privateKeyCount = null, long? pairedKeyCount = null, long? shortKeySizeCount = null)
+        {
+            return new CryptoKeySummary(
+                FirmwareAnalysisSummaryType.CryptoKey,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                totalKeyCount,
+                publicKeyCount,
+                privateKeyCount,
+                pairedKeyCount,
+                shortKeySizeCount);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CveSummary"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="criticalCveCount"> The total number of critical severity CVEs detected. </param>
+        /// <param name="highCveCount"> The total number of high severity CVEs detected. </param>
+        /// <param name="mediumCveCount"> The total number of medium severity CVEs detected. </param>
+        /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
+        /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
+        /// <returns> A new <see cref="Models.CveSummary"/> instance for mocking. </returns>
+        public static CveSummary CveSummary(FirmwareProvisioningState? provisioningState = null, long? criticalCveCount = null, long? highCveCount = null, long? mediumCveCount = null, long? lowCveCount = null, long? unknownCveCount = null)
+        {
+            return new CveSummary(
+                FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                criticalCveCount,
+                highCveCount,
+                mediumCveCount,
+                lowCveCount,
+                unknownCveCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareSummary"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
         /// <param name="extractedFileCount"> Extracted file count. </param>
@@ -388,10 +528,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
         /// <param name="rootFileSystems"> The number of root file systems found. </param>
         /// <returns> A new <see cref="Models.FirmwareSummary"/> instance for mocking. </returns>
-        public static FirmwareSummary FirmwareSummary(long? extractedSize = null, long? fileSize = null, long? extractedFileCount = null, long? componentCount = null, long? binaryCount = null, long? analysisTimeSeconds = null, long? rootFileSystems = null)
+        public static FirmwareSummary FirmwareSummary(FirmwareProvisioningState? provisioningState = null, long? extractedSize = null, long? fileSize = null, long? extractedFileCount = null, long? componentCount = null, long? binaryCount = null, long? analysisTimeSeconds = null, long? rootFileSystems = null)
         {
             return new FirmwareSummary(
                 FirmwareAnalysisSummaryType.Firmware,
+                provisioningState,
                 serializedAdditionalRawData: null,
                 extractedSize,
                 fileSize,
@@ -402,86 +543,70 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 rootFileSystems);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CveSummary"/>. </summary>
-        /// <param name="critical"> The total number of critical severity CVEs detected. </param>
-        /// <param name="high"> The total number of high severity CVEs detected. </param>
-        /// <param name="medium"> The total number of medium severity CVEs detected. </param>
-        /// <param name="low"> The total number of low severity CVEs detected. </param>
-        /// <param name="unknown"> The total number of unknown severity CVEs detected. </param>
-        /// <returns> A new <see cref="Models.CveSummary"/> instance for mocking. </returns>
-        public static CveSummary CveSummary(long? critical = null, long? high = null, long? medium = null, long? low = null, long? unknown = null)
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="passwordHashId"> ID for password hash. </param>
+        /// <param name="filePath"> File path of the password hash. </param>
+        /// <param name="salt"> Salt of the password hash. </param>
+        /// <param name="hash"> Hash of the password. </param>
+        /// <param name="context"> Context of password hash. </param>
+        /// <param name="username"> User name of password hash. </param>
+        /// <param name="algorithm"> Algorithm of the password hash. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PasswordHashResult PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm)
         {
-            return new CveSummary(
-                FirmwareAnalysisSummaryType.Cve,
-                serializedAdditionalRawData: null,
-                critical,
-                high,
-                medium,
-                low,
-                unknown);
+            return PasswordHashResult(id: id, name: name, resourceType: resourceType, systemData: systemData, passwordHashId: passwordHashId, filePath: filePath, salt: salt, hash: hash, context: context, username: username, algorithm: algorithm, provisioningState: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummary"/>. </summary>
-        /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
-        /// <param name="nxPercentage"> NX summary percentage. </param>
-        /// <param name="piePercentage"> PIE summary percentage. </param>
-        /// <param name="relroPercentage"> RELRO summary percentage. </param>
-        /// <param name="canaryPercentage"> Canary summary percentage. </param>
-        /// <param name="strippedPercentage"> Stripped summary percentage. </param>
-        /// <returns> A new <see cref="Models.BinaryHardeningSummary"/> instance for mocking. </returns>
-        public static BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles = null, int? nxPercentage = null, int? piePercentage = null, int? relroPercentage = null, int? canaryPercentage = null, int? strippedPercentage = null)
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResult" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="componentId"> ID for the component. </param>
+        /// <param name="componentName"> Name for the component. </param>
+        /// <param name="version"> Version for the component. </param>
+        /// <param name="license"> License for the component. </param>
+        /// <param name="filePaths"> File paths related to the component. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SbomComponentResult SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IEnumerable<string> filePaths)
         {
-            return new BinaryHardeningSummary(
-                FirmwareAnalysisSummaryType.BinaryHardening,
-                serializedAdditionalRawData: null,
-                totalFiles,
-                nxPercentage,
-                piePercentage,
-                relroPercentage,
-                canaryPercentage,
-                strippedPercentage);
+            return SbomComponentResult(id: id, name: name, resourceType: resourceType, systemData: systemData, componentId: componentId, componentName: componentName, version: version, license: license, filePaths: filePaths, provisioningState: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateSummary"/>. </summary>
-        /// <param name="totalCertificates"> Total number of certificates found. </param>
-        /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
-        /// <param name="expired"> Total number of expired certificates found. </param>
-        /// <param name="expiringSoon"> Total number of nearly expired certificates found. </param>
-        /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
-        /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
-        /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoCertificateSummary"/> instance for mocking. </returns>
-        public static CryptoCertificateSummary CryptoCertificateSummary(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisWorkspaceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisWorkspaceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FirmwareProvisioningState? provisioningState)
         {
-            return new CryptoCertificateSummary(
-                FirmwareAnalysisSummaryType.CryptoCertificate,
-                serializedAdditionalRawData: null,
-                totalCertificates,
-                pairedKeys,
-                expired,
-                expiringSoon,
-                weakSignature,
-                selfSigned,
-                shortKeySize);
+            return FirmwareAnalysisWorkspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: default, provisioningState: provisioningState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CryptoKeySummary"/>. </summary>
-        /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
-        /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
-        /// <param name="privateKeys"> Total number of private keys found. </param>
-        /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
-        /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        /// <returns> A new <see cref="Models.CryptoKeySummary"/> instance for mocking. </returns>
-        public static CryptoKeySummary CryptoKeySummary(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary" />. </summary>
+        /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
+        /// <param name="fileSize"> Firmware file size in bytes. </param>
+        /// <param name="extractedFileCount"> Extracted file count. </param>
+        /// <param name="componentCount"> Components count. </param>
+        /// <param name="binaryCount"> Binary count. </param>
+        /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
+        /// <param name="rootFileSystems"> The number of root file systems found. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirmwareSummary FirmwareSummary(long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems)
         {
-            return new CryptoKeySummary(
-                FirmwareAnalysisSummaryType.CryptoKey,
-                serializedAdditionalRawData: null,
-                totalKeys,
-                publicKeys,
-                privateKeys,
-                pairedKeys,
-                shortKeySize);
+            return FirmwareSummary(provisioningState: default, extractedSize: extractedSize, fileSize: fileSize, extractedFileCount: extractedFileCount, componentCount: componentCount, binaryCount: binaryCount, analysisTimeSeconds: analysisTimeSeconds, rootFileSystems: rootFileSystems);
         }
     }
 }

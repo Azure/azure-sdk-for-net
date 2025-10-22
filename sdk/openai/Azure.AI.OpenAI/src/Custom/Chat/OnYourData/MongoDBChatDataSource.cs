@@ -8,47 +8,48 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("MongoDBChatDataSource")]
+[CodeGenType("MongoDBChatDataSource")]
+[CodeGenSuppress(nameof(MongoDBChatDataSource), typeof(InternalMongoDBChatDataSourceParameters))]
 [Experimental("AOAI001")]
 #if AZURE_OPENAI_GA
 [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
-public partial class MongoDBChatDataSource : ChatDataSource
+public partial class MongoDBChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalMongoDBChatDataSourceParameters InternalParameters { get; }
 
 #if !AZURE_OPENAI_GA
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.Authentication"/>
-    required public DataSourceAuthentication Authentication
+    public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
         set => InternalParameters.Authentication = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.Endpoint"/>
-    required public string EndpointName
+    public string EndpointName
     {
         get => InternalParameters.Endpoint;
         set => InternalParameters.Endpoint = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.CollectionName"/>
-    required public string CollectionName
+    public string CollectionName
     {
         get => InternalParameters.CollectionName;
         set => InternalParameters.CollectionName = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.AppName"/>
-    required public string AppName
+    public string AppName
     {
         get => InternalParameters.AppName;
         set => InternalParameters.AppName = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.IndexName"/>
-    required public string IndexName
+    public string IndexName
     {
         get => InternalParameters.IndexName;
         set => InternalParameters.IndexName = value;
@@ -106,37 +107,25 @@ public partial class MongoDBChatDataSource : ChatDataSource
     /// <summary>
     /// Creates a new instance of <see cref="MongoDBChatDataSource"/>.
     /// </summary>
-    public MongoDBChatDataSource() : base(type: "mongo_db", serializedAdditionalRawData: null)
+    public MongoDBChatDataSource() : base(InternalAzureChatDataSourceKind.MongoDb, null)
     {
         InternalParameters = new();
     }
-
 #else
     public MongoDBChatDataSource()
     {
         throw new InvalidOperationException($"MongoDB data sources are not supported in this GA version. Please use a preview library and service version for this integration.");
     }
-
 #endif
 
-    // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="MongoDBChatDataSource"/>. </summary>
-    /// <param name="internalParameters"> The parameter information to control the use of the MongoDB data source. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
-    internal MongoDBChatDataSource(InternalMongoDBChatDataSourceParameters internalParameters)
-    {
-        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
-        InternalParameters = internalParameters;
-    }
-
-    /// <summary> Initializes a new instance of <see cref="MongoDBChatDataSource"/>. </summary>
-    /// <param name="type"></param>
-    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="kind"></param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal MongoDBChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMongoDBChatDataSourceParameters internalParameters)
-        : base(type, serializedAdditionalRawData)
+    internal MongoDBChatDataSource(InternalAzureChatDataSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMongoDBChatDataSourceParameters internalParameters)
+        : base(kind, additionalBinaryDataProperties)
     {
-        InternalParameters = internalParameters;
+        InternalParameters = internalParameters ?? new();
     }
 }

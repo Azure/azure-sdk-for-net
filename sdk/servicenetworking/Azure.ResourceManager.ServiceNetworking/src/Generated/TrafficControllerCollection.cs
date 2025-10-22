@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_CreateOrUpdate</description>
+        /// <description>TrafficController_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_CreateOrUpdate</description>
+        /// <description>TrafficController_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListByResourceGroup</description>
+        /// <description>TrafficController_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListByResourceGroup</description>
+        /// <description>TrafficController_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,11 +352,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,11 +395,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -440,11 +440,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

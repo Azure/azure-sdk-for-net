@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
 
         MobileNetworkSliceResource IOperationSource<MobileNetworkSliceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MobileNetworkSliceData.DeserializeMobileNetworkSliceData(document.RootElement);
+            var data = ModelReaderWriter.Read<MobileNetworkSliceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
             return new MobileNetworkSliceResource(_client, data);
         }
 
         async ValueTask<MobileNetworkSliceResource> IOperationSource<MobileNetworkSliceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MobileNetworkSliceData.DeserializeMobileNetworkSliceData(document.RootElement);
-            return new MobileNetworkSliceResource(_client, data);
+            var data = ModelReaderWriter.Read<MobileNetworkSliceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            return await Task.FromResult(new MobileNetworkSliceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

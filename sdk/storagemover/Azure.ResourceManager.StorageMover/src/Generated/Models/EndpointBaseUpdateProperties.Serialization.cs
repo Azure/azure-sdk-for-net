@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AzureMultiCloudConnector": return AzureMultiCloudConnectorEndpointUpdateProperties.DeserializeAzureMultiCloudConnectorEndpointUpdateProperties(element, options);
                     case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element, options);
+                    case "AzureStorageNfsFileShare": return AzureStorageNfsFileShareEndpointUpdateProperties.DeserializeAzureStorageNfsFileShareEndpointUpdateProperties(element, options);
                     case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element, options);
                     case "NfsMount": return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element, options);
                     case "SmbMount": return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element, options);
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEndpointBaseUpdateProperties(document.RootElement, options);
                     }
                 default:

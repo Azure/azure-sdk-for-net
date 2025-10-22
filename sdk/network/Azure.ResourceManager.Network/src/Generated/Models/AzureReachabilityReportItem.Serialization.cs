@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -135,6 +137,82 @@ namespace Azure.ResourceManager.Network.Models
             return new AzureReachabilityReportItem(provider, azureLocation, latencies ?? new ChangeTrackingList<AzureReachabilityReportLatencyInfo>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Provider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Provider))
+                {
+                    builder.Append("  provider: ");
+                    if (Provider.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Provider}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Provider}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureLocation))
+                {
+                    builder.Append("  azureLocation: ");
+                    builder.AppendLine($"'{AzureLocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latencies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latencies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Latencies))
+                {
+                    if (Latencies.Any())
+                    {
+                        builder.Append("  latencies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Latencies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  latencies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AzureReachabilityReportItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,7 +220,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureReachabilityReportItem)} does not support writing '{options.Format}' format.");
             }
@@ -156,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureReachabilityReportItem(document.RootElement, options);
                     }
                 default:

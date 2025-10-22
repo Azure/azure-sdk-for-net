@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HybridConnectivity.Models;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridConnectivityContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HybridConnectivityEndpointData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridConnectivityEndpointData(document.RootElement, options);
                     }
                 default:

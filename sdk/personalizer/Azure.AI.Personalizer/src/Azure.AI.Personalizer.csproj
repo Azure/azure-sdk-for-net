@@ -10,6 +10,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -22,8 +25,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <!--STJ reference is temporary until Azure.Core releases with updated version-->
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
   </ItemGroup>
 

@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies information about the operating system disk used by the virtual
         /// machines in the scale set. For more information about disks, see [About disks
         /// and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
+        /// machines](https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </param>
         /// <param name="dataDisks">
         /// Specifies the parameters that are used to add data disks to the virtual
         /// machines in the scale set. For more information about disks, see [About disks
         /// and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
+        /// machines](https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the virtual machines in the scale set. Minimum api-version: 2022-08-01. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifies information about the operating system disk used by the virtual
         /// machines in the scale set. For more information about disks, see [About disks
         /// and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
+        /// machines](https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </summary>
         public ComputeFleetVmssOSDisk OSDisk { get; set; }
         /// <summary>
         /// Specifies the parameters that are used to add data disks to the virtual
         /// machines in the scale set. For more information about disks, see [About disks
         /// and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
+        /// machines](https://learn.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </summary>
         public IList<ComputeFleetVmssDataDisk> DataDisks { get; }
         /// <summary> Specifies the disk controller type configured for the virtual machines in the scale set. Minimum api-version: 2022-08-01. </summary>

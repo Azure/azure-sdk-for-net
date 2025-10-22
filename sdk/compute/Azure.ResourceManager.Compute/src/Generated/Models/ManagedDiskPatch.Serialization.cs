@@ -152,6 +152,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
+            if (Optional.IsDefined(AvailabilityPolicy))
+            {
+                writer.WritePropertyName("availabilityPolicy"u8);
+                writer.WriteObjectValue(AvailabilityPolicy, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -161,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -212,6 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
+            AvailabilityPolicy availabilityPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,6 +430,15 @@ namespace Azure.ResourceManager.Compute.Models
                             optimizedForFrequentAttach = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("availabilityPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityPolicy = AvailabilityPolicy.DeserializeAvailabilityPolicy(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -456,6 +471,7 @@ namespace Azure.ResourceManager.Compute.Models
                 publicNetworkAccess,
                 dataAccessAuthMode,
                 optimizedForFrequentAttach,
+                availabilityPolicy,
                 serializedAdditionalRawData);
         }
 
@@ -466,7 +482,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{options.Format}' format.");
             }
@@ -480,7 +496,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedDiskPatch(document.RootElement, options);
                     }
                 default:

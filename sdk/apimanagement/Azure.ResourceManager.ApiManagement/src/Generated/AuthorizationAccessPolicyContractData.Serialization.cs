@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -39,6 +40,16 @@ namespace Azure.ResourceManager.ApiManagement
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AppIds))
+            {
+                writer.WritePropertyName("appIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -76,6 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            IList<string> appIds = default;
             Guid? tenantId = default;
             string objectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -103,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -115,6 +127,20 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("appIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            appIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -143,6 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
                 name,
                 type,
                 systemData,
+                appIds ?? new ChangeTrackingList<string>(),
                 tenantId,
                 objectId,
                 serializedAdditionalRawData);
@@ -214,6 +241,42 @@ namespace Azure.ResourceManager.ApiManagement
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    appIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AppIds))
+                {
+                    if (AppIds.Any())
+                    {
+                        builder.Append("    appIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AppIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -264,7 +327,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -280,7 +343,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAuthorizationAccessPolicyContractData(document.RootElement, options);
                     }
                 default:

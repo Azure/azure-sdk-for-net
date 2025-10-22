@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Billing
 
         BillingSavingsPlanModelResource IOperationSource<BillingSavingsPlanModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(document.RootElement);
+            var data = ModelReaderWriter.Read<BillingSavingsPlanModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
             return new BillingSavingsPlanModelResource(_client, data);
         }
 
         async ValueTask<BillingSavingsPlanModelResource> IOperationSource<BillingSavingsPlanModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(document.RootElement);
-            return new BillingSavingsPlanModelResource(_client, data);
+            var data = ModelReaderWriter.Read<BillingSavingsPlanModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            return await Task.FromResult(new BillingSavingsPlanModelResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

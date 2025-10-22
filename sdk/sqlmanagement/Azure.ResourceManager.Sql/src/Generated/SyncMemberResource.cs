@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,66 +349,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a sync member database schema.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}/schemas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncMembers_ListMemberSchemas</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncMemberResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncFullSchemaProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncFullSchemaProperties> GetMemberSchemasAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a sync member database schema.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}/schemas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncMembers_ListMemberSchemas</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncMemberResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncFullSchemaProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncFullSchemaProperties> GetMemberSchemas(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Refreshes a sync member database schema.
         /// <list type="bullet">
         /// <item>
@@ -421,7 +361,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,7 +403,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -490,6 +430,66 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a sync member database schema.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}/schemas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncMembers_ListMemberSchemas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SyncMemberResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SyncFullSchemaProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SyncFullSchemaProperties> GetMemberSchemasAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a sync member database schema.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}/schemas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncMembers_ListMemberSchemas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SyncMemberResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SyncFullSchemaProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SyncFullSchemaProperties> GetMemberSchemas(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,12 +175,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineResource(Client, NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(e)), NetworkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines", "value", "nextLink", cancellationToken);
         }
 
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -205,12 +207,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineResource(Client, NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(e)), NetworkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines", "value", "nextLink", cancellationToken);
         }
 
@@ -227,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,12 +239,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudCloudServicesNetworkResource(Client, NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(e)), NetworkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks", "value", "nextLink", cancellationToken);
         }
 
@@ -257,7 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,12 +271,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudCloudServicesNetworkResource(Client, NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(e)), NetworkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks", "value", "nextLink", cancellationToken);
         }
 
@@ -287,7 +295,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,12 +303,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), NetworkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers", "value", "nextLink", cancellationToken);
         }
 
@@ -317,7 +327,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -325,12 +335,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), NetworkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers", "value", "nextLink", cancellationToken);
         }
 
@@ -347,7 +359,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,12 +367,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterResource(Client, NetworkCloudClusterData.DeserializeNetworkCloudClusterData(e)), NetworkCloudClusterClustersClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -377,7 +391,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -385,12 +399,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterResource(Client, NetworkCloudClusterData.DeserializeNetworkCloudClusterData(e)), NetworkCloudClusterClustersClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -407,7 +423,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,12 +431,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), NetworkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -437,7 +455,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,12 +463,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), NetworkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -467,7 +487,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,12 +495,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), NetworkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks", "value", "nextLink", cancellationToken);
         }
 
@@ -497,7 +519,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,12 +527,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), NetworkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks", "value", "nextLink", cancellationToken);
         }
 
@@ -527,7 +551,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -535,12 +559,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), NetworkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks", "value", "nextLink", cancellationToken);
         }
 
@@ -557,7 +583,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -565,12 +591,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), NetworkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks", "value", "nextLink", cancellationToken);
         }
 
@@ -587,7 +615,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -595,12 +623,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), NetworkCloudRackRacksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks", "value", "nextLink", cancellationToken);
         }
 
@@ -617,7 +647,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -625,12 +655,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), NetworkCloudRackRacksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks", "value", "nextLink", cancellationToken);
         }
 
@@ -647,7 +679,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -655,12 +687,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudStorageApplianceResource(Client, NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(e)), NetworkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances", "value", "nextLink", cancellationToken);
         }
 
@@ -677,7 +711,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -685,12 +719,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudStorageApplianceResource(Client, NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(e)), NetworkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances", "value", "nextLink", cancellationToken);
         }
 
@@ -707,7 +743,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -715,12 +751,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), NetworkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks", "value", "nextLink", cancellationToken);
         }
 
@@ -737,7 +775,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -745,12 +783,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), NetworkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks", "value", "nextLink", cancellationToken);
         }
 
@@ -767,7 +807,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -775,12 +815,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVirtualMachineResource(Client, NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(e)), NetworkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
@@ -797,7 +839,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -805,12 +847,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVirtualMachineResource(Client, NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(e)), NetworkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
@@ -827,7 +871,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -835,12 +879,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVolumeResource(Client, NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(e)), NetworkCloudVolumeVolumesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes", "value", "nextLink", cancellationToken);
         }
 
@@ -857,7 +903,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -865,12 +911,14 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVolumeResource(Client, NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(e)), NetworkCloudVolumeVolumesClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes", "value", "nextLink", cancellationToken);
         }
     }

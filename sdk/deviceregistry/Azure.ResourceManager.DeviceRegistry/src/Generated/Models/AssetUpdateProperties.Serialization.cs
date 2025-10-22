@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class AssetUpdateProperties : IUtf8JsonSerializable, IJsonModel<AssetUpdateProperties>
+    /// <summary> The updatable properties of the Asset. </summary>
+    public partial class AssetUpdateProperties : IJsonModel<AssetUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssetUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssetUpdateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Datasets)
+                foreach (DeviceRegistryDataset item in Datasets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
-                foreach (var item in Events)
+                foreach (DeviceRegistryEvent item in Events)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -164,27 +164,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        AssetUpdateProperties IJsonModel<AssetUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetUpdateProperties IJsonModel<AssetUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssetUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAssetUpdateProperties(document.RootElement, options);
         }
 
-        internal static AssetUpdateProperties DeserializeAssetUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AssetUpdateProperties DeserializeAssetUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             string displayName = default;
             string description = default;
             string manufacturer = default;
@@ -201,139 +206,138 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             DeviceRegistryTopic defaultTopic = default;
             IList<DeviceRegistryDataset> datasets = default;
             IList<DeviceRegistryEvent> events = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manufacturer"u8))
+                if (prop.NameEquals("manufacturer"u8))
                 {
-                    manufacturer = property.Value.GetString();
+                    manufacturer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manufacturerUri"u8))
+                if (prop.NameEquals("manufacturerUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    manufacturerUri = new Uri(property.Value.GetString());
+                    manufacturerUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    model = property.Value.GetString();
+                    model = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productCode"u8))
+                if (prop.NameEquals("productCode"u8))
                 {
-                    productCode = property.Value.GetString();
+                    productCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hardwareRevision"u8))
+                if (prop.NameEquals("hardwareRevision"u8))
                 {
-                    hardwareRevision = property.Value.GetString();
+                    hardwareRevision = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softwareRevision"u8))
+                if (prop.NameEquals("softwareRevision"u8))
                 {
-                    softwareRevision = property.Value.GetString();
+                    softwareRevision = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documentationUri"u8))
+                if (prop.NameEquals("documentationUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    documentationUri = new Uri(property.Value.GetString());
+                    documentationUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serialNumber"u8))
+                if (prop.NameEquals("serialNumber"u8))
                 {
-                    serialNumber = property.Value.GetString();
+                    serialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"u8))
+                if (prop.NameEquals("attributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     attributes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("defaultDatasetsConfiguration"u8))
+                if (prop.NameEquals("defaultDatasetsConfiguration"u8))
                 {
-                    defaultDatasetsConfiguration = property.Value.GetString();
+                    defaultDatasetsConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultEventsConfiguration"u8))
+                if (prop.NameEquals("defaultEventsConfiguration"u8))
                 {
-                    defaultEventsConfiguration = property.Value.GetString();
+                    defaultEventsConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultTopic"u8))
+                if (prop.NameEquals("defaultTopic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultTopic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
+                    defaultTopic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("datasets"u8))
+                if (prop.NameEquals("datasets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeviceRegistryDataset> array = new List<DeviceRegistryDataset>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeviceRegistryDataset.DeserializeDeviceRegistryDataset(item, options));
                     }
                     datasets = array;
                     continue;
                 }
-                if (property.NameEquals("events"u8))
+                if (prop.NameEquals("events"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeviceRegistryEvent> array = new List<DeviceRegistryEvent>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeviceRegistryEvent.DeserializeDeviceRegistryEvent(item, options));
                     }
@@ -342,12 +346,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AssetUpdateProperties(
-                enabled,
+                isEnabled,
                 displayName,
                 description,
                 manufacturer,
@@ -364,31 +367,39 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 defaultTopic,
                 datasets ?? new ChangeTrackingList<DeviceRegistryDataset>(),
                 events ?? new ChangeTrackingList<DeviceRegistryEvent>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AssetUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssetUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AssetUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AssetUpdateProperties IPersistableModel<AssetUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetUpdateProperties IPersistableModel<AssetUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAssetUpdateProperties(document.RootElement, options);
                     }
                 default:
@@ -396,6 +407,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AssetUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

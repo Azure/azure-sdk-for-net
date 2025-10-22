@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning status. </summary>
+    /// <summary>
+    /// Provisioning status
+    /// Serialized Name: AfdProvisioningState
+    /// </summary>
     public readonly partial struct FrontDoorProvisioningState : IEquatable<FrontDoorProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: AfdProvisioningState.Succeeded
+        /// </summary>
         public static FrontDoorProvisioningState Succeeded { get; } = new FrontDoorProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: AfdProvisioningState.Failed
+        /// </summary>
         public static FrontDoorProvisioningState Failed { get; } = new FrontDoorProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: AfdProvisioningState.Updating
+        /// </summary>
         public static FrontDoorProvisioningState Updating { get; } = new FrontDoorProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: AfdProvisioningState.Deleting
+        /// </summary>
         public static FrontDoorProvisioningState Deleting { get; } = new FrontDoorProvisioningState(DeletingValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: AfdProvisioningState.Creating
+        /// </summary>
         public static FrontDoorProvisioningState Creating { get; } = new FrontDoorProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="FrontDoorProvisioningState"/> values are the same. </summary>
         public static bool operator ==(FrontDoorProvisioningState left, FrontDoorProvisioningState right) => left.Equals(right);

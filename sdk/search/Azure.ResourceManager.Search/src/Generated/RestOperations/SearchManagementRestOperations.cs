@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-01-preview";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets the quota usage for a search sku in the given subscription. </summary>
+        /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         QuotaUsageResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaUsageResult.DeserializeQuotaUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets the quota usage for a search sku in the given subscription. </summary>
+        /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         QuotaUsageResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaUsageResult.DeserializeQuotaUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,9 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI;
 
-[Experimental("AOAI001")][CodeGenModel("AzureContentFilterDetectionResult")] public partial class ContentFilterDetectionResult { }
-[Experimental("AOAI001")][CodeGenModel("AzureContentFilterResultForChoiceProtectedMaterialCode")] public partial class ContentFilterProtectedMaterialResult { }
-[Experimental("AOAI001")][CodeGenModel("AzureContentFilterSeverityResultSeverity")] public readonly partial struct ContentFilterSeverity { }
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterDetectionResult")] public partial class ContentFilterDetectionResult { }
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterResultForChoiceProtectedMaterialCode")] public partial class ContentFilterProtectedMaterialResult { }
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterSeverityResultSeverity")] public readonly partial struct ContentFilterSeverity { }
 #if !AZURE_OPENAI_GA
-[Experimental("AOAI001")][CodeGenModel("AzureContentFilterCompletionTextSpan")] public partial class ContentFilterTextSpan { }
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterCompletionTextSpan")] public partial class ContentFilterTextSpan { }
+
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterCustomTopicResult")] public partial class AzureContentFilterCustomTopicResult { }
+
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterCustomTopicResultDetail")] public partial class AzureContentFilterCustomTopicResultDetail { }
+
+[Experimental("AOAI001")][CodeGenType("AzureContentFilterResultForChoiceError")] public partial class AzureContentFilterResultForChoiceError { }
 #endif

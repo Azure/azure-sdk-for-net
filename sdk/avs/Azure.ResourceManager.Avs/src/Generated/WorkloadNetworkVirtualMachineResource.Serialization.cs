@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkVirtualMachineResource : IJsonModel<WorkloadNetworkVirtualMachineData>
     {
+        private static WorkloadNetworkVirtualMachineData s_dataDeserializationInstance;
+        private static WorkloadNetworkVirtualMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVirtualMachineData>)Data).Write(writer, options);
 
-        WorkloadNetworkVirtualMachineData IJsonModel<WorkloadNetworkVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVirtualMachineData>)Data).Create(ref reader, options);
+        WorkloadNetworkVirtualMachineData IJsonModel<WorkloadNetworkVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVirtualMachineData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkVirtualMachineData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkVirtualMachineData IPersistableModel<WorkloadNetworkVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVirtualMachineData>(data, options);
+        WorkloadNetworkVirtualMachineData IPersistableModel<WorkloadNetworkVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVirtualMachineData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkVirtualMachineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkVirtualMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

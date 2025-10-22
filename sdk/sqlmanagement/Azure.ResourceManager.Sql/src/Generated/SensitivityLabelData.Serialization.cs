@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
             }
+            if (Optional.IsDefined(ClientClassificationSource))
+            {
+                writer.WritePropertyName("clientClassificationSource"u8);
+                writer.WriteStringValue(ClientClassificationSource.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.Sql
             string informationTypeId = default;
             bool? isDisabled = default;
             SensitivityLabelRank? rank = default;
+            ClientClassificationSource? clientClassificationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -222,6 +228,15 @@ namespace Azure.ResourceManager.Sql
                             rank = property0.Value.GetString().ToSensitivityLabelRank();
                             continue;
                         }
+                        if (property0.NameEquals("clientClassificationSource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clientClassificationSource = new ClientClassificationSource(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -246,6 +261,7 @@ namespace Azure.ResourceManager.Sql
                 informationTypeId,
                 isDisabled,
                 rank,
+                clientClassificationSource,
                 serializedAdditionalRawData);
         }
 
@@ -530,6 +546,21 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientClassificationSource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientClassificationSource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientClassificationSource))
+                {
+                    builder.Append("    clientClassificationSource: ");
+                    builder.AppendLine($"'{ClientClassificationSource.Value.ToString()}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -542,7 +573,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -558,7 +589,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSensitivityLabelData(document.RootElement, options);
                     }
                 default:

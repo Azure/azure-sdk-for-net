@@ -1,6 +1,6 @@
-# Microsoft Azure ImpactReporting management client library for .NET
+# Microsoft Azure Impact Reporting management client library for .NET
 
-**[Describe the service briefly first.]**
+To enhance your investigations into observed workload regressions, Azure Impact Reporting provides an Azure platform relevant to the resource and the time of the regression. When you report an issue, we investigate changes, outages, and other platform events in the context of provided resources and provide you with findings.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure ImpactReporting management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Impact Reporting management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ImpactReporting --prerelease

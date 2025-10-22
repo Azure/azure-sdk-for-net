@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class StreamingLocatorResource : IJsonModel<StreamingLocatorData>
     {
+        private static StreamingLocatorData s_dataDeserializationInstance;
+        private static StreamingLocatorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StreamingLocatorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StreamingLocatorData>)Data).Write(writer, options);
 
-        StreamingLocatorData IJsonModel<StreamingLocatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingLocatorData>)Data).Create(ref reader, options);
+        StreamingLocatorData IJsonModel<StreamingLocatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingLocatorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingLocatorData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        StreamingLocatorData IPersistableModel<StreamingLocatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingLocatorData>(data, options);
+        StreamingLocatorData IPersistableModel<StreamingLocatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingLocatorData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<StreamingLocatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingLocatorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StreamingLocatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingLocatorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -5,8 +5,7 @@ using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.Core;
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
@@ -45,22 +44,22 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                Response getTestRunResponse = loadTestRunClient.GetTestRun(testRunId);
-                JsonDocument testRunJson = JsonDocument.Parse(getTestRunResponse.Content.ToString());
+                var getTestRunResponse = loadTestRunClient.GetTestRun(testRunId);
+                var testRun = getTestRunResponse.Value;
 
-                Response getMetricNamespaces = loadTestRunClient.GetMetricNamespaces(testRunId);
-                JsonDocument metricNamespacesJson = JsonDocument.Parse(getMetricNamespaces.Content.ToString());
+                var getMetricNamespaces = loadTestRunClient.GetMetricNamespaces(testRunId);
+                var metricNamespaces = getMetricNamespaces.Value;
 
-                Response getMetricDefinitions = loadTestRunClient.GetMetricDefinitions(
-                    testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString()
+                var getMetricDefinitions = loadTestRunClient.GetMetricDefinitions(
+                    testRunId, metricNamespaces.Value.First().Name
                     );
-                JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
+                var metricDefinitions = getMetricDefinitions.Value;
 
-                Pageable<BinaryData> metrics = loadTestRunClient.GetMetrics(
+                var metrics = loadTestRunClient.GetMetrics(
                         testRunId,
-                        metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-                        metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-                        testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime")
+                        metricNamespaces.Value.First().Name,
+                        metricDefinitions.Value.First().Name,
+                        testRun.StartDateTime.Value.ToString("o") + "/" + testRun.EndDateTime.Value.ToString("o")
                     );
             }
             catch (Exception ex)

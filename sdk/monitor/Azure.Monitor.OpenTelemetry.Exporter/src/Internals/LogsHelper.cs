@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -19,6 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class LogsHelper
     {
+        private const string CustomEventAttributeName = "microsoft.custom_event.name";
+        private const string ClientIpAttributeName = "microsoft.client.ip";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -47,31 +50,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         };
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
                 try
                 {
-                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
-                    if (logRecord.Exception != null)
+                    var properties = new ChangeTrackingDictionary<string, string>();
+                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? microsoftClientIp);
+
+                    if (logRecord.Exception is not null)
                     {
-                        telemetryItem.Data = new MonitorBase
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
-                            BaseType = "ExceptionData",
-                            BaseData = new TelemetryExceptionData(Version, logRecord),
+                            Data = new MonitorBase
+                            {
+                                BaseType = "ExceptionData",
+                                BaseData = new TelemetryExceptionData(Version, logRecord, message, properties),
+                            }
                         };
+                        telemetrySchemaTypeCounter._exceptionCount++;
+                    }
+                    else if (eventName is not null)
+                    {
+                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, microsoftClientIp)
+                        {
+                            Data = new MonitorBase
+                            {
+                                BaseType = "EventData",
+                                BaseData = new TelemetryEventData(Version, eventName, properties, message, logRecord),
+                            }
+                        };
+                        telemetrySchemaTypeCounter._eventCount++;
                     }
                     else
                     {
-                        telemetryItem.Data = new MonitorBase
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
-                            BaseType = "MessageData",
-                            BaseData = new MessageData(Version, logRecord),
+                            Data = new MonitorBase
+                            {
+                                BaseType = "MessageData",
+                                BaseData = new MessageData(Version, logRecord, message, properties),
+                            }
                         };
+                        telemetrySchemaTypeCounter._traceCount++;
                     }
 
                     telemetryItems.Add(telemetryItem);
@@ -82,17 +108,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            return telemetryItems;
+            return (telemetryItems, telemetrySchemaTypeCounter);
         }
 
-        internal static string? GetMessageAndSetProperties(LogRecord logRecord, IDictionary<string, string> properties)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? microsoftClientIp)
         {
-            string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
+            eventName = null;
+            message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
+            microsoftClientIp = null;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
+                if (item.Key == CustomEventAttributeName)
+                {
+                    eventName = item.Value?.ToString();
+                }
+
+                else if (item.Key == ClientIpAttributeName)
+                {
+                    microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
+                }
                 // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
-                if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
+                else if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
                 {
                     try
                     {
@@ -124,23 +161,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             logRecord.ForEachScope(s_processScope, properties);
 
-            var categoryName = logRecord.CategoryName;
-            if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
+            if (eventName is null) // we will omit the following properties if we've detected a custom event.
             {
-                properties.Add("CategoryName", categoryName.Truncate(SchemaConstants.KVP_MaxValueLength)!);
-            }
+                var categoryName = logRecord.CategoryName;
+                if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
+                {
+                    properties.Add("CategoryName", categoryName.Truncate(SchemaConstants.KVP_MaxValueLength)!);
+                }
 
-            if (!properties.ContainsKey("EventId") && logRecord.EventId.Id != 0)
-            {
-                properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
-            }
+                if (!properties.ContainsKey("EventId") && logRecord.EventId.Id != 0)
+                {
+                    properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
+                }
 
-            if (!properties.ContainsKey("EventName") && !string.IsNullOrEmpty(logRecord.EventId.Name))
-            {
-                properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
+                if (!properties.ContainsKey("EventName") && !string.IsNullOrEmpty(logRecord.EventId.Name))
+                {
+                    properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
+                }
             }
-
-            return message;
         }
 
         internal static string GetProblemId(Exception exception)

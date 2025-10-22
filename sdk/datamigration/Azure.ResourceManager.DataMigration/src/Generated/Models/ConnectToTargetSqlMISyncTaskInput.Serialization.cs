@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MISqlConnectionInfo targetConnectionInfo = default;
-            AzureActiveDirectoryApp azureApp = default;
+            DataMigrationMISqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationAadApp azureApp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureApp"u8))
                 {
-                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value, options);
+                    azureApp = DataMigrationAadApp.DeserializeDataMigrationAadApp(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskInput)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectToTargetSqlMISyncTaskInput(document.RootElement, options);
                     }
                 default:

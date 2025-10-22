@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
-                JsonSerializer.Serialize(writer, Subscription);
+                ((IJsonModel<WritableSubResource>)Subscription).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    subscription = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subscription = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataBoxEdgeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EdgeProfilePatch)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeProfilePatch(document.RootElement, options);
                     }
                 default:

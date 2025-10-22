@@ -1,27 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.NetApp.Tests.Helpers;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using FluentAssertions;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
     public class NetAppAccountTests: NetAppTestBase
     {
         private const string namePrefix = "testNetAppNetSDKmgmt";
-        public static new AzureLocation DefaultLocation = " eastus2";
+        public static new AzureLocation DefaultLocation = "eastus2euap";
 
         public NetAppAccountTests(bool isAsync) : base(isAsync)
         {
@@ -34,8 +29,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             if (_resourceGroup != null)
             {
                 NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
-                List<NetAppAccountResource> netAppAccountList = await netAppAccountCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (NetAppAccountResource account in netAppAccountList)
+                AsyncPageable<NetAppAccountResource> netAppAccountList = netAppAccountCollection.GetAllAsync();
+                await foreach (NetAppAccountResource account in netAppAccountList)
                 {
                     await account.DeleteAsync(WaitUntil.Completed);
                 }
@@ -43,13 +38,19 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
         }
 
+        [Test]
         [RecordedTest]
         public async Task NetAppAccountGetOperations()
         {
             ArmRestApiCollection operationCollection = DefaultSubscription.GetArmRestApis("Microsoft.NetApp");
-            List<ArmRestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            var apiList =  operationCollection.GetAllAsync();
             await LiveDelay(200);
-            Assert.IsTrue(apiList.Count() > 1);
+            int count = 0;
+            await foreach (var api in apiList)
+            {
+                count++;
+            }
+            Assert.IsTrue(count > 1);
         }
 
         [RecordedTest]

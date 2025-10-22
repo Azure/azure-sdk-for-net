@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudHsmClusterRestoreContent)} does not support writing '{options.Format}' format.");
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudHsmClusterRestoreContent(document.RootElement, options);
                     }
                 default:

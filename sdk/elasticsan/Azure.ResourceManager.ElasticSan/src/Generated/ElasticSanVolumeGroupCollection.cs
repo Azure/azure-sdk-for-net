@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
@@ -60,11 +61,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Create</description>
+        /// <description>VolumeGroup_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,11 +110,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Create</description>
+        /// <description>VolumeGroup_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,11 +159,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,11 +204,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,15 +245,15 @@ namespace Azure.ResourceManager.ElasticSan
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumeGroups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_ListByElasticSan</description>
+        /// <description>VolumeGroup_ListByElasticSan</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,12 +261,13 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticSanVolumeGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticSanVolumeGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticSanVolumeGroupResource> GetAllAsync(ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessSoftDeletedResources);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessSoftDeletedResources);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanVolumeGroupResource(Client, ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(e)), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "ElasticSanVolumeGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -274,15 +276,15 @@ namespace Azure.ResourceManager.ElasticSan
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumeGroups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_ListByElasticSan</description>
+        /// <description>VolumeGroup_ListByElasticSan</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,12 +292,13 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanVolumeGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticSanVolumeGroupResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticSanVolumeGroupResource> GetAll(ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessSoftDeletedResources);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeGroupVolumeGroupsRestClient.CreateListByElasticSanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessSoftDeletedResources);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanVolumeGroupResource(Client, ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(e)), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "ElasticSanVolumeGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -308,11 +311,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,11 +354,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,11 +397,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,11 +442,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_Get</description>
+        /// <description>VolumeGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

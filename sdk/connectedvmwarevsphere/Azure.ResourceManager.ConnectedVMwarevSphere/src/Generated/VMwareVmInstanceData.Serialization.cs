@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VMwareVmInstanceData)} does not support writing '{options.Format}' format.");
             }
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVMwareVmInstanceData(document.RootElement, options);
                     }
                 default:

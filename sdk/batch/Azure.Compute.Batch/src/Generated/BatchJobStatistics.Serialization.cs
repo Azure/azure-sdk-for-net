@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
@@ -47,19 +47,19 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("wallClockTime"u8);
             writer.WriteStringValue(WallClockTime, "P");
             writer.WritePropertyName("readIOps"u8);
-            writer.WriteNumberValue(ReadIOps);
+            writer.WriteStringValue(ReadIops.ToString());
             writer.WritePropertyName("writeIOps"u8);
-            writer.WriteNumberValue(WriteIOps);
+            writer.WriteStringValue(WriteIops.ToString());
             writer.WritePropertyName("readIOGiB"u8);
-            writer.WriteNumberValue(ReadIOGiB);
+            writer.WriteNumberValue(ReadIoGiB);
             writer.WritePropertyName("writeIOGiB"u8);
-            writer.WriteNumberValue(WriteIOGiB);
+            writer.WriteNumberValue(WriteIoGiB);
             writer.WritePropertyName("numSucceededTasks"u8);
-            writer.WriteNumberValue(NumSucceededTasks);
+            writer.WriteStringValue(SucceededTasksCount.ToString());
             writer.WritePropertyName("numFailedTasks"u8);
-            writer.WriteNumberValue(NumFailedTasks);
+            writer.WriteStringValue(FailedTasksCount.ToString());
             writer.WritePropertyName("numTaskRetries"u8);
-            writer.WriteNumberValue(NumTaskRetries);
+            writer.WriteStringValue(TaskRetriesCount.ToString());
             writer.WritePropertyName("waitTime"u8);
             writer.WriteStringValue(WaitTime, "P");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,7 +99,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            string url = default;
+            Uri url = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             TimeSpan userCPUTime = default;
@@ -119,7 +119,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -149,12 +149,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("readIOps"u8))
                 {
-                    readIOps = property.Value.GetInt64();
+                    readIOps = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("writeIOps"u8))
                 {
-                    writeIOps = property.Value.GetInt64();
+                    writeIOps = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("readIOGiB"u8))
@@ -169,17 +169,17 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("numSucceededTasks"u8))
                 {
-                    numSucceededTasks = property.Value.GetInt64();
+                    numSucceededTasks = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("numFailedTasks"u8))
                 {
-                    numFailedTasks = property.Value.GetInt64();
+                    numFailedTasks = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("numTaskRetries"u8))
                 {
-                    numTaskRetries = property.Value.GetInt64();
+                    numTaskRetries = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("waitTime"u8))
@@ -218,7 +218,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobStatistics)} does not support writing '{options.Format}' format.");
             }
@@ -232,7 +232,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobStatistics(document.RootElement, options);
                     }
                 default:
@@ -246,7 +246,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchJobStatistics FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchJobStatistics(document.RootElement);
         }
 

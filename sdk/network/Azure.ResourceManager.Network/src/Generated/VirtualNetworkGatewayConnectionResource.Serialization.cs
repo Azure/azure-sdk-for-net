@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayConnectionResource : IJsonModel<VirtualNetworkGatewayConnectionData>
     {
+        private static VirtualNetworkGatewayConnectionData s_dataDeserializationInstance;
+        private static VirtualNetworkGatewayConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualNetworkGatewayConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)Data).Write(writer, options);
 
-        VirtualNetworkGatewayConnectionData IJsonModel<VirtualNetworkGatewayConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)Data).Create(ref reader, options);
+        VirtualNetworkGatewayConnectionData IJsonModel<VirtualNetworkGatewayConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkGatewayConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualNetworkGatewayConnectionData IPersistableModel<VirtualNetworkGatewayConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkGatewayConnectionData>(data, options);
+        VirtualNetworkGatewayConnectionData IPersistableModel<VirtualNetworkGatewayConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkGatewayConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualNetworkGatewayConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkGatewayConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualNetworkGatewayConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkGatewayConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -39,10 +39,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DynamicVNetAssignmentScope))
+            if (Optional.IsDefined(DynamicVnetAssignmentScope))
             {
                 writer.WritePropertyName("dynamicVNetAssignmentScope"u8);
-                writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToString());
+                writer.WriteStringValue(DynamicVnetAssignmentScope.Value.ToString());
             }
             if (Optional.IsDefined(EndpointConfiguration))
             {
@@ -67,7 +67,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,7 +99,7 @@ namespace Azure.Compute.Batch
             string subnetId = default;
             DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default;
             BatchPoolEndpointConfiguration endpointConfiguration = default;
-            PublicIpAddressConfiguration publicIPAddressConfiguration = default;
+            BatchPublicIpAddressConfiguration publicIPAddressConfiguration = default;
             bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = PublicIpAddressConfiguration.DeserializePublicIpAddressConfiguration(property.Value, options);
+                    publicIPAddressConfiguration = BatchPublicIpAddressConfiguration.DeserializeBatchPublicIpAddressConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAcceleratedNetworking"u8))
@@ -168,7 +168,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -182,7 +182,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkConfiguration(document.RootElement, options);
                     }
                 default:
@@ -196,7 +196,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static NetworkConfiguration FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeNetworkConfiguration(document.RootElement);
         }
 

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Maps
                 case 201:
                     {
                         MapsCreatorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Maps
                 case 201:
                     {
                         MapsCreatorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsCreatorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

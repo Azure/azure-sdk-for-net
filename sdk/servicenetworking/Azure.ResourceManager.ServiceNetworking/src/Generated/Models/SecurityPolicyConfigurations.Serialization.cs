@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    internal partial class SecurityPolicyConfigurations : IUtf8JsonSerializable, IJsonModel<SecurityPolicyConfigurations>
+    public partial class SecurityPolicyConfigurations : IUtf8JsonSerializable, IJsonModel<SecurityPolicyConfigurations>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,7 +39,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             if (Optional.IsDefined(WafSecurityPolicy))
             {
                 writer.WritePropertyName("wafSecurityPolicy"u8);
-                JsonSerializer.Serialize(writer, WafSecurityPolicy);
+                ((IJsonModel<WritableSubResource>)WafSecurityPolicy).Write(writer, options);
+            }
+            if (Optional.IsDefined(IPAccessRulesSecurityPolicy))
+            {
+                writer.WritePropertyName("ipAccessRulesSecurityPolicy"u8);
+                ((IJsonModel<WritableSubResource>)IPAccessRulesSecurityPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,6 +84,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             WritableSubResource wafSecurityPolicy = default;
+            WritableSubResource ipAccessRulesSecurityPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +95,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    wafSecurityPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    wafSecurityPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("ipAccessRulesSecurityPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAccessRulesSecurityPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +113,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityPolicyConfigurations(wafSecurityPolicy, serializedAdditionalRawData);
+            return new SecurityPolicyConfigurations(wafSecurityPolicy, ipAccessRulesSecurityPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityPolicyConfigurations>.Write(ModelReaderWriterOptions options)
@@ -107,7 +123,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityPolicyConfigurations)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +137,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityPolicyConfigurations(document.RootElement, options);
                     }
                 default:

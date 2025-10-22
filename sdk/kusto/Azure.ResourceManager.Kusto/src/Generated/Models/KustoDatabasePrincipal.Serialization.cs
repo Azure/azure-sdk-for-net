@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -160,6 +161,160 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Role), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  role: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  role: ");
+                builder.AppendLine($"'{Role.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{PrincipalType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fqn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Fqn))
+                {
+                    builder.Append("  fqn: ");
+                    if (Fqn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Fqn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Fqn}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  email: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Email))
+                {
+                    builder.Append("  email: ");
+                    if (Email.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Email}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Email}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  appId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppId))
+                {
+                    builder.Append("  appId: ");
+                    if (AppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AppId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantName))
+                {
+                    builder.Append("  tenantName: ");
+                    if (TenantName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TenantName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TenantName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KustoDatabasePrincipal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,7 +322,9 @@ namespace Azure.ResourceManager.Kusto.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +338,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKustoDatabasePrincipal(document.RootElement, options);
                     }
                 default:

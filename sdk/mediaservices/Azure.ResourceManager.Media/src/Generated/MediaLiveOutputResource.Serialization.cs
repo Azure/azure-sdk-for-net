@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaLiveOutputResource : IJsonModel<MediaLiveOutputData>
     {
+        private static MediaLiveOutputData s_dataDeserializationInstance;
+        private static MediaLiveOutputData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MediaLiveOutputData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaLiveOutputData>)Data).Write(writer, options);
 
-        MediaLiveOutputData IJsonModel<MediaLiveOutputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaLiveOutputData>)Data).Create(ref reader, options);
+        MediaLiveOutputData IJsonModel<MediaLiveOutputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaLiveOutputData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaLiveOutputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MediaLiveOutputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaLiveOutputData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        MediaLiveOutputData IPersistableModel<MediaLiveOutputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaLiveOutputData>(data, options);
+        MediaLiveOutputData IPersistableModel<MediaLiveOutputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaLiveOutputData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<MediaLiveOutputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaLiveOutputData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MediaLiveOutputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaLiveOutputData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

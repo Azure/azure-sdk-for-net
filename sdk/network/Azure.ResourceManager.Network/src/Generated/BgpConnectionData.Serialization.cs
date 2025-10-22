@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(HubVirtualNetworkConnection))
             {
                 writer.WritePropertyName("hubVirtualNetworkConnection"u8);
-                JsonSerializer.Serialize(writer, HubVirtualNetworkConnection);
+                ((IJsonModel<WritableSubResource>)HubVirtualNetworkConnection).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hubVirtualNetworkConnection = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            hubVirtualNetworkConnection = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -209,6 +210,165 @@ namespace Azure.ResourceManager.Network
                 connectionState);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeerAsn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peerAsn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeerAsn))
+                {
+                    builder.Append("    peerAsn: ");
+                    builder.AppendLine($"'{PeerAsn.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeerIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peerIp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeerIP))
+                {
+                    builder.Append("    peerIp: ");
+                    if (PeerIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PeerIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PeerIP}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HubVirtualNetworkConnectionId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hubVirtualNetworkConnection: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      hubVirtualNetworkConnection: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(HubVirtualNetworkConnection))
+                {
+                    builder.Append("    hubVirtualNetworkConnection: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HubVirtualNetworkConnection, options, 4, false, "    hubVirtualNetworkConnection: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectionState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionState))
+                {
+                    builder.Append("    connectionState: ");
+                    builder.AppendLine($"'{ConnectionState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BgpConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -216,7 +376,9 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BgpConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -230,7 +392,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBgpConnectionData(document.RootElement, options);
                     }
                 default:

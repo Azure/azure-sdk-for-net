@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            OracleConnectionInfo connectionInfo = default;
+            DataMigrationOracleConnectionInfo connectionInfo = default;
             IList<string> selectedSchemas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
+                    connectionInfo = DataMigrationOracleConnectionInfo.DeserializeDataMigrationOracleConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedSchemas"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GetUserTablesOracleTaskInput)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGetUserTablesOracleTaskInput(document.RootElement, options);
                     }
                 default:

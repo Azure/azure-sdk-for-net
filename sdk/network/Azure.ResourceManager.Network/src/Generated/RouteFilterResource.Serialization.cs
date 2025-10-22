@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RouteFilterResource : IJsonModel<RouteFilterData>
     {
+        private static RouteFilterData s_dataDeserializationInstance;
+        private static RouteFilterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RouteFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterData>)Data).Write(writer, options);
 
-        RouteFilterData IJsonModel<RouteFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterData>)Data).Create(ref reader, options);
+        RouteFilterData IJsonModel<RouteFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RouteFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RouteFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteFilterData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        RouteFilterData IPersistableModel<RouteFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteFilterData>(data, options);
+        RouteFilterData IPersistableModel<RouteFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteFilterData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteFilterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RouteFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteFilterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

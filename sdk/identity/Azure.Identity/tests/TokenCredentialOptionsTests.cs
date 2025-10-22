@@ -4,7 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -12,10 +11,6 @@ using System.Reflection;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Messaging.EventHubs;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Diagnostics.Tracing.Extensions;
-using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -281,13 +276,14 @@ namespace Azure.Identity.Tests
         }
 
         // this is a list of ISupports* interfaces that are explicitly supported by TokenCredentialOptions.Clone<T>()
-        // do not add any ISupports types to this list without first adding support to TokenCredentialOptions.Clone<T>()
+        // do not add any ISupports* types to this list without first adding support to TokenCredentialOptions.Clone<T>()
         // and adding corresponding validation to VerifyClone and VerifyCloneHandlesISupportsForAllTypes
         private static Type[] s_KnownISupportsInterfaces = new Type[]
         {
             typeof(ISupportsAdditionallyAllowedTenants),
             typeof(ISupportsDisableInstanceDiscovery),
-            typeof(ISupportsTokenCachePersistenceOptions)
+            typeof(ISupportsTokenCachePersistenceOptions),
+            typeof(ISupportsTenantId)
         };
 
         public static IEnumerable<TestCaseData> CredentialOptionsCloneTypeTestMatrix()
@@ -329,6 +325,11 @@ namespace Azure.Identity.Tests
                 tcpo.TokenCachePersistenceOptions = new TokenCachePersistenceOptions() { Name = Guid.NewGuid().ToString() };
             }
 
+            if (source is ISupportsTenantId sti)
+            {
+                sti.TenantId = Guid.NewGuid().ToString();
+            }
+
             // clone the source and assert that the correct types is returned and all ISupports* interfaces the cloned type supports have been copied
             var destination = sourceType.GetMethod("Clone", BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(destinationType).Invoke(source, null);
 
@@ -348,7 +349,13 @@ namespace Azure.Identity.Tests
 
             if (source is ISupportsTokenCachePersistenceOptions tcpoSource && destination is ISupportsTokenCachePersistenceOptions tcpoDestination)
             {
-                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions, tcpoDestination.TokenCachePersistenceOptions);
+                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.Name, tcpoDestination.TokenCachePersistenceOptions.Name);
+                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage, tcpoDestination.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage);
+            }
+
+            if (source is ISupportsTenantId stiSource && destination is ISupportsTenantId stiDestination)
+            {
+                Assert.AreEqual(stiSource.TenantId, stiDestination.TenantId);
             }
         }
     }

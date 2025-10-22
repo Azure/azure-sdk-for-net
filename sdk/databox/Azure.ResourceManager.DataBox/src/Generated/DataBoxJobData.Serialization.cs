@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBox.Models;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -83,6 +84,11 @@ namespace Azure.ResourceManager.DataBox
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DelayedStage))
+            {
+                writer.WritePropertyName("delayedStage"u8);
+                writer.WriteStringValue(DelayedStage.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.DataBox
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Details))
             {
@@ -117,6 +123,11 @@ namespace Azure.ResourceManager.DataBox
             {
                 writer.WritePropertyName("isCancellableWithoutFee"u8);
                 writer.WriteBooleanValue(IsCancellableWithoutFee.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AreAllDevicesLost))
+            {
+                writer.WritePropertyName("allDevicesLost"u8);
+                writer.WriteBooleanValue(AreAllDevicesLost.Value);
             }
             writer.WriteEndObject();
         }
@@ -157,6 +168,7 @@ namespace Azure.ResourceManager.DataBox
             ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default;
             bool? isPrepareToShipEnabled = default;
             DataBoxStageName? status = default;
+            DataBoxStageName? delayedStage = default;
             DateTimeOffset? startTime = default;
             ResponseError error = default;
             DataBoxBasicJobDetails details = default;
@@ -164,6 +176,7 @@ namespace Azure.ResourceManager.DataBox
             JobDeliveryType? deliveryType = default;
             JobDeliveryInfo deliveryInfo = default;
             bool? isCancellableWithoutFee = default;
+            bool? allDevicesLost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +192,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -222,7 +235,7 @@ namespace Azure.ResourceManager.DataBox
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -302,6 +315,15 @@ namespace Azure.ResourceManager.DataBox
                             status = new DataBoxStageName(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("delayedStage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            delayedStage = new DataBoxStageName(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -317,7 +339,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("details"u8))
@@ -361,6 +383,15 @@ namespace Azure.ResourceManager.DataBox
                             isCancellableWithoutFee = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("allDevicesLost"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allDevicesLost = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -385,6 +416,7 @@ namespace Azure.ResourceManager.DataBox
                 reverseTransportPreferenceUpdate,
                 isPrepareToShipEnabled,
                 status,
+                delayedStage,
                 startTime,
                 error,
                 details,
@@ -392,6 +424,7 @@ namespace Azure.ResourceManager.DataBox
                 deliveryType,
                 deliveryInfo,
                 isCancellableWithoutFee,
+                allDevicesLost,
                 sku,
                 identity,
                 serializedAdditionalRawData);
@@ -404,7 +437,7 @@ namespace Azure.ResourceManager.DataBox
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{options.Format}' format.");
             }
@@ -418,7 +451,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxJobData(document.RootElement, options);
                     }
                 default:

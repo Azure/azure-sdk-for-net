@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(RecoveryPointType.ToString());
             writer.WritePropertyName("customProperties"u8);
             writer.WriteObjectValue(CustomProperties, options);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,7 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             DateTimeOffset recoveryPointTime = default;
             DataReplicationRecoveryPointType recoveryPointType = default;
-            RecoveryPointModelCustomProperties customProperties = default;
+            DataReplicationRecoveryPointCustomProperties customProperties = default;
+            DataReplicationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +102,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = RecoveryPointModelCustomProperties.DeserializeRecoveryPointModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationRecoveryPointCustomProperties.DeserializeDataReplicationRecoveryPointCustomProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataReplicationRecoveryPointProperties(recoveryPointTime, recoveryPointType, customProperties, serializedAdditionalRawData);
+            return new DataReplicationRecoveryPointProperties(recoveryPointTime, recoveryPointType, customProperties, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationRecoveryPointProperties>.Write(ModelReaderWriterOptions options)
@@ -115,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support writing '{options.Format}' format.");
             }
@@ -129,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationRecoveryPointProperties(document.RootElement, options);
                     }
                 default:

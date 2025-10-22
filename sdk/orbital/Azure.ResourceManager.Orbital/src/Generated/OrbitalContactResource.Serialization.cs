@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class OrbitalContactResource : IJsonModel<OrbitalContactData>
     {
+        private static OrbitalContactData s_dataDeserializationInstance;
+        private static OrbitalContactData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OrbitalContactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactData>)Data).Write(writer, options);
 
-        OrbitalContactData IJsonModel<OrbitalContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactData>)Data).Create(ref reader, options);
+        OrbitalContactData IJsonModel<OrbitalContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OrbitalContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OrbitalContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OrbitalContactData>(Data, options, AzureResourceManagerOrbitalContext.Default);
 
-        OrbitalContactData IPersistableModel<OrbitalContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalContactData>(data, options);
+        OrbitalContactData IPersistableModel<OrbitalContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalContactData>(data, options, AzureResourceManagerOrbitalContext.Default);
 
-        string IPersistableModel<OrbitalContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalContactData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OrbitalContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalContactData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

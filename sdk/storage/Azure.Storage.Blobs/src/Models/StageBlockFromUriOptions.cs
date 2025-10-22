@@ -46,5 +46,11 @@ namespace Azure.Storage.Blobs.Models
         /// Optional.  Source authentication used to access the source blob.
         /// </summary>
         public HttpAuthorization SourceAuthentication { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
+        /// Used to indicate the intent of the request.
+        /// </summary>
+        public FileShareTokenIntent? SourceShareTokenIntent { get; set; }
     }
 }

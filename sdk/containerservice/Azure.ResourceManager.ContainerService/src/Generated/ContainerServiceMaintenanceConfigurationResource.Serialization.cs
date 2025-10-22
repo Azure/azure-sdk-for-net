@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ContainerServiceMaintenanceConfigurationResource : IJsonModel<ContainerServiceMaintenanceConfigurationData>
     {
+        private static ContainerServiceMaintenanceConfigurationData s_dataDeserializationInstance;
+        private static ContainerServiceMaintenanceConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerServiceMaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceMaintenanceConfigurationData>)Data).Write(writer, options);
 
-        ContainerServiceMaintenanceConfigurationData IJsonModel<ContainerServiceMaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceMaintenanceConfigurationData>)Data).Create(ref reader, options);
+        ContainerServiceMaintenanceConfigurationData IJsonModel<ContainerServiceMaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceMaintenanceConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceMaintenanceConfigurationData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ContainerServiceMaintenanceConfigurationData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceMaintenanceConfigurationData>(data, options);
+        ContainerServiceMaintenanceConfigurationData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceMaintenanceConfigurationData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ContainerServiceMaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerServiceMaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

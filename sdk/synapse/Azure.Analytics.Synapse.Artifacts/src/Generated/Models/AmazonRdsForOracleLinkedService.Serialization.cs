@@ -64,12 +64,85 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue<object>(ConnectionString);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteObjectValue<object>(ConnectionString);
+            }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                writer.WriteObjectValue<object>(Server);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteObjectValue<object>(Username);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
+            }
+            if (Optional.IsDefined(EncryptionClient))
+            {
+                writer.WritePropertyName("encryptionClient"u8);
+                writer.WriteObjectValue<object>(EncryptionClient);
+            }
+            if (Optional.IsDefined(EncryptionTypesClient))
+            {
+                writer.WritePropertyName("encryptionTypesClient"u8);
+                writer.WriteObjectValue<object>(EncryptionTypesClient);
+            }
+            if (Optional.IsDefined(CryptoChecksumClient))
+            {
+                writer.WritePropertyName("cryptoChecksumClient"u8);
+                writer.WriteObjectValue<object>(CryptoChecksumClient);
+            }
+            if (Optional.IsDefined(CryptoChecksumTypesClient))
+            {
+                writer.WritePropertyName("cryptoChecksumTypesClient"u8);
+                writer.WriteObjectValue<object>(CryptoChecksumTypesClient);
+            }
+            if (Optional.IsDefined(InitialLobFetchSize))
+            {
+                writer.WritePropertyName("initialLobFetchSize"u8);
+                writer.WriteObjectValue<object>(InitialLobFetchSize);
+            }
+            if (Optional.IsDefined(FetchSize))
+            {
+                writer.WritePropertyName("fetchSize"u8);
+                writer.WriteObjectValue<object>(FetchSize);
+            }
+            if (Optional.IsDefined(StatementCacheSize))
+            {
+                writer.WritePropertyName("statementCacheSize"u8);
+                writer.WriteObjectValue<object>(StatementCacheSize);
+            }
+            if (Optional.IsDefined(InitializationString))
+            {
+                writer.WritePropertyName("initializationString"u8);
+                writer.WriteObjectValue<object>(InitializationString);
+            }
+            if (Optional.IsDefined(EnableBulkLoad))
+            {
+                writer.WritePropertyName("enableBulkLoad"u8);
+                writer.WriteObjectValue<object>(EnableBulkLoad);
+            }
+            if (Optional.IsDefined(SupportV1DataTypes))
+            {
+                writer.WritePropertyName("supportV1DataTypes"u8);
+                writer.WriteObjectValue<object>(SupportV1DataTypes);
+            }
+            if (Optional.IsDefined(FetchTswtzAsTimestamp))
+            {
+                writer.WritePropertyName("fetchTswtzAsTimestamp"u8);
+                writer.WriteObjectValue<object>(FetchTswtzAsTimestamp);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -98,7 +171,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object connectionString = default;
+            object server = default;
+            AmazonRdsForOracleAuthenticationType? authenticationType = default;
+            object username = default;
             SecretBase password = default;
+            object encryptionClient = default;
+            object encryptionTypesClient = default;
+            object cryptoChecksumClient = default;
+            object cryptoChecksumTypesClient = default;
+            object initialLobFetchSize = default;
+            object fetchSize = default;
+            object statementCacheSize = default;
+            object initializationString = default;
+            object enableBulkLoad = default;
+            object supportV1DataTypes = default;
+            object fetchTswtzAsTimestamp = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -174,7 +261,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("connectionString"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             connectionString = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationType = new AmazonRdsForOracleAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("username"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -184,6 +302,105 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 continue;
                             }
                             password = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionClient = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionTypesClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionTypesClient = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("cryptoChecksumClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cryptoChecksumClient = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("cryptoChecksumTypesClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cryptoChecksumTypesClient = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("initialLobFetchSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            initialLobFetchSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("fetchSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fetchSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("statementCacheSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            statementCacheSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("initializationString"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            initializationString = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableBulkLoad"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableBulkLoad = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("supportV1DataTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            supportV1DataTypes = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("fetchTswtzAsTimestamp"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fetchTswtzAsTimestamp = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -210,7 +427,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 connectionString,
+                server,
+                authenticationType,
+                username,
                 password,
+                encryptionClient,
+                encryptionTypesClient,
+                cryptoChecksumClient,
+                cryptoChecksumTypesClient,
+                initialLobFetchSize,
+                fetchSize,
+                statementCacheSize,
+                initializationString,
+                enableBulkLoad,
+                supportV1DataTypes,
+                fetchTswtzAsTimestamp,
                 encryptedCredential);
         }
 
@@ -218,7 +449,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AmazonRdsForOracleLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAmazonRdsForOracleLinkedService(document.RootElement);
         }
 

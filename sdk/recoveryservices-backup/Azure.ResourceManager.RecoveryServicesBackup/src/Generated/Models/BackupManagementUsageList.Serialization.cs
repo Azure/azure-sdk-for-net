@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupManagementUsageList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(BackupManagementUsageList)} does not support writing '{format}' format.");
             }
 
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -43,21 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -82,6 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             IReadOnlyList<BackupManagementUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,13 +87,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackupManagementUsageList(value ?? new ChangeTrackingList<BackupManagementUsage>(), serializedAdditionalRawData);
+            return new BackupManagementUsageList(nextLink, serializedAdditionalRawData, value ?? new ChangeTrackingList<BackupManagementUsage>());
         }
 
         BinaryData IPersistableModel<BackupManagementUsageList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BackupManagementUsageList)} does not support writing '{options.Format}' format.");
             }
@@ -130,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBackupManagementUsageList(document.RootElement, options);
                     }
                 default:

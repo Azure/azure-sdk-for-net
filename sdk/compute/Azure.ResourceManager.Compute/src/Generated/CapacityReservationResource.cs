@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details.
+        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details. Note: Block capacity reservations cannot be deleted after it has been successfully allocated until the schedule end time.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details.
+        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details. Note: Block capacity reservations cannot be deleted after it has been successfully allocated until the schedule end time.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

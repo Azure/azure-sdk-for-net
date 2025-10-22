@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
     <LangVersion>latest</LangVersion>
     <!--This is a workaround because `Microsoft.Generator.CSharp` and `Microsoft.Generator.CSharp.Input` is not signed-->
     <NoWarn>CS8002</NoWarn>
@@ -8,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../src/Azure.Generator.csproj" />
+    <ProjectReference Include="common\Azure.Generator.Tests.Common.csproj" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
@@ -22,6 +24,7 @@
 
   <ItemGroup>
     <Compile Remove="**\TestData\**\*.cs" />
+    <Compile Remove="common\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,5 +32,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Compile Remove="common\**" />
+  </ItemGroup>
+
 </Project>

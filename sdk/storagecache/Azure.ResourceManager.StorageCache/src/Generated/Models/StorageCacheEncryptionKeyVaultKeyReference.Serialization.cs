@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault);
+            ((IJsonModel<WritableSubResource>)SourceVault).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (property.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    sourceVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerStorageCacheContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheEncryptionKeyVaultKeyReference)} does not support writing '{options.Format}' format.");
             }
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageCacheEncryptionKeyVaultKeyReference(document.RootElement, options);
                     }
                 default:

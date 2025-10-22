@@ -8,10 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -37,16 +38,24 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(EnabledLogCategories))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("enabledLogCategories"u8);
+                writer.WriteStartArray();
+                foreach (var item in EnabledLogCategories)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
+            writer.WriteEndObject();
         }
 
         NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,34 +78,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            NetworkSecurityPerimeterLoggingConfigurationProperties properties = default;
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            IList<string> enabledLogCategories = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = NetworkSecurityPerimeterLoggingConfigurationProperties.DeserializeNetworkSecurityPerimeterLoggingConfigurationProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -118,7 +109,38 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("enabledLogCategories"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            enabledLogCategories = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,9 +154,139 @@ namespace Azure.ResourceManager.Network
                 name,
                 type,
                 systemData,
-                properties,
-                etag,
+                enabledLogCategories ?? new ChangeTrackingList<string>(),
+                version,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledLogCategories), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabledLogCategories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EnabledLogCategories))
+                {
+                    if (EnabledLogCategories.Any())
+                    {
+                        builder.Append("    enabledLogCategories: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EnabledLogCategories)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("    version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(ModelReaderWriterOptions options)
@@ -144,7 +296,9 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLoggingConfigurationData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +312,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkSecurityPerimeterLoggingConfigurationData(document.RootElement, options);
                     }
                 default:

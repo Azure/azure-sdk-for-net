@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 }
                                 else
                                 {
-                                    array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                                    array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
                                 }
                             }
                             errors = array;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCsmDeploymentStatus(document.RootElement, options);
                     }
                 default:

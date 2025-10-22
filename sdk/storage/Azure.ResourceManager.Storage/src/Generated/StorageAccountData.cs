@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location. </param>
         public StorageAccountData(AzureLocation location) : base(location)
         {
+            Zones = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
@@ -70,7 +71,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="kind"> Gets the Kind. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <param name="provisioningState"> Gets the status of the storage account at the time the operation was called. </param>
+        /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
+        /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
+        /// <param name="storageAccountProvisioningState"> Gets the status of the storage account at the time the operation was called. </param>
         /// <param name="primaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </param>
         /// <param name="primaryLocation"> Gets the location of the primary data center for the storage account. </param>
         /// <param name="statusOfPrimary"> Gets the status indicating whether the primary location of the storage account is available or unavailable. </param>
@@ -97,6 +100,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage account. </param>
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
+        /// <param name="dualStackEndpointPreference"> Maintains information about the Internet protocol opted by the user. </param>
         /// <param name="blobRestoreStatus"> Blob restore status. </param>
         /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
         /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
@@ -112,13 +116,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="isSkuConversionBlocked"> This property will be set to true or false on an event of ongoing migration. Default value is null. </param>
         /// <param name="isAccountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, StorageAccountProvisioningState? storageAccountProvisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
             Identity = identity;
             ExtendedLocation = extendedLocation;
-            ProvisioningState = provisioningState;
+            Zones = zones;
+            Placement = placement;
+            StorageAccountProvisioningState = storageAccountProvisioningState;
             PrimaryEndpoints = primaryEndpoints;
             PrimaryLocation = primaryLocation;
             StatusOfPrimary = statusOfPrimary;
@@ -145,6 +151,7 @@ namespace Azure.ResourceManager.Storage
             LargeFileSharesState = largeFileSharesState;
             PrivateEndpointConnections = privateEndpointConnections;
             RoutingPreference = routingPreference;
+            DualStackEndpointPreference = dualStackEndpointPreference;
             BlobRestoreStatus = blobRestoreStatus;
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
@@ -179,9 +186,27 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The extendedLocation of the resource. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
+        [WirePath("zones")]
+        public IList<string> Zones { get; }
+        /// <summary> Optional. Gets or sets the zonal placement details for the storage account. </summary>
+        internal Placement Placement { get; set; }
+        /// <summary> The availability zone pinning policy for the storage account. </summary>
+        [WirePath("placement.zonePlacementPolicy")]
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
+        {
+            get => Placement is null ? default : Placement.ZonePlacementPolicy;
+            set
+            {
+                if (Placement is null)
+                    Placement = new Placement();
+                Placement.ZonePlacementPolicy = value;
+            }
+        }
+
         /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
         [WirePath("properties.provisioningState")]
-        public StorageProvisioningState? ProvisioningState { get; }
+        public StorageAccountProvisioningState? StorageAccountProvisioningState { get; }
         /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </summary>
         [WirePath("properties.primaryEndpoints")]
         public StorageAccountEndpoints PrimaryEndpoints { get; }
@@ -266,6 +291,21 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         [WirePath("properties.routingPreference")]
         public StorageRoutingPreference RoutingPreference { get; set; }
+        /// <summary> Maintains information about the Internet protocol opted by the user. </summary>
+        internal DualStackEndpointPreference DualStackEndpointPreference { get; set; }
+        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
+        public bool? IsIPv6EndpointToBePublished
+        {
+            get => DualStackEndpointPreference is null ? default : DualStackEndpointPreference.IsIPv6EndpointToBePublished;
+            set
+            {
+                if (DualStackEndpointPreference is null)
+                    DualStackEndpointPreference = new DualStackEndpointPreference();
+                DualStackEndpointPreference.IsIPv6EndpointToBePublished = value;
+            }
+        }
+
         /// <summary> Blob restore status. </summary>
         [WirePath("properties.blobRestoreStatus")]
         public BlobRestoreStatus BlobRestoreStatus { get; }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityOperatorData(document.RootElement, options);
                     }
                 default:

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppReplicaResource : IJsonModel<ContainerAppReplicaData>
     {
+        private static ContainerAppReplicaData s_dataDeserializationInstance;
+        private static ContainerAppReplicaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerAppReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppReplicaData>)Data).Write(writer, options);
 
-        ContainerAppReplicaData IJsonModel<ContainerAppReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppReplicaData>)Data).Create(ref reader, options);
+        ContainerAppReplicaData IJsonModel<ContainerAppReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppReplicaData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerAppReplicaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerAppReplicaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppReplicaData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        ContainerAppReplicaData IPersistableModel<ContainerAppReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppReplicaData>(data, options);
+        ContainerAppReplicaData IPersistableModel<ContainerAppReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppReplicaData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppReplicaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppReplicaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

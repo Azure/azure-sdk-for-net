@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ImpactReporting
 {
     public partial class InsightResource : IJsonModel<InsightData>
     {
+        private static InsightData s_dataDeserializationInstance;
+        private static InsightData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<InsightData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InsightData>)Data).Write(writer, options);
 
-        InsightData IJsonModel<InsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InsightData>)Data).Create(ref reader, options);
+        InsightData IJsonModel<InsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InsightData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InsightData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InsightData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InsightData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        InsightData IPersistableModel<InsightData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InsightData>(data, options);
+        InsightData IPersistableModel<InsightData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InsightData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<InsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InsightData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InsightData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

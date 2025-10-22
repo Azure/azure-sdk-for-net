@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Reflection;
-#if NET6_0_OR_GREATER
+#if NET
 using System.Text.Json.Nodes;
 #endif
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         private static void ValidateProperties(string description, string jsonString, List<KeyValuePair<string, string>> expectedProperties)
         {
-#if NET6_0_OR_GREATER
+#if NET
             var jsonNode = JsonNode.Parse(jsonString);
             Assert.IsNotNull(jsonNode, $"({description}) Expected a non-null JSON node.");
 

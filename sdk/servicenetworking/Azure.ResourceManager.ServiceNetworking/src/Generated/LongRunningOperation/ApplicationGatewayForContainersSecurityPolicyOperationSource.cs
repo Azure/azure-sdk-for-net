@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         ApplicationGatewayForContainersSecurityPolicyResource IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
             return new ApplicationGatewayForContainersSecurityPolicyResource(_client, data);
         }
 
         async ValueTask<ApplicationGatewayForContainersSecurityPolicyResource> IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement);
-            return new ApplicationGatewayForContainersSecurityPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            return await Task.FromResult(new ApplicationGatewayForContainersSecurityPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

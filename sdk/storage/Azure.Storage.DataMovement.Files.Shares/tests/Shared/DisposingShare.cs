@@ -26,6 +26,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return new DisposingShare(share);
         }
 
+        public static async Task<DisposingShare> CreateNfsAsync(ShareClient share, IDictionary<string, string> metadata)
+        {
+            BaseShares::Azure.Storage.Files.Shares.Models.ShareCreateOptions options = new()
+            {
+                Metadata = metadata,
+                Protocols = ShareProtocols.Nfs
+            };
+            await share.CreateIfNotExistsAsync(options);
+            return new DisposingShare(share);
+        }
+
         public DisposingShare(ShareClient share)
         {
             Container = share;

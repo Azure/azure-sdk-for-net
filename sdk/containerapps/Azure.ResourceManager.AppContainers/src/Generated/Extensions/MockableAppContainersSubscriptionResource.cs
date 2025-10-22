@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private ContainerAppsAPIRestOperations _containerAppJobExecutionRestClient;
         private ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
         private ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
+        private ClientDiagnostics _sessionPoolContainerAppsSessionPoolsClientDiagnostics;
+        private ContainerAppsSessionPoolsRestOperations _sessionPoolContainerAppsSessionPoolsRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
 
@@ -61,6 +63,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private ContainerAppsAPIRestOperations ContainerAppJobExecutionRestClient => _containerAppJobExecutionRestClient ??= new ContainerAppsAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobExecutionResource.ResourceType));
         private ClientDiagnostics ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private ManagedEnvironmentsRestOperations ContainerAppManagedEnvironmentManagedEnvironmentsRestClient => _containerAppManagedEnvironmentManagedEnvironmentsRestClient ??= new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppManagedEnvironmentResource.ResourceType));
+        private ClientDiagnostics SessionPoolContainerAppsSessionPoolsClientDiagnostics => _sessionPoolContainerAppsSessionPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", SessionPoolResource.ResourceType.Namespace, Diagnostics);
+        private ContainerAppsSessionPoolsRestOperations SessionPoolContainerAppsSessionPoolsRestClient => _sessionPoolContainerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SessionPoolResource.ResourceType));
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +313,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,7 +343,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +373,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +411,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +449,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,7 +479,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,6 +497,66 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Get the session pools in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/sessionPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SessionPoolResource> GetSessionPoolsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SessionPoolResource(Client, SessionPoolData.DeserializeSessionPoolData(e)), SessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetSessionPools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the session pools in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/sessionPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SessionPoolResource> GetSessionPools(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SessionPoolResource(Client, SessionPoolData.DeserializeSessionPoolData(e)), SessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetSessionPools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
         /// <list type="bullet">
         /// <item>
@@ -505,7 +569,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,7 +596,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>

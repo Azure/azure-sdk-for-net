@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -122,7 +124,7 @@ namespace Azure.ResourceManager.Kusto.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -293,6 +295,309 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TablesToInclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tablesToInclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TablesToInclude))
+                {
+                    if (TablesToInclude.Any())
+                    {
+                        builder.Append("  tablesToInclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TablesToInclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TablesToExclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tablesToExclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TablesToExclude))
+                {
+                    if (TablesToExclude.Any())
+                    {
+                        builder.Append("  tablesToExclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TablesToExclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalTablesToInclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  externalTablesToInclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExternalTablesToInclude))
+                {
+                    if (ExternalTablesToInclude.Any())
+                    {
+                        builder.Append("  externalTablesToInclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ExternalTablesToInclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalTablesToExclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  externalTablesToExclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExternalTablesToExclude))
+                {
+                    if (ExternalTablesToExclude.Any())
+                    {
+                        builder.Append("  externalTablesToExclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ExternalTablesToExclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaterializedViewsToInclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  materializedViewsToInclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
+                {
+                    if (MaterializedViewsToInclude.Any())
+                    {
+                        builder.Append("  materializedViewsToInclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MaterializedViewsToInclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaterializedViewsToExclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  materializedViewsToExclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
+                {
+                    if (MaterializedViewsToExclude.Any())
+                    {
+                        builder.Append("  materializedViewsToExclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MaterializedViewsToExclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionsToInclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  functionsToInclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FunctionsToInclude))
+                {
+                    if (FunctionsToInclude.Any())
+                    {
+                        builder.Append("  functionsToInclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FunctionsToInclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionsToExclude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  functionsToExclude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FunctionsToExclude))
+                {
+                    if (FunctionsToExclude.Any())
+                    {
+                        builder.Append("  functionsToExclude: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FunctionsToExclude)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -300,7 +605,9 @@ namespace Azure.ResourceManager.Kusto.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support writing '{options.Format}' format.");
             }
@@ -314,7 +621,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKustoDatabaseTableLevelSharingProperties(document.RootElement, options);
                     }
                 default:

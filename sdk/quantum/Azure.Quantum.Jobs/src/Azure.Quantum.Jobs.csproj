@@ -7,11 +7,11 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

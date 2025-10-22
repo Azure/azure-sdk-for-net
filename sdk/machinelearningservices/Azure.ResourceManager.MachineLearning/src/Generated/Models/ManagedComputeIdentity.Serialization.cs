@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
         }
 
@@ -77,8 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerMachineLearningContext.Default);
                     continue;
                 }
                 if (property.NameEquals("computeIdentityType"u8))
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -160,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedComputeIdentity(document.RootElement, options);
                     }
                 default:

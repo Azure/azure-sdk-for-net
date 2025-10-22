@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-02-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         CustomDomainListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomDomainListResult.DeserializeCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         CustomDomainListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomDomainListResult.DeserializeCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing custom domain within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         CdnCustomDomainData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets an existing custom domain within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         CdnCustomDomainData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -297,8 +297,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new custom domain within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Creates a new custom domain within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -403,8 +403,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing custom domain within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -433,8 +433,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Deletes an existing custom domain within an endpoint. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -507,8 +507,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Disable https delivery of the custom domain. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -536,8 +536,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Disable https delivery of the custom domain. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -616,8 +616,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Enable https delivery of the custom domain. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -646,8 +646,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Enable https delivery of the custom domain. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -699,8 +699,8 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         CustomDomainListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomDomainListResult.DeserializeCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -732,8 +732,8 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all of the existing custom domains within an endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         CustomDomainListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomDomainListResult.DeserializeCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

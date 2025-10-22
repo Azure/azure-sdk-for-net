@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DtlEnvironmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DtlEnvironmentList.DeserializeDtlEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DtlEnvironmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DtlEnvironmentList.DeserializeDtlEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabEnvironmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabEnvironmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabEnvironmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DevTestLabEnvironmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DtlEnvironmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DtlEnvironmentList.DeserializeDtlEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case 200:
                     {
                         DtlEnvironmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DtlEnvironmentList.DeserializeDtlEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

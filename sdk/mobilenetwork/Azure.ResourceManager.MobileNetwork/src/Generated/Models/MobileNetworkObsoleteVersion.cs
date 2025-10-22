@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Indicates whether this version is obsolete.
-    /// Serialized Name: ObsoleteVersion
-    /// </summary>
+    /// <summary> Indicates whether this version is obsolete. </summary>
     public readonly partial struct MobileNetworkObsoleteVersion : IEquatable<MobileNetworkObsoleteVersion>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string ObsoleteValue = "Obsolete";
         private const string NotObsoleteValue = "NotObsolete";
 
-        /// <summary>
-        /// This version is obsolete for use in new packet core control plane deployments.
-        /// Serialized Name: ObsoleteVersion.Obsolete
-        /// </summary>
+        /// <summary> This version is obsolete for use in new packet core control plane deployments. </summary>
         public static MobileNetworkObsoleteVersion Obsolete { get; } = new MobileNetworkObsoleteVersion(ObsoleteValue);
-        /// <summary>
-        /// This version is not obsolete for use in new packet core control plane deployments.
-        /// Serialized Name: ObsoleteVersion.NotObsolete
-        /// </summary>
+        /// <summary> This version is not obsolete for use in new packet core control plane deployments. </summary>
         public static MobileNetworkObsoleteVersion NotObsolete { get; } = new MobileNetworkObsoleteVersion(NotObsoleteValue);
         /// <summary> Determines if two <see cref="MobileNetworkObsoleteVersion"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkObsoleteVersion left, MobileNetworkObsoleteVersion right) => left.Equals(right);

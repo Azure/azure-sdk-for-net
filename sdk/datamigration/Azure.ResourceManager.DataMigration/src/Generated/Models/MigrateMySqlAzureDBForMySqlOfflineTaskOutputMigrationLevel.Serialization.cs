@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdate))
+            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdatedOn))
             {
                 writer.WritePropertyName("lastStorageUpdate"u8);
-                writer.WriteStringValue(LastStorageUpdate.Value, "O");
+                writer.WriteStringValue(LastStorageUpdatedOn.Value, "O");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             long? durationInSeconds = default;
-            MigrationStatus? status = default;
+            DataMigrationStatus? status = default;
             string statusMessage = default;
             string message = default;
             string databases = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string sourceServerBrandVersion = default;
             string targetServerVersion = default;
             string targetServerBrandVersion = default;
-            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
             DateTimeOffset? lastStorageUpdate = default;
             string id = default;
             string resultType = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new MigrationStatus(property.Value.GetString());
+                    status = new DataMigrationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceServerBrandVersion,
                 targetServerVersion,
                 targetServerBrandVersion,
-                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>(),
                 lastStorageUpdate);
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:

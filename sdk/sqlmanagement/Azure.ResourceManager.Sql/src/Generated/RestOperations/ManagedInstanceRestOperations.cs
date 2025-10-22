@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceOperationListResult.DeserializeManagedInstanceOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceOperationListResult.DeserializeManagedInstanceOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceOperationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceOperationData.DeserializeManagedInstanceOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceOperationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceOperationData.DeserializeManagedInstanceOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -267,6 +267,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -365,7 +366,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceOperationListResult.DeserializeManagedInstanceOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,7 +397,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceOperationListResult.DeserializeManagedInstanceOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

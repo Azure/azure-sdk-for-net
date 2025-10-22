@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                using (JsonDocument document = JsonDocument.Parse(Metadata, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDefenderEasmContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EasmTask)} does not support writing '{options.Format}' format.");
             }
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEasmTask(document.RootElement, options);
                     }
                 default:

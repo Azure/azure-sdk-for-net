@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-02-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all available managed rule sets. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ManagedRuleSetDefinitionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedRuleSetDefinitionList.DeserializeManagedRuleSetDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Lists all available managed rule sets. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ManagedRuleSetDefinitionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedRuleSetDefinitionList.DeserializeManagedRuleSetDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all available managed rule sets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ManagedRuleSetDefinitionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedRuleSetDefinitionList.DeserializeManagedRuleSetDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Lists all available managed rule sets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
                 case 200:
                     {
                         ManagedRuleSetDefinitionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedRuleSetDefinitionList.DeserializeManagedRuleSetDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

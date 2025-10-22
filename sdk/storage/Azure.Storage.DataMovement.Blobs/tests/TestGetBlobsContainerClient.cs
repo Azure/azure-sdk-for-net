@@ -21,47 +21,92 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     /// </summary>
     public class TestGetBlobsContainerClient : BlobContainerClient
     {
-        private List<string> _blobNames;
+        private Dictionary<string, List<(string Path, bool IsPrefix)>> _blobHierarchy;
 
         public TestGetBlobsContainerClient(
             Uri uri,
-            List<string> blobNames,
+            Dictionary<string, List<(string Path, bool IsPrefix)>> blobHierarchy,
             BlobClientOptions options = default)
             : base(uri, options)
         {
-            _blobNames = new List<string>(blobNames);
+            _blobHierarchy = blobHierarchy;
         }
 
-        /// <summary>
-        /// Returns specific GetBlobs listing in the "foo" directory.
-        /// </summary>
-        /// <param name="traits">Will not be applicable in this test instance.</param>
-        /// <param name="states">Will not be applicable in this test instance.</param>
-        /// <param name="prefix">Will be overridden with the prefix "foo"</param>
-        /// <param name="cancellationToken">Will not apply in this instance.</param>
-        /// <returns></returns>
-        public override AsyncPageable<BlobItem> GetBlobsAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = "foo",
+        public override AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
+            GetBlobsByHierarchyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            List<BlobItem> blobItems = _blobNames.Select(
-                blobName => BlobsModelFactory.BlobItem(
-                    name: blobName,
-                    properties: BlobsModelFactory.BlobItemProperties(
-                    accessTierInferred: true,
-                    contentLength: 1024,
-                    blobType: BlobType.Block,
-                    eTag: new ETag("etag")))).ToList();
+            List<BlobHierarchyItem> blobHierarchyItems = [];
+            List<(string Path, bool IsPrefix)> results = _blobHierarchy[options.Prefix];
 
-            return AsyncPageable<BlobItem>.FromPages(new List<Page<BlobItem>>()
+            foreach ((string, bool) result in results)
+            {
+                // Prefix
+                if (result.Item2)
                 {
-                    Page<BlobItem>.FromValues(
-                        blobItems,
+                    blobHierarchyItems.Add(new BlobHierarchyItem(result.Item1, default));
+                }
+                // Blob
+                else
+                {
+                    BlobItem blobItem = BlobsModelFactory.BlobItem(
+                        name: result.Item1,
+                        properties: BlobsModelFactory.BlobItemProperties(
+                            accessTierInferred: true,
+                            contentLength: 1024,
+                            blobType: BlobType.Block,
+                            eTag: new ETag("etag")));
+                    blobHierarchyItems.Add(new BlobHierarchyItem(default, blobItem));
+                }
+            }
+
+            return AsyncPageable<BlobHierarchyItem>.FromPages(
+                [
+                    Page<BlobHierarchyItem>.FromValues(
+                        blobHierarchyItems,
                         continuationToken: null,
                         response: null)
-                });
+                ]);
+        }
+
+        public override AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string delimiter = null,
+            string prefix = null,
+            CancellationToken cancellationToken = default)
+        {
+            List<BlobHierarchyItem> blobHierarchyItems = [];
+            List<(string Path, bool IsPrefix)> results = _blobHierarchy[prefix];
+
+            foreach ((string, bool) result in results)
+            {
+                // Prefix
+                if (result.Item2)
+                {
+                    blobHierarchyItems.Add(new BlobHierarchyItem(result.Item1, default));
+                }
+                // Blob
+                else
+                {
+                    BlobItem blobItem = BlobsModelFactory.BlobItem(
+                        name: result.Item1,
+                        properties: BlobsModelFactory.BlobItemProperties(
+                            accessTierInferred: true,
+                            contentLength: 1024,
+                            blobType: BlobType.Block,
+                            eTag: new ETag("etag")));
+                    blobHierarchyItems.Add(new BlobHierarchyItem(default, blobItem));
+                }
+            }
+
+            return AsyncPageable<BlobHierarchyItem>.FromPages(
+                [
+                    Page<BlobHierarchyItem>.FromValues(
+                        blobHierarchyItems,
+                        continuationToken: null,
+                        response: null)
+                ]);
         }
 
         /// <summary>

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element, options);
                     case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element, options);
                     case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element, options);
-                    case "LakeHouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
+                    case "Lakehouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
                     case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element, options);
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element, options);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element, options);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
                     }
                 default:

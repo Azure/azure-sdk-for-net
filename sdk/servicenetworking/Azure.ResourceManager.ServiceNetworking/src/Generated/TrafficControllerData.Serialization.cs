@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in Frontends)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in SecurityPolicies)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
                 writer.WriteObjectValue(SecurityPolicyConfigurations, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(TrafficControllerProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(TrafficControllerProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             IReadOnlyList<SubResource> associations = default;
             IReadOnlyList<SubResource> securityPolicies = default;
             SecurityPolicyConfigurations securityPolicyConfigurations = default;
-            ProvisioningState? provisioningState = default;
+            ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default));
                             }
                             frontends = array;
                             continue;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default));
                             }
                             associations = array;
                             continue;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default));
                             }
                             securityPolicies = array;
                             continue;
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ServiceNetworkingProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrafficControllerData)} does not support writing '{options.Format}' format.");
             }
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficControllerData(document.RootElement, options);
                     }
                 default:

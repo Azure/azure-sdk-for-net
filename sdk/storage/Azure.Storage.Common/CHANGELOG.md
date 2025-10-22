@@ -1,16 +1,42 @@
 # Release History
 
-## 12.23.0-beta.2 (Unreleased)
+## 12.26.0-beta.1 (Unreleased)
 
 ### Features Added
+- This release contains bug fixes to improve quality.
 
-### Breaking Changes
+## 12.25.0 (2025-10-13)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.24.0 (2025-07-14)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.25.0-beta.1 (2025-06-09)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+## 12.24.0-beta.1 (2025-05-06)
+
+### Features Added
+- `StorageBearerTokenChallengeAuthorizationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default.
+
+## 12.23.0 (2025-03-11)
 
 ### Bugs Fixed
 - Fixed bug where in rare cases, a `NullReferenceException` could be thrown when parsing an error response from the service.
 - Fixed bug to ensure that the accumulated disposables within the internal `StorageWriteStream` are disposed properly in the event that an exception is thrown during the disposal process. (#47781)
+- Fixed bug to Redact SAS credentials from Error.SasCredentialRequiresUriWithoutSas message.
+- Fixed bug where LazyLoadingReadOnlyStream overprovisions the default buffer memory for OpenRead
+- Fixed bug where a client created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
 ### Other Changes
+- Implemented IAsyncDisposable in StorageWriteStream
 
 ## 12.23.0-beta.1 (2025-02-11)
 
@@ -204,55 +230,55 @@
 ## 12.5.0-preview.5 (2020-07-03)
 - This release contains bug fixes to improve quality.
 
-## 12.5.0-preview.4 
+## 12.5.0-preview.4
 - This preview contains bug fixes to improve quality.
 
-## 12.5.0-preview.1 
+## 12.5.0-preview.1
 - This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.
 
-## 12.4.3 
+## 12.4.3
 - This release contains bug fixes to improve quality.
 
-## 12.4.2 
+## 12.4.2
 - This release contains bug fixes to improve quality.
 
-## 12.4.1 
+## 12.4.1
 - This release contains bug fixes to improve quality.
 
-## 12.4.0 
+## 12.4.0
 - This release contains bug fixes to improve quality.
 
-## 12.3.0 
+## 12.3.0
 - Added InitialTransferLength to StorageTransferOptions
 
-## 12.2.0 
+## 12.2.0
 - Added support for service version 2019-07-07.
 - Update StorageSharedKeyPipelinePolicy to upload the request date header each retry.
 - Sanitized header values in exceptions.
 
-## 12.1.1 
+## 12.1.1
  - Fixed issue where SAS content headers were not URL encoded when using Sas builders.
  - Fixed bug where using SAS connection string from portal would throw an exception if it included
    table endpoint.
 
-## 12.1.0 
+## 12.1.0
 - Add support for populating AccountName properties of the UriBuilders
   for non-IP style Uris.
 
-## 12.0.0-preview.4 
+## 12.0.0-preview.4
 - Bug fixes
 
-## 12.0.0-preview.3 
+## 12.0.0-preview.3
 - Support new for Blobs/Files features
 - Bug fixes
 
 For more information, please visit: https://aka.ms/azure-sdk-preview3-net.
 
-## 12.0.0-preview.2 
+## 12.0.0-preview.2
 - Credential rolling
 - Bug fixes
 
-## 12.0.0-preview.1 
+## 12.0.0-preview.1
 This preview is the first release of a ground-up rewrite of our client
 libraries to ensure consistency, idiomatic design, productivity, and an
 excellent developer experience.  It was created following the Azure SDK Design

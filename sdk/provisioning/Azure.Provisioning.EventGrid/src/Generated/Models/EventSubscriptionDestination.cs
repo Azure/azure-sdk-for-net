@@ -22,7 +22,6 @@ namespace Azure.Provisioning.EventGrid;
 /// Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination,
 /// Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination,
 /// Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination,
-/// Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination,
 /// Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination,
 /// Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination,
 /// Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination

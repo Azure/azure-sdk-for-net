@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 {
     public partial class AutoUpgradeProfileResource : IJsonModel<AutoUpgradeProfileData>
     {
+        private static AutoUpgradeProfileData s_dataDeserializationInstance;
+        private static AutoUpgradeProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutoUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoUpgradeProfileData>)Data).Write(writer, options);
 
-        AutoUpgradeProfileData IJsonModel<AutoUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoUpgradeProfileData>)Data).Create(ref reader, options);
+        AutoUpgradeProfileData IJsonModel<AutoUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoUpgradeProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutoUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutoUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        AutoUpgradeProfileData IPersistableModel<AutoUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoUpgradeProfileData>(data, options);
+        AutoUpgradeProfileData IPersistableModel<AutoUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        string IPersistableModel<AutoUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoUpgradeProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutoUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoUpgradeProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

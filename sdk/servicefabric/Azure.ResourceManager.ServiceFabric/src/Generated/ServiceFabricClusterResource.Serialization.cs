@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     public partial class ServiceFabricClusterResource : IJsonModel<ServiceFabricClusterData>
     {
+        private static ServiceFabricClusterData s_dataDeserializationInstance;
+        private static ServiceFabricClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceFabricClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricClusterData>)Data).Write(writer, options);
 
-        ServiceFabricClusterData IJsonModel<ServiceFabricClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricClusterData>)Data).Create(ref reader, options);
+        ServiceFabricClusterData IJsonModel<ServiceFabricClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceFabricClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceFabricClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricClusterData>(Data, options, AzureResourceManagerServiceFabricContext.Default);
 
-        ServiceFabricClusterData IPersistableModel<ServiceFabricClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricClusterData>(data, options);
+        ServiceFabricClusterData IPersistableModel<ServiceFabricClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricClusterData>(data, options, AzureResourceManagerServiceFabricContext.Default);
 
-        string IPersistableModel<ServiceFabricClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceFabricClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

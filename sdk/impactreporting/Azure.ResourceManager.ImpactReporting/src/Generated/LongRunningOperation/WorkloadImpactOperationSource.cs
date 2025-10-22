@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ImpactReporting
 
         WorkloadImpactResource IOperationSource<WorkloadImpactResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = WorkloadImpactData.DeserializeWorkloadImpactData(document.RootElement);
+            var data = ModelReaderWriter.Read<WorkloadImpactData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
             return new WorkloadImpactResource(_client, data);
         }
 
         async ValueTask<WorkloadImpactResource> IOperationSource<WorkloadImpactResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = WorkloadImpactData.DeserializeWorkloadImpactData(document.RootElement);
-            return new WorkloadImpactResource(_client, data);
+            var data = ModelReaderWriter.Read<WorkloadImpactData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
+            return await Task.FromResult(new WorkloadImpactResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

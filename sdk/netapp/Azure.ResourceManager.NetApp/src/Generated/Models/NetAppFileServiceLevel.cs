@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string PremiumValue = "Premium";
         private const string UltraValue = "Ultra";
         private const string StandardZrsValue = "StandardZRS";
+        private const string FlexibleValue = "Flexible";
 
         /// <summary> Standard service level. </summary>
         public static NetAppFileServiceLevel Standard { get; } = new NetAppFileServiceLevel(StandardValue);
@@ -33,8 +34,10 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppFileServiceLevel Premium { get; } = new NetAppFileServiceLevel(PremiumValue);
         /// <summary> Ultra service level. </summary>
         public static NetAppFileServiceLevel Ultra { get; } = new NetAppFileServiceLevel(UltraValue);
-        /// <summary> Zone redundant storage service level. </summary>
+        /// <summary> Zone redundant storage service level. This will be deprecated soon. </summary>
         public static NetAppFileServiceLevel StandardZrs { get; } = new NetAppFileServiceLevel(StandardZrsValue);
+        /// <summary> Flexible service level. </summary>
+        public static NetAppFileServiceLevel Flexible { get; } = new NetAppFileServiceLevel(FlexibleValue);
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are the same. </summary>
         public static bool operator ==(NetAppFileServiceLevel left, NetAppFileServiceLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are not the same. </summary>

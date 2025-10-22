@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
-    public partial class InformaticaOrganizationPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<InformaticaOrganizationPropertiesUpdate>
+    /// <summary> Patchable Properties of the Informatica Organization resource. </summary>
+    public partial class InformaticaOrganizationPropertiesUpdate : IJsonModel<InformaticaOrganizationPropertiesUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformaticaOrganizationPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaOrganizationPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaOrganizationPropertiesUpdate)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(InformaticaOrganizationProperties))
             {
                 writer.WritePropertyName("informaticaOrganizationProperties"u8);
@@ -59,13 +60,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WritePropertyName("existingResourceId"u8);
                 writer.WriteStringValue(ExistingResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -76,22 +77,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        InformaticaOrganizationPropertiesUpdate IJsonModel<InformaticaOrganizationPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaOrganizationPropertiesUpdate IJsonModel<InformaticaOrganizationPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaOrganizationPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaOrganizationPropertiesUpdate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInformaticaOrganizationPropertiesUpdate(document.RootElement, options);
         }
 
-        internal static InformaticaOrganizationPropertiesUpdate DeserializeInformaticaOrganizationPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InformaticaOrganizationPropertiesUpdate DeserializeInformaticaOrganizationPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,92 +107,98 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             InformaticaUserDetailsUpdate userDetails = default;
             InformaticaCompanyDetailsUpdate companyDetails = default;
             ResourceIdentifier existingResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("informaticaOrganizationProperties"u8))
+                if (prop.NameEquals("informaticaOrganizationProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    informaticaOrganizationProperties = InformaticaOrganizationPatch.DeserializeInformaticaOrganizationPatch(property.Value, options);
+                    informaticaOrganizationProperties = InformaticaOrganizationPatch.DeserializeInformaticaOrganizationPatch(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("marketplaceDetails"u8))
+                if (prop.NameEquals("marketplaceDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceDetails = InformaticaMarketplaceDetailsUpdate.DeserializeInformaticaMarketplaceDetailsUpdate(property.Value, options);
+                    marketplaceDetails = InformaticaMarketplaceDetailsUpdate.DeserializeInformaticaMarketplaceDetailsUpdate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userDetails"u8))
+                if (prop.NameEquals("userDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userDetails = InformaticaUserDetailsUpdate.DeserializeInformaticaUserDetailsUpdate(property.Value, options);
+                    userDetails = InformaticaUserDetailsUpdate.DeserializeInformaticaUserDetailsUpdate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("companyDetails"u8))
+                if (prop.NameEquals("companyDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    companyDetails = InformaticaCompanyDetailsUpdate.DeserializeInformaticaCompanyDetailsUpdate(property.Value, options);
+                    companyDetails = InformaticaCompanyDetailsUpdate.DeserializeInformaticaCompanyDetailsUpdate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("existingResourceId"u8))
+                if (prop.NameEquals("existingResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    existingResourceId = new ResourceIdentifier(property.Value.GetString());
+                    existingResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InformaticaOrganizationPropertiesUpdate(
                 informaticaOrganizationProperties,
                 marketplaceDetails,
                 userDetails,
                 companyDetails,
                 existingResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<InformaticaOrganizationPropertiesUpdate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformaticaOrganizationPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InformaticaOrganizationPropertiesUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InformaticaOrganizationPropertiesUpdate IPersistableModel<InformaticaOrganizationPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaOrganizationPropertiesUpdate IPersistableModel<InformaticaOrganizationPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaOrganizationPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInformaticaOrganizationPropertiesUpdate(document.RootElement, options);
                     }
                 default:
@@ -194,6 +206,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaOrganizationPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

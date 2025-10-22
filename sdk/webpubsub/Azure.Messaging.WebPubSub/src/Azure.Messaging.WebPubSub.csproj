@@ -2,20 +2,21 @@
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
-    <Version>1.5.0-beta.1</Version>
+    <Version>1.7.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.4.0</ApiCompatVersion>
+    <ApiCompatVersion>1.6.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub, SignalR</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

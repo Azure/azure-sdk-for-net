@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemorySizesInGB))
+            {
+                writer.WritePropertyName("supportedMemorySizesInGB"u8);
+                writer.WriteObjectValue(SupportedMemorySizesInGB, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
@@ -60,6 +65,46 @@ namespace Azure.ResourceManager.Sql.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncludedStorageIOps))
+            {
+                writer.WritePropertyName("includedStorageIOps"u8);
+                writer.WriteNumberValue(IncludedStorageIOps.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedStorageIOps))
+            {
+                writer.WritePropertyName("supportedStorageIOps"u8);
+                writer.WriteObjectValue(SupportedStorageIOps, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IopsMinValueOverrideFactorPerSelectedStorageGB))
+            {
+                writer.WritePropertyName("iopsMinValueOverrideFactorPerSelectedStorageGB"u8);
+                writer.WriteNumberValue(IopsMinValueOverrideFactorPerSelectedStorageGB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IopsIncludedValueOverrideFactorPerSelectedStorageGB))
+            {
+                writer.WritePropertyName("iopsIncludedValueOverrideFactorPerSelectedStorageGB"u8);
+                writer.WriteNumberValue(IopsIncludedValueOverrideFactorPerSelectedStorageGB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncludedStorageThroughputMBps))
+            {
+                writer.WritePropertyName("includedStorageThroughputMBps"u8);
+                writer.WriteNumberValue(IncludedStorageThroughputMBps.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedStorageThroughputMBps))
+            {
+                writer.WritePropertyName("supportedStorageThroughputMBps"u8);
+                writer.WriteObjectValue(SupportedStorageThroughputMBps, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB))
+            {
+                writer.WritePropertyName("throughputMBpsMinValueOverrideFactorPerSelectedStorageGB"u8);
+                writer.WriteNumberValue(ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB))
+            {
+                writer.WritePropertyName("throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB"u8);
+                writer.WriteNumberValue(ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IsInstancePoolSupported))
             {
@@ -99,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -130,8 +175,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             int? value = default;
+            MaxLimitRangeCapability supportedMemorySizesInGB = default;
             MaxSizeCapability includedMaxSize = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes = default;
+            long? includedStorageIOps = default;
+            MaxLimitRangeCapability supportedStorageIOps = default;
+            double? iopsMinValueOverrideFactorPerSelectedStorageGB = default;
+            double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = default;
+            long? includedStorageThroughputMBps = default;
+            MaxLimitRangeCapability supportedStorageThroughputMBps = default;
+            double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = default;
+            double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = default;
             bool? instancePoolSupported = default;
             bool? standaloneSupported = default;
             IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
@@ -155,6 +209,15 @@ namespace Azure.ResourceManager.Sql.Models
                     value = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("supportedMemorySizesInGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedMemorySizesInGB = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("includedMaxSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -176,6 +239,78 @@ namespace Azure.ResourceManager.Sql.Models
                         array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedStorageSizes = array;
+                    continue;
+                }
+                if (property.NameEquals("includedStorageIOps"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includedStorageIOps = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("supportedStorageIOps"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedStorageIOps = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("iopsMinValueOverrideFactorPerSelectedStorageGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iopsMinValueOverrideFactorPerSelectedStorageGB = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("iopsIncludedValueOverrideFactorPerSelectedStorageGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iopsIncludedValueOverrideFactorPerSelectedStorageGB = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("includedStorageThroughputMBps"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includedStorageThroughputMBps = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("supportedStorageThroughputMBps"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedStorageThroughputMBps = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("throughputMBpsMinValueOverrideFactorPerSelectedStorageGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("instancePoolSupported"u8))
@@ -233,8 +368,17 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(
                 name,
                 value,
+                supportedMemorySizesInGB,
                 includedMaxSize,
                 supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                includedStorageIOps,
+                supportedStorageIOps,
+                iopsMinValueOverrideFactorPerSelectedStorageGB,
+                iopsIncludedValueOverrideFactorPerSelectedStorageGB,
+                includedStorageThroughputMBps,
+                supportedStorageThroughputMBps,
+                throughputMBpsMinValueOverrideFactorPerSelectedStorageGB,
+                throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB,
                 instancePoolSupported,
                 standaloneSupported,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>(),
@@ -292,6 +436,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemorySizesInGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMemorySizesInGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedMemorySizesInGB))
+                {
+                    builder.Append("  supportedMemorySizesInGB: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedMemorySizesInGB, options, 2, false, "  supportedMemorySizesInGB: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -327,6 +486,126 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         builder.AppendLine("  ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedStorageIOps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  includedStorageIOps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludedStorageIOps))
+                {
+                    builder.Append("  includedStorageIOps: ");
+                    builder.AppendLine($"'{IncludedStorageIOps.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageIOps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedStorageIOps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedStorageIOps))
+                {
+                    builder.Append("  supportedStorageIOps: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedStorageIOps, options, 2, false, "  supportedStorageIOps: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IopsMinValueOverrideFactorPerSelectedStorageGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  iopsMinValueOverrideFactorPerSelectedStorageGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IopsMinValueOverrideFactorPerSelectedStorageGB))
+                {
+                    builder.Append("  iopsMinValueOverrideFactorPerSelectedStorageGB: ");
+                    builder.AppendLine($"'{IopsMinValueOverrideFactorPerSelectedStorageGB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IopsIncludedValueOverrideFactorPerSelectedStorageGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  iopsIncludedValueOverrideFactorPerSelectedStorageGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IopsIncludedValueOverrideFactorPerSelectedStorageGB))
+                {
+                    builder.Append("  iopsIncludedValueOverrideFactorPerSelectedStorageGB: ");
+                    builder.AppendLine($"'{IopsIncludedValueOverrideFactorPerSelectedStorageGB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedStorageThroughputMBps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  includedStorageThroughputMBps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludedStorageThroughputMBps))
+                {
+                    builder.Append("  includedStorageThroughputMBps: ");
+                    builder.AppendLine($"'{IncludedStorageThroughputMBps.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageThroughputMBps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedStorageThroughputMBps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedStorageThroughputMBps))
+                {
+                    builder.Append("  supportedStorageThroughputMBps: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedStorageThroughputMBps, options, 2, false, "  supportedStorageThroughputMBps: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  throughputMBpsMinValueOverrideFactorPerSelectedStorageGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB))
+                {
+                    builder.Append("  throughputMBpsMinValueOverrideFactorPerSelectedStorageGB: ");
+                    builder.AppendLine($"'{ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB))
+                {
+                    builder.Append("  throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB: ");
+                    builder.AppendLine($"'{ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB.Value.ToString()}'");
                 }
             }
 
@@ -434,7 +713,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -450,7 +729,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedInstanceVcoresCapability(document.RootElement, options);
                     }
                 default:

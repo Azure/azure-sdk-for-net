@@ -49,9 +49,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("peakDiskGiB"u8);
             writer.WriteNumberValue(PeakDiskGiB);
             writer.WritePropertyName("diskReadIOps"u8);
-            writer.WriteNumberValue(DiskReadIOps);
+            writer.WriteStringValue(DiskReadIops.ToString());
             writer.WritePropertyName("diskWriteIOps"u8);
-            writer.WriteNumberValue(DiskWriteIOps);
+            writer.WriteStringValue(DiskWriteIops.ToString());
             writer.WritePropertyName("diskReadGiB"u8);
             writer.WriteNumberValue(DiskReadGiB);
             writer.WritePropertyName("diskWriteGiB"u8);
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,12 +151,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("diskReadIOps"u8))
                 {
-                    diskReadIOps = property.Value.GetInt64();
+                    diskReadIOps = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskWriteIOps"u8))
                 {
-                    diskWriteIOps = property.Value.GetInt64();
+                    diskWriteIOps = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskReadGiB"u8))
@@ -209,7 +209,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolResourceStatistics)} does not support writing '{options.Format}' format.");
             }
@@ -223,7 +223,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchPoolResourceStatistics(document.RootElement, options);
                     }
                 default:
@@ -237,7 +237,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchPoolResourceStatistics FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchPoolResourceStatistics(document.RootElement);
         }
 

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaAssetListResult.DeserializeMediaAssetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaAssetListResult.DeserializeMediaAssetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaAssetData.DeserializeMediaAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaAssetData.DeserializeMediaAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Media
                 case 201:
                     {
                         MediaAssetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaAssetData.DeserializeMediaAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Media
                 case 201:
                     {
                         MediaAssetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaAssetData.DeserializeMediaAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaAssetData.DeserializeMediaAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaAssetData.DeserializeMediaAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         AssetContainerSas value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssetContainerSas.DeserializeAssetContainerSas(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         AssetContainerSas value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssetContainerSas.DeserializeAssetContainerSas(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         StorageEncryptedAssetDecryptionInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageEncryptedAssetDecryptionInfo.DeserializeStorageEncryptedAssetDecryptionInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         StorageEncryptedAssetDecryptionInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageEncryptedAssetDecryptionInfo.DeserializeStorageEncryptedAssetDecryptionInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ListStreamingLocatorsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListStreamingLocatorsResponse.DeserializeListStreamingLocatorsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ListStreamingLocatorsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListStreamingLocatorsResponse.DeserializeListStreamingLocatorsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MediaAssetListResult.DeserializeMediaAssetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         MediaAssetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MediaAssetListResult.DeserializeMediaAssetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

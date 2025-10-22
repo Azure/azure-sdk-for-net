@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of ScriptExecutionsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ScriptExecutionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -368,7 +368,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(scriptExecutionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -504,7 +503,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -536,7 +535,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -589,7 +588,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -620,7 +619,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         ScriptExecutionsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

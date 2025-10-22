@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ContainerRegistry.Models;

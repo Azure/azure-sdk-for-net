@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileAttachedDataNetworkResource : IJsonModel<MobileAttachedDataNetworkData>
     {
+        private static MobileAttachedDataNetworkData s_dataDeserializationInstance;
+        private static MobileAttachedDataNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MobileAttachedDataNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MobileAttachedDataNetworkData>)Data).Write(writer, options);
 
-        MobileAttachedDataNetworkData IJsonModel<MobileAttachedDataNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileAttachedDataNetworkData>)Data).Create(ref reader, options);
+        MobileAttachedDataNetworkData IJsonModel<MobileAttachedDataNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileAttachedDataNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MobileAttachedDataNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MobileAttachedDataNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileAttachedDataNetworkData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        MobileAttachedDataNetworkData IPersistableModel<MobileAttachedDataNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileAttachedDataNetworkData>(data, options);
+        MobileAttachedDataNetworkData IPersistableModel<MobileAttachedDataNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileAttachedDataNetworkData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<MobileAttachedDataNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileAttachedDataNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MobileAttachedDataNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileAttachedDataNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

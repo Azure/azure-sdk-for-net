@@ -1,0 +1,149 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_delete?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "357",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-007bc9fce7b22cccec23bdd9bc60a53d-2f1dc3f093094307-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Test Metric DeleteExperimentMetric",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).DeleteExperimentMetric)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "462",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:34:48 GMT",
+        "ETag": "\"p3+tyW16raU=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:34:48 GMT",
+        "Location": "/workspaces/3498ec60-ff3f-4fb4-8064-bfcf8de553aa/experiment-metrics/test_metric_delete",
+        "mise-correlation-id": "21a46cd2-d62e-444f-ab26-0cdd732ed40b",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "47e5fe6a-bb39-4855-bcb8-cad432d44932",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_delete",
+        "displayName": "Test Metric DeleteExperimentMetric",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).DeleteExperimentMetric)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"p3+tyW16raU=\"",
+        "lastModifiedAt": "2025-05-01T04:34:48.8306018+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_delete?api-version=2025-05-31-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-7afc8b44b464010563fc73596d7568b2-518d38914f2c2c20-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Date": "Thu, 01 May 2025 04:34:49 GMT",
+        "mise-correlation-id": "85107f4c-85ff-4805-aaa8-c1944d5a89d1",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "a59e0669-d769-4280-8001-96c867c86b40",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_delete?api-version=2025-05-31-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6395e61317600c66f44606ed79f80a84-f64be46c160df12c-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:34:49 GMT",
+        "mise-correlation-id": "b7759a8b-ecf5-48fb-a344-5d376233942d",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-error-code": "NotFound",
+        "x-ms-request-id": "1c714f07-0600-4420-8f7d-258317c97ced",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "NotFound",
+          "message": "Metric not found",
+          "target": "test_metric_delete",
+          "details": [],
+          "innerError": null
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "1713532790"
+  }
+}

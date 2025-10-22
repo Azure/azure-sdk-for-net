@@ -90,7 +90,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     {
                         AcrRefreshToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AcrRefreshToken.DeserializeAcrRefreshToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     {
                         AcrRefreshToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AcrRefreshToken.DeserializeAcrRefreshToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -180,7 +180,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     {
                         AcrAccessToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AcrAccessToken.DeserializeAcrAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.Containers.ContainerRegistry
                 case 200:
                     {
                         AcrAccessToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AcrAccessToken.DeserializeAcrAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

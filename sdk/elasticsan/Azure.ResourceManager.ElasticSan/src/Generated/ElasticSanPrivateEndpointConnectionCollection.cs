@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Create</description>
+        /// <description>PrivateEndpointConnection_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Create</description>
+        /// <description>PrivateEndpointConnection_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_List</description>
+        /// <description>PrivateEndpointConnection_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,7 +265,8 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual AsyncPageable<ElasticSanPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ElasticSanPrivateEndpointConnectionResource(Client, ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(e)), _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ElasticSanPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanPrivateEndpointConnectionResource(Client, ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(e)), _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ElasticSanPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,11 +278,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_List</description>
+        /// <description>PrivateEndpointConnection_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +295,8 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Pageable<ElasticSanPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ElasticSanPrivateEndpointConnectionResource(Client, ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(e)), _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ElasticSanPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanPrivateEndpointConnectionResource(Client, ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(e)), _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ElasticSanPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -306,11 +308,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,11 +351,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -392,11 +394,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -437,11 +439,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

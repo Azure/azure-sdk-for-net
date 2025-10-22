@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List shared gallery image versions by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         SharedGalleryImageVersionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedGalleryImageVersionList.DeserializeSharedGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List shared gallery image versions by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         SharedGalleryImageVersionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedGalleryImageVersionList.DeserializeSharedGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get a shared gallery image version by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         SharedGalleryImageVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedGalleryImageVersionData.DeserializeSharedGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get a shared gallery image version by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         SharedGalleryImageVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedGalleryImageVersionData.DeserializeSharedGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List shared gallery image versions by subscription id or tenant id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         SharedGalleryImageVersionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SharedGalleryImageVersionList.DeserializeSharedGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List shared gallery image versions by subscription id or tenant id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         SharedGalleryImageVersionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SharedGalleryImageVersionList.DeserializeSharedGalleryImageVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWebPubSubContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.WebPubSub
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWebPubSubContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebPubSubHubData(document.RootElement, options);
                     }
                 default:

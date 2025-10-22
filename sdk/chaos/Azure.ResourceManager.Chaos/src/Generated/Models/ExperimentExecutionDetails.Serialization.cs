@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Chaos.Models
             DateTimeOffset? stoppedAt = default;
             string failureReason = default;
             DateTimeOffset? lastActionAt = default;
-            ChaosExperimentRunInformation runInformation = default;
+            ExperimentExecutionDetailsPropertiesRunInformation runInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Chaos.Models
                             {
                                 continue;
                             }
-                            runInformation = ChaosExperimentRunInformation.DeserializeChaosExperimentRunInformation(property0.Value, options);
+                            runInformation = ExperimentExecutionDetailsPropertiesRunInformation.DeserializeExperimentExecutionDetailsPropertiesRunInformation(property0.Value, options);
                             continue;
                         }
                     }
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support writing '{options.Format}' format.");
             }
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExperimentExecutionDetails(document.RootElement, options);
                     }
                 default:

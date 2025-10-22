@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class PolicyAssignmentResource : IJsonModel<PolicyAssignmentData>
     {
+        private static PolicyAssignmentData s_dataDeserializationInstance;
+        private static PolicyAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAssignmentData>)Data).Write(writer, options);
 
-        PolicyAssignmentData IJsonModel<PolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAssignmentData>)Data).Create(ref reader, options);
+        PolicyAssignmentData IJsonModel<PolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
-        PolicyAssignmentData IPersistableModel<PolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAssignmentData>(data, options);
+        PolicyAssignmentData IPersistableModel<PolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAssignmentData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<PolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

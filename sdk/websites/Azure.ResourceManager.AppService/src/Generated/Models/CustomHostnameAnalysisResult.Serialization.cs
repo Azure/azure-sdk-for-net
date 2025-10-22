@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
-                JsonSerializer.Serialize(writer, CustomDomainVerificationFailureInfo);
+                ((IJsonModel<ResponseError>)CustomDomainVerificationFailureInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HasConflictOnScaleUnit))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            customDomainVerificationFailureInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            customDomainVerificationFailureInfo = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("hasConflictOnScaleUnit"u8))
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomHostnameAnalysisResult(document.RootElement, options);
                     }
                 default:

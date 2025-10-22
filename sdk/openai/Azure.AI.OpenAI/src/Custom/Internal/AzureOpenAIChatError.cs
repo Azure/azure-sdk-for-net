@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenModel("AzureOpenAIChatError")]
+[CodeGenType("AzureOpenAIChatError")]
 internal partial class AzureOpenAIChatError
 {
     internal static AzureOpenAIChatError TryCreateFromResponse(PipelineResponse response)
@@ -18,7 +18,7 @@ internal partial class AzureOpenAIChatError
         {
             using JsonDocument errorDocument = JsonDocument.Parse(response.Content);
             AzureOpenAIChatErrorResponse errorResponse
-                = AzureOpenAIChatErrorResponse.DeserializeAzureOpenAIChatErrorResponse(errorDocument.RootElement);
+                = AzureOpenAIChatErrorResponse.DeserializeAzureOpenAIChatErrorResponse(errorDocument.RootElement, ModelSerializationExtensions.WireOptions);
             return errorResponse.Error;
         }
         catch (InvalidOperationException)
@@ -35,11 +35,11 @@ internal partial class AzureOpenAIChatError
     {
         StringBuilder messageBuilder = new();
         messageBuilder.Append($"HTTP {httpStatus}");
-        messageBuilder.Append(!string.IsNullOrEmpty(Type) || !string.IsNullOrEmpty(Code) ? " (" : string.Empty);
-        messageBuilder.Append(Type);
-        messageBuilder.Append(!string.IsNullOrEmpty(Type) ? ": " : string.Empty);
+        messageBuilder.Append(!string.IsNullOrEmpty(Kind) || !string.IsNullOrEmpty(Code) ? " (" : string.Empty);
+        messageBuilder.Append(Kind);
+        messageBuilder.Append(!string.IsNullOrEmpty(Kind) ? ": " : string.Empty);
         messageBuilder.Append(Code);
-        messageBuilder.Append(!string.IsNullOrEmpty(Type) || !string.IsNullOrEmpty(Code) ? ")" : string.Empty);
+        messageBuilder.Append(!string.IsNullOrEmpty(Kind) || !string.IsNullOrEmpty(Code) ? ")" : string.Empty);
         messageBuilder.AppendLine();
 
         if (!string.IsNullOrEmpty(Param))

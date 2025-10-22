@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerProxyResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficManagerProxyResourceData(document.RootElement, options);
                     }
                 default:

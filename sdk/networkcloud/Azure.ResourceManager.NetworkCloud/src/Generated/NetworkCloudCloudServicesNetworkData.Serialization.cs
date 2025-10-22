@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,6 +38,11 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
@@ -121,6 +127,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(StorageOptions))
+            {
+                writer.WritePropertyName("storageOptions"u8);
+                writer.WriteObjectValue(StorageOptions, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageStatus))
+            {
+                writer.WritePropertyName("storageStatus"u8);
+                writer.WriteObjectValue(StorageStatus, options);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
@@ -159,6 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
+            ETag? etag = default;
             ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -176,11 +193,22 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
             string interfaceName = default;
             CloudServicesNetworkProvisioningState? provisioningState = default;
+            CloudServicesNetworkStorageOptions storageOptions = default;
+            CloudServicesNetworkStorageStatus storageStatus = default;
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
@@ -226,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -354,6 +382,24 @@ namespace Azure.ResourceManager.NetworkCloud
                             provisioningState = new CloudServicesNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("storageOptions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageOptions = CloudServicesNetworkStorageOptions.DeserializeCloudServicesNetworkStorageOptions(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("storageStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageStatus = CloudServicesNetworkStorageStatus.DeserializeCloudServicesNetworkStorageStatus(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("virtualMachinesAssociatedIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -391,6 +437,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
                 extendedLocation,
                 additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
@@ -402,6 +449,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 interfaceName,
                 provisioningState,
+                storageOptions,
+                storageStatus,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }
@@ -413,7 +462,7 @@ namespace Azure.ResourceManager.NetworkCloud
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support writing '{options.Format}' format.");
             }
@@ -427,7 +476,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement, options);
                     }
                 default:

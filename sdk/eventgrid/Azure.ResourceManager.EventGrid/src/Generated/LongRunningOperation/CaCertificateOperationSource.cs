@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.EventGrid
 
         CaCertificateResource IOperationSource<CaCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CaCertificateData.DeserializeCaCertificateData(document.RootElement);
+            var data = ModelReaderWriter.Read<CaCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new CaCertificateResource(_client, data);
         }
 
         async ValueTask<CaCertificateResource> IOperationSource<CaCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CaCertificateData.DeserializeCaCertificateData(document.RootElement);
-            return new CaCertificateResource(_client, data);
+            var data = ModelReaderWriter.Read<CaCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            return await Task.FromResult(new CaCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

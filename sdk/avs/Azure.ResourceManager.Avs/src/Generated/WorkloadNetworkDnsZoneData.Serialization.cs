@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.Avs
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkloadNetworkDnsZoneData)} does not support writing '{options.Format}' format.");
             }
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Avs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkloadNetworkDnsZoneData(document.RootElement, options);
                     }
                 default:

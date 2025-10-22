@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -23,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
+            string? microsoftClientIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "microsoft.client.ip")?.ToString();
             if (activity.GetTelemetryType() == TelemetryType.Request)
             {
                 if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
@@ -38,14 +40,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
 
-                // Set ip in case of server spans only.
                 if (activity.Kind == ActivityKind.Server)
                 {
-                    var locationIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+                    var locationIp = microsoftClientIp ??
+                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+
                     if (locationIp != null)
                     {
                         Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
                     }
+                }
+            }
+            else // dependency
+            {
+                if (microsoftClientIp != null)
+                {
+                    Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;
                 }
             }
 
@@ -58,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
-            SetAuthenticatedUserId(ref activityTagsProcessor);
+            SetUserIdAndAuthenticatedUserId(ref activityTagsProcessor);
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
             if (sampleRate != 100f)
@@ -91,8 +101,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
-            this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
+        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, string? microsoftClientIp) :
+            this(name, FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
             {
@@ -102,6 +112,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (logRecord.SpanId != default)
             {
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+            }
+
+            if (microsoftClientIp != null)
+            {
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp.ToString();
             }
 
             InstrumentationKey = instrumentationKey;
@@ -134,11 +149,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
+        private void SetUserIdAndAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
         {
             if (activityTagsProcessor.EndUserId != null)
             {
                 Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId.Truncate(SchemaConstants.Tags_AiUserAuthUserId_MaxLength);
+            }
+
+            if (activityTagsProcessor.EndUserPseudoId != null)
+            {
+                Tags[ContextTagKeys.AiUserId.ToString()] = activityTagsProcessor.EndUserPseudoId.Truncate(SchemaConstants.Tags_AiUserId_MaxLength);
             }
         }
     }

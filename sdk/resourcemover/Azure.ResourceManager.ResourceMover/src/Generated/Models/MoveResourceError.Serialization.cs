@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                JsonSerializer.Serialize(writer, Properties);
+                ((IJsonModel<ResponseError>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    properties = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    properties = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourceMoverContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MoveResourceError)} does not support writing '{options.Format}' format.");
             }
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMoveResourceError(document.RootElement, options);
                     }
                 default:

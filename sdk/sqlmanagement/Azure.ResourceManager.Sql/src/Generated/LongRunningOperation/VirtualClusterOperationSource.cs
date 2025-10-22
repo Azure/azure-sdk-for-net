@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         VirtualClusterResource IOperationSource<VirtualClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<VirtualClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new VirtualClusterResource(_client, data);
         }
 
         async ValueTask<VirtualClusterResource> IOperationSource<VirtualClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
-            return new VirtualClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new VirtualClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

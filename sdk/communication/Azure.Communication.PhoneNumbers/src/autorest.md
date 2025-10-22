@@ -7,10 +7,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-tag: package-phonenumber-2025-02-11
+tag: package-phonenumber-2025-06-01
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a3d9c16f14fbfa814d6315a4972517cec77c6bfb/specification/communication/data-plane/PhoneNumbers/readme.md
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/14800a01400c295af0bfa5886e5f4042e4f6c62e/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
@@ -47,4 +47,19 @@ directive:
   where: $.parameters.Endpoint
   transform: >
     $["format"] = "";
+```
+
+### Set remove-empty-child-schemas
+```yaml
+modelerfour:
+    remove-empty-child-schemas: true
+```
+
+### Rename AvailablePhoneNumberStatus to PhoneNumberAvailabilityStatus
+```yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AvailablePhoneNumber.properties.status.x-ms-enum
+  transform: >
+    $["name"] = "PhoneNumberAvailabilityStatus";
 ```

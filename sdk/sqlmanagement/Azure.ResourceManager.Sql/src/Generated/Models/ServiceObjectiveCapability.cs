@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
             SupportedMinCapacities = new ChangeTrackingList<MinCapacityCapability>();
             SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
+            SupportedZones = new ChangeTrackingList<ZonePinningCapability>();
+            SupportedFreeLimitExhaustionBehaviors = new ChangeTrackingList<FreeLimitExhaustionBehaviorCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceObjectiveCapability"/>. </summary>
@@ -67,10 +69,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMinCapacities"> List of supported min capacities. </param>
         /// <param name="computeModel"> The compute model. </param>
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
+        /// <param name="zonePinning"> Whether or not zone pinning is supported. </param>
+        /// <param name="supportedZones"> List of supported availability zones. </param>
+        /// <param name="supportedFreeLimitExhaustionBehaviors"> List of supported free limit exhaustion behaviors. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, bool? zonePinning, IReadOnlyList<ZonePinningCapability> supportedZones, IReadOnlyList<FreeLimitExhaustionBehaviorCapability> supportedFreeLimitExhaustionBehaviors, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -84,6 +89,9 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMinCapacities = supportedMinCapacities;
             ComputeModel = computeModel;
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
+            ZonePinning = zonePinning;
+            SupportedZones = supportedZones;
+            SupportedFreeLimitExhaustionBehaviors = supportedFreeLimitExhaustionBehaviors;
             Status = status;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -125,6 +133,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> List of supported maintenance configurations. </summary>
         [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
+        /// <summary> Whether or not zone pinning is supported. </summary>
+        [WirePath("zonePinning")]
+        public bool? ZonePinning { get; }
+        /// <summary> List of supported availability zones. </summary>
+        [WirePath("supportedZones")]
+        public IReadOnlyList<ZonePinningCapability> SupportedZones { get; }
+        /// <summary> List of supported free limit exhaustion behaviors. </summary>
+        [WirePath("supportedFreeLimitExhaustionBehaviors")]
+        public IReadOnlyList<FreeLimitExhaustionBehaviorCapability> SupportedFreeLimitExhaustionBehaviors { get; }
         /// <summary> The status of the capability. </summary>
         [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }

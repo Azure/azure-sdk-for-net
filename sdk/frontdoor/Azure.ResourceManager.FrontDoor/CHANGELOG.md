@@ -1,16 +1,33 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.1 (2025-10-15)
+
+### Features Added
+
+- Added `WirePath` attribute for all models' properties.
+
+## 1.4.0 (2025-05-10)
+
+### Features Added
+
+- Upgraded version to 2025-03-01
+- Added support for captcha
+
+## 1.3.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.3.0 (2024-05-06)
 

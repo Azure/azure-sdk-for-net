@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         WorkloadImpactData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadImpactData.DeserializeWorkloadImpactData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         WorkloadImpactData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadImpactData.DeserializeWorkloadImpactData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,6 @@ namespace Azure.ResourceManager.ImpactReporting
             uri.AppendPath(workloadImpactName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -328,7 +327,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         WorkloadImpactListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadImpactListResult.DeserializeWorkloadImpactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +352,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         WorkloadImpactListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadImpactListResult.DeserializeWorkloadImpactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         WorkloadImpactListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkloadImpactListResult.DeserializeWorkloadImpactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +428,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         WorkloadImpactListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkloadImpactListResult.DeserializeWorkloadImpactListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

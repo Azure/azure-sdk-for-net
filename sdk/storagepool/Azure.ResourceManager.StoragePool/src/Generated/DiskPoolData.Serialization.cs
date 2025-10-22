@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStoragePoolContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.StoragePool
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerStoragePoolContext.Default));
                             }
                             disks = array;
                             continue;
@@ -306,7 +307,7 @@ namespace Azure.ResourceManager.StoragePool
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStoragePoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolData)} does not support writing '{options.Format}' format.");
             }
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskPoolData(document.RootElement, options);
                     }
                 default:

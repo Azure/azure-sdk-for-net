@@ -1,14 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/:import?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/:import?api-version=2025-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "791",
+        "Content-Length": "785",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250717.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,14 +16,15 @@
         "stringIndexType": "Utf16CodeUnit",
         "metadata": {
           "projectKind": "CustomSingleLabelClassification",
-          "storageInputContainerName": "test-data",
+          "storageInputContainerName": "single-class-example",
           "settings": {},
-          "projectName": "MyImportTextProject",
+          "projectName": null,
           "multilingual": false,
           "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
           "language": "en"
         },
         "assets": {
+          "projectKind": "CustomSingleLabelClassification",
           "classes": [
             {
               "category": "Date"
@@ -51,31 +51,30 @@
               "location": "02.txt",
               "language": "en"
             }
-          ],
-          "projectKind": "CustomSingleLabelClassification"
+          ]
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "c0954d5b-6964-4851-9d9b-7f48adcc534d",
+        "apim-request-id": "a997f644-7bb8-425e-93d3-6a18f99fb782",
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2024 06:25:22 GMT",
-        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/import/jobs/2eaca98a-6f12-464f-814c-8ed0867bb6a5_638686944000000000?api-version=2024-11-15-preview",
-        "request-id": "c0954d5b-6964-4851-9d9b-7f48adcc534d",
+        "Date": "Fri, 18 Jul 2025 00:52:33 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/import/jobs/f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000?api-version=2025-05-15-preview",
+        "request-id": "a997f644-7bb8-425e-93d3-6a18f99fb782",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "143",
+        "x-envoy-upstream-service-time": "189",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/import/jobs/2eaca98a-6f12-464f-814c-8ed0867bb6a5_638686944000000000?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/import/jobs/f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250717.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -83,30 +82,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "879355ed-6ac9-4d1e-ae52-8da8f20586e5",
+        "apim-request-id": "77407c2e-e922-4426-83fc-ba0e7604d4d7",
         "Content-Length": "219",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Dec 2024 06:25:22 GMT",
-        "request-id": "879355ed-6ac9-4d1e-ae52-8da8f20586e5",
+        "Date": "Fri, 18 Jul 2025 00:52:33 GMT",
+        "request-id": "77407c2e-e922-4426-83fc-ba0e7604d4d7",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "43",
+        "x-envoy-upstream-service-time": "39",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "jobId": "2eaca98a-6f12-464f-814c-8ed0867bb6a5_638686944000000000",
-        "createdDateTime": "2024-12-02T06:25:22Z",
-        "lastUpdatedDateTime": "2024-12-02T06:25:22Z",
-        "expirationDateTime": "2024-12-09T06:25:22Z",
+        "jobId": "f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000",
+        "createdDateTime": "2025-07-18T00:52:33Z",
+        "lastUpdatedDateTime": "2025-07-18T00:52:33Z",
+        "expirationDateTime": "2025-07-25T00:52:33Z",
         "status": "notStarted"
       }
     },
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/import/jobs/2eaca98a-6f12-464f-814c-8ed0867bb6a5_638686944000000000?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject0717/import/jobs/f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250717.1 (.NET 9.0.7; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -114,28 +113,28 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "2d6a50eb-4f95-4dc7-9e43-b0e40c51b5c6",
+        "apim-request-id": "862edfda-0e75-44e5-b74e-3b12397385a0",
         "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Dec 2024 06:25:23 GMT",
-        "request-id": "2d6a50eb-4f95-4dc7-9e43-b0e40c51b5c6",
+        "Date": "Fri, 18 Jul 2025 00:52:34 GMT",
+        "request-id": "862edfda-0e75-44e5-b74e-3b12397385a0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "26",
+        "x-envoy-upstream-service-time": "37",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "jobId": "2eaca98a-6f12-464f-814c-8ed0867bb6a5_638686944000000000",
-        "createdDateTime": "2024-12-02T06:25:22Z",
-        "lastUpdatedDateTime": "2024-12-02T06:25:23Z",
-        "expirationDateTime": "2024-12-09T06:25:22Z",
+        "jobId": "f4ef4f63-cfe6-4c8b-8500-ea5177b3e8d2_638883936000000000",
+        "createdDateTime": "2025-07-18T00:52:33Z",
+        "lastUpdatedDateTime": "2025-07-18T00:52:34Z",
+        "expirationDateTime": "2025-07-25T00:52:33Z",
         "status": "succeeded"
       }
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "117171020"
+    "RandomSeed": "129444462"
   }
 }

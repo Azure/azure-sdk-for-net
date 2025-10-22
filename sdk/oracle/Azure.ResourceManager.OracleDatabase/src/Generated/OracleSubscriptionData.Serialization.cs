@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
         }
 
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerOracleDatabaseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOracleDatabaseContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OracleSubscriptionData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleSubscriptionData(document.RootElement, options);
                     }
                 default:

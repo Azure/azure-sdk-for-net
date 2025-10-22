@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGuestConfigurationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGuestConfigurationAssignmentData(document.RootElement, options);
                     }
                 default:

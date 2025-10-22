@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            DataCenterAddressType dataCenterAddressType = default;
+            DatacenterAddressType datacenterAddressType = default;
             IReadOnlyList<string> supportedCarriersForReturnShipment = default;
             AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("datacenterAddressType"u8))
                 {
-                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
+                    datacenterAddressType = property.Value.GetString().ToDatacenterAddressType();
                     continue;
                 }
                 if (property.NameEquals("supportedCarriersForReturnShipment"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
+            return new UnknownDataCenterAddressResponse(datacenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support writing '{options.Format}' format.");
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataCenterAddressResult(document.RootElement, options);
                     }
                 default:

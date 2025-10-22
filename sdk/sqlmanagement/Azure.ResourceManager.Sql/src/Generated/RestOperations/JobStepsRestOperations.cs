@@ -32,250 +32,8 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListByVersionRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/jobAgents/", false);
-            uri.AppendPath(jobAgentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion, true);
-            uri.AppendPath("/steps", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByVersionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/jobAgents/", false);
-            uri.AppendPath(jobAgentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion, true);
-            uri.AppendPath("/steps", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets all job steps in the specified job version. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="jobAgentName"> The name of the job agent. </param>
-        /// <param name="jobName"> The name of the job to get. </param>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobStepListResult>> ListByVersionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateListByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobStepListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all job steps in the specified job version. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="jobAgentName"> The name of the job agent. </param>
-        /// <param name="jobName"> The name of the job to get. </param>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobStepListResult> ListByVersion(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateListByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobStepListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetByVersionRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/jobAgents/", false);
-            uri.AppendPath(jobAgentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion, true);
-            uri.AppendPath("/steps/", false);
-            uri.AppendPath(stepName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetByVersionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/jobAgents/", false);
-            uri.AppendPath(jobAgentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion, true);
-            uri.AppendPath("/steps/", false);
-            uri.AppendPath(stepName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the specified version of a job step. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="jobAgentName"> The name of the job agent. </param>
-        /// <param name="jobName"> The name of the job. </param>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="stepName"> The name of the job step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlServerJobStepData>> GetByVersionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var message = CreateGetByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SqlServerJobStepData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SqlServerJobStepData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the specified version of a job step. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="jobAgentName"> The name of the job agent. </param>
-        /// <param name="jobName"> The name of the job. </param>
-        /// <param name="jobVersion"> The version of the job to get. </param>
-        /// <param name="stepName"> The name of the job step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlServerJobStepData> GetByVersion(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var message = CreateGetByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SqlServerJobStepData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SqlServerJobStepData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateListByJobRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName)
@@ -346,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobStepListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,7 +137,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobStepListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -460,7 +218,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerJobStepData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -497,7 +255,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerJobStepData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -587,7 +345,7 @@ namespace Azure.ResourceManager.Sql
                 case 201:
                     {
                         SqlServerJobStepData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -625,7 +383,7 @@ namespace Azure.ResourceManager.Sql
                 case 201:
                     {
                         SqlServerJobStepData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,6 +433,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(stepName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -741,22 +500,48 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal RequestUriBuilder CreateListByVersionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
+        internal RequestUriBuilder CreateListByVersionRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(jobVersion, true);
+            uri.AppendPath("/steps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByVersionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
+        internal HttpMessage CreateListByVersionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(jobVersion, true);
+            uri.AppendPath("/steps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -764,7 +549,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all job steps in the specified job version. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -772,25 +556,24 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobStepListResult>> ListByVersionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        public async Task<Response<JobStepListResult>> ListByVersionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateListByVersionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            using var message = CreateListByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         JobStepListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -800,7 +583,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets all job steps in the specified job version. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -808,28 +590,153 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobStepListResult> ListByVersionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        public Response<JobStepListResult> ListByVersion(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateListByVersionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            using var message = CreateListByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         JobStepListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetByVersionRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(jobVersion, true);
+            uri.AppendPath("/steps/", false);
+            uri.AppendPath(stepName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetByVersionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(jobVersion, true);
+            uri.AppendPath("/steps/", false);
+            uri.AppendPath(stepName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the specified version of a job step. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="jobAgentName"> The name of the job agent. </param>
+        /// <param name="jobName"> The name of the job. </param>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="stepName"> The name of the job step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SqlServerJobStepData>> GetByVersionAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var message = CreateGetByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SqlServerJobStepData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((SqlServerJobStepData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the specified version of a job step. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="jobAgentName"> The name of the job agent. </param>
+        /// <param name="jobName"> The name of the job. </param>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="stepName"> The name of the job step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, <paramref name="jobName"/> or <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SqlServerJobStepData> GetByVersion(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var message = CreateGetByVersionRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion, stepName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SqlServerJobStepData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SqlServerJobStepData.DeserializeSqlServerJobStepData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((SqlServerJobStepData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -883,7 +790,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobStepListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -918,7 +825,101 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         JobStepListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByVersionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByVersionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets all job steps in the specified job version. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="jobAgentName"> The name of the job agent. </param>
+        /// <param name="jobName"> The name of the job to get. </param>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<JobStepListResult>> ListByVersionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateListByVersionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        JobStepListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets all job steps in the specified job version. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="jobAgentName"> The name of the job agent. </param>
+        /// <param name="jobName"> The name of the job to get. </param>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<JobStepListResult> ListByVersionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateListByVersionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobVersion);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        JobStepListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JobStepListResult.DeserializeJobStepListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         ReportVerificationResult IOperationSource<ReportVerificationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ReportVerificationResult.DeserializeReportVerificationResult(document.RootElement);
         }
 
         async ValueTask<ReportVerificationResult> IOperationSource<ReportVerificationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ReportVerificationResult.DeserializeReportVerificationResult(document.RootElement);
         }
     }

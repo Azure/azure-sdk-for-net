@@ -40,6 +40,8 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly ClientDiagnostics _managedEnvironmentPrivateLinkResourcesClientDiagnostics;
+        private readonly ManagedEnvironmentPrivateLinkResourcesRestOperations _managedEnvironmentPrivateLinkResourcesRestClient;
         private readonly ClientDiagnostics _managedEnvironmentUsagesClientDiagnostics;
         private readonly ManagedEnvironmentUsagesRestOperations _managedEnvironmentUsagesRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
@@ -71,6 +73,8 @@ namespace Azure.ResourceManager.AppContainers
             _containerAppManagedEnvironmentManagedEnvironmentsRestClient = new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentManagedEnvironmentsApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _namespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _managedEnvironmentPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedEnvironmentPrivateLinkResourcesRestClient = new ManagedEnvironmentPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _managedEnvironmentUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +261,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +292,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,6 +317,75 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
+        /// <summary> Gets a collection of JavaComponentResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of JavaComponentResources and their operations over a JavaComponentResource. </returns>
+        public virtual JavaComponentCollection GetJavaComponents()
+        {
+            return GetCachedClient(client => new JavaComponentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Java Component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Java Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JavaComponentResource>> GetJavaComponentAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetJavaComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Java Component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Java Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JavaComponentResource> GetJavaComponent(string name, CancellationToken cancellationToken = default)
+        {
+            return GetJavaComponents().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppManagedCertificateResources in the ContainerAppManagedEnvironment. </summary>
         /// <returns> An object representing collection of ContainerAppManagedCertificateResources and their operations over a ContainerAppManagedCertificateResource. </returns>
         public virtual ContainerAppManagedCertificateCollection GetContainerAppManagedCertificates()
@@ -333,7 +406,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +437,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -380,6 +453,213 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Response<ContainerAppManagedCertificateResource> GetContainerAppManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
         {
             return GetContainerAppManagedCertificates().Get(managedCertificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnectionResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnectionResources and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a private endpoint connection for a given managed environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a private endpoint connection for a given managed environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppHttpRouteConfigResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppHttpRouteConfigResources and their operations over a ContainerAppHttpRouteConfigResource. </returns>
+        public virtual ContainerAppHttpRouteConfigCollection GetContainerAppHttpRouteConfigs()
+        {
+            return GetCachedClient(client => new ContainerAppHttpRouteConfigCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the specified Http Route Config.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HttpRouteConfig_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppHttpRouteConfigResource>> GetContainerAppHttpRouteConfigAsync(string httpRouteName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppHttpRouteConfigs().GetAsync(httpRouteName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified Http Route Config.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HttpRouteConfig_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppHttpRouteConfigResource> GetContainerAppHttpRouteConfig(string httpRouteName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppHttpRouteConfigs().Get(httpRouteName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppMaintenanceConfigurationResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppMaintenanceConfigurationResources and their operations over a ContainerAppMaintenanceConfigurationResource. </returns>
+        public virtual ContainerAppMaintenanceConfigurationCollection GetContainerAppMaintenanceConfigurations()
+        {
+            return GetCachedClient(client => new ContainerAppMaintenanceConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the maintenance configuration of a ManagedEnvironment .
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppMaintenanceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppMaintenanceConfigurationResource>> GetContainerAppMaintenanceConfigurationAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppMaintenanceConfigurations().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the maintenance configuration of a ManagedEnvironment .
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppMaintenanceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppMaintenanceConfigurationResource> GetContainerAppMaintenanceConfiguration(string configName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppMaintenanceConfigurations().Get(configName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>
@@ -402,7 +682,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -433,7 +713,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +744,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -504,7 +784,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +824,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -586,7 +866,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,7 +908,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +954,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -720,7 +1000,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -758,7 +1038,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -796,7 +1076,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -826,7 +1106,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -856,7 +1136,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -894,7 +1174,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -920,6 +1200,58 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// List private link resources for a given managed environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentPrivateLinkResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppPrivateLink> GetManagedEnvironmentPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerAppPrivateLink.DeserializeContainerAppPrivateLink(e), _managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentPrivateLinkResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List private link resources for a given managed environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentPrivateLinkResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppPrivateLink> GetManagedEnvironmentPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerAppPrivateLink.DeserializeContainerAppPrivateLink(e), _managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentPrivateLinkResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the current usage information as well as the limits for environment.
         /// <list type="bullet">
         /// <item>
@@ -932,7 +1264,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -958,7 +1290,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -984,7 +1316,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1046,7 +1378,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1108,7 +1440,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1165,7 +1497,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1222,7 +1554,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1282,7 +1614,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

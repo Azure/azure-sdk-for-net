@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -53,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw new ArgumentException(key.ToString());
             }
 
-            if (!(valueObject is TValue))
+            if (valueObject is not TValue)
             {
                 throw new ArgumentException(key.ToString());
             }

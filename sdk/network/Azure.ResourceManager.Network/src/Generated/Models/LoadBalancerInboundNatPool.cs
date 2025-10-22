@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Properties of load balancer inbound nat pool. </summary>
+        [WirePath("properties")]
         public LoadBalancerInboundNatPoolProperties Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

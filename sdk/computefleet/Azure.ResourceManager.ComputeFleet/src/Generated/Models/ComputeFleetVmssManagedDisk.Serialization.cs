@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
-                JsonSerializer.Serialize(writer, DiskEncryptionSet);
+                ((IJsonModel<WritableSubResource>)DiskEncryptionSet).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    diskEncryptionSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComputeFleetVmssManagedDisk)} does not support writing '{options.Format}' format.");
             }
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetVmssManagedDisk(document.RootElement, options);
                     }
                 default:

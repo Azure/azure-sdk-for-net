@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapsePrivateEndpointConnectionForPrivateLinkHubResource : IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>
     {
+        private static SynapsePrivateEndpointConnectionForPrivateLinkHubData s_dataDeserializationInstance;
+        private static SynapsePrivateEndpointConnectionForPrivateLinkHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)Data).Write(writer, options);
 
-        SynapsePrivateEndpointConnectionForPrivateLinkHubData IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)Data).Create(ref reader, options);
+        SynapsePrivateEndpointConnectionForPrivateLinkHubData IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapsePrivateEndpointConnectionForPrivateLinkHubData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapsePrivateEndpointConnectionForPrivateLinkHubData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateEndpointConnectionForPrivateLinkHubData>(data, options);
+        SynapsePrivateEndpointConnectionForPrivateLinkHubData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateEndpointConnectionForPrivateLinkHubData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

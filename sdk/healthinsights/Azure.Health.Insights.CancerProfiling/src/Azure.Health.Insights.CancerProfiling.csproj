@@ -9,12 +9,11 @@
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

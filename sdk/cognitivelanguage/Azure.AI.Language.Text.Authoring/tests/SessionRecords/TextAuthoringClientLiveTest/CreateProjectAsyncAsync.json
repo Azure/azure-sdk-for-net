@@ -1,45 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject001?api-version=2025-05-15-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "234",
+        "Content-Length": "243",
         "Content-Type": "application/merge-patch+json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250603.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "projectName": "MyTextProject",
-        "language": "en",
         "projectKind": "customMultiLabelClassification",
-        "description": "Project description for a Custom Entity Recognition project",
+        "storageInputContainerName": "multi-class-example",
+        "projectName": "MyTextProject001",
         "multilingual": true,
-        "storageInputContainerName": "e2e0test0data"
+        "description": "Project description for a Custom Entity Recognition project",
+        "language": "en"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "41a71e78-5adc-44ee-93e1-7c4bb833bc26",
-        "Content-Length": "321",
+        "apim-request-id": "487ddf57-7d39-4f13-8f16-4a81fc433321",
+        "Content-Length": "330",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 01 Dec 2024 19:19:43 GMT",
-        "Location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject/MyTextProject",
-        "request-id": "41a71e78-5adc-44ee-93e1-7c4bb833bc26",
+        "Date": "Tue, 03 Jun 2025 21:43:08 GMT",
+        "Location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject001/MyTextProject001",
+        "request-id": "487ddf57-7d39-4f13-8f16-4a81fc433321",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "319",
+        "x-envoy-upstream-service-time": "434",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "createdDateTime": "2024-12-01T19:19:43Z",
-        "lastModifiedDateTime": "2024-12-01T19:19:43Z",
+        "createdDateTime": "2025-06-03T21:43:08Z",
+        "lastModifiedDateTime": "2025-06-03T21:43:08Z",
         "projectKind": "CustomMultiLabelClassification",
-        "storageInputContainerName": "e2e0test0data",
-        "projectName": "MyTextProject",
+        "storageInputContainerName": "multi-class-example",
+        "projectName": "MyTextProject001",
         "multilingual": true,
         "description": "Project description for a Custom Entity Recognition project",
         "language": "en"
@@ -47,8 +47,8 @@
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "871251045"
+    "RandomSeed": "178710853"
   }
 }

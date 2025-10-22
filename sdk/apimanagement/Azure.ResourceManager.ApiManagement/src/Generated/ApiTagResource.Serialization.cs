@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiTagResource : IJsonModel<TagContractData>
     {
+        private static TagContractData s_dataDeserializationInstance;
+        private static TagContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TagContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TagContractData>)Data).Write(writer, options);
 
-        TagContractData IJsonModel<TagContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagContractData>)Data).Create(ref reader, options);
+        TagContractData IJsonModel<TagContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagContractData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TagContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TagContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TagContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        TagContractData IPersistableModel<TagContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagContractData>(data, options);
+        TagContractData IPersistableModel<TagContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<TagContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TagContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         string value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
@@ -1219,8 +1219,102 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         string value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = document.RootElement.GetString();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListRadiusSecretsRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/listRadiusSecrets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListRadiusSecretsRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/listRadiusSecrets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List all Radius servers with respective radius secrets from virtual network gateway VpnClientConfiguration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RadiusAuthServerListResult>> ListRadiusSecretsAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateListRadiusSecretsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RadiusAuthServerListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = RadiusAuthServerListResult.DeserializeRadiusAuthServerListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List all Radius servers with respective radius secrets from virtual network gateway VpnClientConfiguration. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RadiusAuthServerListResult> ListRadiusSecrets(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateListRadiusSecretsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RadiusAuthServerListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = RadiusAuthServerListResult.DeserializeRadiusAuthServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1395,6 +1489,198 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(peer, nameof(peer));
 
             using var message = CreateGetAdvertisedRoutesRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, peer);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetResiliencyInformationRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/getResiliencyInformation", false);
+            if (attemptRefresh != null)
+            {
+                uri.AppendQuery("attemptRefresh", attemptRefresh.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetResiliencyInformationRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/getResiliencyInformation", false);
+            if (attemptRefresh != null)
+            {
+                uri.AppendQuery("attemptRefresh", attemptRefresh.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation retrieves the resiliency information for an Express Route Gateway, including the gateway's current resiliency score and recommendations to further improve the score. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
+        /// <param name="attemptRefresh"> Attempt to recalculate the Resiliency Information for the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetResiliencyInformationAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateGetResiliencyInformationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, attemptRefresh);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation retrieves the resiliency information for an Express Route Gateway, including the gateway's current resiliency score and recommendations to further improve the score. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
+        /// <param name="attemptRefresh"> Attempt to recalculate the Resiliency Information for the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetResiliencyInformation(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateGetResiliencyInformationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, attemptRefresh);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRoutesInformationRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/getRoutesInformation", false);
+            if (attemptRefresh != null)
+            {
+                uri.AppendQuery("attemptRefresh", attemptRefresh.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRoutesInformationRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/getRoutesInformation", false);
+            if (attemptRefresh != null)
+            {
+                uri.AppendQuery("attemptRefresh", attemptRefresh.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This operation retrieves the route set information for an Express Route Gateway based on their resiliency. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
+        /// <param name="attemptRefresh"> Attempt to recalculate the Route Sets Information for the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetRoutesInformationAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateGetRoutesInformationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, attemptRefresh);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This operation retrieves the route set information for an Express Route Gateway based on their resiliency. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
+        /// <param name="attemptRefresh"> Attempt to recalculate the Route Sets Information for the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetRoutesInformation(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, bool? attemptRefresh = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateGetRoutesInformationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, attemptRefresh);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1646,7 +1932,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         string value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
@@ -1677,7 +1963,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         string value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
@@ -2435,6 +2721,350 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateInvokePrepareMigrationRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayMigrationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/prepareMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateInvokePrepareMigrationRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayMigrationContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/prepareMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Trigger prepare migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="content"> Parameters supplied to the Begin Prepare migration on basic vpn gateway through Network resource provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> InvokePrepareMigrationAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayMigrationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateInvokePrepareMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Trigger prepare migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="content"> Parameters supplied to the Begin Prepare migration on basic vpn gateway through Network resource provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response InvokePrepareMigration(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayMigrationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateInvokePrepareMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateInvokeExecuteMigrationRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/executeMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateInvokeExecuteMigrationRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/executeMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Trigger execute migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> InvokeExecuteMigrationAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateInvokeExecuteMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Trigger execute migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response InvokeExecuteMigration(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateInvokeExecuteMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateInvokeCommitMigrationRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/commitMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateInvokeCommitMigrationRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/commitMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Trigger commit migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> InvokeCommitMigrationAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateInvokeCommitMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Trigger commit migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response InvokeCommitMigration(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateInvokeCommitMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateInvokeAbortMigrationRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/abortMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateInvokeAbortMigrationRequest(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/abortMigration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Trigger abort migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> InvokeAbortMigrationAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateInvokeAbortMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Trigger abort migration for the virtual network gateway. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
+        /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response InvokeAbortMigration(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
+            using var message = CreateInvokeAbortMigrationRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var uri = new RawRequestUriBuilder();
@@ -2477,7 +3107,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2506,7 +3136,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkGatewayListResult.DeserializeVirtualNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2559,7 +3189,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2590,7 +3220,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualNetworkGatewayListConnectionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkGatewayListConnectionsResult.DeserializeVirtualNetworkGatewayListConnectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

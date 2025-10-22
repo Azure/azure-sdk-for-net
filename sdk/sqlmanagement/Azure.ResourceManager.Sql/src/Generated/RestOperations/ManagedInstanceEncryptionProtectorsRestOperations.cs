@@ -32,99 +32,8 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateRevalidateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
-            uri.AppendPath("/revalidate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateRevalidateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
-            uri.AppendPath("/revalidate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Revalidates an existing encryption protector. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RevalidateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            using var message = CreateRevalidateRequest(subscriptionId, resourceGroupName, managedInstanceName, encryptionProtectorName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Revalidates an existing encryption protector. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Revalidate(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            using var message = CreateRevalidateRequest(subscriptionId, resourceGroupName, managedInstanceName, encryptionProtectorName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateListByInstanceRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName)
@@ -183,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceEncryptionProtectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceEncryptionProtectorListResult.DeserializeManagedInstanceEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -212,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceEncryptionProtectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceEncryptionProtectorListResult.DeserializeManagedInstanceEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,7 +189,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceEncryptionProtectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -312,7 +221,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceEncryptionProtectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,6 +330,98 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateRevalidateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/encryptionProtector/", false);
+            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath("/revalidate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateRevalidateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/encryptionProtector/", false);
+            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath("/revalidate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Revalidates an existing encryption protector. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RevalidateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+
+            using var message = CreateRevalidateRequest(subscriptionId, resourceGroupName, managedInstanceName, encryptionProtectorName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Revalidates an existing encryption protector. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Revalidate(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+
+            using var message = CreateRevalidateRequest(subscriptionId, resourceGroupName, managedInstanceName, encryptionProtectorName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListByInstanceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName)
         {
             var uri = new RawRequestUriBuilder();
@@ -465,7 +466,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceEncryptionProtectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceEncryptionProtectorListResult.DeserializeManagedInstanceEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -496,7 +497,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceEncryptionProtectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceEncryptionProtectorListResult.DeserializeManagedInstanceEncryptionProtectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

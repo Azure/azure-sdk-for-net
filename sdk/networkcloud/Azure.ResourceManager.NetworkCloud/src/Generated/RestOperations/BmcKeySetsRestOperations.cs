@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByClusterRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        internal RequestUriBuilder CreateListByClusterRequestUri(string subscriptionId, string resourceGroupName, string clusterName, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,10 +48,18 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/bmcKeySets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName)
+        internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,6 +74,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/bmcKeySets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -76,23 +92,25 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BmcKeySetList>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<BmcKeySetList>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
+            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         BmcKeySetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BmcKeySetList.DeserializeBmcKeySetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,23 +123,25 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BmcKeySetList> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<BmcKeySetList> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
+            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         BmcKeySetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BmcKeySetList.DeserializeBmcKeySetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +210,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudBmcKeySetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +243,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudBmcKeySetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -234,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +270,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,6 +287,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(bmcKeySetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -282,10 +310,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -293,7 +323,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -311,10 +341,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,7 +354,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -334,7 +366,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -350,7 +382,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -367,6 +399,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(bmcKeySetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -377,17 +417,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -405,17 +447,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -428,7 +472,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -444,7 +488,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,6 +505,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(bmcKeySetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -476,10 +528,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="bmcKeySetName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -487,7 +541,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, patch, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -505,10 +559,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="bmcKeySetName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName, NetworkCloudBmcKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -516,7 +572,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, bmcKeySetName, patch, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -528,7 +584,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateListByClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
+        internal RequestUriBuilder CreateListByClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -536,7 +592,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
+        internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -555,24 +611,26 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BmcKeySetList>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<BmcKeySetList>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName);
+            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         BmcKeySetList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BmcKeySetList.DeserializeBmcKeySetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -586,24 +644,26 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BmcKeySetList> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<BmcKeySetList> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName);
+            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         BmcKeySetList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BmcKeySetList.DeserializeBmcKeySetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -120,11 +120,16 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
 
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          NuGetCacheKey: Test
+
       # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
       - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
@@ -132,10 +137,6 @@ jobs:
             }
           displayName: Install Azurite If Necessary
           condition: ne(variables['ProjectNames'], '')
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          NuGetCacheKey: Test
 
       # ProjectListOverrideFile is set by the customization within dependency.tests.yml
       # OR it is set by the PR built to target a set of packages outside of a single target service directory.
@@ -156,11 +157,12 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - script: >-
+      - pwsh: >
+          ./eng/scripts/runwithdevopslogging.ps1
           dotnet test eng/service.proj
-          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
+          --filter '"(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"'
           --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          --logger '"trx;LogFileName=$(TestTargetFramework).trx"' --logger:'"console;verbosity=normal"'
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=$(ServiceDirectory)
@@ -171,7 +173,6 @@ jobs:
           /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
           /p:EnableOverrideExclusions=true
-          /p:RemoveTrack1Projects=true
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"

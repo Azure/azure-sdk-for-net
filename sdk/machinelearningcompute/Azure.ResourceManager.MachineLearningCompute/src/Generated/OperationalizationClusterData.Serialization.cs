@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearningCompute.Models;
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMachineLearningComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OperationalizationClusterData)} does not support writing '{options.Format}' format.");
             }
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOperationalizationClusterData(document.RootElement, options);
                     }
                 default:

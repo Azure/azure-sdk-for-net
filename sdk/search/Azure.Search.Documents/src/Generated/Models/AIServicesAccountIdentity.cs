@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -13,18 +14,12 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AIServicesAccountIdentity : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
-        /// <param name="identity">
-        /// The user-assigned managed identity used for connections to AI Service. If not specified, the system-assigned managed identity is used. On updates to the skillset, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
         /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subdomainUrl"/> is null. </exception>
-        public AIServicesAccountIdentity(SearchIndexerDataIdentity identity, string subdomainUrl)
+        public AIServicesAccountIdentity(string subdomainUrl)
         {
             Argument.AssertNotNull(subdomainUrl, nameof(subdomainUrl));
 
-            Identity = identity;
             SubdomainUrl = subdomainUrl;
             ODataType = "#Microsoft.Azure.Search.AIServicesByIdentity";
         }
@@ -32,17 +27,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity">
         /// The user-assigned managed identity used for connections to AI Service. If not specified, the system-assigned managed identity is used. On updates to the skillset, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared.
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
         /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
-        internal AIServicesAccountIdentity(string oDataType, string description, SearchIndexerDataIdentity identity, string subdomainUrl) : base(oDataType, description)
+        internal AIServicesAccountIdentity(string oDataType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, SearchIndexerDataIdentity identity, string subdomainUrl) : base(oDataType, description, serializedAdditionalRawData)
         {
             Identity = identity;
             SubdomainUrl = subdomainUrl;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.AIServicesByIdentity";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/> for deserialization. </summary>
+        internal AIServicesAccountIdentity()
+        {
         }
 
         /// <summary>

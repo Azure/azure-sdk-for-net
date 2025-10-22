@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         InsightData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InsightData.DeserializeInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         InsightData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InsightData.DeserializeInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         InsightListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InsightListResult.DeserializeInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         InsightListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InsightListResult.DeserializeInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 201:
                     {
                         InsightData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InsightData.DeserializeInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 201:
                     {
                         InsightData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InsightData.DeserializeInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -349,7 +349,6 @@ namespace Azure.ResourceManager.ImpactReporting
             uri.AppendPath(insightName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         InsightListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InsightListResult.DeserializeInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +474,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 case 200:
                     {
                         InsightListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InsightListResult.DeserializeInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

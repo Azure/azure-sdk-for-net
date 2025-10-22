@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </param>
         /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
         /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </summary>
         [WirePath("properties.retentionInDays")]
         public int? RetentionInDays { get; set; }
-        /// <summary> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </summary>
+        /// <summary> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </summary>
         [WirePath("properties.totalRetentionInDays")]
         public int? TotalRetentionInDays { get; set; }
         /// <summary> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </summary>

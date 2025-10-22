@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
             writer.WriteObjectValue(ConnectionState, options);
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerElasticSanContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.ElasticSan
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

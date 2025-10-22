@@ -179,6 +179,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element);
+                    case "ServiceNowV2": return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
@@ -207,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static LinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLinkedService(document.RootElement);
         }
 

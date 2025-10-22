@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScheduleWeeklyRecurrence)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduleWeeklyRecurrence(document.RootElement, options);
                     }
                 default:

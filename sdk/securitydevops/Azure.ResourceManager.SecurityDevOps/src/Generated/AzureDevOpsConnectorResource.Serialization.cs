@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class AzureDevOpsConnectorResource : IJsonModel<AzureDevOpsConnectorData>
     {
+        private static AzureDevOpsConnectorData s_dataDeserializationInstance;
+        private static AzureDevOpsConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AzureDevOpsConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsConnectorData>)Data).Write(writer, options);
 
-        AzureDevOpsConnectorData IJsonModel<AzureDevOpsConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsConnectorData>)Data).Create(ref reader, options);
+        AzureDevOpsConnectorData IJsonModel<AzureDevOpsConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsConnectorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureDevOpsConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureDevOpsConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureDevOpsConnectorData>(Data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        AzureDevOpsConnectorData IPersistableModel<AzureDevOpsConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsConnectorData>(data, options);
+        AzureDevOpsConnectorData IPersistableModel<AzureDevOpsConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsConnectorData>(data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        string IPersistableModel<AzureDevOpsConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsConnectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AzureDevOpsConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

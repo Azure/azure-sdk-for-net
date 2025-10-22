@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            ReportableException error = default;
+            DataMigrationReportableException error = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    error = ReportableException.DeserializeReportableException(property.Value, options);
+                    error = DataMigrationReportableException.DeserializeDataMigrationReportableException(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputError)} does not support writing '{options.Format}' format.");
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlMISyncTaskOutputError(document.RootElement, options);
                     }
                 default:

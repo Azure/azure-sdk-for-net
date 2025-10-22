@@ -8,30 +8,41 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    internal class StorageTaskOperationSource : IOperationSource<StorageTaskResource>
+    /// <summary></summary>
+    internal partial class StorageTaskOperationSource : IOperationSource<StorageTaskResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal StorageTaskOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         StorageTaskResource IOperationSource<StorageTaskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StorageTaskData.DeserializeStorageTaskData(document.RootElement);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            StorageTaskData data = StorageTaskData.DeserializeStorageTaskData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new StorageTaskResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<StorageTaskResource> IOperationSource<StorageTaskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StorageTaskData.DeserializeStorageTaskData(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            StorageTaskData data = StorageTaskData.DeserializeStorageTaskData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new StorageTaskResource(_client, data);
         }
     }

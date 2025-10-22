@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridNamespacePermissionBindingResource : IJsonModel<EventGridNamespacePermissionBindingData>
     {
+        private static EventGridNamespacePermissionBindingData s_dataDeserializationInstance;
+        private static EventGridNamespacePermissionBindingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventGridNamespacePermissionBindingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespacePermissionBindingData>)Data).Write(writer, options);
 
-        EventGridNamespacePermissionBindingData IJsonModel<EventGridNamespacePermissionBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespacePermissionBindingData>)Data).Create(ref reader, options);
+        EventGridNamespacePermissionBindingData IJsonModel<EventGridNamespacePermissionBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespacePermissionBindingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventGridNamespacePermissionBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventGridNamespacePermissionBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespacePermissionBindingData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
-        EventGridNamespacePermissionBindingData IPersistableModel<EventGridNamespacePermissionBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(data, options);
+        EventGridNamespacePermissionBindingData IPersistableModel<EventGridNamespacePermissionBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespacePermissionBindingData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridNamespacePermissionBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespacePermissionBindingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridNamespacePermissionBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespacePermissionBindingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppConfigurationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppConfiguration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppConfigurationPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

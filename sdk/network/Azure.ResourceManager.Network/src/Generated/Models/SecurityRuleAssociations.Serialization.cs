@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -164,6 +166,97 @@ namespace Azure.ResourceManager.Network.Models
             return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkInterfaceAssociation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkInterfaceAssociation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkInterfaceAssociation))
+                {
+                    builder.Append("  networkInterfaceAssociation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkInterfaceAssociation, options, 2, false, "  networkInterfaceAssociation: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetAssociation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subnetAssociation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubnetAssociation))
+                {
+                    builder.Append("  subnetAssociation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SubnetAssociation, options, 2, false, "  subnetAssociation: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSecurityRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultSecurityRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DefaultSecurityRules))
+                {
+                    if (DefaultSecurityRules.Any())
+                    {
+                        builder.Append("  defaultSecurityRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DefaultSecurityRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  defaultSecurityRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EffectiveSecurityRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  effectiveSecurityRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EffectiveSecurityRules))
+                {
+                    if (EffectiveSecurityRules.Any())
+                    {
+                        builder.Append("  effectiveSecurityRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EffectiveSecurityRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  effectiveSecurityRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityRuleAssociations>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,7 +264,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support writing '{options.Format}' format.");
             }
@@ -185,7 +280,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityRuleAssociations(document.RootElement, options);
                     }
                 default:

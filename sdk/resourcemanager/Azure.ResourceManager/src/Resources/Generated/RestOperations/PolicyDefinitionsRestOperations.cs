@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionData.DeserializePolicyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PolicyDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyDefinitionListResult.DeserializePolicyDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

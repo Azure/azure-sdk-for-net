@@ -189,6 +189,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
+            if (Optional.IsDefined(DataSecurityMode))
+            {
+                writer.WritePropertyName("dataSecurityMode"u8);
+                writer.WriteObjectValue<object>(DataSecurityMode);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -229,6 +234,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object encryptedCredential = default;
             object policyId = default;
             CredentialReference credential = default;
+            object dataSecurityMode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -504,6 +510,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             credential = CredentialReference.DeserializeCredentialReference(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("dataSecurityMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataSecurityMode = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -536,14 +551,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 newClusterEnableElasticDisk,
                 encryptedCredential,
                 policyId,
-                credential);
+                credential,
+                dataSecurityMode);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AzureDatabricksLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAzureDatabricksLinkedService(document.RootElement);
         }
 

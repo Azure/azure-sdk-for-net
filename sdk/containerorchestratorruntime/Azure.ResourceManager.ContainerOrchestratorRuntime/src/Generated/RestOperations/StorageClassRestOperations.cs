@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         ConnectedClusterStorageClassData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         ConnectedClusterStorageClassData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             uri.AppendPath(storageClassName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -411,7 +410,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         StorageClassResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageClassResourceListResult.DeserializeStorageClassResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         StorageClassResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageClassResourceListResult.DeserializeStorageClassResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -483,7 +482,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         StorageClassResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageClassResourceListResult.DeserializeStorageClassResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +508,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         StorageClassResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageClassResourceListResult.DeserializeStorageClassResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

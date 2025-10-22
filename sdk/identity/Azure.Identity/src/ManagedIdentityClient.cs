@@ -20,8 +20,10 @@ namespace Azure.Identity
         internal Lazy<ManagedIdentitySource> _identitySource;
         private MsalConfidentialClient _msalConfidentialClient;
         private MsalManagedIdentityClient _msalManagedIdentityClient;
+        private ManagedIdentitySource _tokenExchangeManagedIdentitySource;
         private bool _isChainedCredential;
         private ManagedIdentityClientOptions _options;
+        private bool _probeRequestSent;
 
         protected ManagedIdentityClient()
         {
@@ -61,12 +63,16 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
-            var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+
+            AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
-            if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential)
+            if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential && !_probeRequestSent)
             {
-                return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                _probeRequestSent = true;
+                return probedFlowTokenResult;
             }
 
             // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
@@ -76,16 +82,25 @@ namespace Azure.Identity
             }
 
             // First try the TokenExchangeManagedIdentitySource, if it is not available, fall back to MSAL directly.
-            var tokenExchangeManagedIdentitySource = TokenExchangeManagedIdentitySource.TryCreate(_options);
-            if (default != tokenExchangeManagedIdentitySource)
+            _tokenExchangeManagedIdentitySource ??= TokenExchangeManagedIdentitySource.TryCreate(_options);
+            if (default != _tokenExchangeManagedIdentitySource)
             {
-                return await tokenExchangeManagedIdentitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+                return await _tokenExchangeManagedIdentitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
             }
 
-            // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
-            result = async ?
-                await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
-                _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
+            try
+            {
+                // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
+                result = async ?
+                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
+                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
+            }
+            // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
+            catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
+            {
+                // If the managed identity is not found, throw a more specific exception.
+                throw new CredentialUnavailableException(MsiUnavailableError, ex);
+            }
 
             return result.ToAccessToken();
         }
@@ -121,6 +136,20 @@ namespace Azure.Identity
         {
             return TokenExchangeManagedIdentitySource.TryCreate(options) ??
             new ImdsManagedIdentityProbeSource(options, client);
+        }
+
+        private static bool HasInnerExceptionMatching(Exception exception, Func<Exception, bool> condition)
+        {
+            var current = exception;
+            while (current != null)
+            {
+                if (condition(current))
+                {
+                    return true;
+                }
+                current = current.InnerException;
+            }
+            return false;
         }
     }
 }

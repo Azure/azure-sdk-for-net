@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDesktopVirtualizationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDesktopVirtualizationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualWorkspaceData(document.RootElement, options);
                     }
                 default:

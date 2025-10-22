@@ -6,63 +6,58 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class VectorizableImageUrlQuery : IUtf8JsonSerializable
+    public partial class VectorizableImageUrlQuery : IUtf8JsonSerializable, IJsonModel<VectorizableImageUrlQuery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorizableImageUrlQuery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VectorizableImageUrlQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageUrlQuery>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorizableImageUrlQuery)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(KNearestNeighborsCount))
-            {
-                writer.WritePropertyName("k"u8);
-                writer.WriteNumberValue(KNearestNeighborsCount.Value);
-            }
-            if (Optional.IsDefined(FieldsRaw))
-            {
-                writer.WritePropertyName("fields"u8);
-                writer.WriteStringValue(FieldsRaw);
-            }
-            if (Optional.IsDefined(Exhaustive))
-            {
-                writer.WritePropertyName("exhaustive"u8);
-                writer.WriteBooleanValue(Exhaustive.Value);
-            }
-            if (Optional.IsDefined(Oversampling))
-            {
-                writer.WritePropertyName("oversampling"u8);
-                writer.WriteNumberValue(Oversampling.Value);
-            }
-            if (Optional.IsDefined(Weight))
-            {
-                writer.WritePropertyName("weight"u8);
-                writer.WriteNumberValue(Weight.Value);
-            }
-            if (Optional.IsDefined(Threshold))
-            {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteObjectValue(Threshold);
-            }
-            if (Optional.IsDefined(FilterOverride))
-            {
-                writer.WritePropertyName("filterOverride"u8);
-                writer.WriteStringValue(FilterOverride);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static VectorizableImageUrlQuery DeserializeVectorizableImageUrlQuery(JsonElement element)
+        VectorizableImageUrlQuery IJsonModel<VectorizableImageUrlQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageUrlQuery>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorizableImageUrlQuery)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVectorizableImageUrlQuery(document.RootElement, options);
+        }
+
+        internal static VectorizableImageUrlQuery DeserializeVectorizableImageUrlQuery(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +71,9 @@ namespace Azure.Search.Documents.Models
             float? weight = default;
             VectorThreshold threshold = default;
             string filterOverride = default;
+            int? perDocumentVectorLimit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -139,7 +137,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value);
+                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filterOverride"u8))
@@ -147,7 +145,21 @@ namespace Azure.Search.Documents.Models
                     filterOverride = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("perDocumentVectorLimit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perDocumentVectorLimit = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new VectorizableImageUrlQuery(
                 kind,
                 k,
@@ -157,14 +169,47 @@ namespace Azure.Search.Documents.Models
                 weight,
                 threshold,
                 filterOverride,
+                perDocumentVectorLimit,
+                serializedAdditionalRawData,
                 url);
         }
+
+        BinaryData IPersistableModel<VectorizableImageUrlQuery>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageUrlQuery>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VectorizableImageUrlQuery)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VectorizableImageUrlQuery IPersistableModel<VectorizableImageUrlQuery>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageUrlQuery>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVectorizableImageUrlQuery(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorizableImageUrlQuery)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VectorizableImageUrlQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new VectorizableImageUrlQuery FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorizableImageUrlQuery(document.RootElement);
         }
 
@@ -172,7 +217,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

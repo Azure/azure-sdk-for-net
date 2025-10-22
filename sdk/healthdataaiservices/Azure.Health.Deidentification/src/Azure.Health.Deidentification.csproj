@@ -2,11 +2,14 @@
   <PropertyGroup>
     <Description>This is the Azure.Health.Deidentification client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Azure.Health.Deidentification for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0</Version>
+    <Version>1.1.0-beta.2</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.Health.Deidentification</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>AZC0030</NoWarn>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +19,5 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>

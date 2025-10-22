@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         StorageClassificationMappingResource IOperationSource<StorageClassificationMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(document.RootElement);
+            var data = ModelReaderWriter.Read<StorageClassificationMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return new StorageClassificationMappingResource(_client, data);
         }
 
         async ValueTask<StorageClassificationMappingResource> IOperationSource<StorageClassificationMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(document.RootElement);
-            return new StorageClassificationMappingResource(_client, data);
+            var data = ModelReaderWriter.Read<StorageClassificationMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            return await Task.FromResult(new StorageClassificationMappingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

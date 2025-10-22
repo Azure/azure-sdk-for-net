@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPurviewContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerPurviewContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Purview
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Purview
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePurviewPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

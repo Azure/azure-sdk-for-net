@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Terraform
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.Terraform
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Terraform
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

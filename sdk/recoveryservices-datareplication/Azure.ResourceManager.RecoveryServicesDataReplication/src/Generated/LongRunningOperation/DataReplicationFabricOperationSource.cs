@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         DataReplicationFabricResource IOperationSource<DataReplicationFabricResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataReplicationFabricData.DeserializeDataReplicationFabricData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataReplicationFabricData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
             return new DataReplicationFabricResource(_client, data);
         }
 
         async ValueTask<DataReplicationFabricResource> IOperationSource<DataReplicationFabricResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataReplicationFabricData.DeserializeDataReplicationFabricData(document.RootElement);
-            return new DataReplicationFabricResource(_client, data);
+            var data = ModelReaderWriter.Read<DataReplicationFabricData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+            return await Task.FromResult(new DataReplicationFabricResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("certificateStoreLocation"u8);
                 writer.WriteStringValue(CertificateStoreLocation);
             }
+            if (Optional.IsDefined(CertificateStoreName))
+            {
+                writer.WritePropertyName("certificateStoreName"u8);
+                writer.WriteStringValue(CertificateStoreName.Value.ToString());
+            }
             writer.WritePropertyName("observedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in ObservedCertificates)
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             string certificateStoreLocation = default;
+            CertificateStoreNameOption? certificateStoreName = default;
             IList<Uri> observedCertificates = default;
             bool keyExportable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,6 +106,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 if (property.NameEquals("certificateStoreLocation"u8))
                 {
                     certificateStoreLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("certificateStoreName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateStoreName = new CertificateStoreNameOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("observedCertificates"u8))
@@ -130,7 +145,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecretsManagementSettings(certificateStoreLocation, observedCertificates, keyExportable, serializedAdditionalRawData);
+            return new SecretsManagementSettings(certificateStoreLocation, certificateStoreName, observedCertificates, keyExportable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretsManagementSettings>.Write(ModelReaderWriterOptions options)
@@ -140,7 +155,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecretsManagementSettings)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +169,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecretsManagementSettings(document.RootElement, options);
                     }
                 default:

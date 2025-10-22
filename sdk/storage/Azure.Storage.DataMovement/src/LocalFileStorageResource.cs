@@ -40,13 +40,7 @@ namespace Azure.Storage.DataMovement
         public LocalFileStorageResource(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            UriBuilder uriBuilder = new UriBuilder()
-            {
-                Scheme = Uri.UriSchemeFile,
-                Host = "",
-                Path = path,
-            };
-            _uri = uriBuilder.Uri;
+            _uri = PathScanner.GetEncodedUriFromPath(path);
         }
 
         /// <summary>
@@ -210,7 +204,8 @@ namespace Azure.Storage.DataMovement
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
             {
-                return Task.FromResult(fileInfo.ToStorageResourceProperties());
+                StorageResourceItemProperties properties = fileInfo.ToStorageResourceProperties();
+                return Task.FromResult(properties);
             }
             throw new FileNotFoundException();
         }

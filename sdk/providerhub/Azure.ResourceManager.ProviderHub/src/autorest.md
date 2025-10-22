@@ -8,70 +8,146 @@ azure-arm: true
 csharp: true
 library-name: ProviderHub
 namespace: Azure.ResourceManager.ProviderHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/providerhub/resource-manager/readme.md
-tag: package-2020-11-20
+require: https://github.com/Azure/azure-rest-api-specs/blob/247a38a5fea02ac50132f591f3b53fec06e9377b/specification/providerhub/resource-manager/readme.md
+#tag: package-2024-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
-  ResourceTypeSku: ResourceTypeSkuProperties
-  SkuResource: ResourceTypeSku
+  AdditionalAuthorization: ProviderAdditionalAuthorization
+  AdditionalOptions: AdditionalOptionResourceType
+  AdditionalOptionsAsyncOperation: AdditionalOptionAsyncOperation
+  AdditionalOptionsResourceTypeRegistration: AdditionalOptionResourceTypeRegistration
+  ApiProfile: ResourceTypeRegistrationApiProfile
+  AuthenticationScheme: ProviderAuthenticationScheme
+  AuthorizedApplication: ProviderAuthorizedApplication
+  AuthorizedApplicationProperties: ProviderAuthorizedApplicationProperties
+  CanaryTrafficRegionRolloutConfiguration.regions: -|azure-location
+  CanaryTrafficRegionRolloutConfiguration.skipRegions: -|azure-location
+  CapacityPolicy: ResourceTypeRegistrationCapacityPolicy
   CheckinManifestParams: CheckinManifestContent
+  CheckinManifestParams.baselineArmManifestLocation: -|azure-location
+  CheckNameAvailabilitySpecifications.enableDefaultValidation: IsDefaultValidationEnabled
   CustomRolloutArrayResponseWithContinuation: CustomRolloutListResult
+  CustomRolloutSpecificationAutoProvisionConfig: CustomRolloutAutoProvisionConfig
+  CustomRolloutSpecificationAutoProvisionConfig.resourceGraph: IsResourceGraphEnabled
+  CustomRolloutSpecificationAutoProvisionConfig.storage: IsStorageEnabled
+  CustomRolloutStatus.completedRegions: -|azure-location
+  DataBoundary: ResourceTypeDataBoundary
   DefaultRolloutArrayResponseWithContinuation: DefaultRolloutListResult
+  DefaultRolloutSpecificationAutoProvisionConfig: DefaultRolloutAutoProvisionConfig
+  DefaultRolloutSpecificationAutoProvisionConfig.resourceGraph: IsResourceGraphEnabled
+  DefaultRolloutSpecificationAutoProvisionConfig.storage: IsStorageEnabled
+  DeleteDependency: ResourceTypeRegistrationDeleteDependency
+  DstsConfiguration: ProviderDstsConfiguration
+  EndpointInformation: ProviderEndpointInformation
+  EndpointType: ProviderEndpointType
+  EndpointTypeResourceType: ProviderEndpointTypeResourceType
+  ExpeditedRolloutDefinition.enabled: IsExpeditedRolloutEnabled
+  ExtendedLocationOptions.supportedPolicy: SupportedLocationPolicy
+  ExtendedLocationOptions.type: LocationType
+  ExtendedLocationType: ProviderExtendedLocationType
   ExtensionCategory: ResourceTypeExtensionCategory
+  FeaturesRule: ProviderFeaturesRule
+  FilterOption: ProviderResourceQueryFilterOption
+  FilterRule: ProviderFilterRule
+  FrontloadPayload: ProviderFrontloadPayload
+  FrontloadPayloadProperties: ProviderFrontloadPayloadProperties
+  Intent: AllowedUnauthorizedActionIntent
+  Intent.LOW_PRIVILEGE: LowPrivilege
+  Intent.NOT_SPECIFIED: NotSpecified
+  LegacyOperation: ProviderLegacyOperation
+  LocationQuotaRule: ProviderLocationQuotaRule
   LoggingHiddenPropertyPath: LoggingHiddenPropertyPaths
+  Notification: ProviderNotification
+  NotificationEndpoint.locations: -|azure-location
+  NotificationEndpoint.notificationDestination: -|arm-id
+  NotificationEndpointType: ProviderNotificationEndpointType
+  NotificationOptions: ProviderNotificationOption
   NotificationRegistrationArrayResponseWithContinuation: NotificationRegistrationListResult
+  NotificationType: ProviderNotificationType
+  OpenApiValidation.allowNoncompliantCollectionResponse: IsNoncompliantCollectionResponseAllowed
+  Policy: ResourceConcurrencyPolicy
   ProviderRegistrationArrayResponseWithContinuation: ProviderRegistrationListResult
+  QuotaPolicy: ProviderQuotaPolicy
+  QuotaRule: ProviderQuotaRule
+  Readiness: ServiceTreeReadiness
   Regionality: ResourceTypeRegistrationRegionality
+  ReRegisterSubscriptionMetadata.enabled: IsEnabled
+  RequestHeaderOptions: ProviderRequestHeaderOptions
+  ResourceGraphConfiguration.enabled: IsEnabled
+  ResourceMovePolicy.crossResourceGroupMoveEnabled: IsCrossResourceGroupMoveEnabled
+  ResourceMovePolicy.crossSubscriptionMoveEnabled: IsCrossSubscriptionMoveEnabled
+  ResourceMovePolicy.validationRequired: IsValidationRequired
+  ResourceProviderAuthorizationManagedByAuthorization: ResourceProviderManagedByAuthorization
+  ResourceProviderAuthorizationManagedByAuthorization.allowManagedByInheritance: DoesAllowManagedByInheritance
+  ResourceProviderEndpoint.enabled: IsEnabled
+  ResourceProviderEndpoint.locations: -|azure-location
+  ResourceProviderManagement.pcCode: ProfitCenterCode
+  ResourceProviderManagement.resourceAccessRoles: ResourceAccessRoleList
+  ResourceProviderManagementErrorResponseMessageOptions: ResourceProviderErrorResponseMessageOptions
+  ResourceProviderManagementExpeditedRolloutMetadata: ExpeditedRolloutMetadata
+  ResourceProviderManagementExpeditedRolloutMetadata.enabled: IsEnabled
+  ResourceProviderManifest.enableTenantLinkedNotification: IsTenantLinkedNotificationEnabled
+  ResourceProviderManifestPropertiesNotificationSettings: ResourceProviderManifestNotificationSettings
+  ResourceProviderManifestPropertiesResourceGroupLockOptionDuringMove: ResourceProviderManifestResourceGroupLockOptionDuringMove
+  ResourceProviderManifestPropertiesResponseOptions: ResourceProviderManifestResponseOptions
+  ResourceSubType: ProviderResourceSubType
   ResourceType: ProviderResourceType
+  ResourceTypeEndpoint.enabled: IsEnabled
+  ResourceTypeEndpoint.locations: -|azure-location
   ResourceTypeRegistrationArrayResponseWithContinuation: ResourceTypeRegistrationListResult
+  ResourceTypeRegistrationProperties.addResourceListTargetLocations: IsAddResourceListTargetLocationsAllowed
+  ResourceTypeRegistrationProperties.allowEmptyRoleAssignments: IsEmptyRoleAssignmentsAllowed
+  ResourceTypeRegistrationProperties.enableAsyncOperation: IsAsyncOperationEnabled
+  ResourceTypeRegistrationProperties.enableThirdPartyS2S: IsThirdPartyS2SEnabled
+  ResourceTypeRegistrationProperties.supportsTags: AreTagsSupported
+  ResourceTypeRegistrationPropertiesAvailabilityZoneRule: ResourceTypeRegistrationAvailabilityZoneRule
+  ResourceTypeRegistrationPropertiesCapacityRule: ResourceTypeRegistrationCapacityRule
+  ResourceTypeRegistrationPropertiesLegacyPolicy: ResourceTypeRegistrationLegacyPolicy
+  ResourceTypeRegistrationPropertiesMarketplaceOptions: ResourceTypeRegistrationMarketplaceOptions
+  ResourceTypeRegistrationPropertiesMarketplaceOptions.addOnPlanConversionAllowed: IsAddOnPlanConversionAllowed
+  ResourceTypeRegistrationPropertiesResourceCache: ResourceTypeRegistrationResourceCache
+  ResourceTypeRegistrationPropertiesResourceCache.enableResourceCache: IsResourceCacheEnabled
+  ResourceTypeRegistrationPropertiesResourceManagementOptions: ResourceTypeRegistrationResourceManagementOptions
+  ResourceTypeRegistrationPropertiesResourceManagementOptionsBatchProvisioningSupport: BatchProvisioningSupport
+  ResourceTypeRegistrationPropertiesResourceManagementOptionsNestedProvisioningSupport: NestedProvisioningSupport
+  ResourceTypeRegistrationPropertiesResourceQueryManagement: ProviderResourceQueryManagement
+  ResourceTypeRegistrationPropertiesResourceTypeCommonAttributeManagement: ResourceTypeCommonAttributeManagement
+  ResourceTypeRegistrationPropertiesRoutingRule: ResourceTypeRegistrationRoutingRule
+  ResourceTypeSku: ResourceTypeSkuProperties
+  Role: ApplicationOwnershipRole
+  RolloutStatusBase.completedRegions: -|azure-location
   RoutingType: ResourceRoutingType
+  ServiceStatus: ResourceProviderServiceStatus
   SkuCapability: ResourceSkuCapability
   SkuCapacity: ResourceTypeSkuCapacity
   SkuCost: ResourceTypeSkuCost
   SkuLocationInfo: ResourceTypeSkuLocationInfo
+  SkuLocationInfo.type: LocationType
+  SkuResource: ResourceTypeSku
+  SkuResourceArrayResponseWithContinuation: ResourceTypeSkuListResult
   SkuScaleType: ResourceTypeSkuScaleType
   SkuSetting: ResourceTypeSkuSetting
   SkuZoneDetail: ResourceTypeSkuZoneDetail
-  SkuResourceArrayResponseWithContinuation: ResourceTypeSkuListResult
   SubscriptionState: ProviderSubscriptionState
   SubscriptionStateRule: ProviderSubscriptionStateRule
-  CanaryTrafficRegionRolloutConfiguration.skipRegions: -|azure-location
-  CanaryTrafficRegionRolloutConfiguration.regions: -|azure-location
-  CheckinManifestParams.baselineArmManifestLocation: -|azure-location
-  CheckNameAvailabilitySpecifications.enableDefaultValidation: IsDefaultValidationEnabled
-  CustomRolloutStatus.completedRegions: -|azure-location
-  NotificationEndpoint.notificationDestination: -|arm-id
-  NotificationEndpoint.locations: -|azure-location
-  TrafficRegions.regions: -|azure-location
-  ReRegisterSubscriptionMetadata.enabled: IsEnabled
-  ResourceProviderEndpoint.enabled: IsEnabled
-  ResourceProviderEndpoint.locations: -|azure-location
-  ResourceTypeEndpoint.enabled: IsEnabled
-  ResourceTypeEndpoint.locations: -|azure-location
-  RolloutStatusBase.completedRegions: -|azure-location
-  ResourceMovePolicy.validationRequired: IsValidationRequired
-  ResourceMovePolicy.crossResourceGroupMoveEnabled: IsCrossResourceGroupMoveEnabled
-  ResourceMovePolicy.crossSubscriptionMoveEnabled: IsCrossSubscriptionMoveEnabled
-  ResourceTypeRegistrationProperties.enableAsyncOperation: IsAsyncOperationEnabled
-  ResourceTypeRegistrationProperties.enableThirdPartyS2S: IsThirdPartyS2SEnabled
+  SupportedOperations: ResourceManagementSupportedOperation
   TemplateDeploymentOptions.preflightSupported: IsPreflightSupported
-  SkuLocationInfo.type: ExtendedLocationType
+  TrafficRegions.regions: -|azure-location
 
 prepend-rp-prefix:
   - ExtendedLocationOptions
-  - ExtendedLocationType
   - ProvisioningState
 
 format-by-name-rules:
@@ -110,6 +186,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}: NestedResourceTypeFirstSku
   /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/skus/{sku}: NestedResourceTypeSecondSku
   /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}: NestedResourceTypeThirdSku
+  /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/defaultRollouts/{rolloutName}: DefaultRollout
+  /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}: RegistrationNewRegionFrontloadRelease
 
 directive:
   - remove-operation: Operations_List
@@ -221,5 +299,43 @@ directive:
       $.ResourceTypeRegistrationProperties.properties.resourceMovePolicy['$ref'] = '#/definitions/ResourceMovePolicy';
       delete $.SkuSetting.properties.capacity['allOf'];
       $.SkuSetting.properties.capacity['$ref'] = '#/definitions/SkuCapacity';
+      delete $.DefaultRolloutStatus.properties.manifestCheckinStatus['allOf'];
+      $.DefaultRolloutStatus.properties.manifestCheckinStatus['$ref'] = '#/definitions/CheckinManifestInfo';
+      delete $.CustomRolloutStatus.properties.manifestCheckinStatus['allOf'];
+      $.CustomRolloutStatus.properties.manifestCheckinStatus['$ref'] = '#/definitions/CheckinManifestInfo';
+      delete $.ResourceProviderManifestProperties.properties.dstsConfiguration['allOf'];
+      $.ResourceProviderManifestProperties.properties.dstsConfiguration['$ref'] = '#/definitions/DstsConfiguration';
+      delete $.ResourceTypeEndpoint.properties.dstsConfiguration['allOf'];
+      $.ResourceTypeEndpoint.properties.dstsConfiguration['$ref'] = '#/definitions/DstsConfiguration';
+      delete $.ResourceTypeRegistrationProperties.properties.dstsConfiguration['allOf'];
+      $.ResourceTypeRegistrationProperties.properties.dstsConfiguration['$ref'] = '#/definitions/DstsConfiguration';
+      delete $.FanoutLinkedNotificationRule.properties.dstsConfiguration['allOf'];
+      $.FanoutLinkedNotificationRule.properties.dstsConfiguration['$ref'] = '#/definitions/DstsConfiguration';
+      delete $.ResourceTypeEndpointBase.properties.dstsConfiguration['allOf'];
+      $.ResourceTypeEndpointBase.properties.dstsConfiguration['$ref'] = '#/definitions/DstsConfiguration';
+      delete $.ResourceProviderEndpoint.properties.featuresRule['allOf'];
+      $.ResourceProviderEndpoint.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.ResourceType.properties.featuresRule['allOf'];
+      $.ResourceType.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.ResourceProviderManifest.properties.featuresRule['allOf'];
+      $.ResourceProviderManifest.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.ResourceProviderManifestProperties.properties.featuresRule['allOf'];
+      $.ResourceProviderManifestProperties.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.ResourceTypeEndpoint.properties.featuresRule['allOf'];
+      $.ResourceTypeEndpoint.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.ResourceTypeRegistrationProperties.properties.featuresRule['allOf'];
+      $.ResourceTypeRegistrationProperties.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.ResourceTypeEndpointBase.properties.featuresRule['allOf'];
+      $.ResourceTypeEndpointBase.properties.featuresRule['$ref'] = '#/definitions/FeaturesRule';
+      delete $.FrontloadPayloadProperties.properties.overrideManifestLevelFields['allOf'];
+      $.FrontloadPayloadProperties.properties.overrideManifestLevelFields['$ref'] = '#/definitions/ManifestLevelPropertyBag';
+      delete $.FrontloadPayloadProperties.properties.overrideEndpointLevelFields['allOf'];
+      $.FrontloadPayloadProperties.properties.overrideEndpointLevelFields['$ref'] = '#/definitions/ResourceTypeEndpointBase';
+      delete $.ResourceTypeRegistrationProperties.properties.management['allOf'];
+      $.ResourceTypeRegistrationProperties.properties.management['$ref'] = '#/definitions/ResourceProviderManagement';
+      delete $.ResourceTypeRegistrationProperties.properties.resourceGraphConfiguration['allOf'];
+      $.ResourceTypeRegistrationProperties.properties.resourceGraphConfiguration['$ref'] = '#/definitions/ResourceGraphConfiguration';
+      delete $.ResourceTypeRegistrationProperties.properties.templateDeploymentPolicy['allOf'];
+      $.ResourceTypeRegistrationProperties.properties.templateDeploymentPolicy['$ref'] = '#/definitions/TemplateDeploymentPolicy';
 
 ```

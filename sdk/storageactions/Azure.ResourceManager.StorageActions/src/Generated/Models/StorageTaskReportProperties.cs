@@ -14,40 +14,11 @@ namespace Azure.ResourceManager.StorageActions.Models
     /// <summary> Storage task execution report for a run instance. </summary>
     public partial class StorageTaskReportProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskReportProperties"/>. </summary>
-        public StorageTaskReportProperties()
+        internal StorageTaskReportProperties()
         {
         }
 
@@ -66,8 +37,8 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="taskId"> Resource ID of the Storage Task applied during this run. </param>
         /// <param name="taskVersion"> Storage Task Version. </param>
         /// <param name="runResult"> Represents the overall result of the execution for the run instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, string startTime, string finishTime, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, string startTime, string finishTime, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskAssignmentId = taskAssignmentId;
             StorageAccountId = storageAccountId;
@@ -83,35 +54,48 @@ namespace Azure.ResourceManager.StorageActions.Models
             TaskId = taskId;
             TaskVersion = taskVersion;
             RunResult = runResult;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID of the Storage Task Assignment associated with this reported run. </summary>
         public ResourceIdentifier TaskAssignmentId { get; }
+
         /// <summary> Resource ID of the Storage Account where this reported run executed. </summary>
         public ResourceIdentifier StorageAccountId { get; }
+
         /// <summary> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         public string StartTime { get; }
+
         /// <summary> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         public string FinishTime { get; }
+
         /// <summary> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         public string ObjectsTargetedCount { get; }
+
         /// <summary> Total number of objects that meet the storage tasks condition and were operated upon. Filter options such as objectsOperatedOnCount ge 100 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         public string ObjectsOperatedOnCount { get; }
+
         /// <summary> Total number of objects where task operation failed when was attempted. Filter options such as objectFailedCount eq 0 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         public string ObjectFailedCount { get; }
+
         /// <summary> Total number of objects where task operation succeeded when was attempted.Filter options such as objectsSucceededCount gt 150 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         public string ObjectsSucceededCount { get; }
+
         /// <summary> Well known Azure Storage error code that represents the error encountered during execution of the run instance. </summary>
         public string RunStatusError { get; }
+
         /// <summary> Represents the status of the execution. </summary>
         public StorageTaskRunStatus? RunStatusEnum { get; }
+
         /// <summary> Full path to the verbose report stored in the reporting container as specified in the assignment execution context for the storage account. </summary>
         public string SummaryReportPath { get; }
+
         /// <summary> Resource ID of the Storage Task applied during this run. </summary>
         public ResourceIdentifier TaskId { get; }
+
         /// <summary> Storage Task Version. </summary>
         public string TaskVersion { get; }
+
         /// <summary> Represents the overall result of the execution for the run instance. </summary>
         public StorageTaskRunResult? RunResult { get; }
     }

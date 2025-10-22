@@ -4,15 +4,21 @@
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
-Added detection for empty string in the return value of createdByPrincipalTenantId in BillingRoleAssignmentProperties. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47341.
-
 ### Other Changes
+
+## 1.2.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+Added detection for empty string in the return value of createdByPrincipalTenantId in BillingRoleAssignmentProperties. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47341.
 
 ## 1.2.0 (2024-09-13)
 

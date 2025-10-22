@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// <item>

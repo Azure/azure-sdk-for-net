@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         private const string T1Value = "T1";
         private const string T2Value = "T2";
+        private const string T3Value = "T3";
 
-        /// <summary> T1. </summary>
+        /// <summary> Traditional and most compatible device virtualization interface. </summary>
         public static VirtualMachineDeviceModelType T1 { get; } = new VirtualMachineDeviceModelType(T1Value);
-        /// <summary> T2. </summary>
+        /// <summary> Modern and enhanced device virtualization interface. </summary>
         public static VirtualMachineDeviceModelType T2 { get; } = new VirtualMachineDeviceModelType(T2Value);
+        /// <summary> Improved security and functionality (including TPM and secure boot support). Required for windows 11 and server 2025. </summary>
+        public static VirtualMachineDeviceModelType T3 { get; } = new VirtualMachineDeviceModelType(T3Value);
         /// <summary> Determines if two <see cref="VirtualMachineDeviceModelType"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineDeviceModelType left, VirtualMachineDeviceModelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineDeviceModelType"/> values are not the same. </summary>

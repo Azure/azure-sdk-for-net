@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-30-preview";
+            _apiVersion = apiVersion ?? "2025-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        /// <summary> This method returns region-specific quotas and resource usage information for the Database Migration Service. </summary>
+        /// <summary> This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic). </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         QuotaList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaList.DeserializeQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        /// <summary> This method returns region-specific quotas and resource usage information for the Database Migration Service. </summary>
+        /// <summary> This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic). </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         QuotaList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaList.DeserializeQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        /// <summary> This method returns region-specific quotas and resource usage information for the Database Migration Service. </summary>
+        /// <summary> This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         QuotaList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaList.DeserializeQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        /// <summary> This method returns region-specific quotas and resource usage information for the Database Migration Service. </summary>
+        /// <summary> This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         QuotaList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaList.DeserializeQuotaList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

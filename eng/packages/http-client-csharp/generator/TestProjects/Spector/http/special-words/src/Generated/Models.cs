@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SpecialWords._Models;
 
-namespace SpecialWords
+namespace SpecialWords._Models
 {
     public partial class Models
     {
         protected Models() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithAnd(RequestContent content, RequestContext context = null) => throw null;
 

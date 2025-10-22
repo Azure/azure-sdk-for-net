@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceData.DeserializeEnergyServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceData.DeserializeEnergyServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceData.DeserializeEnergyServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceData.DeserializeEnergyServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         DataPartitionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataPartitionsListResult.DeserializeDataPartitionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         DataPartitionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataPartitionsListResult.DeserializeDataPartitionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceList.DeserializeEnergyServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

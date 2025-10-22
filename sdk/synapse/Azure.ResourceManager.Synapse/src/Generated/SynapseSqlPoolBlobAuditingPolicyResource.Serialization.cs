@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseSqlPoolBlobAuditingPolicyResource : IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>
     {
+        private static SynapseSqlPoolBlobAuditingPolicyData s_dataDeserializationInstance;
+        private static SynapseSqlPoolBlobAuditingPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>)Data).Write(writer, options);
 
-        SynapseSqlPoolBlobAuditingPolicyData IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>)Data).Create(ref reader, options);
+        SynapseSqlPoolBlobAuditingPolicyData IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSqlPoolBlobAuditingPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseSqlPoolBlobAuditingPolicyData IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolBlobAuditingPolicyData>(data, options);
+        SynapseSqlPoolBlobAuditingPolicyData IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolBlobAuditingPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

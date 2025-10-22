@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         SelfHostedIntegrationRuntimeNode value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         SelfHostedIntegrationRuntimeNode value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         SelfHostedIntegrationRuntimeNode value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         SelfHostedIntegrationRuntimeNode value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeNodeIPAddress value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeNodeIPAddress.DeserializeIntegrationRuntimeNodeIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         IntegrationRuntimeNodeIPAddress value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeNodeIPAddress.DeserializeIntegrationRuntimeNodeIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

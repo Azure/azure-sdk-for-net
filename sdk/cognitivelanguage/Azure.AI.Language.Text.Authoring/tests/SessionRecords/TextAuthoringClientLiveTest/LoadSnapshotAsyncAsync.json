@@ -1,13 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject/models/model1/:load-snapshot?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/models/model1/:load-snapshot?api-version=2025-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Content-Length": "0",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250627.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,24 +14,24 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "b52c59f7-dbb6-4c34-ad0f-97b8f2236e21",
+        "apim-request-id": "38ac9ac8-dac2-4ffd-a9ab-94fd699e9a1b",
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2024 04:15:28 GMT",
-        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject/models/model1/load-snapshot/jobs/42cf4dda-1804-4437-8dda-cfbc76c54986_638686944000000000?api-version=2024-11-15-preview",
-        "request-id": "b52c59f7-dbb6-4c34-ad0f-97b8f2236e21",
+        "Date": "Fri, 27 Jun 2025 17:35:12 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/models/model1/load-snapshot/jobs/450d1d39-39cc-4bf3-97d9-42b4743ec809_638865792000000000?api-version=2025-05-15-preview",
+        "request-id": "38ac9ac8-dac2-4ffd-a9ab-94fd699e9a1b",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "52",
+        "x-envoy-upstream-service-time": "113",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject/models/model1/load-snapshot/jobs/42cf4dda-1804-4437-8dda-cfbc76c54986_638686944000000000?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/models/model1/load-snapshot/jobs/450d1d39-39cc-4bf3-97d9-42b4743ec809_638865792000000000?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250627.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -40,30 +39,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "c5afe25f-37a0-4721-beec-a3227c69176f",
-        "Content-Length": "216",
+        "apim-request-id": "c5b130b7-6416-4ab4-8fc8-b1ce8f78e245",
+        "Content-Length": "219",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Dec 2024 04:15:28 GMT",
-        "request-id": "c5afe25f-37a0-4721-beec-a3227c69176f",
+        "Date": "Fri, 27 Jun 2025 17:35:12 GMT",
+        "request-id": "c5b130b7-6416-4ab4-8fc8-b1ce8f78e245",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23",
+        "x-envoy-upstream-service-time": "28",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "jobId": "42cf4dda-1804-4437-8dda-cfbc76c54986_638686944000000000",
-        "createdDateTime": "2024-12-02T04:15:29Z",
-        "lastUpdatedDateTime": "2024-12-02T04:15:29Z",
-        "expirationDateTime": "2024-12-09T04:15:29Z",
-        "status": "running"
+        "jobId": "450d1d39-39cc-4bf3-97d9-42b4743ec809_638865792000000000",
+        "createdDateTime": "2025-06-27T17:35:12Z",
+        "lastUpdatedDateTime": "2025-06-27T17:35:12Z",
+        "expirationDateTime": "2025-07-04T17:35:12Z",
+        "status": "notStarted"
       }
     },
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject/models/model1/load-snapshot/jobs/42cf4dda-1804-4437-8dda-cfbc76c54986_638686944000000000?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/models/model1/load-snapshot/jobs/450d1d39-39cc-4bf3-97d9-42b4743ec809_638865792000000000?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250627.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -71,28 +70,28 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "43d54efd-baef-419f-9635-b5b303823a43",
+        "apim-request-id": "9cbdcce6-6212-473b-a9c6-e3fde392cfcf",
         "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Dec 2024 04:15:29 GMT",
-        "request-id": "43d54efd-baef-419f-9635-b5b303823a43",
+        "Date": "Fri, 27 Jun 2025 17:35:13 GMT",
+        "request-id": "9cbdcce6-6212-473b-a9c6-e3fde392cfcf",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "37",
+        "x-envoy-upstream-service-time": "36",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "jobId": "42cf4dda-1804-4437-8dda-cfbc76c54986_638686944000000000",
-        "createdDateTime": "2024-12-02T04:15:29Z",
-        "lastUpdatedDateTime": "2024-12-02T04:15:29Z",
-        "expirationDateTime": "2024-12-09T04:15:29Z",
+        "jobId": "450d1d39-39cc-4bf3-97d9-42b4743ec809_638865792000000000",
+        "createdDateTime": "2025-06-27T17:35:12Z",
+        "lastUpdatedDateTime": "2025-06-27T17:35:13Z",
+        "expirationDateTime": "2025-07-04T17:35:12Z",
         "status": "succeeded"
       }
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "1941418186"
+    "RandomSeed": "1988952223"
   }
 }

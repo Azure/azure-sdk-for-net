@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceGroupResource : IJsonModel<ResourceGroupData>
     {
+        private static ResourceGroupData s_dataDeserializationInstance;
+        private static ResourceGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupData>)Data).Write(writer, options);
 
-        ResourceGroupData IJsonModel<ResourceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupData>)Data).Create(ref reader, options);
+        ResourceGroupData IJsonModel<ResourceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
-        ResourceGroupData IPersistableModel<ResourceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGroupData>(data, options);
+        ResourceGroupData IPersistableModel<ResourceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGroupData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<ResourceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

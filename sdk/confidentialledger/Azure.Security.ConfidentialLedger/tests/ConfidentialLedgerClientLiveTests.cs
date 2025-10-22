@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Linq;
+using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -20,6 +23,7 @@ using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
+using static Azure.Security.ConfidentialLedger.Tests.ConfidentialLedgerClientLiveTests;
 
 namespace Azure.Security.ConfidentialLedger.Tests
 {
@@ -35,6 +39,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             // https://github.com/Azure/autorest.csharp/issues/1214
             TestDiagnostics = false;
+            // Add BodyRegexSanitizer to handle newline characters
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "[^\\r](?<break>\\n)")
+                {
+                    GroupForReplace = "break",
+                    Value = "\r\n"
+                });
         }
 
         [SetUp]
@@ -55,7 +67,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     TestEnvironment.ConfidentialLedgerUrl,
                     credential: Credential,
                     clientCertificate: null,
-                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_08_22_Preview)),
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_12_09_Preview)),
                     identityServiceCert: serviceCert.Cert));
         }
 
@@ -66,7 +78,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, Certificates = { new ProxyOptionsTransportCertificatesItem { PemValue = TestEnvironment.ClientPEM, PemKey = TestEnvironment.ClientPEMPk } } } });
             var _cert = X509Certificate2.CreateFromPem(TestEnvironment.ClientPEM, TestEnvironment.ClientPEMPk);
+#if NET9_0_OR_GREATER
+            _cert = X509CertificateLoader.LoadPkcs12(_cert.Export(X509ContentType.Pfx), null);
+#else
             _cert = new X509Certificate2(_cert.Export(X509ContentType.Pfx));
+#endif
             var certClient = InstrumentClient(new ConfidentialLedgerClient(
                 TestEnvironment.ConfidentialLedgerUrl,
                 credential: null,
@@ -80,7 +96,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 #endif
 
-        [RecordedTest]
+            [RecordedTest]
         [LiveOnly]
         public async Task GetLedgerIdentity()
         {
@@ -308,25 +324,26 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
         #region Programmability
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the query parameter to match the rest spec.")]
         public async Task UserDefinedEndpointsTest()
         {
+            await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
+            {
+                JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
+                string functionId = functiondata.GetProperty("id").ToString();
+                Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
+                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+            }
+
             // Deploy JS App
-            string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
-            string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
+            string programmabilityPayload = "{\"metadata\":{\"endpoints\":{\"content\":{\"get\":{\"js_module\":\"test.js\",\"js_function\":\"content\",\"forwarding_required\":\"never\",\"redirection_strategy\":\"none\",\"authn_policies\":[\"no_auth\"],\"mode\":\"readonly\",\"openapi\":{}}}}},\"modules\":[{\"name\":\"test.js\",\"module\":\"import { foo } from \\\"./bar/baz.js\\\"; export function content(request) { return { statusCode: 200, body: { payload: foo(), }, }; } \"},{\"name\":\"bar/baz.js\",\"module\":\"export function foo() { return \\\"Test content\\\"; } \"}]}";
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
-            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine(resp.Content);
-
-            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            string programContent = File.ReadAllText(filePath);
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
+            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test.js");
+            Assert.AreEqual((int)HttpStatusCode.OK, resp.Status);
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -334,18 +351,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //(var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
             //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
             //Assert.AreEqual("Test content", response);
-
-            // Deploy Empty JS Bundle to remove JS App
-            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
-
-            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
         [RecordedTest]
-        [Ignore("This test cannot be run until we fix the endpoint to match the rest spec.")]
         public async Task JSRuntimeOptionsTest()
         {
             // Get Default JS Runtime Options
@@ -409,7 +417,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRole";
+            string roleName = "userDefinedTestRole";
 
             // Add Custom Role
             var rolesParam = new RolesParam
@@ -439,6 +447,75 @@ namespace Azure.Security.ConfidentialLedger.Tests
             {
                 Response result = await Client.DeleteUserDefinedRoleAsync(roleName);
                 Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            }
+        }
+        #endregion
+
+        #region CreateLedgerEntryWithTags
+        [RecordedTest]
+        public async Task CreateLedgerEntryWithTagsTest()
+        {
+            RequestContent content = RequestContent.Create(new { contents = Recording.GenerateAssetName("test") });
+            string collectionId = "collection1";
+            string tags = "tags1,tags2";
+
+            Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+
+            await PostLedgerEntry();
+            var tuple = await GetFirstTransactionIdFromGetEntries();
+            string transactionId = tuple.TransactionId;
+            string stringResult = tuple.StringResult;
+            Response response = await Client.GetLedgerEntryAsync(transactionId);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(stringResult, Does.Contain(transactionId));
+        }
+        #endregion
+
+        #region UserDefinedFunction
+        [RecordedTest]
+        public async Task UserDefinedFunctionTest()
+        {
+            string functionId = "myFunction";
+            Response userFunctionResult = null;
+            var functionParam = new UserFunctionParam
+            {
+                Code = "export function main() { return true }",
+                Id = "myFunction"
+            };
+            Response response = await Client.GetUserDefinedEndpointAsync();
+            if (response.Content.ToString() == null)
+            {
+                // Create UDF
+                try
+                {
+                    userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
+                    Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
+                    userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
+
+                    var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
+                    // Validate Fetched user function with Added function Id
+                    Assert.AreEqual(functionId, functionData.Id);
+                }
+                finally
+                {
+                    Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
+                    Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+                }
+            }
+            else
+            {
+                try
+                {
+                    userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
+                    Assert.AreEqual(HttpStatusCode.BadRequest, userFunctionResult.Status);
+                }
+                catch (RequestFailedException ex)
+                {
+                    Assert.AreEqual((int)HttpStatusCode.BadRequest, ex.Status);
+                    Assert.That(ex.Message, Does.Contain("User defined functions cannot be created when user defined endpoints are defined. Please apply an empty application bundle for user defined endpoints and retry"));
+                }
             }
         }
         #endregion
@@ -507,6 +584,15 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             [JsonPropertyName("roles")]
             public List<Role> Roles { get; set; } = new List<Role>();
+        }
+
+        private class UserFunctionParam
+        {
+            [JsonPropertyName("code")]
+            public string Code { get; set; }
+
+            [JsonPropertyName("id")]
+            public string Id { get; set; }
         }
 
         private class RuntimeOptions

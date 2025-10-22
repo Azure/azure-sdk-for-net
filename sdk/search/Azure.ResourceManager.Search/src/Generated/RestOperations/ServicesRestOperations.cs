@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-01-preview";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Creates or updates a search service in the given resource group. If the search service already exists, all properties will be updated with the given values. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net). You cannot change the service name after the service is created. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net). You cannot change the service name after the service is created. </param>
         /// <param name="data"> The definition of the search service to create or update. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Creates or updates a search service in the given resource group. If the search service already exists, all properties will be updated with the given values. </summary>
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="searchServiceName"> The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net). You cannot change the service name after the service is created. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service to create or update. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. Search service names must be unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net). You cannot change the service name after the service is created. </param>
         /// <param name="data"> The definition of the search service to create or update. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceNameAvailabilityResult.DeserializeSearchServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,10 +665,96 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceNameAvailabilityResult.DeserializeSearchServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateUpgradeRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string searchServiceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Upgrades the Azure AI Search service to the latest version available. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string searchServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, searchServiceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Upgrades the Azure AI Search service to the latest version available. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Upgrade(string subscriptionId, string resourceGroupName, string searchServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, searchServiceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -717,7 +803,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -747,7 +833,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -797,7 +883,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -825,7 +911,7 @@ namespace Azure.ResourceManager.Search
                 case 200:
                     {
                         SearchServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchServiceListResult.DeserializeSearchServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

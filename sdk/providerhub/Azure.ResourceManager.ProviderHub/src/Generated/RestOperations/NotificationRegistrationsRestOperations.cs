@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-20";
+            _apiVersion = apiVersion ?? "2024-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the notification registration details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the notification registration details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Creates or updates a notification registration. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="data"> The required body parameters supplied to the notification registration operation. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Creates or updates a notification registration. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="data"> The required body parameters supplied to the notification registration operation. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationRegistrationData.DeserializeNotificationRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Deletes a notification registration. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Deletes a notification registration. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the list of the notification registrations for the given provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationRegistrationListResult.DeserializeNotificationRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the list of the notification registrations for the given provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationRegistrationListResult.DeserializeNotificationRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the list of the notification registrations for the given provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NotificationRegistrationListResult.DeserializeNotificationRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the list of the notification registrations for the given provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         NotificationRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NotificationRegistrationListResult.DeserializeNotificationRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayWafDynamicManifestResource : IJsonModel<ApplicationGatewayWafDynamicManifestData>
     {
+        private static ApplicationGatewayWafDynamicManifestData s_dataDeserializationInstance;
+        private static ApplicationGatewayWafDynamicManifestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApplicationGatewayWafDynamicManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)Data).Write(writer, options);
 
-        ApplicationGatewayWafDynamicManifestData IJsonModel<ApplicationGatewayWafDynamicManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)Data).Create(ref reader, options);
+        ApplicationGatewayWafDynamicManifestData IJsonModel<ApplicationGatewayWafDynamicManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayWafDynamicManifestData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ApplicationGatewayWafDynamicManifestData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayWafDynamicManifestData>(data, options);
+        ApplicationGatewayWafDynamicManifestData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayWafDynamicManifestData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ApplicationGatewayWafDynamicManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayWafDynamicManifestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApplicationGatewayWafDynamicManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayWafDynamicManifestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubPrivateEndpointConnectionResource : IJsonModel<WebPubSubPrivateEndpointConnectionData>
     {
+        private static WebPubSubPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static WebPubSubPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebPubSubPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        WebPubSubPrivateEndpointConnectionData IJsonModel<WebPubSubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        WebPubSubPrivateEndpointConnectionData IJsonModel<WebPubSubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubPrivateEndpointConnectionData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        WebPubSubPrivateEndpointConnectionData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubPrivateEndpointConnectionData>(data, options);
+        WebPubSubPrivateEndpointConnectionData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubPrivateEndpointConnectionData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebPubSubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

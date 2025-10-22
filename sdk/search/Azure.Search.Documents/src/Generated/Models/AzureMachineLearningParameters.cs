@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the properties for connecting to an AML vectorizer. </summary>
     public partial class AzureMachineLearningParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/>. </summary>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
         public AzureMachineLearningParameters(Uri scoringUri)
@@ -25,8 +58,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="resourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
         /// <param name="region"> (Optional for token authentication). The region the AML service is deployed in. </param>
-        /// <param name="modelName"> The name of the embedding model from the Azure AI Studio Catalog that is deployed at the provided endpoint. </param>
-        internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName)
+        /// <param name="modelName"> The name of the embedding model from the Azure AI Foundry Catalog that is deployed at the provided endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScoringUri = scoringUri;
             AuthenticationKey = authenticationKey;
@@ -34,6 +68,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Timeout = timeout;
             Region = region;
             ModelName = modelName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/> for deserialization. </summary>
+        internal AzureMachineLearningParameters()
+        {
         }
 
         /// <summary> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </summary>
@@ -46,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public TimeSpan? Timeout { get; set; }
         /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
         public string Region { get; set; }
-        /// <summary> The name of the embedding model from the Azure AI Studio Catalog that is deployed at the provided endpoint. </summary>
+        /// <summary> The name of the embedding model from the Azure AI Foundry Catalog that is deployed at the provided endpoint. </summary>
         public AIFoundryModelCatalogName? ModelName { get; set; }
     }
 }

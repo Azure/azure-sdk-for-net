@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath("/backupSecurityPIN", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             if (content != null)
             {
@@ -80,27 +84,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Get the security PIN. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TokenInformation>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TokenInformation>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, content);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, content, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         TokenInformation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TokenInformation.DeserializeTokenInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,27 +115,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Get the security PIN. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TokenInformation> Get(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
+        public Response<TokenInformation> Get(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, content);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, content, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         TokenInformation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TokenInformation.DeserializeTokenInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -6,6 +6,7 @@
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -16,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

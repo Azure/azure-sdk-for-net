@@ -32,635 +32,8 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath(sensitivityLabelSource.ToSerialString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath(sensitivityLabelSource.ToSerialString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the sensitivity label of a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, sensitivityLabelSource);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SensitivityLabelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SensitivityLabelData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the sensitivity label of a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, sensitivityLabelSource);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SensitivityLabelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SensitivityLabelData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates or updates the sensitivity label of a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/>, <paramref name="columnName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        SensitivityLabelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates the sensitivity label of a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/>, <paramref name="columnName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        SensitivityLabelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes the sensitivity label of a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the sensitivity label of a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDisableRecommendationRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("recommended", true);
-            uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDisableRecommendationRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("recommended", true);
-            uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Disables sensitivity recommendations on a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DisableRecommendationAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateDisableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Disables sensitivity recommendations on a given column. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DisableRecommendation(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateDisableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateEnableRecommendationRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("recommended", true);
-            uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateEnableRecommendationRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/tables/", false);
-            uri.AppendPath(tableName, true);
-            uri.AppendPath("/columns/", false);
-            uri.AppendPath(columnName, true);
-            uri.AppendPath("/sensitivityLabels/", false);
-            uri.AppendPath("recommended", true);
-            uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnableRecommendationAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateEnableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response EnableRecommendation(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
-
-            using var message = CreateEnableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateListCurrentRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? count, string filter)
@@ -752,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -786,7 +159,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -830,6 +203,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/currentSensitivityLabels", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sensitivityLabelUpdateList, ModelSerializationExtensions.WireOptions);
@@ -983,7 +357,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1017,7 +391,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1061,6 +435,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/recommendedSensitivityLabels", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(recommendedSensitivityLabelUpdateList, ModelSerializationExtensions.WireOptions);
@@ -1125,6 +500,748 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath(sensitivityLabelSource.ToSerialString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath(sensitivityLabelSource.ToSerialString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the sensitivity label of a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, sensitivityLabelSource);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SensitivityLabelData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((SensitivityLabelData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the sensitivity label of a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, sensitivityLabelSource);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SensitivityLabelData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((SensitivityLabelData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("current", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("current", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates the sensitivity label of a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/>, <paramref name="columnName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SensitivityLabelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    {
+                        SensitivityLabelData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates the sensitivity label of a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/>, <paramref name="columnName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SensitivityLabelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    {
+                        SensitivityLabelData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("current", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("current", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes the sensitivity label of a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes the sensitivity label of a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDisableRecommendationRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("recommended", true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDisableRecommendationRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("recommended", true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Disables sensitivity recommendations on a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DisableRecommendationAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateDisableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Disables sensitivity recommendations on a given column. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DisableRecommendation(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateDisableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateEnableRecommendationRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("recommended", true);
+            uri.AppendPath("/enable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateEnableRecommendationRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/columns/", false);
+            uri.AppendPath(columnName, true);
+            uri.AppendPath("/sensitivityLabels/", false);
+            uri.AppendPath("recommended", true);
+            uri.AppendPath("/enable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> EnableRecommendationAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateEnableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response EnableRecommendation(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var message = CreateEnableRecommendationRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, schemaName, tableName, columnName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/sensitivityLabels", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/sensitivityLabels", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SensitivityLabelListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, filter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SensitivityLabelListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SensitivityLabelListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, filter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SensitivityLabelListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListCurrentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string skipToken, bool? count, string filter)
         {
             var uri = new RawRequestUriBuilder();
@@ -1174,7 +1291,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1210,7 +1327,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1268,7 +1385,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1304,7 +1421,97 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SensitivityLabelListResult>> ListByDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName, databaseName, filter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SensitivityLabelListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the sensitivity labels of a given database. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SensitivityLabelListResult> ListByDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName, databaseName, filter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SensitivityLabelListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork
 
         NetworkServiceDesignGroupResource IOperationSource<NetworkServiceDesignGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetworkServiceDesignGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
             return new NetworkServiceDesignGroupResource(_client, data);
         }
 
         async ValueTask<NetworkServiceDesignGroupResource> IOperationSource<NetworkServiceDesignGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(document.RootElement);
-            return new NetworkServiceDesignGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkServiceDesignGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            return await Task.FromResult(new NetworkServiceDesignGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

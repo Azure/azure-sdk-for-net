@@ -150,6 +150,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("apiVersionSet"u8);
                 writer.WriteObjectValue(ApiVersionSet, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WriteEndObject();
         }
 
@@ -198,6 +203,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
             ApiVersionSetContractDetails apiVersionSet = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -393,6 +399,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             apiVersionSet = ApiVersionSetContractDetails.DeserializeApiVersionSetContractDetails(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -428,6 +439,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 path,
                 protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
                 apiVersionSet,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -895,6 +907,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -907,7 +942,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -923,7 +958,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGatewayApiData(document.RootElement, options);
                     }
                 default:

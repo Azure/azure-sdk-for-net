@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Identity and Tags object for patch operations.
-    /// Serialized Name: IdentityAndTagsObject
-    /// </summary>
+    /// <summary> Identity and Tags object for patch operations. </summary>
     public partial class MobileNetworkResourcePatch
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkResourcePatch"/>. </summary>
-        /// <param name="userAssignedIdentity">
-        /// The managed service identity associated with this resource.
-        /// Serialized Name: IdentityAndTagsObject.identity
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: IdentityAndTagsObject.tags
-        /// </param>
+        /// <param name="userAssignedIdentity"> The managed service identity associated with this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkResourcePatch(MobileNetworkManagedServiceIdentity userAssignedIdentity, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The managed service identity associated with this resource.
-        /// Serialized Name: IdentityAndTagsObject.identity
-        /// </summary>
+        /// <summary> The managed service identity associated with this resource. </summary>
         [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: IdentityAndTagsObject.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }

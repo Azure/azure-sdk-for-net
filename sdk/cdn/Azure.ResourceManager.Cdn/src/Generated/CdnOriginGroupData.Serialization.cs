@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.Cdn
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerCdnContext.Default));
                             }
                             origins = array;
                             continue;
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Cdn
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support writing '{options.Format}' format.");
             }
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCdnOriginGroupData(document.RootElement, options);
                     }
                 default:

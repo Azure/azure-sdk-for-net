@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Network
 
         ConnectionMonitorResource IOperationSource<ConnectionMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
+            var data = ModelReaderWriter.Read<ConnectionMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ConnectionMonitorResource(_client, data);
         }
 
         async ValueTask<ConnectionMonitorResource> IOperationSource<ConnectionMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
-            return new ConnectionMonitorResource(_client, data);
+            var data = ModelReaderWriter.Read<ConnectionMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new ConnectionMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

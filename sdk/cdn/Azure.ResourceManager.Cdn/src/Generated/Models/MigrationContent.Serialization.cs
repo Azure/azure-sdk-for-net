@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("classicResourceReference"u8);
-            JsonSerializer.Serialize(writer, ClassicResourceReference);
+            ((IJsonModel<WritableSubResource>)ClassicResourceReference).Write(writer, options);
             writer.WritePropertyName("profileName"u8);
             writer.WriteStringValue(ProfileName);
             if (Optional.IsCollectionDefined(MigrationWebApplicationFirewallMappings))
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    classicResourceReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("profileName"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrationContent)} does not support writing '{options.Format}' format.");
             }
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrationContent(document.RootElement, options);
                     }
                 default:

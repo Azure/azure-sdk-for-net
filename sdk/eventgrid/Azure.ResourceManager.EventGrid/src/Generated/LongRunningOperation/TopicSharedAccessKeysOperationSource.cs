@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.EventGrid
     {
         TopicSharedAccessKeys IOperationSource<TopicSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement);
         }
 
         async ValueTask<TopicSharedAccessKeys> IOperationSource<TopicSharedAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement);
         }
     }

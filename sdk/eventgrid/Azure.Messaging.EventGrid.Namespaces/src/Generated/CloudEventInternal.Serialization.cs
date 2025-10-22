@@ -13,10 +13,15 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    internal partial class CloudEventInternal : IUtf8JsonSerializable, IJsonModel<CloudEventInternal>
+    internal partial class CloudEventInternal : IJsonModel<CloudEventInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEventInternal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/> for deserialization. </summary>
+        internal CloudEventInternal()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudEventInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudEventInternal)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("source"u8);
@@ -42,7 +46,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 writer.WritePropertyName("data"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Data);
+                writer.WriteRawValue(Data);
 #else
                 using (JsonDocument document = JsonDocument.Parse(Data))
                 {
@@ -79,13 +83,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -96,22 +100,27 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        CloudEventInternal IJsonModel<CloudEventInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEventInternal IJsonModel<CloudEventInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudEventInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudEventInternal)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudEventInternal(document.RootElement, options);
         }
 
-        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -120,120 +129,126 @@ namespace Azure.Messaging.EventGrid.Namespaces
             string source = default;
             BinaryData data = default;
             BinaryData dataBase64 = default;
-            string type = default;
+            string @type = default;
             DateTimeOffset? time = default;
             string specversion = default;
             string dataschema = default;
             string datacontenttype = default;
             string subject = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    source = property.Value.GetString();
+                    source = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"u8))
+                if (prop.NameEquals("data"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    data = BinaryData.FromString(property.Value.GetRawText());
+                    data = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("data_base64"u8))
+                if (prop.NameEquals("data_base64"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataBase64 = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    dataBase64 = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("time"u8))
+                if (prop.NameEquals("time"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    time = property.Value.GetDateTimeOffset("O");
+                    time = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("specversion"u8))
+                if (prop.NameEquals("specversion"u8))
                 {
-                    specversion = property.Value.GetString();
+                    specversion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataschema"u8))
+                if (prop.NameEquals("dataschema"u8))
                 {
-                    dataschema = property.Value.GetString();
+                    dataschema = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datacontenttype"u8))
+                if (prop.NameEquals("datacontenttype"u8))
                 {
-                    datacontenttype = property.Value.GetString();
+                    datacontenttype = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subject"u8))
+                if (prop.NameEquals("subject"u8))
                 {
-                    subject = property.Value.GetString();
+                    subject = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CloudEventInternal(
                 id,
                 source,
                 data,
                 dataBase64,
-                type,
+                @type,
                 time,
                 specversion,
                 dataschema,
                 datacontenttype,
                 subject,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CloudEventInternal>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudEventInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudEventInternal)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CloudEventInternal IPersistableModel<CloudEventInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEventInternal IPersistableModel<CloudEventInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudEventInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCloudEventInternal(document.RootElement, options);
                     }
                 default:
@@ -241,21 +256,18 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudEventInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CloudEventInternal FromResponse(Response response)
+        /// <param name="cloudEventInternal"> The <see cref="CloudEventInternal"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CloudEventInternal cloudEventInternal)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCloudEventInternal(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (cloudEventInternal == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(cloudEventInternal, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

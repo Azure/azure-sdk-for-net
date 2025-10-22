@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-02-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerDevOpsAuditSettingsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerDevOpsAuditSettingsListResult.DeserializeServerDevOpsAuditSettingsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerDevOpsAuditSettingsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerDevOpsAuditSettingsListResult.DeserializeServerDevOpsAuditSettingsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerDevOpsAuditingSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SqlServerDevOpsAuditingSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerDevOpsAuditSettingsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServerDevOpsAuditSettingsListResult.DeserializeServerDevOpsAuditSettingsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ServerDevOpsAuditSettingsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServerDevOpsAuditSettingsListResult.DeserializeServerDevOpsAuditSettingsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

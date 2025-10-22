@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAdministratorResource IOperationSource<ManagedInstanceAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceAdministratorResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceAdministratorResource> IOperationSource<ManagedInstanceAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(document.RootElement);
-            return new ManagedInstanceAdministratorResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new ManagedInstanceAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

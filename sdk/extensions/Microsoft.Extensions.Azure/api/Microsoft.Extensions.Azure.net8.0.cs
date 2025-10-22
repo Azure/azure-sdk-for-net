@@ -3,7 +3,6 @@ namespace Microsoft.Extensions.Azure
     public static partial class AzureClientBuilderExtensions
     {
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> ConfigureOptions<TClient, TOptions>(this Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> builder, Microsoft.Extensions.Configuration.IConfiguration configuration) where TOptions : class { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> ConfigureOptions<TClient, TOptions>(this Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> builder, System.Action<TOptions, System.IServiceProvider> configureOptions) where TOptions : class { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> ConfigureOptions<TClient, TOptions>(this Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> builder, System.Action<TOptions> configureOptions) where TOptions : class { throw null; }
@@ -21,11 +20,9 @@ namespace Microsoft.Extensions.Azure
         public Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(System.Func<TOptions, TClient> factory) where TOptions : class { throw null; }
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> Azure.Core.Extensions.IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(System.Func<TOptions, TClient> clientFactory) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<Microsoft.Extensions.Configuration.IConfiguration>.RegisterClientFactory<TClient, TOptions>(Microsoft.Extensions.Configuration.IConfiguration configuration) { throw null; }
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(System.Func<TOptions, Azure.Core.TokenCredential, TClient> clientFactory, bool requiresCredential) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder ConfigureDefaults(Microsoft.Extensions.Configuration.IConfiguration configuration) { throw null; }
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder ConfigureDefaults(System.Action<Azure.Core.ClientOptions, System.IServiceProvider> configureOptions) { throw null; }
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder ConfigureDefaults(System.Action<Azure.Core.ClientOptions> configureOptions) { throw null; }
@@ -42,10 +39,8 @@ namespace Microsoft.Extensions.Azure
     public abstract partial class AzureComponentFactory
     {
         protected AzureComponentFactory() { }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public abstract object CreateClient([System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type clientType, Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential, object clientOptions);
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public abstract object CreateClientOptions([System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type optionsType, object serviceVersion, Microsoft.Extensions.Configuration.IConfiguration configuration);
         public abstract Azure.Core.TokenCredential CreateTokenCredential(Microsoft.Extensions.Configuration.IConfiguration configuration);
     }

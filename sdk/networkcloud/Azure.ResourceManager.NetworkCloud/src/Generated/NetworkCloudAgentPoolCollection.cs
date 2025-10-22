@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,10 +75,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
@@ -87,8 +89,8 @@ namespace Azure.ResourceManager.NetworkCloud
             scope.Start();
             try
             {
-                var response = await _networkCloudAgentPoolAgentPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudAgentPoolAgentPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -124,10 +126,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
@@ -136,8 +140,8 @@ namespace Azure.ResourceManager.NetworkCloud
             scope.Start();
             try
             {
-                var response = _networkCloudAgentPoolAgentPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudAgentPoolAgentPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolOperationSource(Client), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, _networkCloudAgentPoolAgentPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +256,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,12 +264,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudAgentPoolResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudAgentPoolResource(Client, NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(e)), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, "NetworkCloudAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -282,7 +288,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,12 +296,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudAgentPoolResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudAgentPoolAgentPoolsRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudAgentPoolResource(Client, NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(e)), _networkCloudAgentPoolAgentPoolsClientDiagnostics, Pipeline, "NetworkCloudAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -312,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +363,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +406,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,7 +451,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

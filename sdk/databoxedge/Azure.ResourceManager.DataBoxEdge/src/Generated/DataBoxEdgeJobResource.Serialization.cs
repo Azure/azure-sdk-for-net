@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeJobResource : IJsonModel<DataBoxEdgeJobData>
     {
+        private static DataBoxEdgeJobData s_dataDeserializationInstance;
+        private static DataBoxEdgeJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoxEdgeJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeJobData>)Data).Write(writer, options);
 
-        DataBoxEdgeJobData IJsonModel<DataBoxEdgeJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeJobData>)Data).Create(ref reader, options);
+        DataBoxEdgeJobData IJsonModel<DataBoxEdgeJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeJobData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DataBoxEdgeJobData IPersistableModel<DataBoxEdgeJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeJobData>(data, options);
+        DataBoxEdgeJobData IPersistableModel<DataBoxEdgeJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeJobData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxEdgeJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

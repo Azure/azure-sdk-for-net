@@ -34,10 +34,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(CloudExadataInfrastructureProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefinedFileSystemConfiguration))
+            {
+                writer.WritePropertyName("definedFileSystemConfiguration"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefinedFileSystemConfiguration)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExadataInfraOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(ExadataInfraOcid);
             }
             if (Optional.IsDefined(ComputeCount))
             {
@@ -168,15 +178,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunId))
+            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunOcid))
             {
                 writer.WritePropertyName("lastMaintenanceRunId"u8);
-                writer.WriteStringValue(LastMaintenanceRunId);
+                writer.WriteStringValue(LastMaintenanceRunOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunId))
+            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunOcid))
             {
                 writer.WritePropertyName("nextMaintenanceRunId"u8);
-                writer.WriteStringValue(NextMaintenanceRunId);
+                writer.WriteStringValue(NextMaintenanceRunOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyDBServerVersion))
             {
@@ -188,6 +198,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("monthlyStorageServerVersion"u8);
                 writer.WriteStringValue(MonthlyStorageServerVersion);
             }
+            if (Optional.IsDefined(DatabaseServerType))
+            {
+                writer.WritePropertyName("databaseServerType"u8);
+                writer.WriteStringValue(DatabaseServerType);
+            }
+            if (Optional.IsDefined(StorageServerType))
+            {
+                writer.WritePropertyName("storageServerType"u8);
+                writer.WriteStringValue(StorageServerType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
+            {
+                writer.WritePropertyName("computeModel"u8);
+                writer.WriteStringValue(ComputeModel.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExascaleConfig))
+            {
+                writer.WritePropertyName("exascaleConfig"u8);
+                writer.WriteObjectValue(ExascaleConfig, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -196,7 +226,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -225,7 +255,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            ResourceIdentifier ocid = default;
+            IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration = default;
+            string ocid = default;
             int? computeCount = default;
             int? storageCount = default;
             int? totalStorageSizeInGbs = default;
@@ -244,7 +275,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? memorySizeInGbs = default;
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
-            int? maxDBNodeStorageSizeInGbs = default;
+            int? maxDbNodeStorageSizeInGbs = default;
             double? dataStorageSizeInTbs = default;
             double? maxDataStorageInTbs = default;
             string dbServerVersion = default;
@@ -252,21 +283,35 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? activatedStorageCount = default;
             int? additionalStorageCount = default;
             string displayName = default;
-            ResourceIdentifier lastMaintenanceRunId = default;
-            ResourceIdentifier nextMaintenanceRunId = default;
-            string monthlyDBServerVersion = default;
+            string lastMaintenanceRunId = default;
+            string nextMaintenanceRunId = default;
+            string monthlyDbServerVersion = default;
             string monthlyStorageServerVersion = default;
+            string databaseServerType = default;
+            string storageServerType = default;
+            OracleDatabaseComputeModel? computeModel = default;
+            ExascaleConfigDetails exascaleConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ocid"u8))
+                if (property.NameEquals("definedFileSystemConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ocid = new ResourceIdentifier(property.Value.GetString());
+                    List<DefinedFileSystemConfiguration> array = new List<DefinedFileSystemConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.DefinedFileSystemConfiguration.DeserializeDefinedFileSystemConfiguration(item, options));
+                    }
+                    definedFileSystemConfiguration = array;
+                    continue;
+                }
+                if (property.NameEquals("ocid"u8))
+                {
+                    ocid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("computeCount"u8))
@@ -434,7 +479,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maxDBNodeStorageSizeInGbs = property.Value.GetInt32();
+                    maxDbNodeStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -490,30 +535,50 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lastMaintenanceRunId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastMaintenanceRunId = new ResourceIdentifier(property.Value.GetString());
+                    lastMaintenanceRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("nextMaintenanceRunId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextMaintenanceRunId = new ResourceIdentifier(property.Value.GetString());
+                    nextMaintenanceRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("monthlyDbServerVersion"u8))
                 {
-                    monthlyDBServerVersion = property.Value.GetString();
+                    monthlyDbServerVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("monthlyStorageServerVersion"u8))
                 {
                     monthlyStorageServerVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("databaseServerType"u8))
+                {
+                    databaseServerType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageServerType"u8))
+                {
+                    storageServerType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("computeModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("exascaleConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exascaleConfig = ExascaleConfigDetails.DeserializeExascaleConfigDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -523,6 +588,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CloudExadataInfrastructureProperties(
+                definedFileSystemConfiguration ?? new ChangeTrackingList<DefinedFileSystemConfiguration>(),
                 ocid,
                 computeCount,
                 storageCount,
@@ -542,7 +608,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 memorySizeInGbs,
                 maxMemoryInGbs,
                 dbNodeStorageSizeInGbs,
-                maxDBNodeStorageSizeInGbs,
+                maxDbNodeStorageSizeInGbs,
                 dataStorageSizeInTbs,
                 maxDataStorageInTbs,
                 dbServerVersion,
@@ -552,8 +618,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 lastMaintenanceRunId,
                 nextMaintenanceRunId,
-                monthlyDBServerVersion,
+                monthlyDbServerVersion,
                 monthlyStorageServerVersion,
+                databaseServerType,
+                storageServerType,
+                computeModel,
+                exascaleConfig,
                 serializedAdditionalRawData);
         }
 
@@ -564,7 +634,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudExadataInfrastructureProperties)} does not support writing '{options.Format}' format.");
             }
@@ -578,7 +648,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudExadataInfrastructureProperties(document.RootElement, options);
                     }
                 default:

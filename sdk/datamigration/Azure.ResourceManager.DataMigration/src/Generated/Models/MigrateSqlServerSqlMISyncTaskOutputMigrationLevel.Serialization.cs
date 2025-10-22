@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             int? databaseCount = default;
-            MigrationState? state = default;
+            DataMigrationState? state = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             string sourceServerName = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startedOn"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:

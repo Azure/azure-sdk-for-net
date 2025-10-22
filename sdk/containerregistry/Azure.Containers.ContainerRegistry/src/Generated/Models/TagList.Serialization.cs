@@ -57,7 +57,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TagList FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTagList(document.RootElement);
         }
     }

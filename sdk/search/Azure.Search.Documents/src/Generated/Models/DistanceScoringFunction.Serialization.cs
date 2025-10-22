@@ -5,34 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DistanceScoringFunction : IUtf8JsonSerializable
+    public partial class DistanceScoringFunction : IUtf8JsonSerializable, IJsonModel<DistanceScoringFunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistanceScoringFunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DistanceScoringFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("distance"u8);
-            writer.WriteObjectValue(Parameters);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("fieldName"u8);
-            writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("boost"u8);
-            writer.WriteNumberValue(Boost);
-            if (Optional.IsDefined(Interpolation))
-            {
-                writer.WritePropertyName("interpolation"u8);
-                writer.WriteStringValue(Interpolation.Value.ToSerialString());
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DistanceScoringFunction DeserializeDistanceScoringFunction(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DistanceScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DistanceScoringFunction)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("distance"u8);
+            writer.WriteObjectValue(Parameters, options);
+        }
+
+        DistanceScoringFunction IJsonModel<DistanceScoringFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DistanceScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DistanceScoringFunction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDistanceScoringFunction(document.RootElement, options);
+        }
+
+        internal static DistanceScoringFunction DeserializeDistanceScoringFunction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,11 +64,13 @@ namespace Azure.Search.Documents.Indexes.Models
             string fieldName = default;
             double boost = default;
             ScoringFunctionInterpolation? interpolation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("distance"u8))
                 {
-                    distance = DistanceScoringParameters.DeserializeDistanceScoringParameters(property.Value);
+                    distance = DistanceScoringParameters.DeserializeDistanceScoringParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -73,15 +97,57 @@ namespace Azure.Search.Documents.Indexes.Models
                     interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DistanceScoringFunction(type, fieldName, boost, interpolation, distance);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DistanceScoringFunction(
+                type,
+                fieldName,
+                boost,
+                interpolation,
+                serializedAdditionalRawData,
+                distance);
         }
+
+        BinaryData IPersistableModel<DistanceScoringFunction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DistanceScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DistanceScoringFunction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DistanceScoringFunction IPersistableModel<DistanceScoringFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DistanceScoringFunction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDistanceScoringFunction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DistanceScoringFunction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DistanceScoringFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new DistanceScoringFunction FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDistanceScoringFunction(document.RootElement);
         }
 
@@ -89,7 +155,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Quantum
 
         QuantumWorkspaceResource IOperationSource<QuantumWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement);
+            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuantumContext.Default);
             return new QuantumWorkspaceResource(_client, data);
         }
 
         async ValueTask<QuantumWorkspaceResource> IOperationSource<QuantumWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement);
-            return new QuantumWorkspaceResource(_client, data);
+            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuantumContext.Default);
+            return await Task.FromResult(new QuantumWorkspaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

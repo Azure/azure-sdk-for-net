@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the PacketCoreControlPlane data model.
     /// Packet core control plane resource.
-    /// Serialized Name: PacketCoreControlPlane
     /// </summary>
     public partial class PacketCoreControlPlaneData : TrackedResourceData
     {
@@ -56,26 +55,11 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sites">
-        /// Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane.
-        /// Serialized Name: PacketCoreControlPlane.properties.sites
-        /// </param>
-        /// <param name="platform">
-        /// The platform where the packet core is deployed.
-        /// Serialized Name: PacketCoreControlPlane.properties.platform
-        /// </param>
-        /// <param name="controlPlaneAccessInterface">
-        /// The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessInterface
-        /// </param>
-        /// <param name="sku">
-        /// The SKU defining the throughput and SIM allowances for this packet core control plane deployment.
-        /// Serialized Name: PacketCoreControlPlane.properties.sku
-        /// </param>
-        /// <param name="localDiagnosticsAccess">
-        /// The kubernetes ingress configuration to control access to packet core diagnostics over local APIs.
-        /// Serialized Name: PacketCoreControlPlane.properties.localDiagnosticsAccess
-        /// </param>
+        /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
+        /// <param name="platform"> The platform where the packet core is deployed. </param>
+        /// <param name="controlPlaneAccessInterface"> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </param>
+        /// <param name="sku"> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </param>
+        /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sites"/>, <paramref name="platform"/>, <paramref name="controlPlaneAccessInterface"/> or <paramref name="localDiagnosticsAccess"/> is null. </exception>
         public PacketCoreControlPlaneData(AzureLocation location, IEnumerable<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess) : base(location)
         {
@@ -99,86 +83,26 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="userAssignedIdentity">
-        /// The identity used to retrieve the ingress certificate from Azure key vault.
-        /// Serialized Name: PacketCoreControlPlane.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the packet core control plane resource.
-        /// Serialized Name: PacketCoreControlPlane.properties.provisioningState
-        /// </param>
-        /// <param name="installation">
-        /// The installation state of the packet core control plane resource.
-        /// Serialized Name: PacketCoreControlPlane.properties.installation
-        /// </param>
-        /// <param name="sites">
-        /// Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane.
-        /// Serialized Name: PacketCoreControlPlane.properties.sites
-        /// </param>
-        /// <param name="platform">
-        /// The platform where the packet core is deployed.
-        /// Serialized Name: PacketCoreControlPlane.properties.platform
-        /// </param>
-        /// <param name="coreNetworkTechnology">
-        /// The core network technology generation (5G core or EPC / 4G core).
-        /// Serialized Name: PacketCoreControlPlane.properties.coreNetworkTechnology
-        /// </param>
-        /// <param name="version">
-        /// The desired version of the packet core software.
-        /// Serialized Name: PacketCoreControlPlane.properties.version
-        /// </param>
-        /// <param name="installedVersion">
-        /// The currently installed version of the packet core software.
-        /// Serialized Name: PacketCoreControlPlane.properties.installedVersion
-        /// </param>
-        /// <param name="rollbackVersion">
-        /// The previous version of the packet core software that was deployed. Used when performing the rollback action.
-        /// Serialized Name: PacketCoreControlPlane.properties.rollbackVersion
-        /// </param>
-        /// <param name="controlPlaneAccessInterface">
-        /// The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessInterface
-        /// </param>
-        /// <param name="controlPlaneAccessVirtualIPv4Addresses">
-        /// The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessVirtualIpv4Addresses
-        /// </param>
-        /// <param name="sku">
-        /// The SKU defining the throughput and SIM allowances for this packet core control plane deployment.
-        /// Serialized Name: PacketCoreControlPlane.properties.sku
-        /// </param>
-        /// <param name="ueMtu">
-        /// The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation.
-        /// Serialized Name: PacketCoreControlPlane.properties.ueMtu
-        /// </param>
-        /// <param name="localDiagnosticsAccess">
-        /// The kubernetes ingress configuration to control access to packet core diagnostics over local APIs.
-        /// Serialized Name: PacketCoreControlPlane.properties.localDiagnosticsAccess
-        /// </param>
-        /// <param name="diagnosticsUpload">
-        /// Configuration for uploading packet core diagnostics
-        /// Serialized Name: PacketCoreControlPlane.properties.diagnosticsUpload
-        /// </param>
-        /// <param name="eventHub">
-        /// Configuration for sending packet core events to an Azure Event Hub.
-        /// Serialized Name: PacketCoreControlPlane.properties.eventHub
-        /// </param>
-        /// <param name="signaling">
-        /// Signaling configuration for the packet core.
-        /// Serialized Name: PacketCoreControlPlane.properties.signaling
-        /// </param>
-        /// <param name="interopSettings">
-        /// Settings to allow interoperability with third party components e.g. RANs and UEs.
-        /// Serialized Name: PacketCoreControlPlane.properties.interopSettings
-        /// </param>
-        /// <param name="homeNetworkPrivateKeysProvisioning">
-        /// The provisioning state of the secret containing private keys and keyIds for SUPI concealment.
-        /// Serialized Name: PacketCoreControlPlane.properties.homeNetworkPrivateKeysProvisioning
-        /// </param>
-        /// <param name="userConsent">
-        /// The user consent configuration for the packet core.
-        /// Serialized Name: PacketCoreControlPlane.properties.userConsent
-        /// </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the ingress certificate from Azure key vault. </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core control plane resource. </param>
+        /// <param name="installation"> The installation state of the packet core control plane resource. </param>
+        /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
+        /// <param name="platform"> The platform where the packet core is deployed. </param>
+        /// <param name="coreNetworkTechnology"> The core network technology generation (5G core or EPC / 4G core). </param>
+        /// <param name="version"> The desired version of the packet core software. </param>
+        /// <param name="installedVersion"> The currently installed version of the packet core software. </param>
+        /// <param name="rollbackVersion"> The previous version of the packet core software that was deployed. Used when performing the rollback action. </param>
+        /// <param name="controlPlaneAccessInterface"> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </param>
+        /// <param name="controlPlaneAccessVirtualIPv4Addresses"> The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty. </param>
+        /// <param name="sku"> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </param>
+        /// <param name="ueMtu"> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </param>
+        /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
+        /// <param name="diagnosticsUpload"> Configuration for uploading packet core diagnostics. </param>
+        /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
+        /// <param name="signaling"> Signaling configuration for the packet core. </param>
+        /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
+        /// <param name="homeNetworkPrivateKeysProvisioning"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
+        /// <param name="userConsent"> The user consent configuration for the packet core. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, PacketCoreSignalingConfiguration signaling, BinaryData interopSettings, HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning, UserConsentConfiguration userConsent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -210,99 +134,51 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary>
-        /// The identity used to retrieve the ingress certificate from Azure key vault.
-        /// Serialized Name: PacketCoreControlPlane.identity
-        /// </summary>
+        /// <summary> The identity used to retrieve the ingress certificate from Azure key vault. </summary>
         [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
-        /// <summary>
-        /// The provisioning state of the packet core control plane resource.
-        /// Serialized Name: PacketCoreControlPlane.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the packet core control plane resource. </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The installation state of the packet core control plane resource.
-        /// Serialized Name: PacketCoreControlPlane.properties.installation
-        /// </summary>
+        /// <summary> The installation state of the packet core control plane resource. </summary>
         [WirePath("properties.installation")]
         public MobileNetworkInstallation Installation { get; set; }
-        /// <summary>
-        /// Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane.
-        /// Serialized Name: PacketCoreControlPlane.properties.sites
-        /// </summary>
+        /// <summary> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </summary>
         [WirePath("properties.sites")]
         public IList<WritableSubResource> Sites { get; }
-        /// <summary>
-        /// The platform where the packet core is deployed.
-        /// Serialized Name: PacketCoreControlPlane.properties.platform
-        /// </summary>
+        /// <summary> The platform where the packet core is deployed. </summary>
         [WirePath("properties.platform")]
         public MobileNetworkPlatformConfiguration Platform { get; set; }
-        /// <summary>
-        /// The core network technology generation (5G core or EPC / 4G core).
-        /// Serialized Name: PacketCoreControlPlane.properties.coreNetworkTechnology
-        /// </summary>
+        /// <summary> The core network technology generation (5G core or EPC / 4G core). </summary>
         [WirePath("properties.coreNetworkTechnology")]
         public MobileNetworkCoreNetworkType? CoreNetworkTechnology { get; set; }
-        /// <summary>
-        /// The desired version of the packet core software.
-        /// Serialized Name: PacketCoreControlPlane.properties.version
-        /// </summary>
+        /// <summary> The desired version of the packet core software. </summary>
         [WirePath("properties.version")]
         public string Version { get; set; }
-        /// <summary>
-        /// The currently installed version of the packet core software.
-        /// Serialized Name: PacketCoreControlPlane.properties.installedVersion
-        /// </summary>
+        /// <summary> The currently installed version of the packet core software. </summary>
         [WirePath("properties.installedVersion")]
         public string InstalledVersion { get; }
-        /// <summary>
-        /// The previous version of the packet core software that was deployed. Used when performing the rollback action.
-        /// Serialized Name: PacketCoreControlPlane.properties.rollbackVersion
-        /// </summary>
+        /// <summary> The previous version of the packet core software that was deployed. Used when performing the rollback action. </summary>
         [WirePath("properties.rollbackVersion")]
         public string RollbackVersion { get; }
-        /// <summary>
-        /// The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessInterface
-        /// </summary>
+        /// <summary> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </summary>
         [WirePath("properties.controlPlaneAccessInterface")]
         public MobileNetworkInterfaceProperties ControlPlaneAccessInterface { get; set; }
-        /// <summary>
-        /// The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty.
-        /// Serialized Name: PacketCoreControlPlane.properties.controlPlaneAccessVirtualIpv4Addresses
-        /// </summary>
+        /// <summary> The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty. </summary>
         [WirePath("properties.controlPlaneAccessVirtualIpv4Addresses")]
         public IList<string> ControlPlaneAccessVirtualIPv4Addresses { get; }
-        /// <summary>
-        /// The SKU defining the throughput and SIM allowances for this packet core control plane deployment.
-        /// Serialized Name: PacketCoreControlPlane.properties.sku
-        /// </summary>
+        /// <summary> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </summary>
         [WirePath("properties.sku")]
         public MobileNetworkBillingSku Sku { get; set; }
-        /// <summary>
-        /// The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation.
-        /// Serialized Name: PacketCoreControlPlane.properties.ueMtu
-        /// </summary>
+        /// <summary> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </summary>
         [WirePath("properties.ueMtu")]
         public int? UEMtu { get; set; }
-        /// <summary>
-        /// The kubernetes ingress configuration to control access to packet core diagnostics over local APIs.
-        /// Serialized Name: PacketCoreControlPlane.properties.localDiagnosticsAccess
-        /// </summary>
+        /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
         [WirePath("properties.localDiagnosticsAccess")]
         public MobileNetworkLocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get; set; }
-        /// <summary>
-        /// Configuration for uploading packet core diagnostics
-        /// Serialized Name: PacketCoreControlPlane.properties.diagnosticsUpload
-        /// </summary>
+        /// <summary> Configuration for uploading packet core diagnostics. </summary>
         internal DiagnosticsUploadConfiguration DiagnosticsUpload { get; set; }
-        /// <summary>
-        /// The Storage Account Container URL to upload diagnostics to.
-        /// Serialized Name: DiagnosticsUploadConfiguration.storageAccountContainerUrl
-        /// </summary>
+        /// <summary> The Storage Account Container URL to upload diagnostics to. </summary>
         [WirePath("properties.diagnosticsUpload.storageAccountContainerUrl")]
         public Uri DiagnosticsUploadStorageAccountContainerUri
         {
@@ -310,21 +186,14 @@ namespace Azure.ResourceManager.MobileNetwork
             set => DiagnosticsUpload = new DiagnosticsUploadConfiguration(value);
         }
 
-        /// <summary>
-        /// Configuration for sending packet core events to an Azure Event Hub.
-        /// Serialized Name: PacketCoreControlPlane.properties.eventHub
-        /// </summary>
+        /// <summary> Configuration for sending packet core events to an Azure Event Hub. </summary>
         [WirePath("properties.eventHub")]
         public MobileNetworkEventHubConfiguration EventHub { get; set; }
-        /// <summary>
-        /// Signaling configuration for the packet core.
-        /// Serialized Name: PacketCoreControlPlane.properties.signaling
-        /// </summary>
+        /// <summary> Signaling configuration for the packet core. </summary>
         [WirePath("properties.signaling")]
         public PacketCoreSignalingConfiguration Signaling { get; set; }
         /// <summary>
         /// Settings to allow interoperability with third party components e.g. RANs and UEs.
-        /// Serialized Name: PacketCoreControlPlane.properties.interopSettings
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -355,30 +224,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         [WirePath("properties.interopSettings")]
         public BinaryData InteropSettings { get; set; }
-        /// <summary>
-        /// The provisioning state of the secret containing private keys and keyIds for SUPI concealment.
-        /// Serialized Name: PacketCoreControlPlane.properties.homeNetworkPrivateKeysProvisioning
-        /// </summary>
+        /// <summary> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </summary>
         internal HomeNetworkPrivateKeysProvisioning HomeNetworkPrivateKeysProvisioning { get; }
-        /// <summary>
-        /// The provisioning state of the private keys for SUPI concealment.
-        /// Serialized Name: HomeNetworkPrivateKeysProvisioning.state
-        /// </summary>
+        /// <summary> The provisioning state of the private keys for SUPI concealment. </summary>
         [WirePath("properties.homeNetworkPrivateKeysProvisioning.state")]
         public HomeNetworkPrivateKeysProvisioningState? HomeNetworkPrivateKeysProvisioningState
         {
             get => HomeNetworkPrivateKeysProvisioning?.State;
         }
 
-        /// <summary>
-        /// The user consent configuration for the packet core.
-        /// Serialized Name: PacketCoreControlPlane.properties.userConsent
-        /// </summary>
+        /// <summary> The user consent configuration for the packet core. </summary>
         internal UserConsentConfiguration UserConsent { get; set; }
-        /// <summary>
-        /// Allow Microsoft to access non-PII telemetry information from the packet core.
-        /// Serialized Name: UserConsentConfiguration.allowSupportTelemetryAccess
-        /// </summary>
+        /// <summary> Allow Microsoft to access non-PII telemetry information from the packet core. </summary>
         [WirePath("properties.userConsent.allowSupportTelemetryAccess")]
         public bool? AllowSupportTelemetryAccess
         {

@@ -102,6 +102,11 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchRerankerScoreKeyJson = JsonEncodedText.Encode("@search.rerankerScore");
 
         /// <summary>
+        /// The @search.rerankerBoostedScore key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchRerankerBoostedScoreKeyJson = JsonEncodedText.Encode("@search.rerankerBoostedScore");
+
+        /// <summary>
         /// The @search.captions key.
         /// </summary>
         public static readonly JsonEncodedText SearchCaptionsKeyJson = JsonEncodedText.Encode("@search.captions");
@@ -150,6 +155,16 @@ namespace Azure.Search.Documents
         /// The count key.
         /// </summary>
         public static readonly JsonEncodedText CountKeyJson = JsonEncodedText.Encode(CountKey);
+
+        /// <summary>
+        /// The sum key.
+        /// </summary>
+        public const string SumKey = "sum";
+
+        /// <summary>
+        /// The sum key.
+        /// </summary>
+        public static readonly JsonEncodedText SumKeyJson = JsonEncodedText.Encode(SumKey);
 
         /// <summary>
         /// The facets key.

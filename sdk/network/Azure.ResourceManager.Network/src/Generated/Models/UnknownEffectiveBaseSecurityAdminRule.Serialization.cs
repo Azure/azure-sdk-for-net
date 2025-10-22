@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -135,6 +137,140 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigurationDescription))
+                {
+                    builder.Append("  configurationDescription: ");
+                    if (ConfigurationDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConfigurationDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConfigurationDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleCollectionDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleCollectionDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleCollectionDescription))
+                {
+                    builder.Append("  ruleCollectionDescription: ");
+                    if (RuleCollectionDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleCollectionDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleCollectionDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleCollectionAppliesToGroups), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleCollectionAppliesToGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+                {
+                    if (RuleCollectionAppliesToGroups.Any())
+                    {
+                        builder.Append("  ruleCollectionAppliesToGroups: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RuleCollectionAppliesToGroups)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleCollectionAppliesToGroups: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleGroups), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RuleGroups))
+                {
+                    if (RuleGroups.Any())
+                    {
+                        builder.Append("  ruleGroups: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RuleGroups)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleGroups: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine($"'{Kind.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,7 +278,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
             }
@@ -156,7 +294,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
                     }
                 default:

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+    /// <summary>
+    /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+    /// Serialized Name: EnabledState
+    /// </summary>
     public readonly partial struct EnabledState : IEquatable<EnabledState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: EnabledState.Enabled
+        /// </summary>
         public static EnabledState Enabled { get; } = new EnabledState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: EnabledState.Disabled
+        /// </summary>
         public static EnabledState Disabled { get; } = new EnabledState(DisabledValue);
         /// <summary> Determines if two <see cref="EnabledState"/> values are the same. </summary>
         public static bool operator ==(EnabledState left, EnabledState right) => left.Equals(right);

@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{options.Format}' format.");
             }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkFabricPatch(document.RootElement, options);
                     }
                 default:

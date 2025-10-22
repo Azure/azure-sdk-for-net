@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Quota
 
         SubscriptionQuotaAllocationsListResource IOperationSource<SubscriptionQuotaAllocationsListResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SubscriptionQuotaAllocationsListData.DeserializeSubscriptionQuotaAllocationsListData(document.RootElement);
+            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new SubscriptionQuotaAllocationsListResource(_client, data);
         }
 
         async ValueTask<SubscriptionQuotaAllocationsListResource> IOperationSource<SubscriptionQuotaAllocationsListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SubscriptionQuotaAllocationsListData.DeserializeSubscriptionQuotaAllocationsListData(document.RootElement);
-            return new SubscriptionQuotaAllocationsListResource(_client, data);
+            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            return await Task.FromResult(new SubscriptionQuotaAllocationsListResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

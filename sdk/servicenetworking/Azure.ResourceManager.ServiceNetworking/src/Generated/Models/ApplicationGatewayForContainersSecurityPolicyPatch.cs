@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -55,29 +53,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayForContainersSecurityPolicyPatch(IDictionary<string, string> tags, WritableSubResource wafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayForContainersSecurityPolicyPatch(IDictionary<string, string> tags, SecurityPolicyUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            WafPolicy = wafPolicy;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
-        internal WritableSubResource WafPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafPolicyId
-        {
-            get => WafPolicy is null ? default : WafPolicy.Id;
-            set
-            {
-                if (WafPolicy is null)
-                    WafPolicy = new WritableSubResource();
-                WafPolicy.Id = value;
-            }
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public SecurityPolicyUpdateProperties Properties { get; set; }
     }
 }

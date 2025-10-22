@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxCertificateListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxCertificateListResponse.DeserializeNginxCertificateListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

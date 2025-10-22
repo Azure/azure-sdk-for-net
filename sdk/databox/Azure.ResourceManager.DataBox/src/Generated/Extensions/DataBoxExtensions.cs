@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// <description>ServiceOperationGroup_GetAvailableSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// <description>ServiceOperationGroup_GetAvailableSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
@@ -216,72 +216,6 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// This method does all necessary pre-job creation validation under resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateInputsByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Inputs of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateInputsByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Inputs of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DataBoxValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
-        }
-
-        /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
         /// <list type="bullet">
         /// <item>
@@ -290,11 +224,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// <description>ServiceOperationGroup_GetRegionConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -303,7 +237,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
@@ -323,11 +257,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// <description>ServiceOperationGroup_GetRegionConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -336,7 +270,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
@@ -348,6 +282,72 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
+        /// This method does all necessary pre-job creation validation under resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceOperationGroup_ValidateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Inputs of the customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceOperationGroup_ValidateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Inputs of the customer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<DataBoxValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all the jobs available under the subscription.
         /// <list type="bullet">
         /// <item>
@@ -356,11 +356,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_List</description>
+        /// <description>JobResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_List</description>
+        /// <description>JobResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,138 +422,6 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Shipping address of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Shipping address of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateAddress(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Inputs of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_ValidateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Inputs of the customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateInputs(location, content, cancellationToken);
-        }
-
-        /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
         /// <list type="bullet">
         /// <item>
@@ -562,11 +430,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Service_RegionConfiguration</description>
+        /// <description>ServiceOperationGroup_GetRegionConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -575,8 +443,8 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Request body to get the configuration for the region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
@@ -595,11 +463,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Service_RegionConfiguration</description>
+        /// <description>ServiceOperationGroup_GetRegionConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -608,8 +476,8 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="content"> Request body to get the configuration for the region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<RegionConfigurationResult> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
@@ -617,6 +485,138 @@ namespace Azure.ResourceManager.DataBox
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataBoxSubscriptionResource(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceOperationGroup_ValidateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceOperationGroup_ValidateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateAddress(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceOperationGroup_ValidateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This method does all necessary pre-job creation validation under subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceOperationGroup_ValidateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateInputs(location, content, cancellationToken);
         }
     }
 }

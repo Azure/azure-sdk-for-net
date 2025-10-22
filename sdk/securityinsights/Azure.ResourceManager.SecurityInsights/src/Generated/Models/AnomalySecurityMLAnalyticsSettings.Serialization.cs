@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CustomizableObservations);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CustomizableObservations))
+                using (JsonDocument document = JsonDocument.Parse(CustomizableObservations, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnomalySecurityMLAnalyticsSettings(document.RootElement, options);
                     }
                 default:

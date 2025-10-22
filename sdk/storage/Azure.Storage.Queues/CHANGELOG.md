@@ -1,15 +1,43 @@
 # Release History
 
-## 12.22.0-beta.2 (Unreleased)
+## 12.25.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2026-02-06.
+- Added support for User Delegation SAS.
+- Added support for Principal-Bound Identity User Delegation SAS.
+
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+
+## 12.23.0 (2025-07-14)
+
+### Features Added
+- Includes all features from 12.23.0-beta.1
+
+## 12.24.0-beta.1 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+- Added `QueueProperties.ApproximateMessagesCountLong` to replace `QueueProperties.ApproximateMessagesCount`.  This property will correctly handle approximate message counts greater than max int.
+
+## 12.23.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+
+## 12.22.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.22.0-beta.1
 - Added the following Client Builders: `AddQueueServiceClient(Uri, Azure.SasCredential)`, `AddQueueServiceClient(Uri, TokenCredential)`
 
-### Breaking Changes
-
 ### Bugs Fixed
-
-### Other Changes
+- Fixed bug where a `QueueServiceClient`, `QueueClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `QueueServiceClient`, `QueueClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 
 ## 12.22.0-beta.1 (2025-02-11)
 

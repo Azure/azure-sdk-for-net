@@ -41,12 +41,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            writer.WritePropertyName("targetNetworkId"u8);
-            writer.WriteStringValue(TargetNetworkId);
-            writer.WritePropertyName("testNetworkId"u8);
-            writer.WriteStringValue(TestNetworkId);
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                writer.WritePropertyName("targetNetworkId"u8);
+                writer.WriteStringValue(TargetNetworkId);
+            }
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                writer.WritePropertyName("testNetworkId"u8);
+                writer.WriteStringValue(TestNetworkId);
+            }
             writer.WritePropertyName("selectionTypeForFailover"u8);
             writer.WriteStringValue(SelectionTypeForFailover.ToString());
+            if (Optional.IsDefined(IsStaticIPMigrationEnabled))
+            {
+                writer.WritePropertyName("isStaticIpMigrationEnabled"u8);
+                writer.WriteBooleanValue(IsStaticIPMigrationEnabled.Value);
+            }
+            if (Optional.IsDefined(IsMacMigrationEnabled))
+            {
+                writer.WritePropertyName("isMacMigrationEnabled"u8);
+                writer.WriteBooleanValue(IsMacMigrationEnabled.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,6 +105,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string targetNetworkId = default;
             string testNetworkId = default;
             VmNicSelection selectionTypeForFailover = default;
+            bool? isStaticIPMigrationEnabled = default;
+            bool? isMacMigrationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,6 +136,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     selectionTypeForFailover = new VmNicSelection(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("isStaticIpMigrationEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isStaticIPMigrationEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isMacMigrationEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isMacMigrationEnabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -130,6 +166,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetNetworkId,
                 testNetworkId,
                 selectionTypeForFailover,
+                isStaticIPMigrationEnabled,
+                isMacMigrationEnabled,
                 serializedAdditionalRawData);
         }
 
@@ -140,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHyperVToAzStackHciNicInput(document.RootElement, options);
                     }
                 default:

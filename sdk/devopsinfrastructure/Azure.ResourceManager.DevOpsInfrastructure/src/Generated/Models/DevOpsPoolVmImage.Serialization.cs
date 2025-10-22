@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("buffer"u8);
                 writer.WriteStringValue(Buffer);
             }
+            if (Optional.IsDefined(EphemeralType))
+            {
+                writer.WritePropertyName("ephemeralType"u8);
+                writer.WriteStringValue(EphemeralType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEphemeral))
+            {
+                writer.WritePropertyName("isEphemeral"u8);
+                writer.WriteBooleanValue(IsEphemeral.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,7 +77,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,6 +110,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             string wellKnownImageName = default;
             IList<string> aliases = default;
             string buffer = default;
+            DevOpsEphemeralType? ephemeralType = default;
+            bool? isEphemeral = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,13 +145,38 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     buffer = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("ephemeralType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ephemeralType = new DevOpsEphemeralType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("isEphemeral"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isEphemeral = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevOpsPoolVmImage(resourceId, wellKnownImageName, aliases ?? new ChangeTrackingList<string>(), buffer, serializedAdditionalRawData);
+            return new DevOpsPoolVmImage(
+                resourceId,
+                wellKnownImageName,
+                aliases ?? new ChangeTrackingList<string>(),
+                buffer,
+                ephemeralType,
+                isEphemeral,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsPoolVmImage>.Write(ModelReaderWriterOptions options)
@@ -149,7 +186,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevOpsPoolVmImage)} does not support writing '{options.Format}' format.");
             }
@@ -163,7 +200,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsPoolVmImage(document.RootElement, options);
                     }
                 default:

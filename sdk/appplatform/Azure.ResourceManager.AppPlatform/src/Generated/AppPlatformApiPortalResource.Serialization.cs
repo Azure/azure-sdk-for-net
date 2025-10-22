@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformApiPortalResource : IJsonModel<AppPlatformApiPortalData>
     {
+        private static AppPlatformApiPortalData s_dataDeserializationInstance;
+        private static AppPlatformApiPortalData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformApiPortalData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformApiPortalData>)Data).Write(writer, options);
 
-        AppPlatformApiPortalData IJsonModel<AppPlatformApiPortalData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformApiPortalData>)Data).Create(ref reader, options);
+        AppPlatformApiPortalData IJsonModel<AppPlatformApiPortalData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformApiPortalData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformApiPortalData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppPlatformApiPortalData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformApiPortalData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        AppPlatformApiPortalData IPersistableModel<AppPlatformApiPortalData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformApiPortalData>(data, options);
+        AppPlatformApiPortalData IPersistableModel<AppPlatformApiPortalData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformApiPortalData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformApiPortalData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformApiPortalData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformApiPortalData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformApiPortalData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

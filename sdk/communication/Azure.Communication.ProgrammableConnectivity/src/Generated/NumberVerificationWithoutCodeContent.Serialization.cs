@@ -56,7 +56,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,7 +129,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +143,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNumberVerificationWithoutCodeContent(document.RootElement, options);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static NumberVerificationWithoutCodeContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeNumberVerificationWithoutCodeContent(document.RootElement);
         }
 

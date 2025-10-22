@@ -14,6 +14,9 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />

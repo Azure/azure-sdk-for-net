@@ -97,7 +97,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new GeoJsonMultiPolygon FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonMultiPolygon(document.RootElement);
         }
     }

@@ -46,6 +46,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
             JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
+            {
+                writer.WritePropertyName("servicePrincipalCredentialType"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalCredentialType);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCert))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCert"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalEmbeddedCert);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCertPassword))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCertPassword"u8);
+                JsonSerializer.Serialize(writer, ServicePrincipalEmbeddedCertPassword);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -58,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -96,6 +111,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> servicePrincipalTenantId = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactorySecret servicePrincipalKey = default;
+            DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalEmbeddedCert = default;
+            DataFactorySecret servicePrincipalEmbeddedCertPassword = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,6 +207,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                             servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("servicePrincipalCredentialType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalCredentialType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalEmbeddedCert"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalEmbeddedCert = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalEmbeddedCertPassword"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalEmbeddedCertPassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             encryptedCredential = property0.Value.GetString();
@@ -212,6 +257,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 servicePrincipalTenantId,
                 servicePrincipalId,
                 servicePrincipalKey,
+                servicePrincipalCredentialType,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
                 encryptedCredential);
         }
 
@@ -222,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(Office365LinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -236,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOffice365LinkedService(document.RootElement, options);
                     }
                 default:

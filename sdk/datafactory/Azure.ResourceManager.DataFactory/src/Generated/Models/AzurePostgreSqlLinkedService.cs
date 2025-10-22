@@ -42,7 +42,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encoding"> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AzurePostgreSqlLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> timeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<int> readBufferSize, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzurePostgreSqlLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> timeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<int> readBufferSize, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, DataFactoryKeyVaultSecret password, string encryptedCredential, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Server = server;
@@ -58,6 +66,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Encoding = encoding;
             Password = password;
             EncryptedCredential = encryptedCredential;
+            ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
+            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
+            Tenant = tenant;
+            AzureCloudType = azureCloudType;
+            Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzurePostgreSql";
         }
 
@@ -89,5 +105,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
+        /// <summary> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ServicePrincipalId { get; set; }
+        /// <summary> The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
+        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
+        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
+        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Tenant { get; set; }
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> AzureCloudType { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

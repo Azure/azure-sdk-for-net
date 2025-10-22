@@ -637,6 +637,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class VerticalsAgriFoodFarmingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

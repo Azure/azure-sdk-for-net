@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -159,6 +161,103 @@ namespace Azure.ResourceManager.Network.Models
             return new FirewallPolicyIntrusionDetectionConfiguration(signatureOverrides ?? new ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification>(), bypassTrafficSettings ?? new ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>(), privateRanges ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignatureOverrides), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signatureOverrides: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SignatureOverrides))
+                {
+                    if (SignatureOverrides.Any())
+                    {
+                        builder.Append("  signatureOverrides: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SignatureOverrides)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  signatureOverrides: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BypassTrafficSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bypassTrafficSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BypassTrafficSettings))
+                {
+                    if (BypassTrafficSettings.Any())
+                    {
+                        builder.Append("  bypassTrafficSettings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BypassTrafficSettings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  bypassTrafficSettings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateRanges))
+                {
+                    if (PrivateRanges.Any())
+                    {
+                        builder.Append("  privateRanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateRanges)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FirewallPolicyIntrusionDetectionConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,7 +265,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -180,7 +281,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirewallPolicyIntrusionDetectionConfiguration(document.RootElement, options);
                     }
                 default:

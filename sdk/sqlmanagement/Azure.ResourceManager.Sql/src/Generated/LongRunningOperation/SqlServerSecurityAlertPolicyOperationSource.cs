@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerSecurityAlertPolicyResource IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerSecurityAlertPolicyResource(_client, data);
         }
 
         async ValueTask<SqlServerSecurityAlertPolicyResource> IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(document.RootElement);
-            return new SqlServerSecurityAlertPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new SqlServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

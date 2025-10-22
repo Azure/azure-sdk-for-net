@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-08-01-preview";
+            _apiVersion = apiVersion ?? "2025-01-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightPrivateLinkResourceListResult.DeserializeHDInsightPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightPrivateLinkResourceListResult.DeserializeHDInsightPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(OracleGIVersionProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
+            writer.WritePropertyName("version"u8);
+            writer.WriteStringValue(Version);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,7 +99,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OracleGIVersionProperties)} does not support writing '{options.Format}' format.");
             }
@@ -116,7 +113,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleGIVersionProperties(document.RootElement, options);
                     }
                 default:

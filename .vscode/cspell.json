@@ -60,66 +60,77 @@
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
-    "AADDS",
-    "AADKERB",
+    "aadds",
+    "aadkerb",
+    "adls",
+    "aoai",
     "apos",
     "azsdk",
     "blazor",
-    "Byok",
+    "byok",
     "centralus",
-    "Colls",
+    "colls",
     "contoso",
     "cpus",
     "cref",
-    "Dapr",
+    "dapr",
+    "decompile",
+    "decompiled",
     "deduplication",
     "deletesas",
     "deserializable",
     "deserializes",
     "diagnoser",
     "dicom",
-    "Diffie",
+    "diffie",
     "distro",
-    "Dmarc",
+    "dmarc",
     "dont",
     "dotnetcli",
     "dtmf",
     "eastus",
+    "eloqua",
     "entra",
     "epsg",
-    "Exfiltration",
+    "exfiltration",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
-    "Fips",
+    "fips",
     "flac",
     "getsas",
-    "Gmsa",
-    "GZRS",
+    "gmsa",
+    "gzrs",
+    "hana",
+    "hdfs",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
-    "Inotify",
+    "informix",
+    "inotify",
     "interventional",
     "ints",
-    "Intvl",
-    "Istio",
-    "Itsm",
-    "Keda",
-    "Kubelet",
-    "Kubenet",
+    "intvl",
+    "istio",
+    "itsm",
+    "keda",
+    "kubelet",
+    "kubenet",
     "kubernetes",
     "kusto",
-    "Kustomization",
-    "Kustomizations",
+    "kustomization",
+    "kustomizations",
+    "liftr",
     "listsas",
     "lucene",
+    "magento",
     "mgmt",
     "miscs",
     "msal",
-    "Mtls",
+    "mtls",
+    "netezza",
     "northcentralus",
     "nunit",
     "odata",
@@ -132,50 +143,57 @@
     "personalizer",
     "petabit",
     "picometer",
-    "Pids",
+    "pids",
     "pkcs",
     "pstn",
-    "Puid",
+    "puid",
     "pwsh",
-    "RAGRS",
-    "RAGZRS",
+    "ragrs",
+    "ragzrs",
     "referer",
     "renormalize",
     "retriable",
-    "Servfail",
+    "scme",
+    "serp",
+    "servfail",
     "setsas",
     "signalr",
     "signup",
     "skus",
-    "Somaxconn",
+    "somaxconn",
     "southcentralus",
     "structs",
-    "Sysctls",
-    "SYSLIB",
-    "Uefi",
+    "sybase",
+    "sysctls",
+    "syslib",
+    "teradata",
+    "tswtz",
+    "uefi",
     "uints",
     "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "Unparked",
-    "Unprovisioning",
+    "unparked",
+    "unprovisioning",
     "vcpus",
-    "Vectorizable",
-    "Vectorize",
-    "Vectorizer",
-    "Vectorizers",
+    "vectorizable",
+    "vectorize",
+    "vectorizer",
+    "vectorizers",
+    "vertica",
     "vhdx",
     "vmos",
     "vmss",
     "vmuuid",
     "vnet",
-    "VSTSRM",
-    "Wasi",
+    "vstsrm",
+    "wasi",
     "westcentralus",
     "westus",
-    "Wmem",
+    "wmem",
+    "xero",
     "xunit"
   ],
   "overrides": [
@@ -186,15 +204,27 @@
       ]
     },
     {
+      "filename": "**/sdk/agricultureplatform/**/*.cs",
+      "words": [
+        "agri",
+        "mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "ansii",
+        "atbash",
+        "azureai",
+        "bleu",
+        "gleu",
+        "ubinary"
       ]
     },
     {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
-        "Dmts"
+        "dmts"
       ]
     },
     {
@@ -209,9 +239,9 @@
     {
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
+        "invokable",
         "signin",
-        "Wadl",
-        "Invokable"
+        "wadl"
       ]
     },
     {
@@ -230,7 +260,7 @@
     {
       "filename": "**/sdk/automanage/**/*.cs",
       "words": [
-        "HCRP"
+        "hcrp"
       ]
     },
     {
@@ -241,99 +271,106 @@
       ]
     },
     {
+      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
+      "words": [
+        "arize"
+      ]
+    },
+    {
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
+        "iscsi",
         "mirrorings",
         "nsxt",
         "vcenter",
         "vcsa",
-        "vmotion",
-        "Iscsi"
+        "vmotion"
       ]
     },
     {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
+        "adou",
         "cref",
+        "drtm",
+        "hvci",
         "imds",
-        "IMDS",
-        "Wdac",
-        "Adou",
-        "Drtm",
-        "Hvci"
+        "sevsnp",
+        "wdac"
       ]
     },
     {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
-        "Rdma"
+        "rdma"
       ]
     },
     {
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs",
+        "cleanedup",
         "ocpdate",
-        "Reimage",
-        "Reimaging",
+        "reimage",
+        "reimaged",
         "reimaging",
-        "SSDLRS"
+        "ssdlrs"
       ]
     },
     {
       "filename": "**/sdk/billing/**/*.cs",
       "words": [
+        "cnpj",
         "puid",
-        "resellee",
-        "cnpj"
+        "resellee"
       ]
     },
     {
       "filename": "**/sdk/billingbenefits/**/*.cs",
       "words": [
-        "Hana"
+        "hana"
       ]
     },
     {
       "filename": "**/sdk/botservice/**/*.cs",
       "words": [
-        "Alexa",
-        "Cmek",
-        "Omnichannel"
+        "alexa",
+        "cmek",
+        "omnichannel"
       ]
     },
     {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
-        "Orqel",
-        "Wafrankingsresponse"
+        "orqel",
+        "wafrankingsresponse"
       ]
     },
     {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
-        "reimage",
-        "unattend",
-        "ssdlrs",
-        "vcpus",
-        "vmos",
-        "uefi",
-        "vhds",
-        "swappable",
-        "ssdzrs",
         "dscp",
-        "vmguest",
+        "nvme",
+        "reimage",
+        "ssdlrs",
+        "ssdzrs",
+        "swappable",
+        "uefi",
+        "unattend",
+        "vcpus",
+        "vhds",
         "vhdx",
-        "Nvme"
+        "vmguest",
+        "vmos"
       ]
     },
     {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
         "mbps",
-        "unattend",
-        "nvme"
+        "nvme",
+        "unattend"
       ]
     },
     {
@@ -342,7 +379,11 @@
         "cbor",
         "ccfs",
         "cose",
-        "scitt"
+        "jwks",
+        "phdr",
+        "pkix",
+        "scitt",
+        "tstr"
       ]
     },
     {
@@ -387,54 +428,69 @@
       ]
     },
     {
+      "filename": "**/sdk/connectedcache/**/*",
+      "words": [
+        "eflow",
+        "gbps",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
-        "Cpus",
-        "Ctlr",
-        "Lsilogic",
-        "Lsilogicsas",
-        "Pcnet",
-        "Pmem",
-        "Pvscsi",
-        "Sesparse",
-        "VCenter",
-        "VMware",
-        "vSphere"
+        "cpus",
+        "ctlr",
+        "lsilogic",
+        "lsilogicsas",
+        "pcnet",
+        "pmem",
+        "pvscsi",
+        "sesparse",
+        "vcenter",
+        "vmware",
+        "vsphere"
       ]
     },
     {
       "filename": "**/sdk/containerapps/**/*",
       "words": [
+        "agentic",
         "dapr",
         "grpc",
         "proto"
       ]
     },
     {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "abac"
+      ]
+    },
+    {
       "filename": "**/sdk/containerservice/**/*",
       "words": [
+        "ebpf",
+        "fips",
         "gmsa",
         "inotify",
         "intvl",
+        "ipvs",
+        "istio",
+        "kata",
+        "keda",
         "kube",
         "kubeconfigs",
         "kubelet",
-        "Kubenet",
+        "kubenet",
+        "mshv",
+        "oidc",
         "ossku",
         "pids",
         "somaxconn",
         "sysctls",
         "tcpkeepalive",
         "wasi",
-        "wmem",
-        "Oidc",
-        "Ebpf",
-        "Ipvs",
-        "Keda",
-        "Kata",
-        "Mshv",
-        "Fips",
-        "Istio"
+        "wmem"
       ]
     },
     {
@@ -446,7 +502,7 @@
     {
       "filename": "**/sdk/cosmosdbforpostgresql/**/*",
       "words": [
-        "Citus"
+        "citus"
       ]
     },
     {
@@ -473,10 +529,10 @@
       "words": [
         "mbps",
         "mrtcp",
-        "rsaes",
         "numa",
         "posix",
-        "rdma"
+        "rdma",
+        "rsaes"
       ]
     },
     {
@@ -488,8 +544,8 @@
     {
       "filename": "**/sdk/devopsinfrastructure/**/*.cs",
       "words": [
-        "Reimage",
-        "Reimaging"
+        "reimage",
+        "reimaging"
       ]
     },
     {
@@ -514,17 +570,17 @@
     {
       "filename": "**/sdk/datamigration/**/*.cs",
       "words": [
+        "initialiazing",
         "regen",
         "ssis",
-        "sybase",
-        "initialiazing"
+        "sybase"
       ]
     },
     {
       "filename": "**/sdk/dataprotection/**/*.cs",
       "words": [
-        "Bcdr",
-        "Undelete"
+        "bcdr",
+        "undelete"
       ]
     },
     {
@@ -542,34 +598,33 @@
     {
       "filename": "**/sdk/datafactory/**/*.cs",
       "words": [
-        "Ssis",
-        "Asana",
-        "Adls",
-        "Usql",
-        "Distcp",
-        "Eloqua",
-        "Vsts",
-        "Byoa",
-        "Hdfs",
-        "Distcp",
-        "Hcatalog",
-        "Oozie",
-        "Sasl",
-        "Informix",
-        "Exprired",
-        "Magento",
-        "Fqdns",
-        "Netezza",
-        "Responsys",
-        "Hana",
-        "Ssisdb",
-        "Sybase",
-        "Teradata",
-        "Inprogress",
-        "Twilio",
-        "Vertica",
-        "Xero",
-        "Soql"
+        "adls",
+        "asana",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exprired",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "inprogress",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "soql",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "teradata",
+        "twilio",
+        "usql",
+        "vertica",
+        "vsts",
+        "xero"
       ]
     },
     {
@@ -581,12 +636,15 @@
     {
       "filename": "**/sdk/easm/**/*",
       "words": [
-        "easm",
+        "alexa",
         "asns",
         "cnames",
-        "alexa",
+        "easm",
+        "nxdomain",
         "whois",
-        "nxdomain"
+        "cisa",
+        "cves",
+        "remediations"
       ]
     },
     {
@@ -602,21 +660,21 @@
     {
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": [
-        "Fqdns"
+        "fqdns"
       ]
     },
     {
       "filename": "**/sdk/documentintelligence/**/*.cs",
       "words": [
-        "UPCA",
-        "UPCE"
+        "upca",
+        "upce"
       ]
     },
     {
       "filename": "**/sdk/dynatrace/**/*.cs",
       "words": [
-        "Dynatrace",
-        "Liftr"
+        "dynatrace",
+        "liftr"
       ]
     },
     {
@@ -635,17 +693,17 @@
     {
       "filename": "**/sdk/devtestlabs/**/*.cs",
       "words": [
-        "Vhds",
-        "Retarget",
-        "Sysprepped"
+        "retarget",
+        "sysprepped",
+        "vhds"
       ]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": [
-        "Upca",
-        "Upce",
-        "ZhHant"
+        "upca",
+        "upce",
+        "zhhant"
       ]
     },
     {
@@ -657,15 +715,15 @@
     {
       "filename": "**/sdk/guestconfiguration/**/*.cs",
       "words": [
-        "Hcrp"
+        "hcrp"
       ]
     },
     {
       "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
       "words": [
         "fips",
-        "klmk",
-        "hsma"
+        "hsma",
+        "klmk"
       ]
     },
     {
@@ -673,25 +731,25 @@
       "words": [
         "aadds",
         "flink",
+        "hddlrs",
         "ldaps",
         "llap",
         "oaep",
-        "SSDLRS",
-        "SSDV",
-        "SSDZRS",
-        "HDDLRS",
+        "ssdlrs",
+        "ssdv",
+        "ssdzrs",
         "trino"
       ]
     },
     {
       "filename": "**/sdk/hdinsightcontainers/**/*.cs",
       "words": [
-        "trino",
         "flink",
+        "hddlrs",
         "llap",
-        "SSDLRS",
-        "SSDZRS",
-        "HDDLRS"
+        "ssdlrs",
+        "ssdzrs",
+        "trino"
       ]
     },
     {
@@ -704,20 +762,20 @@
     {
       "filename": "**/sdk/hybriddatamanager/**/*.cs",
       "words": [
-        "Oaep"
+        "oaep"
       ]
     },
     {
       "filename": "**/sdk/hybridaks/**/*.cs",
       "words": [
-        "Vmip",
-        "Kubevirt"
+        "kubevirt",
+        "vmip"
       ]
     },
     {
       "filename": "**/sdk/hybridcompute/**/*.cs",
       "words": [
-        "Scvmm"
+        "scvmm"
       ]
     },
     {
@@ -750,76 +808,98 @@
     {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
-        "Edifact",
-        "Keca",
-        "Unoa",
-        "Unob",
-        "Unoc",
-        "Unod",
-        "Unoe",
-        "Unof",
-        "Unog",
-        "Unoh",
-        "Unoi",
-        "Unoj",
-        "Unok",
-        "Unox",
-        "Unoy",
-        "Unregistering",
-        "Ccyymmdd",
-        "Hhmm",
-        "Hhmmss",
-        "Hhmms"
+        "ccyymmdd",
+        "edifact",
+        "hhmm",
+        "hhmms",
+        "hhmmss",
+        "keca",
+        "unoa",
+        "unob",
+        "unoc",
+        "unod",
+        "unoe",
+        "unof",
+        "unog",
+        "unoh",
+        "unoi",
+        "unoj",
+        "unok",
+        "unox",
+        "unoy",
+        "unregistering"
+      ]
+    },
+    {
+      "filename": "**/sdk/migrationassessment/**/*.cs",
+      "words": [
+        "cluter",
+        "dadsv",
+        "dasv",
+        "ddsv",
+        "eadsv",
+        "easv",
+        "ebdsv",
+        "ebsv",
+        "edsv",
+        "hadr",
+        "idms",
+        "mbps",
+        "mdsv",
+        "msazr",
+        "msazrde",
+        "msazrusgov",
+        "msmcazr",
+        "paas",
+        "reasonings",
+        "recieved",
+        "vcpu"
       ]
     },
     {
       "filename": "**/sdk/migrationdiscoverysap/**/*.cs",
       "words": [
-        "Hana",
-        "Informix",
-        "Ascs",
-        "Webdisp"
+        "ascs",
+        "hana",
+        "informix",
+        "webdisp"
       ]
     },
     {
       "filename": "**/sdk/mobilenetwork/**/*.cs",
       "words": [
-        "Napt",
-        "Plmn",
-        "Ambr",
-        "Rfsp",
-        "Snssai",
-        "AKSHCI",
-        "imsi",
+        "akshci",
+        "ambr",
+        "fiveg",
+        "fiveqi",
+        "gbps",
         "guti",
-        "tnla",
-        "imsi",
+        "iccid",
         "imei",
         "imeisv",
-        "tmsi",
-        "supi",
-        "suci",
-        "ngap",
-        "fiveg",
-        "ngap",
-        "tngf",
-        "fiveqi",
-        "plmn",
-        "napt",
-        "nssai",
-        "iccid",
-        "gbps",
+        "imsi",
         "mbps",
+        "napt",
+        "ngap",
+        "nssai",
+        "plmn",
+        "rfsp",
         "sdkutrg",
+        "snssai",
+        "suci",
+        "supi",
+        "tmsi",
+        "tngf",
+        "tnla",
         "ueip"
       ]
     },
     {
       "filename": "**/sdk/netapp/**/*.cs",
       "words": [
-        "mibps",
-        "hana",
         "cifs",
+        "hana",
+        "mibps",
         "nfsv",
         "ntfs"
       ]
@@ -827,61 +907,60 @@
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
-        "Azfw",
-        "Conditon",
-        "Diffie",
-        "Ddos",
-        "Dnat",
-        "Dscp",
-        "Eapmscha",
-        "Eaptls",
-        "Fips",
-        "Fqdns",
-        "Gcmaes",
-        "Generatevirtualwanvpnserverconfigurationvpnprofile",
+        "afri",
+        "apac",
+        "azfw",
+        "conditon",
+        "ddos",
+        "diffie",
+        "dnat",
+        "dscp",
+        "eapmscha",
+        "eaptls",
+        "fips",
+        "fqdns",
+        "gcmaes",
+        "generatevirtualwanvpnserverconfigurationvpnprofile",
+        "idps",
         "ikev",
         "ipam",
-        "Ipconfiguration",
-        "Mbps",
-        "Nics",
-        "Owasp",
-        "Pfsmm",
-        "Snat",
-        "Sstp",
-        "TLSDHEDSS",
-        "TLSDHERSA",
-        "Unprepare",
+        "ipconfiguration",
+        "latam",
+        "mbps",
+        "nics",
+        "ocsp",
+        "owasp",
+        "pfsmm",
+        "quic",
+        "reimage",
+        "snat",
+        "sstp",
+        "tlsdhedss",
+        "tlsdhersa",
+        "unprepare",
         "vmssip",
-        "Vnets",
-        "Vxlan",
-        "WAFV",
-        "Wans",
-        "Idps",
-        "Ocsp",
-        "Afri",
-        "Apac",
-        "Latam",
-        "Fips",
-        "Diffie"
+        "vnets",
+        "vxlan",
+        "wafv",
+        "wans"
       ]
     },
     {
       "filename": "**/sdk/networkcloud/**/*.cs",
       "words": [
-        "Reimage",
-        "Uncordon",
-        "Uncordoned",
-        "Ipam",
-        "Virtio",
+        "dpdk",
+        "ipam",
+        "ipvlan",
+        "lldp",
+        "macvlan",
         "nics",
-        "Lldp",
-        "Nics",
-        "Dpdk",
-        "Sriov",
-        "Sata",
-        "Uefi",
-        "Ipvlan",
-        "Macvlan"
+        "reimage",
+        "sata",
+        "sriov",
+        "uefi",
+        "uncordon",
+        "uncordoned",
+        "virtio"
       ]
     },
     {
@@ -891,21 +970,21 @@
         "echsm",
         "getsas",
         "listsas",
+        "mhsm",
+        "mhsmip",
         "oaep",
         "rsahsm",
-        "setsas",
-        "mhsm",
-        "mhsmip"
+        "setsas"
       ]
     },
     {
       "filename": "**/sdk/kusto/**/*.cs",
       "words": [
-        "tbps",
+        "openai",
         "scsv",
         "sohsv",
-        "tsve",
-        "Openai"
+        "tbps",
+        "tsve"
       ]
     },
     {
@@ -918,26 +997,24 @@
     {
       "filename": "**/sdk/managednetworkfabric/**/*.cs",
       "words": [
+        "dscp",
         "evpn",
-        "mbps",
         "gshut",
-        "dscp"
+        "mbps"
       ]
     },
     {
       "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
-        "Posix",
-        "posix",
-        "POSIX"
+        "posix"
       ]
     },
     {
       "filename": "**/sdk/maps/Azure.Maps.Weather/**/*.cs",
       "words": [
-        "Actuals",
-        "Bangla",
-        "Hecto"
+        "actuals",
+        "bangla",
+        "hecto"
       ]
     },
     {
@@ -955,15 +1032,15 @@
     {
       "filename": "**/sdk/monitor/**/*",
       "words": [
-        "AMPM",
+        "ampm",
         "bcdr",
         "cikey",
+        "ddyyyyhhmmss",
         "faas",
         "gzipped",
         "gzipping",
-        "DDYYYYHHMMSS",
         "hmac",
-        "HMACSHA",
+        "hmacsha",
         "ikey",
         "itsm",
         "jdbc",
@@ -971,16 +1048,16 @@
         "jioindiawest",
         "kaby",
         "khtml",
-        "Localizable",
-        "Milli",
+        "localizable",
+        "milli",
         "msdocs",
         "mslinks",
         "myvm",
         "onboarded",
         "opinsights",
-        "OTELRESOURCE",
+        "otelresource",
         "otlp",
-        "TMPDIR",
+        "tmpdir",
         "uaecentral",
         "uaenorth",
         "uksouth",
@@ -1012,20 +1089,20 @@
     {
       "filename": "**/sdk/openai/**/*",
       "words": [
-        "AOAI",
-        "Arrr",
-        "Dall",
-        "Dalle",
-        "Dall-E",
+        "aoai",
+        "arrr",
+        "dall",
+        "dall-e",
+        "dalle",
         "devcert",
-        "Filip",
-        "Filip's",
+        "filip",
+        "filip's",
         "granularities",
         "haikus",
         "msdocs",
-        "OpenAI",
-        "Pavleski",
-        "Tekakwitha"
+        "openai",
+        "pavleski",
+        "tekakwitha"
       ]
     },
     {
@@ -1041,26 +1118,30 @@
         "adbscharsetname",
         "adbsncharsetname",
         "autonomousdbversionsname",
-        "Exadata",
         "cloudexadatainfrastructurename",
-        "dbserverocid",
         "cloudvmclustername",
         "dbnodeocid",
+        "dbserverocid",
         "dbsystemshapename",
+        "dbversionsname",
         "dnsprivateviewocid",
-        "Ords",
-        "Ocid",
+        "ecpu",
+        "exadata",
+        "exadb",
+        "exascale",
+        "ezconnect",
+        "ezconnectplus",
+        "iorm",
         "ncharacter",
+        "ocid",
+        "ocids",
         "ocpu",
-        "Iorm",
-        "Vnic",
-        "Ecpu",
-        "Tpurgent",
-        "Vmdb",
-        "Tcps",
-        "Ezconnect",
-        "Ezconnectplus",
-        "Oltp"
+        "oltp",
+        "ords",
+        "tcps",
+        "tpurgent",
+        "vmdb",
+        "vnic"
       ]
     },
     {
@@ -1075,18 +1156,18 @@
       "filename": "**/sdk/paloaltonetworks/**/*",
       "words": [
         "armid",
+        "cloudngfw",
         "cpus",
         "eastus",
-        "cloudngfw",
         "fqdnlists",
         "isvtestuklegacy",
         "liftr",
         "liftrpantestplan",
         "msal",
         "ngfw",
-        "panrsid",
         "palo",
         "paloaltonetworks",
+        "panrsid",
         "payg",
         "praval",
         "rgopenapi",
@@ -1099,8 +1180,8 @@
       "words": [
         "asns",
         "glas",
-        "rpki",
-        "mbps"
+        "mbps",
+        "rpki"
       ]
     },
     {
@@ -1121,8 +1202,8 @@
     {
       "filename": "**/sdk/powerbidedicated/**/*.cs",
       "words": [
-        "vcore",
-        "pbie"
+        "pbie",
+        "vcore"
       ]
     },
     {
@@ -1136,7 +1217,48 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
+        "dsts",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
+      "words": [
+        "apacheavro",
+        "openai",
+        "scsv",
+        "sohsv",
+        "tbps",
+        "tsve"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
+      "words": [
+        "awsec"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs",
+      "words": [
+        "freemium"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs",
+      "words": [
+        "mibps"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs",
+      "words": [
+        "dscp",
+        "fqdns",
+        "ipam",
+        "snat",
+        "vnets",
+        "vxlan"
       ]
     },
     {
@@ -1154,24 +1276,31 @@
       ]
     },
     {
+      "filename": "**/sdk/recoveryservices/**/*.cs",
+      "words": [
+        "bcdr"
+      ]
+    },
+    {
       "filename": "**/sdk/recoveryservices-backup/**/*.cs",
       "words": [
-        "xsmb",
-        "kpis",
-        "hana",
         "dedup",
-        "xcool",
-        "vmilr",
-        "reregister",
-        "rehydrated",
+        "dpm",
+        "hana",
+        "kpis",
         "mab",
-        "dpm"
+        "rehydrated",
+        "reregister",
+        "vmilr",
+        "xcool",
+        "xsmb"
       ]
     },
     {
       "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
       "words": [
         "dras",
+        "fqdns",
         "nics",
         "reprotect"
       ]
@@ -1179,26 +1308,27 @@
     {
       "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
       "words": [
-        "vcenter",
+        "ahub",
+        "bcdr",
+        "distro",
+        "dras",
+        "esxi",
+        "fqdns",
+        "nics",
+        "orignal",
+        "payg",
         "reassociate",
         "reprotect",
-        "orignal",
-        "nics",
-        "distro",
-        "bcdr",
-        "vmware",
-        "ahub",
-        "payg",
-        "vcpus",
-        "esxi",
         "seleted",
-        "dras"
+        "vcenter",
+        "vcpus",
+        "vmware"
       ]
     },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
-        "Unprovisioning"
+        "unprovisioning"
       ]
     },
     {
@@ -1212,15 +1342,15 @@
     {
       "filename": "**/sdk/resourcemanager/**/*.cs",
       "words": [
-        "AZPROVISION"
+        "azprovision"
       ]
     },
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
-        "Puid",
-        "Decompile",
-        "Decompiled"
+        "decompile",
+        "decompiled",
+        "puid"
       ]
     },
     {
@@ -1246,32 +1376,32 @@
     {
       "filename": "**/sdk/securitycenter/**/*[.md,.txt,*.cs]",
       "words": [
-        "Pricings",
-        "Cspm"
+        "cspm",
+        "pricings"
       ]
     },
     {
       "filename": "**/sdk/securitycenter/**/*.cs",
       "words": [
         "aaduser",
-        "AJIT",
+        "ajit",
         "ciem",
-        "Dspm",
-        "Exfiltration",
+        "dspm",
+        "exfiltration",
         "iothubs",
-        "Kube",
-        "Mcas",
+        "kube",
+        "mcas",
         "myservers",
-        "Ngfw",
-        "NSGS",
-        "Oidc",
-        "Onboarded",
+        "ngfw",
+        "nsgs",
+        "oidc",
+        "onboarded",
         "paloalto",
-        "Qualys",
-        "Saas",
+        "qualys",
+        "saas",
         "vmuuid",
         "vnets",
-        "Wdatp"
+        "wdatp"
       ],
       "ignoreWords": [
         "AKIARPZCNODDNAEQFSOE",
@@ -1296,42 +1426,43 @@
     {
       "filename": "**/sdk/securityinsights/**/*.cs",
       "words": [
-        "Exfiltration",
-        "Mcas",
-        "Mdatp",
-        "Msti",
-        "Aadiam",
-        "Hkey",
-        "Taxii",
-        "Ueba",
-        "Signin",
-        "Defanged",
-        "Aatp",
-        "Puid",
-        "Stix",
-        "Whois",
-        "Nlstext",
-        "Criterias"
+        "aadiam",
+        "aatp",
+        "criterias",
+        "defanged",
+        "exfiltration",
+        "hkey",
+        "mcas",
+        "mdatp",
+        "msti",
+        "nlstext",
+        "puid",
+        "signin",
+        "stix",
+        "taxii",
+        "ueba",
+        "whois"
       ]
     },
     {
       "filename": "**/sdk/sphere/**/*.cs",
       "words": [
-        "Nwfs"
+        "nwfs"
       ]
     },
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
-        "CIAS",
-        "Droppeded",
-        "Nchar",
-        "Ntext",
-        "Nvarchar",
-        "Stdev",
-        "Unrestorable",
-        "Vcores",
-        "Dtcs"
+        "cias",
+        "droppeded",
+        "dtcs",
+        "freemium",
+        "nchar",
+        "ntext",
+        "nvarchar",
+        "stdev",
+        "unrestorable",
+        "vcores"
       ]
     },
     {
@@ -1348,46 +1479,45 @@
     {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
-        "Adls",
-        "Bangla",
-        "Beider",
-        "Bokmaal",
-        "Cyrl",
-        "Decompounder",
-        "Haase",
-        "Hant",
-        "Koelner",
-        "Latn",
-        "Lovins",
-        "Nysiis",
-        "Phonetik",
-        "Piqd",
-        "Rerank",
-        "Reranker",
-        "Rslp",
-        "Soundex",
-        "Sorani",
-        "Unprocessable",
-        "Beider",
-        "Exfiltration"
+        "adls",
+        "bangla",
+        "beider",
+        "bokmaal",
+        "cyrl",
+        "decompounder",
+        "exfiltration",
+        "haase",
+        "hant",
+        "koelner",
+        "latn",
+        "lovins",
+        "nysiis",
+        "phonetik",
+        "piqd",
+        "rerank",
+        "reranker",
+        "rslp",
+        "sorani",
+        "soundex",
+        "unprocessable"
       ]
     },
     {
       "filename": "**/sdk/storage/**/*.cs",
       "words": [
-        "Aadds",
-        "Deprovisioning",
-        "Gzrs",
-        "Ntfs",
-        "Posix",
-        "Ragrs",
-        "Ragzrs",
-        "Rehydrated",
-        "Undelete",
-        "Aadkerb",
-        "Mibps",
-        "Nfsv",
-        "Sddl"
+        "aadds",
+        "aadkerb",
+        "deprovisioning",
+        "gzrs",
+        "mibps",
+        "nfsv",
+        "ntfs",
+        "posix",
+        "ragrs",
+        "ragzrs",
+        "rehydrated",
+        "sddl",
+        "undelete"
       ]
     },
     {
@@ -1399,14 +1529,14 @@
     {
       "filename": "**/sdk/storagecache/**/*.cs",
       "words": [
-        "Clfs"
+        "clfs"
       ]
     },
     {
       "filename": "**/sdk/storagemover/**/*.cs",
       "words": [
-        "Unregistering",
-        "Mbps"
+        "mbps",
+        "unregistering"
       ]
     },
     {
@@ -1420,6 +1550,7 @@
       "words": [
         "adla",
         "adls",
+        "asana",
         "byoa",
         "distcp",
         "eloqua",
@@ -1436,21 +1567,17 @@
         "oozie",
         "responsys",
         "sasl",
+        "soql",
         "ssis",
         "ssisdb",
         "sybase",
-        "sybase",
         "teradata",
+        "tswtz",
+        "twilio",
         "updation",
         "usql",
         "vertica",
-        "xero",
-        "Asana",
-        "Ename",
-        "Evalue",
-        "Twilio",
-        "Soql",
-        "Tswtz"
+        "xero"
       ]
     },
     {
@@ -1462,45 +1589,45 @@
     {
       "filename": "**/sdk/synapse/**/*.cs",
       "words": [
+        "apacheavro",
+        "exprired",
         "nchar",
         "ntext",
         "nvarchar",
-        "apacheavro",
         "scsv",
-        "tsve",
         "sohsv",
-        "exprired"
+        "tsve"
       ]
     },
     {
       "filename": "**/sdk/textanalytics/**/*.cs",
       "words": [
-        "Brcpf",
-        "Idrg",
-        "Esdni",
-        "Eugps",
-        "Fhir",
-        "Plregon",
-        "Usuk"
+        "brcpf",
+        "esdni",
+        "eugps",
+        "fhir",
+        "idrg",
+        "plregon",
+        "usuk"
       ]
     },
     {
       "filename": "**/sdk/websites/**/*.cs",
       "words": [
-        "Ipssl",
-        "Kube",
-        "Metadatas",
-        "Unparked",
-        "Proto",
-        "Zilla",
-        "Guage",
-        "Plex",
-        "Vstsrm",
-        "Localizable",
-        "Dapr",
-        "TLSAES",
-        "Unregistering",
-        "Diffie"
+        "dapr",
+        "diffie",
+        "guage",
+        "ipssl",
+        "kube",
+        "localizable",
+        "metadatas",
+        "plex",
+        "proto",
+        "tlsaes",
+        "unparked",
+        "unregistering",
+        "vstsrm",
+        "zilla"
       ]
     },
     {
@@ -1508,30 +1635,40 @@
       "words": [
         "ascs",
         "hana",
-        "ssdlrs",
-        "Mbps"
+        "mbps",
+        "ssdlrs"
+      ]
+    },
+    {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
       ]
     },
     {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
-        "Noreuse",
-        "Unsecure"
+        "ngroups",
+        "noreuse",
+        "unsecure"
       ]
     },
     {
       "filename": "**/sdk/machinelearningservices/**/*.cs",
       "words": [
-        "Skus",
-        "Cname",
-        "Kube",
-        "Gluster",
-        "Gepc",
-        "Conda",
-        "Reimage",
-        "Cran",
-        "Rscript",
-        "VCPUs"
+        "cname",
+        "conda",
+        "cran",
+        "gepc",
+        "gluster",
+        "kube",
+        "reimage",
+        "rscript",
+        "skus",
+        "vcpus"
       ]
     },
     {
@@ -1544,50 +1681,51 @@
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
-        "Msrp",
-        "Hana"
+        "hana",
+        "msrp"
       ]
     },
     {
       "filename": "**/sdk/securitydevops/**/*.cs",
       "words": [
-        "Orgs"
+        "orgs"
       ]
     },
     {
       "filename": "**/sdk/voiceservices/**/*.cs",
       "words": [
-        "Esrp",
-        "Pcma",
-        "Pcmu"
+        "esrp",
+        "pcma",
+        "pcmu"
       ]
     },
     {
       "filename": "**/sdk/webpubsub/**/*.cs",
       "words": [
-        "protobuf",
-        "Ackable",
-        "awps"
+        "ackable",
+        "awps",
+        "protobuf"
       ]
     },
     {
       "filename": "**/sdk/openai/**/*.cs",
       "words": [
-        "Probs",
-        "Logprobs",
-        "Logit"
+        "logit",
+        "logprobs",
+        "probs"
       ]
     },
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
+        "cves",
+        "diffie",
+        "iotfirmwaredefense",
+        "ocsp",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "sbom"
       ]
     },
     {
@@ -1599,33 +1737,32 @@
     {
       "filename": "**/sdk/hybridnetwork/**/*.cs",
       "words": [
-        "Nfvi",
         "nfvi",
-        "NFVIs",
         "nfvis"
       ]
     },
     {
       "filename": "**/sdk/healthdataaiservices/**/*",
       "words": [
-        "Deidentification",
-        "Deidentify",
-        "Deidentified",
-        "Deid",
-        "HEALTHDATAAISERVICES"
+        "deid",
+        "deidentification",
+        "deidentified",
+        "deidentify",
+        "healthdataaiservices"
       ]
     },
     {
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
-        "Byok"
+        "byok"
       ]
     },
     {
       "filename": "**/sdk/openai/**/*.cs",
       "words": [
-        "AOAI",
-        "Rerank"
+        "aoai",
+        "evals",
+        "rerank"
       ]
     },
     {
@@ -1641,13 +1778,48 @@
       ]
     },
     {
+      "filename": "**/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/**",
+      "words": [
+        "acrad",
+        "agatston",
+        "ascvd",
+        "birads",
+        "ceus",
+        "cusick",
+        "frax",
+        "hnpcc",
+        "kellgren",
+        "mednax",
+        "tonnis",
+        "tyrer"
+      ]
+    },
+    {
       "filename": "**/sdk/iotoperations/Azure.ResourceManager.IotOperations/api/*.cs",
       "words": [
-        "sasl",
-        "Sasl",
-        "Acks",
-        "acks"
+        "acks",
+        "sasl"
       ]
+    },
+    {
+      "filename": "**/sdk/iotoperations/**/*.cs",
+      "words": [
+        "akri",
+        "bucketized"
+      ]
+    },
+    {
+      "filename": "/sdk/virtualenclaves/**/*.cs",
+      "words": [
+        "mobo"
+      ]
+    },
+    {
+      "filename": "**/sdk/workloadorchestration/**/*.cs",
+      "words": [
+        "inprogress",
+        "undeployed"
+       ]
     }
   ],
   "allowCompoundWords": true

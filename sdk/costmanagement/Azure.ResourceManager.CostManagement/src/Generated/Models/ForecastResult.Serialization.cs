@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0))
+                        using (JsonDocument document = JsonDocument.Parse(item0, ModelSerializationExtensions.JsonDocumentOptions))
                         {
                             JsonSerializer.Serialize(writer, document.RootElement);
                         }
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCostManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -302,7 +303,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ForecastResult)} does not support writing '{options.Format}' format.");
             }
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeForecastResult(document.RootElement, options);
                     }
                 default:

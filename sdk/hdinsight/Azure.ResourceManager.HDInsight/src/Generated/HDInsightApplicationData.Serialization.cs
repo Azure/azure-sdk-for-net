@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHDInsightContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.HDInsight
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightApplicationData)} does not support writing '{options.Format}' format.");
             }
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightApplicationData(document.RootElement, options);
                     }
                 default:

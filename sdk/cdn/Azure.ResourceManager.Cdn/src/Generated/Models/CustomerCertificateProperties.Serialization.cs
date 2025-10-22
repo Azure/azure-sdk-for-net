@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource);
+            ((IJsonModel<WritableSubResource>)SecretSource).Write(writer, options);
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("secretSource"u8))
                 {
-                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    secretSource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("secretVersion"u8))
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomerCertificateProperties(document.RootElement, options);
                     }
                 default:

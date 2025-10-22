@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureChatDataSourceVectorizationSource")]
+[CodeGenType("AzureChatDataSourceVectorizationSource")]
 [Experimental("AOAI001")]
 public abstract partial class DataSourceVectorizer
 {

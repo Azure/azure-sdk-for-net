@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,12 +40,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
-                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
+                ((IJsonModel<WritableSubResource>)FrontendIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(BackendAddressPools))
             {
@@ -51,14 +53,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                JsonSerializer.Serialize(writer, Probe);
+                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
@@ -94,6 +96,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("disableOutboundSnat"u8);
                 writer.WriteBooleanValue(DisableOutboundSnat.Value);
             }
+            if (Optional.IsDefined(EnableConnectionTracking))
+            {
+                writer.WritePropertyName("enableConnectionTracking"u8);
+                writer.WriteBooleanValue(EnableConnectionTracking.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -145,6 +152,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? enableFloatingIP = default;
             bool? enableTcpReset = default;
             bool? disableOutboundSnat = default;
+            bool? enableConnectionTracking = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    frontendIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("backendAddressPool"u8))
@@ -165,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("backendAddressPools"u8))
@@ -177,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                     }
                     backendAddressPools = array;
                     continue;
@@ -188,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    probe = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    probe = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -255,6 +263,15 @@ namespace Azure.ResourceManager.Network.Models
                     disableOutboundSnat = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableConnectionTracking"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableConnectionTracking = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -280,8 +297,249 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 disableOutboundSnat,
+                enableConnectionTracking,
                 provisioningState,
                 additionalProperties);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FrontendIPConfigurationId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frontendIPConfiguration: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FrontendIPConfiguration))
+                {
+                    builder.Append("  frontendIPConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FrontendIPConfiguration, options, 2, false, "  frontendIPConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendAddressPoolId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendAddressPool: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendAddressPool))
+                {
+                    builder.Append("  backendAddressPool: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BackendAddressPool, options, 2, false, "  backendAddressPool: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendAddressPools), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendAddressPools: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BackendAddressPools))
+                {
+                    if (BackendAddressPools.Any())
+                    {
+                        builder.Append("  backendAddressPools: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BackendAddressPools)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  backendAddressPools: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProbeId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probe: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Probe))
+                {
+                    builder.Append("  probe: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Probe, options, 2, false, "  probe: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine($"'{Protocol.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadDistribution), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  loadDistribution: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LoadDistribution))
+                {
+                    builder.Append("  loadDistribution: ");
+                    builder.AppendLine($"'{LoadDistribution.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontendPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frontendPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  frontendPort: ");
+                builder.AppendLine($"{FrontendPort}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendPort))
+                {
+                    builder.Append("  backendPort: ");
+                    builder.AppendLine($"{BackendPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdleTimeoutInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  idleTimeoutInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdleTimeoutInMinutes))
+                {
+                    builder.Append("  idleTimeoutInMinutes: ");
+                    builder.AppendLine($"{IdleTimeoutInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFloatingIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableFloatingIP: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableFloatingIP))
+                {
+                    builder.Append("  enableFloatingIP: ");
+                    var boolValue = EnableFloatingIP.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableTcpReset), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableTcpReset: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableTcpReset))
+                {
+                    builder.Append("  enableTcpReset: ");
+                    var boolValue = EnableTcpReset.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableOutboundSnat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disableOutboundSnat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisableOutboundSnat))
+                {
+                    builder.Append("  disableOutboundSnat: ");
+                    var boolValue = DisableOutboundSnat.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableConnectionTracking), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableConnectionTracking: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableConnectionTracking))
+                {
+                    builder.Append("  enableConnectionTracking: ");
+                    var boolValue = EnableConnectionTracking.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<LoadBalancingRuleProperties>.Write(ModelReaderWriterOptions options)
@@ -291,7 +549,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support writing '{options.Format}' format.");
             }
@@ -305,7 +565,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadBalancingRuleProperties(document.RootElement, options);
                     }
                 default:

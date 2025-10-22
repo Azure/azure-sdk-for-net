@@ -211,7 +211,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         message.BufferResponse = true;
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
 
         testDoneTcs.Cancel();
     }
@@ -243,7 +243,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         message.BufferResponse = true;
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
 
         testDoneTcs.Cancel();
     }
@@ -281,8 +281,10 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
         var buffer = new byte[10];
         Assert.AreEqual(1, await responseContentStream!.ReadAsync(buffer, 0, 1));
+#pragma warning disable CA2022 // This test is validating an exception is thrown and doesn't need to check the return value of ReadAsync.
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
-        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+#pragma warning restore CA2022
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. The default timeout can be adjusted by passing a custom ClientPipelineOptions.NetworkTimeout value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.", exception!.Message);
 
         testDoneTcs.Cancel();
     }

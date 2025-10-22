@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsSecurityRuleResource IOperationSource<DnsSecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DnsSecurityRuleData.DeserializeDnsSecurityRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<DnsSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsSecurityRuleResource(_client, data);
         }
 
         async ValueTask<DnsSecurityRuleResource> IOperationSource<DnsSecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DnsSecurityRuleData.DeserializeDnsSecurityRuleData(document.RootElement);
-            return new DnsSecurityRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<DnsSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            return await Task.FromResult(new DnsSecurityRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

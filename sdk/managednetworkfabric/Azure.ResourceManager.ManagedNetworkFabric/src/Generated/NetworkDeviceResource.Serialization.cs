@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkDeviceResource : IJsonModel<NetworkDeviceData>
     {
+        private static NetworkDeviceData s_dataDeserializationInstance;
+        private static NetworkDeviceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkDeviceData>)Data).Write(writer, options);
 
-        NetworkDeviceData IJsonModel<NetworkDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkDeviceData>)Data).Create(ref reader, options);
+        NetworkDeviceData IJsonModel<NetworkDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkDeviceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkDeviceData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkDeviceData IPersistableModel<NetworkDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkDeviceData>(data, options);
+        NetworkDeviceData IPersistableModel<NetworkDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkDeviceData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkDeviceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkDeviceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

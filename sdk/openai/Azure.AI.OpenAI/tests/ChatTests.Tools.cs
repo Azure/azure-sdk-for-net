@@ -115,7 +115,7 @@ namespace Azure.AI.OpenAI.Tests
 
             // TODO old tests look for stop reason of function_call for both auto and function, but the service currently returns "stop"
             // for function
-            if (toolChoice == ToolChoiceTestType.Auto)
+            if (toolChoice == ToolChoiceTestType.Auto || toolChoice == ToolChoiceTestType.Required)
             {
                 Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.ToolCalls));
             }

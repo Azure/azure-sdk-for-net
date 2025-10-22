@@ -35,8 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("domainName"u8);
-            writer.WriteStringValue(DomainName);
+            if (Optional.IsDefined(DomainName))
+            {
+                writer.WritePropertyName("domainName"u8);
+                writer.WriteStringValue(DomainName);
+            }
             if (Optional.IsDefined(NetBiosDomainName))
             {
                 writer.WritePropertyName("netBiosDomainName"u8);
@@ -47,8 +50,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("forestName"u8);
                 writer.WriteStringValue(ForestName);
             }
-            writer.WritePropertyName("domainGuid"u8);
-            writer.WriteStringValue(DomainGuid);
+            if (Optional.IsDefined(ActiveDirectoryDomainGuid))
+            {
+                writer.WritePropertyName("domainGuid"u8);
+                writer.WriteStringValue(ActiveDirectoryDomainGuid.Value);
+            }
             if (Optional.IsDefined(DomainSid))
             {
                 writer.WritePropertyName("domainSid"u8);
@@ -77,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
             string domainName = default;
             string netBiosDomainName = default;
             string forestName = default;
-            Guid domainGuid = default;
+            Guid? domainGuid = default;
             string domainSid = default;
             string azureStorageSid = default;
             string samAccountName = default;
@@ -135,6 +141,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("domainGuid"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     domainGuid = property.Value.GetGuid();
                     continue;
                 }
@@ -260,7 +270,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainGuid), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryDomainGuid), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  domainGuid: ");
@@ -268,8 +278,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                builder.Append("  domainGuid: ");
-                builder.AppendLine($"'{DomainGuid.ToString()}'");
+                if (Optional.IsDefined(ActiveDirectoryDomainGuid))
+                {
+                    builder.Append("  domainGuid: ");
+                    builder.AppendLine($"'{ActiveDirectoryDomainGuid.Value.ToString()}'");
+                }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainSid), out propertyOverride);
@@ -367,7 +380,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -383,7 +396,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageActiveDirectoryProperties(document.RootElement, options);
                     }
                 default:

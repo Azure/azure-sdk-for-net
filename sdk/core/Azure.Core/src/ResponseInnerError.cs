@@ -12,10 +12,13 @@ namespace Azure
     /// <summary>
     /// Represents an inner error.
     /// </summary>
-    [JsonConverter(typeof(Converter))]
-    internal sealed class ResponseInnerError
+    internal sealed partial class ResponseInnerError
     {
         private readonly JsonElement _innerErrorElement;
+
+        internal ResponseInnerError()
+        {
+        }
 
         internal ResponseInnerError(string? code, ResponseInnerError? innerError, JsonElement innerErrorElement)
         {
@@ -33,43 +36,6 @@ namespace Azure
         /// Gets the inner error.
         /// </summary>
         public ResponseInnerError? InnerError { get; }
-
-        internal class Converter : JsonConverter<ResponseInnerError?>
-        {
-            public override ResponseInnerError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                var element = document.RootElement;
-                return Read(element);
-            }
-
-            internal static ResponseInnerError? Read(JsonElement element)
-            {
-                if (element.ValueKind == JsonValueKind.Null)
-                {
-                    return null;
-                }
-
-                string? code = null;
-                if (element.TryGetProperty("code", out var property))
-                {
-                    code = property.GetString();
-                }
-
-                ResponseInnerError? innererror = null;
-                if (element.TryGetProperty("innererror", out property))
-                {
-                    innererror = Read(property);
-                }
-
-                return new ResponseInnerError(code, innererror, element.Clone());
-            }
-
-            public override void Write(Utf8JsonWriter writer, ResponseInnerError? value, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         /// <inheritdoc />
         public override string ToString()

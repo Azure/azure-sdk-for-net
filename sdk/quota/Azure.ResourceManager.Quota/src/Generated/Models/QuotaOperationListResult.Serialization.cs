@@ -36,16 +36,13 @@ namespace Azure.ResourceManager.Quota.Models
                 throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -59,7 +56,7 @@ namespace Azure.ResourceManager.Quota.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,10 +93,6 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<QuotaOperationResult> array = new List<QuotaOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -119,7 +112,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QuotaOperationListResult(value ?? new ChangeTrackingList<QuotaOperationResult>(), nextLink, serializedAdditionalRawData);
+            return new QuotaOperationListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -190,7 +183,7 @@ namespace Azure.ResourceManager.Quota.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -206,7 +199,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQuotaOperationListResult(document.RootElement, options);
                     }
                 default:

@@ -1,5 +1,31 @@
 namespace Azure.Data.AppConfiguration
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppConfigurationAudience : System.IEquatable<Azure.Data.AppConfiguration.AppConfigurationAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppConfigurationAudience(string value) { throw null; }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzureChina { get { throw null; } }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzureGovernment { get { throw null; } }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Data.AppConfiguration.AppConfigurationAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.AppConfigurationAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDataAppConfigurationContext() { }
+        public static Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConfigurationClient
     {
         protected ConfigurationClient() { }
@@ -74,6 +100,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
         public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_11_01) { }
+        public Azure.Data.AppConfiguration.AppConfigurationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 0,
@@ -84,10 +111,13 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
         public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label = null, string contentType = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = null, string label = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name = null, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status = default(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters = null, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition = default(Azure.Data.AppConfiguration.SnapshotComposition?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.TimeSpan? retentionPeriod = default(System.TimeSpan?), long? sizeInBytes = default(long?), long? itemCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.SettingLabel SettingLabel(string name = null) { throw null; }
     }
-    public partial class ConfigurationSetting
+    public partial class ConfigurationSetting : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
         public ConfigurationSetting(string key, string value, string label, Azure.ETag etag) { }
@@ -103,17 +133,37 @@ namespace Azure.Data.AppConfiguration
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSetting (Azure.Response result) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Data.AppConfiguration.ConfigurationSetting configurationSetting) { throw null; }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.ConfigurationSetting System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.ConfigurationSetting System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public partial class ConfigurationSettingsFilter
+    public partial class ConfigurationSettingsFilter : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>
     {
         public ConfigurationSettingsFilter(string key) { }
         public string Key { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSettingsFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSettingsFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.ConfigurationSettingsFilter System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.ConfigurationSettingsFilter System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSettingsFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationSnapshot
+    public partial class ConfigurationSnapshot : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>
     {
         public ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -127,6 +177,17 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.SnapshotComposition? SnapshotComposition { get { throw null; } set { } }
         public Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSnapshot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSnapshot (Azure.Response result) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Data.AppConfiguration.ConfigurationSnapshot configurationSnapshot) { throw null; }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSnapshot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.ConfigurationSnapshot System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.ConfigurationSnapshot System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfigurationSnapshotStatus : System.IEquatable<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus>
@@ -145,6 +206,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus left, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.ConfigurationSnapshotStatus (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus left, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -198,10 +260,19 @@ namespace Azure.Data.AppConfiguration
         Tags = (uint)128,
         All = (uint)4294967295,
     }
-    public partial class SettingLabel
+    public partial class SettingLabel : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.SettingLabel>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.SettingLabel>
     {
         internal SettingLabel() { }
         public string Name { get { throw null; } }
+        protected virtual Azure.Data.AppConfiguration.SettingLabel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Data.AppConfiguration.SettingLabel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.SettingLabel System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.SettingLabel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.SettingLabel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.SettingLabel System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.SettingLabel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.SettingLabel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.SettingLabel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SettingLabelFields : System.IEquatable<Azure.Data.AppConfiguration.SettingLabelFields>
@@ -217,6 +288,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.SettingLabelFields (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.SettingLabelFields? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -258,6 +330,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.SnapshotComposition left, Azure.Data.AppConfiguration.SnapshotComposition right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.SnapshotComposition (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.SnapshotComposition? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SnapshotComposition left, Azure.Data.AppConfiguration.SnapshotComposition right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -285,6 +358,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.SnapshotFields left, Azure.Data.AppConfiguration.SnapshotFields right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.SnapshotFields (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.SnapshotFields? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SnapshotFields left, Azure.Data.AppConfiguration.SnapshotFields right) { throw null; }
         public override string ToString() { throw null; }
     }

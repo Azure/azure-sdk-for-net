@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.FrontDoor
 {
     public partial class FrontendEndpointResource : IJsonModel<FrontendEndpointData>
     {
+        private static FrontendEndpointData s_dataDeserializationInstance;
+        private static FrontendEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FrontendEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontendEndpointData>)Data).Write(writer, options);
 
-        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontendEndpointData>)Data).Create(ref reader, options);
+        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontendEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontendEndpointData>(Data, options, AzureResourceManagerFrontDoorContext.Default);
 
-        FrontendEndpointData IPersistableModel<FrontendEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontendEndpointData>(data, options);
+        FrontendEndpointData IPersistableModel<FrontendEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontendEndpointData>(data, options, AzureResourceManagerFrontDoorContext.Default);
 
-        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontendEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontendEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

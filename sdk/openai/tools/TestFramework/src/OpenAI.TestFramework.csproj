@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+    <NoWarn>$(NoWarn);NU1604</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

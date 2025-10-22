@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,8 +38,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
         }
 
         DataReplicationEventData IJsonModel<DataReplicationEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,6 +76,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 if (property.NameEquals("properties"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     properties = DataReplicationEventProperties.DeserializeDataReplicationEventProperties(property.Value, options);
                     continue;
                 }
@@ -96,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationEventData)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationEventData(document.RootElement, options);
                     }
                 default:

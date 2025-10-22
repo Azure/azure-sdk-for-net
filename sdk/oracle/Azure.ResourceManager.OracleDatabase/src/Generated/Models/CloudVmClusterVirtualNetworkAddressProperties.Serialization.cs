@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(VmOcid))
+            if (Optional.IsDefined(VipVmOcid))
             {
                 writer.WritePropertyName("vmOcid"u8);
-                writer.WriteStringValue(VmOcid);
+                writer.WriteStringValue(VipVmOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(VipOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(VipOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(Domain))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string ipAddress = default;
-            ResourceIdentifier vmOcid = default;
-            ResourceIdentifier ocid = default;
+            string vmOcid = default;
+            string ocid = default;
             string domain = default;
             string lifecycleDetails = default;
             OracleDatabaseProvisioningState? provisioningState = default;
@@ -130,20 +130,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("vmOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vmOcid = new ResourceIdentifier(property.Value.GetString());
+                    vmOcid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ocid = new ResourceIdentifier(property.Value.GetString());
+                    ocid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("domain"u8))
@@ -208,7 +200,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudVmClusterVirtualNetworkAddressProperties)} does not support writing '{options.Format}' format.");
             }
@@ -222,7 +214,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudVmClusterVirtualNetworkAddressProperties(document.RootElement, options);
                     }
                 default:

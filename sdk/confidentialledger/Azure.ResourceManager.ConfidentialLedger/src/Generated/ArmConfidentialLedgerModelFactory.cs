@@ -61,8 +61,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="ledgerSku"> SKU associated with the ledger. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
+        /// <param name="hostLevel"> CCF Property for the logging level for the untrusted host: Trace, Debug, Info, Fail, Fatal. </param>
+        /// <param name="maxBodySizeInMb"> CCF Property for the maximum size of the http request body: 1MB, 5MB, 10MB. </param>
+        /// <param name="subjectName"> CCF Property for the subject name to include in the node certificate. Default: CN=CCF Node. </param>
+        /// <param name="nodeCount"> Number of CCF nodes in the ACC Ledger. </param>
+        /// <param name="writeLBAddressPrefix"> Prefix for the write load balancer. Example: write. </param>
+        /// <param name="workerThreads"> Number of additional threads processing incoming client requests in the enclave (modify with care!). </param>
+        /// <param name="enclavePlatform"> Enclave platform of the Confidential Ledger. </param>
+        /// <param name="applicationType"> Application type of the Confidential Ledger. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerProperties"/> instance for mocking. </returns>
-        public static ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, Uri ledgerUri = null, Uri identityServiceUri = null, string ledgerInternalNamespace = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerType? ledgerType = null, ConfidentialLedgerProvisioningState? provisioningState = null, ConfidentialLedgerSku? ledgerSku = null, IEnumerable<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, IEnumerable<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null)
+        public static ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, Uri ledgerUri = null, Uri identityServiceUri = null, string ledgerInternalNamespace = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerType? ledgerType = null, ConfidentialLedgerProvisioningState? provisioningState = null, ConfidentialLedgerSku? ledgerSku = null, IEnumerable<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, IEnumerable<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null, string hostLevel = null, int? maxBodySizeInMb = null, string subjectName = null, int? nodeCount = null, string writeLBAddressPrefix = null, int? workerThreads = null, ConfidentialLedgerEnclavePlatform? enclavePlatform = null, ConfidentialLedgerApplicationType? applicationType = null)
         {
             aadBasedSecurityPrincipals ??= new List<AadBasedSecurityPrincipal>();
             certBasedSecurityPrincipals ??= new List<CertBasedSecurityPrincipal>();
@@ -78,6 +86,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 ledgerSku,
                 aadBasedSecurityPrincipals?.ToList(),
                 certBasedSecurityPrincipals?.ToList(),
+                hostLevel,
+                maxBodySizeInMb,
+                subjectName,
+                nodeCount,
+                writeLBAddressPrefix,
+                workerThreads,
+                enclavePlatform,
+                applicationType,
                 serializedAdditionalRawData: null);
         }
 
@@ -139,8 +155,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="runningState"> Object representing RunningState for Managed CCF. </param>
         /// <param name="provisioningState"> Provisioning state of Managed CCF Resource. </param>
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
+        /// <param name="enclavePlatform"> Enclave platform of Managed CCF. </param>
         /// <returns> A new <see cref="Models.ManagedCcfProperties"/> instance for mocking. </returns>
-        public static ManagedCcfProperties ManagedCcfProperties(string appName = null, Uri appUri = null, Uri identityServiceUri = null, IEnumerable<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, ConfidentialLedgerDeploymentType deploymentType = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerProvisioningState? provisioningState = null, int? nodeCount = null)
+        public static ManagedCcfProperties ManagedCcfProperties(string appName = null, Uri appUri = null, Uri identityServiceUri = null, IEnumerable<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, ConfidentialLedgerDeploymentType deploymentType = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerProvisioningState? provisioningState = null, int? nodeCount = null, ConfidentialLedgerEnclavePlatform? enclavePlatform = null)
         {
             memberIdentityCertificates ??= new List<ConfidentialLedgerMemberIdentityCertificate>();
 
@@ -153,6 +170,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 runningState,
                 provisioningState,
                 nodeCount,
+                enclavePlatform,
                 serializedAdditionalRawData: null);
         }
 

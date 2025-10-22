@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAutomationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerAutomationContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Automation
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomationPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Automation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutomationPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

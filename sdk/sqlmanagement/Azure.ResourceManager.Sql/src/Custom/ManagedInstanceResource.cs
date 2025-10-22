@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.ResourceManager.Sql.Models;
 using System.Threading;
+using Azure.Core;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -81,6 +84,78 @@ namespace Azure.ResourceManager.Sql
             options.ObservationMetric = observationMetric;
 
             return GetTopQueries(options, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DistributedAvailabilityGroupResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of DistributedAvailabilityGroupResources and their operations over a DistributedAvailabilityGroupResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DistributedAvailabilityGroupCollection GetDistributedAvailabilityGroups()
+        {
+            return GetCachedClient(client => new DistributedAvailabilityGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a distributed availability group info.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetDistributedAvailabilityGroups().GetAsync(distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a distributed availability group info.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DistributedAvailabilityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<DistributedAvailabilityGroupResource> GetDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
         }
     }
 }

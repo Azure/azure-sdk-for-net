@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class HybridContainerServiceAgentPoolResource : IJsonModel<HybridContainerServiceAgentPoolData>
     {
+        private static HybridContainerServiceAgentPoolData s_dataDeserializationInstance;
+        private static HybridContainerServiceAgentPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridContainerServiceAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceAgentPoolData>)Data).Write(writer, options);
 
-        HybridContainerServiceAgentPoolData IJsonModel<HybridContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceAgentPoolData>)Data).Create(ref reader, options);
+        HybridContainerServiceAgentPoolData IJsonModel<HybridContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceAgentPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridContainerServiceAgentPoolData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        HybridContainerServiceAgentPoolData IPersistableModel<HybridContainerServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(data, options);
+        HybridContainerServiceAgentPoolData IPersistableModel<HybridContainerServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<HybridContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceAgentPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceAgentPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

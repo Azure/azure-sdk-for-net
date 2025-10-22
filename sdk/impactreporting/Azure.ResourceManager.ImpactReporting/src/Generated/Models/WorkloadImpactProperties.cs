@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             ImpactCategory = impactCategory;
             ArmCorrelationIds = new ChangeTrackingList<string>();
             Performance = new ChangeTrackingList<Performance>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadImpactProperties"/>. </summary>
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadImpactProperties(ProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, string impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<Performance> performance, Connectivity connectivity, WorkloadImpactPropertiesAdditionalProperties additionalProperties, ErrorDetailProperties errorDetails, Workload workload, string impactGroupId, ConfidenceLevel? confidenceLevel, ClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadImpactProperties(ProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, string impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<Performance> performance, Connectivity connectivity, IDictionary<string, BinaryData> additionalProperties, ErrorDetailProperties errorDetails, Workload workload, string impactGroupId, ConfidenceLevel? confidenceLevel, ClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StartOn = startOn;
@@ -130,8 +131,37 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public IList<Performance> Performance { get; }
         /// <summary> Details about connectivity issue. Applicable when root resource causing the issue is not identified. For example, when a VM is impacted due to a network issue, the impacted resource is identified as the VM, but the root cause is the network. In such cases, the connectivity field will have the details about the network issue. </summary>
         public Connectivity Connectivity { get; set; }
-        /// <summary> Additional fields related to impact, applicable fields per resource type are list under /impactCategories API. </summary>
-        public WorkloadImpactPropertiesAdditionalProperties AdditionalProperties { get; set; }
+        /// <summary>
+        /// Additional fields related to impact, applicable fields per resource type are list under /impactCategories API
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
         /// <summary> ARM error code and error message associated with the impact. </summary>
         public ErrorDetailProperties ErrorDetails { get; set; }
         /// <summary> Information about the impacted workload. </summary>

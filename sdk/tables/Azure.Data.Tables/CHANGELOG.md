@@ -1,14 +1,24 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where `TimeSpan` properties in strongly typed table entities were not being deserialized.
+- Fixed an issue when deserializing strongly typed table entities with enum properties. Enum values that aren't defined in the enum type are now skipped during deserialization of the table entity.
+- Fixed an issue when comparing `TableErrorCode` with null strings using equality operators.
 
 ### Other Changes
+- Use precedence rules to reduce the parenthesis nesting in OData filters generated from LINQ expressions.
+ 
+## 12.11.0 (2025-05-06)
+
+### Features Added
+
+- Added support for specifying the token credential's Microsoft Entra audience when creating a client.
 
 ## 12.10.0 (2025-01-14)
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.GraphServices.Models;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.GraphServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerGraphServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.GraphServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGraphServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.GraphServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGraphServicesAccountResourceData(document.RootElement, options);
                     }
                 default:

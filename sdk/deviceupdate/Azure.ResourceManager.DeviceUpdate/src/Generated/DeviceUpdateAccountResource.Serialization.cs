@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdateAccountResource : IJsonModel<DeviceUpdateAccountData>
     {
+        private static DeviceUpdateAccountData s_dataDeserializationInstance;
+        private static DeviceUpdateAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceUpdateAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateAccountData>)Data).Write(writer, options);
 
-        DeviceUpdateAccountData IJsonModel<DeviceUpdateAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateAccountData>)Data).Create(ref reader, options);
+        DeviceUpdateAccountData IJsonModel<DeviceUpdateAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateAccountData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdateAccountData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        DeviceUpdateAccountData IPersistableModel<DeviceUpdateAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdateAccountData>(data, options);
+        DeviceUpdateAccountData IPersistableModel<DeviceUpdateAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdateAccountData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        string IPersistableModel<DeviceUpdateAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdateAccountData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceUpdateAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdateAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

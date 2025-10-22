@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("autoRotationEnabled"u8);
                 writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(KeyVersion))
+            {
+                writer.WritePropertyName("keyVersion"u8);
+                writer.WriteStringValue(KeyVersion);
+            }
             writer.WriteEndObject();
         }
 
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Sql
             string thumbprint = default;
             DateTimeOffset? creationDate = default;
             bool? autoRotationEnabled = default;
+            string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -212,6 +218,11 @@ namespace Azure.ResourceManager.Sql
                             autoRotationEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("keyVersion"u8))
+                        {
+                            keyVersion = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -234,6 +245,7 @@ namespace Azure.ResourceManager.Sql
                 thumbprint,
                 creationDate,
                 autoRotationEnabled,
+                keyVersion,
                 serializedAdditionalRawData);
         }
 
@@ -449,6 +461,29 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    keyVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVersion))
+                {
+                    builder.Append("    keyVersion: ");
+                    if (KeyVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVersion}'");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -461,7 +496,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -477,7 +512,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlServerKeyData(document.RootElement, options);
                     }
                 default:

@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MakeSourceServerReadOnly))
+            if (Optional.IsDefined(ShouldMakeSourceServerReadOnly))
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
-                writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
+                writer.WriteBooleanValue(ShouldMakeSourceServerReadOnly.Value);
             }
             if (Optional.IsDefined(StartedOn))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MySqlConnectionInfo sourceConnectionInfo = default;
-            MySqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationMySqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationMySqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
             bool? makeSourceServerReadOnly = default;
             DateTimeOffset? startedOn = default;
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskInput)} does not support writing '{options.Format}' format.");
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskInput(document.RootElement, options);
                     }
                 default:

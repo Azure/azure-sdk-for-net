@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityType"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Details))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            identityType = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
+                            identityType = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerAppServiceContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("details"u8))
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiKeyVaultReferenceData(document.RootElement, options);
                     }
                 default:

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskOutput"/>. </summary>
         internal UploadOciDriverTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskOutput"/>. </summary>
         /// <param name="driverPackageName"> The name of the driver package that was validated and uploaded. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadOciDriverTaskOutput(string driverPackageName, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UploadOciDriverTaskOutput(string driverPackageName, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DriverPackageName = driverPackageName;
             ValidationErrors = validationErrors;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> The name of the driver package that was validated and uploaded. </summary>
         public string DriverPackageName { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

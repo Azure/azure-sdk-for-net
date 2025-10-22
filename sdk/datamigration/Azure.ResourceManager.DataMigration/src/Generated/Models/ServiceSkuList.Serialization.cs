@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            IReadOnlyList<AvailableServiceSku> value = default;
+            IReadOnlyList<DataMigrationAvailableServiceSku> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<AvailableServiceSku> array = new List<AvailableServiceSku>();
+                    List<DataMigrationAvailableServiceSku> array = new List<DataMigrationAvailableServiceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item, options));
+                        array.Add(DataMigrationAvailableServiceSku.DeserializeDataMigrationAvailableServiceSku(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceSkuList(value ?? new ChangeTrackingList<AvailableServiceSku>(), nextLink, serializedAdditionalRawData);
+            return new ServiceSkuList(value ?? new ChangeTrackingList<DataMigrationAvailableServiceSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSkuList>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceSkuList)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceSkuList(document.RootElement, options);
                     }
                 default:

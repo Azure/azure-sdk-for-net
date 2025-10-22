@@ -15,6 +15,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChangesAsync() { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChangesAsync(System.DateTimeOffset? start = default(System.DateTimeOffset?), System.DateTimeOffset? end = default(System.DateTimeOffset?)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChangesAsync(string continuationToken) { throw null; }
+        public virtual System.DateTimeOffset? GetLastConsumable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.DateTimeOffset?> GetLastConsumableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BlobChangeFeedClientOptions
     {

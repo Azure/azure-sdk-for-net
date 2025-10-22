@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class DicomServiceResource : IJsonModel<DicomServiceData>
     {
+        private static DicomServiceData s_dataDeserializationInstance;
+        private static DicomServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DicomServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DicomServiceData>)Data).Write(writer, options);
 
-        DicomServiceData IJsonModel<DicomServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DicomServiceData>)Data).Create(ref reader, options);
+        DicomServiceData IJsonModel<DicomServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DicomServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DicomServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        DicomServiceData IPersistableModel<DicomServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DicomServiceData>(data, options);
+        DicomServiceData IPersistableModel<DicomServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DicomServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<DicomServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DicomServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DicomServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DicomServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

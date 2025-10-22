@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         ProtectionContainerMappingResource IOperationSource<ProtectionContainerMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(document.RootElement);
+            var data = ModelReaderWriter.Read<ProtectionContainerMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return new ProtectionContainerMappingResource(_client, data);
         }
 
         async ValueTask<ProtectionContainerMappingResource> IOperationSource<ProtectionContainerMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(document.RootElement);
-            return new ProtectionContainerMappingResource(_client, data);
+            var data = ModelReaderWriter.Read<ProtectionContainerMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            return await Task.FromResult(new ProtectionContainerMappingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

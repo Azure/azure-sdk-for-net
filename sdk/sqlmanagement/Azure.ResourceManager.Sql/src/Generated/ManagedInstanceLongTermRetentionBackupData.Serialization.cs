@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
+            {
+                writer.WritePropertyName("backupStorageAccessTier"u8);
+                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Sql
             DateTimeOffset? backupTime = default;
             DateTimeOffset? backupExpirationTime = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
+            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +140,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -201,6 +207,15 @@ namespace Azure.ResourceManager.Sql
                             backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("backupStorageAccessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -222,6 +237,7 @@ namespace Azure.ResourceManager.Sql
                 backupTime,
                 backupExpirationTime,
                 backupStorageRedundancy,
+                backupStorageAccessTier,
                 serializedAdditionalRawData);
         }
 
@@ -416,6 +432,21 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backupStorageAccessTier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageAccessTier))
+                {
+                    builder.Append("    backupStorageAccessTier: ");
+                    builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -428,7 +459,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -444,7 +475,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedInstanceLongTermRetentionBackupData(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 
         ConnectedClusterBgpPeerResource IOperationSource<ConnectedClusterBgpPeerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ConnectedClusterBgpPeerData.DeserializeConnectedClusterBgpPeerData(document.RootElement);
+            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return new ConnectedClusterBgpPeerResource(_client, data);
         }
 
         async ValueTask<ConnectedClusterBgpPeerResource> IOperationSource<ConnectedClusterBgpPeerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ConnectedClusterBgpPeerData.DeserializeConnectedClusterBgpPeerData(document.RootElement);
-            return new ConnectedClusterBgpPeerResource(_client, data);
+            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+            return await Task.FromResult(new ConnectedClusterBgpPeerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

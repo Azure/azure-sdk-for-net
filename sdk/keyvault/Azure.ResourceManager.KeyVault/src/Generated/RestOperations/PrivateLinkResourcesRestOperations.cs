@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the private link resources supported for the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         KeyVaultPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KeyVaultPrivateLinkResourceListResult.DeserializeKeyVaultPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the private link resources supported for the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         KeyVaultPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KeyVaultPrivateLinkResourceListResult.DeserializeKeyVaultPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

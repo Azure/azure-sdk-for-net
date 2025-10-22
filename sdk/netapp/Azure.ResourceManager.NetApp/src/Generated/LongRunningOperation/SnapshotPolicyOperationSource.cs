@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.NetApp
 
         SnapshotPolicyResource IOperationSource<SnapshotPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new SnapshotPolicyResource(_client, data);
         }
 
         async ValueTask<SnapshotPolicyResource> IOperationSource<SnapshotPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
-            return new SnapshotPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            return await Task.FromResult(new SnapshotPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

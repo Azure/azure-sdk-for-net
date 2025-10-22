@@ -10,10 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -221,6 +223,30 @@ namespace Azure.Storage.Test.Shared
                 new BlobServiceClient(
                     new Uri($"{Tenants.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: Tenants.TestConfigOAuth.AccountName)}"),
                     BlobsClientBuilder.GetOptions()));
+
+        public ShareServiceClient GetShareServiceClient_OAuthAccount_SharedKey()
+        {
+            ShareClientOptions options = new ShareClientOptions()
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                },
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+            return InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(Tenants.TestConfigDefault.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(TestConfigurations.DefaultTargetOAuthTenant.AccountName, TestConfigurations.DefaultTargetOAuthTenant.AccountKey),
+                    InstrumentClientOptions(options)));
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
@@ -604,6 +630,16 @@ namespace Azure.Storage.Test.Shared
                 offsetNow = uploadResponse.Value.LastModified;
             }
             return offsetNow;
+        }
+        public void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
+        {
+            BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
     }
 }

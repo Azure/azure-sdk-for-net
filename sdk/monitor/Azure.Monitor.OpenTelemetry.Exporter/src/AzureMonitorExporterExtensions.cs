@@ -7,7 +7,9 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
@@ -46,12 +48,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var finalOptionsName = name ?? Options.DefaultName;
 
-            if (name != null && configure != null)
+            // Ensure our default options configurator (which reads IConfiguration + environment variables)
+            // is registered exactly once so that OTEL_TRACES_SAMPLER / OTEL_TRACES_SAMPLER_ARG work for this path.
+            builder.ConfigureServices(services =>
             {
-                // If we are using named options we register the
-                // configuration delegate into options pipeline.
-                builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
-            }
+                services.TryAddEnumerable(ServiceDescriptor.Singleton<IConfigureOptions<AzureMonitorExporterOptions>, DefaultAzureMonitorExporterOptions>());
+
+                if (name != null && configure != null)
+                {
+                    // If we are using named options we register the configuration delegate into the options pipeline
+                    // After the DefaultAzureMonitorExporterOptions so explicit code configuration can override env/config values.
+                    services.Configure(finalOptionsName, configure);
+                }
+            });
 
             var deferredBuilder = builder as IDeferredTracerProviderBuilder;
             if (deferredBuilder == null)
@@ -65,22 +74,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
                 if (name == null && configure != null)
                 {
-                    // If we are NOT using named options, we execute the
-                    // configuration delegate inline. The reason for this is
-                    // AzureMonitorExporterOptions is shared by all signals. Without a
-                    // name, delegates for all signals will mix together. See:
-                    // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
+                    // For unnamed options execute configuration delegate inline so it overrides env/config values.
                     configure(exporterOptions);
                 }
 
-                builder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+                if (exporterOptions.EnableLiveMetrics == true)
+                {
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
+                }
+
+                builder.SetSampler(exporterOptions.TracesPerSecond != null ?
+                    new RateLimitedSampler(exporterOptions.TracesPerSecond.Value) :
+                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
 
                 if (credential != null)
                 {
-                    // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
-                    // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
+
+                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
@@ -136,12 +148,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
+                if (exporterOptions.EnableLiveMetrics == true)
+                {
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorMetricExporter));
+                }
+
                 if (credential != null)
                 {
                     // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
+
+                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 return new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
@@ -171,6 +190,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
+
+            if (options.EnableLiveMetrics == true)
+            {
+                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
+            }
 
             if (credential != null)
             {
@@ -232,12 +256,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
                 }
 
+                if (exporterOptions.EnableLiveMetrics == true)
+                {
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
+                }
+
                 if (credential != null)
                 {
                     // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
+
+                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));

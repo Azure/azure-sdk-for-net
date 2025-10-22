@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeVersionResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CodeVersionResourceArmPaginatedResult.DeserializeCodeVersionResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeVersionResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CodeVersionResourceArmPaginatedResult.DeserializeCodeVersionResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningCodeVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningCodeVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 201:
                     {
                         MachineLearningCodeVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 201:
                     {
                         MachineLearningCodeVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         PendingUploadResponseDto value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PendingUploadResponseDto.DeserializePendingUploadResponseDto(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         PendingUploadResponseDto value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PendingUploadResponseDto.DeserializePendingUploadResponseDto(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeVersionResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CodeVersionResourceArmPaginatedResult.DeserializeCodeVersionResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeVersionResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CodeVersionResourceArmPaginatedResult.DeserializeCodeVersionResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

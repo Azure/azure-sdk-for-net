@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
         /// <param name="detailedStatus"> The more detailed status of the metrics configuration. </param>
@@ -81,8 +82,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="enabledMetrics"> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </param>
         /// <param name="provisioningState"> The provisioning state of the metrics configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ETag = etag;
             ExtendedLocation = extendedLocation;
             CollectionInterval = collectionInterval;
             DetailedStatus = detailedStatus;
@@ -98,6 +100,8 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
+        /// <summary> Resource ETag. </summary>
+        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The interval in minutes by which metrics will be collected. </summary>

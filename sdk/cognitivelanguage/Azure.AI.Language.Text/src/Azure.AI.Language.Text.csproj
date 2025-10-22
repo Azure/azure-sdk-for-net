@@ -2,10 +2,12 @@
   <PropertyGroup>
     <Description>This is the Text client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Text for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure Text</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -16,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WriteStartArray();
                 foreach (var item in RegistrationVirtualNetworks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WriteStartArray();
                 foreach (var item in ResolutionVirtualNetworks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.Dns
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDnsContext.Default));
                             }
                             registrationVirtualNetworks = array;
                             continue;
@@ -289,7 +290,7 @@ namespace Azure.ResourceManager.Dns
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDnsContext.Default));
                             }
                             resolutionVirtualNetworks = array;
                             continue;
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsZoneData)} does not support writing '{options.Format}' format.");
             }
@@ -357,7 +358,7 @@ namespace Azure.ResourceManager.Dns
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDnsZoneData(document.RootElement, options);
                     }
                 default:

@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.DataBox.Models
             string chainOfCustodySasKey = default;
             DeviceErasureDetails deviceErasureDetails = default;
             DataBoxKeyEncryptionKey keyEncryptionKey = default;
-            int? expectedDataSizeInTerabytes = default;
+            int? expectedDataSizeInTeraBytes = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
             LastMitigationActionOnJob lastMitigationActionOnJob = default;
-            DataCenterAddressResult dataCenterAddress = default;
+            DataCenterAddressResult datacenterAddress = default;
             DataCenterCode? dataCenterCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    expectedDataSizeInTerabytes = property.Value.GetInt32();
+                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    datacenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"u8))
@@ -407,10 +407,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 chainOfCustodySasKey,
                 deviceErasureDetails,
                 keyEncryptionKey,
-                expectedDataSizeInTerabytes,
+                expectedDataSizeInTeraBytes,
                 actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
                 lastMitigationActionOnJob,
-                dataCenterAddress,
+                datacenterAddress,
                 dataCenterCode,
                 serializedAdditionalRawData,
                 importDiskDetailsCollection ?? new ChangeTrackingDictionary<string, ImportDiskDetails>(),
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support writing '{options.Format}' format.");
             }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxCustomerDiskJobDetails(document.RootElement, options);
                     }
                 default:

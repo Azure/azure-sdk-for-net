@@ -17,6 +17,9 @@ namespace Azure.Core
             => new ValueTask<T>(CreateResult(response));
 
         private T CreateResult(Response response)
+            // This call will never be invoked with a collection of models, so we can safely disable the warning
+#pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
             => ModelReaderWriter.Read<T>(response.Content)!;
+#pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
     }
 }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string sourceServerVersion = default;
             IReadOnlyList<string> databases = default;
             string sourceServerBrandVersion = default;
-            IReadOnlyList<ReportableException> validationErrors = default;
+            IReadOnlyList<DataMigrationReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceServerVersion,
                 databases ?? new ChangeTrackingList<string>(),
                 sourceServerBrandVersion,
-                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(),
                 serializedAdditionalRawData);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToSourcePostgreSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectToSourcePostgreSqlSyncTaskOutput(document.RootElement, options);
                     }
                 default:

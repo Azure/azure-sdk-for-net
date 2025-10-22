@@ -26,6 +26,8 @@ namespace Azure.Maps.Search.Models
             string postalCode = default;
             AddressCountryRegion countryRegion = default;
             string formattedAddress = default;
+            string streetName = default;
+            string streetNumber = default;
             Intersection intersection = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,6 +79,16 @@ namespace Azure.Maps.Search.Models
                     formattedAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("streetName"u8))
+                {
+                    streetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("streetNumber"u8))
+                {
+                    streetNumber = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("intersection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,6 +107,8 @@ namespace Azure.Maps.Search.Models
                 postalCode,
                 countryRegion,
                 formattedAddress,
+                streetName,
+                streetNumber,
                 intersection);
         }
 
@@ -102,7 +116,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Address FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAddress(document.RootElement);
         }
     }

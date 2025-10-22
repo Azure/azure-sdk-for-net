@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.14.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.2 (2025-07-18)
+
+### Features Added
+
+- Make `Azure.ResourceManager` AOT-compatible.
+
+## 1.14.0-beta.1 (2025-06-23)
+
+### Features Added
+
+- Use ModelReaderWriter instead of System.Text.Json.JsonSerializer for serialization of ManagedServiceIdentity.
+
+## 1.13.1 (2025-04-24)
+
+### Bugs Fixed
+
+- Fixed the `Longitude` and `Latitude` in `LocationMetadata` class to use invariant culture during serialization and deserialization. (https://github.com/Azure/azure-sdk-for-net/issues/43116)
 
 ## 1.13.0 (2024-09-03)
 

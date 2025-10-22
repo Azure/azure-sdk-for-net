@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl);
+            writer.WriteStringValue(ContainerUri.AbsoluteUri);
             if (Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
@@ -64,7 +64,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,9 +94,9 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string path = default;
-            string containerUrl = default;
+            Uri containerUrl = default;
             BatchNodeIdentityReference identityReference = default;
-            IList<HttpHeader> uploadHeaders = default;
+            IList<OutputFileUploadHeader> uploadHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("containerUrl"u8))
                 {
-                    containerUrl = property.Value.GetString();
+                    containerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityReference"u8))
@@ -126,10 +126,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<HttpHeader> array = new List<HttpHeader>();
+                    List<OutputFileUploadHeader> array = new List<OutputFileUploadHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeader.DeserializeHttpHeader(item, options));
+                        array.Add(OutputFileUploadHeader.DeserializeOutputFileUploadHeader(item, options));
                     }
                     uploadHeaders = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OutputFileBlobContainerDestination(path, containerUrl, identityReference, uploadHeaders ?? new ChangeTrackingList<HttpHeader>(), serializedAdditionalRawData);
+            return new OutputFileBlobContainerDestination(path, containerUrl, identityReference, uploadHeaders ?? new ChangeTrackingList<OutputFileUploadHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutputFileBlobContainerDestination>.Write(ModelReaderWriterOptions options)
@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support writing '{options.Format}' format.");
             }
@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOutputFileBlobContainerDestination(document.RootElement, options);
                     }
                 default:
@@ -178,7 +178,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static OutputFileBlobContainerDestination FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOutputFileBlobContainerDestination(document.RootElement);
         }
 

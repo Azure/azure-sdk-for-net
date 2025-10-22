@@ -44,6 +44,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue<object>(AdditionalColumns);
             }
+            if (Optional.IsDefined(NumberPrecision))
+            {
+                writer.WritePropertyName("numberPrecision"u8);
+                writer.WriteObjectValue<object>(NumberPrecision);
+            }
+            if (Optional.IsDefined(NumberScale))
+            {
+                writer.WritePropertyName("numberScale"u8);
+                writer.WriteObjectValue<object>(NumberScale);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -80,6 +90,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             OraclePartitionOption? partitionOption = default;
             OraclePartitionSettings partitionSettings = default;
             object additionalColumns = default;
+            object numberPrecision = default;
+            object numberScale = default;
             string type = default;
             object sourceRetryCount = default;
             object sourceRetryWait = default;
@@ -133,6 +145,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     additionalColumns = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("numberPrecision"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberPrecision = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("numberScale"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberScale = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
@@ -178,14 +208,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 queryTimeout,
                 partitionOption,
                 partitionSettings,
-                additionalColumns);
+                additionalColumns,
+                numberPrecision,
+                numberScale);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new OracleSource FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOracleSource(document.RootElement);
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachinesAssociated)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,6 +92,11 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
+            }
+            if (Optional.IsDefined(ScheduleProfile))
+            {
+                writer.WritePropertyName("scheduleProfile"u8);
+                writer.WriteObjectValue(ScheduleProfile, options);
             }
             writer.WriteEndObject();
         }
@@ -130,6 +136,7 @@ namespace Azure.ResourceManager.Compute
             string provisioningState = default;
             CapacityReservationInstanceView instanceView = default;
             DateTimeOffset? timeCreated = default;
+            ScheduleProfile scheduleProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,7 +235,7 @@ namespace Azure.ResourceManager.Compute
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             virtualMachinesAssociated = array;
                             continue;
@@ -265,6 +272,15 @@ namespace Azure.ResourceManager.Compute
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("scheduleProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduleProfile = ScheduleProfile.DeserializeScheduleProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -290,6 +306,7 @@ namespace Azure.ResourceManager.Compute
                 provisioningState,
                 instanceView,
                 timeCreated,
+                scheduleProfile,
                 serializedAdditionalRawData);
         }
 
@@ -300,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CapacityReservationData)} does not support writing '{options.Format}' format.");
             }
@@ -314,7 +331,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCapacityReservationData(document.RootElement, options);
                     }
                 default:

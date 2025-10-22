@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet);
+            ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         if (property0.NameEquals("subnet"u8))
                         {
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.DnsResolver
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsResolverOutboundEndpointData)} does not support writing '{options.Format}' format.");
             }
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDnsResolverOutboundEndpointData(document.RootElement, options);
                     }
                 default:

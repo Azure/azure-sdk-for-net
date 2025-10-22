@@ -5,30 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ExhaustiveKnnAlgorithmConfiguration : IUtf8JsonSerializable
+    public partial class ExhaustiveKnnAlgorithmConfiguration : IUtf8JsonSerializable, IJsonModel<ExhaustiveKnnAlgorithmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExhaustiveKnnAlgorithmConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExhaustiveKnnAlgorithmConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
-            {
-                writer.WritePropertyName("exhaustiveKnnParameters"u8);
-                writer.WriteObjectValue(Parameters);
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ExhaustiveKnnAlgorithmConfiguration DeserializeExhaustiveKnnAlgorithmConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("exhaustiveKnnParameters"u8);
+                writer.WriteObjectValue(Parameters, options);
+            }
+        }
+
+        ExhaustiveKnnAlgorithmConfiguration IJsonModel<ExhaustiveKnnAlgorithmConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement, options);
+        }
+
+        internal static ExhaustiveKnnAlgorithmConfiguration DeserializeExhaustiveKnnAlgorithmConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +65,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ExhaustiveKnnParameters exhaustiveKnnParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exhaustiveKnnParameters"u8))
@@ -44,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    exhaustiveKnnParameters = ExhaustiveKnnParameters.DeserializeExhaustiveKnnParameters(property.Value);
+                    exhaustiveKnnParameters = ExhaustiveKnnParameters.DeserializeExhaustiveKnnParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -57,15 +88,51 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, serializedAdditionalRawData, exhaustiveKnnParameters);
         }
+
+        BinaryData IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExhaustiveKnnAlgorithmConfiguration IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExhaustiveKnnAlgorithmConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExhaustiveKnnAlgorithmConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ExhaustiveKnnAlgorithmConfiguration FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement);
         }
 
@@ -73,7 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

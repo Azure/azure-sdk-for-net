@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventGridContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.EventGrid
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement, options);
                     }
                 default:

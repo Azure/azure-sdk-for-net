@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network interface ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Collection of custom security rules. </summary>
+        [WirePath("securityRules")]
         public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }
 }

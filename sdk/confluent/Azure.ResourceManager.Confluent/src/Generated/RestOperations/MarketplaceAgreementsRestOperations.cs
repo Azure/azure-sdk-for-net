@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentAgreementListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentAgreementListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentAgreement value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentAgreement.DeserializeConfluentAgreement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentAgreement value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentAgreement.DeserializeConfluentAgreement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentAgreementListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Confluent
                 case 200:
                     {
                         ConfluentAgreementListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfluentAgreementListResult.DeserializeConfluentAgreementListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

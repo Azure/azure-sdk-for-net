@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
+    /// <summary>
+    /// Describes the action that shall be taken when the certificate is updated in Key Vault.
+    /// Serialized Name: UpdateRule
+    /// </summary>
     public readonly partial struct CertificateUpdateAction : IEquatable<CertificateUpdateAction>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string NoActionValue = "NoAction";
 
-        /// <summary> NoAction. </summary>
+        /// <summary>
+        /// NoAction
+        /// Serialized Name: UpdateRule.NoAction
+        /// </summary>
         public static CertificateUpdateAction NoAction { get; } = new CertificateUpdateAction(NoActionValue);
         /// <summary> Determines if two <see cref="CertificateUpdateAction"/> values are the same. </summary>
         public static bool operator ==(CertificateUpdateAction left, CertificateUpdateAction right) => left.Equals(right);

@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.HealthBot.Models
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(AccessControlMethod))
+            {
+                writer.WritePropertyName("accessControlMethod"u8);
+                writer.WriteStringValue(AccessControlMethod);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.HealthBot.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             string provisioningState = default;
             Uri botManagementPortalLink = default;
             HealthBotKeyVaultProperties keyVaultProperties = default;
+            string accessControlMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,13 +122,18 @@ namespace Azure.ResourceManager.HealthBot.Models
                     keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("accessControlMethod"u8))
+                {
+                    accessControlMethod = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, serializedAdditionalRawData);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotProperties>.Write(ModelReaderWriterOptions options)
@@ -132,7 +143,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthBotContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthBotProperties)} does not support writing '{options.Format}' format.");
             }
@@ -146,7 +157,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthBotProperties(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         GremlinGraphResource IOperationSource<GremlinGraphResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
+            var data = ModelReaderWriter.Read<GremlinGraphData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new GremlinGraphResource(_client, data);
         }
 
         async ValueTask<GremlinGraphResource> IOperationSource<GremlinGraphResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
-            return new GremlinGraphResource(_client, data);
+            var data = ModelReaderWriter.Read<GremlinGraphData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            return await Task.FromResult(new GremlinGraphResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

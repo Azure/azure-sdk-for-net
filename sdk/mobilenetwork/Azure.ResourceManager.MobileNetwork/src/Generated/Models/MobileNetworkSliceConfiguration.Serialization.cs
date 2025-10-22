@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WritePropertyName("slice"u8);
-            JsonSerializer.Serialize(writer, Slice);
+            ((IJsonModel<WritableSubResource>)Slice).Write(writer, options);
             writer.WritePropertyName("defaultDataNetwork"u8);
-            JsonSerializer.Serialize(writer, DefaultDataNetwork);
+            ((IJsonModel<WritableSubResource>)DefaultDataNetwork).Write(writer, options);
             writer.WritePropertyName("dataNetworkConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 if (property.NameEquals("slice"u8))
                 {
-                    slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    slice = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("defaultDataNetwork"u8))
                 {
-                    defaultDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    defaultDataNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("dataNetworkConfigurations"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMobileNetworkSliceConfiguration(document.RootElement, options);
                     }
                 default:

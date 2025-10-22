@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SchemaComparisonValidationResultType schemaDifferences = default;
-            ValidationError validationErrors = default;
+            MigrationValidationError validationErrors = default;
             IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = default;
             IReadOnlyDictionary<string, long> targetDatabaseObjectCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
+                    validationErrors = MigrationValidationError.DeserializeMigrationValidationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseObjectCount"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support writing '{options.Format}' format.");
             }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSchemaComparisonValidationResult(document.RootElement, options);
                     }
                 default:

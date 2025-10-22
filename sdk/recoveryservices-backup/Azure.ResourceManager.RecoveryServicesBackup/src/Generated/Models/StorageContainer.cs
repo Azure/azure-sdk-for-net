@@ -38,13 +38,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
         /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
         /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
-        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
+        /// <param name="operationType"> Re-Do Operation. </param>
+        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
         {
             SourceResourceId = sourceResourceId;
             StorageAccountVersion = storageAccountVersion;
             ResourceGroup = resourceGroup;
             ProtectedItemCount = protectedItemCount;
             AcquireStorageAccountLock = acquireStorageAccountLock;
+            OperationType = operationType;
             ContainerType = containerType;
         }
 
@@ -58,5 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public long? ProtectedItemCount { get; set; }
         /// <summary> Whether storage account lock is to be acquired for this container or not. </summary>
         public AcquireStorageAccountLock? AcquireStorageAccountLock { get; set; }
+        /// <summary> Re-Do Operation. </summary>
+        public WorkloadOperationType? OperationType { get; set; }
     }
 }

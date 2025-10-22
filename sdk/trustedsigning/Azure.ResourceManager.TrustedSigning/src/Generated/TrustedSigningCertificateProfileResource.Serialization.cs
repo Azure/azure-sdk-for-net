@@ -11,16 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
+    /// <summary></summary>
     public partial class TrustedSigningCertificateProfileResource : IJsonModel<TrustedSigningCertificateProfileData>
     {
+        private static IJsonModel<TrustedSigningCertificateProfileData> s_dataDeserializationInstance;
+
+        private static IJsonModel<TrustedSigningCertificateProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TrustedSigningCertificateProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrustedSigningCertificateProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningCertificateProfileData>)Data).Write(writer, options);
 
-        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningCertificateProfileData>)Data).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrustedSigningCertificateProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrustedSigningCertificateProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrustedSigningCertificateProfileData>(Data, options, AzureResourceManagerTrustedSigningContext.Default);
 
-        TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(data, options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(data, options, AzureResourceManagerTrustedSigningContext.Default);
 
-        string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningCertificateProfileData>)Data).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

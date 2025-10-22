@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageCache
 {
     public partial class StorageCacheImportJobResource : IJsonModel<StorageCacheImportJobData>
     {
+        private static StorageCacheImportJobData s_dataDeserializationInstance;
+        private static StorageCacheImportJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageCacheImportJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageCacheImportJobData>)Data).Write(writer, options);
 
-        StorageCacheImportJobData IJsonModel<StorageCacheImportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageCacheImportJobData>)Data).Create(ref reader, options);
+        StorageCacheImportJobData IJsonModel<StorageCacheImportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageCacheImportJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageCacheImportJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageCacheImportJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageCacheImportJobData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        StorageCacheImportJobData IPersistableModel<StorageCacheImportJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageCacheImportJobData>(data, options);
+        StorageCacheImportJobData IPersistableModel<StorageCacheImportJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageCacheImportJobData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<StorageCacheImportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageCacheImportJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageCacheImportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageCacheImportJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

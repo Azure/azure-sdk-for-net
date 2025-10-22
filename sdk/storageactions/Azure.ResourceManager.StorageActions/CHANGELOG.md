@@ -1,16 +1,34 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2025-06-27)
+
+This is the first stable release of StorageActions client library.
+
+### Features Added
+
+- Replaced StorageTaskProperties to StorageTaskUpdateProperties in StorageTaskPatch.
+
+## 1.0.0-beta.3 (2025-04-24)
+
+### Features Added
+
+- Added "Accepted" to StorageTask properties ProvisioningState
+
+## 1.0.0-beta.2 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.1 (2024-05-17)
 

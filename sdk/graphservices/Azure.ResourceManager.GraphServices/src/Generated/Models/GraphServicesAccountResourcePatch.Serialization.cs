@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGraphServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GraphServicesAccountResourcePatch)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGraphServicesAccountResourcePatch(document.RootElement, options);
                     }
                 default:

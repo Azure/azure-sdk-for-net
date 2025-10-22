@@ -12,9 +12,11 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user, and obtain an access token.
-    /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the users refresh token as long as it's valid.
+    /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user and obtain an access token.
+    /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the user's refresh token as long as it's valid.
+    /// For usage instructions, see <see href="https://aka.ms/azsdk/net/identity/interactivebrowsercredential/usage">Interactive browser authentication</see>.
     /// </summary>
+    /// <remarks>Implements the <see href="https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow">OAuth 2.0 authorization code flow</see>.</remarks>
     public class InteractiveBrowserCredential : TokenCredential
     {
         internal string TenantId { get; }
@@ -29,6 +31,7 @@ namespace Azure.Identity
         internal string DefaultScope { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
         internal bool UseOperatingSystemAccount { get; }
+        internal bool IsChainedCredential { get; set; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -94,6 +97,7 @@ namespace Azure.Identity
             Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
             BrowserCustomization = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomization;
             UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseDefaultBrokerAccount ?? false;
+            IsChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -241,6 +245,10 @@ namespace Azure.Identity
                     }
                     catch (MsalUiRequiredException e)
                     {
+                        if ((UseOperatingSystemAccount && IsChainedCredential) || (Record is not null && IsChainedCredential))
+                        {
+                            throw;
+                        }
                         inner = e;
                     }
                 }
@@ -254,7 +262,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, null, IsChainedCredential);
             }
         }
 

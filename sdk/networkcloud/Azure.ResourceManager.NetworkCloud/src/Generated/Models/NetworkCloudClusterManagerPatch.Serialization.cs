@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,8 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,8 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudClusterManagerPatch)} does not support writing '{options.Format}' format.");
             }
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudClusterManagerPatch(document.RootElement, options);
                     }
                 default:

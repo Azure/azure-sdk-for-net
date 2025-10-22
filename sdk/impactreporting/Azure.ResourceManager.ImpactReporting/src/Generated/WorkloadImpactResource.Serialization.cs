@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ImpactReporting
 {
     public partial class WorkloadImpactResource : IJsonModel<WorkloadImpactData>
     {
+        private static WorkloadImpactData s_dataDeserializationInstance;
+        private static WorkloadImpactData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadImpactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadImpactData>)Data).Write(writer, options);
 
-        WorkloadImpactData IJsonModel<WorkloadImpactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadImpactData>)Data).Create(ref reader, options);
+        WorkloadImpactData IJsonModel<WorkloadImpactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadImpactData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadImpactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadImpactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadImpactData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        WorkloadImpactData IPersistableModel<WorkloadImpactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadImpactData>(data, options);
+        WorkloadImpactData IPersistableModel<WorkloadImpactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadImpactData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<WorkloadImpactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadImpactData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadImpactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadImpactData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentMetadataResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentMetadataResponseList.DeserializeSecurityAssessmentMetadataResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.Terraform.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.Terraform.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Terraform.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -105,6 +108,7 @@ namespace Azure.ResourceManager.Terraform.Models
             }
             TerraformExportResult properties = default;
             TerraformResourceProvisioningState status = default;
+            string id = default;
             string name = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -126,6 +130,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = new TerraformResourceProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -166,7 +175,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerTerraformContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,6 +187,7 @@ namespace Azure.ResourceManager.Terraform.Models
             return new TerraformOperationStatus(
                 properties,
                 status,
+                id,
                 name,
                 startTime,
                 endTime,
@@ -193,7 +203,7 @@ namespace Azure.ResourceManager.Terraform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTerraformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TerraformOperationStatus)} does not support writing '{options.Format}' format.");
             }
@@ -207,7 +217,7 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTerraformOperationStatus(document.RootElement, options);
                     }
                 default:

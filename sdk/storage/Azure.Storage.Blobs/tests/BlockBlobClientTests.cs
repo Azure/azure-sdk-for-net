@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
@@ -616,7 +617,6 @@ namespace Azure.Storage.Blobs.Test
                 _retryStageBlockFromUri);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
         public async Task StageBlobFromUriAsync_SourceErrorAndStatusCode()
@@ -632,9 +632,9 @@ namespace Azure.Storage.Blobs.Test
                 destBlob.StageBlockFromUriAsync(sourceBlob.Uri, ToBase64(GetNewBlockName())),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
                 });
         }
 
@@ -1103,6 +1103,57 @@ namespace Azure.Storage.Blobs.Test
                     base64BlockId: ToBase64(GetNewBlockName()),
                     options: options),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task StageBlockFromUriAsync_SourceBearerToken_FilesSource()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            ShareServiceClient shareServiceClient = GetShareServiceClient_OAuthAccount_SharedKey();
+            ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
+            try
+            {
+                ShareDirectoryClient directoryClient = await shareClient.CreateDirectoryAsync(GetNewBlobName());
+                ShareFileClient fileClient = await directoryClient.CreateFileAsync(GetNewBlobName(), Constants.KB);
+                await fileClient.UploadAsync(stream);
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                string sourceBearerToken = await GetAuthToken();
+
+                HttpAuthorization sourceAuth = new HttpAuthorization(
+                    "Bearer",
+                    sourceBearerToken);
+
+                StageBlockFromUriOptions options = new StageBlockFromUriOptions
+                {
+                    SourceAuthentication = sourceAuth,
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
+                };
+
+                // Act
+                // Act
+                await RetryAsync(
+                    async () => await destBlob.StageBlockFromUriAsync(
+                        sourceUri: fileClient.Uri,
+                        base64BlockId: ToBase64(GetNewBlockName()),
+                        options: options),
+                    _retryStageBlockFromUri);
+            }
+            finally
+            {
+                await shareClient.DeleteAsync();
+            }
         }
 
         [RecordedTest]
@@ -2854,7 +2905,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
         public async Task SyncUploadFromUriAsync_SourceErrorAndStatusCode()
         {
@@ -2866,12 +2916,12 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.SyncUploadFromUriAsync(sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1))),
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
                 });
         }
 
@@ -3468,6 +3518,54 @@ namespace Azure.Storage.Blobs.Test
                     copySource: sourceBlob.Uri,
                     options: options),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task SyncUploadFromUriAsync_SourceBearerToken_FilesSource()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            ShareServiceClient shareServiceClient = GetShareServiceClient_OAuthAccount_SharedKey();
+            ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
+
+            try
+            {
+                ShareDirectoryClient directoryClient = await shareClient.CreateDirectoryAsync(GetNewBlobName());
+                ShareFileClient fileClient = await directoryClient.CreateFileAsync(GetNewBlobName(), Constants.KB);
+                await fileClient.UploadAsync(stream);
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                string sourceBearerToken = await GetAuthToken();
+
+                HttpAuthorization sourceAuth = new HttpAuthorization(
+                    "Bearer",
+                    sourceBearerToken);
+
+                BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+                {
+                    SourceAuthentication = sourceAuth,
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
+                };
+
+                // Act
+                await destBlob.SyncUploadFromUriAsync(
+                    copySource: fileClient.Uri,
+                    options: options);
+            }
+            finally
+            {
+                await shareClient.DeleteAsync();
+            }
         }
 
         [RecordedTest]

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisPrivateEndpointConnectionListResult.DeserializeRedisPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisPrivateEndpointConnectionListResult.DeserializeRedisPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

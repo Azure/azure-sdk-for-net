@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup, options);
             }
+            if (Optional.IsDefined(DataApi))
+            {
+                writer.WritePropertyName("dataApi"u8);
+                writer.WriteObjectValue(DataApi, options);
+            }
             if (Optional.IsCollectionDefined(PreviewFeatures))
             {
                 writer.WritePropertyName("previewFeatures"u8);
@@ -84,6 +89,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AuthConfig))
+            {
+                writer.WritePropertyName("authConfig"u8);
+                writer.WriteObjectValue(AuthConfig, options);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -92,7 +107,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -125,11 +140,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
             string serverVersion = default;
             MongoClusterPublicNetworkAccess? publicNetworkAccess = default;
             HighAvailabilityProperties highAvailability = default;
-            StorageProperties storage = default;
+            MongoClusterStorageProperties storage = default;
             ShardingProperties sharding = default;
             ComputeProperties compute = default;
             BackupProperties backup = default;
+            DataApiProperties dataApi = default;
             IList<MongoClusterPreviewFeature> previewFeatures = default;
+            AuthConfigProperties authConfig = default;
+            EncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +190,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    storage = StorageProperties.DeserializeStorageProperties(property.Value, options);
+                    storage = MongoClusterStorageProperties.DeserializeMongoClusterStorageProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharding"u8))
@@ -202,6 +220,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     backup = BackupProperties.DeserializeBackupProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("dataApi"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataApi = DataApiProperties.DeserializeDataApiProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("previewFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -214,6 +241,24 @@ namespace Azure.ResourceManager.MongoCluster.Models
                         array.Add(new MongoClusterPreviewFeature(item.GetString()));
                     }
                     previewFeatures = array;
+                    continue;
+                }
+                if (property.NameEquals("authConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authConfig = AuthConfigProperties.DeserializeAuthConfigProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("encryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = EncryptionProperties.DeserializeEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -231,7 +276,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 sharding,
                 compute,
                 backup,
+                dataApi,
                 previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>(),
+                authConfig,
+                encryption,
                 serializedAdditionalRawData);
         }
 
@@ -242,7 +290,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MongoClusterUpdateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -256,7 +304,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoClusterUpdateProperties(document.RootElement, options);
                     }
                 default:

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         AutomanageConfigurationProfileAssignmentReportData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         AutomanageConfigurationProfileAssignmentReportData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         ReportList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReportList.DeserializeReportList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Automanage
                 case 200:
                     {
                         ReportList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReportList.DeserializeReportList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

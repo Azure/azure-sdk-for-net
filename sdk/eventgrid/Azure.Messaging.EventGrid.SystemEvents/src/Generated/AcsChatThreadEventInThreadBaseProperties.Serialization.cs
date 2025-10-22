@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsChatThreadEventInThreadBaseProperties : IUtf8JsonSerializable, IJsonModel<AcsChatThreadEventInThreadBaseProperties>
+    /// <summary> Schema of common properties of all chat thread events. </summary>
+    public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties, IJsonModel<AcsChatThreadEventInThreadBaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatThreadEventInThreadBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/> for deserialization. </summary>
+        internal AcsChatThreadEventInThreadBaseProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsChatThreadEventInThreadBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatThreadEventInThreadBaseProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CreateTime))
             {
@@ -47,93 +51,104 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsChatThreadEventInThreadBaseProperties IJsonModel<AcsChatThreadEventInThreadBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsChatThreadEventInThreadBaseProperties IJsonModel<AcsChatThreadEventInThreadBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsChatThreadEventInThreadBaseProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsChatEventInThreadBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatThreadEventInThreadBaseProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsChatThreadEventInThreadBaseProperties(document.RootElement, options);
         }
 
-        internal static AcsChatThreadEventInThreadBaseProperties DeserializeAcsChatThreadEventInThreadBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsChatThreadEventInThreadBaseProperties DeserializeAcsChatThreadEventInThreadBaseProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? createTime = default;
-            long? version = default;
             string transactionId = default;
             string threadId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("createTime"u8))
+                if (prop.NameEquals("transactionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    transactionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("threadId"u8))
+                {
+                    threadId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("createTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createTime = property.Value.GetDateTimeOffset("O");
+                    createTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("transactionId"u8))
-                {
-                    transactionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("threadId"u8))
-                {
-                    threadId = property.Value.GetString();
+                    version = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AcsChatThreadEventInThreadBaseProperties(transactionId, threadId, serializedAdditionalRawData, createTime, version);
+            return new AcsChatThreadEventInThreadBaseProperties(transactionId, threadId, additionalBinaryDataProperties, createTime, version);
         }
 
-        BinaryData IPersistableModel<AcsChatThreadEventInThreadBaseProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsChatThreadEventInThreadBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatThreadEventInThreadBaseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AcsChatThreadEventInThreadBaseProperties IPersistableModel<AcsChatThreadEventInThreadBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsChatThreadEventInThreadBaseProperties IPersistableModel<AcsChatThreadEventInThreadBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatThreadEventInThreadBaseProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsChatEventInThreadBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAcsChatThreadEventInThreadBaseProperties(document.RootElement, options);
                     }
                 default:
@@ -141,22 +156,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsChatThreadEventInThreadBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsChatThreadEventInThreadBaseProperties FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsChatThreadEventInThreadBaseProperties(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

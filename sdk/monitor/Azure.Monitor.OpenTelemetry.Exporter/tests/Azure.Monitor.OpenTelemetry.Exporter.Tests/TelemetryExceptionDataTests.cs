@@ -15,7 +15,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
 
 using Moq;
-
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 
 using Xunit;
@@ -202,7 +202,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exception = CreateException(1);
             logger.LogWarning(exception, exception.Message);
 
-            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0], string.Empty, new ChangeTrackingDictionary<string, string>());
 
             Assert.Equal(1, exceptionData.Exceptions.Count);
         }
@@ -231,7 +231,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // aggregateException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(aggregateException, "AggregateException");
 
-            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
+            (var telemetryItems, var telemetryCounter) = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
+            var exceptionData = (TelemetryExceptionData)telemetryItems[0].Data.BaseData;
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
 
@@ -240,6 +241,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(aggregateException.Message, exceptionData.Exceptions[0].Message);
             Assert.Equal("Inner1", exceptionData.Exceptions[1].Message);
             Assert.Equal("Inner2", exceptionData.Exceptions[2].Message);
+
+            // Validate TelemetryCounter
+            Assert.Equal(1, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._eventCount);
+            Assert.Equal(0, telemetryCounter._metricCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         [Fact]
@@ -267,12 +276,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // exception.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(exception, "Exception");
 
-            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
+            (var telemetryItems, var telemetryCounter) = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
+            var exceptionData = (TelemetryExceptionData)telemetryItems[0].Data.BaseData;
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
             Assert.Equal("Exception", exceptionData.Exceptions[0].Message);
             Assert.Equal("Inner2", exceptionData.Exceptions[1].Message);
             Assert.Equal("Inner1", exceptionData.Exceptions[2].Message);
+
+            // Validate TelemetryCounter
+            Assert.Equal(1, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._eventCount);
+            Assert.Equal(0, telemetryCounter._metricCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         [Fact]
@@ -304,7 +322,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // rootLevelException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(rootLevelException, "0");
 
-            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
+            (var telemetryItems, var telemetryCounter) = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
+            var exceptionData = (TelemetryExceptionData)telemetryItems[0].Data.BaseData;
 
             Assert.Equal(maxNumberOfExceptionsAllowed + 1, exceptionData.Exceptions.Count);
 
@@ -334,9 +353,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 string.Format(
                     CultureInfo.InvariantCulture,
                     "The number of inner exceptions was {0} which is larger than {1}, the maximum number allowed during transmission. All but the first {1} have been dropped.",
-                    numberOfExceptions+1,
+                    numberOfExceptions + 1,
                     maxNumberOfExceptionsAllowed),
                 lastExceptionInList.Message);
+
+            // Validate TelemetryCounter
+            Assert.Equal(1, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._eventCount);
+            Assert.Equal(0, telemetryCounter._metricCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         [Theory]
@@ -361,7 +388,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var ex = new Exception("Exception Message");
             logger.Log(logLevel, ex, "Log Message");
 
-            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
+            (var telemetryItems, var telemetryCounter) = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
+            var exceptionData = (TelemetryExceptionData)telemetryItems[0].Data.BaseData;
 
             Assert.Equal(2, exceptionData.Version);
             Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), exceptionData.SeverityLevel);
@@ -374,6 +402,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(ex.GetHashCode(), exceptionData.Exceptions[0].Id);
             Assert.Empty(exceptionData.Exceptions[0].ParsedStack);
             Assert.True(exceptionData.Exceptions[0].HasFullStack);
+
+            // Validate TelemetryCounter
+            Assert.Equal(1, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._eventCount);
+            Assert.Equal(0, telemetryCounter._metricCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

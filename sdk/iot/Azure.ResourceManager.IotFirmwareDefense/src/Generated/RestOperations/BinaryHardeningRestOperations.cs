@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-10";
+            _apiVersion = apiVersion ?? "2025-08-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryHardeningListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public async Task<Response<BinaryHardeningResourceListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        BinaryHardeningListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BinaryHardeningListResult.DeserializeBinaryHardeningListResult(document.RootElement);
+                        BinaryHardeningResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BinaryHardeningResourceListResult.DeserializeBinaryHardeningResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryHardeningListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public Response<BinaryHardeningResourceListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        BinaryHardeningListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BinaryHardeningListResult.DeserializeBinaryHardeningListResult(document.RootElement);
+                        BinaryHardeningResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BinaryHardeningResourceListResult.DeserializeBinaryHardeningResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryHardeningListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public async Task<Response<BinaryHardeningResourceListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        BinaryHardeningListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BinaryHardeningListResult.DeserializeBinaryHardeningListResult(document.RootElement);
+                        BinaryHardeningResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BinaryHardeningResourceListResult.DeserializeBinaryHardeningResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryHardeningListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public Response<BinaryHardeningResourceListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        BinaryHardeningListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BinaryHardeningListResult.DeserializeBinaryHardeningListResult(document.RootElement);
+                        BinaryHardeningResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BinaryHardeningResourceListResult.DeserializeBinaryHardeningResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

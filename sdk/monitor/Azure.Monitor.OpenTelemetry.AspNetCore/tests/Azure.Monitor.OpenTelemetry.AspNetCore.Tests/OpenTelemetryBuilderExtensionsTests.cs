@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class OpenTelemetryBuilderExtensionsTests
     {
-#if !NETFRAMEWORK
+#if NET
         private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
 
         [Theory]

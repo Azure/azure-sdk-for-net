@@ -1,10 +1,21 @@
-param([string]$ServiceDirectory, [string]$PackageName, [string]$ExpectedWarningsFilePath)
+param(
+  [string]$ServiceDirectory,
+  [string]$PackageName,
+  [string]$ExpectedWarningsFilePath,
+  [string]$DirectoryName = "")
 
 ### Creating a test app ###
 
 Write-Host "Creating a test app to publish."
 
 $expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
+
+# Set the project reference path based on whether DirectoryName was provided
+if ([string]::IsNullOrEmpty($DirectoryName)) {
+    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj"
+} else {
+    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$DirectoryName\src\$PackageName.csproj"
+}
 
 $folderPath = "\TempAotCompatFiles"
 New-Item -ItemType Directory -Path "./$folderPath" | Out-Null
@@ -16,18 +27,19 @@ $csprojContent = @"
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <PublishAot>true</PublishAot>
+    <EventSourceSupport>true</EventSourceSupport>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj" />
+    <ProjectReference Include="$projectRefFullPath" />
       <TrimmerRootAssembly Include="$PackageName" />
   </ItemGroup>
   <ItemGroup>
     <!-- Update this dependency to its latest, which has all the annotations -->
-    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.0" />
   </ItemGroup>
 </Project>
 "@
@@ -37,7 +49,6 @@ $csprojContent | Set-Content -Path $csprojFile
 $programFile = "Program.cs"
 
 $programFileContent = @"
-using $PackageName;
 using System;
 namespace AotCompatibility
 {
@@ -63,16 +74,16 @@ $publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseS
 
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Host "Publish failed."
+    Write-Host "Publish failed." -ForegroundColor Red
 
-    Write-Host $publishOutput
+    Write-Host ($publishOutput -join "`n")
 
     Write-Host "Deleting test app files."
 
     Set-Location -Path ..
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
-    Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+    Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
     Exit 2
 }
 
@@ -80,7 +91,7 @@ $actualWarningCount = 0
 
 foreach ($line in $($publishOutput -split "`r`n"))
 {
-    if ($line -like "*analysis warning IL*")
+    if ($line -like "*warning IL*")
     {
         $actualWarningCount += 1
     }
@@ -104,9 +115,9 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
-      Write-Host "Found $numWarnings additional warnings that were not expected:"
+      Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
       foreach ($warning in $warnings) {
-        Write-Host $warning
+        Write-Host $warning -ForegroundColor Yellow
       }
     }
 
@@ -115,7 +126,7 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     Set-Location -Path ..
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
-    Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+    Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
 
     exit $warnings.Count
 }
@@ -129,9 +140,9 @@ Write-Host "Checking against the list of expected warnings. There are $numExpect
 $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
 if ($numWarnings -gt 0) {
-  Write-Host "Found $numWarnings additional warnings that were not expected:"
+  Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
   foreach ($warning in $warnings) {
-    Write-Host $warning
+    Write-Host $warning -ForegroundColor Yellow
   }
 }
 
@@ -144,9 +155,9 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
-  Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+  Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
   exit 2
 }
 
-Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
 exit $warnings.Count

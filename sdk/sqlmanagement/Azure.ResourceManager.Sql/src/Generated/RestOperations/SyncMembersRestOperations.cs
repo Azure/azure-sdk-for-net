@@ -32,8 +32,118 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySyncGroupRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/syncMembers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySyncGroupRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/syncMembers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists sync members in the given sync group. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SyncMemberListResult>> ListBySyncGroupAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SyncMemberListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists sync members in the given sync group. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SyncMemberListResult> ListBySyncGroup(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SyncMemberListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName)
@@ -108,7 +218,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -145,7 +255,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,6 +425,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(syncMemberName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -499,7 +610,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal RequestUriBuilder CreateListBySyncGroupRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        internal RequestUriBuilder CreateRefreshMemberSchemaRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -513,16 +624,18 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/syncMembers", false);
+            uri.AppendPath("/syncMembers/", false);
+            uri.AppendPath(syncMemberName, true);
+            uri.AppendPath("/refreshSchema", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListBySyncGroupRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
+        internal HttpMessage CreateRefreshMemberSchemaRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -535,7 +648,9 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/syncMembers", false);
+            uri.AppendPath("/syncMembers/", false);
+            uri.AppendPath(syncMemberName, true);
+            uri.AppendPath("/refreshSchema", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -543,67 +658,63 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Lists sync members in the given sync group. </summary>
+        /// <summary> Refreshes a sync member database schema. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="syncGroupName"> The name of the sync group on which the sync member is hosted. </param>
+        /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SyncMemberListResult>> ListBySyncGroupAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RefreshMemberSchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
-            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            using var message = CreateRefreshMemberSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, syncMemberName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        SyncMemberListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Lists sync members in the given sync group. </summary>
+        /// <summary> Refreshes a sync member database schema. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="syncGroupName"> The name of the sync group on which the sync member is hosted. </param>
+        /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SyncMemberListResult> ListBySyncGroup(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response RefreshMemberSchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
-            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName);
+            using var message = CreateRefreshMemberSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, syncMemberName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        SyncMemberListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -683,7 +794,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -718,119 +829,10 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateRefreshMemberSchemaRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/syncMembers/", false);
-            uri.AppendPath(syncMemberName, true);
-            uri.AppendPath("/refreshSchema", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateRefreshMemberSchemaRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/syncMembers/", false);
-            uri.AppendPath(syncMemberName, true);
-            uri.AppendPath("/refreshSchema", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Refreshes a sync member database schema. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group on which the sync member is hosted. </param>
-        /// <param name="syncMemberName"> The name of the sync member. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RefreshMemberSchemaAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
-
-            using var message = CreateRefreshMemberSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, syncMemberName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Refreshes a sync member database schema. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database on which the sync group is hosted. </param>
-        /// <param name="syncGroupName"> The name of the sync group on which the sync member is hosted. </param>
-        /// <param name="syncMemberName"> The name of the sync member. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/> or <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RefreshMemberSchema(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string syncMemberName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
-
-            using var message = CreateRefreshMemberSchemaRequest(subscriptionId, resourceGroupName, serverName, databaseName, syncGroupName, syncMemberName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -884,7 +886,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,7 +921,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncMemberListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncMemberListResult.DeserializeSyncMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -978,7 +980,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1015,7 +1017,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         SyncFullSchemaPropertiesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SyncFullSchemaPropertiesListResult.DeserializeSyncFullSchemaPropertiesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

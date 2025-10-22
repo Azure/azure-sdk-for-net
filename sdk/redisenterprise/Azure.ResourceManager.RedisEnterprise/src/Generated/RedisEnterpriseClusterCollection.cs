@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>

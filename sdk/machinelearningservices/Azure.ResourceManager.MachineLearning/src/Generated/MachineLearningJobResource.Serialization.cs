@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningJobResource : IJsonModel<MachineLearningJobData>
     {
+        private static MachineLearningJobData s_dataDeserializationInstance;
+        private static MachineLearningJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningJobData>)Data).Write(writer, options);
 
-        MachineLearningJobData IJsonModel<MachineLearningJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningJobData>)Data).Create(ref reader, options);
+        MachineLearningJobData IJsonModel<MachineLearningJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningJobData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningJobData IPersistableModel<MachineLearningJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningJobData>(data, options);
+        MachineLearningJobData IPersistableModel<MachineLearningJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningJobData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

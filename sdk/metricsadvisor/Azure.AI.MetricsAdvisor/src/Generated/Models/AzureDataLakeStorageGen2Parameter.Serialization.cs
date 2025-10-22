@@ -140,7 +140,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AzureDataLakeStorageGen2Parameter FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAzureDataLakeStorageGen2Parameter(document.RootElement);
         }
 

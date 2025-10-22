@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVpnSite))
             {
                 writer.WritePropertyName("remoteVpnSite"u8);
-                JsonSerializer.Serialize(writer, RemoteVpnSite);
+                ((IJsonModel<WritableSubResource>)RemoteVpnSite).Write(writer, options);
             }
             if (Optional.IsDefined(RoutingWeight))
             {
@@ -251,7 +253,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVpnSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVpnSite = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"u8))
@@ -463,6 +465,404 @@ namespace Azure.ResourceManager.Network
                 routingConfiguration);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RemoteVpnSiteId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteVpnSite: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      remoteVpnSite: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteVpnSite))
+                {
+                    builder.Append("    remoteVpnSite: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RemoteVpnSite, options, 4, false, "    remoteVpnSite: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingWeight), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingWeight: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingWeight))
+                {
+                    builder.Append("    routingWeight: ");
+                    builder.AppendLine($"{RoutingWeight.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DpdTimeoutSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dpdTimeoutSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DpdTimeoutSeconds))
+                {
+                    builder.Append("    dpdTimeoutSeconds: ");
+                    builder.AppendLine($"{DpdTimeoutSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectionStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionStatus))
+                {
+                    builder.Append("    connectionStatus: ");
+                    builder.AppendLine($"'{ConnectionStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnConnectionProtocolType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vpnConnectionProtocolType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VpnConnectionProtocolType))
+                {
+                    builder.Append("    vpnConnectionProtocolType: ");
+                    builder.AppendLine($"'{VpnConnectionProtocolType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressBytesTransferred), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ingressBytesTransferred: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngressBytesTransferred))
+                {
+                    builder.Append("    ingressBytesTransferred: ");
+                    builder.AppendLine($"'{IngressBytesTransferred.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressBytesTransferred), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    egressBytesTransferred: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EgressBytesTransferred))
+                {
+                    builder.Append("    egressBytesTransferred: ");
+                    builder.AppendLine($"'{EgressBytesTransferred.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionBandwidth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectionBandwidth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionBandwidth))
+                {
+                    builder.Append("    connectionBandwidth: ");
+                    builder.AppendLine($"{ConnectionBandwidth.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sharedKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedKey))
+                {
+                    builder.Append("    sharedKey: ");
+                    if (SharedKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SharedKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SharedKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBgp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableBgp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableBgp))
+                {
+                    builder.Append("    enableBgp: ");
+                    var boolValue = EnableBgp.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsePolicyBasedTrafficSelectors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    usePolicyBasedTrafficSelectors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
+                {
+                    builder.Append("    usePolicyBasedTrafficSelectors: ");
+                    var boolValue = UsePolicyBasedTrafficSelectors.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPsecPolicies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ipsecPolicies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPsecPolicies))
+                {
+                    if (IPsecPolicies.Any())
+                    {
+                        builder.Append("    ipsecPolicies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPsecPolicies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipsecPolicies: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficSelectorPolicies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trafficSelectorPolicies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
+                {
+                    if (TrafficSelectorPolicies.Any())
+                    {
+                        builder.Append("    trafficSelectorPolicies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TrafficSelectorPolicies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trafficSelectorPolicies: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableRateLimiting), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableRateLimiting: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableRateLimiting))
+                {
+                    builder.Append("    enableRateLimiting: ");
+                    var boolValue = EnableRateLimiting.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableInternetSecurity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableInternetSecurity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableInternetSecurity))
+                {
+                    builder.Append("    enableInternetSecurity: ");
+                    var boolValue = EnableInternetSecurity.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseLocalAzureIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    useLocalAzureIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseLocalAzureIPAddress))
+                {
+                    builder.Append("    useLocalAzureIpAddress: ");
+                    var boolValue = UseLocalAzureIPAddress.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnLinkConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vpnLinkConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VpnLinkConnections))
+                {
+                    if (VpnLinkConnections.Any())
+                    {
+                        builder.Append("    vpnLinkConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in VpnLinkConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    vpnLinkConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingConfiguration))
+                {
+                    builder.Append("    routingConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingConfiguration, options, 4, false, "    routingConfiguration: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VpnConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -470,7 +870,9 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VpnConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -484,7 +886,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVpnConnectionData(document.RootElement, options);
                     }
                 default:

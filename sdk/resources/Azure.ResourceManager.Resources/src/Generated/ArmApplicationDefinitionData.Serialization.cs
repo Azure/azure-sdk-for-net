@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MainTemplate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MainTemplate))
+                using (JsonDocument document = JsonDocument.Parse(MainTemplate, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CreateUiDefinition);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CreateUiDefinition))
+                using (JsonDocument document = JsonDocument.Parse(CreateUiDefinition, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Resources
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArmApplicationDefinitionData(document.RootElement, options);
                     }
                 default:

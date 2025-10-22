@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         RunbookTestJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation
                 case 201:
                     {
                         RunbookTestJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         RunbookTestJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         RunbookTestJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

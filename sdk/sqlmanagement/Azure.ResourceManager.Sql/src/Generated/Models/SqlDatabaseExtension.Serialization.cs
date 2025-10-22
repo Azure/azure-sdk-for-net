@@ -59,6 +59,41 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                writer.WritePropertyName("administratorLogin"u8);
+                writer.WriteStringValue(AdministratorLogin);
+            }
+            if (Optional.IsDefined(AdministratorLoginPassword))
+            {
+                writer.WritePropertyName("administratorLoginPassword"u8);
+                writer.WriteStringValue(AdministratorLoginPassword);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType);
+            }
+            if (Optional.IsDefined(DatabaseEdition))
+            {
+                writer.WritePropertyName("databaseEdition"u8);
+                writer.WriteStringValue(DatabaseEdition);
+            }
+            if (Optional.IsDefined(ServiceObjectiveName))
+            {
+                writer.WritePropertyName("serviceObjectiveName"u8);
+                writer.WriteStringValue(ServiceObjectiveName);
+            }
+            if (Optional.IsDefined(MaxSizeBytes))
+            {
+                writer.WritePropertyName("maxSizeBytes"u8);
+                writer.WriteStringValue(MaxSizeBytes);
+            }
+            if (Optional.IsDefined(NetworkIsolation))
+            {
+                writer.WritePropertyName("networkIsolation"u8);
+                writer.WriteObjectValue(NetworkIsolation, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -90,6 +125,13 @@ namespace Azure.ResourceManager.Sql.Models
             StorageKeyType? storageKeyType = default;
             string storageKey = default;
             Uri storageUri = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string authenticationType = default;
+            string databaseEdition = default;
+            string serviceObjectiveName = default;
+            string maxSizeBytes = default;
+            NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,6 +201,45 @@ namespace Azure.ResourceManager.Sql.Models
                             storageUri = new Uri(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administratorLogin"u8))
+                        {
+                            administratorLogin = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("administratorLoginPassword"u8))
+                        {
+                            administratorLoginPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            authenticationType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseEdition"u8))
+                        {
+                            databaseEdition = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceObjectiveName"u8))
+                        {
+                            serviceObjectiveName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxSizeBytes"u8))
+                        {
+                            maxSizeBytes = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("networkIsolation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -177,6 +258,13 @@ namespace Azure.ResourceManager.Sql.Models
                 storageKeyType,
                 storageKey,
                 storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType,
+                databaseEdition,
+                serviceObjectiveName,
+                maxSizeBytes,
+                networkIsolation,
                 serializedAdditionalRawData);
         }
 
@@ -314,6 +402,159 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLogin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administratorLogin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLogin))
+                {
+                    builder.Append("    administratorLogin: ");
+                    if (AdministratorLogin.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLogin}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLogin}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLoginPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administratorLoginPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLoginPassword))
+                {
+                    builder.Append("    administratorLoginPassword: ");
+                    if (AdministratorLoginPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLoginPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLoginPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationType))
+                {
+                    builder.Append("    authenticationType: ");
+                    if (AuthenticationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthenticationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthenticationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseEdition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    databaseEdition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseEdition))
+                {
+                    builder.Append("    databaseEdition: ");
+                    if (DatabaseEdition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseEdition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseEdition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceObjectiveName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceObjectiveName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceObjectiveName))
+                {
+                    builder.Append("    serviceObjectiveName: ");
+                    if (ServiceObjectiveName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceObjectiveName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceObjectiveName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxSizeBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxSizeBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxSizeBytes))
+                {
+                    builder.Append("    maxSizeBytes: ");
+                    if (MaxSizeBytes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxSizeBytes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxSizeBytes}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkIsolation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    networkIsolation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkIsolation))
+                {
+                    builder.Append("    networkIsolation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkIsolation, options, 4, false, "    networkIsolation: ");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -326,7 +567,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -342,7 +583,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlDatabaseExtension(document.RootElement, options);
                     }
                 default:

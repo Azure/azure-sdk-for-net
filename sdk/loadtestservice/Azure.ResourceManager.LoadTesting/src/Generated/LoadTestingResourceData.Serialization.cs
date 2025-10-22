@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.LoadTesting.Models;
@@ -40,8 +41,7 @@ namespace Azure.ResourceManager.LoadTesting
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -116,8 +116,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerLoadTestingContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerLoadTestingContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.LoadTesting
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadTestingResourceData(document.RootElement, options);
                     }
                 default:

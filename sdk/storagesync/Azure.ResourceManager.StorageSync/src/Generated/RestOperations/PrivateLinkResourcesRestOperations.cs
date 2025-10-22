@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Gets the private link resources that need to be created for a storage sync service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> The name of the storage sync service name within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageSyncPrivateLinkResourceListResult.DeserializeStorageSyncPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Gets the private link resources that need to be created for a storage sync service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> The name of the storage sync service name within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         StorageSyncPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageSyncPrivateLinkResourceListResult.DeserializeStorageSyncPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

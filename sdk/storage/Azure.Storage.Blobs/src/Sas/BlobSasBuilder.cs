@@ -183,6 +183,13 @@ namespace Azure.Storage.Sas
         public string EncryptionScope { get; set; }
 
         /// <summary>
+        /// Optional. Beginning in version 2025-07-05, this value  specifies the Entra ID of the user would is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
+        /// </summary>
+        public string DelegatedUserObjectId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -456,7 +463,7 @@ namespace Azure.Storage.Sas
 
             stringToSign = ToStringToSign(userDelegationKey, accountName);
 
-            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
             BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
@@ -483,7 +490,8 @@ namespace Azure.Storage.Sas
                 contentType: ContentType,
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
-                encryptionScope: EncryptionScope);
+                encryptionScope: EncryptionScope,
+                delegatedUserObjectId: DelegatedUserObjectId);
             return p;
         }
 
@@ -509,6 +517,8 @@ namespace Azure.Storage.Sas
                     PreauthorizedAgentObjectId,
                     null, // AgentObjectId - enabled only in HNS accounts
                     CorrelationId,
+                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                    DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),
                     Version,
@@ -535,22 +545,6 @@ namespace Azure.Storage.Sas
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
-
-        /// <summary>
-        /// ComputeHMACSHA256 generates a base-64 hash signature string for an
-        /// HTTP request or for a SAS.
-        /// </summary>
-        /// <param name="userDelegationKeyValue">
-        /// A <see cref="UserDelegationKey.Value"/> used to sign with a key
-        /// representing AD credentials.
-        /// </param>
-        /// <param name="message">The message to sign.</param>
-        /// <returns>The signed message.</returns>
-        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
-            Convert.ToBase64String(
-                new HMACSHA256(
-                    Convert.FromBase64String(userDelegationKeyValue))
-                .ComputeHash(Encoding.UTF8.GetBytes(message)));
 
         /// <summary>
         /// Ensure the <see cref="BlobSasBuilder"/>'s properties are in a

@@ -88,6 +88,75 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of OracleGIMinorVersionResources in the OracleGIVersion. </summary>
+        /// <returns> An object representing collection of OracleGIMinorVersionResources and their operations over a OracleGIMinorVersionResource. </returns>
+        public virtual OracleGIMinorVersionCollection GetOracleGIMinorVersions()
+        {
+            return GetCachedClient(client => new OracleGIMinorVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a GiMinorVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GiMinorVersion_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OracleGIMinorVersionResource>> GetOracleGIMinorVersionAsync(string giMinorVersionName, CancellationToken cancellationToken = default)
+        {
+            return await GetOracleGIMinorVersions().GetAsync(giMinorVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GiMinorVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions/{giMinorVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GiMinorVersion_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleGIMinorVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="giMinorVersionName"> The name of the GiMinorVersion. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="giMinorVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giMinorVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OracleGIMinorVersionResource> GetOracleGIMinorVersion(string giMinorVersionName, CancellationToken cancellationToken = default)
+        {
+            return GetOracleGIMinorVersions().Get(giMinorVersionName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a GiVersion
         /// <list type="bullet">
@@ -97,11 +166,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +206,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

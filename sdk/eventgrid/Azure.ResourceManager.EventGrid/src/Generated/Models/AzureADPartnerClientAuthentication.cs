@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Azure Active Directory Partner Client Authentication. </summary>
+    /// <summary> Microsoft Entra ID Partner Client Authentication. </summary>
     public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="AzureADPartnerClientAuthentication"/>. </summary>
@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="AzureADPartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureActiveDirectoryTenantId"> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
+        /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
+        /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         internal AzureADPartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string azureActiveDirectoryTenantId, Uri azureActiveDirectoryApplicationIdOrUri) : base(clientAuthenticationType, serializedAdditionalRawData)
         {
             AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             ClientAuthenticationType = clientAuthenticationType;
         }
 
-        /// <summary> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
+        /// <summary> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("properties.azureActiveDirectoryTenantId")]
         public string AzureActiveDirectoryTenantId { get; set; }
-        /// <summary> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
+        /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
         public Uri AzureActiveDirectoryApplicationIdOrUri { get; set; }
     }

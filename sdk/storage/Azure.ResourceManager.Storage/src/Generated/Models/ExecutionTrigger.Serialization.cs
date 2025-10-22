@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(TriggerType.ToSerialString());
+            writer.WriteStringValue(TaskExecutionTriggerType.ToString());
             writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(Parameters, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ExecutionTriggerType type = default;
+            TaskExecutionTriggerType type = default;
             ExecutionTriggerParameters parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToExecutionTriggerType();
+                    type = new TaskExecutionTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskExecutionTriggerType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
             else
             {
                 builder.Append("  type: ");
-                builder.AppendLine($"'{TriggerType.ToSerialString()}'");
+                builder.AppendLine($"'{TaskExecutionTriggerType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExecutionTrigger(document.RootElement, options);
                     }
                 default:

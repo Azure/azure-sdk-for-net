@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01-preview";
+            _apiVersion = apiVersion ?? "2024-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserContractData.DeserializeUserContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserContractData.DeserializeUserContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         UserContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserContractData.DeserializeUserContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         UserContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserContractData.DeserializeUserContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserContractData.DeserializeUserContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserContractData.DeserializeUserContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ApiManagement
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.ApiManagement
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         GenerateSsoUriResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GenerateSsoUriResult.DeserializeGenerateSsoUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         GenerateSsoUriResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GenerateSsoUriResult.DeserializeGenerateSsoUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserTokenResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserTokenResult.DeserializeUserTokenResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserTokenResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserTokenResult.DeserializeUserTokenResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         UserListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

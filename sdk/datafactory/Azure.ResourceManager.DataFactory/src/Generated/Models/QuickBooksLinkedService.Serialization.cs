@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ConnectionProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ConnectionProperties))
+                using (JsonDocument document = JsonDocument.Parse(ConnectionProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("accessTokenSecret"u8);
                 JsonSerializer.Serialize(writer, AccessTokenSecret);
             }
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                JsonSerializer.Serialize(writer, RefreshToken);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret consumerSecret = default;
             DataFactorySecret accessToken = default;
             DataFactorySecret accessTokenSecret = default;
+            DataFactorySecret refreshToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -275,6 +281,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("refreshToken"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -310,6 +325,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 consumerSecret,
                 accessToken,
                 accessTokenSecret,
+                refreshToken,
                 useEncryptedEndpoints,
                 encryptedCredential);
         }
@@ -321,7 +337,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -335,7 +351,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQuickBooksLinkedService(document.RootElement, options);
                     }
                 default:

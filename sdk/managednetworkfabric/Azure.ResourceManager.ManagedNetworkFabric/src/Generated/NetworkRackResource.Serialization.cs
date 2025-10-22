@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkRackResource : IJsonModel<NetworkRackData>
     {
+        private static NetworkRackData s_dataDeserializationInstance;
+        private static NetworkRackData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkRackData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkRackData>)Data).Write(writer, options);
 
-        NetworkRackData IJsonModel<NetworkRackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkRackData>)Data).Create(ref reader, options);
+        NetworkRackData IJsonModel<NetworkRackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkRackData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkRackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkRackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkRackData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkRackData IPersistableModel<NetworkRackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkRackData>(data, options);
+        NetworkRackData IPersistableModel<NetworkRackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkRackData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkRackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkRackData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkRackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkRackData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

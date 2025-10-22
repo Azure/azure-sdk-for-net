@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -40,109 +41,58 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CryptoKeyId))
             {
-                if (CryptoKeyId != null)
-                {
-                    writer.WritePropertyName("cryptoKeyId"u8);
-                    writer.WriteStringValue(CryptoKeyId);
-                }
-                else
-                {
-                    writer.WriteNull("cryptoKeyId");
-                }
+                writer.WritePropertyName("cryptoKeyId"u8);
+                writer.WriteStringValue(CryptoKeyId);
             }
-            if (Optional.IsDefined(KeyType))
+            if (Optional.IsDefined(CryptoKeyType))
             {
-                if (KeyType != null)
-                {
-                    writer.WritePropertyName("keyType"u8);
-                    writer.WriteStringValue(KeyType);
-                }
-                else
-                {
-                    writer.WriteNull("keyType");
-                }
+                writer.WritePropertyName("keyType"u8);
+                writer.WriteStringValue(CryptoKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(KeySize))
+            if (Optional.IsDefined(CryptoKeySize))
             {
-                if (KeySize != null)
-                {
-                    writer.WritePropertyName("keySize"u8);
-                    writer.WriteNumberValue(KeySize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("keySize");
-                }
+                writer.WritePropertyName("cryptoKeySize"u8);
+                writer.WriteNumberValue(CryptoKeySize.Value);
             }
             if (Optional.IsDefined(KeyAlgorithm))
             {
-                if (KeyAlgorithm != null)
-                {
-                    writer.WritePropertyName("keyAlgorithm"u8);
-                    writer.WriteStringValue(KeyAlgorithm);
-                }
-                else
-                {
-                    writer.WriteNull("keyAlgorithm");
-                }
+                writer.WritePropertyName("keyAlgorithm"u8);
+                writer.WriteStringValue(KeyAlgorithm);
             }
-            if (Optional.IsCollectionDefined(Usage))
+            if (Optional.IsCollectionDefined(CryptoKeyUsage))
             {
-                if (Usage != null)
+                writer.WritePropertyName("usage"u8);
+                writer.WriteStartArray();
+                foreach (var item in CryptoKeyUsage)
                 {
-                    writer.WritePropertyName("usage"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Usage)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("usage");
-                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
             {
-                if (FilePaths != null)
+                writer.WritePropertyName("filePaths"u8);
+                writer.WriteStartArray();
+                foreach (var item in FilePaths)
                 {
-                    writer.WritePropertyName("filePaths"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in FilePaths)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("filePaths");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PairedKey))
             {
-                if (PairedKey != null)
-                {
-                    writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("pairedKey");
-                }
+                writer.WritePropertyName("pairedKey"u8);
+                writer.WriteObjectValue(PairedKey, options);
             }
             if (Optional.IsDefined(IsShortKeySize))
             {
-                if (IsShortKeySize != null)
-                {
-                    writer.WritePropertyName("isShortKeySize"u8);
-                    writer.WriteBooleanValue(IsShortKeySize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isShortKeySize");
-                }
+                writer.WritePropertyName("isShortKeySize"u8);
+                writer.WriteBooleanValue(IsShortKeySize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -172,13 +122,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceType type = default;
             SystemData systemData = default;
             string cryptoKeyId = default;
-            string keyType = default;
-            long? keySize = default;
+            CryptoKeyType? keyType = default;
+            long? cryptoKeySize = default;
             string keyAlgorithm = default;
             IList<string> usage = default;
             IReadOnlyList<string> filePaths = default;
             CryptoPairedKey pairedKey = default;
             bool? isShortKeySize = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +155,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotFirmwareDefenseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -218,11 +169,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         if (property0.NameEquals("cryptoKeyId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                cryptoKeyId = null;
-                                continue;
-                            }
                             cryptoKeyId = property0.Value.GetString();
                             continue;
                         }
@@ -230,29 +176,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keyType = null;
                                 continue;
                             }
-                            keyType = property0.Value.GetString();
+                            keyType = new CryptoKeyType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("keySize"u8))
+                        if (property0.NameEquals("cryptoKeySize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keySize = null;
                                 continue;
                             }
-                            keySize = property0.Value.GetInt64();
+                            cryptoKeySize = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("keyAlgorithm"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                keyAlgorithm = null;
-                                continue;
-                            }
                             keyAlgorithm = property0.Value.GetString();
                             continue;
                         }
@@ -288,7 +227,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                pairedKey = null;
                                 continue;
                             }
                             pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property0.Value, options);
@@ -298,10 +236,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                isShortKeySize = null;
                                 continue;
                             }
                             isShortKeySize = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -320,12 +266,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 systemData,
                 cryptoKeyId,
                 keyType,
-                keySize,
+                cryptoKeySize,
                 keyAlgorithm,
                 usage ?? new ChangeTrackingList<string>(),
                 filePaths ?? new ChangeTrackingList<string>(),
                 pairedKey,
                 isShortKeySize,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -336,7 +283,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support writing '{options.Format}' format.");
             }
@@ -350,7 +297,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCryptoKeyResult(document.RootElement, options);
                     }
                 default:

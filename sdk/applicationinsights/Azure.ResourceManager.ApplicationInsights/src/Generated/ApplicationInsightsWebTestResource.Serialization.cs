@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     public partial class ApplicationInsightsWebTestResource : IJsonModel<ApplicationInsightsWebTestData>
     {
+        private static ApplicationInsightsWebTestData s_dataDeserializationInstance;
+        private static ApplicationInsightsWebTestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApplicationInsightsWebTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWebTestData>)Data).Write(writer, options);
 
-        ApplicationInsightsWebTestData IJsonModel<ApplicationInsightsWebTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWebTestData>)Data).Create(ref reader, options);
+        ApplicationInsightsWebTestData IJsonModel<ApplicationInsightsWebTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWebTestData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationInsightsWebTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApplicationInsightsWebTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationInsightsWebTestData>(Data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
-        ApplicationInsightsWebTestData IPersistableModel<ApplicationInsightsWebTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWebTestData>(data, options);
+        ApplicationInsightsWebTestData IPersistableModel<ApplicationInsightsWebTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWebTestData>(data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
-        string IPersistableModel<ApplicationInsightsWebTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWebTestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApplicationInsightsWebTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWebTestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

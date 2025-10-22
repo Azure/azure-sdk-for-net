@@ -34,16 +34,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -57,7 +54,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,10 +91,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ElasticSanPrivateLinkResource> array = new List<ElasticSanPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -117,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticSanPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ElasticSanPrivateLinkResource>(), nextLink, serializedAdditionalRawData);
+            return new ElasticSanPrivateLinkResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
@@ -127,7 +120,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +134,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:

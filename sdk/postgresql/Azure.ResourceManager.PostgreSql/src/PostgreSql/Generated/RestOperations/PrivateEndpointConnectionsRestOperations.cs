@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlPrivateEndpointConnectionListResult.DeserializePostgreSqlPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlPrivateEndpointConnectionListResult.DeserializePostgreSqlPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlPrivateEndpointConnectionListResult.DeserializePostgreSqlPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlPrivateEndpointConnectionListResult.DeserializePostgreSqlPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                WriteResourceUri(writer, options);
             }
             if (Optional.IsDefined(ConnectionType))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,11 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceUri = new Uri(property.Value.GetString());
+                    DeserializeResourceUri(property, ref resourceUri);
                     continue;
                 }
                 if (property.NameEquals("connectionType"u8))
@@ -117,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualHubInboundRoutesContent)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualHubInboundRoutesContent(document.RootElement, options);
                     }
                 default:

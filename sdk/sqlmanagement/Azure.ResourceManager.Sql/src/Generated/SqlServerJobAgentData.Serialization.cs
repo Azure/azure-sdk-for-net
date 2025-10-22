@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseId))
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.Sql
                 return null;
             }
             SqlSku sku = default;
+            JobAgentIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -99,6 +105,15 @@ namespace Azure.ResourceManager.Sql
                         continue;
                     }
                     sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JobAgentIdentity.DeserializeJobAgentIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -141,7 +156,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -188,6 +203,7 @@ namespace Azure.ResourceManager.Sql
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
+                identity,
                 databaseId,
                 state,
                 serializedAdditionalRawData);
@@ -291,6 +307,21 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -365,7 +396,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -381,7 +412,7 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlServerJobAgentData(document.RootElement, options);
                     }
                 default:

@@ -32,6 +32,10 @@ namespace Azure.Template.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Value { get { throw null; } }
     }
+    public static partial class TemplateModelFactory
+    {
+        public static Azure.Template.Models.SecretBundle SecretBundle(string value = null, string id = null, string contentType = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string kid = null, bool? managed = default(bool?)) { throw null; }
+    }
 }
 namespace Microsoft.Extensions.Azure
 {

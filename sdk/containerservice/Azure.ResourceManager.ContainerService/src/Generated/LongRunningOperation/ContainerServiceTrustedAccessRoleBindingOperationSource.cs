@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServiceTrustedAccessRoleBindingResource IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
             return new ContainerServiceTrustedAccessRoleBindingResource(_client, data);
         }
 
         async ValueTask<ContainerServiceTrustedAccessRoleBindingResource> IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(document.RootElement);
-            return new ContainerServiceTrustedAccessRoleBindingResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
+            return await Task.FromResult(new ContainerServiceTrustedAccessRoleBindingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

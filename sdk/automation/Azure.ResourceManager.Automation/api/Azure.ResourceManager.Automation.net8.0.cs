@@ -1075,6 +1075,12 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationWebhookResource> Update(Azure.ResourceManager.Automation.Models.AutomationWebhookPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationWebhookResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationWebhookPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerAutomationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerAutomationContext() { }
+        public static Azure.ResourceManager.Automation.AzureResourceManagerAutomationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DscCompilationJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>, System.Collections.IEnumerable
     {
         protected DscCompilationJobCollection() { }

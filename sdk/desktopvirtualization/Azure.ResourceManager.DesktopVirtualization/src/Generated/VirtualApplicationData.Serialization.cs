@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(IconContent);
 #else
-                using (JsonDocument document = JsonDocument.Parse(IconContent))
+                using (JsonDocument document = JsonDocument.Parse(IconContent, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualApplicationData(document.RootElement, options);
                     }
                 default:

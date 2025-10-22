@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
-                JsonSerializer.Serialize(writer, HostGroup);
+                ((IJsonModel<WritableSubResource>)HostGroup).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
@@ -150,13 +151,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("skuProfile"u8);
                 writer.WriteObjectValue(SkuProfile, options);
             }
+            if (Optional.IsDefined(HighSpeedInterconnectPlacement))
+            {
+                writer.WritePropertyName("highSpeedInterconnectPlacement"u8);
+                writer.WriteStringValue(HighSpeedInterconnectPlacement.Value.ToString());
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -207,6 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
+            HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +315,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    proximityPlacementGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("hostGroup"u8))
@@ -317,7 +324,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    hostGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("additionalCapabilities"u8))
@@ -410,6 +417,15 @@ namespace Azure.ResourceManager.Compute.Models
                     skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("highSpeedInterconnectPlacement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    highSpeedInterconnectPlacement = new HighSpeedInterconnectPlacement(property.Value.GetString());
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -437,6 +453,7 @@ namespace Azure.ResourceManager.Compute.Models
                 resiliencyPolicy,
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
+                highSpeedInterconnectPlacement,
                 additionalProperties);
         }
 
@@ -447,7 +464,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support writing '{options.Format}' format.");
             }
@@ -461,7 +478,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineScaleSetProperties(document.RootElement, options);
                     }
                 default:

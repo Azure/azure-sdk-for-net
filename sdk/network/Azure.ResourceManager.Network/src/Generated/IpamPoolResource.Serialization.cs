@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class IpamPoolResource : IJsonModel<IpamPoolData>
     {
+        private static IpamPoolData s_dataDeserializationInstance;
+        private static IpamPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IpamPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IpamPoolData>)Data).Write(writer, options);
 
-        IpamPoolData IJsonModel<IpamPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IpamPoolData>)Data).Create(ref reader, options);
+        IpamPoolData IJsonModel<IpamPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IpamPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IpamPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IpamPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IpamPoolData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        IpamPoolData IPersistableModel<IpamPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IpamPoolData>(data, options);
+        IpamPoolData IPersistableModel<IpamPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IpamPoolData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<IpamPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IpamPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IpamPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IpamPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

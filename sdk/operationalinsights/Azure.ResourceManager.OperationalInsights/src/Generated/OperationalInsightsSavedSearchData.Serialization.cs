@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationalInsightsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOperationalInsightsSavedSearchData(document.RootElement, options);
                     }
                 default:

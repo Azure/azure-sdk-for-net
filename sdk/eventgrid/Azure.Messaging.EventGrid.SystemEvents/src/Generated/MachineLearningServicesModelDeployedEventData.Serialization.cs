@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class MachineLearningServicesModelDeployedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesModelDeployedEventData>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
+    [JsonConverter(typeof(MachineLearningServicesModelDeployedEventDataConverter))]
+    public partial class MachineLearningServicesModelDeployedEventData : IJsonModel<MachineLearningServicesModelDeployedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesModelDeployedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/> for deserialization. </summary>
+        internal MachineLearningServicesModelDeployedEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningServicesModelDeployedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,74 +35,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningServicesModelDeployedEventData)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(ServiceName))
+            writer.WritePropertyName("serviceName"u8);
+            writer.WriteStringValue(ServiceName);
+            writer.WritePropertyName("serviceComputeType"u8);
+            writer.WriteStringValue(ServiceComputeType);
+            writer.WritePropertyName("modelIds"u8);
+            writer.WriteStringValue(ModelIds);
+            if (Optional.IsDefined(ServiceTags))
             {
-                writer.WritePropertyName("serviceName"u8);
-                writer.WriteStringValue(ServiceName);
+                writer.WritePropertyName("serviceTags"u8);
+                writer.WriteObjectValue<object>(ServiceTags, options);
             }
-            if (Optional.IsDefined(ServiceComputeType))
+            if (Optional.IsDefined(ServiceProperties))
             {
-                writer.WritePropertyName("serviceComputeType"u8);
-                writer.WriteStringValue(ServiceComputeType);
+                writer.WritePropertyName("serviceProperties"u8);
+                writer.WriteObjectValue<object>(ServiceProperties, options);
             }
-            if (Optional.IsDefined(ModelIds))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("modelIds"u8);
-                writer.WriteStringValue(ModelIds);
-            }
-            writer.WritePropertyName("serviceTags"u8);
-            writer.WriteStartObject();
-            foreach (var item in ServiceTags)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("serviceProperties"u8);
-            writer.WriteStartObject();
-            foreach (var item in ServiceProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -106,22 +73,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        MachineLearningServicesModelDeployedEventData IJsonModel<MachineLearningServicesModelDeployedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningServicesModelDeployedEventData IJsonModel<MachineLearningServicesModelDeployedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningServicesModelDeployedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningServicesModelDeployedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningServicesModelDeployedEventData(document.RootElement, options);
         }
 
-        internal static MachineLearningServicesModelDeployedEventData DeserializeMachineLearningServicesModelDeployedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningServicesModelDeployedEventData DeserializeMachineLearningServicesModelDeployedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,98 +101,88 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string serviceName = default;
             string serviceComputeType = default;
             string modelIds = default;
-            IReadOnlyDictionary<string, BinaryData> serviceTags = default;
-            IReadOnlyDictionary<string, BinaryData> serviceProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            object serviceTags = default;
+            object serviceProperties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceName"u8))
+                if (prop.NameEquals("serviceName"u8))
                 {
-                    serviceName = property.Value.GetString();
+                    serviceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceComputeType"u8))
+                if (prop.NameEquals("serviceComputeType"u8))
                 {
-                    serviceComputeType = property.Value.GetString();
+                    serviceComputeType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelIds"u8))
+                if (prop.NameEquals("modelIds"u8))
                 {
-                    modelIds = property.Value.GetString();
+                    modelIds = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceTags"u8))
+                if (prop.NameEquals("serviceTags"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
+                        continue;
                     }
-                    serviceTags = dictionary;
+                    serviceTags = prop.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("serviceProperties"u8))
+                if (prop.NameEquals("serviceProperties"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
+                        continue;
                     }
-                    serviceProperties = dictionary;
+                    serviceProperties = prop.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningServicesModelDeployedEventData(
                 serviceName,
                 serviceComputeType,
                 modelIds,
                 serviceTags,
                 serviceProperties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MachineLearningServicesModelDeployedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningServicesModelDeployedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningServicesModelDeployedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MachineLearningServicesModelDeployedEventData IPersistableModel<MachineLearningServicesModelDeployedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningServicesModelDeployedEventData IPersistableModel<MachineLearningServicesModelDeployedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningServicesModelDeployedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesModelDeployedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningServicesModelDeployedEventData(document.RootElement, options);
                     }
                 default:
@@ -228,22 +190,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MachineLearningServicesModelDeployedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MachineLearningServicesModelDeployedEventData FromResponse(Response response)
+        internal partial class MachineLearningServicesModelDeployedEventDataConverter : JsonConverter<MachineLearningServicesModelDeployedEventData>
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMachineLearningServicesModelDeployedEventData(document.RootElement);
-        }
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesModelDeployedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<MachineLearningServicesModelDeployedEventData>>(model, ModelSerializationExtensions.WireOptions);
+            }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override MachineLearningServicesModelDeployedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesModelDeployedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

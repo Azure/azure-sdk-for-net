@@ -5,15 +5,15 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NET6.0": {
-        "OSVmImage": "env:LINUXVMIMAGE",
-        "Pool": "env:LINUXPOOL",
-        "TestTargetFramework": "net6.0"
-      },
-      "Ubuntu-20.04_NET8.0": {
+      "Ubuntu-24.04_NET8.0": {
         "OSVmImage": "env:LINUXVMIMAGE",
         "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net8.0"
+      },
+      "Ubuntu-24.04_NET9.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net9.0"
       },
       "Windows2022_NET462": {
         "OSVmImage": "env:WINDOWSVMIMAGE",
@@ -25,15 +25,15 @@
         "Pool": "env:WINDOWSPOOL",
         "TestTargetFramework": "net8.0"
       },
-      "MacOS_NET6.0": {
-        "OSVmImage": "env:MACVMIMAGE",
-        "Pool": "env:MACPOOL",
-        "TestTargetFramework": "net6.0"
-      },
       "MacOS_NET8.0": {
         "OSVmImage": "env:MACVMIMAGE",
         "Pool": "env:MACPOOL",
         "TestTargetFramework": "net8.0"
+      },
+      "MacOS_NET9.0": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net9.0"
       }
     },
     "AdditionalTestArguments": [
@@ -48,10 +48,10 @@
   "include": [
     {
       "Agent": {
-        "Windows2022_NET8.0": {
+        "Windows2022_NET9.0": {
           "OSVmImage": "env:WINDOWSVMIMAGE",
           "Pool": "env:WINDOWSPOOL",
-          "TestTargetFramework": "net8.0"
+          "TestTargetFramework": "net9.0"
         }
       },
       "TestMode": {

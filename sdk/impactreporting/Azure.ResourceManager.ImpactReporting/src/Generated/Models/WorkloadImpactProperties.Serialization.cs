@@ -90,10 +90,28 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 writer.WritePropertyName("connectivity"u8);
                 writer.WriteObjectValue(Connectivity, options);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (Optional.IsCollectionDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteObjectValue(AdditionalProperties, options);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(ErrorDetails))
             {
@@ -128,7 +146,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -168,7 +186,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             IList<string> armCorrelationIds = default;
             IList<Performance> performance = default;
             Connectivity connectivity = default;
-            WorkloadImpactPropertiesAdditionalProperties additionalProperties = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
             ErrorDetailProperties errorDetails = default;
             Workload workload = default;
             string impactGroupId = default;
@@ -273,7 +291,19 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    additionalProperties = WorkloadImpactPropertiesAdditionalProperties.DeserializeWorkloadImpactPropertiesAdditionalProperties(property.Value, options);
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    additionalProperties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))
@@ -335,7 +365,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 armCorrelationIds ?? new ChangeTrackingList<string>(),
                 performance ?? new ChangeTrackingList<Performance>(),
                 connectivity,
-                additionalProperties,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 errorDetails,
                 workload,
                 impactGroupId,
@@ -351,7 +381,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support writing '{options.Format}' format.");
             }
@@ -365,7 +395,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkloadImpactProperties(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
 
         SapInstanceResource IOperationSource<SapInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SapInstanceData.DeserializeSapInstanceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SapInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationDiscoverySapContext.Default);
             return new SapInstanceResource(_client, data);
         }
 
         async ValueTask<SapInstanceResource> IOperationSource<SapInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SapInstanceData.DeserializeSapInstanceData(document.RootElement);
-            return new SapInstanceResource(_client, data);
+            var data = ModelReaderWriter.Read<SapInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationDiscoverySapContext.Default);
+            return await Task.FromResult(new SapInstanceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

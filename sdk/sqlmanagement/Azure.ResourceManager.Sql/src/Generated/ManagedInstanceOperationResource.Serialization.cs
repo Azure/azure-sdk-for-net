@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceOperationResource : IJsonModel<ManagedInstanceOperationData>
     {
+        private static ManagedInstanceOperationData s_dataDeserializationInstance;
+        private static ManagedInstanceOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedInstanceOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceOperationData>)Data).Write(writer, options);
 
-        ManagedInstanceOperationData IJsonModel<ManagedInstanceOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceOperationData>)Data).Create(ref reader, options);
+        ManagedInstanceOperationData IJsonModel<ManagedInstanceOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceOperationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedInstanceOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceOperationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedInstanceOperationData IPersistableModel<ManagedInstanceOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceOperationData>(data, options);
+        ManagedInstanceOperationData IPersistableModel<ManagedInstanceOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceOperationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceOperationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedInstanceOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

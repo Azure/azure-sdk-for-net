@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            MigrationStatus? status = default;
-            MigrationState? state = default;
+            DataMigrationStatus? status = default;
+            DataMigrationState? state = default;
             string agentJobs = default;
             string logins = default;
             string message = default;
             string serverRoleResults = default;
-            IReadOnlyList<OrphanedUserInfo> orphanedUsersInfo = default;
+            IReadOnlyList<DataMigrationSqlServerOrphanedUserInfo> orphanedUsersInfo = default;
             string databases = default;
             string sourceServerVersion = default;
             string sourceServerBrandVersion = default;
             string targetServerVersion = default;
             string targetServerBrandVersion = default;
-            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new MigrationStatus(property.Value.GetString());
+                    status = new DataMigrationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("agentJobs"u8))
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<OrphanedUserInfo> array = new List<OrphanedUserInfo>();
+                    List<DataMigrationSqlServerOrphanedUserInfo> array = new List<DataMigrationSqlServerOrphanedUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrphanedUserInfo.DeserializeOrphanedUserInfo(item, options));
+                        array.Add(DataMigrationSqlServerOrphanedUserInfo.DeserializeDataMigrationSqlServerOrphanedUserInfo(item, options));
                     }
                     orphanedUsersInfo = array;
                     continue;
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -300,13 +300,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 logins,
                 message,
                 serverRoleResults,
-                orphanedUsersInfo ?? new ChangeTrackingList<OrphanedUserInfo>(),
+                orphanedUsersInfo ?? new ChangeTrackingList<DataMigrationSqlServerOrphanedUserInfo>(),
                 databases,
                 sourceServerVersion,
                 sourceServerBrandVersion,
                 targetServerVersion,
                 targetServerBrandVersion,
-                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlMITaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:

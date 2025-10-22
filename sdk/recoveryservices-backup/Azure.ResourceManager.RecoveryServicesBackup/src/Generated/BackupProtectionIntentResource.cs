@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="intentObjectName"> The intentObjectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string intentObjectName)
         {
-            var resourceId = $"/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

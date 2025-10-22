@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsThreatIntelligenceIndicatorResource : IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>
     {
+        private static SecurityInsightsThreatIntelligenceIndicatorBaseData s_dataDeserializationInstance;
+        private static SecurityInsightsThreatIntelligenceIndicatorBaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)Data).Write(writer, options);
 
-        SecurityInsightsThreatIntelligenceIndicatorBaseData IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)Data).Create(ref reader, options);
+        SecurityInsightsThreatIntelligenceIndicatorBaseData IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsThreatIntelligenceIndicatorBaseData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsThreatIntelligenceIndicatorBaseData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsThreatIntelligenceIndicatorBaseData>(data, options);
+        SecurityInsightsThreatIntelligenceIndicatorBaseData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsThreatIntelligenceIndicatorBaseData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

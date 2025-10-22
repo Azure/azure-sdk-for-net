@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -20,12 +19,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
-
-        public const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
-        public const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
-        public const string SampleAzureActiveDirectoryTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
-        public const string SampleAzureActiveDirectoryApplicationIdOrUri = "03d47d4a-7c50-43e0-ba90-89d090cc4582";
-
+        // for live tests, replace passcode with actual code from portal for this this function devexpfuncappdestination and function EventGridTrigger1
+        // for live tests, replace SANITIZED_FUNCTION_KEY with actual code from from the Azure Portal for "sdk-test-logic-app" -> workflowUrl.
+        public const string LogicAppEndpointUrl = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
         private EventGridTopicCollection TopicCollection { get; set; }
 
         private EventGridDomainCollection DomainCollection { get; set; }
@@ -39,7 +35,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             DomainCollection = ResourceGroup.GetEventGridDomains();
         }
 
-        [Ignore("TODO: 06/21/2023 - EventSubscription not available in global for this API version, enable this test after ARM deployment")]
         [Test]
         public async Task EventSubscriptionToCustomTopicCreateGetUpdateDelete()
         {
@@ -74,7 +69,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl),
+                    DeliveryAttributeMappings = {
+                        new StaticDeliveryAttributeMapping
+                        {
+                            Name = "StaticAttribute",
+                            IsSecret = false,
+                            Value = "value"
+                        },
+                        new DynamicDeliveryAttributeMapping
+                        {
+                            Name = "DynamicAttribute",
+                            SourceField = "data.field"
+                        }
+                    }
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -104,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                     DeliveryAttributeMappings = {
                             new StaticDeliveryAttributeMapping()
                             {
@@ -141,9 +149,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("StaticDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[0].Name);
             Assert.AreEqual("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
-            // List event subscriptions
-            var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).ToEnumerableAsync();
-            Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Name.Equals(eventSubscriptionName)));
+            string topicTypeName = "Microsoft.EventGrid.Topics";
+
+            // Get regional event subscriptions at resource group level from given location
+            var regionalEventSubscriptionsByResourceGroup = ResourceGroup.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByResourceGroup);
+
+            // Get regional event subscriptions at subscription level for given location
+            var regionalEventSubscriptionsBySubscription = DefaultSubscription.GetRegionalEventSubscriptionsDataAsync(DefaultLocation).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByResourceGroup);
+
+            // Get regional event subscriptions by topic type at resource group level from given location
+            var regionalEventSubscriptionsByTopicTypeResourceGroup =  ResourceGroup.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByTopicTypeResourceGroup);
+
+            // Get regional event subscriptions by topic type at subscription level for given location
+            var regionalEventSubscriptionsByTopicTypeBySubscription = DefaultSubscription.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(regionalEventSubscriptionsByTopicTypeBySubscription);
+
+            // Get global event subscriptions by topic type at resource group level
+            var globalEventSubscriptionsByResourceGroup = ResourceGroup.GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(globalEventSubscriptionsByResourceGroup);
+
+            // Get global event subscriptions by topic type at subscription level
+            var globalEventSubscriptionsBySubscription = DefaultSubscription.GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
+            Assert.NotNull(globalEventSubscriptionsBySubscription);
 
             // Delete the event subscription
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
@@ -156,7 +186,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(falseResult);
         }
 
-        [Ignore("TODO: 06/21/2023 - EventSubscription not available in global for this API version, enable this test after ARM deployment")]
         [Test]
         public async Task EventSubscriptionToDomainCreateGetUpdateDelete()
         {
@@ -196,7 +225,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl),
+                    DeliveryAttributeMappings = {
+                        new StaticDeliveryAttributeMapping
+                        {
+                            Name = "StaticAttribute",
+                            IsSecret = false,
+                            Value = "value"
+                        },
+                        new DynamicDeliveryAttributeMapping
+                        {
+                            Name = "DynamicAttribute",
+                            SourceField = "data.field"
+                        }
+                    }
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -236,7 +278,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -268,7 +310,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl),
+                    DeliveryAttributeMappings = {
+                        new StaticDeliveryAttributeMapping
+                        {
+                            Name = "StaticAttribute",
+                            IsSecret = false,
+                            Value = "value"
+                        },
+                        new DynamicDeliveryAttributeMapping
+                        {
+                            Name = "DynamicAttribute",
+                            SourceField = "data.field"
+                        }
+                    }
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -294,6 +349,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("TestPrefix", eventSubscriptionResponse.Data.Filter.SubjectBeginsWith);
             Assert.AreEqual("TestSuffix", eventSubscriptionResponse.Data.Filter.SubjectEndsWith);
 
+            // List all event subscriptions for a domain topic
+            var domainTopicEventSubscriptions = await domainTopic.GetDomainTopicEventSubscriptions().GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(domainTopicEventSubscriptions);
+            Assert.AreEqual(domainTopicEventSubscriptions.Count(), 1);
+
             // List event subscriptions
             var eventSubscriptionsPage = await subscriptionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Data.Name.Equals(eventSubscriptionName)));
@@ -309,7 +369,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(falseResult);
         }
 
-        [Ignore("TODO: 06/21/2023 - EventSubscription not available in global for this API version, enable this test after ARM deployment")]
         [Test]
         public async Task EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
         {
@@ -325,7 +384,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl),
+                    DeliveryAttributeMappings = {
+                        new StaticDeliveryAttributeMapping
+                        {
+                            Name = "StaticAttribute",
+                            IsSecret = false,
+                            Value = "value"
+                        },
+                        new DynamicDeliveryAttributeMapping
+                        {
+                            Name = "DynamicAttribute",
+                            SourceField = "data.field"
+                        }
+                    }
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -357,6 +429,69 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await subscriptionCollection.ExistsAsync(eventSubscriptionName)).Value;
             Assert.IsFalse(falseResult);
+        }
+
+        [Test]
+        public async Task EventSubscriptionResourceCRUD()
+        {
+            await SetCollection();
+
+            // Create topic and event subscription
+            var topicName = Recording.GenerateAssetName("sdk-Topic-");
+            var createTopicResponse = (await TopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new EventGridTopicData(DefaultLocation))).Value;
+            var eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-");
+            string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/topics/{topicName}";
+            var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
+            var eventSubscription = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl),
+                    DeliveryAttributeMappings = {
+                        new StaticDeliveryAttributeMapping
+                        {
+                            Name = "StaticAttribute",
+                            IsSecret = false,
+                            Value = "value"
+                        },
+                        new DynamicDeliveryAttributeMapping
+                        {
+                            Name = "DynamicAttribute",
+                            SourceField = "data.field"
+                        }
+                    }
+                }
+            };
+            var eventSubscriptionResponse = (await subscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
+
+            // Get the EventSubscriptionResource
+            var eventSubResourceId = EventSubscriptionResource.CreateResourceIdentifier(scope, eventSubscriptionName);
+            var eventSubResource = Client.GetEventSubscriptionResource(eventSubResourceId);
+
+            // GetAsync
+            var getResult = await eventSubResource.GetAsync();
+            Assert.IsNotNull(getResult);
+            Assert.IsNotNull(getResult.Value);
+            Assert.AreEqual(eventSubscriptionName, getResult.Value.Data.Name);
+
+            // GetDeliveryAttributesAsync
+            int count = 0;
+            await foreach (var attr in eventSubResource.GetDeliveryAttributesAsync())
+            {
+                Assert.IsNotNull(attr);
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 2);
+
+            // GetFullUriAsync
+            var fullUriResult = await eventSubResource.GetFullUriAsync();
+            Assert.IsNotNull(fullUriResult);
+            Assert.IsNotNull(fullUriResult.Value);
+            Assert.IsNotNull(fullUriResult.Value.Endpoint);
+
+            // Cleanup
+            await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
+            await createTopicResponse.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

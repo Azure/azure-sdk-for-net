@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -634,6 +634,184 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Reimages one VM belonging to the specified Network Virtual Appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/reimage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_Reimage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="networkVirtualApplianceInstanceIds"> Specifies a list of virtual machine instance IDs from the Network Virtual Appliance VM instances. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetworkVirtualApplianceInstanceIds>> ReimageAsync(WaitUntil waitUntil, NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Reimage");
+            scope.Start();
+            try
+            {
+                var response = await _networkVirtualApplianceRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceIds>(new NetworkVirtualApplianceInstanceIdsOperationSource(), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reimages one VM belonging to the specified Network Virtual Appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/reimage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_Reimage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="networkVirtualApplianceInstanceIds"> Specifies a list of virtual machine instance IDs from the Network Virtual Appliance VM instances. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkVirtualApplianceInstanceIds> Reimage(WaitUntil waitUntil, NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Reimage");
+            scope.Start();
+            try
+            {
+                var response = _networkVirtualApplianceRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds, cancellationToken);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceIds>(new NetworkVirtualApplianceInstanceIdsOperationSource(), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the boot diagnostic logs for a VM instance belonging to the specified Network Virtual Appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/getBootDiagnosticLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_GetBootDiagnosticLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to retrieve boot diagnostic logs for a NVA VM instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkVirtualApplianceInstanceId>> GetBootDiagnosticLogsAsync(WaitUntil waitUntil, NetworkVirtualApplianceBootDiagnosticContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.GetBootDiagnosticLogs");
+            scope.Start();
+            try
+            {
+                var response = await _networkVirtualApplianceRestClient.GetBootDiagnosticLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceId>(new NetworkVirtualApplianceInstanceIdOperationSource(), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateGetBootDiagnosticLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the boot diagnostic logs for a VM instance belonging to the specified Network Virtual Appliance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/getBootDiagnosticLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualAppliances_GetBootDiagnosticLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to retrieve boot diagnostic logs for a NVA VM instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkVirtualApplianceInstanceId> GetBootDiagnosticLogs(WaitUntil waitUntil, NetworkVirtualApplianceBootDiagnosticContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.GetBootDiagnosticLogs");
+            scope.Start();
+            try
+            {
+                var response = _networkVirtualApplianceRestClient.GetBootDiagnosticLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceId>(new NetworkVirtualApplianceInstanceIdOperationSource(), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateGetBootDiagnosticLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -646,7 +824,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -708,7 +886,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -770,7 +948,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,7 +1005,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -884,7 +1062,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -944,7 +1122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

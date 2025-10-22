@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
         /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
         /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
         /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details">
@@ -90,10 +91,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="deliveryType"> Delivery type of Job. </param>
         /// <param name="deliveryInfo"> Delivery Info of Job. </param>
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, bool? areAllDevicesLost, DataBoxSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -103,6 +105,7 @@ namespace Azure.ResourceManager.DataBox
             ReverseTransportPreferenceUpdate = reverseTransportPreferenceUpdate;
             IsPrepareToShipEnabled = isPrepareToShipEnabled;
             Status = status;
+            DelayedStage = delayedStage;
             StartOn = startOn;
             Error = error;
             Details = details;
@@ -110,6 +113,7 @@ namespace Azure.ResourceManager.DataBox
             DeliveryType = deliveryType;
             DeliveryInfo = deliveryInfo;
             IsCancellableWithoutFee = isCancellableWithoutFee;
+            AreAllDevicesLost = areAllDevicesLost;
             Sku = sku;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -136,6 +140,8 @@ namespace Azure.ResourceManager.DataBox
         public bool? IsPrepareToShipEnabled { get; }
         /// <summary> Name of the stage which is in progress. </summary>
         public DataBoxStageName? Status { get; }
+        /// <summary> Name of the stage where delay might be present. </summary>
+        public DataBoxStageName? DelayedStage { get; }
         /// <summary> Time at which the job was started in UTC ISO 8601 format. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> Top level error for the job. </summary>
@@ -166,6 +172,8 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary> Flag to indicate cancellation of scheduled job. </summary>
         public bool? IsCancellableWithoutFee { get; }
+        /// <summary> Flag to indicate if all devices associated with the job are lost. </summary>
+        public bool? AreAllDevicesLost { get; }
         /// <summary> The sku type. </summary>
         public DataBoxSku Sku { get; set; }
         /// <summary> Msi identity of the resource. </summary>

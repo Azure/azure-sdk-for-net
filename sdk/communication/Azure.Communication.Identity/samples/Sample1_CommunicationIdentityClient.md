@@ -46,6 +46,31 @@ Console.WriteLine($"User id: {user.Id}");
 
 You will need to store the `identity` that is returned by Azure Communication Services. This is necessary for creating tokens or refreshing them in the future and to map your user identities with Azure Communication Services identities. The `identity` value should be treated as a secret.
 
+## Create a user with an associated customId
+
+The `CommunicationIdentityClient` allows you to create users with an associated customId. This customId can be used to map your application's user identities with Azure Communication Services identities.
+
+```C# Snippet:CreateCommunicationUserWithCustomId
+Response<CommunicationUserIdentifier> userResponse = client.CreateUser(customId: "alice@contoso.com");
+CommunicationUserIdentifier user = userResponse.Value;
+Console.WriteLine($"User id: {user.Id}");
+```
+
+If you call the CreateUser method again with the same customId, it will return the same user.Id. Therefore, you do not need to store this mapping yourself.
+
+## Get user
+
+The CommunicationIdentityClient can be used to retrieve details about a user. This includes the user's ID, custom ID, and the last time a token was issued for the user.
+
+```C# Snippet:GetUserDetail
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
+CommunicationUserIdentifier user = userResponse.Value;
+var userDetails = client.GetUserDetail(user);
+Console.WriteLine($"User id: {userDetails.Value.User.Id}");
+Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
+Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
+```
+
 ## Generate a user token
 
  <!---: TODO: Update the website address for explaining the scopes -->
@@ -80,7 +105,7 @@ You can create user and token in the same request. You can specify expiration ti
 
 ```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
 TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
-Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(customId: "alice@contoso.com", scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
 var (user, token) = response.Value;
 Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");

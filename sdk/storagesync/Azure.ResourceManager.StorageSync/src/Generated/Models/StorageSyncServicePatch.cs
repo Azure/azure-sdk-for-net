@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -53,18 +54,26 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServicePatch"/>. </summary>
         /// <param name="tags"> The user-specified tags associated with the storage sync service. </param>
+        /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServicePatch(IDictionary<string, string> tags, IncomingTrafficPolicy? incomingTrafficPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSyncServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Identity = identity;
             IncomingTrafficPolicy = incomingTrafficPolicy;
+            UseIdentity = useIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user-specified tags associated with the storage sync service. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Incoming Traffic Policy. </summary>
         public IncomingTrafficPolicy? IncomingTrafficPolicy { get; set; }
+        /// <summary> Use Identity authorization when customer have finished setup RBAC permissions. </summary>
+        public bool? UseIdentity { get; set; }
     }
 }

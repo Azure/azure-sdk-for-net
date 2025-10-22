@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
@@ -14,9 +15,9 @@ namespace Azure.Health.Deidentification.Samples
     public partial class Samples_DeidentificationClient : SamplesBase<DeidentificationTestEnvironment>
     {
         [Test]
-        public async void ListCompletedFilesAsync()
+        public async Task ListCompletedFilesAsync()
         {
-            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
+            string serviceEndpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
             DeidentificationClient client = new(
@@ -30,9 +31,9 @@ namespace Azure.Health.Deidentification.Samples
 
             await foreach (DeidentificationDocumentDetails file in files)
             {
-                Console.WriteLine($"File Name: {file.Input.Location}");
+                Console.WriteLine($"File Name: {file.InputLocation.Location}");
                 Console.WriteLine($"File Status: {file.Status}");
-                Console.WriteLine($"File Output Path: {file.Output.Location}");
+                Console.WriteLine($"File Output Path: {file.OutputLocation.Location}");
             }
             #endregion
         }

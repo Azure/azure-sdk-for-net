@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedImages value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedImages value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineImageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineImageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineImageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineImageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineImageData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabVirtualMachineImageData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedImages value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedImages value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

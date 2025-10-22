@@ -78,6 +78,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
             }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
+            if (Optional.IsDefined(CapacityType))
+            {
+                writer.WritePropertyName("capacityType"u8);
+                writer.WriteStringValue(CapacityType.Value.ToString());
+            }
+            if (Optional.IsDefined(ZoneAllocationPolicy))
+            {
+                writer.WritePropertyName("zoneAllocationPolicy"u8);
+                writer.WriteObjectValue(ZoneAllocationPolicy, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,7 +101,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,6 +139,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetComputeProfile computeProfile = default;
             DateTimeOffset? timeCreated = default;
             string uniqueId = default;
+            ComputeFleetMode? mode = default;
+            ComputeFleetCapacityType? capacityType = default;
+            ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,6 +220,33 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     uniqueId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("mode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new ComputeFleetMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("capacityType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityType = new ComputeFleetCapacityType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zoneAllocationPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneAllocationPolicy = ComputeFleetZoneAllocationPolicy.DeserializeComputeFleetZoneAllocationPolicy(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -218,6 +263,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 computeProfile,
                 timeCreated,
                 uniqueId,
+                mode,
+                capacityType,
+                zoneAllocationPolicy,
                 serializedAdditionalRawData);
         }
 
@@ -228,7 +276,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComputeFleetProperties)} does not support writing '{options.Format}' format.");
             }
@@ -242,7 +290,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetProperties(document.RootElement, options);
                     }
                 default:

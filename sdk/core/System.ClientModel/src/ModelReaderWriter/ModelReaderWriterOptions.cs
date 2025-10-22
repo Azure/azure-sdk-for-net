@@ -23,7 +23,7 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/>.
     /// </summary>
-    /// <param name="format">The format to read and write models.</param>
+    /// <param name="format">The format to read and write models.  Pass in 'W' to use the service defined wire format.</param>
     public ModelReaderWriterOptions (string format)
     {
         Format = format;

@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("erasureOrDestructionCertificateSasKey"u8);
                 writer.WriteStringValue(ErasureOrDestructionCertificateSasKey);
             }
+            if (options.Format != "W" && Optional.IsDefined(SecureErasureCertificateSasKey))
+            {
+                writer.WritePropertyName("secureErasureCertificateSasKey"u8);
+                writer.WriteStringValue(SecureErasureCertificateSasKey);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             DataBoxStageStatus? deviceErasureStatus = default;
             string erasureOrDestructionCertificateSasKey = default;
+            string secureErasureCertificateSasKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +107,18 @@ namespace Azure.ResourceManager.DataBox.Models
                     erasureOrDestructionCertificateSasKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("secureErasureCertificateSasKey"u8))
+                {
+                    secureErasureCertificateSasKey = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, serializedAdditionalRawData);
+            return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceErasureDetails>.Write(ModelReaderWriterOptions options)
@@ -117,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceErasureDetails)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +142,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceErasureDetails(document.RootElement, options);
                     }
                 default:

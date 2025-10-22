@@ -1,0 +1,3 @@
+options:
+  "@azure-typespec/http-client-csharp":
+    package-name: Resiliency.SrvDriven.V2

@@ -19,6 +19,250 @@ namespace Azure.AI.Language.Conversations.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationalAITask()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "ConversationalAI",
+                parameters = new
+                {
+                    projectName = "project1",
+                    deploymentName = "deployment1",
+                    stringIndexType = "Utf16CodeUnit",
+                },
+                analysisInput = new
+                {
+                    conversations = new object[]
+            {
+new
+{
+id = "order",
+language = "en",
+modality = "text",
+conversationItems = new object[]
+{
+new
+{
+participantId = "user",
+id = "1",
+text = "Hi!",
+},
+new
+{
+participantId = "bot",
+id = "2",
+text = "Hello, how can I help you?",
+},
+new
+{
+participantId = "user",
+id = "3",
+text = "I would like to book a flight from Paris to Berlin on Oct 10th.",
+},
+new
+{
+participantId = "bot",
+id = "4",
+text = "Do you have any airline preference?",
+},
+new
+{
+participantId = "user",
+id = "5",
+text = "No.",
+},
+new
+{
+participantId = "user",
+id = "6",
+text = "I like New York and Boston.",
+},
+new
+{
+participantId = "user",
+id = "7",
+text = "Actualy, change the destination to New York.",
+},
+new
+{
+participantId = "user",
+id = "8",
+text = "Wait, I do not like the food in New York.",
+},
+new
+{
+participantId = "user",
+id = "9",
+text = "Ok, change the destination back to Berlin.",
+}
+},
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeConversation(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationalAITask_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "ConversationalAI",
+                parameters = new
+                {
+                    projectName = "project1",
+                    deploymentName = "deployment1",
+                    stringIndexType = "Utf16CodeUnit",
+                },
+                analysisInput = new
+                {
+                    conversations = new object[]
+            {
+new
+{
+id = "order",
+language = "en",
+modality = "text",
+conversationItems = new object[]
+{
+new
+{
+participantId = "user",
+id = "1",
+text = "Hi!",
+},
+new
+{
+participantId = "bot",
+id = "2",
+text = "Hello, how can I help you?",
+},
+new
+{
+participantId = "user",
+id = "3",
+text = "I would like to book a flight from Paris to Berlin on Oct 10th.",
+},
+new
+{
+participantId = "bot",
+id = "4",
+text = "Do you have any airline preference?",
+},
+new
+{
+participantId = "user",
+id = "5",
+text = "No.",
+},
+new
+{
+participantId = "user",
+id = "6",
+text = "I like New York and Boston.",
+},
+new
+{
+participantId = "user",
+id = "7",
+text = "Actualy, change the destination to New York.",
+},
+new
+{
+participantId = "user",
+id = "8",
+text = "Wait, I do not like the food in New York.",
+},
+new
+{
+participantId = "user",
+id = "9",
+text = "Ok, change the destination back to Berlin.",
+}
+},
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeConversationAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationalAITask_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            AnalyzeConversationInput analyzeConversationInput = new ConversationalAITask(new ConversationalAIAnalysisInput(new TextConversation[]
+            {
+new TextConversation("order", "en", new TextConversationItem[]
+{
+new TextConversationItem("1", "user", "Hi!"),
+new TextConversationItem("2", "bot", "Hello, how can I help you?"),
+new TextConversationItem("3", "user", "I would like to book a flight from Paris to Berlin on Oct 10th."),
+new TextConversationItem("4", "bot", "Do you have any airline preference?"),
+new TextConversationItem("5", "user", "No."),
+new TextConversationItem("6", "user", "I like New York and Boston."),
+new TextConversationItem("7", "user", "Actualy, change the destination to New York."),
+new TextConversationItem("8", "user", "Wait, I do not like the food in New York."),
+new TextConversationItem("9", "user", "Ok, change the destination back to Berlin.")
+})
+            }), new AIConversationLanguageUnderstandingActionContent("project1", "deployment1")
+            {
+                StringIndexType = StringIndexType.Utf16CodeUnit,
+            });
+            Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationalAITask_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            AnalyzeConversationInput analyzeConversationInput = new ConversationalAITask(new ConversationalAIAnalysisInput(new TextConversation[]
+            {
+new TextConversation("order", "en", new TextConversationItem[]
+{
+new TextConversationItem("1", "user", "Hi!"),
+new TextConversationItem("2", "bot", "Hello, how can I help you?"),
+new TextConversationItem("3", "user", "I would like to book a flight from Paris to Berlin on Oct 10th."),
+new TextConversationItem("4", "bot", "Do you have any airline preference?"),
+new TextConversationItem("5", "user", "No."),
+new TextConversationItem("6", "user", "I like New York and Boston."),
+new TextConversationItem("7", "user", "Actualy, change the destination to New York."),
+new TextConversationItem("8", "user", "Wait, I do not like the food in New York."),
+new TextConversationItem("9", "user", "Ok, change the destination back to Berlin.")
+})
+            }), new AIConversationLanguageUnderstandingActionContent("project1", "deployment1")
+            {
+                StringIndexType = StringIndexType.Utf16CodeUnit,
+            });
+            Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversations()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -41,6 +285,7 @@ namespace Azure.AI.Language.Conversations.Samples
                 {
                     projectName = "{project-name}",
                     deploymentName = "{deployment-name}",
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = client.AnalyzeConversation(content);
@@ -73,6 +318,7 @@ namespace Azure.AI.Language.Conversations.Samples
                 {
                     projectName = "{project-name}",
                     deploymentName = "{deployment-name}",
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = await client.AnalyzeConversationAsync(content);
@@ -89,7 +335,10 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
+            {
+                StringIndexType = new StringIndexType("TextElement_V8"),
+            });
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
 
@@ -101,7 +350,10 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
+            {
+                StringIndexType = new StringIndexType("TextElement_V8"),
+            });
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }
 
@@ -133,6 +385,7 @@ namespace Azure.AI.Language.Conversations.Samples
                     deploymentName = "{deployment-name}",
                     verbose = true,
                     isLoggingEnabled = false,
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = client.AnalyzeConversation(content);
@@ -169,6 +422,7 @@ namespace Azure.AI.Language.Conversations.Samples
                     deploymentName = "{deployment-name}",
                     verbose = true,
                     isLoggingEnabled = false,
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = await client.AnalyzeConversationAsync(content);
@@ -193,6 +447,7 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 Verbose = true,
                 IsLoggingEnabled = false,
+                StringIndexType = new StringIndexType("TextElement_V8"),
             });
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
@@ -213,6 +468,7 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 Verbose = true,
                 IsLoggingEnabled = false,
+                StringIndexType = new StringIndexType("TextElement_V8"),
             });
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchLocationQuota value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchLocationQuota.DeserializeBatchLocationQuota(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchLocationQuota value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchLocationQuota.DeserializeBatchLocationQuota(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         SupportedSkusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportedSkusResult.DeserializeSupportedSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         SupportedSkusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportedSkusResult.DeserializeSupportedSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchNameAvailabilityResult.DeserializeBatchNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         BatchNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchNameAvailabilityResult.DeserializeBatchNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         SupportedSkusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportedSkusResult.DeserializeSupportedSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Batch
                 case 200:
                     {
                         SupportedSkusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportedSkusResult.DeserializeSupportedSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

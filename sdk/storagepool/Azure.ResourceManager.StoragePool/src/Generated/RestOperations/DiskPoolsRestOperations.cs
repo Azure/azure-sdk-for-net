@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolData.DeserializeDiskPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolData.DeserializeDiskPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         StoragePoolOutboundEnvironmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         StoragePoolOutboundEnvironmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         DiskPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiskPoolListResult.DeserializeDiskPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         StoragePoolOutboundEnvironmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.StoragePool
                 case 200:
                     {
                         StoragePoolOutboundEnvironmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StoragePoolOutboundEnvironmentList.DeserializeStoragePoolOutboundEnvironmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

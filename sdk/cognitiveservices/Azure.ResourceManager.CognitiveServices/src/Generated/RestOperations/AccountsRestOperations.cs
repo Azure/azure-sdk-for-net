@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-10-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         ServiceAccountApiKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         ServiceAccountApiKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         ServiceAccountApiKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         ServiceAccountApiKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAccountApiKeys.DeserializeServiceAccountApiKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountSkuListResult.DeserializeCognitiveServicesAccountSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountSkuListResult.DeserializeCognitiveServicesAccountSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         ServiceAccountUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceAccountUsageListResult.DeserializeServiceAccountUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         ServiceAccountUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceAccountUsageListResult.DeserializeServiceAccountUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountModelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountModelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountListResult.DeserializeCognitiveServicesAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountModelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CognitiveServicesAccountModelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CognitiveServicesAccountModelListResult.DeserializeCognitiveServicesAccountModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

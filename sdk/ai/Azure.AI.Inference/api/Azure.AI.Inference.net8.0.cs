@@ -1,5 +1,10 @@
 namespace Azure.AI.Inference
 {
+    public static partial class AIInferenceExtensions
+    {
+        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
+        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
+    }
     public static partial class AIInferenceModelFactory
     {
         public static Azure.AI.Inference.ChatChoice ChatChoice(int index = 0, Azure.AI.Inference.CompletionsFinishReason? finishReason = default(Azure.AI.Inference.CompletionsFinishReason?), Azure.AI.Inference.ChatResponseMessage message = null) { throw null; }
@@ -47,6 +52,12 @@ namespace Azure.AI.Inference
         {
             V2024_05_01_Preview = 1,
         }
+    }
+    public partial class AzureAIInferenceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIInferenceContext() { }
+        public static Azure.AI.Inference.AzureAIInferenceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class ChatChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatChoice>
     {
@@ -813,12 +824,15 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ChatCompletionsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ChatCompletionsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ChatCompletionsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.EmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.EmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.EmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ImageEmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ImageEmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ImageEmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -169,6 +169,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
+            }
+            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
+            {
+                writer.WritePropertyName("clientAffinityProxyEnabled"u8);
+                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
             }
             if (Optional.IsDefined(IsClientCertEnabled))
             {
@@ -329,6 +334,7 @@ namespace Azure.ResourceManager.AppService.Models
             string targetSwapSlot = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             bool? clientAffinityEnabled = default;
+            bool? clientAffinityProxyEnabled = default;
             bool? clientCertEnabled = default;
             ClientCertMode? clientCertMode = default;
             string clientCertExclusionPaths = default;
@@ -361,7 +367,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -390,7 +396,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -588,6 +594,15 @@ namespace Azure.ResourceManager.AppService.Models
                                 continue;
                             }
                             clientAffinityEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("clientAffinityProxyEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clientAffinityProxyEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("clientCertEnabled"u8))
@@ -795,6 +810,7 @@ namespace Azure.ResourceManager.AppService.Models
                 targetSwapSlot,
                 hostingEnvironmentProfile,
                 clientAffinityEnabled,
+                clientAffinityProxyEnabled,
                 clientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
@@ -1327,6 +1343,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityProxyEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientAffinityProxyEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsClientAffinityProxyEnabled))
+                {
+                    builder.Append("    clientAffinityProxyEnabled: ");
+                    var boolValue = IsClientAffinityProxyEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientCertEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1731,7 +1763,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1747,7 +1779,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSitePatchInfo(document.RootElement, options);
                     }
                 default:

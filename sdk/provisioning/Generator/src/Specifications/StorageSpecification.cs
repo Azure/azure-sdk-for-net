@@ -4,6 +4,7 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
+using Generator.Model;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -24,6 +25,7 @@ public class StorageSpecification() :
         CustomizeProperty<StorageAccountKey>("Value", p => p.IsSecure = true);
         CustomizeProperty<LocalUserKeys>("SharedKey", p => p.IsSecure = true);
         CustomizeProperty<StorageSshPublicKey>("Key", p => p.IsSecure = true);
+        CustomizeProperty<StorageTaskAssignmentProperties>("ProvisioningState", p => p.HideLevel = PropertyHideLevel.HideProperty);
 
         // Naming requirements
         AddNameRequirements<StorageAccountResource>(min: 3, max: 24, lower: true, digits: true);
@@ -34,6 +36,8 @@ public class StorageSpecification() :
         CustomizeProperty<StorageAccountManagementPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `default`
         AddNameRequirements<StorageQueueResource>(min: 3, max: 63, lower: true, digits: true, hyphen: true);
         AddNameRequirements<TableResource>(min: 3, max: 63, lower: true, upper: true, digits: true);
+        CustomizeProperty<QueueServiceResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `default`
+        CustomizeProperty<TableServiceResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `default`
 
         // Roles
         Roles.Add(new Role("StorageAccountBackupContributor", "e5e2a7ff-d759-4cd2-bb51-3152d37e2eb1", "Lets you perform backup and restore operations using Azure Backup on the storage account."));

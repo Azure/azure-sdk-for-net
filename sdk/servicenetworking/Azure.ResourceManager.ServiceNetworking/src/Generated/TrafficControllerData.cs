@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="associations"> Associations References List. </param>
         /// <param name="securityPolicies"> Security Policies References List. </param>
         /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="trafficControllerProvisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<string> configurationEndpoints, IReadOnlyList<SubResource> frontends, IReadOnlyList<SubResource> associations, IReadOnlyList<SubResource> securityPolicies, SecurityPolicyConfigurations securityPolicyConfigurations, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<string> configurationEndpoints, IReadOnlyList<SubResource> frontends, IReadOnlyList<SubResource> associations, IReadOnlyList<SubResource> securityPolicies, SecurityPolicyConfigurations securityPolicyConfigurations, ServiceNetworkingProvisioningState? trafficControllerProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ConfigurationEndpoints = configurationEndpoints;
             Frontends = frontends;
             Associations = associations;
             SecurityPolicies = securityPolicies;
             SecurityPolicyConfigurations = securityPolicyConfigurations;
-            ProvisioningState = provisioningState;
+            TrafficControllerProvisioningState = trafficControllerProvisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,20 +101,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <summary> Security Policies References List. </summary>
         public IReadOnlyList<SubResource> SecurityPolicies { get; }
         /// <summary> Security Policy Configuration. </summary>
-        internal SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
-        {
-            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
-            set
-            {
-                if (SecurityPolicyConfigurations is null)
-                    SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
-            }
-        }
-
+        public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ServiceNetworkingProvisioningState? TrafficControllerProvisioningState { get; }
     }
 }

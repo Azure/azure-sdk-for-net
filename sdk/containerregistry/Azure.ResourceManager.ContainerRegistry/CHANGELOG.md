@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.1 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.ContainerRegistry` AOT-compatible
+
+## 1.3.0 (2025-04-22)
+
+### Features Added
+
+- Upgraded api-version tag from `package-2022-12` to `package-2025-04`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0aec760d4e28712c3a4ae0/specification/containerregistry/resource-manager/readme.md.
+- Added new classes and methods for the following features
+    - Connected Registry
+    - Artifact Cache
+
+## 1.3.0-beta.3 (2025-04-10)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-11-preview' to 'package-2025-03-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cb262725d128f6dfec4622cca03bc9e04e2d0f1f/specification/containerregistry/resource-manager/readme.md.
+- Added new struct `RoleAssignmentMode`.
+- Added new class `SourceRegistryCredentials`.
+- Added new attribute `RoleAssignmentMode` in `ContainerRegistryData` and `ContainerRegistryPatch`.
+- Added new attribute `SourceRegistry` in `ContainerRegistryCredentials`.
+- Added the following methods to `ContainerRegistryResource` with new signature:
+    - `ScheduleRun`
+    - `ScheduleRunAsync`
+- Added the following methods to `ContainerRegistryRunResource` with new signature:
+    - `Cancel`
+    - `CancelAsync`
+    - `Update`
+    - `UpdateAsync`
+- Added the following methods to `ContainerRegistryTaskResource` with new signature:
+    - `Update`
+    - `UpdateAsync`
 
 ## 1.3.0-beta.2 (2025-01-24)
 

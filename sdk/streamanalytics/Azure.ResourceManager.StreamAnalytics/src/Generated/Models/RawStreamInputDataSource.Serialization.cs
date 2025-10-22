@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Payload);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Payload))
+                using (JsonDocument document = JsonDocument.Parse(Payload, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStreamAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RawStreamInputDataSource)} does not support writing '{options.Format}' format.");
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRawStreamInputDataSource(document.RootElement, options);
                     }
                 default:

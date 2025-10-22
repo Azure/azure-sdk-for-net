@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets the quota usage for a search sku in the given subscription.
+        /// Gets the quota usage for a search SKU in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets the quota usage for a search sku in the given subscription.
+        /// Gets the quota usage for a search SKU in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>

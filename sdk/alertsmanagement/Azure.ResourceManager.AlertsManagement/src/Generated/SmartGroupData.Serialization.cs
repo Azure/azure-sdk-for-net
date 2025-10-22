@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.AlertsManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAlertsManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -413,7 +414,7 @@ namespace Azure.ResourceManager.AlertsManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SmartGroupData)} does not support writing '{options.Format}' format.");
             }
@@ -427,7 +428,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSmartGroupData(document.RootElement, options);
                     }
                 default:

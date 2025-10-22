@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,6 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
@@ -80,6 +86,11 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("privilegeLevel"u8);
             writer.WriteStringValue(PrivilegeLevel.ToString());
+            if (Optional.IsDefined(PrivilegeLevelName))
+            {
+                writer.WritePropertyName("privilegeLevelName"u8);
+                writer.WriteStringValue(PrivilegeLevelName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -125,6 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
+            ETag? etag = default;
             ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -140,6 +152,7 @@ namespace Azure.ResourceManager.NetworkCloud
             DateTimeOffset? lastValidation = default;
             string osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
+            string privilegeLevelName = default;
             BareMetalMachineKeySetProvisioningState? provisioningState = default;
             IList<KeySetUser> userList = default;
             IReadOnlyList<KeySetUserStatus> userListStatus = default;
@@ -147,6 +160,15 @@ namespace Azure.ResourceManager.NetworkCloud
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
@@ -192,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -264,6 +286,11 @@ namespace Azure.ResourceManager.NetworkCloud
                             privilegeLevel = new BareMetalMachineKeySetPrivilegeLevel(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("privilegeLevelName"u8))
+                        {
+                            privilegeLevelName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -313,6 +340,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
                 extendedLocation,
                 azureGroupId,
                 detailedStatus,
@@ -322,6 +350,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 lastValidation,
                 osGroupName,
                 privilegeLevel,
+                privilegeLevelName,
                 provisioningState,
                 userList,
                 userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
@@ -335,7 +364,7 @@ namespace Azure.ResourceManager.NetworkCloud
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support writing '{options.Format}' format.");
             }
@@ -349,7 +378,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement, options);
                     }
                 default:

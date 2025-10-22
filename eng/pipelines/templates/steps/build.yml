@@ -1,0 +1,194 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: TestPipeline
+    type: boolean
+    default: false
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: SDKType
+    type: string
+    default: all
+  - name: CheckAOTCompat
+    type: boolean
+    default: false
+  - name: AOTTestInputs
+    type: object
+    default: []
+  - name: BuildSnippets
+    type: boolean
+    default: true
+
+steps:
+  - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+        Paths:
+          - "/*"
+          - "!SessionRecords"
+  - template: /eng/pipelines/templates/steps/install-dotnet.yml
+  - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
+    parameters:
+      PackageName: "Azure.Template"
+      ServiceDirectory: "template"
+      TestPipeline: ${{ parameters.TestPipeline }}
+  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+  - pwsh: |
+      echo "##vso[build.addbuildtag]Scheduled"
+    displayName: "Tag scheduled builds"
+    condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
+  # Set env variable SkipDevBuildNumber to generate package properties with non alpha version
+  # Package version is used to create or update package work item from CI pipeline
+  - pwsh: |
+      echo "##vso[task.setvariable variable=SkipDevBuildNumber]true"
+    displayName: "Set SkipDevBuildNumber env variable"
+
+  # run this before setting SetDevVersion to true, so that versioning properties will be non-dev always
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: BuildPackagesArtifact
+        path: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
+  - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+
+  - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+    parameters:
+      PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+      Artifacts: ${{ parameters.Artifacts }}
+      ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
+        SetOverrideFile: false
+
+  - pwsh: |
+      # Reset SkipDevBuildNumber as empty
+      $skipDevBuildNumber = ""
+      echo "##vso[task.setvariable variable=SkipDevBuildNumber]$skipDevBuildNumber"
+      Write-Host "SkipDevBuildNumber: [$(SkipDevBuildNumber)]"
+      $skipDevBuildNumber = "false"
+      # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
+      # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
+      if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
+        $skipDevBuildNumber = "true"
+      }
+      $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
+      echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
+    displayName: "Setup .NET specific versioning properties"
+
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.11'
+    inputs:
+      versionSpec: '3.11'
+
+  - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+    parameters:
+      LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
+
+  # Due to discovering differing pack errors during debug vs release builds, we simply always opt into the more advanced
+  # release pack. This ensures that the public ci is packing the same way as what we will eventually release, and we won't be
+  # surprised by new errors that pop up only in internal when public CI was clean.
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    # only use the project list override file if the service directory is not auto
+    - pwsh: >
+        ./eng/scripts/runwithdevopslogging.ps1
+        dotnet pack eng/service.proj -warnaserror
+        /p:ValidateRunApiCompat=true
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:IncludeTests=false
+        /p:PublicSign=false $(VersioningProperties)
+        /p:Configuration=Release
+        /p:CommitSHA=$(Build.SourceVersion)
+        /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+        /p:ServiceDirectory=*
+        /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+        /p:IncludePerf=false
+        /p:IncludeStress=false
+        /p:IncludeIntegrationTests=false
+        /p:EnableOverrideExclusions=true
+        $(DiagnosticArguments)
+      displayName: "Build and Package for PR"
+  - ${{ else }}:
+    - pwsh: >
+        ./eng/scripts/runwithdevopslogging.ps1
+        dotnet pack eng/service.proj -warnaserror
+        /p:ValidateRunApiCompat=true
+        /p:SDKType=${{ parameters.SDKType }}
+        /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+        /p:IncludeTests=false
+        /p:PublicSign=false $(VersioningProperties)
+        /p:Configuration=Release
+        /p:CommitSHA=$(Build.SourceVersion)
+        /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+        $(DiagnosticArguments)
+      displayName: "Build and Package Service Directory"
+
+  # save package properties again, this time honoring the dev version number
+  - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/scripts/Save-Package-Namespaces-Property.ps1
+      arguments: >
+        -RepoRoot $(Build.SourcesDirectory)
+        -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+        -BuildConfiguration Release
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Update package properties with namespaces
+    condition: and(succeeded(), ne(variables['ProjectNames'], ''))
+
+  - template: ../steps/archetype-sdk-docs.yml
+    parameters:
+      ServiceDirectory: ${{parameters.ServiceDirectory}}
+      Artifacts: ${{parameters.Artifacts}}
+      DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
+      LibType: 'client'
+      PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+
+  - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
+    - template: /eng/pipelines/templates/steps/aot-compatibility.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        AOTTestInputs: ${{ parameters.AOTTestInputs }}
+        PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+
+  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+    displayName: "Component Detection"
+    # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+    # scheduled builds should be good enough.
+    condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+    inputs:
+      ignoreDirectories: '.nuget'
+
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'packages_$(System.JobName)'
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'packages'
+
+  - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+    parameters:
+      Artifacts: ${{parameters.Artifacts}}
+
+  - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
+    parameters:
+      Artifacts: ${{ parameters.Artifacts }}
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        ArtifactName: 'packages_$(System.JobName)'
+
+  - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
+    parameters:
+      Artifacts: ${{ parameters.Artifacts }}

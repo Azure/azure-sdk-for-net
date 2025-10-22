@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
         /// <param name="autoCreateTopicWithFirstSubscription">
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
         /// In this context, creation of domain topic can be auto-managed (when true) or self-managed (when false). The default value for this property is true.
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("properties.inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
-        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </summary>
+        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </summary>
         [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>

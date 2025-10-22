@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
-                JsonSerializer.Serialize(writer, BackendPool);
+                ((IJsonModel<WritableSubResource>)BackendPool).Write(writer, options);
             }
         }
 
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -147,6 +148,115 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 backendPool);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomForwardingPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customForwardingPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomForwardingPath))
+                {
+                    builder.Append("  customForwardingPath: ");
+                    if (CustomForwardingPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomForwardingPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomForwardingPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForwardingProtocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forwardingProtocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForwardingProtocol))
+                {
+                    builder.Append("  forwardingProtocol: ");
+                    builder.AppendLine($"'{ForwardingProtocol.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CacheConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cacheConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CacheConfiguration))
+                {
+                    builder.Append("  cacheConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CacheConfiguration, options, 2, false, "  cacheConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendPoolId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendPool: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendPool))
+                {
+                    builder.Append("  backendPool: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BackendPool, options, 2, false, "  backendPool: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OdataType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  @odata.type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OdataType))
+                {
+                    builder.Append("  @odata.type: ");
+                    if (OdataType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OdataType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OdataType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ForwardingConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ForwardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -154,7 +264,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +280,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeForwardingConfiguration(document.RootElement, options);
                     }
                 default:

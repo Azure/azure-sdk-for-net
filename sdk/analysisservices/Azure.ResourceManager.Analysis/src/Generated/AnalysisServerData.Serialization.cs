@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Analysis.Models;
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Analysis
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAnalysisContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Analysis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAnalysisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{options.Format}' format.");
             }
@@ -345,7 +346,7 @@ namespace Azure.ResourceManager.Analysis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnalysisServerData(document.RootElement, options);
                     }
                 default:

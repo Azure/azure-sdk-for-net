@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string name = default;
-            LoginType? loginType = default;
+            DataMigrationLoginType? loginType = default;
             string defaultDatabase = default;
             bool? isEnabled = default;
             MigrationEligibilityInfo migrationEligibility = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    loginType = new LoginType(property.Value.GetString());
+                    loginType = new DataMigrationLoginType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultDatabase"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputLoginLevel)} does not support writing '{options.Format}' format.");
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(document.RootElement, options);
                     }
                 default:

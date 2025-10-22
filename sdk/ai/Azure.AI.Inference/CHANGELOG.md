@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2025-05-14)
+
+### Other Changes
+
+- Updated support for `AIInferenceExtensions` methods to consume stable SCM version.
+
+## 1.0.0-beta.4 (2025-03-18)
+
+### Features Added
+
+- Added extension methods to get `ChatCompletionsClient` and `EmbeddingsClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
+
+### Bugs Fixed
+
+- Fixed an issue with the audio samples not properly showcasing the intended workflow.
 
 ## 1.0.0-beta.3 (2025-02-13)
 

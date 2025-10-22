@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ImpactReporting
 {
     public partial class ConnectorResource : IJsonModel<ConnectorData>
     {
+        private static ConnectorData s_dataDeserializationInstance;
+        private static ConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectorData>)Data).Write(writer, options);
 
-        ConnectorData IJsonModel<ConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectorData>)Data).Create(ref reader, options);
+        ConnectorData IJsonModel<ConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectorData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        ConnectorData IPersistableModel<ConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectorData>(data, options);
+        ConnectorData IPersistableModel<ConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectorData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<ConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Batch.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerBatchContext.Default));
                     }
                     subscriptions = array;
                     continue;
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.Batch.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccessRuleProperties)} does not support writing '{options.Format}' format.");
             }
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccessRuleProperties(document.RootElement, options);
                     }
                 default:

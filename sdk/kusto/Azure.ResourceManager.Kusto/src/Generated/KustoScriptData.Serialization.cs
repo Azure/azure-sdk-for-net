@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -236,6 +237,222 @@ namespace Azure.ResourceManager.Kusto
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scriptUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptUri))
+                {
+                    builder.Append("    scriptUrl: ");
+                    builder.AppendLine($"'{ScriptUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptUriSasToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scriptUrlSasToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptUriSasToken))
+                {
+                    builder.Append("    scriptUrlSasToken: ");
+                    if (ScriptUriSasToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScriptUriSasToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScriptUriSasToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptContent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scriptContent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptContent))
+                {
+                    builder.Append("    scriptContent: ");
+                    if (ScriptContent.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScriptContent}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScriptContent}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForceUpdateTag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    forceUpdateTag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForceUpdateTag))
+                {
+                    builder.Append("    forceUpdateTag: ");
+                    if (ForceUpdateTag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ForceUpdateTag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ForceUpdateTag}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldContinueOnErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    continueOnErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShouldContinueOnErrors))
+                {
+                    builder.Append("    continueOnErrors: ");
+                    var boolValue = ShouldContinueOnErrors.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scriptLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptLevel))
+                {
+                    builder.Append("    scriptLevel: ");
+                    builder.AppendLine($"'{ScriptLevel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalPermissionsAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    principalPermissionsAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalPermissionsAction))
+                {
+                    builder.Append("    principalPermissionsAction: ");
+                    builder.AppendLine($"'{PrincipalPermissionsAction.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
@@ -243,7 +460,9 @@ namespace Azure.ResourceManager.Kusto
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{options.Format}' format.");
             }
@@ -257,7 +476,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKustoScriptData(document.RootElement, options);
                     }
                 default:

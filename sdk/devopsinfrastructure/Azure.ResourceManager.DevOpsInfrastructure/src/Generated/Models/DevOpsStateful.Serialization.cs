@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevOpsStateful)} does not support writing '{options.Format}' format.");
             }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsStateful(document.RootElement, options);
                     }
                 default:

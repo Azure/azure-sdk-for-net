@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdatePrivateLinkResource : IJsonModel<DeviceUpdatePrivateLinkData>
     {
+        private static DeviceUpdatePrivateLinkData s_dataDeserializationInstance;
+        private static DeviceUpdatePrivateLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceUpdatePrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateLinkData>)Data).Write(writer, options);
 
-        DeviceUpdatePrivateLinkData IJsonModel<DeviceUpdatePrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateLinkData>)Data).Create(ref reader, options);
+        DeviceUpdatePrivateLinkData IJsonModel<DeviceUpdatePrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceUpdatePrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceUpdatePrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdatePrivateLinkData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        DeviceUpdatePrivateLinkData IPersistableModel<DeviceUpdatePrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateLinkData>(data, options);
+        DeviceUpdatePrivateLinkData IPersistableModel<DeviceUpdatePrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateLinkData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        string IPersistableModel<DeviceUpdatePrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceUpdatePrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

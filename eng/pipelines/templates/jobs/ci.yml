@@ -45,300 +45,101 @@ parameters:
   - name: LimitForPullRequest
     type: boolean
     default: false
+  - name: ExcludePaths
+    type: object
+    default: []
 
 jobs:
-  - job: Build
-    pool:
-      name: $(WINDOWSPOOL)
-      image: $(WINDOWSVMIMAGE)
-      os: windows
-
-    variables:
-      Codeql.Enabled: true
-      Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
-      Codeql.SkipTaskAutoInjection: false
-      SDKType: ${{ parameters.SDKType }}
-
-    steps:
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            Paths:
-              - "/*"
-              - "!SessionRecords"
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
-        parameters:
-          PackageName: "Azure.Template"
-          ServiceDirectory: "template"
-          TestPipeline: ${{ parameters.TestPipeline }}
-      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-      - pwsh: |
-          echo "##vso[build.addbuildtag]Scheduled"
-        displayName: "Tag scheduled builds"
-        condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
-      # Set env variable SkipDevBuildNumber to generate package properties with non alpha version
-      # Package version is used to create or update package work item from CI pipeline
-      - pwsh: |
-          echo "##vso[task.setvariable variable=SkipDevBuildNumber]true"
-        displayName: "Set SkipDevBuildNumber env variable"
-
-      # run this before setting SetDevVersion to true, so that versioning properties will be non-dev always
-      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
-      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
-
-      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
-        parameters:
-          PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_build_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
+        MatrixConfigs:
+        - Name: NET_ci_build_base
+          Path: eng/pipelines/templates/stages/build-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 10
+        AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
-          IncludeIndirect: false
+          TestPipeline: ${{ parameters.TestPipeline }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+          AOTTestInputs: ${{ parameters.AOTTestInputs }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
+        PreGenerationSteps:
+          - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+            parameters:
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PublishingArtifactName: BuildPackagesArtifact
+              ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
 
-      - pwsh: |
-          # Reset SkipDevBuildNumber as empty
-          $skipDevBuildNumber = ""
-          echo "##vso[task.setvariable variable=SkipDevBuildNumber]$skipDevBuildNumber"
-          Write-Host "SkipDevBuildNumber: [$(SkipDevBuildNumber)]"
-          $skipDevBuildNumber = "false"
-          # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
-          # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
-          if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
-            $skipDevBuildNumber = "true"
-          }
-          $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
-          echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
-        displayName: "Setup .NET specific versioning properties"
+  - ${{ else }}:
+    - job: Build
+      pool:
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
 
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.11'
-        inputs:
-          versionSpec: '3.11'
+      variables:
+      - name: SDKType
+        value: ${{ parameters.SDKType }}
 
-      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
-        parameters:
-          LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
+      # Only run CG and codeql on internal build job
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        templateContext:
+          sdl:
+            componentgovernance:
+              enabled: true
+            codeql:
+              # Need to specify the language because we clone after the codeql initialize step
+              language: csharp, javascript
+              compiled:
+                enabled: true
 
-      # only use the project list override file if the service directory is not auto
-      - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-        - pwsh: |
-            if (!"$(ProjectNames)") {
-              Write-Host "No packages to build."
-              exit 0
-            }
-            dotnet pack eng/service.proj -warnaserror `
-              /p:ValidateRunApiCompat=true `
-              /p:SDKType=${{ parameters.SDKType }} `
-              /p:IncludeTests=false `
-              /p:PublicSign=false $(VersioningProperties) `
-              /p:Configuration=$(BuildConfiguration) `
-              /p:CommitSHA=$(Build.SourceVersion) `
-              /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
-              /p:ServiceDirectory=* `
-              /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
-              /p:IncludePerf=false `
-              /p:IncludeStress=false `
-              /p:IncludeIntegrationTests=false `
-              /p:EnableOverrideExclusions=true `
-              $(DiagnosticArguments)
-          displayName: "Build and Package for PR"
-      - ${{ else }}:
-        - pwsh: |
-            if (Test-Path "$(ProjectListOverrideFile)") {
-              Write-Host "Clearing $(ProjectListOverrideFile)"
-              rm "$(ProjectListOverrideFile)"
-              Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]"
-            }
-          displayName: Cleanup Props File
-
-        - script: >-
-            dotnet pack eng/service.proj -warnaserror
-            /p:ValidateRunApiCompat=true
-            /p:SDKType=${{ parameters.SDKType }}
-            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-            /p:IncludeTests=false
-            /p:PublicSign=false $(VersioningProperties)
-            /p:Configuration=$(BuildConfiguration)
-            /p:CommitSHA=$(Build.SourceVersion)
-            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-            /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
-            $(DiagnosticArguments)
-          displayName: "Build and Package Service Directory"
-
-      # save package properties again, this time honoring the dev version number
-      - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
-        - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      steps:
+        - template: /eng/pipelines/templates/steps/build.yml
           parameters:
+            Artifacts: ${{ parameters.Artifacts }}
+            TestPipeline: ${{ parameters.TestPipeline }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
-      - task: Powershell@2
-        inputs:
-          filePath: $(Build.SourcesDirectory)/eng/scripts/Save-Package-Namespaces-Property.ps1
-          arguments: >
-            -RepoRoot $(Build.SourcesDirectory)
-            -PackageInfoDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-            -BuildConfiguration $(BuildConfiguration)
-          pwsh: true
-          workingDirectory: $(Pipeline.Workspace)
-        displayName: Update package properties with namespaces
-        condition: and(succeeded(), ne(variables['ProjectNames'], ''))
-
-      - template: ../steps/archetype-sdk-docs.yml
-        parameters:
-          ServiceDirectory: ${{parameters.ServiceDirectory}}
-          Artifacts: ${{parameters.Artifacts}}
-          DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
-          LibType: 'client'
-          PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
-
-      - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-        - template: /eng/pipelines/templates/steps/aot-compatibility.yml
-          parameters:
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-        inputs:
-          ignoreDirectories: '.nuget'
+    - job: "Analyze"
+      timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+      condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+      templateContext:
+        outputs:
+          - output: pipelineArtifact
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'verify'
 
-      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'packages'
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
 
-      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
-        parameters:
-          Artifacts: ${{parameters.Artifacts}}
-
-      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
-
-      - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
-
-  - job: "Analyze"
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-    templateContext:
-      outputs:
-        - output: pipelineArtifact
-          targetPath: '$(Build.ArtifactStagingDirectory)'
-          artifactName: 'verify'
-
-    pool:
-      name: $(LINUXPOOL)
-      image: $(LINUXVMIMAGE)
-      os: linux
-    steps:
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      steps:
+        - template: /eng/pipelines/templates/steps/analyze.yml
           parameters:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-
-      - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
-
-      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
-      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
-        parameters:
-          PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
-          Artifacts: ${{ parameters.Artifacts }}
-          IncludeIndirect: false
-
-      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
-        parameters:
-          ServiceDirectories: "$(ChangedServices)"
-
-      - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
-        parameters:
-          PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
-          IncludeIndirect: false
-
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 18.x
-        displayName: 'Use Node 18.x'
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-
-      - task: DotNetCoreCLI@2
-        displayName: 'Install Snippet Generator Tool'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'restore'
-          workingDirectory: '$(Agent.BuildDirectory)'
-
-      - pwsh: |
-          $failed = $false
-          if ("$(ProjectNames)") {
-            $serviceDirectories = "$(ChangedServices)" -split ","
-            $ScanPaths = @()
-            foreach ($ServiceDirectory in $serviceDirectories) {
-              ./eng/scripts/CodeChecks.ps1 `
-                -ServiceDirectory $ServiceDirectory `
-                -SDKType ${{ parameters.SDKType }} `
-                -SpellCheckPublicApiSurface `
-
-              if ($LASTEXITCODE -ne 0) {
-                $failed = $true
-              }
-            }
-
-            if ($failed) {
-              exit 1
-            }
-          }
-          else {
-            Write-Host "No services were directly changed. Skipping code checks."
-          }
-        displayName: Verify Generated Code
-        env:
-          EnableSourceLink: false
-
-      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
-        parameters:
-          LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
-
-      # todo, refactor to using the projectlistoverridefile
-      - pwsh: |
-          $failed = $false
-          if ("$(ProjectNames)") {
-            $services = "$(ChangedServices)" -split ","
-
-            foreach ($service in $services) {
-              Write-Host "building $service"
-              dotnet build eng/service.proj -warnaserror `
-                /t:rebuild `
-                /p:DebugType=none `
-                /p:SDKType=${{ parameters.SDKType }} `
-                /p:ServiceDirectory=$service `
-                /p:IncludePerf=false `
-                /p:IncludeStress=false `
-                /p:PublicSign=false `
-                /p:Configuration=$(BuildConfiguration) `
-                /p:EnableSourceLink=false `
-                /p:ProjectListOverrideFile="" `
-                /p:BuildSnippets=true `
-                $(DiagnosticArguments)
-            }
-          }
-          else {
-            Write-Host "No services were directly changed. Skipping snippet build."
-          }
-        displayName: Build snippets
-        condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+            Artifacts: ${{ parameters.Artifacts }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            SDKType: ${{ parameters.SDKType }}
+            BuildSnippets: ${{ parameters.BuildSnippets }}
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
@@ -373,11 +174,6 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
@@ -398,28 +194,11 @@ jobs:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
           PreGenerationSteps:
-            - script: |
-                echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
-              displayName: Enable AdditionalDependency Calculation
-
-            - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+            - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
               parameters:
-                ServiceDirectory: ${{parameters.ServiceDirectory}}
-                PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
-
-            # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
-            # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
-            # and then publish the originals
-            - pwsh: |
-                mkdir "$(Build.ArtifactStagingDirectory)/PackageInfo"
-                Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
-                  | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
-              displayName: Copy ArtifactInfo from Publishing Directory
-
-            - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
-              parameters:
-                ArtifactName: 'TestPackagesArtifact'
-                ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
+                ServiceDirectory: ${{ parameters.ServiceDirectory }}
+                PublishingArtifactName: TestPackagesArtifact
+                ExcludePaths: ${{ parameters.ExcludePaths }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}

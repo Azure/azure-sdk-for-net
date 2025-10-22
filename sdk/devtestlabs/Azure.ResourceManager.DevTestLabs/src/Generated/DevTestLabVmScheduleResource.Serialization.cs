@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabVmScheduleResource : IJsonModel<DevTestLabScheduleData>
     {
+        private static DevTestLabScheduleData s_dataDeserializationInstance;
+        private static DevTestLabScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabScheduleData>)Data).Write(writer, options);
 
-        DevTestLabScheduleData IJsonModel<DevTestLabScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabScheduleData>)Data).Create(ref reader, options);
+        DevTestLabScheduleData IJsonModel<DevTestLabScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabScheduleData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabScheduleData IPersistableModel<DevTestLabScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabScheduleData>(data, options);
+        DevTestLabScheduleData IPersistableModel<DevTestLabScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabScheduleData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

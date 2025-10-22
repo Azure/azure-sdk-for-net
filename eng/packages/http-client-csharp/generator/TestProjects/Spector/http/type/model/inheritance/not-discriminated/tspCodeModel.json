@@ -1,421 +1,587 @@
 {
- "$id": "1",
- "Name": "Type.Model.Inheritance.NotDiscriminated",
- "ApiVersions": [],
- "Enums": [],
- "Models": [
-  {
-   "$id": "2",
-   "kind": "model",
-   "name": "Siamese",
-   "clientNamespace": "Type.Model.Inheritance.NotDiscriminated",
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese",
-   "usage": "Input,Output,Json",
-   "doc": "The third level model in the normal multiple levels inheritance.",
-   "decorators": [],
-   "baseModel": {
-    "$id": "3",
-    "kind": "model",
-    "name": "Cat",
-    "clientNamespace": "Type.Model.Inheritance.NotDiscriminated",
-    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat",
-    "usage": "Input,Output,Json",
-    "doc": "The second level model in the normal multiple levels inheritance.",
-    "decorators": [],
-    "baseModel": {
-     "$id": "4",
-     "kind": "model",
-     "name": "Pet",
-     "clientNamespace": "Type.Model.Inheritance.NotDiscriminated",
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet",
-     "usage": "Input,Output,Json",
-     "doc": "This is base model for not-discriminated normal multiple levels inheritance.",
-     "decorators": [],
-     "properties": [
-      {
-       "$id": "5",
-       "kind": "property",
-       "name": "name",
-       "serializedName": "name",
-       "type": {
+  "name": "Type.Model.Inheritance.NotDiscriminated",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "postValidContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "getValidContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "putValidContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
         "$id": "6",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
-       },
-       "optional": false,
-       "readOnly": false,
-       "discriminator": false,
-       "flatten": false,
-       "decorators": [],
-       "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet.name",
-       "serializationOptions": {
-        "$id": "7",
-        "json": {
-         "$id": "8",
-         "name": "name"
-        }
-       }
-      }
-     ]
-    },
-    "properties": [
-     {
-      "$id": "9",
-      "kind": "property",
-      "name": "age",
-      "serializedName": "age",
-      "type": {
-       "$id": "10",
-       "kind": "int32",
-       "name": "int32",
-       "crossLanguageDefinitionId": "TypeSpec.int32",
-       "decorators": []
       },
-      "optional": false,
-      "readOnly": false,
-      "discriminator": false,
-      "flatten": false,
-      "decorators": [],
-      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat.age",
-      "serializationOptions": {
-       "$id": "11",
-       "json": {
-        "$id": "12",
-        "name": "age"
-       }
-      }
-     }
-    ]
-   },
-   "properties": [
-    {
-     "$id": "13",
-     "kind": "property",
-     "name": "smart",
-     "serializedName": "smart",
-     "type": {
-      "$id": "14",
-      "kind": "boolean",
-      "name": "boolean",
-      "crossLanguageDefinitionId": "TypeSpec.boolean",
+      "value": "application/json",
       "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese.smart",
-     "serializationOptions": {
-      "$id": "15",
-      "json": {
-       "$id": "16",
-       "name": "smart"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$ref": "3"
-  },
-  {
-   "$ref": "4"
-  }
- ],
- "Clients": [
-  {
-   "$id": "17",
-   "Name": "NotDiscriminatedClient",
-   "ClientNamespace": "Type.Model.Inheritance.NotDiscriminated",
-   "Doc": "Illustrates not-discriminated inheritance model.",
-   "Operations": [
-    {
-     "$id": "18",
-     "Name": "postValid",
-     "ResourceName": "NotDiscriminated",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "19",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "Body parameter's content type. Known values are application/json",
-       "Type": {
-        "$id": "20",
-        "kind": "constant",
-        "valueType": {
-         "$id": "21",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "22",
-       "Name": "input",
-       "NameInRequest": "input",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "23",
-       "StatusCodes": [
-        204
-       ],
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/not-discriminated/valid",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid",
-     "Decorators": []
     },
     {
-     "$id": "24",
-     "Name": "getValid",
-     "ResourceName": "NotDiscriminated",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "25",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "26",
-        "kind": "constant",
-        "valueType": {
-         "$id": "27",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
+      "$id": "7",
+      "kind": "constant",
+      "name": "putValidContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "28",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/not-discriminated/valid",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid",
-     "Decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "9",
+      "kind": "model",
+      "name": "Siamese",
+      "namespace": "Type.Model.Inheritance.NotDiscriminated",
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese",
+      "usage": "Input,Output,Json",
+      "doc": "The third level model in the normal multiple levels inheritance.",
+      "decorators": [],
+      "baseModel": {
+        "$id": "10",
+        "kind": "model",
+        "name": "Cat",
+        "namespace": "Type.Model.Inheritance.NotDiscriminated",
+        "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat",
+        "usage": "Input,Output,Json",
+        "doc": "The second level model in the normal multiple levels inheritance.",
+        "decorators": [],
+        "baseModel": {
+          "$id": "11",
+          "kind": "model",
+          "name": "Pet",
+          "namespace": "Type.Model.Inheritance.NotDiscriminated",
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet",
+          "usage": "Input,Output,Json",
+          "doc": "This is base model for not-discriminated normal multiple levels inheritance.",
+          "decorators": [],
+          "properties": [
+            {
+              "$id": "12",
+              "kind": "property",
+              "name": "name",
+              "serializedName": "name",
+              "type": {
+                "$id": "13",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": false,
+              "readOnly": false,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet.name",
+              "serializationOptions": {
+                "json": {
+                  "name": "name"
+                }
+              },
+              "isHttpMetadata": false
+            }
+          ]
+        },
+        "properties": [
+          {
+            "$id": "14",
+            "kind": "property",
+            "name": "age",
+            "serializedName": "age",
+            "type": {
+              "$id": "15",
+              "kind": "int32",
+              "name": "int32",
+              "crossLanguageDefinitionId": "TypeSpec.int32",
+              "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat.age",
+            "serializationOptions": {
+              "json": {
+                "name": "age"
+              }
+            },
+            "isHttpMetadata": false
+          }
+        ]
+      },
+      "properties": [
+        {
+          "$id": "16",
+          "kind": "property",
+          "name": "smart",
+          "serializedName": "smart",
+          "type": {
+            "$id": "17",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese.smart",
+          "serializationOptions": {
+            "json": {
+              "name": "smart"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
     },
     {
-     "$id": "29",
-     "Name": "putValid",
-     "ResourceName": "NotDiscriminated",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "30",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "Body parameter's content type. Known values are application/json",
-       "Type": {
-        "$id": "31",
-        "kind": "constant",
-        "valueType": {
-         "$id": "32",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "33",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "34",
-        "kind": "constant",
-        "valueType": {
-         "$id": "35",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "36",
-       "Name": "input",
-       "NameInRequest": "input",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "37",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/not-discriminated/valid",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "38"
-   },
-   "Parameters": [
+      "$ref": "10"
+    },
     {
-     "$id": "39",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "40",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "41",
-      "Type": {
-       "$id": "42",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
+      "$ref": "11"
     }
-   ],
-   "Decorators": []
-  }
- ]
+  ],
+  "clients": [
+    {
+      "$id": "18",
+      "kind": "client",
+      "name": "NotDiscriminatedClient",
+      "namespace": "Type.Model.Inheritance.NotDiscriminated",
+      "doc": "Illustrates not-discriminated inheritance model.",
+      "methods": [
+        {
+          "$id": "19",
+          "kind": "basic",
+          "name": "postValid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "20",
+            "name": "postValid",
+            "resourceName": "NotDiscriminated",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "21",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType"
+              },
+              {
+                "$id": "22",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "9"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/not-discriminated/valid",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "23",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "24",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid"
+        },
+        {
+          "$id": "25",
+          "kind": "basic",
+          "name": "getValid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "26",
+            "name": "getValid",
+            "resourceName": "NotDiscriminated",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "27",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "3"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "9"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/not-discriminated/valid",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "28",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "3"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "9"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid"
+        },
+        {
+          "$id": "29",
+          "kind": "basic",
+          "name": "putValid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "30",
+            "name": "putValid",
+            "resourceName": "NotDiscriminated",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "31",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "5"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType"
+              },
+              {
+                "$id": "32",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "7"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept"
+              },
+              {
+                "$id": "33",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "9"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "9"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/not-discriminated/valid",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "34",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "35",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "5"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "36",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "7"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "9"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "37",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "38",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "39",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated",
+      "apiVersions": []
+    }
+  ]
 }

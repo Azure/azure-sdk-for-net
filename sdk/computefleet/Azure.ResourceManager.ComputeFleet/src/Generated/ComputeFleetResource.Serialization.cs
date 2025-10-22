@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ComputeFleet
 {
     public partial class ComputeFleetResource : IJsonModel<ComputeFleetData>
     {
+        private static ComputeFleetData s_dataDeserializationInstance;
+        private static ComputeFleetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ComputeFleetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeFleetData>)Data).Write(writer, options);
 
-        ComputeFleetData IJsonModel<ComputeFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeFleetData>)Data).Create(ref reader, options);
+        ComputeFleetData IJsonModel<ComputeFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeFleetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ComputeFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ComputeFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeFleetData>(Data, options, AzureResourceManagerComputeFleetContext.Default);
 
-        ComputeFleetData IPersistableModel<ComputeFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeFleetData>(data, options);
+        ComputeFleetData IPersistableModel<ComputeFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeFleetData>(data, options, AzureResourceManagerComputeFleetContext.Default);
 
-        string IPersistableModel<ComputeFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeFleetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ComputeFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeFleetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

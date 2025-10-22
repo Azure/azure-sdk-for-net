@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Initializes a new instance of QuotaRequestStatusRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public QuotaRequestStatusRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
-        /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="id"/> is null. </exception>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaRequestDetailData.DeserializeQuotaRequestDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
-        /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="id"/> is null. </exception>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaRequestDetailData.DeserializeQuotaRequestDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -177,15 +177,14 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
-        /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
         ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        ///
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -212,15 +211,14 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
-        /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
         ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        ///
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -237,7 +235,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -270,15 +268,14 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
         ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        ///
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -296,7 +293,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -307,15 +304,14 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The target Azure resource URI. For example, `/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/qms-test/providers/Microsoft.Batch/batchAccounts/testAccount/`. This is the target Azure resource URI for the List GET operation. If a `{resourceName}` is added after `/quotas`, then it's the target Azure resource URI in the GET operation for the specific resource. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter">
         /// | Field                    | Supported operators
         /// |---------------------|------------------------
         ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
-        ///  |provisioningState eq {QuotaRequestState}
-        ///  |resourceName eq {resourceName}
-        ///
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -333,7 +329,7 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                     {
                         QuotaRequestDetailsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuotaRequestDetailsList.DeserializeQuotaRequestDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

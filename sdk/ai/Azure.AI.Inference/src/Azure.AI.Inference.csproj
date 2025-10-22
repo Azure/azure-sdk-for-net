@@ -1,12 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Microsoft Azure AI Inference Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.Inference client library</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageTags>Azure Inference</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);CS1591;AZC0030;AZC0031</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0030;AZC0031;AZC0035;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <AotCompatOptOut>true</AotCompatOptOut>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -17,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

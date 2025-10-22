@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-08-01-preview";
+            _apiVersion = apiVersion ?? "2025-01-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ApplicationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ApplicationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightApplicationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightApplicationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightAsyncOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightAsyncOperationResult.DeserializeHDInsightAsyncOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightAsyncOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightAsyncOperationResult.DeserializeHDInsightAsyncOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ApplicationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ApplicationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

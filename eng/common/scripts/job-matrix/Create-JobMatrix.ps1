@@ -15,18 +15,32 @@ param (
     [Parameter(Mandatory=$False)][array] $Filters,
     [Parameter(Mandatory=$False)][array] $Replace,
     [Parameter(Mandatory=$False)][array] $NonSparseParameters,
+    # Use for local generation/debugging when env: values are set in a matrix
+    [Parameter(Mandatory=$False)][switch] $SkipEnvironmentVariables,
     [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . $PSScriptRoot/job-matrix-functions.ps1
+. $PSScriptRoot/../logging.ps1
 
 if (!(Test-Path $ConfigPath)) {
     Write-Error "ConfigPath '$ConfigPath' does not exist."
     exit 1
 }
-$config = GetMatrixConfigFromFile (Get-Content $ConfigPath -Raw)
+$rawConfig = Get-Content $ConfigPath -Raw
+$config = GetMatrixConfigFromFile $rawConfig
 # Strip empty string filters in order to be able to use azure pipelines yaml join()
 $Filters = $Filters | Where-Object { $_ }
+
+LogGroupStart "Matrix generation configuration"
+Write-Host "Configuration File: $ConfigPath"
+Write-Host $rawConfig
+Write-Host "SelectionType: $Selection"
+Write-Host "DisplayNameFilter: $DisplayNameFilter"
+Write-Host "Filters: $Filters"
+Write-Host "Replace: $Replace"
+Write-Host "NonSparseParameters: $NonSparseParameters"
+LogGroupEnd
 
 [array]$matrix = GenerateMatrix `
     -config $config `
@@ -34,10 +48,14 @@ $Filters = $Filters | Where-Object { $_ }
     -displayNameFilter $DisplayNameFilter `
     -filters $Filters `
     -replace $Replace `
-    -nonSparseParameters $NonSparseParameters
+    -nonSparseParameters $NonSparseParameters `
+    -skipEnvironmentVariables:$SkipEnvironmentVariables
 
 $serialized = SerializePipelineMatrix $matrix
 
+Write-Host "Generated matrix:"
+
+# Write-Output required to support other scripts that call this script directly
 Write-Output $serialized.pretty
 
 if ($CI) {

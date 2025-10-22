@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class HybridSearch : IUtf8JsonSerializable
+    public partial class HybridSearch : IUtf8JsonSerializable, IJsonModel<HybridSearch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridSearch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridSearch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridSearch)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(MaxTextRecallSize))
             {
                 writer.WritePropertyName("maxTextRecallSize"u8);
@@ -25,17 +44,47 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("countAndFacetMode"u8);
                 writer.WriteStringValue(CountAndFacetMode.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static HybridSearch DeserializeHybridSearch(JsonElement element)
+        HybridSearch IJsonModel<HybridSearch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridSearch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridSearch(document.RootElement, options);
+        }
+
+        internal static HybridSearch DeserializeHybridSearch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? maxTextRecallSize = default;
             HybridCountAndFacetMode? countAndFacetMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTextRecallSize"u8))
@@ -56,15 +105,51 @@ namespace Azure.Search.Documents.Models
                     countAndFacetMode = new HybridCountAndFacetMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridSearch(maxTextRecallSize, countAndFacetMode);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridSearch(maxTextRecallSize, countAndFacetMode, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridSearch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HybridSearch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridSearch IPersistableModel<HybridSearch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHybridSearch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridSearch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static HybridSearch FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHybridSearch(document.RootElement);
         }
 
@@ -72,7 +157,7 @@ namespace Azure.Search.Documents.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

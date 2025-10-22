@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: Newrelic
 namespace: Azure.ResourceManager.NewRelicObservability
-require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/newrelic/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/91e3aca0bfa4b59a9f578959d0b214a26b90df40/specification/newrelic/resource-manager/readme.md
 #tag: package-2024-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -157,6 +157,10 @@ rename-mapping:
   SubscriptionList: NewRelicMonitoredSubscriptionProperties
   MonitoredSubscription: NewRelicMonitoredSubscriptionInfo
   MonitoringTagRulesProperties: NewRelicMonitoringTagRules
+  LatestLinkedSaaSResponse: NewRelicObservabilityLatestLinkedSaaSResult
+  SaaSResourceDetailsResponse: NewRelicObservabilitySaaSResourceDetailsResult
+  SaaSData: NewRelicObservabilitySaaSInfo
+
 
 override-operation-name:
   Accounts_List: GetNewRelicAccounts

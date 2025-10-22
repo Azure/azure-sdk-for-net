@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    internal partial class DevOpsNetworkProfile : IUtf8JsonSerializable, IJsonModel<DevOpsNetworkProfile>
+    public partial class DevOpsNetworkProfile : IUtf8JsonSerializable, IJsonModel<DevOpsNetworkProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
+            if (Optional.IsDefined(StaticIPAddressCount))
+            {
+                writer.WritePropertyName("staticIpAddressCount"u8);
+                writer.WriteNumberValue(StaticIPAddressCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
+            {
+                writer.WritePropertyName("ipAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -44,7 +59,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,6 +89,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             string subnetId = default;
+            int? staticIPAddressCount = default;
+            IReadOnlyList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +100,36 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     subnetId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("staticIpAddressCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staticIPAddressCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("ipAddresses"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ipAddresses = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevOpsNetworkProfile(subnetId, serializedAdditionalRawData);
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -99,7 +139,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevOpsNetworkProfile)} does not support writing '{options.Format}' format.");
             }
@@ -113,7 +153,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsNetworkProfile(document.RootElement, options);
                     }
                 default:

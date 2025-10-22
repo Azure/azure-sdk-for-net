@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapseSensitivityLabelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Synapse
                 case 201:
                     {
                         SynapseSensitivityLabelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseSensitivityLabelListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

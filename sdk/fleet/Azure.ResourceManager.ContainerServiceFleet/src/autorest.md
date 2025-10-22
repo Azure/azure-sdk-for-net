@@ -7,11 +7,12 @@ azure-arm: true
 csharp: true
 library-name: ContainerServiceFleet
 namespace: Azure.ResourceManager.ContainerServiceFleet
-require: https://github.com/Azure/azure-rest-api-specs/blob/7ec14d22272e95ba23e2dbaa969531448c4d7af6/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d19d4d8c69cf37c355ee55095b335ca92643120e/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
+#tag: package-2025-04-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -31,10 +32,20 @@ rename-mapping:
   SkipTarget: ContainerServiceFleetSkipTarget
   TargetType: ContainerServiceFleetTargetType
   UpgradeChannel: ContainerServiceFleetUpgradeChannel
+  GenerateResponse: AutoUpgradeProfileGenerateResult
+  FleetMemberStatus: ContainerServiceFleetMemberStatus
+  FleetStatus: ContainerServiceFleetStatus
+  Timing: ContainerServiceFleetGateTiming 
 
 prepend-rp-prefix:
   - AgentProfile
   - APIServerAccessProfile
+  - Gate
+  - GateConfiguration
+  - GateProvisioningState
+  - GateState
+  - GateTarget
+  - GateType
   - ManagedClusterUpdate
   - ManagedClusterUpgradeSpec
   - ManagedClusterUpgradeType
@@ -57,6 +68,21 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+operations-to-lro-api-version-override:
+  Fleets_CreateOrUpdate: "2016-03-30"
+  Fleets_Update: "2016-03-30"
+  Fleets_Delete: "2016-03-30"
+  FleetMembers_Create: "2016-03-30"
+  FleetMembers_Update: "2016-03-30"
+  FleetMembers_Delete: "2016-03-30"
+  UpdateRuns_CreateOrUpdate: "2016-03-30"
+  UpdateRuns_Delete: "2016-03-30"
+  FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
+  FleetUpdateStrategies_Delete: "2016-03-30"
+
+override-operation-name:
+  AutoUpgradeProfileOperations_GenerateUpdateRun: GenerateUpdateRun
 
 acronym-mapping:
   CPU: Cpu

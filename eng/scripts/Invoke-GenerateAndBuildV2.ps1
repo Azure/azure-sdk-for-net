@@ -129,17 +129,33 @@ if ($relatedTypeSpecProjectFolder) {
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
         Write-host "Start to call tsp-client to generate package:$packageName"
-        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        
+        # Install tsp-client dependencies from eng/common/tsp-client
+        $tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../common/tsp-client")
+        Push-Location $tspClientDir
+        try {
+            Write-Host "Installing tsp-client dependencies from $tspClientDir"
+            npm ci
+            if ($LASTEXITCODE) {
+                Write-Error "Failed to install tsp-client dependencies"
+                exit $LASTEXITCODE
+            }
+        }
+        finally {
+            Pop-Location
+        }
+        
+        # Use tsp-client from pinned version by passing --prefix to use tsp-client from that directory
+        $tspclientCommand = "npm exec --prefix $tspClientDir --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
+        
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE."
-          Write-Error "[ERROR] Please review the detail errors for potential fixes."
-          Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+          Write-Host "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
           $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");

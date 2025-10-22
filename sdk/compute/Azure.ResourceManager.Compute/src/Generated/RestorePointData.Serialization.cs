@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ExcludeDisks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SourceRestorePoint))
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
-                JsonSerializer.Serialize(writer, SourceRestorePoint);
+                ((IJsonModel<WritableSubResource>)SourceRestorePoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Compute
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             excludeDisks = array;
                             continue;
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sourceRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sourceRestorePoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("instanceView"u8))
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RestorePointData)} does not support writing '{options.Format}' format.");
             }
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRestorePointData(document.RootElement, options);
                     }
                 default:

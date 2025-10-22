@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1421,14 +1421,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1459,14 +1459,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1524,7 +1524,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1619,7 +1619,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1645,7 +1645,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1701,7 +1701,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1719,6 +1719,84 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// Check if a resource name is available for DNL sites.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegionalCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await DefaultRestClient.RegionalCheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check if a resource name is available for DNL sites.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegionalCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = DefaultRestClient.RegionalCheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Description for List all premier add-on offers.
         /// <list type="bullet">
         /// <item>
@@ -1731,7 +1809,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1757,7 +1835,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1783,7 +1861,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1817,7 +1895,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1851,7 +1929,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1889,7 +1967,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1927,7 +2005,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1954,7 +2032,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1981,7 +2059,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2020,7 +2098,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2059,7 +2137,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2089,7 +2167,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2119,7 +2197,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2149,7 +2227,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

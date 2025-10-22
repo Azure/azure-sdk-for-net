@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingSubscriptionAliasResource : IJsonModel<BillingSubscriptionAliasData>
     {
+        private static BillingSubscriptionAliasData s_dataDeserializationInstance;
+        private static BillingSubscriptionAliasData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingSubscriptionAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingSubscriptionAliasData>)Data).Write(writer, options);
 
-        BillingSubscriptionAliasData IJsonModel<BillingSubscriptionAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingSubscriptionAliasData>)Data).Create(ref reader, options);
+        BillingSubscriptionAliasData IJsonModel<BillingSubscriptionAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingSubscriptionAliasData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingSubscriptionAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingSubscriptionAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingSubscriptionAliasData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        BillingSubscriptionAliasData IPersistableModel<BillingSubscriptionAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingSubscriptionAliasData>(data, options);
+        BillingSubscriptionAliasData IPersistableModel<BillingSubscriptionAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingSubscriptionAliasData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingSubscriptionAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingSubscriptionAliasData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingSubscriptionAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingSubscriptionAliasData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

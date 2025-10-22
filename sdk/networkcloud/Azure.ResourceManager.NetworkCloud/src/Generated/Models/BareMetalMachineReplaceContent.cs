@@ -51,23 +51,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
-        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
         /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
         /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="safeguardMode"> The safeguard mode to use for the replace action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
+        /// <param name="storagePolicy"> The indicator of whether to bypass clearing storage while replacing a bare metal machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineReplaceContent(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineName, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BareMetalMachineReplaceContent(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineName, BareMetalMachineReplaceSafeguardMode? safeguardMode, string serialNumber, BareMetalMachineReplaceStoragePolicy? storagePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BmcCredentials = bmcCredentials;
             BmcMacAddress = bmcMacAddress;
             BootMacAddress = bootMacAddress;
             MachineName = machineName;
+            SafeguardMode = safeguardMode;
             SerialNumber = serialNumber;
+            StoragePolicy = storagePolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The credentials of the baseboard management controller on this bare metal machine. </summary>
+        /// <summary> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </summary>
         public AdministrativeCredentials BmcCredentials { get; set; }
         /// <summary> The MAC address of the BMC device. </summary>
         public string BmcMacAddress { get; set; }
@@ -75,7 +79,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string BootMacAddress { get; set; }
         /// <summary> The OS-level hostname assigned to this machine. </summary>
         public string MachineName { get; set; }
+        /// <summary> The safeguard mode to use for the replace action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. </summary>
+        public BareMetalMachineReplaceSafeguardMode? SafeguardMode { get; set; }
         /// <summary> The serial number of the bare metal machine. </summary>
         public string SerialNumber { get; set; }
+        /// <summary> The indicator of whether to bypass clearing storage while replacing a bare metal machine. </summary>
+        public BareMetalMachineReplaceStoragePolicy? StoragePolicy { get; set; }
     }
 }

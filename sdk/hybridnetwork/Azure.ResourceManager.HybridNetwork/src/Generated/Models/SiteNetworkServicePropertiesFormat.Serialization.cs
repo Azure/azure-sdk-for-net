@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(SiteReference))
             {
                 writer.WritePropertyName("siteReference"u8);
-                JsonSerializer.Serialize(writer, SiteReference);
+                ((IJsonModel<WritableSubResource>)SiteReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in DesiredStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in LastStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    siteReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    siteReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("publisherName"u8))
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default));
                     }
                     desiredStateConfigurationGroupValueReferences = dictionary;
                     continue;
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default));
                     }
                     lastStateConfigurationGroupValueReferences = dictionary;
                     continue;
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support writing '{options.Format}' format.");
             }
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSiteNetworkServicePropertiesFormat(document.RootElement, options);
                     }
                 default:

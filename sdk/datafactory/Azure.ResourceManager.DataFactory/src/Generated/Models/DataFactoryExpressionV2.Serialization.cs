@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(V2Type.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(V2Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                JsonSerializer.Serialize(writer, V2Value);
             }
             if (Optional.IsCollectionDefined(Operators))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryExpressionV2Type? type = default;
-            string value = default;
+            DataFactoryElement<string> value = default;
             IList<DataFactoryElement<string>> operators = default;
             IList<DataFactoryExpressionV2> operands = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("operators"u8))
@@ -180,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support writing '{options.Format}' format.");
             }
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataFactoryExpressionV2(document.RootElement, options);
                     }
                 default:

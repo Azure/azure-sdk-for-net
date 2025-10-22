@@ -395,6 +395,25 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="JavaComponentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JavaComponentResource.CreateResourceIdentifier" /> to create a <see cref="JavaComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetJavaComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="JavaComponentResource"/> object. </returns>
+        public static JavaComponentResource GetJavaComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetJavaComponentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppJobExecutionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppJobExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -433,6 +452,63 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
+        public static ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppHttpRouteConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppHttpRouteConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppHttpRouteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppHttpRouteConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppHttpRouteConfigResource"/> object. </returns>
+        public static ContainerAppHttpRouteConfigResource GetContainerAppHttpRouteConfigResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppHttpRouteConfigResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppMaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppMaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppMaintenanceConfigurationResource"/> object. </returns>
+        public static ContainerAppMaintenanceConfigurationResource GetContainerAppMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppMaintenanceConfigurationResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentStorageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppManagedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -452,6 +528,25 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SessionPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SessionPoolResource.CreateResourceIdentifier" /> to create a <see cref="SessionPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetSessionPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SessionPoolResource"/> object. </returns>
+        public static SessionPoolResource GetSessionPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetSessionPoolResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -468,6 +563,44 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppContainersArmClient(client).GetContainerAppSourceControlResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetLogicAppResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogicAppResource"/> object. </returns>
+        public static LogicAppResource GetLogicAppResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetLogicAppResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicAppWorkflowEnvelopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowEnvelopeResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowEnvelopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetLogicAppWorkflowEnvelopeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogicAppWorkflowEnvelopeResource"/> object. </returns>
+        public static LogicAppWorkflowEnvelopeResource GetLogicAppWorkflowEnvelopeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetLogicAppWorkflowEnvelopeResource(id);
         }
 
         /// <summary>
@@ -500,7 +633,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -538,7 +671,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -593,7 +726,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -631,7 +764,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -686,7 +819,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -724,7 +857,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -779,7 +912,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -817,7 +950,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -843,6 +976,99 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets a collection of SessionPoolResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetSessionPools()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of SessionPoolResources and their operations over a SessionPoolResource. </returns>
+        public static SessionPoolCollection GetSessionPools(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetSessionPools();
+        }
+
+        /// <summary>
+        /// Get the properties of a session pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetSessionPoolAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="sessionPoolName"> Name of the session pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sessionPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SessionPoolResource>> GetSessionPoolAsync(this ResourceGroupResource resourceGroupResource, string sessionPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetSessionPoolAsync(sessionPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a session pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetSessionPool(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="sessionPoolName"> Name of the session pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sessionPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SessionPoolResource> GetSessionPool(this ResourceGroupResource resourceGroupResource, string sessionPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetSessionPool(sessionPoolName, cancellationToken);
+        }
+
+        /// <summary>
         /// Get all available workload profiles for a location.
         /// <list type="bullet">
         /// <item>
@@ -855,7 +1081,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -888,7 +1114,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -921,7 +1147,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -954,7 +1180,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -987,7 +1213,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1023,7 +1249,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1059,7 +1285,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1095,7 +1321,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1131,7 +1357,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1167,7 +1393,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1203,7 +1429,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1238,7 +1464,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1273,7 +1499,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1309,7 +1535,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1333,6 +1559,78 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Get the session pools in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/sessionPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetSessionPools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SessionPoolResource> GetSessionPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetSessionPoolsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the session pools in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/sessionPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetSessionPools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SessionPoolResource> GetSessionPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetSessionPools(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
         /// <list type="bullet">
         /// <item>
@@ -1345,7 +1643,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1378,7 +1676,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// <item>

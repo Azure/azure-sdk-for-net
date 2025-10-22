@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Communication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommunicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EmailServiceResourcePatch)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEmailServiceResourcePatch(document.RootElement, options);
                     }
                 default:

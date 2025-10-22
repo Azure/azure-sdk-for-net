@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataLakeAnalyticsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support writing '{options.Format}' format.");
             }
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataLakeAnalyticsAccountBasic(document.RootElement, options);
                     }
                 default:

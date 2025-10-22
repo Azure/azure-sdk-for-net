@@ -21,7 +21,7 @@ namespace Server.Path.Single
 
         public SingleClient(Uri endpoint, SingleClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response MyOp(RequestContext context) => throw null;
 

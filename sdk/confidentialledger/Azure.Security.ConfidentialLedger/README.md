@@ -291,7 +291,23 @@ Note: Both ranges are optional; they can be provided individually or not at all.
 ```C# Snippet:RangedQuery
 ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 ```
+#### Tags
+It is possible to further organize data within a collection as part of the latest preview version dated `2024-12-09-preview` or newer.
 
+Specify the `tags` parameter as part of the create entry operation. Multiple tags can be specified using commas. There is a limit of five tags per transaction.
+
+```C#
+string tags = "tag1,tag2";
+
+Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
+```
+
+```C#
+
+// Specify collection ID and tag. Optionally add a range of transaction IDs.
+// Only one tag is permitted in each retrieval operation.
+var result = Client.GetLedgerEntriesAsync(collectionId, "tag1");
+```
 ### User management
 
 Users are managed directly with the confidential ledger instead of through Azure. New users may be AAD-based or certificate-based.

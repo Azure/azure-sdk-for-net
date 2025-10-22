@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Authorization;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
-using System.Globalization;
+using Azure.Messaging.ServiceBus.Authorization;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -33,6 +33,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             TokenCredential tokenCredential,
             string fullyQualifiedNamespace,
             ServiceBusAdministrationClientOptions.ServiceVersion version,
+            int port,
             bool useTls)
         {
             _pipeline = pipeline;
@@ -40,13 +41,13 @@ namespace Azure.Messaging.ServiceBus.Administration
             _versionQuery = $"api-version={version.ToVersionString()}";
             _tokenCredential = tokenCredential;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
-            _port = GetPort(_fullyQualifiedNamespace);
+            _port = GetPort(_fullyQualifiedNamespace, port);
             _scheme = useTls ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
         }
 
         internal void ThrowIfRequestFailed(Request request, Response response)
         {
-            if ((response.Status >= 200) && (response.Status < 400))
+            if (response.Status is >= 200 and < 400)
             {
                 return;
             }
@@ -131,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 scope = Constants.DefaultScope;
             }
-            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
+            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext([scope]), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 
@@ -264,6 +265,15 @@ namespace Azure.Messaging.ServiceBus.Administration
             return response;
         }
 
+        internal Uri BuildDefaultUri(string entityPath) =>
+            new UriBuilder(_fullyQualifiedNamespace)
+            {
+                Path = entityPath,
+                Port = _port,
+                Scheme = _scheme,
+                Query = _versionQuery
+            }.Uri;
+
         private async Task<Response> SendHttpRequestAsync(
             Request request,
             CancellationToken cancellationToken)
@@ -281,7 +291,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return response;
         }
 
-        private static int GetPort(string endpoint)
+        private static int GetPort(string endpoint, int port)
         {
             // used for internal testing
             if (endpoint.EndsWith("onebox.windows-int.net", StringComparison.InvariantCultureIgnoreCase))
@@ -289,7 +299,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 return 4446;
             }
 
-            return -1;
+            return (port > 0) ? port : -1;
         }
     }
 }

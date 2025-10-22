@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabVirtualNetworkResource : IJsonModel<DevTestLabVirtualNetworkData>
     {
+        private static DevTestLabVirtualNetworkData s_dataDeserializationInstance;
+        private static DevTestLabVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVirtualNetworkData>)Data).Write(writer, options);
 
-        DevTestLabVirtualNetworkData IJsonModel<DevTestLabVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVirtualNetworkData>)Data).Create(ref reader, options);
+        DevTestLabVirtualNetworkData IJsonModel<DevTestLabVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabVirtualNetworkData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabVirtualNetworkData IPersistableModel<DevTestLabVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabVirtualNetworkData>(data, options);
+        DevTestLabVirtualNetworkData IPersistableModel<DevTestLabVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabVirtualNetworkData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabVirtualNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

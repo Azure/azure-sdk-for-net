@@ -48,6 +48,17 @@ public partial class ContainerAppCustomScaleRule : ProvisionableConstruct
     private BicepList<ContainerAppScaleRuleAuth>? _auth;
 
     /// <summary>
+    /// The resource ID of a user-assigned managed identity that is assigned to
+    /// the Container App, or &apos;system&apos; for system-assigned identity.
+    /// </summary>
+    public BicepValue<string> Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); _identity!.Assign(value); }
+    }
+    private BicepValue<string>? _identity;
+
+    /// <summary>
     /// Creates a new ContainerAppCustomScaleRule.
     /// </summary>
     public ContainerAppCustomScaleRule()
@@ -63,5 +74,6 @@ public partial class ContainerAppCustomScaleRule : ProvisionableConstruct
         _customScaleRuleType = DefineProperty<string>("CustomScaleRuleType", ["type"]);
         _metadata = DefineDictionaryProperty<string>("Metadata", ["metadata"]);
         _auth = DefineListProperty<ContainerAppScaleRuleAuth>("Auth", ["auth"]);
+        _identity = DefineProperty<string>("Identity", ["identity"]);
     }
 }

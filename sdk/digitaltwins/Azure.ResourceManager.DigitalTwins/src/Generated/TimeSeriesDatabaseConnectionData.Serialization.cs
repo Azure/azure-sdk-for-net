@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DigitalTwins.Models;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDigitalTwinsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.DigitalTwins
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDigitalTwinsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTimeSeriesDatabaseConnectionData(document.RootElement, options);
                     }
                 default:

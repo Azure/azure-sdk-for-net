@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/summary-result?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/models/Model1/evaluation/summary-result?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,327 +14,232 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "ee4889e2-aa70-49d2-83fa-48628ec41a18",
-        "Content-Length": "7102",
+        "apim-request-id": "ea762a87-828f-44bb-83d9-27e5ebc9edcf",
+        "Content-Length": "7525",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 20 Nov 2024 05:05:07 GMT",
-        "request-id": "ee4889e2-aa70-49d2-83fa-48628ec41a18",
+        "Date": "Tue, 24 Jun 2025 23:48:03 GMT",
+        "request-id": "ea762a87-828f-44bb-83d9-27e5ebc9edcf",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "79",
+        "x-envoy-upstream-service-time": "166",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
         "entitiesEvaluation": {
           "confusionMatrix": {
-            "Date": {
-              "Date": {
-                "normalizedValue": 88.23529,
-                "rawValue": 15.0
-              },
-              "Duration": {
-                "normalizedValue": 5.882353,
-                "rawValue": 1.0
-              },
-              "StartTime": {
-                "normalizedValue": 5.882353,
-                "rawValue": 1.0
-              }
-            },
-            "UserPreferredLanguage": {},
-            "Duration": {
-              "Duration": {
-                "normalizedValue": 85.71429,
-                "rawValue": 6.0
-              },
-              "Date": {
-                "normalizedValue": 14.285714,
-                "rawValue": 1.0
-              }
-            },
-            "Activity.Raise": {
-              "Activity.Raise": {
-                "normalizedValue": 88.23529,
-                "rawValue": 15.0
-              },
+            "Attachment": {
               "$none": {
-                "normalizedValue": 11.764706,
+                "normalizedValue": 66.666664,
                 "rawValue": 2.0
-              }
-            },
-            "Activity.Edit": {
-              "$none": {
-                "normalizedValue": 38.46154,
-                "rawValue": 5.0
               },
-              "Activity.Edit": {
-                "normalizedValue": 61.53846,
-                "rawValue": 8.0
-              }
-            },
-            "Activity.Cancel": {
-              "Activity.Cancel": {
-                "normalizedValue": 100.0,
-                "rawValue": 4.0
-              }
-            },
-            "Activity.View": {
-              "Activity.View": {
-                "normalizedValue": 100.0,
-                "rawValue": 2.0
-              }
-            },
-            "Location.Country": {},
-            "TicketNumber": {
-              "TicketNumber": {
-                "normalizedValue": 100.0,
-                "rawValue": 2.0
-              }
-            },
-            "Location.City": {},
-            "Location.Office": {},
-            "StartTime": {
-              "StartTime": {
-                "normalizedValue": 83.333336,
-                "rawValue": 5.0
-              },
-              "Date": {
-                "normalizedValue": 16.666666,
+              "Attachment": {
+                "normalizedValue": 33.333332,
                 "rawValue": 1.0
               }
             },
-            "FloorNumber": {
-              "FloorNumber": {
-                "normalizedValue": 100.0,
-                "rawValue": 3.0
-              }
-            },
-            "Capacity": {
-              "Capacity": {
+            "Category": {
+              "Category": {
                 "normalizedValue": 75.0,
-                "rawValue": 3.0
+                "rawValue": 9.0
               },
               "$none": {
                 "normalizedValue": 25.0,
-                "rawValue": 1.0
-              }
-            },
-            "PersonName": {
-              "PersonName": {
-                "normalizedValue": 100.0,
-                "rawValue": 11.0
-              }
-            },
-            "PersonEmail": {
-              "PersonEmail": {
-                "normalizedValue": 100.0,
-                "rawValue": 1.0
-              }
-            },
-            "MeetingRoomsList": {},
-            "SystemName": {},
-            "WhoIs_Manager": {
-              "MeetingRoomsList": {
-                "normalizedValue": 31.818182,
-                "rawValue": 1.4
-              },
-              "WhoIs_Manager": {
-                "normalizedValue": 68.181816,
                 "rawValue": 3.0
               }
             },
-            "WhoIs_Peers": {
-              "WhoIs_Peers": {
-                "normalizedValue": 100.0,
-                "rawValue": 4.0
+            "ContactName": {
+              "ContactName": {
+                "normalizedValue": 95.833336,
+                "rawValue": 23.0
+              },
+              "$none": {
+                "normalizedValue": 4.1666665,
+                "rawValue": 1.0
               }
             },
-            "WhoIs_WhoAmI": {},
-            "WhoIs_DirectReports": {
-              "WhoIs_DirectReports": {
+            "Date": {
+              "Date": {
                 "normalizedValue": 100.0,
                 "rawValue": 2.0
               }
             },
-            "FacilityType": {},
-            "OfficeType": {},
-            "OfficeName": {},
-            "RegionName": {},
-            "$none": {
-              "WhoIs_WhoAmI": {
-                "normalizedValue": 2.9303622,
-                "rawValue": 2.761866
+            "EmailSubject": {
+              "EmailSubject": {
+                "normalizedValue": 70.0,
+                "rawValue": 7.0
               },
               "$none": {
-                "normalizedValue": 77.76676,
-                "rawValue": 73.295166
+                "normalizedValue": 30.0,
+                "rawValue": 3.0
+              }
+            },
+            "FromRelationshipName": {
+              "FromRelationshipName": {
+                "normalizedValue": 100.0,
+                "rawValue": 1.0
+              }
+            },
+            "Line": {
+              "Line": {
+                "normalizedValue": 100.0,
+                "rawValue": 2.0
+              }
+            },
+            "Message": {
+              "$none": {
+                "normalizedValue": 82.954544,
+                "rawValue": 6.6363635
               },
-              "OfficeType": {
-                "normalizedValue": 1.7489973,
-                "rawValue": 1.6484299
+              "EmailSubject": {
+                "normalizedValue": 4.5454545,
+                "rawValue": 0.36363637
               },
-              "Activity.Raise": {
-                "normalizedValue": 0.07578629,
-                "rawValue": 0.071428575
+              "Message": {
+                "normalizedValue": 12.5,
+                "rawValue": 1.0
+              }
+            },
+            "OrderReference": {
+              "OrderReference": {
+                "normalizedValue": 100.0,
+                "rawValue": 17.0
+              }
+            },
+            "PositionReference": {
+              "PositionReference": {
+                "normalizedValue": 100.0,
+                "rawValue": 1.0
+              }
+            },
+            "RelationshipName": {
+              "RelationshipName": {
+                "normalizedValue": 100.0,
+                "rawValue": 3.0
+              }
+            },
+            "SearchTexts": {
+              "$none": {
+                "normalizedValue": 50.0,
+                "rawValue": 2.0
               },
-              "Date": {
-                "normalizedValue": 9.199277,
-                "rawValue": 8.670318
+              "SearchTexts": {
+                "normalizedValue": 50.0,
+                "rawValue": 2.0
+              }
+            },
+            "SenderName": {
+              "SenderName": {
+                "normalizedValue": 88.888885,
+                "rawValue": 8.0
               },
-              "Location.Country": {
-                "normalizedValue": 0.2074151,
-                "rawValue": 0.19548872
+              "$none": {
+                "normalizedValue": 11.111111,
+                "rawValue": 1.0
+              }
+            },
+            "Time": {
+              "Time": {
+                "normalizedValue": 50.0,
+                "rawValue": 1.0
               },
-              "SystemName": {
-                "normalizedValue": 0.13960633,
-                "rawValue": 0.13157895
+              "$none": {
+                "normalizedValue": 50.0,
+                "rawValue": 1.0
+              }
+            },
+            "$none": {
+              "$none": {
+                "normalizedValue": 98.14795,
+                "rawValue": 159.98116
               },
-              "MeetingRoomsList": {
-                "normalizedValue": 0.8252285,
-                "rawValue": 0.7777778
+              "Category": {
+                "normalizedValue": 0.9368082,
+                "rawValue": 1.5269973
               },
-              "Duration": {
-                "normalizedValue": 0.76807755,
-                "rawValue": 0.7239131
+              "ContactName": {
+                "normalizedValue": 0.61349696,
+                "rawValue": 1.0
               },
-              "StartTime": {
-                "normalizedValue": 5.883772,
-                "rawValue": 5.5454545
-              },
-              "Activity.View": {
-                "normalizedValue": 0.45471773,
-                "rawValue": 0.42857143
+              "Time": {
+                "normalizedValue": 0.3017471,
+                "rawValue": 0.4918478
               }
             }
           },
           "entities": {
-            "Activity.Edit": {
-              "f1": 0.761904776096344,
-              "precision": 1.0,
-              "recall": 0.6153846383094788,
-              "truePositiveCount": 8,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 5
-            },
-            "WhoIs_WhoAmI": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 25,
-              "falseNegativeCount": 0
-            },
-            "OfficeType": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 6,
-              "falseNegativeCount": 0
-            },
-            "Activity.Raise": {
-              "f1": 0.9090908765792847,
-              "precision": 0.9375,
-              "recall": 0.8823529481887817,
-              "truePositiveCount": 15,
+            "ContactName": {
+              "f1": 0.9130433797836304,
+              "precision": 0.9545454382896423,
+              "recall": 0.875,
+              "truePositiveCount": 21,
               "trueNegativeCount": 0,
               "falsePositiveCount": 1,
-              "falseNegativeCount": 2
-            },
-            "Date": {
-              "f1": 0.27586209774017334,
-              "precision": 0.2857142984867096,
-              "recall": 0.2666666805744171,
-              "truePositiveCount": 4,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 10,
-              "falseNegativeCount": 11
-            },
-            "Location.Country": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 2,
-              "falseNegativeCount": 0
-            },
-            "SystemName": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 1,
-              "falseNegativeCount": 0
-            },
-            "Activity.Cancel": {
-              "f1": 1.0,
-              "precision": 1.0,
-              "recall": 1.0,
-              "truePositiveCount": 4,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "PersonName": {
-              "f1": 1.0,
-              "precision": 1.0,
-              "recall": 1.0,
-              "truePositiveCount": 11,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "WhoIs_Peers": {
-              "f1": 1.0,
-              "precision": 1.0,
-              "recall": 1.0,
-              "truePositiveCount": 4,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "Duration": {
-              "f1": 0.5,
-              "precision": 0.5,
-              "recall": 0.5,
-              "truePositiveCount": 3,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 3,
               "falseNegativeCount": 3
             },
-            "MeetingRoomsList": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
+            "Category": {
+              "f1": 0.6428571343421936,
+              "precision": 0.5625,
+              "recall": 0.75,
+              "truePositiveCount": 9,
               "trueNegativeCount": 0,
-              "falsePositiveCount": 3,
-              "falseNegativeCount": 0
+              "falsePositiveCount": 7,
+              "falseNegativeCount": 3
             },
-            "StartTime": {
-              "f1": 0.20000000298023224,
-              "precision": 0.20000000298023224,
-              "recall": 0.20000000298023224,
+            "EmailSubject": {
+              "f1": 0.7777777314186096,
+              "precision": 0.875,
+              "recall": 0.699999988079071,
+              "truePositiveCount": 7,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 3
+            },
+            "Message": {
+              "f1": 0.2222222238779068,
+              "precision": 1.0,
+              "recall": 0.125,
               "truePositiveCount": 1,
               "trueNegativeCount": 0,
-              "falsePositiveCount": 4,
-              "falseNegativeCount": 4
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 7
             },
-            "Capacity": {
-              "f1": 0.8571428060531616,
+            "OrderReference": {
+              "f1": 1.0,
               "precision": 1.0,
-              "recall": 0.75,
-              "truePositiveCount": 3,
+              "recall": 1.0,
+              "truePositiveCount": 17,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Time": {
+              "f1": 0.4000000059604645,
+              "precision": 0.3333333432674408,
+              "recall": 0.5,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 2,
+              "falseNegativeCount": 1
+            },
+            "SenderName": {
+              "f1": 0.9411764740943909,
+              "precision": 1.0,
+              "recall": 0.8888888955116272,
+              "truePositiveCount": 8,
               "trueNegativeCount": 0,
               "falsePositiveCount": 0,
               "falseNegativeCount": 1
             },
-            "FloorNumber": {
+            "SearchTexts": {
+              "f1": 0.6666666865348816,
+              "precision": 1.0,
+              "recall": 0.5,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 2
+            },
+            "RelationshipName": {
               "f1": 1.0,
               "precision": 1.0,
               "recall": 1.0,
@@ -343,25 +248,16 @@
               "falsePositiveCount": 0,
               "falseNegativeCount": 0
             },
-            "WhoIs_Manager": {
-              "f1": 1.0,
+            "Attachment": {
+              "f1": 0.5,
               "precision": 1.0,
-              "recall": 1.0,
-              "truePositiveCount": 3,
+              "recall": 0.3333333432674408,
+              "truePositiveCount": 1,
               "trueNegativeCount": 0,
               "falsePositiveCount": 0,
-              "falseNegativeCount": 0
+              "falseNegativeCount": 2
             },
-            "Activity.View": {
-              "f1": 0.800000011920929,
-              "precision": 0.6666666865348816,
-              "recall": 1.0,
-              "truePositiveCount": 2,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 1,
-              "falseNegativeCount": 0
-            },
-            "TicketNumber": {
+            "Line": {
               "f1": 1.0,
               "precision": 1.0,
               "recall": 1.0,
@@ -370,7 +266,7 @@
               "falsePositiveCount": 0,
               "falseNegativeCount": 0
             },
-            "WhoIs_DirectReports": {
+            "Date": {
               "f1": 1.0,
               "precision": 1.0,
               "recall": 1.0,
@@ -379,7 +275,7 @@
               "falsePositiveCount": 0,
               "falseNegativeCount": 0
             },
-            "PersonEmail": {
+            "FromRelationshipName": {
               "f1": 1.0,
               "precision": 1.0,
               "recall": 1.0,
@@ -388,84 +284,249 @@
               "falsePositiveCount": 0,
               "falseNegativeCount": 0
             },
-            "UserPreferredLanguage": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "Location.City": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "Location.Office": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "FacilityType": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "OfficeName": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
-            },
-            "RegionName": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
+            "PositionReference": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 1,
               "trueNegativeCount": 0,
               "falsePositiveCount": 0,
               "falseNegativeCount": 0
             }
           },
-          "microF1": 0.6168225,
-          "microPrecision": 0.5409836,
-          "microRecall": 0.7173913,
-          "macroF1": 0.8202667,
-          "macroPrecision": 0.83932537,
-          "macroRecall": 0.8142936
+          "microF1": 0.8216216,
+          "microPrecision": 0.87356323,
+          "microRecall": 0.7755102,
+          "macroF1": 0.7902674,
+          "macroPrecision": 0.90895563,
+          "macroRecall": 0.76230156
         },
         "intentsEvaluation": {
           "confusionMatrix": {
+            "AddFlag": {
+              "AddFlag": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "AddMore": {
+              "AddMore": {
+                "normalizedValue": 100.0,
+                "rawValue": 17.0
+              }
+            },
+            "Cancel": {
+              "Cancel": {
+                "normalizedValue": 100.0,
+                "rawValue": 9.0
+              }
+            },
+            "CheckMessages": {
+              "CheckMessages": {
+                "normalizedValue": 100.0,
+                "rawValue": 9.0
+              }
+            },
+            "Confirm": {
+              "Confirm": {
+                "normalizedValue": 100.0,
+                "rawValue": 4.0
+              }
+            },
+            "Delete": {
+              "Delete": {
+                "normalizedValue": 100.0,
+                "rawValue": 5.0
+              }
+            },
+            "Forward": {
+              "Forward": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "QueryLastText": {
+              "QueryLastText": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "ReadAloud": {
+              "ReadAloud": {
+                "normalizedValue": 100.0,
+                "rawValue": 16.0
+              }
+            },
+            "Reply": {
+              "Reply": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "SearchMessages": {
+              "SearchMessages": {
+                "normalizedValue": 100.0,
+                "rawValue": 9.0
+              }
+            },
+            "SendEmail": {
+              "SendEmail": {
+                "normalizedValue": 100.0,
+                "rawValue": 20.0
+              }
+            },
+            "ShowNext": {
+              "ShowNext": {
+                "normalizedValue": 100.0,
+                "rawValue": 4.0
+              }
+            },
+            "ShowPrevious": {
+              "ShowPrevious": {
+                "normalizedValue": 100.0,
+                "rawValue": 3.0
+              }
+            },
             "None": {
               "None": {
                 "normalizedValue": 100.0,
-                "rawValue": 49.0
+                "rawValue": 1.0
               }
             }
           },
           "intents": {
+            "AddMore": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 17,
+              "trueNegativeCount": 104,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Cancel": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 112,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "SendEmail": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 20,
+              "trueNegativeCount": 101,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "CheckMessages": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 112,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "AddFlag": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Reply": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "ReadAloud": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 16,
+              "trueNegativeCount": 105,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "QueryLastText": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "SearchMessages": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 112,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Delete": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 5,
+              "trueNegativeCount": 116,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Forward": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Confirm": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 117,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "ShowNext": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 117,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "ShowPrevious": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 118,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
             "None": {
               "f1": 1.0,
               "precision": 1.0,
               "recall": 1.0,
-              "truePositiveCount": 49,
-              "trueNegativeCount": 0,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 120,
               "falsePositiveCount": 0,
               "falseNegativeCount": 0
             }
@@ -486,8 +547,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "497265056"
+    "RandomSeed": "1939695324"
   }
 }

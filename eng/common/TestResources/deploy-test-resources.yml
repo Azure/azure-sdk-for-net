@@ -1,5 +1,6 @@
 parameters:
-  ServiceDirectory: not-set
+  ServiceDirectory: ''
+  TestResourcesDirectory: ''
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
@@ -9,6 +10,7 @@ parameters:
   ResourceType: test
   UseFederatedAuth: true
   PersistOidcToken: false
+  SelfContainedPostScript: self-contained-test-resources-post.ps1
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -89,20 +91,45 @@ steps:
           # Write the new SubscriptionConfiguration to be used by the remove test resources
           Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$($subscriptionConfiguration | ConvertTo-Json -Compress)"
 
+          $postScriptPath = $${{ parameters.PersistOidcToken }} ? '$(Agent.TempDirectory)/${{ parameters.SelfContainedPostScript }}' : $null
+
           # The subscriptionConfiguration may have ArmTemplateParameters defined, so
           # pass those in via the ArmTemplateParameters flag, and handle any
           # additional parameters from the pipelines via AdditionalParameters
           eng/common/TestResources/New-TestResources.ps1 `
             -ResourceType '${{ parameters.ResourceType }}' `
             -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
+            -TestResourcesDirectory '${{ parameters.TestResourcesDirectory }}' `
             -Location '${{ parameters.Location }}' `
             -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
             @subscriptionConfiguration `
             -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
             -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
+            -SelfContainedPostScript $postScriptPath `
             -CI `
             -Force `
             -Verbose | Out-Null
+
+    - ${{ if eq(parameters.PersistOidcToken, true) }}:
+      # ARM deployments that take longer than 10-15 minutes (e.g. HSM) can
+      # cause post scripts to fail with expired credentials.
+      # Add a new task with a refreshed token as a workaround to this issue.
+      - task: AzureCLI@2
+        displayName: Test Resources Post with refreshed login
+        env:
+          ${{ insert }}: ${{ parameters.EnvVars }}
+        inputs:
+          azureSubscription: ${{ parameters.ServiceConnection }}
+          addSpnToEnvironment: true
+          scriptLocation: inlineScript
+          scriptType: pscore
+          inlineScript: |
+            eng/common/scripts/Import-AzModules.ps1  # Support post scripts using az powershell instead of az cli
+            $env:ARM_OIDC_TOKEN = $env:idToken
+            $scriptPath = '$(Agent.TempDirectory)/${{ parameters.SelfContainedPostScript }}'
+            Write-Host "Executing self contained test resources post script '$scriptPath'"
+            & $scriptPath
+            Remove-Item $scriptPath  # avoid any possible complications when we run multiple deploy templates
 
   - ${{ else }}:
     - pwsh: |
@@ -117,6 +144,7 @@ steps:
         eng/common/TestResources/New-TestResources.ps1 `
           -ResourceType '${{ parameters.ResourceType }}' `
           -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
+          -TestResourcesDirectory '${{ parameters.TestResourcesDirectory }}' `
           -Location '${{ parameters.Location }}' `
           -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
           @subscriptionConfiguration `

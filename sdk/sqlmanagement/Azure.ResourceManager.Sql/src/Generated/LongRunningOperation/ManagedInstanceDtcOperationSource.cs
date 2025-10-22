@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceDtcResource IOperationSource<ManagedInstanceDtcResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedInstanceDtcData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceDtcResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceDtcResource> IOperationSource<ManagedInstanceDtcResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(document.RootElement);
-            return new ManagedInstanceDtcResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedInstanceDtcData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new ManagedInstanceDtcResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

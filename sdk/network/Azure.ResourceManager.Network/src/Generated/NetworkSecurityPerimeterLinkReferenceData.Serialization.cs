@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,11 +39,6 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -137,13 +134,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
             NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default;
-            string remotePerimeterResourceId = default;
+            ResourceIdentifier remotePerimeterResourceId = default;
             Guid? remotePerimeterGuid = default;
             string remotePerimeterLocation = default;
             IList<string> localInboundProfiles = default;
@@ -156,15 +152,6 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -186,7 +173,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -209,7 +196,11 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("remotePerimeterResourceId"u8))
                         {
-                            remotePerimeterResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remotePerimeterResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("remotePerimeterGuid"u8))
@@ -320,8 +311,328 @@ namespace Azure.ResourceManager.Network
                 remoteOutboundProfiles ?? new ChangeTrackingList<string>(),
                 description,
                 status,
-                etag,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemotePerimeterResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remotePerimeterResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemotePerimeterResourceId))
+                {
+                    builder.Append("    remotePerimeterResourceId: ");
+                    builder.AppendLine($"'{RemotePerimeterResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemotePerimeterGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remotePerimeterGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemotePerimeterGuid))
+                {
+                    builder.Append("    remotePerimeterGuid: ");
+                    builder.AppendLine($"'{RemotePerimeterGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemotePerimeterLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remotePerimeterLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemotePerimeterLocation))
+                {
+                    builder.Append("    remotePerimeterLocation: ");
+                    if (RemotePerimeterLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RemotePerimeterLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RemotePerimeterLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalInboundProfiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localInboundProfiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocalInboundProfiles))
+                {
+                    if (LocalInboundProfiles.Any())
+                    {
+                        builder.Append("    localInboundProfiles: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocalInboundProfiles)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalOutboundProfiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localOutboundProfiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocalOutboundProfiles))
+                {
+                    if (LocalOutboundProfiles.Any())
+                    {
+                        builder.Append("    localOutboundProfiles: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocalOutboundProfiles)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteInboundProfiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteInboundProfiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RemoteInboundProfiles))
+                {
+                    if (RemoteInboundProfiles.Any())
+                    {
+                        builder.Append("    remoteInboundProfiles: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RemoteInboundProfiles)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteOutboundProfiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteOutboundProfiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RemoteOutboundProfiles))
+                {
+                    if (RemoteOutboundProfiles.Any())
+                    {
+                        builder.Append("    remoteOutboundProfiles: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RemoteOutboundProfiles)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Write(ModelReaderWriterOptions options)
@@ -331,7 +642,9 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkReferenceData)} does not support writing '{options.Format}' format.");
             }
@@ -345,7 +658,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkSecurityPerimeterLinkReferenceData(document.RootElement, options);
                     }
                 default:

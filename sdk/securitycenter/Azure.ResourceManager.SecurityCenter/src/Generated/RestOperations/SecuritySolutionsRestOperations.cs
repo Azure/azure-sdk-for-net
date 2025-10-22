@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecuritySolutionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecuritySolutionList.DeserializeSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecuritySolutionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecuritySolutionList.DeserializeSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecuritySolution value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecuritySolution.DeserializeSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecuritySolution value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecuritySolution.DeserializeSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecuritySolutionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecuritySolutionList.DeserializeSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecuritySolutionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecuritySolutionList.DeserializeSecuritySolutionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

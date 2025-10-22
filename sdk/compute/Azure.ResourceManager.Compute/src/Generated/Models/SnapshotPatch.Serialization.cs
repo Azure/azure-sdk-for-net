@@ -102,6 +102,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotAccessState))
+            {
+                writer.WritePropertyName("snapshotAccessState"u8);
+                writer.WriteStringValue(SnapshotAccessState.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             SupportedCapabilities supportedCapabilities = default;
+            SnapshotAccessState? snapshotAccessState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,6 +284,15 @@ namespace Azure.ResourceManager.Compute.Models
                             supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("snapshotAccessState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            snapshotAccessState = new SnapshotAccessState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -300,6 +315,7 @@ namespace Azure.ResourceManager.Compute.Models
                 publicNetworkAccess,
                 dataAccessAuthMode,
                 supportedCapabilities,
+                snapshotAccessState,
                 serializedAdditionalRawData);
         }
 
@@ -310,7 +326,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SnapshotPatch)} does not support writing '{options.Format}' format.");
             }
@@ -324,7 +340,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSnapshotPatch(document.RootElement, options);
                     }
                 default:

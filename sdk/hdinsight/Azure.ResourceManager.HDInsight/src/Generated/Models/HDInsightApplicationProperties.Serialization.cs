@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerHDInsightContext.Default));
                     }
                     errors = array;
                     continue;
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support writing '{options.Format}' format.");
             }
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightApplicationProperties(document.RootElement, options);
                     }
                 default:

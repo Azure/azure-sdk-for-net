@@ -1,17 +1,36 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2025-09-25)
+
+This release is the first stable release of the Database Migration management library.
+
+### Features Added
+
+- Upgraded api-version tag from '2025-03-15-preview' to 'package-2025-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8d4f7c60f2a1448a1442399aebf1fc17b208a253/specification/datamigration/resource-manager/readme.md.
+
+## 1.0.0-beta.6 (2025-08-04)
+
+### Features Added
+
+- Upgraded the API version to 2025-03-15-preview.
+- Added support for Azure Blob to SQL MI migrations using Managed Identities.
+
+## 1.0.0-beta.5 (2025-03-11)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.4 (2023-11-27)
 

@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ContainerServiceFleet.csproj" />
-    <ProjectReference Include="..\..\..\containerservice\Azure.ResourceManager.ContainerService\src\Azure.ResourceManager.ContainerService.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.ContainerService"/>
   </ItemGroup>
 </Project>

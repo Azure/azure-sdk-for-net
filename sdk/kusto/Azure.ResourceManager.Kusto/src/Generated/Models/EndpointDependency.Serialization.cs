@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -120,6 +122,67 @@ namespace Azure.ResourceManager.Kusto.Models
             return new EndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<EndpointDetail>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  domainName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainName))
+                {
+                    builder.Append("  domainName: ");
+                    if (DomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EndpointDetails))
+                {
+                    if (EndpointDetails.Any())
+                    {
+                        builder.Append("  endpointDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EndpointDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  endpointDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EndpointDependency>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,7 +190,9 @@ namespace Azure.ResourceManager.Kusto.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +206,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEndpointDependency(document.RootElement, options);
                     }
                 default:

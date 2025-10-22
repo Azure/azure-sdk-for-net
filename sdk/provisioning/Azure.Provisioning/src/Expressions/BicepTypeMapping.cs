@@ -40,9 +40,9 @@ internal static class BicepTypeMapping
         type == typeof(ResourceIdentifier) ? "string" :
         type == typeof(ResourceType) ? "string" :
         type == typeof(AzureLocation) ? "string" :
-        type.IsSubclassOf(typeof(Enum)) ? "string" :
-        type.IsSubclassOf(typeof(System.Collections.IEnumerable)) ? "array" :
-        type.IsSubclassOf(typeof(System.Collections.IDictionary)) ? "object" :
+        typeof(Enum).IsAssignableFrom(type) ? "string" :
+        typeof(System.Collections.IDictionary).IsAssignableFrom(type) ? "object" :
+        typeof(System.Collections.IEnumerable).IsAssignableFrom(type) ? "array" :
         null;
 
     /// <summary>
@@ -60,6 +60,8 @@ internal static class BicepTypeMapping
             bool b => b.ToString(),
             int i => i.ToString(),
             long i => i.ToString(),
+            float f => f.ToString(),
+            double d => d.ToString(),
             string s => s,
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => d.ToString("o"),
@@ -69,8 +71,10 @@ internal static class BicepTypeMapping
             IPAddress a => a.ToString(),
             ETag e => e.ToString(),
             ResourceIdentifier i => i.ToString(),
+            AzureLocation azureLocation => azureLocation.ToString(),
+            ResourceType rt => rt.ToString(),
             Enum e => GetEnumValue(e),
-            // Extensible enums like Azure.Location
+            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
             // TODO: Can we either tag or special case all that we care about because ValueType is too broad
             ValueType ee => ee.ToString()!,
             _ => throw new InvalidOperationException($"Cannot convert {value} to a literal Bicep string.")
@@ -92,10 +96,12 @@ internal static class BicepTypeMapping
             null => BicepSyntax.Null(),
             bool b => BicepSyntax.Value(b),
             int i => BicepSyntax.Value(i),
-            // Note: below cast is valid because bicep limits to int.Min/MaxValue
-            // in bicep source and you need to use a parameter file for larger
-            // values
-            long i => BicepSyntax.Value((int)i),
+            long l => FromLong(l),
+            // Note: bicep does not offically support floating numbers
+            // therefore for floating numbers we are taking a workaround from
+            // https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            float f => FromDouble(f),
+            double d => FromDouble(d),
             string s => BicepSyntax.Value(s),
             Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
             DateTimeOffset d => BicepSyntax.Value(ToLiteralString(d, format)),
@@ -104,13 +110,16 @@ internal static class BicepTypeMapping
             IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
             ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
+            AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
+            ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
-            ProvisionableConstruct c => CompileNestedConstruct(c),
+            // we call this method on IBicepValue to convert this into an expression instead of statements
+            ProvisionableConstruct c => ((IBicepValue)c).Compile(),
             IDictionary<string, IBicepValue> d =>
                 d is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
                 seq is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToArray(seq.OfType<object>()),
-            // Extensible enums like Azure.Location
+            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             // Unwrap BicepValue after collections so it doesn't loop forever
             IBicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
@@ -120,6 +129,28 @@ internal static class BicepTypeMapping
             IBicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
+
+        BicepExpression FromLong(long l)
+        {
+            // see if the value falls into the int range
+            if (l >= int.MinValue && l <= int.MaxValue)
+            {
+                return BicepSyntax.Value((int)l);
+            }
+            // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            return BicepFunction.ParseJson(BicepSyntax.Value(l.ToString())).Compile();
+        }
+
+        BicepExpression FromDouble(double d)
+        {
+            // see if the value is a whole number
+            if (d >= int.MinValue && d <= int.MaxValue && d == Math.Floor(d))
+            {
+                return BicepSyntax.Value((int)d);
+            }
+            // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+            return BicepFunction.ParseJson(BicepSyntax.Value(d.ToString())).Compile();
+        }
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
             BicepSyntax.Array([.. seq.Select(v => ToBicep(v, v is BicepValue b ? b.Format : null))]);
@@ -137,18 +168,6 @@ internal static class BicepTypeMapping
                 values[pair.Key] = ToBicep(pair.Value, format);
             }
             return BicepSyntax.Object(values);
-        }
-
-        BicepExpression CompileNestedConstruct(ProvisionableConstruct construct)
-        {
-            IList<BicepStatement> statements = [.. construct.Compile()];
-            if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
-            {
-                throw statements.Count == 1 ?
-                    new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it compiles to {statements[0]} instead.") :
-                    new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it contains multiple statements.");
-            }
-            return expr.Expression;
         }
     }
 

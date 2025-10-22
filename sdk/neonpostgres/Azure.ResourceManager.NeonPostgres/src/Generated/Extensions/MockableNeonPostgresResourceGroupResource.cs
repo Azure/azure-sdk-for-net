@@ -9,12 +9,17 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableNeonPostgresResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _neonOrganizationOrganizationsClientDiagnostics;
+        private OrganizationsRestOperations _neonOrganizationOrganizationsRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableNeonPostgresResourceGroupResource"/> class for mocking. </summary>
         protected MockableNeonPostgresResourceGroupResource()
         {
@@ -26,6 +31,9 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         internal MockableNeonPostgresResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics NeonOrganizationOrganizationsClientDiagnostics => _neonOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationsRestOperations NeonOrganizationOrganizationsRestClient => _neonOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NeonOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -53,7 +61,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-06-23-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +92,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-06-23-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,6 +108,84 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         public virtual Response<NeonOrganizationResource> GetNeonOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
             return GetNeonOrganizations().Get(organizationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Action to retrieve the PostgreSQL versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_GetPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-23-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PgVersionsResult>> GetPostgresVersionsOrganizationAsync(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
+            scope.Start();
+            try
+            {
+                var response = await NeonOrganizationOrganizationsRestClient.GetPostgresVersionsAsync(Id.SubscriptionId, Id.ResourceGroupName, pgVersion, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to retrieve the PostgreSQL versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_GetPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-23-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PgVersionsResult> GetPostgresVersionsOrganization(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
+            scope.Start();
+            try
+            {
+                var response = NeonOrganizationOrganizationsRestClient.GetPostgresVersions(Id.SubscriptionId, Id.ResourceGroupName, pgVersion, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/f999652ecea2a4bddc2b08a113617e23e98f10d4/specification/networkcloud/resource-manager/readme.md
-#tag: package-2024-07-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/a83122b78a412ed2733042cb468a98484d99ecc2/specification/networkcloud/resource-manager/readme.md
+#tag: package-2025-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     # Not support generate samples from customized operations

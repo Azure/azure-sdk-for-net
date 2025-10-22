@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.PolicyInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                using (JsonDocument document = JsonDocument.Parse(Metadata, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPolicyInsightsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.PolicyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support writing '{options.Format}' format.");
             }
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePolicyAttestationData(document.RootElement, options);
                     }
                 default:

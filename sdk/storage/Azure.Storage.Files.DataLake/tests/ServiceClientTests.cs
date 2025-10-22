@@ -127,6 +127,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            DataLakeServiceClient service = new DataLakeServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
@@ -142,6 +159,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => new DataLakeServiceClient(uri, tokenCredential, new DataLakeClientOptions()),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/");
+
+            DataLakeServiceClient service = new DataLakeServiceClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, service.AccountName);
         }
 
         [RecordedTest]
@@ -441,6 +472,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [NonParallelizable]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
         public async Task GetFileSystemsAsync_System()
@@ -785,6 +817,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()

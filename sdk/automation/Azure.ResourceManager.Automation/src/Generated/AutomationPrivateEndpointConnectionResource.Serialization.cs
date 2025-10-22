@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationPrivateEndpointConnectionResource : IJsonModel<AutomationPrivateEndpointConnectionData>
     {
+        private static AutomationPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static AutomationPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        AutomationPrivateEndpointConnectionData IJsonModel<AutomationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        AutomationPrivateEndpointConnectionData IJsonModel<AutomationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationPrivateEndpointConnectionData IPersistableModel<AutomationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationPrivateEndpointConnectionData>(data, options);
+        AutomationPrivateEndpointConnectionData IPersistableModel<AutomationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationPrivateEndpointConnectionData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning.Expressions;
 
@@ -104,6 +106,14 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
             _expressions.Add(b.Compile());
             _isSecure = _isSecure || b.IsSecure;
         }
+        else if (t is BicepExpression exp)
+        {
+            _expressions.Add(exp);
+        }
+        else if (t is FormattableString formattable)
+        {
+            AppendFormattableString(formattable);
+        }
         else
         {
             string? s = t?.ToString();
@@ -114,10 +124,34 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
         }
     }
 
+    internal void AppendFormattableString(FormattableString value)
+    {
+        var formatSpan = value.Format.AsSpan();
+        foreach (var (span, isLiteral, index) in FormattableStringHelpers.GetFormattableStringFormatParts(formatSpan))
+        {
+            if (isLiteral)
+            {
+                AppendLiteral(span.ToString());
+            }
+            else
+            {
+                // this is not a literal therefore an argument
+                AppendFormatted(value.GetArgument(index));
+            }
+        }
+    }
+
     internal readonly BicepValue<string> Build()
     {
         BicepValue<string> value = new(new InterpolatedStringExpression([.. _expressions]));
         value._isSecure = _isSecure;
         return value;
+    }
+
+    public static implicit operator BicepInterpolatedStringHandler(FormattableString formattable)
+    {
+        var handler = new BicepInterpolatedStringHandler(formattable.Format.Length, formattable.ArgumentCount);
+        handler.AppendFormattableString(formattable);
+        return handler;
     }
 }

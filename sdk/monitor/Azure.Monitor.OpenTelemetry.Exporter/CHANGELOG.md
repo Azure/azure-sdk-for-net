@@ -1,10 +1,58 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0-beta.1 (2025-10-16)
+
+### Features Added
+
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`). This now applies to both
+  `UseAzureMonitorExporter` and the direct
+  `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
+
+## 1.4.0 (2025-05-08)
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be internal to match the other Exporters (Trace and Metric).
+  ([#49849](https://github.com/Azure/azure-sdk-for-net/pull/49849))
+
+* Update OpenTelemetry dependencies
+  ([#49861](https://github.com/Azure/azure-sdk-for-net/pull/49861))
+  - OpenTelemetry 1.12.0
+
+## 1.4.0-beta.3 (2025-04-01)
+
+### Features Added
+
+* Added support for emitting Application Insights Custom Events.
+  ([#48378](https://github.com/Azure/azure-sdk-for-net/pull/48378))
+
+* Added new api `UseAzureMonitorExporter` which automatically enables logging, tracing, and metrics.
+  Additional calls to `WithLogging`, `WithMetrics`, and `WithTracing` are NOT required.
+  However, you may still need to enable specific tracing/metric sources/meters separately.
+  ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
+  - Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
 
 ### Bugs Fixed
 
@@ -15,6 +63,11 @@
   ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
 
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#48574](https://github.com/Azure/azure-sdk-for-net/pull/48574))
+  - OpenTelemetry 1.11.2
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.1
 
 ## 1.4.0-beta.2 (2024-10-11)
 

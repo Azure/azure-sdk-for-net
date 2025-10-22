@@ -47,6 +47,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerDesktopVirtualizationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDesktopVirtualizationContext() { }
+        public static Azure.ResourceManager.DesktopVirtualization.AzureResourceManagerDesktopVirtualizationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class DesktopVirtualizationExtensions
     {
         public static Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackage(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

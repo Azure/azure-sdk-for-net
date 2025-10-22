@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Delete</description>
+        /// <description>SecurityPolicy_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Delete</description>
+        /// <description>SecurityPolicy_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,11 +263,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Update</description>
+        /// <description>SecurityPolicy_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Update</description>
+        /// <description>SecurityPolicy_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -347,11 +347,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -528,11 +528,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -585,11 +585,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -645,11 +645,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SecurityPoliciesInterface_Get</description>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

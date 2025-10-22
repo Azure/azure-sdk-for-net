@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsCaaRecordData)} does not support '{options.Format}' format.");
             }

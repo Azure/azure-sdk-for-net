@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The customer name. </summary>
+        [WirePath("customerName")]
         public string CustomerName { get; }
     }
 }

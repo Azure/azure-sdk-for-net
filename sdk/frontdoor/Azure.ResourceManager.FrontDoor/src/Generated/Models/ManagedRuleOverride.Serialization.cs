@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -147,6 +149,97 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new ManagedRuleOverride(ruleId, enabledState, action, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleId))
+                {
+                    builder.Append("  ruleId: ");
+                    if (RuleId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabledState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnabledState))
+                {
+                    builder.Append("  enabledState: ");
+                    builder.AppendLine($"'{EnabledState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  action: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Action))
+                {
+                    builder.Append("  action: ");
+                    builder.AppendLine($"'{Action.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exclusions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exclusions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Exclusions))
+                {
+                    if (Exclusions.Any())
+                    {
+                        builder.Append("  exclusions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Exclusions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exclusions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -154,7 +247,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +263,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedRuleOverride(document.RootElement, options);
                     }
                 default:

@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class PhiEntity : IUtf8JsonSerializable, IJsonModel<PhiEntity>
+    /// <summary> PHI Entity tag in the input. </summary>
+    public partial class PhiEntity : IJsonModel<PhiEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhiEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PhiEntity"/> for deserialization. </summary>
+        internal PhiEntity()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PhiEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PhiEntity)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
             writer.WritePropertyName("offset"u8);
@@ -50,13 +54,13 @@ namespace Azure.Health.Deidentification
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -67,22 +71,27 @@ namespace Azure.Health.Deidentification
             }
         }
 
-        PhiEntity IJsonModel<PhiEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PhiEntity IJsonModel<PhiEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PhiEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PhiEntity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePhiEntity(document.RootElement, options);
         }
 
-        internal static PhiEntity DeserializePhiEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PhiEntity DeserializePhiEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,76 +101,82 @@ namespace Azure.Health.Deidentification
             StringIndex length = default;
             string text = default;
             double? confidenceScore = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("category"u8))
+                if (prop.NameEquals("category"u8))
                 {
-                    category = new PhiCategory(property.Value.GetString());
+                    category = new PhiCategory(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("offset"u8))
+                if (prop.NameEquals("offset"u8))
                 {
-                    offset = StringIndex.DeserializeStringIndex(property.Value, options);
+                    offset = StringIndex.DeserializeStringIndex(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("length"u8))
+                if (prop.NameEquals("length"u8))
                 {
-                    length = StringIndex.DeserializeStringIndex(property.Value, options);
+                    length = StringIndex.DeserializeStringIndex(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("text"u8))
+                if (prop.NameEquals("text"u8))
                 {
-                    text = property.Value.GetString();
+                    text = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"u8))
+                if (prop.NameEquals("confidenceScore"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    confidenceScore = property.Value.GetDouble();
+                    confidenceScore = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PhiEntity(
                 category,
                 offset,
                 length,
                 text,
                 confidenceScore,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PhiEntity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PhiEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PhiEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PhiEntity IPersistableModel<PhiEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PhiEntity IPersistableModel<PhiEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PhiEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PhiEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePhiEntity(document.RootElement, options);
                     }
                 default:
@@ -169,22 +184,7 @@ namespace Azure.Health.Deidentification
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PhiEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PhiEntity FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializePhiEntity(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

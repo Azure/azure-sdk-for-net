@@ -2,13 +2,15 @@
   <PropertyGroup>
     <Description>Client SDK for the Azure Confidential Ledger service</Description>
     <AssemblyTitle>Azure Confidential Ledger</AssemblyTitle>
-    <Version>1.4.1-beta.2</Version>
+    <Version>1.4.1-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Azure ConfidentialLedger</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants)</DefineConstants>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,10 +19,9 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
-<!-- Shared source from Azure.Core -->
+  <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />

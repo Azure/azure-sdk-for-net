@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages.Models.Channels
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Content);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Content))
+                using (JsonDocument document = JsonDocument.Parse(Content, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -129,7 +129,7 @@ namespace Azure.Communication.Messages.Models.Channels
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatsAppMessageTemplateItem)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +143,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWhatsAppMessageTemplateItem(document.RootElement, options);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new WhatsAppMessageTemplateItem FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWhatsAppMessageTemplateItem(document.RootElement);
         }
 

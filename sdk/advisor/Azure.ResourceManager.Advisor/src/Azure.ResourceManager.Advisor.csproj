@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageId>Azure.ResourceManager.Advisor</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Advisor.</Description>
     <PackageTags>azure;management;arm;resource manager;advisor</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

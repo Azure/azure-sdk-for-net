@@ -678,7 +678,7 @@ namespace Azure.Analytics.Defender.Easm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AsAsset)} does not support writing '{options.Format}' format.");
             }
@@ -692,7 +692,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAsAsset(document.RootElement, options);
                     }
                 default:
@@ -706,7 +706,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AsAsset FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAsAsset(document.RootElement);
         }
 

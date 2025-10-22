@@ -36,6 +36,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsCollectionDefined(BeforeGates))
+            {
+                writer.WritePropertyName("beforeGates"u8);
+                writer.WriteStartArray();
+                foreach (var item in BeforeGates)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AfterGates))
+            {
+                writer.WritePropertyName("afterGates"u8);
+                writer.WriteStartArray();
+                foreach (var item in AfterGates)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -44,7 +64,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,6 +94,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             string name = default;
+            IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
+            IList<ContainerServiceFleetGateConfiguration> afterGates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +105,41 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("beforeGates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerServiceFleetGateConfiguration> array = new List<ContainerServiceFleetGateConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerServiceFleetGateConfiguration.DeserializeContainerServiceFleetGateConfiguration(item, options));
+                    }
+                    beforeGates = array;
+                    continue;
+                }
+                if (property.NameEquals("afterGates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerServiceFleetGateConfiguration> array = new List<ContainerServiceFleetGateConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerServiceFleetGateConfiguration.DeserializeContainerServiceFleetGateConfiguration(item, options));
+                    }
+                    afterGates = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerServiceFleetUpdateGroup(name, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateGroup(name, beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(), afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateGroup>.Write(ModelReaderWriterOptions options)
@@ -99,7 +149,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateGroup)} does not support writing '{options.Format}' format.");
             }
@@ -113,7 +163,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerServiceFleetUpdateGroup(document.RootElement, options);
                     }
                 default:

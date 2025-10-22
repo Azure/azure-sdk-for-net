@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WorkflowTriggerResource : IJsonModel<WorkflowTriggerData>
     {
+        private static WorkflowTriggerData s_dataDeserializationInstance;
+        private static WorkflowTriggerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkflowTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowTriggerData>)Data).Write(writer, options);
 
-        WorkflowTriggerData IJsonModel<WorkflowTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowTriggerData>)Data).Create(ref reader, options);
+        WorkflowTriggerData IJsonModel<WorkflowTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowTriggerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkflowTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowTriggerData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WorkflowTriggerData IPersistableModel<WorkflowTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerData>(data, options);
+        WorkflowTriggerData IPersistableModel<WorkflowTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowTriggerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkflowTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowTriggerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -9,11 +9,11 @@ namespace Azure.Provisioning.Search;
 /// The state of the last provisioning operation performed on the search
 /// service. Provisioning is an intermediate state that occurs while service
 /// capacity is being established. After capacity is set up, provisioningState
-/// changes to either &apos;succeeded&apos; or &apos;failed&apos;. Client
+/// changes to either &apos;Succeeded&apos; or &apos;Failed&apos;. Client
 /// applications can poll provisioning status (the recommended polling
 /// interval is from 30 seconds to one minute) by using the Get Search Service
 /// operation to see when an operation is completed. If you are using the free
-/// service, this value tends to come back as &apos;succeeded&apos; directly
+/// service, this value tends to come back as &apos;Succeeded&apos; directly
 /// in the call to Create search service. This is because the free service
 /// uses capacity that is already set up.
 /// </summary>

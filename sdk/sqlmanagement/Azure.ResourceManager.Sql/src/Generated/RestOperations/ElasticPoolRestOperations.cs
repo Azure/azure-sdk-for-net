@@ -32,105 +32,8 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/elasticPools/", false);
-            uri.AppendPath(elasticPoolName, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/elasticPools/", false);
-            uri.AppendPath(elasticPoolName, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Cancels the asynchronous operation on the elastic pool. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="elasticPoolName"> The <see cref="string"/> to use. </param>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
-
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, elasticPoolName, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Cancels the asynchronous operation on the elastic pool. </summary>
-        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="elasticPoolName"> The <see cref="string"/> to use. </param>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Cancel(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
-
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, elasticPoolName, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateListByElasticPoolRequestUri(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName)
@@ -195,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ElasticPoolOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticPoolOperationListResult.DeserializeElasticPoolOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -226,10 +129,108 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ElasticPoolOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticPoolOperationListResult.DeserializeElasticPoolOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/elasticPools/", false);
+            uri.AppendPath(elasticPoolName, true);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/elasticPools/", false);
+            uri.AppendPath(elasticPoolName, true);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Cancels the asynchronous operation on the elastic pool. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="elasticPoolName"> The <see cref="string"/> to use. </param>
+        /// <param name="operationId"> The operation identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+
+            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, elasticPoolName, operationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Cancels the asynchronous operation on the elastic pool. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="elasticPoolName"> The <see cref="string"/> to use. </param>
+        /// <param name="operationId"> The operation identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Cancel(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+
+            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, elasticPoolName, operationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ElasticPoolOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticPoolOperationListResult.DeserializeElasticPoolOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ElasticPoolOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticPoolOperationListResult.DeserializeElasticPoolOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

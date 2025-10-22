@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotHub
 {
     public partial class IotHubDescriptionResource : IJsonModel<IotHubDescriptionData>
     {
+        private static IotHubDescriptionData s_dataDeserializationInstance;
+        private static IotHubDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotHubDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotHubDescriptionData>)Data).Write(writer, options);
 
-        IotHubDescriptionData IJsonModel<IotHubDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubDescriptionData>)Data).Create(ref reader, options);
+        IotHubDescriptionData IJsonModel<IotHubDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotHubDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotHubDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubDescriptionData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
-        IotHubDescriptionData IPersistableModel<IotHubDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubDescriptionData>(data, options);
+        IotHubDescriptionData IPersistableModel<IotHubDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubDescriptionData>(data, options, AzureResourceManagerIotHubContext.Default);
 
-        string IPersistableModel<IotHubDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubDescriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotHubDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<AccessScope> access = default;
+            IList<BatchAccessScope> access = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<AccessScope> array = new List<AccessScope>();
+                    List<BatchAccessScope> array = new List<BatchAccessScope>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AccessScope(item.GetString()));
+                        array.Add(new BatchAccessScope(item.GetString()));
                     }
                     access = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthenticationTokenSettings(access ?? new ChangeTrackingList<AccessScope>(), serializedAdditionalRawData);
+            return new AuthenticationTokenSettings(access ?? new ChangeTrackingList<BatchAccessScope>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationTokenSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationTokenSettings)} does not support writing '{options.Format}' format.");
             }
@@ -130,7 +130,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAuthenticationTokenSettings(document.RootElement, options);
                     }
                 default:
@@ -144,7 +144,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AuthenticationTokenSettings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAuthenticationTokenSettings(document.RootElement);
         }
 

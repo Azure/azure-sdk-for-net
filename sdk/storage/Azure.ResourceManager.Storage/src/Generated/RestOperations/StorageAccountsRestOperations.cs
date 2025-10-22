@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountNameAvailabilityResult.DeserializeStorageAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountNameAvailabilityResult.DeserializeStorageAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountGetKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountGetKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountGetKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountGetKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         GetAccountSasResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetAccountSasResult.DeserializeGetAccountSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         GetAccountSasResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetAccountSasResult.DeserializeGetAccountSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         GetServiceSasResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetServiceSasResult.DeserializeGetServiceSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         GetServiceSasResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetServiceSasResult.DeserializeGetServiceSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance. </summary>
+        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance. </summary>
+        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1503,7 +1503,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountMigrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountMigrationData.DeserializeStorageAccountMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountMigrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountMigrationData.DeserializeStorageAccountMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1841,7 +1841,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1870,7 +1870,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

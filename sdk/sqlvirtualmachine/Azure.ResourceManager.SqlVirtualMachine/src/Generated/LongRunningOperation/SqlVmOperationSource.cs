@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         SqlVmResource IOperationSource<SqlVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlVmData.DeserializeSqlVmData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return new SqlVmResource(_client, data);
         }
 
         async ValueTask<SqlVmResource> IOperationSource<SqlVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlVmData.DeserializeSqlVmData(document.RootElement);
-            return new SqlVmResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            return await Task.FromResult(new SqlVmResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

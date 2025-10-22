@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsSecurityRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsSecurityRuleData.DeserializeDnsSecurityRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsSecurityRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsSecurityRuleData.DeserializeDnsSecurityRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsSecurityRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsSecurityRuleListResult.DeserializeDnsSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsSecurityRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsSecurityRuleListResult.DeserializeDnsSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsSecurityRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsSecurityRuleListResult.DeserializeDnsSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsSecurityRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsSecurityRuleListResult.DeserializeDnsSecurityRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

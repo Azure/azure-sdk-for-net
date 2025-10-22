@@ -8,16 +8,17 @@ azure-arm: true
 csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/399cbac2de1bc0acbed4c9a0a864a9c84da3692e/specification/cognitiveservices/resource-manager/readme.md
-#tag: package-2024-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/78c97002d557d9aca3f8220b4a4774ed5aae3a09/specification/cognitiveservices/resource-manager/readme.md
+#tag: package-2025-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
@@ -32,6 +33,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}: CognitiveServicesAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}: CommitmentPlan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}: CognitiveServicesCommitmentPlan
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}: CognitiveServicesCapabilityHost
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/capabilityHosts/{capabilityHostName}: CognitiveServicesProjectCapabilityHost
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/connections/{connectionName}: CognitiveServicesConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/connections/{connectionName}: CognitiveServicesProjectConnection
 
 rename-mapping:
   CheckSkuAvailabilityParameter.type: ResourceType
@@ -100,6 +105,25 @@ rename-mapping:
   ContentLevel: RaiPolicyContentLevel
   ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
   ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
+  CapabilityHost: CognitiveServicesCapabilityHost
+  CapabilityHostProperties: CognitiveServicesCapabilityHostProperties
+  ConnectionPropertiesV2BasicResource: CognitiveServicesConnection
+  ConnectionUpdateContent: CognitiveServicesConnectionPatch
+  ConnectionPropertiesV2: CognitiveServicesConnectionProperties
+  Project: CognitiveServicesProject
+  ProjectProperties: CognitiveServicesProjectProperties
+  AADAuthTypeConnectionProperties: AadAuthTypeConnectionProperties
+  ConnectionAccessKey: CognitiveServicesConnectionAccessKey
+  ConnectionCategory: CognitiveServicesConnectionCategory
+  ConnectionGroup: CognitiveServicesConnectionGroup
+  ConnectionManagedIdentity: CognitiveServicesConnectionManagedIdentity
+  ConnectionOAuth2: CognitiveServicesConnectionOAuth2
+  ConnectionServicePrincipal: CognitiveServicesConnectionServicePrincipal
+  ConnectionUsernamePassword: CognitiveServicesConnectionUsernamePassword
+  NetworkInjection: AIFoundryNetworkInjection
+  AccountProperties.networkInjections: AIFoundryNetworkInjections
+  PATAuthTypeConnectionProperties: PatAuthTypeConnectionProperties
+  ScenarioType: AIFoundryNetworkInjectionScenarioType
 
 prepend-rp-prefix:
   - Account
@@ -115,6 +139,7 @@ prepend-rp-prefix:
   - NetworkRuleAction
   - NetworkRuleSet
   - NetworkSecurityPerimeter
+  - ResourceBase
   - SkuCapability
   - SkuChangeInfo
   - VirtualNetworkRule
@@ -151,6 +176,8 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Db: DB
+  SqlMi: SqlMI
 
 directive:
   - from: cognitiveservices.json

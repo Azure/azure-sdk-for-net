@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("permissionProfile"u8);
                 writer.WriteObjectValue(PermissionProfile, options);
             }
+            if (Optional.IsDefined(Alias))
+            {
+                writer.WritePropertyName("alias"u8);
+                writer.WriteStringValue(Alias);
+            }
         }
 
         DevOpsAzureOrganizationProfile IJsonModel<DevOpsAzureOrganizationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
             IList<DevOpsOrganization> organizations = default;
             DevOpsAzurePermissionProfile permissionProfile = default;
+            string @alias = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,6 +101,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     permissionProfile = DevOpsAzurePermissionProfile.DeserializeDevOpsAzurePermissionProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("alias"u8))
+                {
+                    @alias = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
@@ -106,7 +117,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevOpsAzureOrganizationProfile(kind, serializedAdditionalRawData, organizations, permissionProfile);
+            return new DevOpsAzureOrganizationProfile(kind, serializedAdditionalRawData, organizations, permissionProfile, @alias);
         }
 
         BinaryData IPersistableModel<DevOpsAzureOrganizationProfile>.Write(ModelReaderWriterOptions options)
@@ -116,7 +127,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevOpsAzureOrganizationProfile)} does not support writing '{options.Format}' format.");
             }
@@ -130,7 +141,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsAzureOrganizationProfile(document.RootElement, options);
                     }
                 default:

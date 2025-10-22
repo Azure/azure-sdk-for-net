@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties, options);
             }
+            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            {
+                writer.WritePropertyName("recoveryPointTierDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecoveryPointTierDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         FileShareRecoveryPoint IJsonModel<FileShareRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,6 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Uri fileShareSnapshotUri = default;
             int? recoveryPointSizeInGB = default;
             RecoveryPointProperties recoveryPointProperties = default;
+            IList<RecoveryPointTierInformation> recoveryPointTierDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -133,6 +144,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("recoveryPointTierDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RecoveryPointTierInformation> array = new List<RecoveryPointTierInformation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RecoveryPointTierInformation.DeserializeRecoveryPointTierInformation(item, options));
+                    }
+                    recoveryPointTierDetails = array;
+                    continue;
+                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
@@ -151,7 +176,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 recoveryPointTime,
                 fileShareSnapshotUri,
                 recoveryPointSizeInGB,
-                recoveryPointProperties);
+                recoveryPointProperties,
+                recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformation>());
         }
 
         BinaryData IPersistableModel<FileShareRecoveryPoint>.Write(ModelReaderWriterOptions options)
@@ -161,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support writing '{options.Format}' format.");
             }
@@ -175,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFileShareRecoveryPoint(document.RootElement, options);
                     }
                 default:

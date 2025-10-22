@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDatadogContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Datadog.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDatadogAgreementResourceProperties(document.RootElement, options);
                     }
                 default:

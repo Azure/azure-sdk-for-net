@@ -57,5 +57,11 @@ namespace Azure.Storage.Blobs.Models
         /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
+
+        /// <summary>
+        /// Optional.  Sets the page blob tiers on the blob.
+        /// This is only supported for page blobs on premium accounts.
+        /// </summary>
+        public PremiumPageBlobAccessTier? PremiumPageBlobAccessTier { get; set; }
     }
 }

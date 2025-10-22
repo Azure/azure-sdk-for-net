@@ -36,13 +36,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             writer.WritePropertyName("dbServers"u8);
             writer.WriteStartArray();
-            foreach (var item in DBServers)
+            foreach (var item in DBServerOcids)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -54,7 +49,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,24 +78,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> dbServers = default;
+            IList<string> dbServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbServers"u8))
                 {
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     dbServers = array;
                     continue;
@@ -121,7 +109,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudVmClusterDBNodeContent)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +123,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudVmClusterDBNodeContent(document.RootElement, options);
                     }
                 default:

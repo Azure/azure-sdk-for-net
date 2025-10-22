@@ -1,15 +1,26 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support for SocketIO when generating ClientAccessURI
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+
+## 1.6.0 (2025-05-07)
+
+### Features Added
+- Added method `serviceClient.ListConnectionsInGroup` and `serviceClient.ListConnectionsInGroupAsync`.`
+
+## 1.5.0 (2025-02-27)
+
+### Features Added
+- Added support for SocketIO when generating ClientAccessURI
 
 ## 1.4.0 (2024-07-31)
 

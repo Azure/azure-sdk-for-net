@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ContainerServiceTrustedAccessRoleBindingResource : IJsonModel<ContainerServiceTrustedAccessRoleBindingData>
     {
+        private static ContainerServiceTrustedAccessRoleBindingData s_dataDeserializationInstance;
+        private static ContainerServiceTrustedAccessRoleBindingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerServiceTrustedAccessRoleBindingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceTrustedAccessRoleBindingData>)Data).Write(writer, options);
 
-        ContainerServiceTrustedAccessRoleBindingData IJsonModel<ContainerServiceTrustedAccessRoleBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceTrustedAccessRoleBindingData>)Data).Create(ref reader, options);
+        ContainerServiceTrustedAccessRoleBindingData IJsonModel<ContainerServiceTrustedAccessRoleBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceTrustedAccessRoleBindingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceTrustedAccessRoleBindingData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ContainerServiceTrustedAccessRoleBindingData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(data, options);
+        ContainerServiceTrustedAccessRoleBindingData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

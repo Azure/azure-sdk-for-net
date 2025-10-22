@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         DeviceGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceGroupListResult.DeserializeDeviceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         DeviceGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceGroupListResult.DeserializeDeviceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         SphereDeviceGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SphereDeviceGroupData.DeserializeSphereDeviceGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         SphereDeviceGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SphereDeviceGroupData.DeserializeSphereDeviceGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         CountDevicesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CountDevicesResult.DeserializeCountDevicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         CountDevicesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CountDevicesResult.DeserializeCountDevicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         DeviceGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeviceGroupListResult.DeserializeDeviceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Sphere
                 case 200:
                     {
                         DeviceGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeviceGroupListResult.DeserializeDeviceGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -1,16 +1,34 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2025-08-08)
+
+### Features Added
+
+- Updated API version to 2025-06-01
+- Make `Azure.ResourceManager.Cdn` AOT-compatible
+
+## 1.4.0 (2025-05-10)
+
+### Features Added
+
+- Updated API version to 2025-04-15
+- Added support for cipher
+
+## 1.3.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.3.0 (2024-04-30)
 

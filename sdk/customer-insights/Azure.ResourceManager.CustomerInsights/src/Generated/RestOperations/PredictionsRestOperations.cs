@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredictionResourceFormatData.DeserializePredictionResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredictionResourceFormatData.DeserializePredictionResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionTrainingResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredictionTrainingResults.DeserializePredictionTrainingResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionTrainingResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredictionTrainingResults.DeserializePredictionTrainingResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionModelStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredictionModelStatus.DeserializePredictionModelStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionModelStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredictionModelStatus.DeserializePredictionModelStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredictionListResult.DeserializePredictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredictionListResult.DeserializePredictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredictionListResult.DeserializePredictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         PredictionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredictionListResult.DeserializePredictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

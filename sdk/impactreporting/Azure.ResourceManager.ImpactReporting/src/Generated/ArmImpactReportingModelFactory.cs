@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmImpactReportingModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.ConnectorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactReporting.WorkloadImpactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.ConnectorData"/> instance for mocking. </returns>
-        public static ConnectorData ConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConnectorProperties properties = null)
+        /// <returns> A new <see cref="ImpactReporting.WorkloadImpactData"/> instance for mocking. </returns>
+        public static WorkloadImpactData WorkloadImpactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadImpactProperties properties = null)
         {
-            return new ConnectorData(
+            return new WorkloadImpactData(
                 id,
                 name,
                 resourceType,
@@ -34,67 +34,49 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadImpactProperties"/>. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="connectorId"> unique id of the connector. </param>
-        /// <param name="tenantId"> tenant id of this connector. </param>
-        /// <param name="connectorType"> connector type. </param>
-        /// <param name="lastRunTimeStamp"> last run time stamp of this connector in UTC time zone. </param>
-        /// <returns> A new <see cref="Models.ConnectorProperties"/> instance for mocking. </returns>
-        public static ConnectorProperties ConnectorProperties(ProvisioningState? provisioningState = null, string connectorId = null, string tenantId = null, Platform connectorType = default, DateTimeOffset lastRunTimeStamp = default)
+        /// <param name="startOn"> Time at which impact was observed. </param>
+        /// <param name="endOn"> Time at which impact has ended. </param>
+        /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
+        /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
+        /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
+        /// <param name="impactCategory"> Category of the impact,  details can found from /impactCategories API. </param>
+        /// <param name="impactDescription"> A detailed description of the impact. </param>
+        /// <param name="armCorrelationIds"> The ARM correlation ids, this is important field for control plane related impacts. </param>
+        /// <param name="performance"> Details about performance issue. Applicable for performance impacts. </param>
+        /// <param name="connectivity"> Details about connectivity issue. Applicable when root resource causing the issue is not identified. For example, when a VM is impacted due to a network issue, the impacted resource is identified as the VM, but the root cause is the network. In such cases, the connectivity field will have the details about the network issue. </param>
+        /// <param name="additionalProperties"> Additional fields related to impact, applicable fields per resource type are list under /impactCategories API. </param>
+        /// <param name="errorDetails"> ARM error code and error message associated with the impact. </param>
+        /// <param name="workload"> Information about the impacted workload. </param>
+        /// <param name="impactGroupId"> Use this field to group impacts. </param>
+        /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
+        /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
+        /// <returns> A new <see cref="Models.WorkloadImpactProperties"/> instance for mocking. </returns>
+        public static WorkloadImpactProperties WorkloadImpactProperties(ProvisioningState? provisioningState = null, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, string impactedResourceId = null, string impactUniqueId = null, DateTimeOffset? reportedTimeUtc = null, string impactCategory = null, string impactDescription = null, IEnumerable<string> armCorrelationIds = null, IEnumerable<Performance> performance = null, Connectivity connectivity = null, IDictionary<string, BinaryData> additionalProperties = null, ErrorDetailProperties errorDetails = null, Workload workload = null, string impactGroupId = null, ConfidenceLevel? confidenceLevel = null, ClientIncidentDetails clientIncidentDetails = null)
         {
-            return new ConnectorProperties(
-                provisioningState,
-                connectorId,
-                tenantId,
-                connectorType,
-                lastRunTimeStamp,
-                serializedAdditionalRawData: null);
-        }
+            armCorrelationIds ??= new List<string>();
+            performance ??= new List<Performance>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.InsightData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.InsightData"/> instance for mocking. </returns>
-        public static InsightData InsightData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InsightProperties properties = null)
-        {
-            return new InsightData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InsightProperties"/>. </summary>
-        /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="category"> category of the insight. </param>
-        /// <param name="status"> status of the insight. example resolved, repaired, other. </param>
-        /// <param name="eventId"> Identifier of the event that has been correlated with this insight. This can be used to aggregate insights for the same event. </param>
-        /// <param name="groupId"> Identifier that can be used to group similar insights. </param>
-        /// <param name="content"> Contains title &amp; description for the insight. </param>
-        /// <param name="eventOn"> Time of the event, which has been correlated the impact. </param>
-        /// <param name="insightUniqueId"> unique id of the insight. </param>
-        /// <param name="impact"> details of of the impact for which insight has been generated. </param>
-        /// <param name="additionalDetails"> additional details of the insight. </param>
-        /// <returns> A new <see cref="Models.InsightProperties"/> instance for mocking. </returns>
-        public static InsightProperties InsightProperties(ProvisioningState? provisioningState = null, string category = null, string status = null, string eventId = null, string groupId = null, Content content = null, DateTimeOffset? eventOn = null, string insightUniqueId = null, ImpactDetails impact = null, InsightPropertiesAdditionalDetails additionalDetails = null)
-        {
-            return new InsightProperties(
+            return new WorkloadImpactProperties(
                 provisioningState,
-                category,
-                status,
-                eventId,
-                groupId,
-                content,
-                eventOn,
-                insightUniqueId,
-                impact,
-                additionalDetails,
+                startOn,
+                endOn,
+                impactedResourceId,
+                impactUniqueId,
+                reportedTimeUtc,
+                impactCategory,
+                impactDescription,
+                armCorrelationIds?.ToList(),
+                performance?.ToList(),
+                connectivity,
+                additionalProperties,
+                errorDetails,
+                workload,
+                impactGroupId,
+                confidenceLevel,
+                clientIncidentDetails,
                 serializedAdditionalRawData: null);
         }
 
@@ -147,16 +129,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new RequiredImpactProperties(name, allowedValues?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImpactReporting.WorkloadImpactData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactReporting.InsightData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.WorkloadImpactData"/> instance for mocking. </returns>
-        public static WorkloadImpactData WorkloadImpactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadImpactProperties properties = null)
+        /// <returns> A new <see cref="ImpactReporting.InsightData"/> instance for mocking. </returns>
+        public static InsightData InsightData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InsightProperties properties = null)
         {
-            return new WorkloadImpactData(
+            return new InsightData(
                 id,
                 name,
                 resourceType,
@@ -165,48 +147,67 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadImpactProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InsightProperties"/>. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="startOn"> Time at which impact was observed. </param>
-        /// <param name="endOn"> Time at which impact has ended. </param>
-        /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
-        /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
-        /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
-        /// <param name="impactCategory"> Category of the impact,  details can found from /impactCategories API. </param>
-        /// <param name="impactDescription"> A detailed description of the impact. </param>
-        /// <param name="armCorrelationIds"> The ARM correlation ids, this is important field for control plane related impacts. </param>
-        /// <param name="performance"> Details about performance issue. Applicable for performance impacts. </param>
-        /// <param name="connectivity"> Details about connectivity issue. Applicable when root resource causing the issue is not identified. For example, when a VM is impacted due to a network issue, the impacted resource is identified as the VM, but the root cause is the network. In such cases, the connectivity field will have the details about the network issue. </param>
-        /// <param name="additionalProperties"> Additional fields related to impact, applicable fields per resource type are list under /impactCategories API. </param>
-        /// <param name="errorDetails"> ARM error code and error message associated with the impact. </param>
-        /// <param name="workload"> Information about the impacted workload. </param>
-        /// <param name="impactGroupId"> Use this field to group impacts. </param>
-        /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
-        /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
-        /// <returns> A new <see cref="Models.WorkloadImpactProperties"/> instance for mocking. </returns>
-        public static WorkloadImpactProperties WorkloadImpactProperties(ProvisioningState? provisioningState = null, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, string impactedResourceId = null, string impactUniqueId = null, DateTimeOffset? reportedTimeUtc = null, string impactCategory = null, string impactDescription = null, IEnumerable<string> armCorrelationIds = null, IEnumerable<Performance> performance = null, Connectivity connectivity = null, WorkloadImpactPropertiesAdditionalProperties additionalProperties = null, ErrorDetailProperties errorDetails = null, Workload workload = null, string impactGroupId = null, ConfidenceLevel? confidenceLevel = null, ClientIncidentDetails clientIncidentDetails = null)
+        /// <param name="category"> category of the insight. </param>
+        /// <param name="status"> status of the insight. example resolved, repaired, other. </param>
+        /// <param name="eventId"> Identifier of the event that has been correlated with this insight. This can be used to aggregate insights for the same event. </param>
+        /// <param name="groupId"> Identifier that can be used to group similar insights. </param>
+        /// <param name="content"> Contains title &amp; description for the insight. </param>
+        /// <param name="eventOn"> Time of the event, which has been correlated the impact. </param>
+        /// <param name="insightUniqueId"> unique id of the insight. </param>
+        /// <param name="impact"> details of of the impact for which insight has been generated. </param>
+        /// <param name="additionalDetails"> additional details of the insight. </param>
+        /// <returns> A new <see cref="Models.InsightProperties"/> instance for mocking. </returns>
+        public static InsightProperties InsightProperties(ProvisioningState? provisioningState = null, string category = null, string status = null, string eventId = null, string groupId = null, Content content = null, DateTimeOffset? eventOn = null, string insightUniqueId = null, ImpactDetails impact = null, InsightPropertiesAdditionalDetails additionalDetails = null)
         {
-            armCorrelationIds ??= new List<string>();
-            performance ??= new List<Performance>();
-
-            return new WorkloadImpactProperties(
+            return new InsightProperties(
                 provisioningState,
-                startOn,
-                endOn,
-                impactedResourceId,
-                impactUniqueId,
-                reportedTimeUtc,
-                impactCategory,
-                impactDescription,
-                armCorrelationIds?.ToList(),
-                performance?.ToList(),
-                connectivity,
-                additionalProperties,
-                errorDetails,
-                workload,
-                impactGroupId,
-                confidenceLevel,
-                clientIncidentDetails,
+                category,
+                status,
+                eventId,
+                groupId,
+                content,
+                eventOn,
+                insightUniqueId,
+                impact,
+                additionalDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImpactReporting.ConnectorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ImpactReporting.ConnectorData"/> instance for mocking. </returns>
+        public static ConnectorData ConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConnectorProperties properties = null)
+        {
+            return new ConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectorProperties"/>. </summary>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="connectorId"> unique id of the connector. </param>
+        /// <param name="tenantId"> tenant id of this connector. </param>
+        /// <param name="connectorType"> connector type. </param>
+        /// <param name="lastRunTimeStamp"> last run time stamp of this connector in UTC time zone. </param>
+        /// <returns> A new <see cref="Models.ConnectorProperties"/> instance for mocking. </returns>
+        public static ConnectorProperties ConnectorProperties(ProvisioningState? provisioningState = null, string connectorId = null, string tenantId = null, Platform connectorType = default, DateTimeOffset lastRunTimeStamp = default)
+        {
+            return new ConnectorProperties(
+                provisioningState,
+                connectorId,
+                tenantId,
+                connectorType,
+                lastRunTimeStamp,
                 serializedAdditionalRawData: null);
         }
     }

@@ -5,43 +5,36 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UpdateTranscriptionRequest. </summary>
     internal partial class UpdateTranscriptionRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
-        /// <param name="locale"> Defines new locale for transcription. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        public UpdateTranscriptionRequestInternal(string locale)
+        public UpdateTranscriptionRequestInternal()
         {
-            Argument.AssertNotNull(locale, nameof(locale));
-
-            Locale = locale;
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
-        /// <param name="locale"> Defines new locale for transcription. </param>
-        /// <param name="speechRecognitionModelEndpointId"> Sets Endpoint id where the custom model was deployed. </param>
+        /// <param name="locale"> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </param>
+        /// <param name="speechModelEndpointId"> The ID of the deployed custom model, in GUID format, e.g., a259c255-1cdw-4ed7-a693-dd58563b6f6a. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal UpdateTranscriptionRequestInternal(string locale, string speechRecognitionModelEndpointId, string operationContext, string operationCallbackUri)
+        internal UpdateTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri)
         {
             Locale = locale;
-            SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
+            SpeechModelEndpointId = speechModelEndpointId;
             OperationContext = operationContext;
             OperationCallbackUri = operationCallbackUri;
         }
 
-        /// <summary> Defines new locale for transcription. </summary>
-        public string Locale { get; }
-        /// <summary> Sets Endpoint id where the custom model was deployed. </summary>
-        public string SpeechRecognitionModelEndpointId { get; set; }
+        /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
+        public string Locale { get; set; }
+        /// <summary> The ID of the deployed custom model, in GUID format, e.g., a259c255-1cdw-4ed7-a693-dd58563b6f6a. </summary>
+        public string SpeechModelEndpointId { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
         /// <summary>

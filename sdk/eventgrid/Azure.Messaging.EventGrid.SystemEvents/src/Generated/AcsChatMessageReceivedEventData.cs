@@ -15,23 +15,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="metadata"> The chat message metadata. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="senderCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, CommunicationIdentifierModel senderCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata) : base(recipientCommunicationIdentifier, senderCommunicationIdentifier)
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        internal AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string @type, string messageBody) : base(recipientCommunicationIdentifier, threadId, messageId, senderCommunicationIdentifier, @type)
         {
-            Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-            Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
-            Argument.AssertNotNull(metadata, nameof(metadata));
-
-            Metadata = metadata;
+            MessageBody = messageBody;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
@@ -40,19 +39,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
-        internal AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
+        internal AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, @type, version)
         {
             MessageBody = messageBody;
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedEventData"/> for deserialization. </summary>
-        internal AcsChatMessageReceivedEventData()
-        {
-        }
-
         /// <summary> The body of the chat message. </summary>
         public string MessageBody { get; }
+
         /// <summary> The chat message metadata. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

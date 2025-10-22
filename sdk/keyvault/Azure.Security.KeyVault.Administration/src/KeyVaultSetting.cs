@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
     /// An account setting.
     /// </summary>
-    [CodeGenModel("Setting")]
+    [CodeGenType("Setting")]
     [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
-    [CodeGenSuppress("Content")]
     public partial class KeyVaultSetting
     {
         /// <summary>
@@ -27,6 +28,7 @@ namespace Azure.Security.KeyVault.Administration
 
             Name = name;
             Value = new KeyVaultSettingValue(value);
+            SettingType = KeyVaultSettingType.Boolean;
         }
 
         // TODO: Move construction to KeyVaultSettingValue and hide constructors here when the number of supported value types warrants it e.g., more than 3 intrinsic types.
@@ -35,31 +37,46 @@ namespace Azure.Security.KeyVault.Administration
         /// Creates a new instance of the <see cref="KeyVaultSetting"/> class.
         /// </summary>
         /// <param name="name">The name of the account setting.</param>
-        /// <param name="value">The string value of the account setting.</param>
+        /// <param name="content">The string content of the account setting.</param>
         /// <param name="settingType">The type specifier of the value.</param>
-        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType)
+        /// <param name="additionalBinaryDataProperties">Additional properties.</param>
+        internal KeyVaultSetting(string name, string content, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(content, nameof(content));
 
             Name = name;
-            Value = new KeyVaultSettingValue(value, settingType);
+            SettingType = settingType;
+            Value = new KeyVaultSettingValue(content, settingType);
+            Content = content;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// Gets the type specifier of the value.
         /// </summary>
-        public KeyVaultSettingType? SettingType => Value.SettingType;
+        [CodeGenMember("Type")]
+        public KeyVaultSettingType? SettingType { get; }
 
         /// <summary>
         /// Gets the value of the account setting.
         /// </summary>
         public KeyVaultSettingValue Value { get; }
 
+        internal string Content { get; }
+
         /// <summary>
         /// Returns the setting name, value, and type.
         /// </summary>
         /// <returns></returns>
         public override string ToString() => $"{Name}={Value} ({SettingType ?? string.Empty})";
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(new UpdateSettingRequest(this.Value.ToString()));
+            return content;
+        }
     }
 }

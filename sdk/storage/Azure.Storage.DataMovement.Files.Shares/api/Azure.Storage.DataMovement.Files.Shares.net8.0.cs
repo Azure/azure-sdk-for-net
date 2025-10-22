@@ -8,6 +8,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
     }
     public partial class ShareFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
+        public ShareFilesStorageResourceProvider() { }
         public ShareFilesStorageResourceProvider(Azure.AzureSasCredential credential) { }
         public ShareFilesStorageResourceProvider(Azure.Core.TokenCredential credential) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
@@ -39,7 +40,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public System.DateTimeOffset? FileLastWrittenOn { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> FileMetadata { get { throw null; } set { } }
         public bool? FilePermissions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Files.Shares.ShareProtocol ShareProtocol { get { throw null; } set { } }
+        public bool SkipProtocolValidation { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
+    }
+    public enum ShareProtocol : byte
+    {
+        Smb = (byte)1,
+        Nfs = (byte)2,
     }
 }
 namespace Azure.Storage.Files.Shares

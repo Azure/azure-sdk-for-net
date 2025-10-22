@@ -89,6 +89,12 @@ namespace Azure.ResourceManager.ContainerService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.AgentPoolUpgradeProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.AgentPoolUpgradeProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureResourceManagerContainerServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerContainerServiceContext() { }
+        public static Azure.ResourceManager.ContainerService.AzureResourceManagerContainerServiceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ContainerServiceAgentPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerService.ContainerServiceAgentPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.ContainerServiceAgentPoolResource>, System.Collections.IEnumerable
     {
         protected ContainerServiceAgentPoolCollection() { }
@@ -2390,14 +2396,9 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile>
     {
         public ManagedClusterStorageProfile() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsBlobCsiDriverEnabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public bool? IsDiskCsiDriverEnabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsFileCsiDriverEnabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? IsSnapshotControllerEnabled { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

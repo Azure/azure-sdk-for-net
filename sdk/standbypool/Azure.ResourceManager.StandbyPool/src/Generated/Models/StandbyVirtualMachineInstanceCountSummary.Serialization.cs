@@ -40,12 +40,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WriteNumberValue(Zone.Value);
             }
             writer.WritePropertyName("instanceCountsByState"u8);
-            writer.WriteStartArray();
-            foreach (var item in InstanceCountsByState)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            InstanceCountsByStateSerial(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +49,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -84,7 +79,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             long? zone = default;
-            IReadOnlyList<PoolResourceStateCount> instanceCountsByState = default;
+            IReadOnlyList<PoolVirtualMachineStateCount> instanceCountsByState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,10 +95,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (property.NameEquals("instanceCountsByState"u8))
                 {
-                    List<PoolResourceStateCount> array = new List<PoolResourceStateCount>();
+                    List<PoolVirtualMachineStateCount> array = new List<PoolVirtualMachineStateCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolResourceStateCount.DeserializePoolResourceStateCount(item, options));
+                        array.Add(PoolVirtualMachineStateCount.DeserializePoolVirtualMachineStateCount(item, options));
                     }
                     instanceCountsByState = array;
                     continue;
@@ -124,7 +119,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyVirtualMachineInstanceCountSummary)} does not support writing '{options.Format}' format.");
             }
@@ -138,7 +133,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyVirtualMachineInstanceCountSummary(document.RootElement, options);
                     }
                 default:

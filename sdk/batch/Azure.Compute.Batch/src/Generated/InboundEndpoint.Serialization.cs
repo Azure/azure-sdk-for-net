@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,7 +40,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("publicIPAddress"u8);
-            writer.WriteStringValue(PublicIpAddress);
+            writer.WriteStringValue(PublicIpAddress.ToString());
             writer.WritePropertyName("publicFQDN"u8);
             writer.WriteStringValue(PublicFQDN);
             writer.WritePropertyName("frontendPort"u8);
@@ -54,7 +55,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -85,7 +86,7 @@ namespace Azure.Compute.Batch
             }
             string name = default;
             InboundEndpointProtocol protocol = default;
-            string publicIPAddress = default;
+            IPAddress publicIPAddress = default;
             string publicFQDN = default;
             int frontendPort = default;
             int backendPort = default;
@@ -105,7 +106,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("publicIPAddress"u8))
                 {
-                    publicIPAddress = property.Value.GetString();
+                    publicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicFQDN"u8))
@@ -146,7 +147,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InboundEndpoint)} does not support writing '{options.Format}' format.");
             }
@@ -160,7 +161,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInboundEndpoint(document.RootElement, options);
                     }
                 default:
@@ -174,7 +175,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static InboundEndpoint FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeInboundEndpoint(document.RootElement);
         }
 

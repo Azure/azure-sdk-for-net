@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(TriggeredBuildResult))
             {
                 writer.WritePropertyName("triggeredBuildResult"u8);
-                JsonSerializer.Serialize(writer, TriggeredBuildResult);
+                ((IJsonModel<SubResource>)TriggeredBuildResult).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    triggeredBuildResult = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppPlatformContext.Default);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppPlatformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppPlatformBuildProperties(document.RootElement, options);
                     }
                 default:

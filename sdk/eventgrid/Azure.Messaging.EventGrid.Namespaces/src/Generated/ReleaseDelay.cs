@@ -14,47 +14,72 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public readonly partial struct ReleaseDelay : IEquatable<ReleaseDelay>
     {
         private readonly string _value;
+        /// <summary> Release the event after 0 seconds. </summary>
+        private const string NoDelayValue = "0";
+        /// <summary> Release the event after 10 seconds. </summary>
+        private const string TenSecondsValue = "10";
+        /// <summary> Release the event after 60 seconds. </summary>
+        private const string OneMinuteValue = "60";
+        /// <summary> Release the event after 600 seconds. </summary>
+        private const string TenMinutesValue = "600";
+        /// <summary> Release the event after 3600 seconds. </summary>
+        private const string OneHourValue = "3600";
 
         /// <summary> Initializes a new instance of <see cref="ReleaseDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReleaseDelay(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoDelayValue = "0";
-        private const string TenSecondsValue = "10";
-        private const string OneMinuteValue = "60";
-        private const string TenMinutesValue = "600";
-        private const string OneHourValue = "3600";
+            _value = value;
+        }
 
         /// <summary> Release the event after 0 seconds. </summary>
         public static ReleaseDelay NoDelay { get; } = new ReleaseDelay(NoDelayValue);
+
         /// <summary> Release the event after 10 seconds. </summary>
         public static ReleaseDelay TenSeconds { get; } = new ReleaseDelay(TenSecondsValue);
+
         /// <summary> Release the event after 60 seconds. </summary>
         public static ReleaseDelay OneMinute { get; } = new ReleaseDelay(OneMinuteValue);
+
         /// <summary> Release the event after 600 seconds. </summary>
         public static ReleaseDelay TenMinutes { get; } = new ReleaseDelay(TenMinutesValue);
+
         /// <summary> Release the event after 3600 seconds. </summary>
         public static ReleaseDelay OneHour { get; } = new ReleaseDelay(OneHourValue);
+
         /// <summary> Determines if two <see cref="ReleaseDelay"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReleaseDelay left, ReleaseDelay right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReleaseDelay"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReleaseDelay left, ReleaseDelay right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReleaseDelay"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReleaseDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReleaseDelay(string value) => new ReleaseDelay(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReleaseDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReleaseDelay?(string value) => value == null ? null : new ReleaseDelay(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReleaseDelay other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReleaseDelay other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

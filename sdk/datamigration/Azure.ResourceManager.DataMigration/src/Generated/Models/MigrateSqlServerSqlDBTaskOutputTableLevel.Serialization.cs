@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string objectName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            MigrationState? state = default;
+            DataMigrationState? state = default;
             string statusMessage = default;
             long? itemsCount = default;
             long? itemsCompletedCount = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputTableLevel)} does not support writing '{options.Format}' format.");
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(document.RootElement, options);
                     }
                 default:

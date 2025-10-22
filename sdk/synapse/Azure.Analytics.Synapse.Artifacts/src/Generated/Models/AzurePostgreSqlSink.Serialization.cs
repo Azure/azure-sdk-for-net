@@ -24,6 +24,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("preCopyScript"u8);
                 writer.WriteObjectValue<object>(PreCopyScript);
             }
+            if (Optional.IsDefined(WriteMethod))
+            {
+                writer.WritePropertyName("writeMethod"u8);
+                writer.WriteStringValue(WriteMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(UpsertSettings))
+            {
+                writer.WritePropertyName("upsertSettings"u8);
+                writer.WriteObjectValue(UpsertSettings);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
@@ -66,6 +76,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object preCopyScript = default;
+            AzurePostgreSqlWriteMethodEnum? writeMethod = default;
+            AzurePostgreSqlSinkUpsertSettings upsertSettings = default;
             string type = default;
             object writeBatchSize = default;
             object writeBatchTimeout = default;
@@ -83,6 +95,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     preCopyScript = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("writeMethod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeMethod = new AzurePostgreSqlWriteMethodEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("upsertSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upsertSettings = AzurePostgreSqlSinkUpsertSettings.DeserializeAzurePostgreSqlSinkUpsertSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -146,14 +176,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sinkRetryWait,
                 maxConcurrentConnections,
                 additionalProperties,
-                preCopyScript);
+                preCopyScript,
+                writeMethod,
+                upsertSettings);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AzurePostgreSqlSink FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAzurePostgreSqlSink(document.RootElement);
         }
 

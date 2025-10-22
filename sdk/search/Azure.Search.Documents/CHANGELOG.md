@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.3 (Unreleased)
+## 11.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,70 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0 (2025-10-09)
+
+### Features Added
+- Added support for `2025-09-01` service version.
+- Support for reranker boosted scores in search results and the ability to sort results on either reranker or reranker boosted scores in `SemanticConfiguration.RankingOrder`.
+- Support for `VectorSearchCompression.RescoringOptions` to configure how vector compression handles the original vector when indexing and how vectors are used during rescoring.
+- Added `SearchIndex.Description` to provide a textual description of the index.
+- Support for `LexicalNormalizer` when defining `SearchIndex`, `SimpleField`, and `SearchableField` and the ability to use it when analyzing text with `SearchIndexClient.AnalyzeText`.
+- Support `DocumentIntelligenceLayoutSkill` skillset skill and `OneLake` `SearchIndexerDataSourceConnection` data source.
+- Support for `QueryDebugMode` in searching to retrieve detailed information about search processing. Only vector is supported for `QueryDebugMode`.
+
+### Breaking Changes
+- `VectorSearchCompression.RerankWithOriginalVectors` and `VectorSearchCompression.DefaultOversampling` don't work with
+  `2025-09-01` and were replaced by `VectorSearchCompression.RescoringOptions.EnabledRescoring` and 
+  `VectorSearchCompression.RescoringOptions.DefaultOversampling`. If using `2024-07-01` continue using the old properties,
+  otherwise if using `2025-09-01` use the new properties in `RescoringOptions`.
+
+## 11.7.0-beta.7 (2025-09-05)
+
+### Features Added
+- Added support for Knowledge Agent knowledge sources.
+- Added support for Knowledge Agent answer synthesis.
+- Added `VectorFilterMode.StrictPostFilter`.
+
+### Breaking Changes
+- Dropped support for Knowledge Agent target index. Use knowledge sources instead.
+- Moved `QueryDebugMode` from `SemanticSearchOptions` to `SearchOptions` as it is no longer tied only to semantic queries.
+
+## 11.7.0-beta.6 (2025-08-11)
+
+### Features Added
+- Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
+
+## 11.7.0-beta.5 (2025-06-17)
+
+### Bugs Fixed
+- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
+
+## 11.6.1 (2025-06-17)
+
+### Bugs Fixed
+- Added support for HTTP status code 206 (Partial Content) in the `Search` method to handle partial results returned by the service.
+
+## 11.7.0-beta.4 (2025-05-14)
+
+### Features Added
+- Added new `KnowledgeAgent` resource APIs in `SearchIndexClient` and introduced `KnowledgeAgentRetrievalClient` for managing and querying KnowledgeAgents, enabling multi-index grounding for agentic retrieval.
+- Added a method overload for search query to include the `QuerySourceAuthorization` parameter to enforce per-user filtering in queries.
+- Added `Resync` method in `SearchIndexerClient` to resync selective options from the data source to be re-ingested by the indexer.
+- Added `PermissionFilter` to `SearchField`, `SimpleField`, and `SimpleFieldAttribute`, indicating whether the field should be used as a permission filter.
+- Added `PermissionFilterOption` to `SearchIndex`, indicating whether permission filtering is enabled for the index.
+- Added `RerankerBoostedScore` to `SemanticSearchResult` and updated `SemanticConfiguration` with a new `RankingOrder` property.
+- Introduced new skill `ChatCompletionSkill` that integrates with Azure AI Foundry.
+- Enhanced `DocumentIntelligenceLayoutSkill` with new properties: `ChunkingProperties`, `ExtractionOptions`, and `OutputFormat`.
+- Added `IndexerPermissionOptions` to `SearchIndexerDataSourceConnection` to support ingestion of various types of permission data.
+- Introduced sub-field vector support (multi-vectors) via `VectorQuery.Fields`, and added new query option `VectorQuery.PerDocumentVectorLimit`.
+
+## 11.7.0-beta.3 (2025-03-25)
+
+### Features Added
+- Added support for the `GetIndexStatsSummary` API in `SearchIndexClient`.
+- Added extension methods to get `SearchClient`, `SearchIndexClient` and `SearchIndexerClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
 
 ## 11.7.0-beta.2 (2024-11-25)
 

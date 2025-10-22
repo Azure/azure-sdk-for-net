@@ -1,16 +1,32 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2025-11-05)
+
+### Features Added
+Updating the api-version to "2025-05-01-preview"
+
+### Other Changes
+
+- Fixed model naming compliance issues by renaming models that violated Azure SDK guidelines:
+  - Renamed `SaaSData` to `NewRelicObservabilitySaaSInfo`
+  - Renamed `SaaSResourceDetailsResponse` to `NewRelicObservabilitySaaSResourceDetailsResult`
+  - Renamed `LatestLinkedSaaSResponse` to `NewRelicObservabilityLatestLinkedSaaSResult`
+
+## 1.1.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.1.0 (2024-07-05)
 

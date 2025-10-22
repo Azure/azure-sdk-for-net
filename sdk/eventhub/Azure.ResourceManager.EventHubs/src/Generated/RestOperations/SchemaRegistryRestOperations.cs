@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         SchemaGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         SchemaGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsSchemaGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsSchemaGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsSchemaGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsSchemaGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         SchemaGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         SchemaGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

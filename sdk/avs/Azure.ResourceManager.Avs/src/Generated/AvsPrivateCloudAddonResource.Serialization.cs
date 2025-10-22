@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class AvsPrivateCloudAddonResource : IJsonModel<AvsPrivateCloudAddonData>
     {
+        private static AvsPrivateCloudAddonData s_dataDeserializationInstance;
+        private static AvsPrivateCloudAddonData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AvsPrivateCloudAddonData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudAddonData>)Data).Write(writer, options);
 
-        AvsPrivateCloudAddonData IJsonModel<AvsPrivateCloudAddonData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudAddonData>)Data).Create(ref reader, options);
+        AvsPrivateCloudAddonData IJsonModel<AvsPrivateCloudAddonData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudAddonData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvsPrivateCloudAddonData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AvsPrivateCloudAddonData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsPrivateCloudAddonData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        AvsPrivateCloudAddonData IPersistableModel<AvsPrivateCloudAddonData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudAddonData>(data, options);
+        AvsPrivateCloudAddonData IPersistableModel<AvsPrivateCloudAddonData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudAddonData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsPrivateCloudAddonData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudAddonData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AvsPrivateCloudAddonData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudAddonData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

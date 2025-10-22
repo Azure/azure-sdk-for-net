@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerQuotaContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Quota
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Quota
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQuotaAllocationRequestStatusData(document.RootElement, options);
                     }
                 default:

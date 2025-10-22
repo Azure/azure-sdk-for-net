@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryInnerHealthError"/>. </summary>
-        internal SiteRecoveryInnerHealthError()
+        public SiteRecoveryInnerHealthError()
         {
         }
 
@@ -86,32 +86,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Source of error. </summary>
-        public string ErrorSource { get; }
+        public string ErrorSource { get; set; }
         /// <summary> Type of error. </summary>
-        public string ErrorType { get; }
+        public string ErrorType { get; set; }
         /// <summary> Level of error. </summary>
-        public string ErrorLevel { get; }
+        public string ErrorLevel { get; set; }
         /// <summary> Category of error. </summary>
-        public string ErrorCategory { get; }
+        public string ErrorCategory { get; set; }
         /// <summary> Error code. </summary>
-        public string ErrorCode { get; }
+        public string ErrorCode { get; set; }
         /// <summary> Summary message of the entity. </summary>
-        public string SummaryMessage { get; }
+        public string SummaryMessage { get; set; }
         /// <summary> Error message. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; set; }
         /// <summary> Possible causes of error. </summary>
-        public string PossibleCauses { get; }
+        public string PossibleCauses { get; set; }
         /// <summary> Recommended action to resolve error. </summary>
-        public string RecommendedAction { get; }
+        public string RecommendedAction { get; set; }
         /// <summary> Error creation time (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> DRA error message. </summary>
-        public string RecoveryProviderErrorMessage { get; }
+        public string RecoveryProviderErrorMessage { get; set; }
         /// <summary> ID of the entity. </summary>
-        public string EntityId { get; }
+        public string EntityId { get; set; }
         /// <summary> The health error unique id. </summary>
-        public string ErrorId { get; }
+        public string ErrorId { get; set; }
         /// <summary> Value indicating whether the health error is customer resolvable. </summary>
-        public HealthErrorCustomerResolvability? CustomerResolvability { get; }
+        public HealthErrorCustomerResolvability? CustomerResolvability { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendPath("/softDeletedArtifactTypes/", false);
+            uri.AppendPath("/softdeletedartifacttypes/", false);
             uri.AppendPath(artifactType, true);
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(artifactName, true);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendPath("/softDeletedArtifactTypes/", false);
+            uri.AppendPath("/softdeletedartifacttypes/", false);
             uri.AppendPath(artifactType, true);
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(artifactName, true);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Gallery in which the soft-deleted resources resides. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
         /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GallerySoftDeletedResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GallerySoftDeletedResourceList.DeserializeGallerySoftDeletedResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Gallery in which the soft-deleted resources resides. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
         /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GallerySoftDeletedResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GallerySoftDeletedResourceList.DeserializeGallerySoftDeletedResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Gallery in which the soft-deleted resources resides. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
         /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GallerySoftDeletedResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GallerySoftDeletedResourceList.DeserializeGallerySoftDeletedResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List soft-deleted resources of an artifact in the gallery, such as soft-deleted gallery image version of an image. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="galleryName"> The name of the Gallery in which the soft-deleted resources resides. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
         /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GallerySoftDeletedResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GallerySoftDeletedResourceList.DeserializeGallerySoftDeletedResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

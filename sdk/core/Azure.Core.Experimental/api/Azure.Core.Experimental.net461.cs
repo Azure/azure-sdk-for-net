@@ -120,3 +120,46 @@ namespace Azure.Core
         public string ResourceName { get { throw null; } }
     }
 }
+namespace System.ClientModel
+{
+    public partial class AccessToken
+    {
+        public AccessToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
+        public string TokenType { get { throw null; } protected set { } }
+        public string TokenValue { get { throw null; } protected set { } }
+    }
+    public abstract partial class RefreshableToken : System.ClientModel.AccessToken
+    {
+        public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
+        public abstract System.Threading.Tasks.Task RefreshAsync(System.Threading.CancellationToken cancellationToken);
+    }
+}
+namespace System.ClientModel.Auth
+{
+    public partial class OAuth2BearerTokenAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public OAuth2BearerTokenAuthenticationPolicy(System.ClientModel.Auth.TokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
+    public partial class TokenFlowProperties
+    {
+        public const string AuthorizationUrlPropertyName = "authorizationUrl";
+        public const string RefreshUrlPropertyName = "refreshUrl";
+        public const string ScopesPropertyName = "scopes";
+        public const string TokenUrlPropertyName = "tokenUrl";
+        public TokenFlowProperties(string[] scopes, System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
+        public string[] Scopes { get { throw null; } }
+        public System.ClientModel.Auth.TokenFlowProperties WithAdditionalScopes(string[] additionalScopes) { throw null; }
+    }
+    public abstract partial class TokenProvider
+    {
+        protected TokenProvider() { }
+        public abstract System.ClientModel.Auth.TokenFlowProperties? CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.AccessToken GetToken(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.AccessToken> GetTokenAsync(System.ClientModel.Auth.TokenFlowProperties properties, System.Threading.CancellationToken cancellationToken);
+    }
+}

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,9 +200,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation(response, rehydrationToken);
+                var operation = new AppContainersArmOperation(_containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,9 +242,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation(response, rehydrationToken);
+                var operation = new AppContainersArmOperation(_containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,7 +267,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,9 +288,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppConnectedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppConnectedEnvironmentDaprComponentOperationSource(Client), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -319,7 +313,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -340,9 +334,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppConnectedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(new ContainerAppConnectedEnvironmentDaprComponentOperationSource(Client), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -367,7 +359,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +388,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

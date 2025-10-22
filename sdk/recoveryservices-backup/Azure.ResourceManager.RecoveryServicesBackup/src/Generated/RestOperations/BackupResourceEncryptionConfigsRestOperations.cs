@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Fetches Vault Encryption config. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupResourceEncryptionConfigExtendedData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupResourceEncryptionConfigExtendedData.DeserializeBackupResourceEncryptionConfigExtendedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Fetches Vault Encryption config. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupResourceEncryptionConfigExtendedData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupResourceEncryptionConfigExtendedData.DeserializeBackupResourceEncryptionConfigExtendedData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Updates Vault encryption config. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="content"> Vault encryption input config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Updates Vault encryption config. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="content"> Vault encryption input config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>

@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("fullLoadErroredTables"u8);
                 writer.WriteNumberValue(FullLoadErroredTables.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitializationCompleted))
+            if (options.Format != "W" && Optional.IsDefined(IsInitializationCompleted))
             {
                 writer.WritePropertyName("initializationCompleted"u8);
-                writer.WriteBooleanValue(InitializationCompleted.Value);
+                writer.WriteBooleanValue(IsInitializationCompleted.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Latency))
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:

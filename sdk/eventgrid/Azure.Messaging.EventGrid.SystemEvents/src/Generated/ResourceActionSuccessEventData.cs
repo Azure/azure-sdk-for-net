@@ -7,58 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionSuccess event. This is raised when a resource action operation succeeds. </summary>
     public partial class ResourceActionSuccessEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceActionSuccessEventData"/>. </summary>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorization"/>, <paramref name="claims"/> or <paramref name="httpRequest"/> is null. </exception>
-        internal ResourceActionSuccessEventData(ResourceAuthorization authorization, IReadOnlyDictionary<string, string> claims, ResourceHttpRequest httpRequest)
+        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
+        /// <param name="httpRequestJson"> The details of the operation. </param>
+        internal ResourceActionSuccessEventData(JsonElement authorizationJson, JsonElement httpRequestJson)
         {
-            Argument.AssertNotNull(authorization, nameof(authorization));
-            Argument.AssertNotNull(claims, nameof(claims));
-            Argument.AssertNotNull(httpRequest, nameof(httpRequest));
-
-            Authorization = authorization;
-            Claims = claims;
-            HttpRequest = httpRequest;
+            AuthorizationJson = authorizationJson;
+            HttpRequestJson = httpRequestJson;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceActionSuccessEventData"/>. </summary>
@@ -69,12 +34,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceUri"> The URI of the resource in the operation. </param>
         /// <param name="operationName"> The operation that was performed. </param>
         /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
+        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
+        /// <param name="claimsJson"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceActionSuccessEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, ResourceAuthorization authorization, IReadOnlyDictionary<string, string> claims, string correlationId, ResourceHttpRequest httpRequest, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="httpRequestJson"> The details of the operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceActionSuccessEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
@@ -83,39 +48,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ResourceUri = resourceUri;
             OperationName = operationName;
             Status = status;
-            Authorization = authorization;
-            Claims = claims;
+            AuthorizationJson = authorizationJson;
+            ClaimsJson = claimsJson;
             CorrelationId = correlationId;
-            HttpRequest = httpRequest;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceActionSuccessEventData"/> for deserialization. </summary>
-        internal ResourceActionSuccessEventData()
-        {
+            HttpRequestJson = httpRequestJson;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The tenant ID of the resource. </summary>
         public string TenantId { get; }
+
         /// <summary> The subscription ID of the resource. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> The resource group of the resource. </summary>
         public string ResourceGroup { get; }
+
         /// <summary> The resource provider performing the operation. </summary>
         public string ResourceProvider { get; }
+
         /// <summary> The URI of the resource in the operation. </summary>
         public string ResourceUri { get; }
+
         /// <summary> The operation that was performed. </summary>
         public string OperationName { get; }
+
         /// <summary> The status of the operation. </summary>
         public string Status { get; }
-        /// <summary> The requested authorization for the operation. </summary>
-        public ResourceAuthorization Authorization { get; }
-        /// <summary> The properties of the claims. </summary>
-        public IReadOnlyDictionary<string, string> Claims { get; }
+
         /// <summary> An operation ID used for troubleshooting. </summary>
         public string CorrelationId { get; }
-        /// <summary> The details of the operation. </summary>
-        public ResourceHttpRequest HttpRequest { get; }
     }
 }

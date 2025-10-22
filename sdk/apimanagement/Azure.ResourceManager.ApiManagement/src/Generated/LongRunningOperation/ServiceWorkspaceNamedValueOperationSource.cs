@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
 
         ServiceWorkspaceNamedValueResource IOperationSource<ServiceWorkspaceNamedValueResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement);
+            var data = ModelReaderWriter.Read<ApiManagementNamedValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ServiceWorkspaceNamedValueResource(_client, data);
         }
 
         async ValueTask<ServiceWorkspaceNamedValueResource> IOperationSource<ServiceWorkspaceNamedValueResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement);
-            return new ServiceWorkspaceNamedValueResource(_client, data);
+            var data = ModelReaderWriter.Read<ApiManagementNamedValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            return await Task.FromResult(new ServiceWorkspaceNamedValueResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

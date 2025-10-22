@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapMonitorData.DeserializeSapMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapMonitorData.DeserializeSapMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapMonitorData.DeserializeSapMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapMonitorData.DeserializeSapMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         MonitorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorListResult.DeserializeMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

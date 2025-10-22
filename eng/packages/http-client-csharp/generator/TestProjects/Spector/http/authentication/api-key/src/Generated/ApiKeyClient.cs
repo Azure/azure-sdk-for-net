@@ -17,11 +17,11 @@ namespace Authentication.ApiKey
     {
         protected ApiKeyClient() => throw null;
 
-        public ApiKeyClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new ApiKeyClientOptions()) => throw null;
+        public ApiKeyClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new ApiKeyClientOptions()) => throw null;
 
-        public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options) => throw null;
+        public ApiKeyClient(Uri endpoint, AzureKeyCredential credential, ApiKeyClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 

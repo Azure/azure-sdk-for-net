@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 return null;
             }
+            RedisEnterpriseKind? kind = default;
             RedisEnterpriseSku sku = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
@@ -153,6 +159,15 @@ namespace Azure.ResourceManager.RedisEnterprise
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new RedisEnterpriseKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
                     sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(property.Value, options);
@@ -178,7 +193,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -221,7 +236,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -327,6 +342,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
@@ -422,6 +438,21 @@ namespace Azure.ResourceManager.RedisEnterprise
                         }
                         builder.AppendLine("  }");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
@@ -699,7 +730,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -715,7 +746,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisEnterpriseClusterData(document.RootElement, options);
                     }
                 default:

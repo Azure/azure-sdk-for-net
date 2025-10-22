@@ -8,19 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsDataConnectorDefinitionResource : IJsonModel<SecurityInsightsDataConnectorDefinitionData>
     {
+        private static UnknownDataConnectorDefinition s_dataDeserializationInstance;
+        private static UnknownDataConnectorDefinition DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorDefinitionData>)Data).Write(writer, options);
 
-        SecurityInsightsDataConnectorDefinitionData IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorDefinitionData>)Data).Create(ref reader, options);
+        SecurityInsightsDataConnectorDefinitionData IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsDataConnectorDefinitionData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsDataConnectorDefinitionData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsDataConnectorDefinitionData>(data, options);
+        SecurityInsightsDataConnectorDefinitionData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsDataConnectorDefinitionData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

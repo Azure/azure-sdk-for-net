@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterGalleryResource : IJsonModel<DevCenterGalleryData>
     {
+        private static DevCenterGalleryData s_dataDeserializationInstance;
+        private static DevCenterGalleryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevCenterGalleryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterGalleryData>)Data).Write(writer, options);
 
-        DevCenterGalleryData IJsonModel<DevCenterGalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterGalleryData>)Data).Create(ref reader, options);
+        DevCenterGalleryData IJsonModel<DevCenterGalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterGalleryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevCenterGalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevCenterGalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterGalleryData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        DevCenterGalleryData IPersistableModel<DevCenterGalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterGalleryData>(data, options);
+        DevCenterGalleryData IPersistableModel<DevCenterGalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterGalleryData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterGalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterGalleryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterGalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterGalleryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

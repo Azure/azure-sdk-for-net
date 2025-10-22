@@ -167,6 +167,26 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var filesystemName = "filesystemName";
+
+            DataLakeFileSystemClient container = new DataLakeFileSystemClient(connectionString.ToString(true), filesystemName);
+
+            Assert.AreEqual(filesystemName, container.Name);
+            Assert.AreEqual(accountName, container.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
@@ -182,6 +202,22 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => new DataLakeFileSystemClient(uri, tokenCredential, new DataLakeClientOptions()),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var fileSystemName = "fileSystemName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri($"https://customdomain/{fileSystemName}");
+
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(blobEndpoint, credentials);
+
+            Assert.AreEqual(accountName, fileSystemClient.AccountName);
+            Assert.AreEqual(fileSystemName, fileSystemClient.Name);
         }
 
         [RecordedTest]
@@ -942,9 +978,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
-                recursive: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -968,9 +1008,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                UserPrincipalName = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
-                userPrincipalName: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             ;
             IList<PathItem> paths = await response.ToListAsync();
 
@@ -992,9 +1036,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Path = "foo"
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
-                path: "foo");
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -1106,6 +1154,28 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.NotNull(paths[0].CreatedOn);
             Assert.NotNull(paths[1].CreatedOn);
             Assert.NotNull(paths[2].CreatedOn);
+        }
+
+        [RecordedTest]
+        public async Task GetPathsAsync_BeginFrom()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            await SetUpFileSystemForListing(test.FileSystem);
+
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true,
+                StartFrom = "foo"
+            };
+
+            // Act
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
         }
 
         [RecordedTest]
@@ -2357,6 +2427,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetSetAccesPolicy_OAuth()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service);
+
+            // Act
+            Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
+            await test.FileSystem.SetAccessPolicyAsync(permissions: response.Value.SignedIdentifiers);
+        }
+
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2770,9 +2853,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync()
         {
             // Arrange
@@ -2812,9 +2894,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(paths[1].RemainingRetentionDays);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync_Path()
         {
             // Arrange
@@ -2841,9 +2922,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Path);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync_Error()
         {
             // Arrange
@@ -2856,9 +2936,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync()
         {
             // Arrange
@@ -2882,9 +2961,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await restoredPathClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync_Error()
         {
             // Arrange
@@ -2899,13 +2977,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase(" my cool directory ")]
         [TestCase("directory")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync_SpecialCharacters(string directoryName)
         {
             // Arrange

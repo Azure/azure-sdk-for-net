@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -289,6 +291,44 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 start,
                 end);
             return asyncPagable;
+        }
+
+        /// <summary>
+        /// Returns the LastConsumable <see cref="DateTimeOffset"/> of the ChangeFeed, or null if the ChangeFeed is empty or has not been initialized.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+#pragma warning disable AZC0015
+
+        public virtual DateTimeOffset? GetLastConsumable(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015
+        {
+            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
+            return ChangeFeedFactory.GetLastConsumableInternal(
+                containerClient,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Returns the LastConsumable <see cref="DateTimeOffset"/> of the ChangeFeed, or null if the ChangeFeed is empty or has not been initialized.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+#pragma warning disable AZC0015
+        public virtual Task<DateTimeOffset?> GetLastConsumableAsync(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015
+        {
+            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
+            return ChangeFeedFactory.GetLastConsumableInternal(
+                containerClient,
+                async: true,
+                cancellationToken);
         }
     }
 }

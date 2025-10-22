@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.FluidRelay
 {
     public partial class FluidRelayServerResource : IJsonModel<FluidRelayServerData>
     {
+        private static FluidRelayServerData s_dataDeserializationInstance;
+        private static FluidRelayServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FluidRelayServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FluidRelayServerData>)Data).Write(writer, options);
 
-        FluidRelayServerData IJsonModel<FluidRelayServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FluidRelayServerData>)Data).Create(ref reader, options);
+        FluidRelayServerData IJsonModel<FluidRelayServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FluidRelayServerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FluidRelayServerData>(Data, options, AzureResourceManagerFluidRelayContext.Default);
 
-        FluidRelayServerData IPersistableModel<FluidRelayServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FluidRelayServerData>(data, options);
+        FluidRelayServerData IPersistableModel<FluidRelayServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FluidRelayServerData>(data, options, AzureResourceManagerFluidRelayContext.Default);
 
-        string IPersistableModel<FluidRelayServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FluidRelayServerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FluidRelayServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FluidRelayServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRoutePortResource : IJsonModel<ExpressRoutePortData>
     {
+        private static ExpressRoutePortData s_dataDeserializationInstance;
+        private static ExpressRoutePortData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExpressRoutePortData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortData>)Data).Write(writer, options);
 
-        ExpressRoutePortData IJsonModel<ExpressRoutePortData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortData>)Data).Create(ref reader, options);
+        ExpressRoutePortData IJsonModel<ExpressRoutePortData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRoutePortData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExpressRoutePortData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRoutePortData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ExpressRoutePortData IPersistableModel<ExpressRoutePortData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRoutePortData>(data, options);
+        ExpressRoutePortData IPersistableModel<ExpressRoutePortData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRoutePortData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRoutePortData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRoutePortData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRoutePortData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRoutePortData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

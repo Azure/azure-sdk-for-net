@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ResourceMover
 {
     public partial class MoverResourceSetResource : IJsonModel<MoverResourceSetData>
     {
+        private static MoverResourceSetData s_dataDeserializationInstance;
+        private static MoverResourceSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MoverResourceSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MoverResourceSetData>)Data).Write(writer, options);
 
-        MoverResourceSetData IJsonModel<MoverResourceSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MoverResourceSetData>)Data).Create(ref reader, options);
+        MoverResourceSetData IJsonModel<MoverResourceSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MoverResourceSetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MoverResourceSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MoverResourceSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MoverResourceSetData>(Data, options, AzureResourceManagerResourceMoverContext.Default);
 
-        MoverResourceSetData IPersistableModel<MoverResourceSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MoverResourceSetData>(data, options);
+        MoverResourceSetData IPersistableModel<MoverResourceSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MoverResourceSetData>(data, options, AzureResourceManagerResourceMoverContext.Default);
 
-        string IPersistableModel<MoverResourceSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MoverResourceSetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MoverResourceSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MoverResourceSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

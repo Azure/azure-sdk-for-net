@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_List</description>
+        /// <description>JobRun_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_List</description>
+        /// <description>JobRun_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

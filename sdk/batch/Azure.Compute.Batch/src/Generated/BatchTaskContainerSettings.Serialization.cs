@@ -51,6 +51,16 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ContainerHostBatchBindMounts))
+            {
+                writer.WritePropertyName("containerHostBatchBindMounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in ContainerHostBatchBindMounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,7 +69,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,6 +102,7 @@ namespace Azure.Compute.Batch
             string imageName = default;
             ContainerRegistryReference registry = default;
             ContainerWorkingDirectory? workingDirectory = default;
+            IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,13 +135,33 @@ namespace Azure.Compute.Batch
                     workingDirectory = new ContainerWorkingDirectory(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("containerHostBatchBindMounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerHostBatchBindMountEntry> array = new List<ContainerHostBatchBindMountEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerHostBatchBindMountEntry.DeserializeContainerHostBatchBindMountEntry(item, options));
+                    }
+                    containerHostBatchBindMounts = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchTaskContainerSettings(containerRunOptions, imageName, registry, workingDirectory, serializedAdditionalRawData);
+            return new BatchTaskContainerSettings(
+                containerRunOptions,
+                imageName,
+                registry,
+                workingDirectory,
+                containerHostBatchBindMounts ?? new ChangeTrackingList<ContainerHostBatchBindMountEntry>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchTaskContainerSettings>.Write(ModelReaderWriterOptions options)
@@ -140,7 +171,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +185,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchTaskContainerSettings(document.RootElement, options);
                     }
                 default:
@@ -168,7 +199,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchTaskContainerSettings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchTaskContainerSettings(document.RootElement);
         }
 

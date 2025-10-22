@@ -66,6 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clusterUri"u8);
             writer.WriteObjectValue<object>(ClusterUri);
+            if (Optional.IsDefined(ClusterAuthType))
+            {
+                writer.WritePropertyName("clusterAuthType"u8);
+                writer.WriteStringValue(ClusterAuthType.Value.ToString());
+            }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
@@ -101,6 +106,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue<object>(FileSystem);
             }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -123,6 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object clusterUri = default;
+            HDInsightClusterAuthenticationType? clusterAuthType = default;
             object userName = default;
             SecretBase password = default;
             LinkedServiceReference linkedServiceName = default;
@@ -130,6 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object encryptedCredential = default;
             object isEspEnabled = default;
             object fileSystem = default;
+            CredentialReference credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -207,6 +219,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             clusterUri = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("clusterAuthType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterAuthType = new HDInsightClusterAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("userName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -270,6 +291,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             fileSystem = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -285,20 +315,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 clusterUri,
+                clusterAuthType,
                 userName,
                 password,
                 linkedServiceName,
                 hcatalogLinkedServiceName,
                 encryptedCredential,
                 isEspEnabled,
-                fileSystem);
+                fileSystem,
+                credential);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new HDInsightLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHDInsightLinkedService(document.RootElement);
         }
 

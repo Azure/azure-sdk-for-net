@@ -9,31 +9,6 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 
-$DependencyCalculationPackages = @(
-  "Azure.Core",
-  "Azure.ResourceManager"
-)
-
-function processTestProject($projPath) {
-  $cleanPath = $projPath -replace "^\$\(RepoRoot\)", ""
-
-  # Split the path into segments
-  $pathSegments = $cleanPath -split "[\\/]"
-
-  # Find the index of the 'tests' directory
-  $testsIndex = $pathSegments.IndexOf("tests")
-
-  if ($testsIndex -gt 0) {
-      # Reconstruct the path up to the directory just above 'tests'
-      $parentDirectory = ($pathSegments[0..($testsIndex - 1)] -join [System.IO.Path]::DirectorySeparatorChar)
-      return $parentDirectory
-  } else {
-      Write-Error "Unable to retrieve a package directory for this this test project: $projPath"
-      # If 'tests' is not found, return the original path (optional behavior)
-      $_
-  }
-}
-
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -41,24 +16,42 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
+  $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
+  
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
-  $msbuildOutput = dotnet msbuild `
+  dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $ServiceProj `
+    "$ServiceProj" `
     /p:ServiceDirectory=$serviceDirectory `
-    /p:AddDevVersion=$shouldAddDevVersion
+    /p:AddDevVersion=$shouldAddDevVersion `
+    /p:OutputProjectInfoListFilePath="$outputFilePath" `
+    -tl:off | Out-Host
 
-  foreach ($projectOutput in $msbuildOutput)
+  # Check if msbuild succeeded
+  if ($LASTEXITCODE -ne 0) {
+    # Clean up temp file before failing
+    if (Test-Path $outputFilePath) {
+      $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+    }
+    throw "MSBuild failed with exit code $LASTEXITCODE"
+  }
+
+  $packageInfoLines = @()
+  if (Test-Path $outputFilePath) {
+    $packageInfoLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
+    $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+  }
+
+  foreach ($projectOutput in $packageInfoLines)
   {
     if (!$projectOutput) {
-      Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
+      Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $AotCompatOptOut = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -71,55 +64,139 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.IncludedForValidation = $false
     $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
 
-    if ($pkgProp.Name -in $DependencyCalculationPackages -and $env:DISCOVER_DEPENDENT_PACKAGES) {
-      Write-Host "Calculating dependencies for $($pkgProp.Name)"
-      $outputFilePath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylist.txt"
-      $buildOutputPath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylistoutput.txt"
+    $ciProps = $pkgProp.GetCIYmlForArtifact()
 
-      if (!(Test-Path $outputFilePath)) {
-        try {
-          $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$($pkgProp.Name)`" /p:IncludeSrc=false " +
-          "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-          " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
-
-          Invoke-LoggedCommand $command | Out-Null
-        }
-        catch {
-            Write-Host "Failed calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
-            Write-Host "Dumping erroring build output."
-            Write-Host (Get-Content -Raw $buildOutputPath)
-            continue
+    if ($ciProps) {
+      # First, check if this artifact has baselined warnings in AOTTestInputs
+      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+      $hasBaselinedWarnings = $false
+      if ($aotArtifacts) {
+        $matchingAotArtifact = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+        if ($matchingAotArtifact -and $matchingAotArtifact.ExpectedWarningsFilepath) {
+          $hasBaselinedWarnings = $true
         }
       }
 
-      $pkgRelPath = $pkgProp.DirectoryPath.Replace($RepoRoot, "").TrimStart("\/")
-
-      if (Test-Path $outputFilePath) {
-        $dependentProjects = Get-Content $outputFilePath
-        $testPackages = @{}
-
-        foreach ($projectLine in $dependentProjects) {
-          $testPackage = processTestProject($projectLine)
-          if ($testPackage -and $testPackage -ne $pkgRelPath) {
-            if ($testPackages[$testPackage]) {
-              $testPackages[$testPackage] += 1
-            }
-            else {
-              $testPackages[$testPackage] = 1
-            }
-          }
+      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
+      # if artifact has baselined warnings, run AOT checks; 
+      # otherwise use AotCompatOptOut from project settings
+      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
+      if ($null -ne $shouldAot) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
         }
-
-        $pkgProp.AdditionalValidationPackages = $testPackages.Keys
-
-        Write-Host "Cleaning up $outputFilePath."
       }
+      elseif ($hasBaselinedWarnings) {
+        # If artifact has baselined warnings, enable AOT checks
+        $pkgProp.CIParameters["CheckAOTCompat"] = $true
+      }
+      else {
+        # If not explicitly opted out of AOT compat, run the check
+        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -ne 'true'
+      }
+
+      # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
+      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
+        if ($aotArtifacts) {
+          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
+        }
+        else {
+          $pkgProp.CIParameters["AOTTestInputs"] = @()
+        }
+      }
+      else {
+        $pkgProp.CIParameters["AOTTestInputs"] = @()
+      }
+
+      # BuildSnippets is opt _out_, so we should default to true if not specified
+      $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
+      if ($null -ne $shouldSnippet) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["BuildSnippets"] = $parsedBool
+        }
+      }
+      else {
+        $pkgProp.CIParameters["BuildSnippets"] = $true
+      }
+    }
+    # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
+    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    else {
+      # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
+      $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
+      $pkgProp.CIParameters["AOTTestInputs"] = @()
+      $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
     $allPackageProps += $pkgProp
   }
 
   return $allPackageProps
+}
+
+function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages, $diffObj, $AllPkgProps)
+{
+  $additionalValidationPackages = @()
+
+  $DependencyCalculationPackages = @(
+    "Azure.Core",
+    "Azure.ResourceManager",
+    "System.ClientModel"
+  )
+
+  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.Name -in $DependencyCalculationPackages }
+  $TestDependsOnDependency = $TestDependsOnDependencySet.Name -join " "
+
+  if (!$TestDependsOnDependency) {
+    return $additionalValidationPackages
+  }
+
+  Write-Host "Calculating dependencies for $($pkgProp.Name)"
+
+  $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
+  $buildOutputPath = Join-Path $RepoRoot "_dependencylistoutput.txt"
+
+  try {
+    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+
+    Invoke-LoggedCommand $command | Out-Null
+  }
+  catch {
+      Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
+      Write-Host "Dumping erroring build output."
+      Write-Host (Get-Content -Raw $buildOutputPath)
+
+      return @()
+  }
+
+  if (Test-Path $outputFilePath) {
+    $dependentProjects = Get-Content $outputFilePath
+
+    foreach ($packageRootPath in $dependentProjects) {
+      if (!$packageRootPath) {
+        Write-Verbose "Get-dotnet-AdditionalValidationPackagesFromPackageSet::dependentProjects Package root path is empty, skipping."
+        continue
+      }
+      $pkg = $AllPkgProps | Where-Object { $_.DirectoryPath -eq $packageRootPath }
+
+      if (!$pkg) {
+        Write-Verbose "Unable to find package for path $packageRootPath, skipping. Most likely a nested test project not directly under test."
+        continue
+      }
+
+      if ($pkg -and $LocatedPackages -notcontains $pkg) {
+        $pkg.IncludedForValidation = $true
+        $additionalValidationPackages += $pkg
+      }
+    }
+  }
+
+  return $additionalValidationPackages
 }
 
 # Returns the nuget publish status of a package id and version.

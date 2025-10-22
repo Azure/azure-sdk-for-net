@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Nginx
                 case 201:
                     {
                         NginxDeploymentApiKeyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentApiKeyData.DeserializeNginxDeploymentApiKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Nginx
                 case 201:
                     {
                         NginxDeploymentApiKeyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentApiKeyData.DeserializeNginxDeploymentApiKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentApiKeyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentApiKeyData.DeserializeNginxDeploymentApiKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentApiKeyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentApiKeyData.DeserializeNginxDeploymentApiKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentApiKeyListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentApiKeyListResponse.DeserializeNginxDeploymentApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentApiKeyListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentApiKeyListResponse.DeserializeNginxDeploymentApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentApiKeyListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NginxDeploymentApiKeyListResponse.DeserializeNginxDeploymentApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Nginx
                 case 200:
                     {
                         NginxDeploymentApiKeyListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NginxDeploymentApiKeyListResponse.DeserializeNginxDeploymentApiKeyListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -1678,7 +1678,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1694,7 +1694,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiManagementServiceData(document.RootElement, options);
                     }
                 default:

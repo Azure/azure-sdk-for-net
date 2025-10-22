@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -40,15 +41,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComponentId))
             {
-                if (ComponentId != null)
-                {
-                    writer.WritePropertyName("componentId"u8);
-                    writer.WriteStringValue(ComponentId);
-                }
-                else
-                {
-                    writer.WriteNull("componentId");
-                }
+                writer.WritePropertyName("componentId"u8);
+                writer.WriteStringValue(ComponentId);
             }
             if (Optional.IsDefined(ComponentName))
             {
@@ -62,15 +56,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             if (Optional.IsDefined(License))
             {
-                if (License != null)
-                {
-                    writer.WritePropertyName("license"u8);
-                    writer.WriteStringValue(License);
-                }
-                else
-                {
-                    writer.WriteNull("license");
-                }
+                writer.WritePropertyName("license"u8);
+                writer.WriteStringValue(License);
             }
             if (Optional.IsCollectionDefined(FilePaths))
             {
@@ -81,6 +68,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -114,6 +106,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string version = default;
             string license = default;
             IList<string> filePaths = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +132,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotFirmwareDefenseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -153,11 +146,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         if (property0.NameEquals("componentId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                componentId = null;
-                                continue;
-                            }
                             componentId = property0.Value.GetString();
                             continue;
                         }
@@ -173,11 +161,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         }
                         if (property0.NameEquals("license"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                license = null;
-                                continue;
-                            }
                             license = property0.Value.GetString();
                             continue;
                         }
@@ -193,6 +176,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 array.Add(item.GetString());
                             }
                             filePaths = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -214,6 +206,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 version,
                 license,
                 filePaths ?? new ChangeTrackingList<string>(),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -224,7 +217,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SbomComponentResult)} does not support writing '{options.Format}' format.");
             }
@@ -238,7 +231,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSbomComponentResult(document.RootElement, options);
                     }
                 default:

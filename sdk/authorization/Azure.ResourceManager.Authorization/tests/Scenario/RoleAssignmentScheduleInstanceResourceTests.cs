@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return ResourceGroup.GetRoleAssignmentScheduleInstances();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             var collection = await GetRoleAssignmentScheduleInstanceCollectionAsync();

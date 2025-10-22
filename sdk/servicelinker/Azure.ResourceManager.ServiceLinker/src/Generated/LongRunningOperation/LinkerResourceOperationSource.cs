@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ServiceLinker
 
         LinkerResource IOperationSource<LinkerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
             return new LinkerResource(_client, data);
         }
 
         async ValueTask<LinkerResource> IOperationSource<LinkerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement);
-            return new LinkerResource(_client, data);
+            var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
+            return await Task.FromResult(new LinkerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

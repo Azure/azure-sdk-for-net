@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerPostgreSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerPatch)} does not support writing '{options.Format}' format.");
             }
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlServerPatch(document.RootElement, options);
                     }
                 default:

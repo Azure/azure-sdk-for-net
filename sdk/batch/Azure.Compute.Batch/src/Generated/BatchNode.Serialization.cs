@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,10 +40,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(State))
             {
@@ -72,7 +73,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IpAddress.ToString());
             }
             if (Optional.IsDefined(AffinityId))
             {
@@ -124,6 +125,16 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTaskInfo"u8);
                 writer.WriteObjectValue(StartTaskInfo, options);
             }
+            if (Optional.IsCollectionDefined(CertificateReferences))
+            {
+                writer.WritePropertyName("certificateReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in CertificateReferences)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
@@ -162,7 +173,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -192,13 +203,13 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string id = default;
-            string url = default;
+            Uri url = default;
             BatchNodeState? state = default;
             SchedulingState? schedulingState = default;
             DateTimeOffset? stateTransitionTime = default;
             DateTimeOffset? lastBootTime = default;
             DateTimeOffset? allocationTime = default;
-            string ipAddress = default;
+            IPAddress ipAddress = default;
             string affinityId = default;
             string vmSize = default;
             int? totalTasksRun = default;
@@ -208,6 +219,7 @@ namespace Azure.Compute.Batch
             IReadOnlyList<BatchTaskInfo> recentTasks = default;
             BatchStartTask startTask = default;
             BatchStartTaskInfo startTaskInfo = default;
+            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchNodeError> errors = default;
             bool? isDedicated = default;
             BatchNodeEndpointConfiguration endpointConfiguration = default;
@@ -224,7 +236,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -274,7 +290,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityId"u8))
@@ -355,6 +375,20 @@ namespace Azure.Compute.Batch
                     startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("certificateReferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
+                    }
+                    certificateReferences = array;
+                    continue;
+                }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -429,6 +463,7 @@ namespace Azure.Compute.Batch
                 recentTasks ?? new ChangeTrackingList<BatchTaskInfo>(),
                 startTask,
                 startTaskInfo,
+                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 errors ?? new ChangeTrackingList<BatchNodeError>(),
                 isDedicated,
                 endpointConfiguration,
@@ -444,7 +479,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{options.Format}' format.");
             }
@@ -458,7 +493,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchNode(document.RootElement, options);
                     }
                 default:
@@ -472,7 +507,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchNode FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchNode(document.RootElement);
         }
 

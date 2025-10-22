@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridContainerServiceContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.HybridContainerService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkData)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement, options);
                     }
                 default:

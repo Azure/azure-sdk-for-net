@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1317,7 +1317,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         PrivateLinkServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkPrivateEndpointConnectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1527,7 +1527,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1637,7 +1637,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

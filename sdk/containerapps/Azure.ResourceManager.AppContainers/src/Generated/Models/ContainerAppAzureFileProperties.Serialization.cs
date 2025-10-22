@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
+            if (Optional.IsDefined(AccountKeyVaultProperties))
+            {
+                writer.WritePropertyName("accountKeyVaultProperties"u8);
+                writer.WriteObjectValue(AccountKeyVaultProperties, options);
+            }
             if (Optional.IsDefined(AccessMode))
             {
                 writer.WritePropertyName("accessMode"u8);
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string accountName = default;
             string accountKey = default;
+            ContainerAppSecretKeyVaultProperties accountKeyVaultProperties = default;
             ContainerAppAccessMode? accessMode = default;
             string shareName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,6 +114,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountKeyVaultProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accountKeyVaultProperties = ContainerAppSecretKeyVaultProperties.DeserializeContainerAppSecretKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessMode"u8))
@@ -130,7 +145,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppAzureFileProperties(accountName, accountKey, accessMode, shareName, serializedAdditionalRawData);
+            return new ContainerAppAzureFileProperties(
+                accountName,
+                accountKey,
+                accountKeyVaultProperties,
+                accessMode,
+                shareName,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -190,6 +211,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountKeyVaultProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountKeyVaultProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountKeyVaultProperties))
+                {
+                    builder.Append("  accountKeyVaultProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AccountKeyVaultProperties, options, 2, false, "  accountKeyVaultProperties: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -239,7 +275,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -255,7 +291,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppAzureFileProperties(document.RootElement, options);
                     }
                 default:

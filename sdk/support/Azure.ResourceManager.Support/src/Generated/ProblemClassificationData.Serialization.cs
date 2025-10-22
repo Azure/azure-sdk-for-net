@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -44,11 +45,11 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(SecondaryConsentEnabled))
+            if (Optional.IsCollectionDefined(SecondaryConsentEnabledInfo))
             {
                 writer.WritePropertyName("secondaryConsentEnabled"u8);
                 writer.WriteStartArray();
-                foreach (var item in SecondaryConsentEnabled)
+                foreach (var item in SecondaryConsentEnabledInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Support
             ResourceType type = default;
             SystemData systemData = default;
             string displayName = default;
-            IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
+            IList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Support
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSupportContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Support
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSupportContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ProblemClassificationData)} does not support writing '{options.Format}' format.");
             }
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Support
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeProblemClassificationData(document.RootElement, options);
                     }
                 default:

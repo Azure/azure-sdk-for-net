@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a role instance from a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a role instance from a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a role instance from a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceRoleInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a role instance from a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceRoleInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceView value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleInstanceView.DeserializeRoleInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceView value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleInstanceView.DeserializeRoleInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         RoleInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleInstanceListResult.DeserializeRoleInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

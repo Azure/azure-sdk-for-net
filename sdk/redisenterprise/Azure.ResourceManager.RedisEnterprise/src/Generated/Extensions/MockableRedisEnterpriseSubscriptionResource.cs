@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

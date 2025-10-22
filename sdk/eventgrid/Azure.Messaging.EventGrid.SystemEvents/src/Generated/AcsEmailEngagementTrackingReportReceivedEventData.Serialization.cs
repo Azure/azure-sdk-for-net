@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsEmailEngagementTrackingReportReceivedEventData : IUtf8JsonSerializable, IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailEngagementTrackingReportReceived event. </summary>
+    [JsonConverter(typeof(AcsEmailEngagementTrackingReportReceivedEventDataConverter))]
+    public partial class AcsEmailEngagementTrackingReportReceivedEventData : IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
@@ -69,13 +70,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("engagementType"u8);
                 writer.WriteStringValue(Engagement.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -86,22 +87,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsEmailEngagementTrackingReportReceivedEventData IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsEmailEngagementTrackingReportReceivedEventData IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsEmailEngagementTrackingReportReceivedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement, options);
         }
 
-        internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,60 +118,58 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DateTimeOffset? userActionTimestamp = default;
             string engagementContext = default;
             string userAgent = default;
-            AcsUserEngagement? engagementType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            AcsUserEngagement? engagement = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sender"u8))
+                if (prop.NameEquals("sender"u8))
                 {
-                    sender = property.Value.GetString();
+                    sender = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recipient"u8))
+                if (prop.NameEquals("recipient"u8))
                 {
-                    recipient = property.Value.GetString();
+                    recipient = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageId"u8))
+                if (prop.NameEquals("messageId"u8))
                 {
-                    messageId = property.Value.GetString();
+                    messageId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userActionTimestamp"u8))
+                if (prop.NameEquals("userActionTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userActionTimestamp = property.Value.GetDateTimeOffset("O");
+                    userActionTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("engagementContext"u8))
+                if (prop.NameEquals("engagementContext"u8))
                 {
-                    engagementContext = property.Value.GetString();
+                    engagementContext = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userAgent"u8))
+                if (prop.NameEquals("userAgent"u8))
                 {
-                    userAgent = property.Value.GetString();
+                    userAgent = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("engagementType"u8))
+                if (prop.NameEquals("engagementType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    engagementType = new AcsUserEngagement(property.Value.GetString());
+                    engagement = new AcsUserEngagement(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AcsEmailEngagementTrackingReportReceivedEventData(
                 sender,
                 recipient,
@@ -173,32 +177,40 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 userActionTimestamp,
                 engagementContext,
                 userAgent,
-                engagementType,
-                serializedAdditionalRawData);
+                engagement,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsEmailEngagementTrackingReportReceivedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AcsEmailEngagementTrackingReportReceivedEventData IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsEmailEngagementTrackingReportReceivedEventData IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsEmailEngagementTrackingReportReceivedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -206,22 +218,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsEmailEngagementTrackingReportReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsEmailEngagementTrackingReportReceivedEventData FromResponse(Response response)
+        internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement);
-        }
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, AcsEmailEngagementTrackingReportReceivedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<AcsEmailEngagementTrackingReportReceivedEventData>>(model, ModelSerializationExtensions.WireOptions);
+            }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override AcsEmailEngagementTrackingReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

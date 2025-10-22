@@ -25,6 +25,9 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     internal partial class BlobCheckpointStoreInternal : CheckpointStore
     {
+        /// <summary>The text used as a placeholder when no offset metadata exists in some older checkpoint formats.</summary>
+        internal const string NoOffsetPlaceholderText = "no offset";
+
 #pragma warning disable CA1802 // Use a constant field
         /// <summary>A message to use when throwing exception when checkpoint container or blob does not exists.</summary>
         private static readonly string BlobsResourceDoesNotExist = "The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.";
@@ -138,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 var prefix = string.Format(CultureInfo.InvariantCulture, OwnershipPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
 
-                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false))
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(BlobTraits.Metadata, BlobStates.None, prefix, cancellationToken).ConfigureAwait(false))
                 {
                     // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                     // to throw an exception.
@@ -524,7 +527,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
 
-            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && !string.IsNullOrEmpty(offsetStr))
+            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && !IsPlaceholderOffset(offsetStr))
             {
                 offset = offsetStr;
                 startingPosition = EventPosition.FromOffset(offsetStr, false);
@@ -600,10 +603,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     startingPosition ??= EventPosition.FromOffset(offset, false);
                 }
-                else if (sequenceNumber.HasValue && sequenceNumber.Value != long.MinValue)
-                {
-                    startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
-                }
                 else
                 {
                     // Skip checkpoints without an offset without logging an error.
@@ -630,6 +629,20 @@ namespace Azure.Messaging.EventHubs.Primitives
                 SequenceNumber = sequenceNumber,
             };
         }
+
+        /// <summary>
+        ///   Determines whether an offset value is a placeholder slug that was written
+        ///   for legacy compatibility purposes.
+        /// </summary>
+        ///
+        /// <param name="offset">The offset to test.</param>
+        ///
+        /// <returns><c>true</c> if <paramref name="offset"/> is the placeholder offset; otherwise, <c>false</c>.</returns>
+        ///
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/Azure.Messaging.EventHubs_5.11.6/sdk/eventhub/Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/BlobCheckpointStoreInternal.cs#L446" />
+        ///
+        private bool IsPlaceholderOffset(string offset) =>
+            string.IsNullOrEmpty(offset) || string.Equals(offset, NoOffsetPlaceholderText, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         ///   Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number.

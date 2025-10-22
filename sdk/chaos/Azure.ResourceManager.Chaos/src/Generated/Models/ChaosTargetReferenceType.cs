@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         private const string ChaosTargetValue = "ChaosTarget";
 
-        /// <summary> ChaosTarget. </summary>
+        /// <summary> Chaos target reference type. </summary>
         public static ChaosTargetReferenceType ChaosTarget { get; } = new ChaosTargetReferenceType(ChaosTargetValue);
         /// <summary> Determines if two <see cref="ChaosTargetReferenceType"/> values are the same. </summary>
         public static bool operator ==(ChaosTargetReferenceType left, ChaosTargetReferenceType right) => left.Equals(right);

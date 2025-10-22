@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="sizeInMiB"> The size of the allocation for this volume in Mebibytes. </param>
+        /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public NetworkCloudVolumeData(AzureLocation location, ExtendedLocation extendedLocation, long sizeInMiB) : base(location)
         {
@@ -72,23 +72,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="allocatedSizeMiB"> The allocated size of the volume in Mebibytes. </param>
         /// <param name="attachedTo"> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </param>
         /// <param name="detailedStatus"> The more detailed status of the volume. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="provisioningState"> The provisioning state of the volume. </param>
         /// <param name="serialNumber"> The unique identifier of the volume. </param>
-        /// <param name="sizeInMiB"> The size of the allocation for this volume in Mebibytes. </param>
+        /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
+        /// <param name="storageApplianceId"> The resource ID of the storage appliance that hosts the volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long? allocatedSizeMiB, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, ResourceIdentifier storageApplianceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ETag = etag;
             ExtendedLocation = extendedLocation;
+            AllocatedSizeMiB = allocatedSizeMiB;
             AttachedTo = attachedTo;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
             ProvisioningState = provisioningState;
             SerialNumber = serialNumber;
             SizeInMiB = sizeInMiB;
+            StorageApplianceId = storageApplianceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,8 +103,12 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
+        /// <summary> Resource ETag. </summary>
+        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> The allocated size of the volume in Mebibytes. </summary>
+        public long? AllocatedSizeMiB { get; }
         /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
         public IReadOnlyList<string> AttachedTo { get; }
         /// <summary> The more detailed status of the volume. </summary>
@@ -109,7 +119,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public VolumeProvisioningState? ProvisioningState { get; }
         /// <summary> The unique identifier of the volume. </summary>
         public string SerialNumber { get; }
-        /// <summary> The size of the allocation for this volume in Mebibytes. </summary>
+        /// <summary> The requested storage allocation for the volume in Mebibytes. </summary>
         public long SizeInMiB { get; set; }
+        /// <summary> The resource ID of the storage appliance that hosts the volume. </summary>
+        public ResourceIdentifier StorageApplianceId { get; set; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ResourceGroupLongTermRetentionBackupResource : IJsonModel<LongTermRetentionBackupData>
     {
+        private static LongTermRetentionBackupData s_dataDeserializationInstance;
+        private static LongTermRetentionBackupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LongTermRetentionBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LongTermRetentionBackupData>)Data).Write(writer, options);
 
-        LongTermRetentionBackupData IJsonModel<LongTermRetentionBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LongTermRetentionBackupData>)Data).Create(ref reader, options);
+        LongTermRetentionBackupData IJsonModel<LongTermRetentionBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LongTermRetentionBackupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LongTermRetentionBackupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        LongTermRetentionBackupData IPersistableModel<LongTermRetentionBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LongTermRetentionBackupData>(data, options);
+        LongTermRetentionBackupData IPersistableModel<LongTermRetentionBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LongTermRetentionBackupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<LongTermRetentionBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LongTermRetentionBackupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LongTermRetentionBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LongTermRetentionBackupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

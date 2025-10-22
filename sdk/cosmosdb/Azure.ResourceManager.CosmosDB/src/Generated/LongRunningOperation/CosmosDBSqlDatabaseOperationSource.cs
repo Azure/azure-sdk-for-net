@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlDatabaseResource IOperationSource<CosmosDBSqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBSqlDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CosmosDBSqlDatabaseResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlDatabaseResource> IOperationSource<CosmosDBSqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(document.RootElement);
-            return new CosmosDBSqlDatabaseResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBSqlDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            return await Task.FromResult(new CosmosDBSqlDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class DataMigrationServiceResource : IJsonModel<DataMigrationServiceData>
     {
+        private static DataMigrationServiceData s_dataDeserializationInstance;
+        private static DataMigrationServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataMigrationServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationServiceData>)Data).Write(writer, options);
 
-        DataMigrationServiceData IJsonModel<DataMigrationServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationServiceData>)Data).Create(ref reader, options);
+        DataMigrationServiceData IJsonModel<DataMigrationServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataMigrationServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataMigrationServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataMigrationServiceData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        DataMigrationServiceData IPersistableModel<DataMigrationServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataMigrationServiceData>(data, options);
+        DataMigrationServiceData IPersistableModel<DataMigrationServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataMigrationServiceData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<DataMigrationServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMigrationServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataMigrationServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMigrationServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

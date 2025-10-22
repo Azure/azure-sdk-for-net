@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteSlotResourceHealthMetadataResource : IJsonModel<ResourceHealthMetadataData>
     {
+        private static ResourceHealthMetadataData s_dataDeserializationInstance;
+        private static ResourceHealthMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceHealthMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthMetadataData>)Data).Write(writer, options);
 
-        ResourceHealthMetadataData IJsonModel<ResourceHealthMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthMetadataData>)Data).Create(ref reader, options);
+        ResourceHealthMetadataData IJsonModel<ResourceHealthMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthMetadataData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        ResourceHealthMetadataData IPersistableModel<ResourceHealthMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataData>(data, options);
+        ResourceHealthMetadataData IPersistableModel<ResourceHealthMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<ResourceHealthMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceHealthMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

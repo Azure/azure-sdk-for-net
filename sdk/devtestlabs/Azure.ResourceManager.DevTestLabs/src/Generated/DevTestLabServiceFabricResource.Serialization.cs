@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabServiceFabricResource : IJsonModel<DevTestLabServiceFabricData>
     {
+        private static DevTestLabServiceFabricData s_dataDeserializationInstance;
+        private static DevTestLabServiceFabricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabServiceFabricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabServiceFabricData>)Data).Write(writer, options);
 
-        DevTestLabServiceFabricData IJsonModel<DevTestLabServiceFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabServiceFabricData>)Data).Create(ref reader, options);
+        DevTestLabServiceFabricData IJsonModel<DevTestLabServiceFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabServiceFabricData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabServiceFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabServiceFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabServiceFabricData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabServiceFabricData IPersistableModel<DevTestLabServiceFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabServiceFabricData>(data, options);
+        DevTestLabServiceFabricData IPersistableModel<DevTestLabServiceFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabServiceFabricData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabServiceFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabServiceFabricData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabServiceFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabServiceFabricData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

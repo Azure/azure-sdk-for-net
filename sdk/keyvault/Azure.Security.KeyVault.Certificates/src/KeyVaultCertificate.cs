@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string KeyIdPropertyName = "kid";
         private const string SecretIdPropertyName = "sid";
         private const string CERPropertyName = "cer";
+        private const string PreserveCertificateOrderPropertyName = "preserveCertOrder";
 
         private string _keyId;
         private string _secretId;
@@ -66,6 +67,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// </remarks>
         public byte[] Cer { get; internal set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the certificate chain preserves its original order.
+        /// The default value is false, which sets the leaf certificate at index 0.
+        /// </summary>
+        public bool? PreserveCertificateOrder { get; internal set; }
+
         internal virtual void ReadProperty(JsonProperty prop)
         {
             switch (prop.Name)
@@ -80,6 +87,10 @@ namespace Azure.Security.KeyVault.Certificates
 
                 case CERPropertyName:
                     Cer = prop.Value.GetBytesFromBase64();
+                    break;
+
+                case PreserveCertificateOrderPropertyName:
+                    PreserveCertificateOrder = prop.Value.GetBoolean();
                     break;
 
                 default:

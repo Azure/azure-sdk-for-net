@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork
 
         ArtifactManifestResource IOperationSource<ArtifactManifestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement);
+            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
             return new ArtifactManifestResource(_client, data);
         }
 
         async ValueTask<ArtifactManifestResource> IOperationSource<ArtifactManifestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement);
-            return new ArtifactManifestResource(_client, data);
+            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            return await Task.FromResult(new ArtifactManifestResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

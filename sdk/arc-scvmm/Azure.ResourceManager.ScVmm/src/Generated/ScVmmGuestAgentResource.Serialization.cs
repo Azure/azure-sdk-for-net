@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmGuestAgentResource : IJsonModel<ScVmmGuestAgentData>
     {
+        private static ScVmmGuestAgentData s_dataDeserializationInstance;
+        private static ScVmmGuestAgentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScVmmGuestAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmGuestAgentData>)Data).Write(writer, options);
 
-        ScVmmGuestAgentData IJsonModel<ScVmmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmGuestAgentData>)Data).Create(ref reader, options);
+        ScVmmGuestAgentData IJsonModel<ScVmmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmGuestAgentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmGuestAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScVmmGuestAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmGuestAgentData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
-        ScVmmGuestAgentData IPersistableModel<ScVmmGuestAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmGuestAgentData>(data, options);
+        ScVmmGuestAgentData IPersistableModel<ScVmmGuestAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmGuestAgentData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmGuestAgentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScVmmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmGuestAgentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabEnvironmentResource : IJsonModel<DevTestLabEnvironmentData>
     {
+        private static DevTestLabEnvironmentData s_dataDeserializationInstance;
+        private static DevTestLabEnvironmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabEnvironmentData>)Data).Write(writer, options);
 
-        DevTestLabEnvironmentData IJsonModel<DevTestLabEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabEnvironmentData>)Data).Create(ref reader, options);
+        DevTestLabEnvironmentData IJsonModel<DevTestLabEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabEnvironmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabEnvironmentData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabEnvironmentData IPersistableModel<DevTestLabEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabEnvironmentData>(data, options);
+        DevTestLabEnvironmentData IPersistableModel<DevTestLabEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabEnvironmentData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabEnvironmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabEnvironmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

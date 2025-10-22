@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotWorkflowResource : IJsonModel<WorkflowEnvelopeData>
     {
+        private static WorkflowEnvelopeData s_dataDeserializationInstance;
+        private static WorkflowEnvelopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkflowEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowEnvelopeData>)Data).Write(writer, options);
 
-        WorkflowEnvelopeData IJsonModel<WorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowEnvelopeData>)Data).Create(ref reader, options);
+        WorkflowEnvelopeData IJsonModel<WorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowEnvelopeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkflowEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowEnvelopeData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WorkflowEnvelopeData IPersistableModel<WorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowEnvelopeData>(data, options);
+        WorkflowEnvelopeData IPersistableModel<WorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowEnvelopeData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowEnvelopeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowEnvelopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

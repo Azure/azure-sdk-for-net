@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -57,8 +58,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
+        /// <param name="mode"> Mode of the Fleet. </param>
+        /// <param name="capacityType">
+        /// Specifies capacity type for Fleet Regular and Spot priority profiles.
+        /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
+        /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
+        /// </param>
+        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetVmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetVmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null, ComputeFleetMode? mode = null, ComputeFleetCapacityType? capacityType = null, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = null)
         {
             vmSizesProfile ??= new List<ComputeFleetVmSizeProfile>();
             additionalLocationsLocationProfiles ??= new List<LocationProfile>();
@@ -73,6 +81,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 computeProfile,
                 createdOn,
                 uniqueId,
+                mode,
+                capacityType,
+                zoneAllocationPolicy,
                 serializedAdditionalRawData: null);
         }
 
@@ -102,9 +113,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS
         /// (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for
         /// Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// Server](https://learn.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
         /// &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
+        /// Server](https://learn.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15
         /// </param>
         /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
@@ -281,17 +292,23 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmss"/>. </summary>
-        /// <param name="id">
-        /// The compute RP resource id of the virtualMachineScaleSet
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
-        /// </param>
-        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmss"/> instance for mocking. </returns>
-        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = null, string type = null, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = null)
+        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = null)
         {
-            return new ComputeFleetVmss(id, type, operationStatus, error, serializedAdditionalRawData: null);
+            return new ComputeFleetVmss(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationStatus,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetApiError"/>. </summary>
@@ -331,6 +348,43 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static ComputeFleetInnerError ComputeFleetInnerError(string exceptionType = null, string errorDetail = null)
         {
             return new ComputeFleetInnerError(exceptionType, errorDetail, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVirtualMachine"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
+        /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
+        /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = null)
+        {
+            return new ComputeFleetVirtualMachine(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationStatus,
+                error,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties" />. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
+        /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
+        /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
+        /// <param name="vmAttributes"> Attribute based Fleet. </param>
+        /// <param name="additionalLocationsLocationProfiles"> Represents the configuration for additional locations where Fleet resources may be deployed. </param>
+        /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
+        /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
+        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId)
+        {
+            return ComputeFleetProperties(provisioningState: provisioningState, spotPriorityProfile: spotPriorityProfile, regularPriorityProfile: regularPriorityProfile, vmSizesProfile: vmSizesProfile, vmAttributes: vmAttributes, additionalLocationsLocationProfiles: additionalLocationsLocationProfiles, computeProfile: computeProfile, createdOn: createdOn, uniqueId: uniqueId, mode: default, capacityType: default, zoneAllocationPolicy: default);
         }
     }
 }

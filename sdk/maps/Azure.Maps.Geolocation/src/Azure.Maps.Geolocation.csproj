@@ -5,13 +5,13 @@
     <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Geolocation</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);AZC0012;AZC0035</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

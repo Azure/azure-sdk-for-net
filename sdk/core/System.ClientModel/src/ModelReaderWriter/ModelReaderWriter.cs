@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -21,8 +22,9 @@ public static class ModelReaderWriter
     /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default)
-        where T : IPersistableModel<T>
     {
         if (model is null)
         {
@@ -31,6 +33,110 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
+        return WritePersistableOrEnumerable(model, options, ModelReaderWriterReflectionContext.Default);
+    }
+
+    /// <summary>
+    /// Converts the value of a model into a <see cref="BinaryData"/>.
+    /// </summary>
+    /// <param name="model">The model to convert.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
+    /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    public static BinaryData Write(object model, ModelReaderWriterOptions? options = default)
+    {
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        options ??= ModelReaderWriterOptions.Json;
+
+        return WritePersistableOrEnumerable(model, options, ModelReaderWriterReflectionContext.Default);
+    }
+
+    /// <summary>
+    /// Converts the value of a model into a <see cref="BinaryData"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the value to write.</typeparam>
+    /// <param name="model">The model to convert.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
+    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    public static BinaryData Write<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        return WritePersistableOrEnumerable(model, options, context);
+    }
+
+    /// <summary>
+    /// Converts the value of a model into a <see cref="BinaryData"/>.
+    /// </summary>
+    /// <param name="model">The model to convert.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
+    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
+    /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    public static BinaryData Write(object model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        return WritePersistableOrEnumerable(model, options, context);
+    }
+
+    private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        if (model is IPersistableModel<T> iModel)
+        {
+            return WritePersistable(iModel, options);
+        }
+        else if (model is IPersistableModel<object> objModel)
+        {
+            //used for the class proxy case since the proxy does not need to implement reading and writing for itself
+            return WritePersistable(objModel, options);
+        }
+        else
+        {
+            var enumerable = model as IEnumerable ?? context.GetTypeBuilder(model!.GetType()).ToEnumerable(model);
+            if (enumerable is not null)
+            {
+                var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
+                return collectionWriter.Write(enumerable, options);
+            }
+            else
+            {
+                throw new InvalidOperationException($"{model!.GetType().ToFriendlyName()} must implement IEnumerable or IPersistableModel");
+            }
+        }
+    }
+
+    private static BinaryData WritePersistable<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+    {
         if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
             using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).ExtractReader())
@@ -45,43 +151,6 @@ public static class ModelReaderWriter
     }
 
     /// <summary>
-    /// Converts the value of a model into a <see cref="BinaryData"/>.
-    /// </summary>
-    /// <param name="model">The model to convert.</param>
-    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
-    /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
-    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
-    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-    public static BinaryData Write(object model, ModelReaderWriterOptions? options = default)
-    {
-        if (model is null)
-        {
-            throw new ArgumentNullException(nameof(model));
-        }
-
-        options ??= ModelReaderWriterOptions.Json;
-
-        var iModel = model as IPersistableModel<object>;
-        if (iModel is null)
-        {
-            throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
-        }
-
-        if (ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
-        {
-            using (UnsafeBufferSequence.Reader reader = new ModelWriter<object>(jsonModel, options).ExtractReader())
-            {
-                return reader.ToBinaryData();
-            }
-        }
-        else
-        {
-            return iModel.Write(options);
-        }
-    }
-
-    /// <summary>
     /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
     /// </summary>
     /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
@@ -91,24 +160,44 @@ public static class ModelReaderWriter
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
     /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
-    public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default)
-        where T : IPersistableModel<T>
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    public static T? Read<T>(BinaryData data, ModelReaderWriterOptions? options = default)
     {
-        if (data is null)
+        return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
+    }
+
+    /// <summary>
+    /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
+    /// </summary>
+    /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context"> The <see cref="ModelReaderWriterContext"/> to use.</param>
+    /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
+    /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
+    /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
+    public static T? Read<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        if (options is null)
         {
-            throw new ArgumentNullException(nameof(data));
+            throw new ArgumentNullException(nameof(options));
         }
 
-        options ??= ModelReaderWriterOptions.Json;
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
 
-        return GetInstance<T>().Create(data, options);
+        return ReadInternal<T>(data, options, context);
     }
 
     /// <summary>
     /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
     /// </summary>
     /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
-    /// <param name="returnType">The type of the objec to convert and return.</param>
+    /// <param name="returnType">The type of the object to convert and return.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
     /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
@@ -116,7 +205,48 @@ public static class ModelReaderWriter
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
     /// <exception cref="MissingMethodException">If <paramref name="returnType"/> does not have a public or non public empty constructor.</exception>
-    public static object? Read(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelReaderWriterOptions? options = default)
+    [RequiresDynamicCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
+    public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions? options = default)
+    {
+        return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
+    }
+
+    /// <summary>
+    /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
+    /// </summary>
+    /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
+    /// <param name="returnType">The type of the object to convert and return.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="context">The <see cref="ModelReaderWriterContext"/> to use.</param>
+    /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
+    /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
+    /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
+    /// <exception cref="MissingMethodException">If <paramref name="returnType"/> does not have a public or non public empty constructor.</exception>
+    public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return ReadInternal(data, returnType, options, context);
+    }
+
+    private static T? ReadInternal<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        var obj = ReadInternal(data, typeof(T), options, context);
+        return obj is null ? (T?)obj : (T)obj;
+    }
+
+    private static object? ReadInternal(BinaryData data, Type returnType, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
         if (data is null)
         {
@@ -128,48 +258,21 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(returnType));
         }
 
-        options ??= ModelReaderWriterOptions.Json;
-
-        return GetInstance(returnType).Create(data, options);
-    }
-
-    private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
-    {
-        var model = GetObjectInstance(returnType) as IPersistableModel<object>;
-        if (model is null)
+        var builder = context.GetTypeBuilder(returnType);
+        var returnObj = builder.CreateObject();
+        if (returnObj is ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper)
         {
-            throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+            var collectionReader = CollectionReader.GetCollectionReader(collectionWrapper, options);
+            return collectionReader.Read(collectionWrapper, data, builder, context, options);
         }
-        return model;
-    }
-
-    private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
-        where T : IPersistableModel<T>
-    {
-        var model = GetObjectInstance(typeof(T)) as IPersistableModel<T>;
-        if (model is null)
+        else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IPersistableModel<T>)}");
+            return persistableModel.Create(data, options);
         }
-        return model;
-    }
-
-    internal static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
-    {
-        PersistableModelProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(PersistableModelProxyAttribute), false) as PersistableModelProxyAttribute;
-        Type typeToActivate = attribute is null ? returnType : attribute.ProxyType;
-
-        if (returnType.IsAbstract && attribute is null)
+        else
         {
-            throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
+            throw new InvalidOperationException($"{returnType.ToFriendlyName()} must implement IPersistableModel");
         }
-
-        var obj = Activator.CreateInstance(typeToActivate, true);
-        if (obj is null)
-        {
-            throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
-        }
-        return obj;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -190,14 +293,6 @@ public static class ModelReaderWriter
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool ShouldWriteAsJson(IPersistableModel<object> model, ModelReaderWriterOptions options, [MaybeNullWhen(false)] out IJsonModel<object> jsonModel)
-        => ShouldWriteAsJson<object>(model, options, out jsonModel);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
         => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)
-        => IsJsonFormatRequested<object>(model, options);
 }

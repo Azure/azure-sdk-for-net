@@ -10,8 +10,7 @@ description: Samples for the Azure.Security.CodeTransparency client library.
 
 # Azure.Security.CodeTransparency Samples
 
-- [Submission of a signature envelope to the service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample1_HelloWorld.md)
+- [Submission of a signed statement to the service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample1_HelloWorld.md)
 - [Download and verification of a receipt](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample2_ReceiptDownloadVerification.md)
 - [Use your credentials](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)
-- [Find your receipt](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample4_FindYourReceipt.md)
-
+- [Deserialize transparent statement](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample4_DeserializeTransparentStatement.md)

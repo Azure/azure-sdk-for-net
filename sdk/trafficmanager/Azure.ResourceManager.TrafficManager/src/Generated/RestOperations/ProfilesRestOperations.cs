@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-04-01";
+            _apiVersion = apiVersion ?? "2024-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerNameAvailabilityResult.DeserializeTrafficManagerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerNameAvailabilityResult.DeserializeTrafficManagerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerNameAvailabilityResult.DeserializeTrafficManagerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerNameAvailabilityResult.DeserializeTrafficManagerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 201:
                     {
                         TrafficManagerProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 201:
                     {
                         TrafficManagerProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,174 +423,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Starts the specified connection monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionMonitors_Start</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectionMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Start");
-            scope.Start();
-            try
-            {
-                var response = await _connectionMonitorRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Starts the specified connection monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionMonitors_Start</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectionMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Start");
-            scope.Start();
-            try
-            {
-                var response = _connectionMonitorRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Query a snapshot of the most recent connection states.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionMonitors_Query</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectionMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ConnectionMonitorQueryResult>> QueryAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Query");
-            scope.Start();
-            try
-            {
-                var response = await _connectionMonitorRestClient.QueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ConnectionMonitorQueryResult>(new ConnectionMonitorQueryResultOperationSource(), _connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Query a snapshot of the most recent connection states.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionMonitors_Query</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectionMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ConnectionMonitorQueryResult> Query(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorResource.Query");
-            scope.Start();
-            try
-            {
-                var response = _connectionMonitorRestClient.Query(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<ConnectionMonitorQueryResult>(new ConnectionMonitorQueryResultOperationSource(), _connectionMonitorClientDiagnostics, Pipeline, _connectionMonitorRestClient.CreateQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -603,7 +435,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -665,7 +497,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -727,7 +559,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -784,7 +616,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -841,7 +673,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -901,7 +733,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

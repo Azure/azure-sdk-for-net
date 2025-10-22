@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -42,6 +43,11 @@ namespace Azure.ResourceManager.ProviderHub
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
         }
 
         ResourceTypeRegistrationData IJsonModel<ResourceTypeRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,6 +71,7 @@ namespace Azure.ResourceManager.ProviderHub
                 return null;
             }
             ResourceTypeRegistrationProperties properties = default;
+            ResourceTypeRegistrationKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,6 +87,15 @@ namespace Azure.ResourceManager.ProviderHub
                         continue;
                     }
                     properties = ResourceTypeRegistrationProperties.DeserializeResourceTypeRegistrationProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new ResourceTypeRegistrationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerProviderHubContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -118,6 +134,7 @@ namespace Azure.ResourceManager.ProviderHub
                 type,
                 systemData,
                 properties,
+                kind,
                 serializedAdditionalRawData);
         }
 
@@ -128,7 +145,7 @@ namespace Azure.ResourceManager.ProviderHub
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceTypeRegistrationData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceTypeRegistrationData(document.RootElement, options);
                     }
                 default:

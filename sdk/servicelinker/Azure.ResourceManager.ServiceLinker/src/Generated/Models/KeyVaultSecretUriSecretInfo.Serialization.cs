@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support writing '{options.Format}' format.");
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultSecretUriSecretInfo(document.RootElement, options);
                     }
                 default:

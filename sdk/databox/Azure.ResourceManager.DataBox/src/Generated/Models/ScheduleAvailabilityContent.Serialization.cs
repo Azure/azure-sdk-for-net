@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model.Value.ToSerialString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
@@ -113,7 +118,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:

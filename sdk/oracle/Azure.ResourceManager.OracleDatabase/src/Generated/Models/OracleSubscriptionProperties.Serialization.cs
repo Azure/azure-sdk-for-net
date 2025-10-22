@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("saasSubscriptionId"u8);
                 writer.WriteStringValue(SaasSubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudAccountId))
+            if (options.Format != "W" && Optional.IsDefined(CloudAccountOcid))
             {
                 writer.WritePropertyName("cloudAccountId"u8);
-                writer.WriteStringValue(CloudAccountId);
+                writer.WriteStringValue(CloudAccountOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(CloudAccountState))
             {
@@ -69,6 +69,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AzureSubscriptionIds))
+            {
+                writer.WritePropertyName("azureSubscriptionIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in AzureSubscriptionIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(AddSubscriptionOperationState))
+            {
+                writer.WritePropertyName("addSubscriptionOperationState"u8);
+                writer.WriteStringValue(AddSubscriptionOperationState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperationStatusDetail))
+            {
+                writer.WritePropertyName("lastOperationStatusDetail"u8);
+                writer.WriteStringValue(LastOperationStatusDetail);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +97,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,11 +128,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             OracleSubscriptionProvisioningState? provisioningState = default;
             string saasSubscriptionId = default;
-            ResourceIdentifier cloudAccountId = default;
+            string cloudAccountId = default;
             CloudAccountProvisioningState? cloudAccountState = default;
             string termUnit = default;
             string productCode = default;
             OracleSubscriptionUpdateIntent? intent = default;
+            IReadOnlyList<string> azureSubscriptionIds = default;
+            AddSubscriptionOperationState? addSubscriptionOperationState = default;
+            string lastOperationStatusDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,11 +156,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("cloudAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    cloudAccountId = new ResourceIdentifier(property.Value.GetString());
+                    cloudAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("cloudAccountState"u8))
@@ -168,6 +187,34 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     intent = new OracleSubscriptionUpdateIntent(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("azureSubscriptionIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    azureSubscriptionIds = array;
+                    continue;
+                }
+                if (property.NameEquals("addSubscriptionOperationState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    addSubscriptionOperationState = new AddSubscriptionOperationState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("lastOperationStatusDetail"u8))
+                {
+                    lastOperationStatusDetail = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -182,6 +229,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 termUnit,
                 productCode,
                 intent,
+                azureSubscriptionIds ?? new ChangeTrackingList<string>(),
+                addSubscriptionOperationState,
+                lastOperationStatusDetail,
                 serializedAdditionalRawData);
         }
 
@@ -192,7 +242,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OracleSubscriptionProperties)} does not support writing '{options.Format}' format.");
             }
@@ -206,7 +256,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOracleSubscriptionProperties(document.RootElement, options);
                     }
                 default:

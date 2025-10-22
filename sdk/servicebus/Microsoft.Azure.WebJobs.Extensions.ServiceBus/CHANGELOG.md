@@ -1,15 +1,38 @@
 # Release History
 
-## 5.17.0-beta.1 (Unreleased)
+## 5.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-GetProcessorCount for webjobs service bus extension does not override processor count for flex consumption. (#45970)
+
+- Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with ScaleControlelr V2) - AB#32302750
 
 ### Other Changes
+
+## 5.17.0 (2025-06-20)
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 8.x line, the Azure extensions to 1.12.0, and the latest dependencies for the Functions host.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.16.6 (2025-04-08)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.19.0
+
+## 5.16.5 (2025-03-14)
+
+Updated GetProcessorCount to not override the processor count for flex consumption. (#45970)
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
 
 ## 5.16.4 (2024-08-08)
 

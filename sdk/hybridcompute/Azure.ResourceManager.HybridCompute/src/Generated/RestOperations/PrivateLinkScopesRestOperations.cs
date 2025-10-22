@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 201:
                     {
                         HybridComputePrivateLinkScopeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 201:
                     {
                         HybridComputePrivateLinkScopeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         PrivateLinkScopeValidationDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkScopeValidationDetails.DeserializePrivateLinkScopeValidationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         PrivateLinkScopeValidationDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkScopeValidationDetails.DeserializePrivateLinkScopeValidationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         PrivateLinkScopeValidationDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateLinkScopeValidationDetails.DeserializePrivateLinkScopeValidationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         PrivateLinkScopeValidationDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateLinkScopeValidationDetails.DeserializePrivateLinkScopeValidationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputePrivateLinkScopeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputePrivateLinkScopeListResult.DeserializeHybridComputePrivateLinkScopeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

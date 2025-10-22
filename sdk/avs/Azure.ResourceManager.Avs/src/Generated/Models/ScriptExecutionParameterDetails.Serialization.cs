@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ParameterType.ToString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Avs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support writing '{options.Format}' format.");
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
                     }
                 default:

@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Avs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support writing '{options.Format}' format.");
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkloadNetworkDhcpRelay(document.RootElement, options);
                     }
                 default:

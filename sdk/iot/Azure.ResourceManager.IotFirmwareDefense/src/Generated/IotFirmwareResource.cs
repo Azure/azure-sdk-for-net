@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetFirmwareAnalysisSummaryAsync(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
-            return await GetFirmwareAnalysisSummaries().GetAsync(summaryName, cancellationToken).ConfigureAwait(false);
+            return await GetFirmwareAnalysisSummaries().GetAsync(summaryType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareAnalysisSummaryResource> GetFirmwareAnalysisSummary(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
-            return GetFirmwareAnalysisSummaries().Get(summaryName, cancellationToken);
+            return GetFirmwareAnalysisSummaries().Get(summaryType, cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Lists cryptographic certificate analysis results found in a firmware.
+        /// Lists crypto certificate analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Lists cryptographic certificate analysis results found in a firmware.
+        /// Lists crypto certificate analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Lists cryptographic key analysis results found in a firmware.
+        /// Lists crypto key analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Lists cryptographic key analysis results found in a firmware.
+        /// Lists crypto key analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -637,158 +637,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CveResult.DeserializeCveResult(e), _cvesClientDiagnostics, Pipeline, "IotFirmwareResource.GetCves", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to a url for file download.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateDownloadUrl</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateDownloadUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareUriToken>> GenerateDownloadUriAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateDownloadUri");
-            scope.Start();
-            try
-            {
-                var response = await _iotFirmwareFirmwaresRestClient.GenerateDownloadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to a url for file download.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateDownloadUrl</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateDownloadUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareUriToken> GenerateDownloadUri(CancellationToken cancellationToken = default)
-        {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateDownloadUri");
-            scope.Start();
-            try
-            {
-                var response = _iotFirmwareFirmwaresRestClient.GenerateDownloadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to a url for tar file download.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateFilesystemDownloadUrl</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateFilesystemDownloadUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareUriToken>> GenerateFilesystemDownloadUriAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateFilesystemDownloadUri");
-            scope.Start();
-            try
-            {
-                var response = await _iotFirmwareFirmwaresRestClient.GenerateFilesystemDownloadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to a url for tar file download.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateFilesystemDownloadUrl</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmwares_GenerateFilesystemDownloadUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotFirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareUriToken> GenerateFilesystemDownloadUri(CancellationToken cancellationToken = default)
-        {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateFilesystemDownloadUri");
-            scope.Start();
-            try
-            {
-                var response = _iotFirmwareFirmwaresRestClient.GenerateFilesystemDownloadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -804,7 +652,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -830,7 +678,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -844,7 +692,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Lists SBOM analysis results of a firmware.
+        /// Lists sbom analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -856,7 +704,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -870,7 +718,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Lists SBOM analysis results of a firmware.
+        /// Lists sbom analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -882,7 +730,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// </list>
         /// </summary>

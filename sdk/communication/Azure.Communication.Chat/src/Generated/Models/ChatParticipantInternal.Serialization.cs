@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,6 +29,17 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("shareHistoryTime"u8);
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
@@ -40,6 +52,7 @@ namespace Azure.Communication.Chat
             CommunicationIdentifierModel communicationIdentifier = default;
             string displayName = default;
             DateTimeOffset? shareHistoryTime = default;
+            IDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))
@@ -61,15 +74,29 @@ namespace Azure.Communication.Chat
                     shareHistoryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName, shareHistoryTime);
+            return new ChatParticipantInternal(communicationIdentifier, displayName, shareHistoryTime, metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatParticipantInternal FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeChatParticipantInternal(document.RootElement);
         }
 

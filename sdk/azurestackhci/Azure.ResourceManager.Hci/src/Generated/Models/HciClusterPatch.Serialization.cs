@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.Hci.Models
                             Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.GetRawText()));
+                                dictionary.Add(property1.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property1.Value.GetRawText())), options, AzureResourceManagerHciContext.Default));
                             }
                             userAssignedIdentities = dictionary;
                             continue;
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Hci.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HciClusterPatch)} does not support writing '{options.Format}' format.");
             }
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHciClusterPatch(document.RootElement, options);
                     }
                 default:

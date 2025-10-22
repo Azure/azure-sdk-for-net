@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCacheData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCacheData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageCacheData.DeserializeStorageCacheData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1525,7 +1525,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1552,7 +1552,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1603,7 +1603,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1632,7 +1632,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCachesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageCachesResult.DeserializeStorageCachesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

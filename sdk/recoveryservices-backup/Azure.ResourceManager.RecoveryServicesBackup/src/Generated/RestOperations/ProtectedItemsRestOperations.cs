@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Provides the details of the backed up item. This is an asynchronous operation. To know the status of the operation,
         /// call the GetItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupProtectedItemData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Provides the details of the backed up item. This is an asynchronous operation. To know the status of the operation,
         /// call the GetItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case 200:
                     {
                         BackupProtectedItemData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, string xMsAuthorizationAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, string xMsAuthorizationAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -212,6 +212,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             uri.AppendPath(protectedItemName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsAuthorizationAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -225,17 +229,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Enables backup of an item or to modifies the backup policy information of an already backed up item. This is an
         /// asynchronous operation. To know the status of the operation, call the GetItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backup item. </param>
-        /// <param name="containerName"> Container name associated with the backup item. </param>
-        /// <param name="protectedItemName"> Item name to be backed up. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="data"> resource backed up item. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -245,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, data, xMsAuthorizationAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,17 +266,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Enables backup of an item or to modifies the backup policy information of an already backed up item. This is an
         /// asynchronous operation. To know the status of the operation, call the GetItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backup item. </param>
-        /// <param name="containerName"> Container name associated with the backup item. </param>
-        /// <param name="protectedItemName"> Item name to be backed up. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="data"> resource backed up item. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, BackupProtectedItemData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -281,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, data, xMsAuthorizationAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -343,12 +349,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Used to disable backup of an item within a container. This is an asynchronous operation. To know the status of the
         /// request, call the GetItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -378,12 +384,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Used to disable backup of an item within a container. This is an asynchronous operation. To know the status of the
         /// request, call the GetItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
-        /// <param name="containerName"> Container name associated with the backed up item. </param>
-        /// <param name="protectedItemName"> Backed up item to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>

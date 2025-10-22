@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkFabricAccessControlListData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         NetworkFabricAccessControlListData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case 200:
                     {
                         AccessControlListsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AccessControlListsResult.DeserializeAccessControlListsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -8,30 +8,41 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
-    internal class InformaticaServerlessRuntimeOperationSource : IOperationSource<InformaticaServerlessRuntimeResource>
+    /// <summary></summary>
+    internal partial class InformaticaServerlessRuntimeOperationSource : IOperationSource<InformaticaServerlessRuntimeResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal InformaticaServerlessRuntimeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         InformaticaServerlessRuntimeResource IOperationSource<InformaticaServerlessRuntimeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = InformaticaServerlessRuntimeData.DeserializeInformaticaServerlessRuntimeData(document.RootElement);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            InformaticaServerlessRuntimeData data = InformaticaServerlessRuntimeData.DeserializeInformaticaServerlessRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new InformaticaServerlessRuntimeResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<InformaticaServerlessRuntimeResource> IOperationSource<InformaticaServerlessRuntimeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = InformaticaServerlessRuntimeData.DeserializeInformaticaServerlessRuntimeData(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            InformaticaServerlessRuntimeData data = InformaticaServerlessRuntimeData.DeserializeInformaticaServerlessRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new InformaticaServerlessRuntimeResource(_client, data);
         }
     }

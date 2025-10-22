@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning
     {
         MachineLearningEndpointAuthKeys IOperationSource<MachineLearningEndpointAuthKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement);
         }
 
         async ValueTask<MachineLearningEndpointAuthKeys> IOperationSource<MachineLearningEndpointAuthKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(document.RootElement);
         }
     }

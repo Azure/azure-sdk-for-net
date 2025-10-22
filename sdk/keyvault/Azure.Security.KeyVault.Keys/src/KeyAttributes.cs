@@ -17,11 +17,13 @@ namespace Azure.Security.KeyVault.Keys
         private const string RecoveryLevelPropertyName = "recoveryLevel";
         private const string ExportablePropertyName = "exportable";
         private const string HsmPlatformPropertyName = "hsmPlatform";
+        private const string KeyAttestationPropertyName = "attestation";
 
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
         private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
         private static readonly JsonEncodedText s_exportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
+        private static readonly JsonEncodedText s_keyAttestationPropertyNameBytes = JsonEncodedText.Encode(KeyAttestationPropertyName);
 
         public bool? Enabled { get; set; }
 
@@ -41,11 +43,14 @@ namespace Azure.Security.KeyVault.Keys
 
         public string HsmPlatform { get; internal set; }
 
+        public KeyAttestation Attestation { get; set; }
+
         internal bool ShouldSerialize =>
             Enabled.HasValue ||
             NotBefore.HasValue ||
             ExpiresOn.HasValue ||
-            Exportable.HasValue;
+            Exportable.HasValue ||
+            Attestation != null;
 
         internal void ReadProperties(JsonElement json)
         {
@@ -80,6 +85,35 @@ namespace Azure.Security.KeyVault.Keys
                     case HsmPlatformPropertyName:
                         HsmPlatform = prop.Value.GetString();
                         break;
+                    case KeyAttestationPropertyName:
+                        if (prop.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            Attestation = null;
+                        }
+                        else
+                        {
+                            Attestation = new KeyAttestation();
+                            // Read attestation properties
+                            foreach (JsonProperty attestProp in prop.Value.EnumerateObject())
+                            {
+                                switch (attestProp.Name)
+                                {
+                                    case "cert":
+                                        Attestation.CertificatePemFile = Convert.FromBase64String(attestProp.Value.GetString());
+                                        break;
+                                    case "priv":
+                                        Attestation.PrivateKeyAttestation = Convert.FromBase64String(attestProp.Value.GetString());
+                                        break;
+                                    case "pub":
+                                        Attestation.PublicKeyAttestation = Convert.FromBase64String(attestProp.Value.GetString());
+                                        break;
+                                    case "ver":
+                                        Attestation.Version = attestProp.Value.GetString();
+                                        break;
+                                }
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -104,6 +138,28 @@ namespace Azure.Security.KeyVault.Keys
             if (Exportable.HasValue)
             {
                 json.WriteBoolean(s_exportablePropertyNameBytes, Exportable.Value);
+            }
+
+            if (Attestation != null)
+            {
+                json.WriteStartObject(s_keyAttestationPropertyNameBytes);
+                if (!Attestation.CertificatePemFile.IsEmpty)
+                {
+                    json.WriteString("certificatePemFile", Convert.ToBase64String(Attestation.CertificatePemFile.ToArray()));
+                }
+                if (!Attestation.PrivateKeyAttestation.IsEmpty)
+                {
+                    json.WriteString("privateKeyAttestation", Convert.ToBase64String(Attestation.PrivateKeyAttestation.ToArray()));
+                }
+                if (!Attestation.PublicKeyAttestation.IsEmpty)
+                {
+                    json.WriteString("publicKeyAttestation", Convert.ToBase64String(Attestation.PublicKeyAttestation.ToArray()));
+                }
+                if (Attestation.Version != null)
+                {
+                    json.WriteString("version", Attestation.Version);
+                }
+                json.WriteEndObject();
             }
 
             // Created is read-only don't serialize

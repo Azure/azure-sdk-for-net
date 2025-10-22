@@ -3,22 +3,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
-using System.Text.Json;
-using System.Security.Claims;
 
 namespace Azure.AI.Language.Text.Authoring.Tests
 {
     public class TextAuthoringClientLiveTest : TextAuthoringTestBase
     {
-        public TextAuthoringClientLiveTest(bool isAsync, AuthoringClientOptions.ServiceVersion serviceVersion)
+        public TextAuthoringClientLiveTest(bool isAsync, TextAnalysisAuthoringClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -27,51 +29,52 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-
+            string projectName = "MyTextProject001";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
             // Act
-            Response<ProjectMetadata> response = await client.GetProjectAsync(projectName);
-            ProjectMetadata projectMetadata = response.Value;
+            Response<TextAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
+            TextAuthoringProjectMetadata projectMetadata = response.Value;
 
             // Assert
             Assert.IsNotNull(projectMetadata);
             Assert.AreEqual(projectName, projectMetadata.ProjectName);
             Assert.IsNotNull(projectMetadata.Language);
-            Assert.IsNotNull(projectMetadata.CreatedDateTime);
-            Assert.IsNotNull(projectMetadata.LastModifiedDateTime);
+            Assert.IsNotNull(projectMetadata.CreatedOn);
+            Assert.IsNotNull(projectMetadata.LastModifiedOn);
+            Assert.IsNotNull(projectMetadata.StorageInputContainerName);
 
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Language: {projectMetadata.Language}");
-            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedDateTime}");
-            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedDateTime}");
+            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
             Console.WriteLine($"Description: {projectMetadata.Description}");
+            Console.WriteLine($"StorageInputContainerName: {projectMetadata.StorageInputContainerName}");
         }
 
         [RecordedTest]
         public async Task ImportAsync()
         {
             // Arrange
-            string projectName = "MyImportTextProject";
+            string projectName = "MyImportTextProject0717";
 
-            var projectMetadata = new CreateProjectDetails(
+            var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "CustomSingleLabelClassification",
-                storageInputContainerName: "test-data",
-                projectName: projectName,
+                storageInputContainerName: "single-class-example",
                 language: "en"
             )
             {
                 Description = "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
                 Multilingual = false,
-                Settings = new ProjectSettings()
+                Settings = new TextAuthoringProjectSettings()
             };
 
-            var projectAssets = new ExportedCustomSingleLabelClassificationProjectAssets
+            var projectAssets = new ExportedCustomSingleLabelClassificationProjectAsset
             {
                 Classes =
                 {
-                    new ExportedClass { Category = "Date" },
-                    new ExportedClass { Category = "LenderName" },
-                    new ExportedClass { Category = "LenderAddress" }
+                    new TextAuthoringExportedClass { Category = "Date" },
+                    new TextAuthoringExportedClass { Category = "LenderName" },
+                    new TextAuthoringExportedClass { Category = "LenderAddress" }
                 },
                 Documents =
                 {
@@ -90,7 +93,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 }
             };
 
-            var exportedProject = new ExportedProject(
+            var exportedProject = new TextAuthoringExportedProject(
                 projectFileVersion: "2022-05-01",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata)
@@ -98,10 +101,10 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 Assets = projectAssets
             };
 
+            TextAuthoringProject projectClient = client.GetProject(projectName);
             // Act
-            Operation operation = await client.ImportAsync(
+            Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 body: exportedProject
             );
 
@@ -116,24 +119,83 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         }
 
         [RecordedTest]
+        public async Task ImportRawStringAsync()
+        {
+            // Arrange
+            string projectName = "MyImportTextProjectRaw0718";
+
+            string rawJson = """
+            {
+              "projectFileVersion": "2025-05-15-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "CustomSingleLabelClassification",
+                "storageInputContainerName": "single-class-example",
+                "language": "en",
+                "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+                "multilingual": false,
+                "settings": {}
+              },
+              "assets": {
+                "projectKind": "CustomSingleLabelClassification",
+                "classes": [
+                  { "category": "Date" },
+                  { "category": "LenderName" },
+                  { "category": "LenderAddress" }
+                ],
+                "documents": [
+                  {
+                    "class": { "category": "Date" },
+                    "location": "01.txt",
+                    "language": "en"
+                  },
+                  {
+                    "class": { "category": "LenderName" },
+                    "location": "02.txt",
+                    "language": "en"
+                  }
+                ]
+              }
+            }
+            """;
+
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            // Act
+            Operation operation = await projectClient.ImportAsync(
+                waitUntil: WaitUntil.Started,
+                projectJson: rawJson
+            );
+
+            // Assert
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(202, operation.GetRawResponse().Status);
+
+            // Logging for additional context
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Import completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
         public async Task CreateProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-            var projectData = new
+            string projectName = "MyTextProject001";
+            var projectMetadata = new TextAuthoringCreateProjectDetails(
+                projectKind: "customMultiLabelClassification",
+                storageInputContainerName: "multi-class-example",
+                language: "en"
+            )
             {
-                projectName = projectName,
-                language = "en",
-                projectKind = "customMultiLabelClassification",
-                description = "Project description for a Custom Entity Recognition project",
-                multilingual = true,
-                storageInputContainerName = "e2e0test0data"
+                Description = "Project description for a Custom Entity Recognition project",
+                Multilingual = true
             };
 
-            using RequestContent content = RequestContent.Create(projectData);
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
-            Response response = await client.CreateProjectAsync(projectName, content);
+            Response response = await projectClient.CreateProjectAsync(projectMetadata);
 
             // Assert
             Assert.IsNotNull(response);
@@ -147,13 +209,13 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "MyImportTextProject";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
-            Operation operation = await client.DeleteProjectAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
-            );
+            Operation operation = await projectClient.DeleteProjectAsync(
+                waitUntil: WaitUntil.Completed
+                );
 
             // Assert
             Assert.IsNotNull(operation);
@@ -169,26 +231,26 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task TrainAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
 
-            var trainingJobDetails = new TrainingJobDetails(
+            var trainingJobDetails = new TextAuthoringTrainingJobDetails(
                 modelLabel: "model1",
                 trainingConfigVersion: "2022-05-01"
             )
             {
-                EvaluationOptions = new EvaluationDetails
+                EvaluationOptions = new TextAuthoringEvaluationDetails
                 {
-                    Kind = EvaluationKind.Percentage,
+                    Kind = TextAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }
             };
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
-            Operation<TrainingJobResult> operation = await client.TrainAsync(
+            Operation<TextAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
                 waitUntil: WaitUntil.Started,
-                projectName: projectName,
-                body: trainingJobDetails
+                details: trainingJobDetails
             );
 
             // Assert
@@ -205,13 +267,13 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task CancelTrainingJobAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-            string jobId = "4e993615-bfe2-44bb-926b-fbe12dc17097_638686944000000000"; // Replace with an actual job ID.
+            string projectName = "single-class-project";
+            string jobId = "a0f21063-df96-49ea-b275-2c50b4c5fe33_638864928000000000"; // Replace with an actual job ID.
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
-            Operation<TrainingJobResult> operation = await client.CancelTrainingJobAsync(
+            Operation<TextAuthoringTrainingJobResult> operation = await projectClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Started,
-                projectName: projectName,
                 jobId: jobId
             );
 
@@ -229,19 +291,20 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetModelEvaluationSummaryAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
             string trainedModelLabel = "model1";
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Act
-            Response<EvaluationSummary> evaluationSummaryResponse = await client.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
+            Response<TextAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
 
-            EvaluationSummary evaluationSummary = evaluationSummaryResponse.Value;
+            TextAuthoringEvalSummary evaluationSummary = evaluationSummaryResponse.Value;
 
             // Assert
             Assert.IsNotNull(evaluationSummary, "Evaluation summary should not be null.");
 
             // Specific type assertion for single-label classification
-            if (evaluationSummary is CustomSingleLabelClassificationEvaluationSummary singleLabelSummary)
+            if (evaluationSummary is CustomSingleLabelClassificationEvalSummary singleLabelSummary)
             {
                 Assert.IsNotNull(singleLabelSummary.EvaluationOptions, "Evaluation options should not be null.");
                 Assert.IsNotNull(singleLabelSummary.CustomSingleLabelClassificationEvaluation, "Evaluation metrics should not be null.");
@@ -262,17 +325,21 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
                 // Print confusion matrix
                 Console.WriteLine("Confusion Matrix:");
-                foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix.AdditionalProperties)
+                foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix)
                 {
                     Console.WriteLine($"Row: {row.Key}");
-                    // Convert BinaryData to JSON string
-                    var json = row.Value.ToString();
-                    // Deserialize JSON string to dictionary
-                    var columnData = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, float>>>(json);
-
-                    foreach (var col in columnData)
+                    foreach (var col in row.Value.AdditionalProperties)
                     {
-                        Console.WriteLine($"    Column: {col.Key}, Normalized Value: {col.Value["normalizedValue"]}, Raw Value: {col.Value["rawValue"]}");
+                        try
+                        {
+                            // Deserialize BinaryData properly
+                            var cell = col.Value.ToObject<TextAuthoringConfusionMatrixCell>(new JsonObjectSerializer());
+                            Console.WriteLine($"    Column: {col.Key}, Normalized Value: {cell.NormalizedValue}, Raw Value: {cell.RawValue}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"    Error deserializing column {col.Key}: {ex.Message}");
+                        }
                     }
                 }
 
@@ -301,14 +368,13 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task LoadSnapshotAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-            string trainedModelLabel = "model1"; // Replace with your actual model label.
+            string projectName = "single-class-project";
+            string trainedModelLabel = "model1";
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Act
-            Operation operation = await client.LoadSnapshotAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                trainedModelLabel: trainedModelLabel
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(
+                waitUntil: WaitUntil.Completed
             );
 
             // Assert
@@ -325,14 +391,12 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteTrainedModelAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
             string trainedModelLabel = "model1"; // Replace with the actual model label.
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Act
-            Response response = await client.DeleteTrainedModelAsync(
-                projectName: projectName,
-                trainedModelLabel: trainedModelLabel
-            );
+            Response response = await trainedModelClient.DeleteTrainedModelAsync();
 
             // Assert
             Assert.IsNotNull(response);
@@ -346,21 +410,20 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeployProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
             string deploymentName = "deployment1";
-            var deploymentDetails = new CreateDeploymentDetails(trainedModelLabel: "m2");
+            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "model1");
 
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
             // Act
-            Operation operation = await client.DeployProjectAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                deploymentName: deploymentName,
-                body: deploymentDetails
+            Operation operation = await deploymentClient.DeployProjectAsync(
+                waitUntil: WaitUntil.Started,
+                details: deploymentDetails
             );
 
             // Assert
             Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
 
             // Logging for additional context
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
@@ -370,17 +433,17 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task SwapDeploymentsAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-            var swapDetails = new SwapDeploymentsDetails(
+            string projectName = "single-class-project";
+            var swapDetails = new TextAuthoringSwapDeploymentsDetails(
                 firstDeploymentName: "deployment1",
                 secondDeploymentName: "deployment2"
             );
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
-            Operation operation = await client.SwapDeploymentsAsync(
+            Operation operation = await projectClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: swapDetails
+                details: swapDetails
             );
 
             // Assert
@@ -395,14 +458,13 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteDeploymentAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-            string deploymentName = "deployment2";
+            string projectName = "single-class-project";
+            string deploymentName = "singleclassdeployment";
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
             // Act
-            Operation operation = await client.DeleteDeploymentAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                deploymentName: deploymentName
+            Operation operation = await deploymentClient.DeleteDeploymentAsync(
+                waitUntil: WaitUntil.Completed
             );
 
             // Assert
@@ -411,6 +473,98 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
             // Logging for additional context
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task ExportProjectAsync()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+
+            TextAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
+            // Act
+            Operation operation = await projectAuthoringClient.ExportAsync(
+                waitUntil: WaitUntil.Completed,
+                stringIndexType: StringIndexType.Utf16CodeUnit);
+
+            // Assert
+            Assert.IsNotNull(operation, "The export operation should not be null.");
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+
+            // Extract and check the operation-location header
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task GetModelEvaluationResultsAsync()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+            string trainedModelLabel = "model1";
+            StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+
+            TextAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            // Act
+            AsyncPageable<TextAuthoringDocumentEvalResult> results = trainedModelAuthoringClient.GetModelEvaluationResultsAsync(
+                stringIndexType: stringIndexType
+            );
+
+            // Assert
+            Assert.IsNotNull(results, "The evaluation results should not be null.");
+
+            await foreach (TextAuthoringDocumentEvalResult result in results)
+            {
+                // Validate base properties
+                Assert.IsNotNull(result, "The result should not be null.");
+                Assert.IsNotNull(result.Location, "The result location should not be null.");
+                Assert.IsNotNull(result.Language, "The result language should not be null.");
+
+                // Validate classification result
+                if (result is CustomSingleLabelClassificationDocumentEvalResult singleLabelResult)
+                {
+                    var classification = singleLabelResult.CustomSingleLabelClassificationResult;
+
+                    Assert.IsNotNull(classification, "The classification result should not be null.");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(classification.ExpectedClass), "The expected class should not be null or empty.");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(classification.PredictedClass), "The predicted class should not be null or empty.");
+                }
+                else
+                {
+                    Assert.Fail($"Unsupported result type: {result.GetType().Name}");
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetDeploymentAsync()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+            string deploymentName = "deployment1";
+
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            // Act
+            Response<TextAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
+
+            // Assert
+            Assert.IsNotNull(response, "The response should not be null.");
+            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected status to be 200 (OK).");
+
+            TextAuthoringProjectDeployment deployment = response.Value;
+
+            Assert.IsNotNull(deployment, "Deployment details should not be null.");
+            Assert.IsNotNull(deployment.DeploymentName, "DeploymentName should not be null.");
+            Assert.IsNotNull(deployment.ModelId, "ModelId should not be null.");
+            Assert.IsNotNull(deployment.LastTrainedOn, "LastTrainedOn should not be null.");
+            Assert.IsNotNull(deployment.LastDeployedOn, "LastDeployedOn should not be null.");
+            Assert.IsNotNull(deployment.DeploymentExpiredOn, "DeploymentExpiredOn should not be null.");
+            Assert.IsNotNull(deployment.ModelTrainingConfigVersion, "ModelTrainingConfigVersion should not be null.");
         }
     }
 }

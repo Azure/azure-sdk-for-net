@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ImpactReporting
 {
     public partial class ImpactCategoryResource : IJsonModel<ImpactCategoryData>
     {
+        private static ImpactCategoryData s_dataDeserializationInstance;
+        private static ImpactCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ImpactCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImpactCategoryData>)Data).Write(writer, options);
 
-        ImpactCategoryData IJsonModel<ImpactCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImpactCategoryData>)Data).Create(ref reader, options);
+        ImpactCategoryData IJsonModel<ImpactCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImpactCategoryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ImpactCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ImpactCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImpactCategoryData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        ImpactCategoryData IPersistableModel<ImpactCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImpactCategoryData>(data, options);
+        ImpactCategoryData IPersistableModel<ImpactCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImpactCategoryData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<ImpactCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImpactCategoryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ImpactCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImpactCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

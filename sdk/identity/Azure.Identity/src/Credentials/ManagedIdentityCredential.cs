@@ -16,7 +16,6 @@ namespace Azure.Identity
     /// Attempts authentication using a managed identity that has been assigned to the deployment environment. This authentication type works for all Azure-hosted
     /// environments that support managed identity. For end-to-end guidance, see <see href="https://learn.microsoft.com/dotnet/azure/sdk/authentication/user-assigned-managed-identity">user-assigned managed identity</see>
     /// or <see href="https://learn.microsoft.com/dotnet/azure/sdk/authentication/system-assigned-managed-identity">system-assigned managed identity</see>.
-    /// <see href="https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview"/>.
     /// </summary>
     public class ManagedIdentityCredential : TokenCredential
     {

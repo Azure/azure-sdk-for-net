@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             string sourceServer = default;
             string targetServerVersion = default;
             string targetServer = default;
-            ScenarioSource? sourceServerType = default;
-            ScenarioTarget? targetServerType = default;
+            DataMigrationScenarioSource? sourceServerType = default;
+            DataMigrationScenarioTarget? targetServerType = default;
             ReplicateMigrationState? state = default;
             float? databaseCount = default;
             string id = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceServerType = new ScenarioSource(property.Value.GetString());
+                    sourceServerType = new DataMigrationScenarioSource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetServerType"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetServerType = new ScenarioTarget(property.Value.GetString());
+                    targetServerType = new DataMigrationScenarioTarget(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:

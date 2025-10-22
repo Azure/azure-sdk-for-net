@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Grafana
 
         ManagedGrafanaResource IOperationSource<ManagedGrafanaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return new ManagedGrafanaResource(_client, data);
         }
 
         async ValueTask<ManagedGrafanaResource> IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
-            return new ManagedGrafanaResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            return await Task.FromResult(new ManagedGrafanaResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

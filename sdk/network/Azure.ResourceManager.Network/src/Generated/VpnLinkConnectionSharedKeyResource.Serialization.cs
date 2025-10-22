@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnLinkConnectionSharedKeyResource : IJsonModel<VpnLinkConnectionSharedKeyData>
     {
+        private static VpnLinkConnectionSharedKeyData s_dataDeserializationInstance;
+        private static VpnLinkConnectionSharedKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VpnLinkConnectionSharedKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnLinkConnectionSharedKeyData>)Data).Write(writer, options);
 
-        VpnLinkConnectionSharedKeyData IJsonModel<VpnLinkConnectionSharedKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnLinkConnectionSharedKeyData>)Data).Create(ref reader, options);
+        VpnLinkConnectionSharedKeyData IJsonModel<VpnLinkConnectionSharedKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnLinkConnectionSharedKeyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnLinkConnectionSharedKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VpnLinkConnectionSharedKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnLinkConnectionSharedKeyData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VpnLinkConnectionSharedKeyData IPersistableModel<VpnLinkConnectionSharedKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(data, options);
+        VpnLinkConnectionSharedKeyData IPersistableModel<VpnLinkConnectionSharedKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VpnLinkConnectionSharedKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnLinkConnectionSharedKeyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VpnLinkConnectionSharedKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnLinkConnectionSharedKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

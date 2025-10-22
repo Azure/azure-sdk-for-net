@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsWatchlistResource : IJsonModel<SecurityInsightsWatchlistData>
     {
+        private static SecurityInsightsWatchlistData s_dataDeserializationInstance;
+        private static SecurityInsightsWatchlistData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsWatchlistData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistData>)Data).Write(writer, options);
 
-        SecurityInsightsWatchlistData IJsonModel<SecurityInsightsWatchlistData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistData>)Data).Create(ref reader, options);
+        SecurityInsightsWatchlistData IJsonModel<SecurityInsightsWatchlistData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsWatchlistData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsWatchlistData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsWatchlistData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsWatchlistData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsWatchlistData IPersistableModel<SecurityInsightsWatchlistData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsWatchlistData>(data, options);
+        SecurityInsightsWatchlistData IPersistableModel<SecurityInsightsWatchlistData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsWatchlistData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsWatchlistData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsWatchlistData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsWatchlistData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsWatchlistData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

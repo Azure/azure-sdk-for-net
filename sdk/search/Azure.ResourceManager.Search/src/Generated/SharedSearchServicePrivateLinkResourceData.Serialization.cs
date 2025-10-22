@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Search
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Search
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSharedSearchServicePrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

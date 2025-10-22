@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotOperations
 {
     public partial class IotOperationsDataflowEndpointResource : IJsonModel<IotOperationsDataflowEndpointData>
     {
+        private static IotOperationsDataflowEndpointData s_dataDeserializationInstance;
+        private static IotOperationsDataflowEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotOperationsDataflowEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsDataflowEndpointData>)Data).Write(writer, options);
 
-        IotOperationsDataflowEndpointData IJsonModel<IotOperationsDataflowEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsDataflowEndpointData>)Data).Create(ref reader, options);
+        IotOperationsDataflowEndpointData IJsonModel<IotOperationsDataflowEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsDataflowEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotOperationsDataflowEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotOperationsDataflowEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsDataflowEndpointData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        IotOperationsDataflowEndpointData IPersistableModel<IotOperationsDataflowEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(data, options);
+        IotOperationsDataflowEndpointData IPersistableModel<IotOperationsDataflowEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        string IPersistableModel<IotOperationsDataflowEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsDataflowEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotOperationsDataflowEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsDataflowEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

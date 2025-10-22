@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,6 +369,75 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceWorkspaceApiSchemas().Get(schemaId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ServiceWorkspaceApiDiagnosticResources in the ServiceWorkspaceApi. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceApiDiagnosticResources and their operations over a ServiceWorkspaceApiDiagnosticResource. </returns>
+        public virtual ServiceWorkspaceApiDiagnosticCollection GetServiceWorkspaceApiDiagnostics()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceApiDiagnosticCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the Diagnostic for an API specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/diagnostics/{diagnosticId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceApiDiagnostic_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceWorkspaceApiDiagnosticResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceWorkspaceApiDiagnosticResource>> GetServiceWorkspaceApiDiagnosticAsync(string diagnosticId, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceWorkspaceApiDiagnostics().GetAsync(diagnosticId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Diagnostic for an API specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/diagnostics/{diagnosticId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceApiDiagnostic_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceWorkspaceApiDiagnosticResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceApiDiagnosticResource> GetServiceWorkspaceApiDiagnostic(string diagnosticId, CancellationToken cancellationToken = default)
+        {
+            return GetServiceWorkspaceApiDiagnostics().Get(diagnosticId, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the details of the API specified by its identifier.
         /// <list type="bullet">
@@ -382,7 +451,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,7 +531,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,7 +577,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -554,7 +623,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -597,7 +666,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -640,7 +709,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -669,7 +738,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -698,7 +767,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -736,7 +805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

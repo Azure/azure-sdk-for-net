@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class ErrorInformation : IUtf8JsonSerializable
+    public partial class ErrorInformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -77,7 +77,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ErrorInformation FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeErrorInformation(document.RootElement);
         }
 

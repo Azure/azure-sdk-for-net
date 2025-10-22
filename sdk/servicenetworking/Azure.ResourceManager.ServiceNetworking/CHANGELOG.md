@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,20 +10,31 @@
 
 ### Other Changes
 
+## 1.1.0 (2025-03-04)
+
+### Features Added
+
+- Stable release for api-version `2025-01-01`. Detail available at https://github.com/Azure/azure-rest-api-specs/tree/aaa30aa706969369385454abb690e425d2e5addb/specification/servicenetworking/ServiceNetworking.Management.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.45.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0
+
 ## 1.1.0-beta.1 (2025-02-06)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-- Added CRUD Operations for Application Gateway for Containers (AGC) Security Policy
-- Bumped api-version to `2025-01-01`
+- Added CRUD Operations for Application Gateway for Containers (AGC) Security Policy.
+- Bumped api-version to `2025-01-01`.
 
 ## 1.0.1 (2023-11-30)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -40,7 +51,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

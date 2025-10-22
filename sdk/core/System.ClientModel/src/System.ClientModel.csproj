@@ -2,13 +2,15 @@
 
   <PropertyGroup>
     <Description>Contains building blocks for clients that call cloud services.</Description>
-    <Version>1.4.0-beta.1</Version>
+    <Version>1.8.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.3.0</ApiCompatVersion>
+    <ApiCompatVersion>1.7.0</ApiCompatVersion>
     <Nullable>enable</Nullable>
-    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net9.0'">net8.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +18,11 @@
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" PackAsAnalyzer="true" />
+    <None Include="$(OutputPath)\..\..\System.ClientModel.SourceGeneration\$(Configuration)\netstandard2.0\System.ClientModel.SourceGeneration.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
 </Project>

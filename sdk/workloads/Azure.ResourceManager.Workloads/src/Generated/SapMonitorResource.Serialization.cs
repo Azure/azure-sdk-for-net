@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapMonitorResource : IJsonModel<SapMonitorData>
     {
+        private static SapMonitorData s_dataDeserializationInstance;
+        private static SapMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SapMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapMonitorData>)Data).Write(writer, options);
 
-        SapMonitorData IJsonModel<SapMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapMonitorData>)Data).Create(ref reader, options);
+        SapMonitorData IJsonModel<SapMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapMonitorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SapMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SapMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapMonitorData>(Data, options, AzureResourceManagerWorkloadsContext.Default);
 
-        SapMonitorData IPersistableModel<SapMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapMonitorData>(data, options);
+        SapMonitorData IPersistableModel<SapMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapMonitorData>(data, options, AzureResourceManagerWorkloadsContext.Default);
 
-        string IPersistableModel<SapMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapMonitorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SapMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

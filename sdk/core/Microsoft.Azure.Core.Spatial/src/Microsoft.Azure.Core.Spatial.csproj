@@ -9,11 +9,11 @@
     <PackageTags>Microsoft Azure SDK Spatial System Text Json</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" />
-    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.Search simplifies declarative resource provisioning in .NET.</Description>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.1.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -10,7 +10,12 @@
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
 
   <!-- TODO: Consider adding DataPlane dependencies here like:
   <ItemGroup>

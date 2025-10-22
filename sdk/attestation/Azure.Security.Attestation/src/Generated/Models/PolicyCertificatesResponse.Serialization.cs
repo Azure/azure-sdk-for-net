@@ -33,7 +33,7 @@ namespace Azure.Security.Attestation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PolicyCertificatesResponse FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePolicyCertificatesResponse(document.RootElement);
         }
     }

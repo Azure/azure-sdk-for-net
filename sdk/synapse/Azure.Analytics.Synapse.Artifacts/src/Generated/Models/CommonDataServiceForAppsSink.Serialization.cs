@@ -31,6 +31,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("alternateKeyName"u8);
                 writer.WriteObjectValue<object>(AlternateKeyName);
             }
+            if (Optional.IsDefined(BypassBusinessLogicExecution))
+            {
+                writer.WritePropertyName("bypassBusinessLogicExecution"u8);
+                writer.WriteObjectValue<object>(BypassBusinessLogicExecution);
+            }
+            if (Optional.IsDefined(BypassPowerAutomateFlows))
+            {
+                writer.WritePropertyName("bypassPowerAutomateFlows"u8);
+                writer.WriteObjectValue<object>(BypassPowerAutomateFlows);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
@@ -75,6 +85,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DynamicsSinkWriteBehavior writeBehavior = default;
             object ignoreNullValues = default;
             object alternateKeyName = default;
+            object bypassBusinessLogicExecution = default;
+            object bypassPowerAutomateFlows = default;
             string type = default;
             object writeBatchSize = default;
             object writeBatchTimeout = default;
@@ -106,6 +118,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     alternateKeyName = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("bypassBusinessLogicExecution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassBusinessLogicExecution = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("bypassPowerAutomateFlows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassPowerAutomateFlows = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -171,14 +201,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties,
                 writeBehavior,
                 ignoreNullValues,
-                alternateKeyName);
+                alternateKeyName,
+                bypassBusinessLogicExecution,
+                bypassPowerAutomateFlows);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new CommonDataServiceForAppsSink FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCommonDataServiceForAppsSink(document.RootElement);
         }
 

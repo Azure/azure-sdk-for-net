@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceTelemetryConfigResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceTelemetryConfigResult.DeserializeApplianceTelemetryConfigResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceTelemetryConfigResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceTelemetryConfigResult.DeserializeApplianceTelemetryConfigResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ResourceConnectorApplianceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ResourceConnectorApplianceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -466,6 +466,106 @@ namespace Azure.ResourceManager.ResourceConnector
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Updates an Appliance with the specified Resource Name in the specified Resource Group and Subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="patch"> The updatable fields of an existing Appliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceConnectorApplianceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceConnectorApplianceData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Updates an Appliance with the specified Resource Name in the specified Resource Group and Subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="patch"> The updatable fields of an existing Appliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceConnectorApplianceData> Update(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceConnectorApplianceData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var uri = new RawRequestUriBuilder();
@@ -550,106 +650,6 @@ namespace Azure.ResourceManager.ResourceConnector
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Updates an Appliance with the specified Resource Name in the specified Resource Group and Subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Appliances name. </param>
-        /// <param name="patch"> The updatable fields of an existing Appliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceConnectorApplianceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceConnectorApplianceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates an Appliance with the specified Resource Name in the specified Resource Group and Subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Appliances name. </param>
-        /// <param name="patch"> The updatable fields of an existing Appliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceConnectorApplianceData> Update(string subscriptionId, string resourceGroupName, string resourceName, ResourceConnectorAppliancePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceConnectorApplianceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListClusterUserCredentialRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var uri = new RawRequestUriBuilder();
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserCredentialResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceClusterUserCredentialResult.DeserializeApplianceClusterUserCredentialResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserCredentialResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceClusterUserCredentialResult.DeserializeApplianceClusterUserCredentialResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceClusterUserKeysResult.DeserializeApplianceClusterUserKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceClusterUserKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceClusterUserKeysResult.DeserializeApplianceClusterUserKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceUpgradeGraph value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceUpgradeGraph.DeserializeApplianceUpgradeGraph(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceUpgradeGraph value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceUpgradeGraph.DeserializeApplianceUpgradeGraph(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case 200:
                     {
                         ApplianceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplianceListResult.DeserializeApplianceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

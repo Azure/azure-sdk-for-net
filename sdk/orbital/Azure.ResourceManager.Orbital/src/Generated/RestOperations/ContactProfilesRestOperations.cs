@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalContactProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalContactProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         ContactProfileListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContactProfileListResult.DeserializeContactProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

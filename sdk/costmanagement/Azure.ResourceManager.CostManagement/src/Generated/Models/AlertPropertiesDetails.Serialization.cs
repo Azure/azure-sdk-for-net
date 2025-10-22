@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TagFilter);
 #else
-                using (JsonDocument document = JsonDocument.Parse(TagFilter))
+                using (JsonDocument document = JsonDocument.Parse(TagFilter, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{options.Format}' format.");
             }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAlertPropertiesDetails(document.RootElement, options);
                     }
                 default:

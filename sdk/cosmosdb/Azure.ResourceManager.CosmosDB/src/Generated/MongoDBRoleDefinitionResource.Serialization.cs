@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class MongoDBRoleDefinitionResource : IJsonModel<MongoDBRoleDefinitionData>
     {
+        private static MongoDBRoleDefinitionData s_dataDeserializationInstance;
+        private static MongoDBRoleDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MongoDBRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBRoleDefinitionData>)Data).Write(writer, options);
 
-        MongoDBRoleDefinitionData IJsonModel<MongoDBRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBRoleDefinitionData>)Data).Create(ref reader, options);
+        MongoDBRoleDefinitionData IJsonModel<MongoDBRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBRoleDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MongoDBRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MongoDBRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoDBRoleDefinitionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        MongoDBRoleDefinitionData IPersistableModel<MongoDBRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBRoleDefinitionData>(data, options);
+        MongoDBRoleDefinitionData IPersistableModel<MongoDBRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBRoleDefinitionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<MongoDBRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBRoleDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MongoDBRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBRoleDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

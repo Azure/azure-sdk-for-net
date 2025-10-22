@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClusterJobProperties(document.RootElement, options);
                     }
                 default:

@@ -35,20 +35,20 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
             writer.WriteStringValue(LastUpdateTime, "O");
-            if (Optional.IsDefined(UsageStats))
+            if (Optional.IsDefined(UsageStatistics))
             {
                 writer.WritePropertyName("usageStats"u8);
-                writer.WriteObjectValue(UsageStats, options);
+                writer.WriteObjectValue(UsageStatistics, options);
             }
-            if (Optional.IsDefined(ResourceStats))
+            if (Optional.IsDefined(ResourceStatistics))
             {
                 writer.WritePropertyName("resourceStats"u8);
-                writer.WriteObjectValue(ResourceStats, options);
+                writer.WriteObjectValue(ResourceStatistics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -58,7 +58,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,7 +87,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            string url = default;
+            Uri url = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             BatchPoolUsageStatistics usageStats = default;
@@ -98,7 +98,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -151,7 +151,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolStatistics)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +165,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchPoolStatistics(document.RootElement, options);
                     }
                 default:
@@ -179,7 +179,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchPoolStatistics FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchPoolStatistics(document.RootElement);
         }
 

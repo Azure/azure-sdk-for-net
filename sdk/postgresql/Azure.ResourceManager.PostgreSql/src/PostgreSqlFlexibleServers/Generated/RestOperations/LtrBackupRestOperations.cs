@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlLtrServerBackupOperationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlLtrServerBackupOperationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlLtrServerBackupOperationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlLtrServerBackupOperationList.DeserializePostgreSqlLtrServerBackupOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlLtrServerBackupOperationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlLtrServerBackupOperationList.DeserializePostgreSqlLtrServerBackupOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlLtrServerBackupOperationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlLtrServerBackupOperationList.DeserializePostgreSqlLtrServerBackupOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlLtrServerBackupOperationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlLtrServerBackupOperationList.DeserializePostgreSqlLtrServerBackupOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

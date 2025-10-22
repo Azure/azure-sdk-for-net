@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportNameAvailabilityResult.DeserializeAppComplianceReportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportNameAvailabilityResult.DeserializeAppComplianceReportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         ReportCollectionGetCountResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReportCollectionGetCountResult.DeserializeReportCollectionGetCountResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         ReportCollectionGetCountResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReportCollectionGetCountResult.DeserializeReportCollectionGetCountResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceGetOverviewStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceGetOverviewStatusResult.DeserializeAppComplianceGetOverviewStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceGetOverviewStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceGetOverviewStatusResult.DeserializeAppComplianceGetOverviewStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         ReportListInUseStorageAccountsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReportListInUseStorageAccountsResult.DeserializeReportListInUseStorageAccountsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         ReportListInUseStorageAccountsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReportListInUseStorageAccountsResult.DeserializeReportListInUseStorageAccountsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -1,14 +1,31 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
+## 4.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
+- Added the `previousVersion` property to `SecretProperties`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version is now `2025-07-01`.
+
+## 4.8.0 (2025-06-13)
+
+### Other Changes
+
+- The default service version is now "7.6".
+
+## 4.8.0-beta.1 (2025-04-08)
+
+### Other Changes
+
+- The default service version is now "7.6-preview.2".
 
 ## 4.7.0 (2024-10-14)
 

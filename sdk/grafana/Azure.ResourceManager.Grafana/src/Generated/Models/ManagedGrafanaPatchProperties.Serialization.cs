@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
+            if (Optional.IsDefined(CreatorCanAdmin))
+            {
+                writer.WritePropertyName("creatorCanAdmin"u8);
+                writer.WriteStringValue(CreatorCanAdmin.Value.ToString());
+            }
             if (Optional.IsDefined(DeterministicOutboundIP))
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
@@ -93,7 +98,7 @@ namespace Azure.ResourceManager.Grafana.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             GrafanaZoneRedundancy? zoneRedundancy = default;
             GrafanaApiKey? apiKey = default;
+            GrafanaCreatorCanAdmin? creatorCanAdmin = default;
             DeterministicOutboundIP? deterministicOutboundIP = default;
             GrafanaPublicNetworkAccess? publicNetworkAccess = default;
             GrafanaIntegrations grafanaIntegrations = default;
@@ -151,6 +157,15 @@ namespace Azure.ResourceManager.Grafana.Models
                         continue;
                     }
                     apiKey = new GrafanaApiKey(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("creatorCanAdmin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creatorCanAdmin = new GrafanaCreatorCanAdmin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deterministicOutboundIP"u8))
@@ -226,6 +241,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedGrafanaPatchProperties(
                 zoneRedundancy,
                 apiKey,
+                creatorCanAdmin,
                 deterministicOutboundIP,
                 publicNetworkAccess,
                 grafanaIntegrations,
@@ -243,7 +259,7 @@ namespace Azure.ResourceManager.Grafana.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support writing '{options.Format}' format.");
             }
@@ -257,7 +273,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedGrafanaPatchProperties(document.RootElement, options);
                     }
                 default:

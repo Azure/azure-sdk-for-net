@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStreamAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentDbOutputDataSource)} does not support writing '{options.Format}' format.");
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentDbOutputDataSource(document.RootElement, options);
                     }
                 default:

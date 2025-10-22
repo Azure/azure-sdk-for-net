@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputeLicenseProfileResource IOperationSource<HybridComputeLicenseProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<HybridComputeLicenseProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return new HybridComputeLicenseProfileResource(_client, data);
         }
 
         async ValueTask<HybridComputeLicenseProfileResource> IOperationSource<HybridComputeLicenseProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement);
-            return new HybridComputeLicenseProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<HybridComputeLicenseProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            return await Task.FromResult(new HybridComputeLicenseProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

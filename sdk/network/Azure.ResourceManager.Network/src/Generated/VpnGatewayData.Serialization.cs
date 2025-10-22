@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -216,7 +218,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("connections"u8))
@@ -334,6 +336,295 @@ namespace Azure.ResourceManager.Network
                 natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VirtualHubId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    virtualHub: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      virtualHub: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualHub))
+                {
+                    builder.Append("    virtualHub: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, VirtualHub, options, 4, false, "    virtualHub: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Connections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Connections))
+                {
+                    if (Connections.Any())
+                    {
+                        builder.Append("    connections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Connections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    connections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BgpSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    bgpSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BgpSettings))
+                {
+                    builder.Append("    bgpSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BgpSettings, options, 4, false, "    bgpSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnGatewayScaleUnit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vpnGatewayScaleUnit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VpnGatewayScaleUnit))
+                {
+                    builder.Append("    vpnGatewayScaleUnit: ");
+                    builder.AppendLine($"{VpnGatewayScaleUnit.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ipConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPConfigurations))
+                {
+                    if (IPConfigurations.Any())
+                    {
+                        builder.Append("    ipConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipConfigurations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBgpRouteTranslationForNat), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableBgpRouteTranslationForNat: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
+                {
+                    builder.Append("    enableBgpRouteTranslationForNat: ");
+                    var boolValue = EnableBgpRouteTranslationForNat.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRoutingPreferenceInternet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isRoutingPreferenceInternet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRoutingPreferenceInternet))
+                {
+                    builder.Append("    isRoutingPreferenceInternet: ");
+                    var boolValue = IsRoutingPreferenceInternet.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NatRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    natRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NatRules))
+                {
+                    if (NatRules.Any())
+                    {
+                        builder.Append("    natRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NatRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    natRules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VpnGatewayData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
@@ -341,7 +632,9 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VpnGatewayData)} does not support writing '{options.Format}' format.");
             }
@@ -355,7 +648,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVpnGatewayData(document.RootElement, options);
                     }
                 default:

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            writer.WriteStringValue(SubnetOcid);
             writer.WritePropertyName("vnicId"u8);
-            writer.WriteStringValue(VnicId);
+            writer.WriteStringValue(VnicOcid);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            ResourceIdentifier subnetId = default;
-            ResourceIdentifier vnicId = default;
+            string subnetId = default;
+            string vnicId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    subnetId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vnicId"u8))
                 {
-                    vnicId = new ResourceIdentifier(property.Value.GetString());
+                    vnicId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateIPAddressesContent)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrivateIPAddressesContent(document.RootElement, options);
                     }
                 default:

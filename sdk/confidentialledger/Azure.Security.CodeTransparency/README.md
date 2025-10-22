@@ -1,8 +1,8 @@
-# Azure Code Transparency client library for .NET
+# Azure Signing Transparency client library for .NET
 
 <!-- cspell:ignore cose merkle scitt -->
 
-`Azure.Security.CodeTransparency` is based on a managed service complying with a [draft SCITT RFC][SCITT_ARCHITECTURE_RFC]. It is a managed service that allows countersigning [COSE signature envelopes][COSE_RFC]. Countersignatures are recorded and signed in the immutable merkle tree for any auditing purposes and [the receipt][SCITT_RECEIPT_RFC] gets issued.
+`Azure.Security.CodeTransparency` is based on a managed service that complies with a [draft SCITT RFC][SCITT_ARCHITECTURE_RFC]. The service stores [COSE signature envelopes][COSE_RFC] in the Merkle tree and issues signed inclusion proofs as [receipts][SCITT_RECEIPT_RFC].
 
 - [OSS server application source code][Service_source_code]
 
@@ -10,9 +10,9 @@
 
 ### Install the package
 
-Make sure you have access to the correct NuGet Feed.
+Ensure you have access to the correct NuGet feed.
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library via NuGet:
 
 ```dotnetcli
 dotnet add package Azure.Security.CodeTransparency --prerelease
@@ -20,10 +20,10 @@ dotnet add package Azure.Security.CodeTransparency --prerelease
 
 ### Prerequisites
 
-- A running and accessible Code Transparency Service
-- Ability to create `COSE_Sign1` envelopes, [an example script][CTS_claim_generator_script]
-- Your signer details (CA cert or DID issuer) have to be configured in the running service, [about available configuration][CTS_configuration_doc]
-- You can get a valid Bearer token if the service authentication is configured to require one, [see example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)
+- A running, accessible Signing Transparency service
+- Ability to create `COSE_Sign1` envelopes (see [example script][CTS_claim_generator_script])
+- Your signer details (CA certificate) must be configured in the running service (see [configuration options][CTS_configuration_doc])
+- Obtain a valid bearer token if service authentication requires one (see [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md))
 
 ### Thread safety
 
@@ -31,37 +31,56 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Authenticate the client
 
-You can get a valid Bearer token if the service authentication is configured to require one, [see example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md).
+Obtain a valid bearer token if the service requires authentication (see [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)).
 
 ## Examples
 
-There are two main use cases for this service: submitting a cose signature envelope and verifying the cryptographic submission receipt. The receipt proves that the signature file was successfully accepted.
+There are two main use cases: submitting a COSE signature envelope and verifying the cryptographic submission receipt, which proves that the signature file was accepted.
 
-Before submitting the cose file, the service must be configured with the relevant Certificate Authority certificate to be able to accept it.
+Before submitting the COSE file, ensure the service is configured with the appropriate policy.
 
-To submit the signature, use the following code:
+Use the following code to submit the signature:
 
 ```C# Snippet:CodeTransparencySubmission
-CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
-Response<GetOperationResult> operationResult = await operation.WaitForCompletionAsync();
-Console.WriteLine($"The entry id to use to get the entry and receipt is {{{operationResult.Value.EntryId}}}");
-Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(operationResult.Value.EntryId, true);
-BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
-byte[] signatureWithReceiptBytes = signatureWithReceipt.ToArray();
+Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
-Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
+Then obtain the transparent statement:
 
-```C# Snippet:CodeTransparencyVerification
-CcfReceiptVerifier.RunVerification(signatureWithReceiptBytes);
+```C# Snippet:CodeTransparencyDownloadTransparentStatement
+Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
+string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
+Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
+byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
 ```
 
-If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.
+After obtaining the transparent statement, you can distribute it so others can verify its inclusion in the service. The verifier checks that the receipt was issued for the given signature and that its signature was endorsed by the service. Because users might not know which service instance the statement came from, they can extract that information from the receipt to create the client for verification.
 
-To learn more about other APIs, please refer to our [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples).
+```C# Snippet:CodeTransparencyVerificationUsingFileBytes
+try
+{
+    var verificationOptions = new CodeTransparencyVerificationOptions
+    {
+        AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+        AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+        UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
+    };
+    CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+    Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
+}
+catch (Exception e)
+{
+    Console.WriteLine($"Verification failed: {e.Message}");
+}
+```
+
+If verification completes without exception, you can trust the signature and the receipt. You can then safely inspect the files, especially the payload embedded in the COSE signature envelope.
+
+To learn more about other APIs, see the [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples).
 
 ### Key concepts
 
@@ -77,12 +96,11 @@ To learn more about other APIs, please refer to our [samples](https://github.com
 
 ## Troubleshooting
 
-Response values returned from Azure confidential ledger client methods are `Response` objects, which contain information about the http response such as the http `Status` property and a `Headers` object containing more information about the failure.
+Response values returned from client methods are `Response` objects, which contain information about the HTTP response such as the HTTP `Status` property and a `Headers` collection with more details.
 
 ## Next steps
 
-For more extensive documentation, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/).
-You may also read more about Microsoft Research's open-source [Confidential Consortium Framework][ccf].
+For more extensive documentation, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/). You can also read more about Microsoft Research's open-source [Confidential Consortium Framework][ccf].
 
 ## Contributing
 
@@ -94,8 +112,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [COSE_RFC]: https://www.rfc-editor.org/rfc/rfc8152.txt
-[SCITT_ARCHITECTURE_RFC]: https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-01.txt
-[SCITT_RECEIPT_RFC]: https://www.ietf.org/archive/id/draft-birkholz-scitt-receipts-03.txt
+[SCITT_ARCHITECTURE_RFC]: https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-11.txt
+[SCITT_RECEIPT_RFC]: https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.txt
 [API_reference]: https://learn.microsoft.com/dotnet/api/azure.security.keyvault.keys
 [Service_source_code]: https://github.com/microsoft/scitt-ccf-ledger
 [CTS_claim_generator_script]: https://github.com/microsoft/scitt-ccf-ledger/tree/main/demo/cts_poc

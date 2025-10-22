@@ -4,13 +4,23 @@
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.3 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.MachineLearning` AOT-compatible
+
+## 1.2.2 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.1 (2024-09-14)
 

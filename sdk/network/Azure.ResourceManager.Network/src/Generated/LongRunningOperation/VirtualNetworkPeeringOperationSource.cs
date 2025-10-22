@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkPeeringResource IOperationSource<VirtualNetworkPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
+            var data = ModelReaderWriter.Read<VirtualNetworkPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new VirtualNetworkPeeringResource(_client, data);
         }
 
         async ValueTask<VirtualNetworkPeeringResource> IOperationSource<VirtualNetworkPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
-            return new VirtualNetworkPeeringResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualNetworkPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new VirtualNetworkPeeringResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

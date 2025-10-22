@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class ConnectorMappingResourceFormatResource : IJsonModel<ConnectorMappingResourceFormatData>
     {
+        private static ConnectorMappingResourceFormatData s_dataDeserializationInstance;
+        private static ConnectorMappingResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConnectorMappingResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectorMappingResourceFormatData>)Data).Write(writer, options);
 
-        ConnectorMappingResourceFormatData IJsonModel<ConnectorMappingResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectorMappingResourceFormatData>)Data).Create(ref reader, options);
+        ConnectorMappingResourceFormatData IJsonModel<ConnectorMappingResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectorMappingResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectorMappingResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectorMappingResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectorMappingResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        ConnectorMappingResourceFormatData IPersistableModel<ConnectorMappingResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectorMappingResourceFormatData>(data, options);
+        ConnectorMappingResourceFormatData IPersistableModel<ConnectorMappingResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectorMappingResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<ConnectorMappingResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectorMappingResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectorMappingResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectorMappingResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

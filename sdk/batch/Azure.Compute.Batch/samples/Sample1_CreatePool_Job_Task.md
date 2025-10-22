@@ -28,7 +28,7 @@ With the BatchAccountResource you can create a pool with the [batchAccount.GetBa
 
 ```C# Snippet:Batch_Sample01_PoolCreation
 var poolName = "HelloWorldPool";
-var imageReference = new BatchImageReference()
+var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
 {
     Publisher = "canonical",
     Offer = "0001-com-ubuntu-server-jammy",
@@ -62,7 +62,7 @@ Creation of Batch jobs and tasks can only be preformed with the `Azure.Compute.B
 
 ```C# Snippet:Batch_Sample01_CreateBatchClient
 var credential = new DefaultAzureCredential();
-BatchClient _batchClient = new BatchClient(
+BatchClient batchClient = new BatchClient(
 new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 ```
 
@@ -71,14 +71,14 @@ new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 Before we can create Batch Tasks, we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are an id for job itself and the name of the pool that this job will run against. 
 
 ```C# Snippet:Batch_Sample01_CreateBatchJob
-await _batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+await batchClient.CreateJobAsync(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
 
 ### Task creation
 
 Batch tasks can be created from the BatchClient via the `CreateTaskAsync`.  The basic elements needed are the name of the job the task will be assigned to, and id for the task itself, and a command to run.
 ```C# Snippet:Batch_Sample01_CreateBatchTask
-await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+await batchClient.CreateTaskAsync("jobId", new BatchTaskCreateOptions("taskId", $"echo Hello world"));
 ```
 
 
@@ -87,7 +87,7 @@ await _batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId",
 Onces the tasks are complete `GetTasksAsync` cand be used to retrieve the `BatchTask` instance and `GetTaskFileAsync` can be used to get the output files
 
 ```C# Snippet:Batch_Sample01_GetTasks
-var completedTasks = _batchClient.GetTasksAsync("jobId", filter: "state eq 'completed'");
+var completedTasks = batchClient.GetTasksAsync("jobId", filter: "state eq 'completed'");
 await foreach (BatchTask t in completedTasks)
 {
     var outputFileName = t.ExecutionInfo.ExitCode == 0 ? "stdout.txt" : "stderr.txt";
@@ -95,7 +95,7 @@ await foreach (BatchTask t in completedTasks)
     Console.WriteLine("Task {0} exited with code {1}. Output ({2}):",
         t.Id, t.ExecutionInfo.ExitCode, outputFileName);
 
-    BinaryData fileContents = await _batchClient.GetTaskFileAsync("jobId", t.Id, outputFileName);
+    BinaryData fileContents = await batchClient.GetTaskFileAsync("jobId", t.Id, outputFileName);
     using (var reader = new StreamReader(fileContents.ToStream()))
     {
         Console.WriteLine(await reader.ReadLineAsync());

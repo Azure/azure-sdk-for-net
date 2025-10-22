@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformServiceData.DeserializeAppPlatformServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformServiceData.DeserializeAppPlatformServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceTestKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceTestKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceTestKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceTestKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceTestKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformServiceTestKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppPlatformNameAvailabilityResult.DeserializeAppPlatformNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         AppPlatformNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppPlatformNameAvailabilityResult.DeserializeAppPlatformNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1320,7 +1320,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                     {
                         ServiceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceResourceList.DeserializeServiceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

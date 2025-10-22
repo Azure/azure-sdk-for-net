@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
+            {
+                writer.WritePropertyName("keyVaultUri"u8);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            }
             if (options.Format != "W" && Optional.IsDefined(SecretName))
             {
                 writer.WritePropertyName("secretName"u8);
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
             string secretName = default;
             string secretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,6 +106,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         continue;
                     }
                     keyVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("keyVaultUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))
@@ -118,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecretArchiveReference(keyVaultId, secretName, secretVersion, serializedAdditionalRawData);
+            return new SecretArchiveReference(keyVaultId, keyVaultUri, secretName, secretVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretArchiveReference>.Write(ModelReaderWriterOptions options)
@@ -128,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecretArchiveReference)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +157,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecretArchiveReference(document.RootElement, options);
                     }
                 default:

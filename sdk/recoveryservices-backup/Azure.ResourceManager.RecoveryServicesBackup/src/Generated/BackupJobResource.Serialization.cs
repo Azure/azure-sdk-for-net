@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupJobResource : IJsonModel<BackupJobData>
     {
+        private static BackupJobData s_dataDeserializationInstance;
+        private static BackupJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackupJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupJobData>)Data).Write(writer, options);
 
-        BackupJobData IJsonModel<BackupJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupJobData>)Data).Create(ref reader, options);
+        BackupJobData IJsonModel<BackupJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupJobData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupJobData IPersistableModel<BackupJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupJobData>(data, options);
+        BackupJobData IPersistableModel<BackupJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupJobData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackupJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

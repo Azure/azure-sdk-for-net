@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-10";
+            _apiVersion = apiVersion ?? "2025-08-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             return message;
         }
 
-        /// <summary> Lists cryptographic certificate analysis results found in a firmware. </summary>
+        /// <summary> Lists crypto certificate analysis results of a firmware. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CryptoCertificateListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public async Task<Response<CryptoCertificateResourceListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        CryptoCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CryptoCertificateListResult.DeserializeCryptoCertificateListResult(document.RootElement);
+                        CryptoCertificateResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CryptoCertificateResourceListResult.DeserializeCryptoCertificateResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        /// <summary> Lists cryptographic certificate analysis results found in a firmware. </summary>
+        /// <summary> Lists crypto certificate analysis results of a firmware. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CryptoCertificateListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public Response<CryptoCertificateResourceListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        CryptoCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CryptoCertificateListResult.DeserializeCryptoCertificateListResult(document.RootElement);
+                        CryptoCertificateResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CryptoCertificateResourceListResult.DeserializeCryptoCertificateResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             return message;
         }
 
-        /// <summary> Lists cryptographic certificate analysis results found in a firmware. </summary>
+        /// <summary> Lists crypto certificate analysis results of a firmware. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CryptoCertificateListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public async Task<Response<CryptoCertificateResourceListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        CryptoCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CryptoCertificateListResult.DeserializeCryptoCertificateListResult(document.RootElement);
+                        CryptoCertificateResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CryptoCertificateResourceListResult.DeserializeCryptoCertificateResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        /// <summary> Lists cryptographic certificate analysis results found in a firmware. </summary>
+        /// <summary> Lists crypto certificate analysis results of a firmware. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CryptoCertificateListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public Response<CryptoCertificateResourceListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        CryptoCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CryptoCertificateListResult.DeserializeCryptoCertificateListResult(document.RootElement);
+                        CryptoCertificateResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CryptoCertificateResourceListResult.DeserializeCryptoCertificateResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

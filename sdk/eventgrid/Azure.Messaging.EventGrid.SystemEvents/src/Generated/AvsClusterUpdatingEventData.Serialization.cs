@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AvsClusterUpdatingEventData : IUtf8JsonSerializable, IJsonModel<AvsClusterUpdatingEventData>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterUpdating event. </summary>
+    [JsonConverter(typeof(AvsClusterUpdatingEventDataConverter))]
+    public partial class AvsClusterUpdatingEventData : AvsClusterEventData, IJsonModel<AvsClusterUpdatingEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsClusterUpdatingEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AvsClusterUpdatingEventData"/> for deserialization. </summary>
+        internal AvsClusterUpdatingEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsClusterUpdatingEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +35,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsClusterUpdatingEventData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        AvsClusterUpdatingEventData IJsonModel<AvsClusterUpdatingEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsClusterUpdatingEventData IJsonModel<AvsClusterUpdatingEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvsClusterUpdatingEventData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsClusterEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsClusterUpdatingEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAvsClusterUpdatingEventData(document.RootElement, options);
         }
 
-        internal static AvsClusterUpdatingEventData DeserializeAvsClusterUpdatingEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AvsClusterUpdatingEventData DeserializeAvsClusterUpdatingEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,88 +72,115 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IReadOnlyList<string> addedHostNames = default;
             IReadOnlyList<string> removedHostNames = default;
             IReadOnlyList<string> inMaintenanceHostNames = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"u8))
+                if (prop.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetString();
+                    operationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addedHostNames"u8))
+                if (prop.NameEquals("addedHostNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     addedHostNames = array;
                     continue;
                 }
-                if (property.NameEquals("removedHostNames"u8))
+                if (prop.NameEquals("removedHostNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     removedHostNames = array;
                     continue;
                 }
-                if (property.NameEquals("inMaintenanceHostNames"u8))
+                if (prop.NameEquals("inMaintenanceHostNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     inMaintenanceHostNames = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AvsClusterUpdatingEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AvsClusterUpdatingEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AvsClusterUpdatingEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsClusterUpdatingEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvsClusterUpdatingEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AvsClusterUpdatingEventData IPersistableModel<AvsClusterUpdatingEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsClusterUpdatingEventData IPersistableModel<AvsClusterUpdatingEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsClusterUpdatingEventData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsClusterEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsClusterUpdatingEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAvsClusterUpdatingEventData(document.RootElement, options);
                     }
                 default:
@@ -150,22 +188,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsClusterUpdatingEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AvsClusterUpdatingEventData FromResponse(Response response)
+        internal partial class AvsClusterUpdatingEventDataConverter : JsonConverter<AvsClusterUpdatingEventData>
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAvsClusterUpdatingEventData(document.RootElement);
-        }
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, AvsClusterUpdatingEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<AvsClusterUpdatingEventData>>(model, ModelSerializationExtensions.WireOptions);
+            }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override AvsClusterUpdatingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsClusterUpdatingEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

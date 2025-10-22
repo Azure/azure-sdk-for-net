@@ -72,6 +72,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue<object>(ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
             writer.WriteObjectValue(ServicePrincipalKey);
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
+            {
+                writer.WritePropertyName("servicePrincipalCredentialType"u8);
+                writer.WriteObjectValue<object>(ServicePrincipalCredentialType);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCert))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCert"u8);
+                writer.WriteObjectValue(ServicePrincipalEmbeddedCert);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCertPassword))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCertPassword"u8);
+                writer.WriteObjectValue(ServicePrincipalEmbeddedCertPassword);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -102,6 +117,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object servicePrincipalTenantId = default;
             object servicePrincipalId = default;
             SecretBase servicePrincipalKey = default;
+            object servicePrincipalCredentialType = default;
+            SecretBase servicePrincipalEmbeddedCert = default;
+            SecretBase servicePrincipalEmbeddedCertPassword = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -195,6 +213,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("servicePrincipalCredentialType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalCredentialType = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalEmbeddedCert"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalEmbeddedCert = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("servicePrincipalEmbeddedCertPassword"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            servicePrincipalEmbeddedCertPassword = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -222,6 +267,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 servicePrincipalTenantId,
                 servicePrincipalId,
                 servicePrincipalKey,
+                servicePrincipalCredentialType,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
                 encryptedCredential);
         }
 
@@ -229,7 +277,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new Office365LinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOffice365LinkedService(document.RootElement);
         }
 

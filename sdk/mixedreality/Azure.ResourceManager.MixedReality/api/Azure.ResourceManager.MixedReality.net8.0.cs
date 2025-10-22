@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MixedReality
 {
+    public partial class AzureResourceManagerMixedRealityContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMixedRealityContext() { }
+        public static Azure.ResourceManager.MixedReality.AzureResourceManagerMixedRealityContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class MixedRealityExtensions
     {
         public static Azure.Response<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult> CheckMixedRealityNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseResource : IJsonModel<SqlDatabaseData>
     {
+        private static SqlDatabaseData s_dataDeserializationInstance;
+        private static SqlDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseData>)Data).Write(writer, options);
 
-        SqlDatabaseData IJsonModel<SqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseData>)Data).Create(ref reader, options);
+        SqlDatabaseData IJsonModel<SqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlDatabaseData IPersistableModel<SqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseData>(data, options);
+        SqlDatabaseData IPersistableModel<SqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -64,11 +64,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Vault properties. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataReplicationVaultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataReplicationVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataReplicationVaultProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,7 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
         }
 
-        /// <summary> Vault properties. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public DataReplicationVaultProperties Properties { get; set; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

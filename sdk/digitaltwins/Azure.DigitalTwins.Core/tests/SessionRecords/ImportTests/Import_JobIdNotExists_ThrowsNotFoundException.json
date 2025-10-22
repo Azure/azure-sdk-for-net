@@ -1,0 +1,37 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/doesnotexistid?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-251f314a50ad45535c4608cccf5a6692-cd896dc5ea730db2-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "186",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:19:38 GMT",
+        "mise-correlation-id": "b93d4e73-d1ca-4c94-8c96-7162581e92f9",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-251f314a50ad45535c4608cccf5a6692-885d88302e3fb74c-01"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "JobNotFound",
+          "message": "There is no job available that matches the provided id doesnotexistid. Check that the Job ID provided is valid by doing a Jobs_List API call."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "579212890"
+  }
+}

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlPrivateEndpointConnectionResource : IJsonModel<SqlPrivateEndpointConnectionData>
     {
+        private static SqlPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static SqlPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        SqlPrivateEndpointConnectionData IJsonModel<SqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        SqlPrivateEndpointConnectionData IJsonModel<SqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlPrivateEndpointConnectionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlPrivateEndpointConnectionData IPersistableModel<SqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(data, options);
+        SqlPrivateEndpointConnectionData IPersistableModel<SqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

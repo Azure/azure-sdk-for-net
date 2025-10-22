@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AcrRefreshToken
+    public partial class AcrRefreshToken
     {
         internal static AcrRefreshToken DeserializeAcrRefreshToken(JsonElement element)
         {
@@ -33,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcrRefreshToken FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcrRefreshToken(document.RootElement);
         }
     }

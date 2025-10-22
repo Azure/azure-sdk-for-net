@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
         internal string FieldsRaw
         {
             get => Fields.CommaJoin();
-            set => Fields = SearchExtensions.CommaSplit(value);
+            set => Fields = InternalSearchExtensions.CommaSplit(value);
         }
     }
 }

@@ -1,51 +1,51 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync?api-version=2024-11-15-preview",
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/NewProject001?api-version=2025-05-15-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "136",
+        "Content-Length": "135",
         "Content-Type": "application/merge-patch+json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250525.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "projectName": "MyNewProjectAsync",
-        "language": "en",
         "projectKind": "Conversation",
+        "projectName": "NewProject001",
+        "multilingual": true,
         "description": "Project description",
-        "multilingual": true
+        "language": "en-us"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "06002f56-e101-47fe-aa0d-f1d6e4756ae9",
-        "Content-Length": "223",
+        "apim-request-id": "dedeab4b-f147-463e-8aab-60323dba371e",
+        "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Nov 2024 23:53:05 GMT",
-        "request-id": "06002f56-e101-47fe-aa0d-f1d6e4756ae9",
+        "Date": "Mon, 26 May 2025 03:35:46 GMT",
+        "request-id": "dedeab4b-f147-463e-8aab-60323dba371e",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "51",
+        "x-envoy-upstream-service-time": "182",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
         "createdDateTime": "0001-01-01T00:00:00Z",
         "lastModifiedDateTime": "0001-01-01T00:00:00Z",
         "projectKind": "Conversation",
-        "projectName": "MyNewProjectAsync",
+        "projectName": "NewProject001",
         "multilingual": true,
         "description": "Project description",
-        "language": "en"
+        "language": "en-us"
       }
     }
   ],
   "Variables": {
-    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "1238287766"
+    "RandomSeed": "1166147637"
   }
 }

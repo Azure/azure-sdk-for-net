@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,18 +36,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -54,22 +49,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(UseIdentity))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("useIdentity"u8);
+                writer.WriteBooleanValue(UseIdentity.Value);
             }
+            writer.WriteEndObject();
         }
 
         StorageSyncServiceCreateOrUpdateContent IJsonModel<StorageSyncServiceCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,16 +77,26 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            AzureLocation location = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             IncomingTrafficPolicy? incomingTrafficPolicy = default;
+            bool? useIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (property.NameEquals("identity"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerStorageSyncContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -116,6 +111,35 @@ namespace Azure.ResourceManager.StorageSync.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageSyncContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -136,6 +160,15 @@ namespace Azure.ResourceManager.StorageSync.Models
                             incomingTrafficPolicy = new IncomingTrafficPolicy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("useIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useIdentity = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -145,7 +178,17 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageSyncServiceCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), incomingTrafficPolicy, serializedAdditionalRawData);
+            return new StorageSyncServiceCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                incomingTrafficPolicy,
+                useIdentity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -155,7 +198,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
@@ -169,7 +212,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageSyncServiceCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:

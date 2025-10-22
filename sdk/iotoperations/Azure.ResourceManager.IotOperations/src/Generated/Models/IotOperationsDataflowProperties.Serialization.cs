@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
+            if (Optional.IsDefined(RequestDiskPersistence))
+            {
+                writer.WritePropertyName("requestDiskPersistence"u8);
+                writer.WriteStringValue(RequestDiskPersistence.Value.ToString());
+            }
             writer.WritePropertyName("operations"u8);
             writer.WriteStartArray();
             foreach (var item in Operations)
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 return null;
             }
             IotOperationsOperationalMode? mode = default;
+            IotOperationsOperationalMode? requestDiskPersistence = default;
             IList<DataflowOperationProperties> operations = default;
             IotOperationsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -102,6 +108,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                         continue;
                     }
                     mode = new IotOperationsOperationalMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("requestDiskPersistence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestDiskPersistence = new IotOperationsOperationalMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operations"u8))
@@ -129,7 +144,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IotOperationsDataflowProperties(mode, operations, provisioningState, serializedAdditionalRawData);
+            return new IotOperationsDataflowProperties(mode, requestDiskPersistence, operations, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotOperationsDataflowProperties>.Write(ModelReaderWriterOptions options)
@@ -139,7 +154,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotOperationsDataflowProperties)} does not support writing '{options.Format}' format.");
             }
@@ -153,7 +168,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotOperationsDataflowProperties(document.RootElement, options);
                     }
                 default:

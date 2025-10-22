@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HealthDataAIServices.Models;
@@ -45,8 +46,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
         }
 
@@ -97,8 +97,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerHealthDataAIServicesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthDataAIServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthDataAIServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeidServiceData)} does not support writing '{options.Format}' format.");
             }
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeidServiceData(document.RootElement, options);
                     }
                 default:

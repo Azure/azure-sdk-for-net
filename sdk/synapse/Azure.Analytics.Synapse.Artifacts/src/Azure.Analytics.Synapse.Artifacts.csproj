@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Artifacts client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.Artifacts</AssemblyTitle>
-    <Version>1.0.0-preview.22</Version>
+    <Version>1.0.0-preview.23</Version>
     <PackageTags>Microsoft Azure Synapse Artifacts;$(PackageCommonTags)</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -15,13 +15,13 @@
       CS1591;
     </NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

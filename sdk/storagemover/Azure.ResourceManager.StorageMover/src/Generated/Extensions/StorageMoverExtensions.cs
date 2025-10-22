@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_ListBySubscription</description>
+        /// <description>StorageMover_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,11 +284,11 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_ListBySubscription</description>
+        /// <description>StorageMover_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

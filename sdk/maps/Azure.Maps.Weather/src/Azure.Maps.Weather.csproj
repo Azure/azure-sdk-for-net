@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Maps Azure.Maps.Weather</Description>
     <AssemblyTitle>Azure Maps Azure.Maps.Weather</AssemblyTitle>
@@ -8,11 +8,12 @@
     <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

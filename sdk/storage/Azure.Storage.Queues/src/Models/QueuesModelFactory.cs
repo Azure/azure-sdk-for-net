@@ -121,6 +121,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Creates a new QueueProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static QueueProperties QueueProperties(
             IDictionary<string, string> metadata,
             int approximateMessagesCount)
@@ -129,6 +130,20 @@ namespace Azure.Storage.Queues.Models
             {
                 Metadata = metadata,
                 ApproximateMessagesCount = approximateMessagesCount,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new QueueProperties instance for mocking.
+        /// </summary>
+        public static QueueProperties QueueProperties(
+            IDictionary<string, string> metadata,
+            long approximateMessagesCount)
+        {
+            return new QueueProperties()
+            {
+                Metadata = metadata,
+                ApproximateMessagesCountLong = approximateMessagesCount,
             };
         }
 
@@ -189,6 +204,30 @@ namespace Azure.Storage.Queues.Models
             {
                 Status = status,
                 LastSyncedOn = lastSyncedOn,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId = default,
+            string signedTenantId = default,
+            DateTimeOffset signedStartsOn = default,
+            DateTimeOffset signedExpiresOn = default,
+            string signedService = default,
+            string signedVersion = default,
+            string value = default)
+        {
+            return new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStartsOn,
+                SignedExpiresOn = signedExpiresOn,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                Value = value
             };
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class TriggeredAnalyticsRuleRunResource : IJsonModel<TriggeredAnalyticsRuleRunData>
     {
+        private static TriggeredAnalyticsRuleRunData s_dataDeserializationInstance;
+        private static TriggeredAnalyticsRuleRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TriggeredAnalyticsRuleRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredAnalyticsRuleRunData>)Data).Write(writer, options);
 
-        TriggeredAnalyticsRuleRunData IJsonModel<TriggeredAnalyticsRuleRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredAnalyticsRuleRunData>)Data).Create(ref reader, options);
+        TriggeredAnalyticsRuleRunData IJsonModel<TriggeredAnalyticsRuleRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredAnalyticsRuleRunData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TriggeredAnalyticsRuleRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TriggeredAnalyticsRuleRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TriggeredAnalyticsRuleRunData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        TriggeredAnalyticsRuleRunData IPersistableModel<TriggeredAnalyticsRuleRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredAnalyticsRuleRunData>(data, options);
+        TriggeredAnalyticsRuleRunData IPersistableModel<TriggeredAnalyticsRuleRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredAnalyticsRuleRunData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<TriggeredAnalyticsRuleRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredAnalyticsRuleRunData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TriggeredAnalyticsRuleRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredAnalyticsRuleRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

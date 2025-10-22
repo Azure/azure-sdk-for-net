@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputeLicenseProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputeLicenseProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         LicenseProfilesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LicenseProfilesListResult.DeserializeLicenseProfilesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         LicenseProfilesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LicenseProfilesListResult.DeserializeLicenseProfilesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         LicenseProfilesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LicenseProfilesListResult.DeserializeLicenseProfilesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         LicenseProfilesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LicenseProfilesListResult.DeserializeLicenseProfilesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -137,6 +142,26 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("peerTrafficConfiguration"u8);
                 writer.WriteObjectValue(PeerTrafficConfiguration, options);
             }
+            if (Optional.IsDefined(IngressConfiguration))
+            {
+                writer.WritePropertyName("ingressConfiguration"u8);
+                writer.WriteObjectValue(IngressConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -161,6 +186,7 @@ namespace Azure.ResourceManager.AppContainers
                 return null;
             }
             string kind = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -184,6 +210,9 @@ namespace Azure.ResourceManager.AppContainers
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
+            ManagedEnvironmentIngressConfiguration ingressConfiguration = default;
+            IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = default;
+            ContainerAppPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,6 +220,15 @@ namespace Azure.ResourceManager.AppContainers
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -233,7 +271,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -379,6 +417,38 @@ namespace Azure.ResourceManager.AppContainers
                             peerTrafficConfiguration = ManagedEnvironmentPropertiesPeerTrafficConfiguration.DeserializeManagedEnvironmentPropertiesPeerTrafficConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("ingressConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ingressConfiguration = ManagedEnvironmentIngressConfiguration.DeserializeManagedEnvironmentIngressConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerAppPrivateEndpointConnectionData> array = new List<ContainerAppPrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerAppPrivateEndpointConnectionData.DeserializeContainerAppPrivateEndpointConnectionData(item, options));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new ContainerAppPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -396,6 +466,7 @@ namespace Azure.ResourceManager.AppContainers
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 kind,
+                identity,
                 provisioningState,
                 daprAIInstrumentationKey,
                 daprAIConnectionString,
@@ -413,6 +484,9 @@ namespace Azure.ResourceManager.AppContainers
                 infrastructureResourceGroup,
                 peerAuthentication,
                 peerTrafficConfiguration,
+                ingressConfiguration,
+                privateEndpointConnections ?? new ChangeTrackingList<ContainerAppPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 
@@ -519,6 +593,21 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         builder.AppendLine($"'{Kind}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -890,6 +979,59 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ingressConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngressConfiguration))
+                {
+                    builder.Append("    ingressConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IngressConfiguration, options, 4, false, "    ingressConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -902,7 +1044,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -918,7 +1060,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppManagedEnvironmentData(document.RootElement, options);
                     }
                 default:

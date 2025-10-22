@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class MaintenanceWindowsResource : IJsonModel<MaintenanceWindowsData>
     {
+        private static MaintenanceWindowsData s_dataDeserializationInstance;
+        private static MaintenanceWindowsData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MaintenanceWindowsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowsData>)Data).Write(writer, options);
 
-        MaintenanceWindowsData IJsonModel<MaintenanceWindowsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowsData>)Data).Create(ref reader, options);
+        MaintenanceWindowsData IJsonModel<MaintenanceWindowsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowsData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MaintenanceWindowsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MaintenanceWindowsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceWindowsData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        MaintenanceWindowsData IPersistableModel<MaintenanceWindowsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowsData>(data, options);
+        MaintenanceWindowsData IPersistableModel<MaintenanceWindowsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowsData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<MaintenanceWindowsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceWindowsData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MaintenanceWindowsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceWindowsData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

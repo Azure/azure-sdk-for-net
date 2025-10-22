@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Test code for System.ClientModel.SourceGeneration.</Description>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <DefineConstants>$(DefineConstants);SOURCE_GENERATOR</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" VersionOverride ="4.12.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\gen\System.ClientModel.SourceGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" SetTargetFramework="TargetFramework=netstandard2.0" />
+    <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
+    <ProjectReference Include="..\client\System.ClientModel.Tests.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ArrayTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\CustomCollectionTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\DictionaryTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\JaggedArrayTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ListTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ListOfListTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ModelInstances.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\MultiDimensionalArrayTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ReadOnlyMemoryTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
+    <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDataTests.cs" LinkBase="SharedTests" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModels\ListTests.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModels\ModelInstances.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModelTests.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\UnknownBaseModelTests.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\ModelJsonTests.cs" LinkBase="SharedTests" />
+    <Compile Include="..\ModelReaderWriterTests\MrwModelTests.cs" LinkBase="SharedTests" />
+    <Compile Include="..\ModelReaderWriterTests\MrwCollectionTests.cs" LinkBase="SharedTests" />
+    <Compile Include="..\ModelReaderWriterTests\MrwTestBase.cs" LinkBase="SharedTests" />
+    <Compile Include="..\ModelReaderWriterTests\RoundTripStrategy.cs" LinkBase="SharedTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\BaseModel.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelX.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelY.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\UnknownBaseModel.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ClientShared\ModelReaderWriterHelper.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\OptionalProperty.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\OptionalList.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\OptionalDictionary.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\ModelReaderWriterExtensions.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\TypeFormatters.cs" LinkBase="Shared\Helpers" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="..\client\TestData\**\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

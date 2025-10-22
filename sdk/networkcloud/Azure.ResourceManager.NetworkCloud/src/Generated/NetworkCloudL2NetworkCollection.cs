@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -76,10 +76,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
             Argument.AssertNotNull(data, nameof(data));
@@ -88,8 +90,8 @@ namespace Azure.ResourceManager.NetworkCloud
             scope.Start();
             try
             {
-                var response = await _networkCloudL2NetworkL2NetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudL2NetworkResource>(new NetworkCloudL2NetworkOperationSource(Client), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, _networkCloudL2NetworkL2NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudL2NetworkL2NetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudL2NetworkResource>(new NetworkCloudL2NetworkOperationSource(Client), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, _networkCloudL2NetworkL2NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,10 +127,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
             Argument.AssertNotNull(data, nameof(data));
@@ -137,8 +141,8 @@ namespace Azure.ResourceManager.NetworkCloud
             scope.Start();
             try
             {
-                var response = _networkCloudL2NetworkL2NetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudL2NetworkResource>(new NetworkCloudL2NetworkOperationSource(Client), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, _networkCloudL2NetworkL2NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudL2NetworkL2NetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudL2NetworkResource>(new NetworkCloudL2NetworkOperationSource(Client), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, _networkCloudL2NetworkL2NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +257,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -261,12 +265,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "NetworkCloudL2NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -283,7 +289,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,12 +297,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudL2NetworkResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudL2NetworkResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL2NetworkL2NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), _networkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "NetworkCloudL2NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -313,7 +321,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +364,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +407,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +452,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

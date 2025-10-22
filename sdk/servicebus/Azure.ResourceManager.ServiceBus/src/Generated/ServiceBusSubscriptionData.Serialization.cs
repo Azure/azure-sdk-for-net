@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ServiceBus
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceBusSubscriptionData(document.RootElement, options);
                     }
                 default:

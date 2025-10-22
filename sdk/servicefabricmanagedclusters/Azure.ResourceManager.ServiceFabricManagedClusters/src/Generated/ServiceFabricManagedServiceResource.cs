@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly ServiceFabricManagedServiceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applications/services";
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedClusters/applications/services";
 
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedServiceResource"/> class for mocking. </summary>
         protected ServiceFabricManagedServiceResource()
@@ -96,15 +96,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,15 +176,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Delete</description>
+        /// <description>ServiceResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,15 +218,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Delete</description>
+        /// <description>ServiceResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,15 +260,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Update</description>
+        /// <description>ServiceResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,15 +302,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Update</description>
+        /// <description>ServiceResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,15 +344,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,15 +406,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -468,15 +468,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -525,15 +525,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -582,15 +582,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -642,15 +642,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

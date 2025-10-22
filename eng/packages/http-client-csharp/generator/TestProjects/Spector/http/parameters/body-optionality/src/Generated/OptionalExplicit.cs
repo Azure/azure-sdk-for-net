@@ -10,30 +10,30 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Parameters.BodyOptionality.Models;
+using Parameters.BodyOptionality;
 
-namespace Parameters.BodyOptionality
+namespace Parameters.BodyOptionality._OptionalExplicit
 {
     public partial class OptionalExplicit
     {
         protected OptionalExplicit() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Set(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> SetAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response Set(BodyModel body = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Set(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SetAsync(BodyModel body = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> SetAsync(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Omit(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> OmitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response Omit(BodyModel body = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Omit(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> OmitAsync(BodyModel body = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> OmitAsync(BodyModel body = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

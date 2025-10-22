@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
         /// <param name="detailedStatus"> The more detailed status of the key set. </param>
@@ -94,12 +95,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="lastValidatedOn"> The last time this key set was validated. </param>
         /// <param name="osGroupName"> The name of the group that users will be assigned to on the operating system of the machines. </param>
         /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
+        /// <param name="privilegeLevelName"> The name of the access level to apply when the privilege level is set to Other. </param>
         /// <param name="provisioningState"> The provisioning state of the bare metal machine key set. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="userListStatus"> The status evaluation of each user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBareMetalMachineKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, IList<IPAddress> jumpHostsAllowed, DateTimeOffset? lastValidatedOn, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, BareMetalMachineKeySetProvisioningState? provisioningState, IList<KeySetUser> userList, IReadOnlyList<KeySetUserStatus> userListStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudBareMetalMachineKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, string azureGroupId, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, IList<IPAddress> jumpHostsAllowed, DateTimeOffset? lastValidatedOn, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, string privilegeLevelName, BareMetalMachineKeySetProvisioningState? provisioningState, IList<KeySetUser> userList, IReadOnlyList<KeySetUserStatus> userListStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ETag = etag;
             ExtendedLocation = extendedLocation;
             AzureGroupId = azureGroupId;
             DetailedStatus = detailedStatus;
@@ -109,6 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud
             LastValidatedOn = lastValidatedOn;
             OSGroupName = osGroupName;
             PrivilegeLevel = privilegeLevel;
+            PrivilegeLevelName = privilegeLevelName;
             ProvisioningState = provisioningState;
             UserList = userList;
             UserListStatus = userListStatus;
@@ -120,6 +124,8 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
+        /// <summary> Resource ETag. </summary>
+        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </summary>
@@ -138,6 +144,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public string OSGroupName { get; set; }
         /// <summary> The access level allowed for the users in this key set. </summary>
         public BareMetalMachineKeySetPrivilegeLevel PrivilegeLevel { get; set; }
+        /// <summary> The name of the access level to apply when the privilege level is set to Other. </summary>
+        public string PrivilegeLevelName { get; set; }
         /// <summary> The provisioning state of the bare metal machine key set. </summary>
         public BareMetalMachineKeySetProvisioningState? ProvisioningState { get; }
         /// <summary> The unique list of permitted users. </summary>

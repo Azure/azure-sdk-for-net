@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
                 writer.WritePropertyName("supportedLicenseTypes"u8);
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             string sku = default;
+            bool? zoneRedundant = default;
             IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
             IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues = default;
             SqlCapabilityStatus? status = default;
@@ -131,6 +137,15 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("zoneRedundant"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -184,6 +199,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceFamilyCapability(
                 name,
                 sku,
+                zoneRedundant,
                 supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
                 supportedVcoresValues ?? new ChangeTrackingList<ManagedInstanceVcoresCapability>(),
                 status,
@@ -245,6 +261,22 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         builder.AppendLine($"'{Sku}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsZoneRedundant))
+                {
+                    builder.Append("  zoneRedundant: ");
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -343,7 +375,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -359,7 +391,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedInstanceFamilyCapability(document.RootElement, options);
                     }
                 default:

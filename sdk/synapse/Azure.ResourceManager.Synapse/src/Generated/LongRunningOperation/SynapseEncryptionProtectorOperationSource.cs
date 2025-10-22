@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseEncryptionProtectorResource IOperationSource<SynapseEncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseEncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseEncryptionProtectorResource(_client, data);
         }
 
         async ValueTask<SynapseEncryptionProtectorResource> IOperationSource<SynapseEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
-            return new SynapseEncryptionProtectorResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseEncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            return await Task.FromResult(new SynapseEncryptionProtectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

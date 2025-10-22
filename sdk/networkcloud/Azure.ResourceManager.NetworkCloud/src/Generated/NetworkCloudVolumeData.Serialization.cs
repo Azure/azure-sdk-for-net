@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,10 +38,20 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AllocatedSizeMiB))
+            {
+                writer.WritePropertyName("allocatedSizeMiB"u8);
+                writer.WriteNumberValue(AllocatedSizeMiB.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedTo))
             {
                 writer.WritePropertyName("attachedTo"u8);
@@ -73,6 +84,11 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("sizeMiB"u8);
             writer.WriteNumberValue(SizeInMiB);
+            if (Optional.IsDefined(StorageApplianceId))
+            {
+                writer.WritePropertyName("storageApplianceId"u8);
+                writer.WriteStringValue(StorageApplianceId);
+            }
             writer.WriteEndObject();
         }
 
@@ -96,6 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
+            ETag? etag = default;
             ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -103,16 +120,27 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            long? allocatedSizeMiB = default;
             IReadOnlyList<string> attachedTo = default;
             VolumeDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             VolumeProvisioningState? provisioningState = default;
             string serialNumber = default;
             long sizeMiB = default;
+            ResourceIdentifier storageApplianceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
@@ -158,7 +186,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -170,6 +198,15 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("allocatedSizeMiB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allocatedSizeMiB = property0.Value.GetInt64();
+                            continue;
+                        }
                         if (property0.NameEquals("attachedTo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -217,6 +254,15 @@ namespace Azure.ResourceManager.NetworkCloud
                             sizeMiB = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("storageApplianceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageApplianceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -233,13 +279,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
                 extendedLocation,
+                allocatedSizeMiB,
                 attachedTo ?? new ChangeTrackingList<string>(),
                 detailedStatus,
                 detailedStatusMessage,
                 provisioningState,
                 serialNumber,
                 sizeMiB,
+                storageApplianceId,
                 serializedAdditionalRawData);
         }
 
@@ -250,7 +299,7 @@ namespace Azure.ResourceManager.NetworkCloud
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support writing '{options.Format}' format.");
             }
@@ -264,7 +313,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudVolumeData(document.RootElement, options);
                     }
                 default:

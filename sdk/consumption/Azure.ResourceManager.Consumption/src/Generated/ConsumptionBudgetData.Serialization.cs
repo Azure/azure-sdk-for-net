@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Consumption.Models;
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Consumption
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConsumptionContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Consumption
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support writing '{options.Format}' format.");
             }
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConsumptionBudgetData(document.RootElement, options);
                     }
                 default:

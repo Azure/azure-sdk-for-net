@@ -12,7 +12,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/b72e0199fa3242d64b0b
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   # Snapshot is immutable once created, there won't be any update method on it. Skip generating the sample test on this method, so it will pass the build.

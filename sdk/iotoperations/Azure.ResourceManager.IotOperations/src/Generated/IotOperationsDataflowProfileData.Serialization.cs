@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.IotOperations.Models;
@@ -42,8 +43,11 @@ namespace Azure.ResourceManager.IotOperations
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
+            }
         }
 
         IotOperationsDataflowProfileData IJsonModel<IotOperationsDataflowProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,6 +91,10 @@ namespace Azure.ResourceManager.IotOperations
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     extendedLocation = IotOperationsExtendedLocation.DeserializeIotOperationsExtendedLocation(property.Value, options);
                     continue;
                 }
@@ -111,7 +119,7 @@ namespace Azure.ResourceManager.IotOperations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotOperationsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +145,7 @@ namespace Azure.ResourceManager.IotOperations
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotOperationsDataflowProfileData)} does not support writing '{options.Format}' format.");
             }
@@ -151,7 +159,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotOperationsDataflowProfileData(document.RootElement, options);
                     }
                 default:

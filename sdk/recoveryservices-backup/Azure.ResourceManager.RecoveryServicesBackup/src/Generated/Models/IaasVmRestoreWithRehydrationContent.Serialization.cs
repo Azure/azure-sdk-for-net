@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SecuredVmDetails securedVmDetails = default;
             BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default;
             string objectType = default;
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                     continue;
                 }
                 if (property.NameEquals("securedVMDetails"u8))
@@ -311,6 +313,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -319,6 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new IaasVmRestoreWithRehydrationContent(
                 objectType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 recoveryPointId,
                 recoveryType,
@@ -353,7 +370,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IaasVmRestoreWithRehydrationContent)} does not support writing '{options.Format}' format.");
             }
@@ -367,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIaasVmRestoreWithRehydrationContent(document.RootElement, options);
                     }
                 default:

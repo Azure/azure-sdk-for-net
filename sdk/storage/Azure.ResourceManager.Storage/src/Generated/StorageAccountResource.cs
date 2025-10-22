@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance
+        /// A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1181,7 +1181,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance
+        /// A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account's primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to 'Planned'. Learn more about the failover options here- https://learn.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1443,7 +1443,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1489,7 +1489,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1573,7 +1573,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1661,12 +1661,12 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
-        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReportsAsync(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1689,12 +1689,12 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
-        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskReportInstance"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReports(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1779,7 +1779,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1841,7 +1841,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1898,7 +1898,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2015,7 +2015,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

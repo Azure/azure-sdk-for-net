@@ -26,7 +26,6 @@ namespace Azure.Identity
         private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
-
         private readonly CredentialPipeline _pipeline;
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
@@ -119,7 +118,9 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
+                // Treat all exceptions as credential unavailable, except for OperationCanceledException which is treated as a cancellation.
+                bool IsCancellationRequested = e is OperationCanceledException && cancellationToken.IsCancellationRequested;
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: !IsCancellationRequested);
             }
         }
 

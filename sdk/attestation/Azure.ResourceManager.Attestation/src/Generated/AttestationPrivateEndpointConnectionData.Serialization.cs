@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Attestation.Models;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Attestation
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAttestationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Attestation
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAttestationPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeAlertResource : IJsonModel<DataBoxEdgeAlertData>
     {
+        private static DataBoxEdgeAlertData s_dataDeserializationInstance;
+        private static DataBoxEdgeAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoxEdgeAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeAlertData>)Data).Write(writer, options);
 
-        DataBoxEdgeAlertData IJsonModel<DataBoxEdgeAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeAlertData>)Data).Create(ref reader, options);
+        DataBoxEdgeAlertData IJsonModel<DataBoxEdgeAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeAlertData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxEdgeAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxEdgeAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeAlertData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DataBoxEdgeAlertData IPersistableModel<DataBoxEdgeAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeAlertData>(data, options);
+        DataBoxEdgeAlertData IPersistableModel<DataBoxEdgeAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeAlertData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeAlertData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxEdgeAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,14 +1,28 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-07-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a83122b78a412ed2733042cb468a98484d99ecc2/specification/networkcloud/resource-manager/readme.md
+
+## 1.2.0 (2025-06-25)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/08973141b0d31a7e75d4dc43a5224a1814a0994f/specification/networkcloud/resource-manager/readme.md.
 
-### Bugs Fixed
+## 1.2.0-beta.1 (2025-04-25)
 
-### Other Changes
+### Features Added
+
+- This SDK version supports 2024-10-01-preview API version.
+- ClusterManager commands are updated with custom parameters AssociatedIdentity to support managing identity.
+- Cluster commands are updated with custom parameters AssociatedIdentity to support managing identity.
+- Cluster resource supports SecretArchiveSettings for configuring access to Key Vault.
+- Cluster create and update commands support new parameter AnalyticsOutputSettings for configuring access to Log Analytics Workspace.
+- Cluster create and update commands support new parameter VulnerabilityScanningContainerScan which determines how security vulnerability scanning is applied to the cluster.
+- VirtualMachine is updated to return the extended location to use for creation of a VirtualMachine console resource.
+- VirtualMachine is updated to support persistent storage for OS disk.
+- VirtualMachine's property VmDeviceModel gets a new option 'T3'. When 'T3' is selected, SecureBoot and vTPM are automatically enabled. This is to support Windows users.
 
 ## 1.1.0 (2025-01-31)
 
@@ -18,8 +32,8 @@
 
 ### Other Changes
 
-- Upgraded Azure.Core from 1.36.0 to 1.44.1
-- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0
+- Upgraded Azure.Core from 1.36.0 to 1.44.1.
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0.
 
 ## 1.1.0-beta.1 (2024-11-06)
 

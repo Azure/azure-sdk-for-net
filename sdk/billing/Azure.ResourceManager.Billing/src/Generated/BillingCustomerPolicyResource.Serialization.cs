@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingCustomerPolicyResource : IJsonModel<BillingCustomerPolicyData>
     {
+        private static BillingCustomerPolicyData s_dataDeserializationInstance;
+        private static BillingCustomerPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingCustomerPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingCustomerPolicyData>)Data).Write(writer, options);
 
-        BillingCustomerPolicyData IJsonModel<BillingCustomerPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingCustomerPolicyData>)Data).Create(ref reader, options);
+        BillingCustomerPolicyData IJsonModel<BillingCustomerPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingCustomerPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingCustomerPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingCustomerPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingCustomerPolicyData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        BillingCustomerPolicyData IPersistableModel<BillingCustomerPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingCustomerPolicyData>(data, options);
+        BillingCustomerPolicyData IPersistableModel<BillingCustomerPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingCustomerPolicyData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingCustomerPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingCustomerPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingCustomerPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingCustomerPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

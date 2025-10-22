@@ -67,18 +67,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
         /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ConnectivityTopology = connectivityTopology;
             Hubs = hubs;
             IsGlobal = isGlobal;
+            ConnectivityCapabilities = connectivityCapabilities;
             AppliesToGroups = appliesToGroups;
             ProvisioningState = provisioningState;
             DeleteExistingPeering = deleteExistingPeering;
@@ -88,22 +90,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A description of the connectivity configuration. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Connectivity topology type. </summary>
+        [WirePath("properties.connectivityTopology")]
         public ConnectivityTopology? ConnectivityTopology { get; set; }
         /// <summary> List of hubItems. </summary>
+        [WirePath("properties.hubs")]
         public IList<ConnectivityHub> Hubs { get; }
         /// <summary> Flag if global mesh is supported. </summary>
+        [WirePath("properties.isGlobal")]
         public GlobalMeshSupportFlag? IsGlobal { get; set; }
+        /// <summary> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </summary>
+        [WirePath("properties.connectivityCapabilities")]
+        public ConnectivityConfigurationPropertiesConnectivityCapabilities ConnectivityCapabilities { get; set; }
         /// <summary> Groups for configuration. </summary>
+        [WirePath("properties.appliesToGroups")]
         public IList<ConnectivityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Flag if need to remove current existing peerings. </summary>
+        [WirePath("properties.deleteExistingPeering")]
         public DeleteExistingPeering? DeleteExistingPeering { get; set; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Peeri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Peering.Tests", "tests\Azure.ResourceManager.Peering.Tests.csproj", "{8D47082F-3E3C-43C4-BAEB-93184FA5D31B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Peering.Samples", "samples\Azure.ResourceManager.Peering.Samples.csproj", "{414365B8-CB71-4021-877E-8435E141BDE1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{8D47082F-3E3C-43C4-BAEB-93184FA5D31B}.Release|x64.Build.0 = Release|Any CPU
 		{8D47082F-3E3C-43C4-BAEB-93184FA5D31B}.Release|x86.ActiveCfg = Release|Any CPU
 		{8D47082F-3E3C-43C4-BAEB-93184FA5D31B}.Release|x86.Build.0 = Release|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Debug|x64.Build.0 = Debug|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Debug|x86.Build.0 = Debug|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Release|x64.ActiveCfg = Release|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Release|x64.Build.0 = Release|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Release|x86.ActiveCfg = Release|Any CPU
-		{414365B8-CB71-4021-877E-8435E141BDE1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

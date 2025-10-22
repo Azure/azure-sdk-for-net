@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -54,10 +55,20 @@ namespace Azure.ResourceManager.ContainerInstance
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ContainerGroupProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
+                writer.WriteStringValue(ContainerGroupProvisioningState.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SecretReferences))
+            {
+                writer.WritePropertyName("secretReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretReferences)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("containers"u8);
             writer.WriteStartArray();
@@ -166,6 +177,11 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
+            if (Optional.IsDefined(IdentityAcls))
+            {
+                writer.WritePropertyName("identityAcls"u8);
+                writer.WriteObjectValue(IdentityAcls, options);
+            }
             if (Optional.IsDefined(ContainerGroupProfile))
             {
                 writer.WritePropertyName("containerGroupProfile"u8);
@@ -212,7 +228,8 @@ namespace Azure.ResourceManager.ContainerInstance
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string provisioningState = default;
+            ContainerGroupProvisioningState? provisioningState = default;
+            IList<ContainerGroupSecretReference> secretReferences = default;
             IList<ContainerInstanceContainer> containers = default;
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
@@ -229,6 +246,7 @@ namespace Azure.ResourceManager.ContainerInstance
             IList<DeploymentExtensionSpec> extensions = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerGroupPriority? priority = default;
+            ContainerGroupIdentityAccessControlLevels identityAcls = default;
             ContainerGroupProfileReferenceDefinition containerGroupProfile = default;
             StandbyPoolProfileDefinition standbyPoolProfile = default;
             bool? isCreatedFromStandbyPool = default;
@@ -242,7 +260,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerInstanceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -299,7 +317,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerInstanceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -313,7 +331,25 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ContainerGroupProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("secretReferences"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerGroupSecretReference> array = new List<ContainerGroupSecretReference>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerGroupSecretReference.DeserializeContainerGroupSecretReference(item, options));
+                            }
+                            secretReferences = array;
                             continue;
                         }
                         if (property0.NameEquals("containers"u8))
@@ -486,6 +522,15 @@ namespace Azure.ResourceManager.ContainerInstance
                             priority = new ContainerGroupPriority(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("identityAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identityAcls = ContainerGroupIdentityAccessControlLevels.DeserializeContainerGroupIdentityAccessControlLevels(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("containerGroupProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -531,6 +576,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 location,
                 identity,
                 provisioningState,
+                secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>(),
                 containers,
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,
@@ -547,6 +593,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
                 confidentialComputeProperties,
                 priority,
+                identityAcls,
                 containerGroupProfile,
                 standbyPoolProfile,
                 isCreatedFromStandbyPool,
@@ -561,7 +608,7 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{options.Format}' format.");
             }
@@ -575,7 +622,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerGroupData(document.RootElement, options);
                     }
                 default:

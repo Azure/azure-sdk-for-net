@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         internal ResourceGuardProxyCollection(ArmClient client, ResourceIdentifier id, string vaultName) : base(client, id)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

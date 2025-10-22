@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -69,6 +71,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("javascriptChallengeExpirationInMinutes"u8);
                 writer.WriteNumberValue(JavascriptChallengeExpirationInMinutes.Value);
             }
+            if (Optional.IsDefined(CaptchaExpirationInMinutes))
+            {
+                writer.WritePropertyName("captchaExpirationInMinutes"u8);
+                writer.WriteNumberValue(CaptchaExpirationInMinutes.Value);
+            }
             writer.WritePropertyName("logScrubbing"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,6 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string customBlockResponseBody = default;
             PolicyRequestBodyCheck? requestBodyCheck = default;
             int? javascriptChallengeExpirationInMinutes = default;
+            int? captchaExpirationInMinutes = default;
             WebApplicationFirewallScrubbingState? state = default;
             IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -196,6 +204,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     javascriptChallengeExpirationInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("captchaExpirationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    captchaExpirationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("logScrubbing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -245,9 +262,194 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 customBlockResponseBody,
                 requestBodyCheck,
                 javascriptChallengeExpirationInMinutes,
+                captchaExpirationInMinutes,
                 state,
                 scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabledState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnabledState))
+                {
+                    builder.Append("  enabledState: ");
+                    builder.AppendLine($"'{EnabledState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
+                {
+                    builder.Append("  mode: ");
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  redirectUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RedirectUri))
+                {
+                    builder.Append("  redirectUrl: ");
+                    builder.AppendLine($"'{RedirectUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseStatusCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBlockResponseStatusCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBlockResponseStatusCode))
+                {
+                    builder.Append("  customBlockResponseStatusCode: ");
+                    builder.AppendLine($"{CustomBlockResponseStatusCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseBody), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBlockResponseBody: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBlockResponseBody))
+                {
+                    builder.Append("  customBlockResponseBody: ");
+                    if (CustomBlockResponseBody.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomBlockResponseBody}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomBlockResponseBody}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyCheck), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyCheck: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyCheck))
+                {
+                    builder.Append("  requestBodyCheck: ");
+                    builder.AppendLine($"'{RequestBodyCheck.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JavascriptChallengeExpirationInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  javascriptChallengeExpirationInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JavascriptChallengeExpirationInMinutes))
+                {
+                    builder.Append("  javascriptChallengeExpirationInMinutes: ");
+                    builder.AppendLine($"{JavascriptChallengeExpirationInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CaptchaExpirationInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  captchaExpirationInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CaptchaExpirationInMinutes))
+                {
+                    builder.Append("  captchaExpirationInMinutes: ");
+                    builder.AppendLine($"{CaptchaExpirationInMinutes.Value}");
+                }
+            }
+
+            builder.Append("  logScrubbing:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("    state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScrubbingRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scrubbingRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ScrubbingRules))
+                {
+                    if (ScrubbingRules.Any())
+                    {
+                        builder.Append("    scrubbingRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ScrubbingRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    scrubbingRules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(ModelReaderWriterOptions options)
@@ -257,7 +459,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{options.Format}' format.");
             }
@@ -271,7 +475,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
                     }
                 default:

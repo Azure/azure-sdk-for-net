@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-09-01-preview";
+            _apiVersion = apiVersion ?? "2025-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Gets all databases in the specified Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Gets all databases in the specified Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Creates a database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="data"> Parameters supplied to the create or update database operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Creates a database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="data"> Parameters supplied to the create or update database operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Updates a database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="patch"> Parameters supplied to the create or update database operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Updates a database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="patch"> Parameters supplied to the create or update database operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Gets information about a database in a Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Gets information about a database in a Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Deletes a single database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Deletes a single database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Retrieves the access keys for the Redis Enterprise database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDataAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Retrieves the access keys for the Redis Enterprise database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDataAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Regenerates the Redis Enterprise database's access keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Specifies which key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Regenerates the Redis Enterprise database's access keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Specifies which key to regenerate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Imports database files to target database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Storage information for importing into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Imports database files to target database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Storage information for importing into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Exports a database file from target database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Storage information for exporting into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Exports a database file from target database. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Storage information for exporting into the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Forcibly removes the link to the specified database resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Forcibly removes the link to the specified database resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Forcibly recreates an existing database on the specified cluster, and rejoins it to an existing replication group. **IMPORTANT NOTE:** All data in this database will be discarded, and the database will temporarily be unavailable while rejoining the replication group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Forcibly recreates an existing database on the specified cluster, and rejoins it to an existing replication group. **IMPORTANT NOTE:** All data in this database will be discarded, and the database will temporarily be unavailable while rejoining the replication group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Information identifying the database to be unlinked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Flushes all the keys in this database and also from its linked databases. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Flushes all the keys in this database and also from its linked databases. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="content"> Information identifying the databases to be flushed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Upgrades the database Redis version to the latest available. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -1309,7 +1309,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Upgrades the database Redis version to the latest available. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="databaseName"> The name of the Redis Enterprise database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case 200:
                     {
                         RedisEnterpriseDatabaseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

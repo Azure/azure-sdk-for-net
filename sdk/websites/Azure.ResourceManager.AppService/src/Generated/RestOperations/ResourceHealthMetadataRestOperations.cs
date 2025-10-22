@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         ResourceHealthMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataListResult.DeserializeResourceHealthMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

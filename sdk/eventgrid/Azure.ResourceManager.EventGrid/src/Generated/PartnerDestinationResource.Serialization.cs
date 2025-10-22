@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class PartnerDestinationResource : IJsonModel<PartnerDestinationData>
     {
+        private static PartnerDestinationData s_dataDeserializationInstance;
+        private static PartnerDestinationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PartnerDestinationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerDestinationData>)Data).Write(writer, options);
 
-        PartnerDestinationData IJsonModel<PartnerDestinationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerDestinationData>)Data).Create(ref reader, options);
+        PartnerDestinationData IJsonModel<PartnerDestinationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerDestinationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PartnerDestinationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PartnerDestinationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerDestinationData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
-        PartnerDestinationData IPersistableModel<PartnerDestinationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerDestinationData>(data, options);
+        PartnerDestinationData IPersistableModel<PartnerDestinationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerDestinationData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<PartnerDestinationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerDestinationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PartnerDestinationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerDestinationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

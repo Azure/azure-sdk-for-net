@@ -9,6 +9,7 @@ using NUnit.Framework;
 #region Snippet:TextAuthoring_Identity_Namespace
 using Azure.Identity;
 using Azure.Core;
+using Microsoft.Extensions.Options;
 #endregion
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples
@@ -19,15 +20,14 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         public void CreateAuthoringClientForSpecificApiVersion()
         {
             #region Snippet:CreateTextAuthoringClientForSpecificApiVersion
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-            AzureKeyCredential credential = new("your apikey");
+            Uri endpoint = new Uri("{endpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
-            AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-            AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
             #endregion
         }
 
@@ -35,13 +35,12 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         public void AuthoringClient_CreateWithDefaultAzureCredential()
         {
             #region Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");;
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
 #endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
             #endregion
         }
 
@@ -50,24 +49,23 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:TextAuthoringClient_BadRequest
             try
             {
                 string invalidProjectName = "InvalidProject";
-
-                var projectData = new
+                TextAuthoringProject projectClient = client.GetProject(invalidProjectName);
+                var projectData = new TextAuthoringCreateProjectDetails(
+                    projectKind: "Text",
+                    storageInputContainerName: "e2e0test0data",
+                    language: "invalid-lang" // Invalid language code
+                )
                 {
-                    projectName = invalidProjectName,
-                    language = "invalid-lang", // Invalid language code
-                    projectKind = "Text",
-                    description = "This is a test for invalid configuration."
+                    Description = "This is a test for invalid configuration."
                 };
 
-                using RequestContent content = RequestContent.Create(projectData);
-                Response response = authoringClient.CreateProject(invalidProjectName, content);
+                Response response = projectClient.CreateProject(projectData);
             }
             catch (RequestFailedException ex)
             {

@@ -34,12 +34,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 throw new FormatException($"The model {nameof(ApplianceListResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -49,6 +44,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,23 +86,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<ResourceConnectorApplianceData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceConnectorApplianceData> array = new List<ResourceConnectorApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,13 +102,22 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplianceListResult(nextLink, value ?? new ChangeTrackingList<ResourceConnectorApplianceData>(), serializedAdditionalRawData);
+            return new ApplianceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceListResult>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApplianceListResult)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplianceListResult(document.RootElement, options);
                     }
                 default:

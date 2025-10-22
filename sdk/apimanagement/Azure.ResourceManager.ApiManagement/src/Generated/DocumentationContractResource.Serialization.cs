@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class DocumentationContractResource : IJsonModel<DocumentationContractData>
     {
+        private static DocumentationContractData s_dataDeserializationInstance;
+        private static DocumentationContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DocumentationContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DocumentationContractData>)Data).Write(writer, options);
 
-        DocumentationContractData IJsonModel<DocumentationContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DocumentationContractData>)Data).Create(ref reader, options);
+        DocumentationContractData IJsonModel<DocumentationContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DocumentationContractData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DocumentationContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DocumentationContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DocumentationContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        DocumentationContractData IPersistableModel<DocumentationContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DocumentationContractData>(data, options);
+        DocumentationContractData IPersistableModel<DocumentationContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DocumentationContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<DocumentationContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DocumentationContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DocumentationContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DocumentationContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

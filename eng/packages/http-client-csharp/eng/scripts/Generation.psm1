@@ -4,18 +4,20 @@ function Invoke($command, $executePath=$repoRoot)
 {
     Write-Host "> $command"
     Push-Location $executePath
-    if ($IsLinux -or $IsMacOs)
-    {
-        sh -c "$command 2>&1"
+    try {
+        if ($IsLinux -or $IsMacOs)
+        {
+            sh -c "$command 2>&1"
+        }
+        else
+        {
+            cmd /c "$command 2>&1"
+        }
     }
-    else
-    {
-        cmd /c "$command 2>&1"
+    finally {
+        Pop-Location
     }
-    Pop-Location
-
-    if($LastExitCode -ne 0)
-    {
+    if($LastExitCode -ne 0) {
         Write-Error "Command failed to execute: $command"
     }
 }
@@ -25,13 +27,12 @@ function Get-TspCommand {
         [string]$specFile,
         [string]$generationDir,
         [bool]$generateStub = $false,
-        [string]$namespaceOverride = $null,
         [string]$apiVersion = $null,
-        [bool]$forceNewProject = $false
+        [string]$libraryNameOverride = $null
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
-    $command += " --emit @azure-typespec/http-client-csharp"
+    $command += " --emit $repoRoot/.."
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -39,19 +40,50 @@ function Get-TspCommand {
     $command += " --option @azure-typespec/http-client-csharp.emitter-output-dir=$generationDir"
     $command += " --option @azure-typespec/http-client-csharp.save-inputs=true"
     if ($generateStub) {
-        $command += " --option @azure-typespec/http-client-csharp.plugin-name=AzureStubPlugin"
+        $command += " --option @azure-typespec/http-client-csharp.generator-name=AzureStubGenerator"
     }
 
-    if ($namespaceOverride) {
-        $command += " --option @azure-typespec/http-client-csharp.namespace=$namespaceOverride"
-    }
-    
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp.api-version=$apiVersion"
     }
 
+    if ($libraryNameOverride) {
+        $command += " --option @azure-typespec/http-client-csharp.package-name=$libraryNameOverride"
+    }
+
+    $command += " --option @azure-typespec/http-client-csharp.new-project=true"
+
+    return $command
+}
+
+function Get-Mgmt-TspCommand {
+    param (
+        [string]$specFile,
+        [string]$generationDir,
+        [bool]$generateStub = $false,
+        [string]$apiVersion = $null,
+        [bool]$forceNewProject = $false
+    )
+    $command = "npx tsp compile $specFile"
+    $command += " --trace @azure-typespec/http-client-csharp-mgmt"
+    $command += " --emit $repoRoot/../../http-client-csharp-mgmt"
+
+    $configFile = Join-Path $generationDir "tspconfig.yaml"
+    if (Test-Path $configFile) {
+        $command += " --config=$configFile"
+    }
+    $command += " --option @azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$generationDir"
+    $command += " --option @azure-typespec/http-client-csharp-mgmt.save-inputs=true"
+    if ($generateStub) {
+        $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
+    }
+
+    if ($apiVersion) {
+        $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
+    }
+
     if ($forceNewProject) {
-        $command += " --option @azure-typespec/http-client-csharp.new-project=true"
+        $command += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true"
     }
 
     return $command
@@ -66,8 +98,23 @@ function Refresh-Build {
     }
 
     # we don't want to build the entire solution because the test projects might not build until after regeneration
-    # generating Microsoft.Generator.CSharp.ClientModel.csproj is enough
     Invoke "dotnet build $repoRoot/../generator/Azure.Generator/src"
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+}
+
+function Refresh-Mgmt-Build {
+    Write-Host "Building emitter and generator" -ForegroundColor Cyan
+    Invoke "npm run build:emitter" "$repoRoot/../../http-client-csharp-mgmt"
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+
+    # we don't want to build the entire solution because the test projects might not build until after regeneration
+    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Management/src"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
@@ -114,14 +161,11 @@ function Generate-Srv-Driven {
     ## get the last two directories of the output directory and add V1/V2 to disambiguate the namespaces
     $namespaceRoot = $(($outputDir.Split([System.IO.Path]::DirectorySeparatorChar)[-2..-1] | `
         ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -replace '-(\p{L})', { $_.Groups[1].Value.ToUpper() } -replace '\W', '' -join ".")
-    $v1NamespaceOverride = $namespaceRoot + ".V1" 
-    $v2NamespaceOverride = $namespaceRoot + ".V2"
-
     $v1SpecFilePath = $(Join-Path $specFilePath "old.tsp")
     $v2SpecFilePath = $(Join-Path $specFilePath "main.tsp")
 
-    Invoke (Get-TspCommand $v1SpecFilePath $v1Dir -generateStub $generateStub -namespaceOverride $v1NamespaceOverride)
-    Invoke (Get-TspCommand $v2SpecFilePath $v2Dir -generateStub $generateStub -namespaceOverride $v2NamespaceOverride)
+    Invoke (Get-TspCommand $v1SpecFilePath $v1Dir -generateStub $generateStub)
+    Invoke (Get-TspCommand $v2SpecFilePath $v2Dir -generateStub $generateStub)
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
@@ -141,7 +185,7 @@ function Generate-Versioning {
     if ($createOutputDirIfNotExist -and -not (Test-Path $v1Dir)) {
         New-Item -ItemType Directory -Path $v1Dir | Out-Null
     }
-    
+
     $v2Dir = $(Join-Path $outputDir "v2")
     if ($createOutputDirIfNotExist -and -not (Test-Path $v2Dir)) {
         New-Item -ItemType Directory -Path $v2Dir | Out-Null
@@ -150,19 +194,19 @@ function Generate-Versioning {
     ## get the last two directories of the output directory and add V1/V2 to disambiguate the namespaces
     $namespaceRoot = $(($outputFolders[-2..-1] | `
                            ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -join ".")
-    $v1NamespaceOverride = $namespaceRoot + ".V1" 
-    $v2NamespaceOverride = $namespaceRoot + ".V2"
-      
-    Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1" -namespaceOverride $v1NamespaceOverride)
-    Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2" -namespaceOverride $v2NamespaceOverride)
-    
+    $v1LibraryNameOverride = $namespaceRoot + ".V1"
+    $v2LibraryNameOverride = $namespaceRoot + ".V2"
+
+    Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1" -libraryNameOverride $v1LibraryNameOverride)
+    Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2" -libraryNameOverride $v2LibraryNameOverride)
+
     if ($outputFolders.Contains("removed")) {
         $v2PreviewDir = $(Join-Path $outputDir "v2Preview")
         if ($createOutputDirIfNotExist -and -not (Test-Path $v2PreviewDir)) {
             New-Item -ItemType Directory -Path $v2PreviewDir | Out-Null
         }
-        $v2PreviewNamespaceOverride = $namespaceRoot + ".V2Preview"
-        Invoke (Get-TspCommand $specFilePath $v2PreviewDir -generateStub $generateStub -apiVersion "v2preview" -namespaceOverride $v2PreviewNamespaceOverride)
+        $v2PreviewLibraryNameOverride = $namespaceRoot + ".V2Preview"
+        Invoke (Get-TspCommand $specFilePath $v2PreviewDir -generateStub $generateStub -apiVersion "v2preview" -libraryNameOverride $v2PreviewLibraryNameOverride)
     }
 
     # exit if the generation failed
@@ -174,7 +218,9 @@ function Generate-Versioning {
 
 Export-ModuleMember -Function "Invoke"
 Export-ModuleMember -Function "Get-TspCommand"
+Export-ModuleMember -Function "Get-Mgmt-TspCommand"
 Export-ModuleMember -Function "Refresh-Build"
+Export-ModuleMember -Function "Refresh-Mgmt-Build"
 Export-ModuleMember -Function "Compare-Paths"
 Export-ModuleMember -Function "Generate-Srv-Driven"
 Export-ModuleMember -Function "Generate-Versioning"

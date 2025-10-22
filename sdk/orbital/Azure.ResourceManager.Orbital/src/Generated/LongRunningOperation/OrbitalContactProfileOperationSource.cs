@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Orbital
 
         OrbitalContactProfileResource IOperationSource<OrbitalContactProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<OrbitalContactProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
             return new OrbitalContactProfileResource(_client, data);
         }
 
         async ValueTask<OrbitalContactProfileResource> IOperationSource<OrbitalContactProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(document.RootElement);
-            return new OrbitalContactProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<OrbitalContactProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
+            return await Task.FromResult(new OrbitalContactProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

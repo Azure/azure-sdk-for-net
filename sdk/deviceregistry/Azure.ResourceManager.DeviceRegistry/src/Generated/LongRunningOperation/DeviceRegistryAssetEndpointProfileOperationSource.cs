@@ -8,30 +8,41 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
-    internal class DeviceRegistryAssetEndpointProfileOperationSource : IOperationSource<DeviceRegistryAssetEndpointProfileResource>
+    /// <summary></summary>
+    internal partial class DeviceRegistryAssetEndpointProfileOperationSource : IOperationSource<DeviceRegistryAssetEndpointProfileResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DeviceRegistryAssetEndpointProfileOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DeviceRegistryAssetEndpointProfileResource IOperationSource<DeviceRegistryAssetEndpointProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DeviceRegistryAssetEndpointProfileData data = DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceRegistryAssetEndpointProfileResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DeviceRegistryAssetEndpointProfileResource> IOperationSource<DeviceRegistryAssetEndpointProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DeviceRegistryAssetEndpointProfileData data = DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceRegistryAssetEndpointProfileResource(_client, data);
         }
     }

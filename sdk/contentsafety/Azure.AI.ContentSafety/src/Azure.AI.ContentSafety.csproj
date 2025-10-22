@@ -10,6 +10,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -20,8 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

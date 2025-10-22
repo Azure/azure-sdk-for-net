@@ -64,8 +64,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue<object>(ConnectionString);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteObjectValue<object>(ConnectionString);
+            }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
@@ -258,6 +261,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("connectionString"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             connectionString = property0.Value.GetObject();
                             continue;
                         }
@@ -442,7 +449,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new OracleLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOracleLinkedService(document.RootElement);
         }
 

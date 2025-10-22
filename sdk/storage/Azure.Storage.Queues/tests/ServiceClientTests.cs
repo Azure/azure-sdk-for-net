@@ -49,6 +49,23 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder2.AccountName);
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            QueueServiceClient service = new QueueServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
         [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
@@ -75,6 +92,20 @@ namespace Azure.Storage.Queues.Test
 
             Assert.IsEmpty(builder.QueueName);
             Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var queueEndpoint = new Uri($"https://customdomain/");
+
+            QueueServiceClient service = new QueueServiceClient(queueEndpoint, credentials);
+
+            Assert.AreEqual(accountName, service.AccountName);
         }
 
         [RecordedTest]
@@ -267,6 +298,53 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetQueuesAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetUserDelegatioKey()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+
+            // Act
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
+
+            // Assert
+            Assert.IsNotNull(response.Value);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetUserDelegationKey_Error()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetUserDelegationKey_ArgumentException()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                service.GetUserDelegationKeyAsync(
+                    startsOn: null,
+                    // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
+                    // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
+                    expiresOn: TimeZoneInfo.ConvertTime(
+                        Recording.Now.AddHours(1),
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
+            ;
         }
 
         #region Secondary Storage

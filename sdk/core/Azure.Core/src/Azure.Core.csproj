@@ -2,17 +2,17 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.46.0-beta.1</Version>
+    <Version>1.50.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.45.0</ApiCompatVersion>
+    <ApiCompatVersion>1.49.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462;net472</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,13 +28,6 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
-
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" />
-    <PackageReference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">

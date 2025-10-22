@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.IotHub
 {
+    public partial class AzureResourceManagerIotHubContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerIotHubContext() { }
+        public static Azure.ResourceManager.IotHub.AzureResourceManagerIotHubContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class EventHubConsumerGroupInfoCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource>, System.Collections.IEnumerable
     {
         protected EventHubConsumerGroupInfoCollection() { }

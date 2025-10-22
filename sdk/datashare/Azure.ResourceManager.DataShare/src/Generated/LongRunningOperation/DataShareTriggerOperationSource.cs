@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DataShare
 
         DataShareTriggerResource IOperationSource<DataShareTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataShareTriggerData.DeserializeDataShareTriggerData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataShareTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
             return new DataShareTriggerResource(_client, data);
         }
 
         async ValueTask<DataShareTriggerResource> IOperationSource<DataShareTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataShareTriggerData.DeserializeDataShareTriggerData(document.RootElement);
-            return new DataShareTriggerResource(_client, data);
+            var data = ModelReaderWriter.Read<DataShareTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
+            return await Task.FromResult(new DataShareTriggerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
-        /// Properties of an analysis summary.
+        /// The resource-specific properties for this resource.
         /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveSummary"/> and <see cref="FirmwareSummary"/>.
+        /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CveSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/> and <see cref="FirmwareSummary"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirmwareAnalysisSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirmwareAnalysisSummaryProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Properties of an analysis summary.
+        /// The resource-specific properties for this resource.
         /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveSummary"/> and <see cref="FirmwareSummary"/>.
+        /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CveSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/> and <see cref="FirmwareSummary"/>.
         /// </summary>
-        public FirmwareAnalysisSummaryProperties Properties { get; }
+        public FirmwareAnalysisSummaryProperties Properties { get; set; }
     }
 }

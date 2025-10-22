@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -40,8 +41,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -137,8 +137,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerDeviceUpdateContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDeviceUpdateContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support writing '{options.Format}' format.");
             }
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceUpdateAccountData(document.RootElement, options);
                     }
                 default:

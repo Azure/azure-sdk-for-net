@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            IReadOnlyList<DistributedAvailabilityGroupData> value = default;
+            IReadOnlyList<SqlDistributedAvailabilityGroupData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    List<DistributedAvailabilityGroupData> array = new List<DistributedAvailabilityGroupData>();
+                    List<SqlDistributedAvailabilityGroupData> array = new List<SqlDistributedAvailabilityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(item, options));
+                        array.Add(SqlDistributedAvailabilityGroupData.DeserializeSqlDistributedAvailabilityGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DistributedAvailabilityGroupsListResult(value ?? new ChangeTrackingList<DistributedAvailabilityGroupData>(), nextLink, serializedAdditionalRawData);
+            return new DistributedAvailabilityGroupsListResult(value ?? new ChangeTrackingList<SqlDistributedAvailabilityGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDistributedAvailabilityGroupsListResult(document.RootElement, options);
                     }
                 default:

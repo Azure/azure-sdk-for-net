@@ -83,10 +83,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
+            if (Optional.IsDefined(ThriftTransportProtocol))
+            {
+                writer.WritePropertyName("thriftTransportProtocol"u8);
+                writer.WriteStringValue(ThriftTransportProtocol.Value.ToSerialString());
+            }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 writer.WriteObjectValue<object>(EnableSsl);
+            }
+            if (Optional.IsDefined(EnableServerCertificateValidation))
+            {
+                writer.WritePropertyName("enableServerCertificateValidation"u8);
+                writer.WriteObjectValue<object>(EnableServerCertificateValidation);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
@@ -139,7 +149,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ImpalaAuthenticationType authenticationType = default;
             object username = default;
             SecretBase password = default;
+            ImpalaThriftTransportProtocol? thriftTransportProtocol = default;
             object enableSsl = default;
+            object enableServerCertificateValidation = default;
             object trustedCertPath = default;
             object useSystemTrustStore = default;
             object allowHostNameCNMismatch = default;
@@ -254,6 +266,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("thriftTransportProtocol"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            thriftTransportProtocol = property0.Value.GetString().ToImpalaThriftTransportProtocol();
+                            continue;
+                        }
                         if (property0.NameEquals("enableSsl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -261,6 +282,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 continue;
                             }
                             enableSsl = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableServerCertificateValidation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableServerCertificateValidation = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"u8))
@@ -327,7 +357,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 authenticationType,
                 username,
                 password,
+                thriftTransportProtocol,
                 enableSsl,
+                enableServerCertificateValidation,
                 trustedCertPath,
                 useSystemTrustStore,
                 allowHostNameCNMismatch,
@@ -339,7 +371,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ImpalaLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeImpalaLinkedService(document.RootElement);
         }
 

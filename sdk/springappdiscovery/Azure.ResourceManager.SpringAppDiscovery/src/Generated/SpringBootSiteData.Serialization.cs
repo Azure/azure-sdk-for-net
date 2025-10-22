@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSpringAppDiscoveryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSpringBootSiteData(document.RootElement, options);
                     }
                 default:

@@ -186,6 +186,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Sets the permissions of the storage resource.
+        /// This is intended to be called on the destination resource item with the source resource item passed-in.
         /// </summary>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -241,5 +242,19 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Determines whether to perform the item transfer. This should be called on the source resource item.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Whether the item transfer should be performed.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task<bool> ShouldItemTransferAsync(CancellationToken cancellationToken = default)
+            => Task.FromResult(true);
     }
 }

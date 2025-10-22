@@ -71,6 +71,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(IPv6Rules))
+            {
+                writer.WritePropertyName("ipv6Rules"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPv6Rules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -114,6 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
             IList<StorageAccountResourceAccessRule> resourceAccessRules = default;
             IList<StorageAccountVirtualNetworkRule> virtualNetworkRules = default;
             IList<StorageAccountIPRule> ipRules = default;
+            IList<StorageAccountIPRule> ipv6Rules = default;
             StorageNetworkDefaultAction defaultAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -170,6 +181,20 @@ namespace Azure.ResourceManager.Storage.Models
                     ipRules = array;
                     continue;
                 }
+                if (property.NameEquals("ipv6Rules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StorageAccountIPRule> array = new List<StorageAccountIPRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item, options));
+                    }
+                    ipv6Rules = array;
+                    continue;
+                }
                 if (property.NameEquals("defaultAction"u8))
                 {
                     defaultAction = property.Value.GetString().ToStorageNetworkDefaultAction();
@@ -186,6 +211,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(),
                 virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(),
                 ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(),
+                ipv6Rules ?? new ChangeTrackingList<StorageAccountIPRule>(),
                 defaultAction,
                 serializedAdditionalRawData);
         }
@@ -285,6 +311,29 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv6Rules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipv6Rules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPv6Rules))
+                {
+                    if (IPv6Rules.Any())
+                    {
+                        builder.Append("  ipv6Rules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPv6Rules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipv6Rules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -308,7 +357,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -324,7 +373,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageAccountNetworkRuleSet(document.RootElement, options);
                     }
                 default:

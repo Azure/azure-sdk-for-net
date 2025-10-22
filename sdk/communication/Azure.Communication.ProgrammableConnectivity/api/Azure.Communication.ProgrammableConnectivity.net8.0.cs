@@ -1,5 +1,11 @@
 namespace Azure.Communication.ProgrammableConnectivity
 {
+    public partial class AzureCommunicationProgrammableConnectivityContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationProgrammableConnectivityContext() { }
+        public static Azure.Communication.ProgrammableConnectivity.AzureCommunicationProgrammableConnectivityContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class CommunicationProgrammableConnectivityModelFactory
     {
         public static Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult DeviceLocationVerificationResult(bool verificationResult = false) { throw null; }
@@ -250,6 +256,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class CommunicationProgrammableConnectivityClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClient, Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions> AddProgrammableConnectivityClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClient, Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions> AddProgrammableConnectivityClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

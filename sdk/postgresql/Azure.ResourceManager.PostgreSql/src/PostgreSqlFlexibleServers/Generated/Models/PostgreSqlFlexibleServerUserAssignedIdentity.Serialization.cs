@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerPostgreSqlContext.Default));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlFlexibleServerUserAssignedIdentity(document.RootElement, options);
                     }
                 default:

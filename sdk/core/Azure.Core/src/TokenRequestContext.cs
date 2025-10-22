@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Net.Http;
 
 namespace Azure.Core
 {
@@ -149,5 +149,27 @@ namespace Azure.Core
         /// The URI of the request. This is used in combination with <see cref="ResourceRequestMethod"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
         /// </summary>
         public Uri? ResourceRequestUri { get; }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="TokenRequestContext"/> from the specified <see cref="GetTokenOptions"/>.
+        /// </summary>
+        internal static TokenRequestContext FromGetTokenOptions(GetTokenOptions getTokenOptions)
+        {
+            var scopes = getTokenOptions.Properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue) && scopesValue is ReadOnlyMemory<string> memoryScopes
+                ? memoryScopes.ToArray()
+                : scopesValue is string[] scopeArray ?
+                    scopeArray :
+                    throw new InvalidOperationException($"The '{GetTokenOptions.ScopesPropertyName}' property must be set in the {nameof(GetTokenOptions)}.");
+            string? parentRequestId = getTokenOptions.Properties.TryGetValue("parentRequestId", out var parentRequestIdValue) && parentRequestIdValue is string ? (string)parentRequestIdValue : default;
+            string? claims = getTokenOptions.Properties.TryGetValue("claims", out var claimsValue) && claimsValue is string ? (string)claimsValue : default;
+            string? tenantId = getTokenOptions.Properties.TryGetValue("tenantId", out var tenantIdValue) && tenantIdValue is string ? (string)tenantIdValue : default;
+            bool isCaeEnabled = getTokenOptions.Properties.TryGetValue("isCaeEnabled", out var isCaeEnabledValue) && isCaeEnabledValue is bool ? (bool)isCaeEnabledValue : default;
+            bool isProofOfPossessionEnabled = getTokenOptions.Properties.TryGetValue("isProofOfPossessionEnabled", out var isProofOfPossessionEnabledValue) && isProofOfPossessionEnabledValue is bool ? (bool)isProofOfPossessionEnabledValue : false;
+            string? proofOfPossessionNonce = getTokenOptions.Properties.TryGetValue("proofOfPossessionNonce", out var proofOfPossessionNonceValue) && proofOfPossessionNonceValue is string ? (string)proofOfPossessionNonceValue : default;
+            Uri? requestUri = getTokenOptions.Properties.TryGetValue("requestUri", out var requestUriValue) && requestUriValue is Uri ? (Uri)requestUriValue : default;
+            string? requestMethod = getTokenOptions.Properties.TryGetValue("requestMethod", out var requestMethodValue) && requestMethodValue is string ? (string)requestMethodValue : default;
+
+            return new TokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, requestUri, requestMethod);
+        }
     }
 }

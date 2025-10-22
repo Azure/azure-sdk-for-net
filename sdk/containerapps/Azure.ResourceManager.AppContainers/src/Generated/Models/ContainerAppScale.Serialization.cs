@@ -46,6 +46,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
+            if (Optional.IsDefined(CooldownPeriod))
+            {
+                writer.WritePropertyName("cooldownPeriod"u8);
+                writer.WriteNumberValue(CooldownPeriod.Value);
+            }
+            if (Optional.IsDefined(PollingInterval))
+            {
+                writer.WritePropertyName("pollingInterval"u8);
+                writer.WriteNumberValue(PollingInterval.Value);
+            }
             if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
@@ -64,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -95,6 +105,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             int? minReplicas = default;
             int? maxReplicas = default;
+            int? cooldownPeriod = default;
+            int? pollingInterval = default;
             IList<ContainerAppScaleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -118,6 +130,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxReplicas = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("cooldownPeriod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cooldownPeriod = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("pollingInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pollingInterval = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -138,7 +168,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppScale(minReplicas, maxReplicas, rules ?? new ChangeTrackingList<ContainerAppScaleRule>(), serializedAdditionalRawData);
+            return new ContainerAppScale(
+                minReplicas,
+                maxReplicas,
+                cooldownPeriod,
+                pollingInterval,
+                rules ?? new ChangeTrackingList<ContainerAppScaleRule>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -182,6 +218,36 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CooldownPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cooldownPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CooldownPeriod))
+                {
+                    builder.Append("  cooldownPeriod: ");
+                    builder.AppendLine($"{CooldownPeriod.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PollingInterval), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pollingInterval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PollingInterval))
+                {
+                    builder.Append("  pollingInterval: ");
+                    builder.AppendLine($"{PollingInterval.Value}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rules), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -216,7 +282,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -232,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppScale(document.RootElement, options);
                     }
                 default:

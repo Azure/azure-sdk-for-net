@@ -32,8 +32,110 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/backupLongTermRetentionPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/backupLongTermRetentionPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets a database's long term retention policy. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedInstanceLongTermRetentionPolicyListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedInstanceLongTermRetentionPolicyListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets a database's long term retention policy. </summary>
+        /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedInstanceLongTermRetentionPolicyListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedInstanceLongTermRetentionPolicyListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName)
@@ -101,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +237,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -252,7 +354,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -264,16 +366,17 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/backupLongTermRetentionPolicies", false);
+            uri.AppendPath("/backupLongTermRetentionPolicies/", false);
+            uri.AppendPath(policyName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -284,7 +387,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/backupLongTermRetentionPolicies", false);
+            uri.AppendPath("/backupLongTermRetentionPolicies/", false);
+            uri.AppendPath(policyName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -292,63 +396,57 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a database's long term retention policy. </summary>
+        /// <summary> Deletes a managed database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedInstanceLongTermRetentionPolicyListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, policyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets a database's long term retention policy. </summary>
+        /// <summary> Deletes a managed database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedInstanceLongTermRetentionPolicyListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, policyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -400,7 +498,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +531,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         ManagedInstanceLongTermRetentionPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedInstanceLongTermRetentionPolicyListResult.DeserializeManagedInstanceLongTermRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

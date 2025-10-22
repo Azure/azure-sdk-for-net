@@ -45,6 +45,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AdminStatus))
+            {
+                writer.WritePropertyName("adminStatus"u8);
+                writer.WriteStringValue(AdminStatus.Value.ToString());
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +61,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,6 +91,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            ImportJobAdminStatus? adminStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +110,34 @@ namespace Azure.ResourceManager.StorageCache.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("adminStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            adminStatus = new ImportJobAdminStatus(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageCacheImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new StorageCacheImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), adminStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheImportJobPatch>.Write(ModelReaderWriterOptions options)
@@ -117,7 +147,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheImportJobPatch)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +161,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageCacheImportJobPatch(document.RootElement, options);
                     }
                 default:

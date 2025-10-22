@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IdleTimeoutInMinutes))
@@ -55,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
-                JsonSerializer.Serialize(writer, PublicIPPrefix);
+                ((IJsonModel<WritableSubResource>)PublicIPPrefix).Write(writer, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -71,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,6 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
+            IDictionary<string, string> tags = default;
             int? idleTimeoutInMinutes = default;
             VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
             WritableSubResource publicIPPrefix = default;
@@ -112,6 +125,20 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            publicIPPrefix = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("deleteOption"u8))
@@ -170,6 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(
                 name,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 idleTimeoutInMinutes,
                 dnsSettings,
                 publicIPPrefix,
@@ -184,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -198,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineScaleSetUpdatePublicIPAddressConfiguration(document.RootElement, options);
                     }
                 default:

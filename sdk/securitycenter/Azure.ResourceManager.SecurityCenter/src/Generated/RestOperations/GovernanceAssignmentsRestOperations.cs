@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         GovernanceAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         GovernanceAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

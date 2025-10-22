@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         TemplateSpecVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         TemplateSpecVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecVersionsListResult.DeserializeTemplateSpecVersionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecVersionsListResult.DeserializeTemplateSpecVersionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateSpecVersionsListResult.DeserializeTemplateSpecVersionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateSpecVersionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateSpecVersionsListResult.DeserializeTemplateSpecVersionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

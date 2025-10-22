@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List all the existing accounts. </summary>
+        /// <summary> Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAccountsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicAccountsListResult.DeserializeNewRelicAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List all the existing accounts. </summary>
+        /// <summary> Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAccountsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicAccountsListResult.DeserializeNewRelicAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List all the existing accounts. </summary>
+        /// <summary> Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="userEmail"> User Email. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAccountsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicAccountsListResult.DeserializeNewRelicAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List all the existing accounts. </summary>
+        /// <summary> Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="userEmail"> User Email. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicAccountsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicAccountsListResult.DeserializeNewRelicAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

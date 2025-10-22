@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Maps.Models;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMapsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Maps
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MapsCreatorData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Maps
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsCreatorData(document.RootElement, options);
                     }
                 default:

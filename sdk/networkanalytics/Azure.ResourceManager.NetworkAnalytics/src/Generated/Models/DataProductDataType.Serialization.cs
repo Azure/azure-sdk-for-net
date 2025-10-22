@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkAnalyticsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataProductDataType)} does not support writing '{options.Format}' format.");
             }
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataProductDataType(document.RootElement, options);
                     }
                 default:

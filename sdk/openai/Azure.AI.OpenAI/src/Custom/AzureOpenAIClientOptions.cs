@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Files;
-using Azure.AI.OpenAI.RealtimeConversation;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI;
 
@@ -48,6 +47,35 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     }
     private string _userAgentApplicationId;
 
+#if !AZURE_OPENAI_GA
+    [Experimental("AOAI001")]
+    public IDictionary<string, string> DefaultHeaders
+    {
+        get => _defaultHeaders ??= new();
+        set
+        {
+            AssertNotFrozen();
+            _defaultHeaders = new(value);
+        }
+    }
+    private ChangeTrackingDictionary<string, string> _defaultHeaders;
+
+    [Experimental("AOAI001")]
+    public IDictionary<string, string> DefaultQueryParameters
+    {
+        get => _defaultQueryParameters ??= new();
+        set
+        {
+            AssertNotFrozen();
+            _defaultQueryParameters = new(value);
+        }
+    }
+    private ChangeTrackingDictionary<string, string> _defaultQueryParameters;
+#else
+    internal IDictionary<string, string> DefaultHeaders = new ChangeTrackingDictionary<string, string>();
+    internal IDictionary<string, string> DefaultQueryParameters = new ChangeTrackingDictionary<string, string>();
+#endif
+
     /// <summary>
     /// Initializes a new instance of <see cref="AzureOpenAIClientOptions"/>.
     /// </summary>
@@ -74,68 +102,6 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         : this()
     {
         ExplicitVersion = version;
-    }
-
-    /// <summary> The version of the service to use. </summary>
-    public enum ServiceVersion
-    {
-        V2024_06_01 = 0,
-#if !AZURE_OPENAI_GA
-        V2024_08_01_Preview = 1,
-        V2024_09_01_Preview = 2,
-        V2024_10_01_Preview = 3,
-#endif
-        V2024_10_21 = 4,
-#if !AZURE_OPENAI_GA
-        V2024_12_01_Preview = 5,
-        V2025_01_01_Preview = 6,
-#endif
-    }
-
-    private static string GetStringForVersion(ServiceVersion version)
-    {
-        return version switch
-        {
-            ServiceVersion.V2024_06_01 => "2024-06-01",
-#if !AZURE_OPENAI_GA
-            ServiceVersion.V2024_08_01_Preview => "2024-08-01-preview",
-            ServiceVersion.V2024_09_01_Preview => "2024-09-01-preview",
-            ServiceVersion.V2024_10_01_Preview => "2024-10-01-preview",
-#endif
-            ServiceVersion.V2024_10_21 => "2024-10-21",
-#if !AZURE_OPENAI_GA
-            ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
-            ServiceVersion.V2025_01_01_Preview => "2025-01-01-preview",
-#endif
-            _ => throw new NotSupportedException($"The specified {nameof(ServiceVersion)} value ({version}) is not supported.")
-        };
-    }
-
-    internal string GetRawServiceApiValueForClient(object client)
-    {
-        if (ExplicitVersion.HasValue)
-        {
-            return GetStringForVersion(ExplicitVersion.Value);
-        }
-        else
-        {
-            ServiceVersion defaultVersion = client switch
-            {
-#if !AZURE_OPENAI_GA
-                // Realtime (preview only) is currently *only* supported on 2024-10-01-preview; override default
-                // version selection for optimal out-of-the-box support if it's not explicitly specified.
-                AzureRealtimeConversationClient _ => ServiceVersion.V2024_10_01_Preview,
-#endif
-#if !AZURE_OPENAI_GA
-                // Standard default for beta libraries: latest preview version
-                _ => ServiceVersion.V2025_01_01_Preview,
-#else
-                // Standard default for GA libraries: latest stable version
-                _ => ServiceVersion.V2024_10_21,
-#endif
-            };
-            return GetStringForVersion(defaultVersion);
-        }
     }
 
     internal class RetryWithDelaysPolicy : ClientRetryPolicy
@@ -166,9 +132,64 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         }
     }
 
+    /// <summary> The version of the service to use. </summary>
+    public enum ServiceVersion
+    {
+        V2024_06_01 = 0,
 #if !AZURE_OPENAI_GA
-    private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01_Preview;
+        V2024_08_01_Preview = 1,
+        V2024_09_01_Preview = 2,
+        V2024_10_01_Preview = 3,
+#endif
+        V2024_10_21 = 4,
+#if !AZURE_OPENAI_GA
+        V2024_12_01_Preview = 5,
+        V2025_01_01_Preview = 6,
+        V2025_03_01_Preview = 8,
+        V2025_04_01_Preview = 9,
+#endif
+    }
+
+    private static string GetStringForVersion(ServiceVersion version)
+    {
+        return version switch
+        {
+            ServiceVersion.V2024_06_01 => "2024-06-01",
+#if !AZURE_OPENAI_GA
+            ServiceVersion.V2024_08_01_Preview => "2024-08-01-preview",
+            ServiceVersion.V2024_09_01_Preview => "2024-09-01-preview",
+            ServiceVersion.V2024_10_01_Preview => "2024-10-01-preview",
+#endif
+            ServiceVersion.V2024_10_21 => "2024-10-21",
+#if !AZURE_OPENAI_GA
+            ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
+            ServiceVersion.V2025_01_01_Preview => "2025-01-01-preview",
+            ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
+            ServiceVersion.V2025_04_01_Preview => "2025-04-01-preview",
+#endif
+            _ => throw new NotSupportedException($"The specified {nameof(ServiceVersion)} value ({version}) is not supported.")
+        };
+    }
+
+#if !AZURE_OPENAI_GA
+    private const ServiceVersion LatestVersion = ServiceVersion.V2025_04_01_Preview;
 #else
     private const ServiceVersion LatestVersion = ServiceVersion.V2024_10_21;
 #endif
+
+    internal string GetRawServiceApiValueForClient(object client)
+    {
+        if (ExplicitVersion.HasValue)
+        {
+            return GetStringForVersion(ExplicitVersion.Value);
+        }
+        else
+        {
+            ServiceVersion defaultVersion = client switch
+            {
+                _ => LatestVersion,
+            };
+            return GetStringForVersion(defaultVersion);
+        }
+    }
 }

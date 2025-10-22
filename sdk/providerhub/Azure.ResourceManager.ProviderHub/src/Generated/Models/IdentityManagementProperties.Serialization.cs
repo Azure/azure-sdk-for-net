@@ -44,6 +44,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
+            if (Optional.IsCollectionDefined(ApplicationIds))
+            {
+                writer.WritePropertyName("applicationIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicationIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DelegationAppIds))
+            {
+                writer.WritePropertyName("delegationAppIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in DelegationAppIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,6 +103,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             IdentityManagementType? type = default;
             string applicationId = default;
+            IList<string> applicationIds = default;
+            IList<string> delegationAppIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +123,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     applicationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("applicationIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    applicationIds = array;
+                    continue;
+                }
+                if (property.NameEquals("delegationAppIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    delegationAppIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IdentityManagementProperties(type, applicationId, serializedAdditionalRawData);
+            return new IdentityManagementProperties(type, applicationId, applicationIds ?? new ChangeTrackingList<string>(), delegationAppIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityManagementProperties>.Write(ModelReaderWriterOptions options)
@@ -117,7 +167,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +181,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIdentityManagementProperties(document.RootElement, options);
                     }
                 default:

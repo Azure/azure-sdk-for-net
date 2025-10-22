@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseReplicationLinkResource : IJsonModel<SynapseReplicationLinkData>
     {
+        private static SynapseReplicationLinkData s_dataDeserializationInstance;
+        private static SynapseReplicationLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseReplicationLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseReplicationLinkData>)Data).Write(writer, options);
 
-        SynapseReplicationLinkData IJsonModel<SynapseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseReplicationLinkData>)Data).Create(ref reader, options);
+        SynapseReplicationLinkData IJsonModel<SynapseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseReplicationLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseReplicationLinkData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseReplicationLinkData IPersistableModel<SynapseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseReplicationLinkData>(data, options);
+        SynapseReplicationLinkData IPersistableModel<SynapseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseReplicationLinkData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseReplicationLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseReplicationLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

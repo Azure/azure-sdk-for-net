@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityTaskData)} does not support writing '{options.Format}' format.");
             }
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityTaskData(document.RootElement, options);
                     }
                 default:

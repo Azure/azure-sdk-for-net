@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
@@ -49,50 +50,6 @@ namespace Azure.ResourceManager.ContainerInstance
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("containers"u8);
-            writer.WriteStartArray();
-            foreach (var item in Containers)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
-            {
-                writer.WritePropertyName("imageRegistryCredentials"u8);
-                writer.WriteStartArray();
-                foreach (var item in ImageRegistryCredentials)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RestartPolicy))
-            {
-                writer.WritePropertyName("restartPolicy"u8);
-                writer.WriteStringValue(RestartPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress, options);
-            }
-            writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Volumes))
-            {
-                writer.WritePropertyName("volumes"u8);
-                writer.WriteStartArray();
-                foreach (var item in Volumes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Diagnostics))
-            {
-                writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -102,6 +59,16 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties, options);
+            }
+            if (Optional.IsCollectionDefined(Containers))
+            {
+                writer.WritePropertyName("containers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Containers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(InitContainers))
             {
@@ -123,20 +90,90 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConfidentialComputeProperties))
+            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
             {
-                writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties, options);
+                writer.WritePropertyName("imageRegistryCredentials"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImageRegistryCredentials)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RestartPolicy))
+            {
+                writer.WritePropertyName("restartPolicy"u8);
+                writer.WriteStringValue(RestartPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(ShutdownGracePeriod))
+            {
+                writer.WritePropertyName("shutdownGracePeriod"u8);
+                writer.WriteStringValue(ShutdownGracePeriod.Value, "O");
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteObjectValue(IPAddress, options);
+            }
+            if (Optional.IsDefined(TimeToLive))
+            {
+                writer.WritePropertyName("timeToLive"u8);
+                writer.WriteStringValue(TimeToLive.Value, "O");
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Volumes))
+            {
+                writer.WritePropertyName("volumes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Volumes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Diagnostics))
+            {
+                writer.WritePropertyName("diagnostics"u8);
+                writer.WriteObjectValue(Diagnostics, options);
             }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
+            if (Optional.IsDefined(ConfidentialComputeProperties))
+            {
+                writer.WritePropertyName("confidentialComputeProperties"u8);
+                writer.WriteObjectValue(ConfidentialComputeProperties, options);
+            }
+            if (Optional.IsDefined(SecurityContext))
+            {
+                writer.WritePropertyName("securityContext"u8);
+                writer.WriteObjectValue(SecurityContext, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RegisteredRevisions))
+            {
+                writer.WritePropertyName("registeredRevisions"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegisteredRevisions)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(UseKrypton))
+            {
+                writer.WritePropertyName("useKrypton"u8);
+                writer.WriteBooleanValue(UseKrypton.Value);
             }
             writer.WriteEndObject();
         }
@@ -168,20 +205,25 @@ namespace Azure.ResourceManager.ContainerInstance
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<ContainerInstanceContainer> containers = default;
-            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
-            ContainerGroupRestartPolicy? restartPolicy = default;
-            ContainerGroupIPAddress ipAddress = default;
-            ContainerInstanceOperatingSystemType osType = default;
-            IList<ContainerVolume> volumes = default;
-            ContainerGroupDiagnostics diagnostics = default;
             ContainerGroupSku? sku = default;
             ContainerGroupEncryptionProperties encryptionProperties = default;
+            IList<ContainerInstanceContainer> containers = default;
             IList<InitContainerDefinitionContent> initContainers = default;
             IList<DeploymentExtensionSpec> extensions = default;
-            ConfidentialComputeProperties confidentialComputeProperties = default;
+            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
+            ContainerGroupRestartPolicy? restartPolicy = default;
+            DateTimeOffset? shutdownGracePeriod = default;
+            ContainerGroupIPAddress ipAddress = default;
+            DateTimeOffset? timeToLive = default;
+            ContainerInstanceOperatingSystemType? osType = default;
+            IList<ContainerVolume> volumes = default;
+            ContainerGroupDiagnostics diagnostics = default;
             ContainerGroupPriority? priority = default;
+            ConfidentialComputeProperties confidentialComputeProperties = default;
+            ContainerSecurityContextDefinition securityContext = default;
             int? revision = default;
+            IReadOnlyList<int> registeredRevisions = default;
+            bool? useKrypton = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +282,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerInstanceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -252,76 +294,6 @@ namespace Azure.ResourceManager.ContainerInstance
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("containers"u8))
-                        {
-                            List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
-                            }
-                            containers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("imageRegistryCredentials"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
-                            }
-                            imageRegistryCredentials = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("restartPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restartPolicy = new ContainerGroupRestartPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("osType"u8))
-                        {
-                            osType = new ContainerInstanceOperatingSystemType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("volumes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerVolume> array = new List<ContainerVolume>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
-                            }
-                            volumes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("diagnostics"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -338,6 +310,20 @@ namespace Azure.ResourceManager.ContainerInstance
                                 continue;
                             }
                             encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("containers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
+                            }
+                            containers = array;
                             continue;
                         }
                         if (property0.NameEquals("initContainers"u8))
@@ -368,13 +354,86 @@ namespace Azure.ResourceManager.ContainerInstance
                             extensions = array;
                             continue;
                         }
-                        if (property0.NameEquals("confidentialComputeProperties"u8))
+                        if (property0.NameEquals("imageRegistryCredentials"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value, options);
+                            List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
+                            }
+                            imageRegistryCredentials = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("restartPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restartPolicy = new ContainerGroupRestartPolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("shutdownGracePeriod"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            shutdownGracePeriod = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("ipAddress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("timeToLive"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeToLive = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("osType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            osType = new ContainerInstanceOperatingSystemType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("volumes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerVolume> array = new List<ContainerVolume>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
+                            }
+                            volumes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("diagnostics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("priority"u8))
@@ -386,6 +445,24 @@ namespace Azure.ResourceManager.ContainerInstance
                             priority = new ContainerGroupPriority(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("confidentialComputeProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("securityContext"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("revision"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -393,6 +470,29 @@ namespace Azure.ResourceManager.ContainerInstance
                                 continue;
                             }
                             revision = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("registeredRevisions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<int> array = new List<int>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetInt32());
+                            }
+                            registeredRevisions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("useKrypton"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useKrypton = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -411,20 +511,25 @@ namespace Azure.ResourceManager.ContainerInstance
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                containers,
+                sku,
+                encryptionProperties,
+                containers ?? new ChangeTrackingList<ContainerInstanceContainer>(),
+                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
+                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,
+                shutdownGracePeriod,
                 ipAddress,
+                timeToLive,
                 osType,
                 volumes ?? new ChangeTrackingList<ContainerVolume>(),
                 diagnostics,
-                sku,
-                encryptionProperties,
-                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
-                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
-                confidentialComputeProperties,
                 priority,
+                confidentialComputeProperties,
+                securityContext,
                 revision,
+                registeredRevisions ?? new ChangeTrackingList<int>(),
+                useKrypton,
                 zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
@@ -436,7 +541,7 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupProfileData)} does not support writing '{options.Format}' format.");
             }
@@ -450,7 +555,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerGroupProfileData(document.RootElement, options);
                     }
                 default:

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class VirtualEndpointResource : IJsonModel<VirtualEndpointResourceData>
     {
+        private static VirtualEndpointResourceData s_dataDeserializationInstance;
+        private static VirtualEndpointResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualEndpointResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEndpointResourceData>)Data).Write(writer, options);
 
-        VirtualEndpointResourceData IJsonModel<VirtualEndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEndpointResourceData>)Data).Create(ref reader, options);
+        VirtualEndpointResourceData IJsonModel<VirtualEndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEndpointResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualEndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualEndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualEndpointResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        VirtualEndpointResourceData IPersistableModel<VirtualEndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEndpointResourceData>(data, options);
+        VirtualEndpointResourceData IPersistableModel<VirtualEndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEndpointResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<VirtualEndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualEndpointResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualEndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualEndpointResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

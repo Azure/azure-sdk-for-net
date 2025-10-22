@@ -46,23 +46,24 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/>. </summary>
-        /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
+        /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public BatchPoolSpecification(string vmSize)
         {
             Argument.AssertNotNull(vmSize, nameof(vmSize));
 
             VmSize = vmSize;
+            CertificateReferences = new ChangeTrackingList<BatchCertificateReference>();
             ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
             UserAccounts = new ChangeTrackingList<UserAccount>();
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<BatchMetadataItem>();
             MountConfiguration = new ChangeTrackingList<MountConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/>. </summary>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
-        /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
-        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified if the Pool needs to be created with Azure IaaS VMs. If it is not specified then the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
+        /// <param name="vmSize"> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
+        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
         /// <param name="taskSlotsPerNode"> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service rejects the request with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
@@ -75,6 +76,11 @@ namespace Azure.Compute.Batch
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
         /// <param name="startTask"> A Task to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. </param>
+        /// <param name="certificateReferences">
+        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location. For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location. For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
+        /// Warning: This property is deprecated and will be removed after February, 2024.
+        /// Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// </param>
         /// <param name="applicationPackageReferences"> The list of Packages to be installed on each Compute Node in the Pool. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </param>
         /// <param name="userAccounts"> The list of user Accounts to be created on each Compute Node in the Pool. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
@@ -82,7 +88,7 @@ namespace Azure.Compute.Batch
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. If omitted, the default value is Default. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolSpecification(string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, TimeSpan? resizeTimeout, string resourceTags, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<UserAccount> userAccounts, IList<MetadataItem> metadata, IList<MountConfiguration> mountConfiguration, BatchNodeCommunicationMode? targetNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPoolSpecification(string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, TimeSpan? resizeTimeout, string resourceTags, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<BatchCertificateReference> certificateReferences, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<UserAccount> userAccounts, IList<BatchMetadataItem> metadata, IList<MountConfiguration> mountConfiguration, BatchNodeCommunicationMode? targetNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -99,6 +105,7 @@ namespace Azure.Compute.Batch
             EnableInterNodeCommunication = enableInterNodeCommunication;
             NetworkConfiguration = networkConfiguration;
             StartTask = startTask;
+            CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
             UserAccounts = userAccounts;
             Metadata = metadata;
@@ -115,9 +122,9 @@ namespace Azure.Compute.Batch
 
         /// <summary> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; set; }
-        /// <summary> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </summary>
+        /// <summary> The size of the virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </summary>
         public string VmSize { get; set; }
-        /// <summary> The virtual machine configuration for the Pool. This property must be specified if the Pool needs to be created with Azure IaaS VMs. If it is not specified then the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </summary>
+        /// <summary> The virtual machine configuration for the Pool. This property must be specified. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </summary>
         public int? TaskSlotsPerNode { get; set; }
@@ -143,12 +150,18 @@ namespace Azure.Compute.Batch
         public NetworkConfiguration NetworkConfiguration { get; set; }
         /// <summary> A Task to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. </summary>
         public BatchStartTask StartTask { get; set; }
+        /// <summary>
+        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location. For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location. For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
+        /// Warning: This property is deprecated and will be removed after February, 2024.
+        /// Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// </summary>
+        public IList<BatchCertificateReference> CertificateReferences { get; }
         /// <summary> The list of Packages to be installed on each Compute Node in the Pool. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </summary>
         public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. </summary>
         public IList<UserAccount> UserAccounts { get; }
         /// <summary> A list of name-value pairs associated with the Pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<MetadataItem> Metadata { get; }
+        public IList<BatchMetadataItem> Metadata { get; }
         /// <summary> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
         public IList<MountConfiguration> MountConfiguration { get; }
         /// <summary> The desired node communication mode for the pool. If omitted, the default value is Default. </summary>

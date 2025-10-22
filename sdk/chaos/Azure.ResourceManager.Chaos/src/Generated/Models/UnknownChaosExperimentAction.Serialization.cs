@@ -57,20 +57,20 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            string type = "Unknown";
             string name = default;
+            ExperimentActionType type = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ExperimentActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownChaosExperimentAction(type, name, serializedAdditionalRawData);
+            return new UnknownChaosExperimentAction(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentAction>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{options.Format}' format.");
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChaosExperimentAction(document.RootElement, options);
                     }
                 default:

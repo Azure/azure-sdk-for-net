@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -102,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -255,6 +257,203 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  peeringLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeeringLocation))
+                {
+                    builder.Append("  peeringLocation: ");
+                    if (PeeringLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PeeringLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PeeringLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Circuits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  circuits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Circuits))
+                {
+                    if (Circuits.Any())
+                    {
+                        builder.Append("  circuits: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Circuits)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  circuits: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Connections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Connections))
+                {
+                    if (Connections.Any())
+                    {
+                        builder.Append("  connections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Connections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  connections: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TestGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  testGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TestGuid))
+                {
+                    builder.Append("  testGuid: ");
+                    builder.AppendLine($"'{TestGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TestType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  testType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TestType))
+                {
+                    builder.Append("  testType: ");
+                    builder.AppendLine($"'{TestType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issues), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  issues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Issues))
+                {
+                    if (Issues.Any())
+                    {
+                        builder.Append("  issues: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Issues)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteFailoverTestDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverTestDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -262,7 +461,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteFailoverTestDetails)} does not support writing '{options.Format}' format.");
             }
@@ -276,7 +477,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExpressRouteFailoverTestDetails(document.RootElement, options);
                     }
                 default:

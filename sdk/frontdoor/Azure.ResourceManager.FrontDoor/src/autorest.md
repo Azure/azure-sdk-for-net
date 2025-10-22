@@ -7,15 +7,16 @@ azure-arm: true
 csharp: true
 library-name: FrontDoor
 namespace: Azure.ResourceManager.FrontDoor
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/frontdoor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f11631f1c1057d8363f9e3f9597c73b90f8924c8/specification/frontdoor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+enable-bicep-serialization: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 

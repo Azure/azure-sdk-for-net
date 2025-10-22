@@ -1,6 +1,6 @@
 # Release History
 
-## 6.4.0-beta.1 (Unreleased)
+## 6.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,56 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 6.5.3 (2025-10-20)
+
+### Bugs Fixed
+
+- Fixed an issue where a legacy ownership record without checkpoint data was interpreted as a valid checkpoint and used to initialize a partition when no current generation checkpoint was present.
+
+## 6.5.2 (2025-06-16)
+
+### Bugs Fixed
+
+- Fixed a bug where the data types of broker-owned properties were being adjusted when an event was read by the client, causing the underlying AMQP data to be mutated.  This resulted in binary changes when the AMQP message was serialized and unintentionally altered the service contract.  Going forward, the original data types will be preserved on the AMQP representation of the message and type normalization only applied to the .NET `EventData` projection.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+ 
+- Added a compatibility hack to the binding data associated with the trigger to preserve the previous service behavior of `Offset` being a valid numeric value.  As this data is not local to the trigger context and is surfaced upstream, the change in service behavior for GeoDR namespaces caused issues with some custom language workers making invalid assumptions about the string-based offset format.  To work around this, the `Offset` is being populated with `OffsetString` if it can be parsed as a number.  In the case that `OffsetString` is not a valid numeric value, it will default to `-1` which would position readers at the beginning of the stream, causing duplicates but preventing data loss.  A key for `OffsetString` was added that reflects the actual offset returned by the service in all scenarios.
+
+## 6.5.1 (2025-04-09)
+
+### Bugs Fixed
+
+- Fixed a bug which caused the placeholder value used to represent missing offsets in v5.11.3 - v5.11.6 to not be properly detected and incorrectly used as a valid offset when reading from a partition.
+
+## 6.5.0 (2025-04-08)
+
+### Features Added
+
+- Support for the Event Hubs geographic data replication feature has been enabled.  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.   
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+
+### Bugs Fixed
+
+- Fixed a misspelling of "PartitionId" in the trigger input data passed to the function executor.  This caused function logs and metrics reported by AppInsights and the portal to reflect the wrong label.  To ensure that applications that rely on the misspelling are not impacted, a new member with the correct spelling was added.
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
+
+## 6.4.0-beta.1 (2025-03-14)
+
+### Bugs Fixed
+
+- Fixed a misspelling of "PartitionId" in the trigger input data passed to the function executor.  This caused function logs and metrics reported by AppInsights and the portal to reflect the wrong label.  To ensure that applications that rely on the misspelling are not impacted, a new member with the correct spelling was added.
+
+### Other Changes
+
+- Updating .NET runtime dependencies to the 6.x line, the Azure extensions to 1.8.0, and the latest dependencies for the Functions host.
 
 ## 6.3.5 (2024-08-01)
 

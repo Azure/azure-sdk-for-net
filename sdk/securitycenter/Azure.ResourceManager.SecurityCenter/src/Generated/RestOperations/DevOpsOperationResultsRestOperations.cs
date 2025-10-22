@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,8 +98,8 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         OperationStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -127,8 +129,8 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         OperationStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

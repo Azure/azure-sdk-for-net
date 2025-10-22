@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Cdn
     {
         CanMigrateResult IOperationSource<CanMigrateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return CanMigrateResult.DeserializeCanMigrateResult(document.RootElement);
         }
 
         async ValueTask<CanMigrateResult> IOperationSource<CanMigrateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return CanMigrateResult.DeserializeCanMigrateResult(document.RootElement);
         }
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.WorkloadMonitor
 {
+    public partial class AzureResourceManagerWorkloadMonitorContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerWorkloadMonitorContext() { }
+        public static Azure.ResourceManager.WorkloadMonitor.AzureResourceManagerWorkloadMonitorContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class HealthMonitorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>, System.Collections.IEnumerable
     {
         protected HealthMonitorCollection() { }

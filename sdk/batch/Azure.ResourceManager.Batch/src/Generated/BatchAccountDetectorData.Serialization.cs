@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountDetectorData)} does not support writing '{options.Format}' format.");
             }
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccountDetectorData(document.RootElement, options);
                     }
                 default:

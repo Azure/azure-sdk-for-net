@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class KubeEnvironmentResource : IJsonModel<KubeEnvironmentData>
     {
+        private static KubeEnvironmentData s_dataDeserializationInstance;
+        private static KubeEnvironmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KubeEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubeEnvironmentData>)Data).Write(writer, options);
 
-        KubeEnvironmentData IJsonModel<KubeEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubeEnvironmentData>)Data).Create(ref reader, options);
+        KubeEnvironmentData IJsonModel<KubeEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubeEnvironmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubeEnvironmentData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        KubeEnvironmentData IPersistableModel<KubeEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubeEnvironmentData>(data, options);
+        KubeEnvironmentData IPersistableModel<KubeEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubeEnvironmentData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<KubeEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubeEnvironmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KubeEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubeEnvironmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

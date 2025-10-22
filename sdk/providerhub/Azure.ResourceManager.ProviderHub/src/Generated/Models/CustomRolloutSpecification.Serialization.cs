@@ -34,8 +34,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 throw new FormatException($"The model {nameof(CustomRolloutSpecification)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("canary"u8);
-            writer.WriteObjectValue(Canary, options);
+            if (Optional.IsDefined(AutoProvisionConfig))
+            {
+                writer.WritePropertyName("autoProvisionConfig"u8);
+                writer.WriteObjectValue(AutoProvisionConfig, options);
+            }
+            if (Optional.IsDefined(Canary))
+            {
+                writer.WritePropertyName("canary"u8);
+                writer.WriteObjectValue(Canary, options);
+            }
+            if (Optional.IsCollectionDefined(ReleaseScopes))
+            {
+                writer.WritePropertyName("releaseScopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReleaseScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RefreshSubscriptionRegistration))
+            {
+                writer.WritePropertyName("refreshSubscriptionRegistration"u8);
+                writer.WriteBooleanValue(RefreshSubscriptionRegistration.Value);
+            }
+            if (Optional.IsDefined(SkipReleaseScopeValidation))
+            {
+                writer.WritePropertyName("skipReleaseScopeValidation"u8);
+                writer.WriteBooleanValue(SkipReleaseScopeValidation.Value);
+            }
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
@@ -59,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,16 +116,65 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
+            CustomRolloutAutoProvisionConfig autoProvisionConfig = default;
             TrafficRegions canary = default;
+            IList<string> releaseScopes = default;
+            bool? refreshSubscriptionRegistration = default;
+            bool? skipReleaseScopeValidation = default;
             ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("autoProvisionConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoProvisionConfig = CustomRolloutAutoProvisionConfig.DeserializeCustomRolloutAutoProvisionConfig(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("canary"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     canary = TrafficRegions.DeserializeTrafficRegions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("releaseScopes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    releaseScopes = array;
+                    continue;
+                }
+                if (property.NameEquals("refreshSubscriptionRegistration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshSubscriptionRegistration = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("skipReleaseScopeValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skipReleaseScopeValidation = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -129,7 +206,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomRolloutSpecification(canary, providerRegistration, resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(), serializedAdditionalRawData);
+            return new CustomRolloutSpecification(
+                autoProvisionConfig,
+                canary,
+                releaseScopes ?? new ChangeTrackingList<string>(),
+                refreshSubscriptionRegistration,
+                skipReleaseScopeValidation,
+                providerRegistration,
+                resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutSpecification>.Write(ModelReaderWriterOptions options)
@@ -139,7 +224,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomRolloutSpecification)} does not support writing '{options.Format}' format.");
             }
@@ -153,7 +238,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomRolloutSpecification(document.RootElement, options);
                     }
                 default:

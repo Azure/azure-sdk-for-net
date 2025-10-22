@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(NextAllowedQuotaDowngradeOn))
             {
                 writer.WritePropertyName("nextAllowedQuotaDowngradeTime"u8);
-                writer.WriteStringValue(NextAllowedQuotaDowngradeOn.Value, "O");
+                writer.WriteStringValue(NextAllowedQuotaDowngradeOn.Value, "R");
             }
             if (options.Format != "W" && Optional.IsDefined(NextAllowedProvisionedIopsDowngradeOn))
             {
                 writer.WritePropertyName("nextAllowedProvisionedIopsDowngradeTime"u8);
-                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeOn.Value, "O");
+                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeOn.Value, "R");
             }
             if (options.Format != "W" && Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeOn))
             {
                 writer.WritePropertyName("nextAllowedProvisionedBandwidthDowngradeTime"u8);
-                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeOn.Value, "O");
+                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeOn.Value, "R");
             }
             if (Optional.IsDefined(EnabledProtocol))
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            nextAllowedQuotaDowngradeTime = property0.Value.GetDateTimeOffset("O");
+                            nextAllowedQuotaDowngradeTime = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("nextAllowedProvisionedIopsDowngradeTime"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            nextAllowedProvisionedIopsDowngradeTime = property0.Value.GetDateTimeOffset("O");
+                            nextAllowedProvisionedIopsDowngradeTime = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("nextAllowedProvisionedBandwidthDowngradeTime"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            nextAllowedProvisionedBandwidthDowngradeTime = property0.Value.GetDateTimeOffset("O");
+                            nextAllowedProvisionedBandwidthDowngradeTime = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("enabledProtocols"u8))
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Storage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFileShareData(document.RootElement, options);
                     }
                 default:

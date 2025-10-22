@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HealthDataAIServices
 
         DeidServiceResource IOperationSource<DeidServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeidServiceData.DeserializeDeidServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<DeidServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthDataAIServicesContext.Default);
             return new DeidServiceResource(_client, data);
         }
 
         async ValueTask<DeidServiceResource> IOperationSource<DeidServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeidServiceData.DeserializeDeidServiceData(document.RootElement);
-            return new DeidServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<DeidServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthDataAIServicesContext.Default);
+            return await Task.FromResult(new DeidServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

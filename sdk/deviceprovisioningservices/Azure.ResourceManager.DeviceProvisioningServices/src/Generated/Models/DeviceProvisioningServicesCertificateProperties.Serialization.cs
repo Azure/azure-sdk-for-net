@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(ExpireOn.Value, "R");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Certificate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Certificate))
+                using (JsonDocument document = JsonDocument.Parse(Certificate, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(CreatedOn.Value, "R");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "R");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    expiry = property.Value.GetDateTimeOffset("R");
+                    expiry = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("thumbprint"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("R");
+                    created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("updated"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("R");
+                    updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceProvisioningServicesCertificateProperties(document.RootElement, options);
                     }
                 default:

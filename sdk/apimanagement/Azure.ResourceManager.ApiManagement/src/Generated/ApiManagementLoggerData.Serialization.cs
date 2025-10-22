@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiManagementLoggerData(document.RootElement, options);
                     }
                 default:

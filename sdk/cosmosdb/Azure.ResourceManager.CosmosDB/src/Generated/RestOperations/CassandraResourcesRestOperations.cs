@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraKeyspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraKeyspaceListResult.DeserializeCassandraKeyspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraKeyspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraKeyspaceListResult.DeserializeCassandraKeyspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraKeyspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraKeyspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraTableListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraTableListResult.DeserializeCassandraTableListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraTableListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraTableListResult.DeserializeCassandraTableListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraTableData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraTableData.DeserializeCassandraTableData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraTableData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraTableData.DeserializeCassandraTableData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1345,7 +1345,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1732,7 +1732,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraViewListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraViewListResult.DeserializeCassandraViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraViewListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraViewListResult.DeserializeCassandraViewListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1838,7 +1838,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraViewGetResultData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CassandraViewGetResultData.DeserializeCassandraViewGetResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1873,7 +1873,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CassandraViewGetResultData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CassandraViewGetResultData.DeserializeCassandraViewGetResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2161,7 +2161,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2196,7 +2196,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         ThroughputSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

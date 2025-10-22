@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class SubscriptionPolicyResource : IJsonModel<SubscriptionPolicyData>
     {
+        private static SubscriptionPolicyData s_dataDeserializationInstance;
+        private static SubscriptionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SubscriptionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionPolicyData>)Data).Write(writer, options);
 
-        SubscriptionPolicyData IJsonModel<SubscriptionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionPolicyData>)Data).Create(ref reader, options);
+        SubscriptionPolicyData IJsonModel<SubscriptionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SubscriptionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SubscriptionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionPolicyData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        SubscriptionPolicyData IPersistableModel<SubscriptionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionPolicyData>(data, options);
+        SubscriptionPolicyData IPersistableModel<SubscriptionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionPolicyData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<SubscriptionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SubscriptionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SlotConfigNamesResource : IJsonModel<SlotConfigNamesResourceData>
     {
+        private static SlotConfigNamesResourceData s_dataDeserializationInstance;
+        private static SlotConfigNamesResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SlotConfigNamesResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SlotConfigNamesResourceData>)Data).Write(writer, options);
 
-        SlotConfigNamesResourceData IJsonModel<SlotConfigNamesResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SlotConfigNamesResourceData>)Data).Create(ref reader, options);
+        SlotConfigNamesResourceData IJsonModel<SlotConfigNamesResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SlotConfigNamesResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SlotConfigNamesResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SlotConfigNamesResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SlotConfigNamesResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        SlotConfigNamesResourceData IPersistableModel<SlotConfigNamesResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SlotConfigNamesResourceData>(data, options);
+        SlotConfigNamesResourceData IPersistableModel<SlotConfigNamesResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SlotConfigNamesResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<SlotConfigNamesResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SlotConfigNamesResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SlotConfigNamesResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SlotConfigNamesResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

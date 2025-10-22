@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -98,11 +99,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("anonymousPullEnabled"u8);
                 writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
             }
-            if (Optional.IsDefined(MetadataSearch))
-            {
-                writer.WritePropertyName("metadataSearch"u8);
-                writer.WriteStringValue(MetadataSearch.Value.ToString());
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,7 +148,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? anonymousPullEnabled = default;
-            ContainerRegistryMetadataSearch? metadataSearch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerRegistryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -270,15 +265,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             anonymousPullEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("metadataSearch"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            metadataSearch = new ContainerRegistryMetadataSearch(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -300,7 +286,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 publicNetworkAccess,
                 networkRuleBypassOptions,
                 anonymousPullEnabled,
-                metadataSearch,
                 serializedAdditionalRawData);
         }
 
@@ -311,7 +296,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support writing '{options.Format}' format.");
             }
@@ -325,7 +310,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryPatch(document.RootElement, options);
                     }
                 default:

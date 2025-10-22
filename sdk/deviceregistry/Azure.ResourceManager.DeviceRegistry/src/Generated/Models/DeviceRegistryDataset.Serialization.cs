@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class DeviceRegistryDataset : IUtf8JsonSerializable, IJsonModel<DeviceRegistryDataset>
+    /// <summary> Defines the dataset properties. </summary>
+    public partial class DeviceRegistryDataset : IJsonModel<DeviceRegistryDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryDataset"/> for deserialization. </summary>
+        internal DeviceRegistryDataset()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceRegistryDataset)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(DatasetConfiguration))
@@ -50,19 +55,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("dataPoints"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataPoints)
+                foreach (DeviceRegistryDataPoint item in DataPoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -73,22 +78,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        DeviceRegistryDataset IJsonModel<DeviceRegistryDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryDataset IJsonModel<DeviceRegistryDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceRegistryDataset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceRegistryDataset)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeviceRegistryDataset(document.RootElement, options);
         }
 
-        internal static DeviceRegistryDataset DeserializeDeviceRegistryDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeviceRegistryDataset DeserializeDeviceRegistryDataset(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,37 +107,36 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string datasetConfiguration = default;
             DeviceRegistryTopic topic = default;
             IList<DeviceRegistryDataPoint> dataPoints = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datasetConfiguration"u8))
+                if (prop.NameEquals("datasetConfiguration"u8))
                 {
-                    datasetConfiguration = property.Value.GetString();
+                    datasetConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topic"u8))
+                if (prop.NameEquals("topic"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
+                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataPoints"u8))
+                if (prop.NameEquals("dataPoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeviceRegistryDataPoint> array = new List<DeviceRegistryDataPoint>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeviceRegistryDataPoint.DeserializeDeviceRegistryDataPoint(item, options));
                     }
@@ -136,35 +145,42 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceRegistryDataset(name, datasetConfiguration, topic, dataPoints ?? new ChangeTrackingList<DeviceRegistryDataPoint>(), serializedAdditionalRawData);
+            return new DeviceRegistryDataset(name, datasetConfiguration, topic, dataPoints ?? new ChangeTrackingList<DeviceRegistryDataPoint>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DeviceRegistryDataset>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryDataset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceRegistryDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeviceRegistryDataset IPersistableModel<DeviceRegistryDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryDataset IPersistableModel<DeviceRegistryDataset>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceRegistryDataset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryDataset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDeviceRegistryDataset(document.RootElement, options);
                     }
                 default:
@@ -172,6 +188,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceRegistryDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

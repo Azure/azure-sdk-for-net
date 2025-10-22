@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         ContainerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerList.DeserializeContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         ContainerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerList.DeserializeContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeStorageContainerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeStorageContainerData.DeserializeDataBoxEdgeStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeStorageContainerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeStorageContainerData.DeserializeDataBoxEdgeStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         ContainerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerList.DeserializeContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         ContainerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerList.DeserializeContainerList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

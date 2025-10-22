@@ -2,11 +2,17 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.KubernetesConfiguration simplifies declarative resource provisioning in .NET.</Description>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
 </Project>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceSkusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceSkusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceSkusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         ResourceSkusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

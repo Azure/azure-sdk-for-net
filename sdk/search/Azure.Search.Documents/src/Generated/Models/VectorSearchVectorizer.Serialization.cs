@@ -5,26 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class VectorSearchVectorizer : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownVectorSearchVectorizer))]
+    public partial class VectorSearchVectorizer : IUtf8JsonSerializable, IJsonModel<VectorSearchVectorizer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorSearchVectorizer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VectorSearchVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static VectorSearchVectorizer DeserializeVectorSearchVectorizer(JsonElement element)
+        VectorSearchVectorizer IJsonModel<VectorSearchVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVectorSearchVectorizer(document.RootElement, options);
+        }
+
+        internal static VectorSearchVectorizer DeserializeVectorSearchVectorizer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,20 +80,51 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "aiServicesVision": return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element);
-                    case "aml": return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element);
-                    case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element);
-                    case "customWebApi": return WebApiVectorizer.DeserializeWebApiVectorizer(element);
+                    case "aiServicesVision": return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element, options);
+                    case "aml": return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element, options);
+                    case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element, options);
+                    case "customWebApi": return WebApiVectorizer.DeserializeWebApiVectorizer(element, options);
                 }
             }
-            return UnknownVectorSearchVectorizer.DeserializeUnknownVectorSearchVectorizer(element);
+            return UnknownVectorSearchVectorizer.DeserializeUnknownVectorSearchVectorizer(element, options);
         }
+
+        BinaryData IPersistableModel<VectorSearchVectorizer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VectorSearchVectorizer IPersistableModel<VectorSearchVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVectorSearchVectorizer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VectorSearchVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VectorSearchVectorizer FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorSearchVectorizer(document.RootElement);
         }
 
@@ -54,7 +132,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

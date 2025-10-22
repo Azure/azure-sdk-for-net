@@ -13,37 +13,8 @@ namespace Azure.Health.Deidentification
     /// <summary> Customizations options to override default service behaviors for job usage. </summary>
     public partial class DeidentificationJobCustomizationOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobCustomizationOptions"/>. </summary>
         public DeidentificationJobCustomizationOptions()
@@ -52,24 +23,30 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobCustomizationOptions"/>. </summary>
         /// <param name="redactionFormat">
-        /// Format of the redacted output. Only valid when Operation is Redact.
-        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// Format of the redacted output. Only valid when Operation is Redact. 
+        /// Please refer to https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format for more details.
         /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, string inputLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedactionFormat = redactionFormat;
             SurrogateLocale = surrogateLocale;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            InputLocale = inputLocale;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
-        /// Format of the redacted output. Only valid when Operation is Redact.
-        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// Format of the redacted output. Only valid when Operation is Redact. 
+        /// Please refer to https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format for more details.
         /// </summary>
         public string RedactionFormat { get; set; }
+
         /// <summary> Locale in which the output surrogates are written. </summary>
         public string SurrogateLocale { get; set; }
+
+        /// <summary> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </summary>
+        public string InputLocale { get; set; }
     }
 }

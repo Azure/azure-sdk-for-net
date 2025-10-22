@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription. </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportNameAvailabilityResult.DeserializeSupportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription. </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<SupportNameAvailabilityResult> CheckNameAvailability(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportNameAvailabilityResult.DeserializeSupportNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -117,6 +117,7 @@ namespace Azure.ResourceManager.Support
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Support/supportTickets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -125,7 +126,6 @@ namespace Azure.ResourceManager.Support
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -137,6 +137,7 @@ namespace Azure.ResourceManager.Support
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Support/supportTickets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -145,7 +146,6 @@ namespace Azure.ResourceManager.Support
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportTicketsListResult.DeserializeSupportTicketsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportTicketsListResult.DeserializeSupportTicketsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -265,96 +265,12 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
                     return Response.FromValue((SupportTicketData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string supportTicketName, UpdateSupportTicket updateSupportTicket)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
-            uri.AppendPath(supportTicketName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string supportTicketName, UpdateSupportTicket updateSupportTicket)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
-            uri.AppendPath(supportTicketName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateSupportTicket, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API. </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="updateSupportTicket"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportTicketData>> UpdateAsync(string supportTicketName, UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
-
-            using var message = CreateUpdateRequest(supportTicketName, updateSupportTicket);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SupportTicketData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API. </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="updateSupportTicket"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportTicketData> Update(string supportTicketName, UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
-
-            using var message = CreateUpdateRequest(supportTicketName, updateSupportTicket);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SupportTicketData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -391,7 +307,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new support ticket for Billing, and Subscription Management issues. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;. </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="data"> Support ticket request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
@@ -414,7 +330,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new support ticket for Billing, and Subscription Management issues. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;. </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="data"> Support ticket request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
@@ -431,6 +347,90 @@ namespace Azure.ResourceManager.Support
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string supportTicketName, UpdateSupportTicket updateSupportTicket)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string supportTicketName, UpdateSupportTicket updateSupportTicket)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(updateSupportTicket, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API. </summary>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
+        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="updateSupportTicket"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SupportTicketData>> UpdateAsync(string supportTicketName, UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
+
+            using var message = CreateUpdateRequest(supportTicketName, updateSupportTicket);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SupportTicketData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API. </summary>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
+        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="updateSupportTicket"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SupportTicketData> Update(string supportTicketName, UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
+
+            using var message = CreateUpdateRequest(supportTicketName, updateSupportTicket);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SupportTicketData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SupportTicketsListResult.DeserializeSupportTicketsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         SupportTicketsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SupportTicketsListResult.DeserializeSupportTicketsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

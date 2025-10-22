@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServerConfigurationListResult.DeserializePostgreSqlFlexibleServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServerConfigurationListResult.DeserializePostgreSqlFlexibleServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlFlexibleServerConfigurationListResult.DeserializePostgreSqlFlexibleServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                     {
                         PostgreSqlFlexibleServerConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlFlexibleServerConfigurationListResult.DeserializePostgreSqlFlexibleServerConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

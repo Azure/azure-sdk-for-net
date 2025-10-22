@@ -34,12 +34,21 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(SecurityProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("encryptionAtHost"u8);
-            writer.WriteBooleanValue(EncryptionAtHost);
-            writer.WritePropertyName("securityType"u8);
-            writer.WriteStringValue(SecurityType.ToString());
-            writer.WritePropertyName("uefiSettings"u8);
-            writer.WriteObjectValue(UefiSettings, options);
+            if (Optional.IsDefined(EncryptionAtHost))
+            {
+                writer.WritePropertyName("encryptionAtHost"u8);
+                writer.WriteBooleanValue(EncryptionAtHost.Value);
+            }
+            if (Optional.IsDefined(SecurityType))
+            {
+                writer.WritePropertyName("securityType"u8);
+                writer.WriteStringValue(SecurityType.Value.ToString());
+            }
+            if (Optional.IsDefined(UefiSettings))
+            {
+                writer.WritePropertyName("uefiSettings"u8);
+                writer.WriteObjectValue(UefiSettings, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -48,7 +57,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,26 +86,38 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            bool encryptionAtHost = default;
-            SecurityTypes securityType = default;
-            UefiSettings uefiSettings = default;
+            bool? encryptionAtHost = default;
+            SecurityTypes? securityType = default;
+            BatchUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptionAtHost"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     encryptionAtHost = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("securityType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     securityType = new SecurityTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uefiSettings"u8))
                 {
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +136,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityProfile)} does not support writing '{options.Format}' format.");
             }
@@ -129,7 +150,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityProfile(document.RootElement, options);
                     }
                 default:
@@ -143,7 +164,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SecurityProfile FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSecurityProfile(document.RootElement);
         }
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-10-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 201:
                     {
                         CommitmentPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 201:
                     {
                         CommitmentPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1404,7 +1404,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1591,7 +1591,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanListResult.DeserializeCommitmentPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1644,7 +1644,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1675,7 +1675,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                     {
                         CommitmentPlanAccountAssociationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommitmentPlanAccountAssociationListResult.DeserializeCommitmentPlanAccountAssociationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

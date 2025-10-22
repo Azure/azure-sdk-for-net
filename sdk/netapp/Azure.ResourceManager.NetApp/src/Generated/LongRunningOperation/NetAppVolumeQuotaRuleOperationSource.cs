@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppVolumeQuotaRuleResource IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppVolumeQuotaRuleResource(_client, data);
         }
 
         async ValueTask<NetAppVolumeQuotaRuleResource> IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(document.RootElement);
-            return new NetAppVolumeQuotaRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            return await Task.FromResult(new NetAppVolumeQuotaRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

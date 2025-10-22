@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceTagRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceTagRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceTagRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         DynatraceTagRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         TagRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TagRuleListResult.DeserializeTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         TagRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TagRuleListResult.DeserializeTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         TagRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TagRuleListResult.DeserializeTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Dynatrace
                 case 200:
                     {
                         TagRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TagRuleListResult.DeserializeTagRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

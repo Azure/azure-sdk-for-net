@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 throw new FormatException($"The model {nameof(ElasticSanSkuInformationList)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,17 +87,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             IReadOnlyList<ElasticSanSkuInformation> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ElasticSanSkuInformation> array = new List<ElasticSanSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,7 +104,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticSanSkuInformationList(value ?? new ChangeTrackingList<ElasticSanSkuInformation>(), nextLink, serializedAdditionalRawData);
+            return new ElasticSanSkuInformationList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSkuInformationList>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanSkuInformationList)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanSkuInformationList(document.RootElement, options);
                     }
                 default:

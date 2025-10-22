@@ -42,6 +42,8 @@ namespace Azure.Identity
         private const int UserAssignedManagedIdentityNotSupportedEvent = 21;
         private const int ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedEvent = 22;
         private const int ManagedIdentitySourceAttemptedEvent = 25;
+        private const int ManagedIdentityCredentialSelectedEvent = 26;
+
         internal const string TenantIdDiscoveredAndNotUsedEventMessage = "A token was request for a different tenant than was configured on the credential, but the configured value was used since multi tenant authentication has been disabled. Configured TenantId: {0}, Requested TenantId {1}";
         internal const string TenantIdDiscoveredAndUsedEventMessage = "A token was requested for a different tenant than was configured on the credential, and the requested tenant id was used to authenticate. Configured TenantId: {0}, Requested TenantId {1}";
         internal const string AuthenticatedAccountDetailsMessage = "Client ID: {0}. Tenant ID: {1}. User Principal Name: {2} Object ID: {3}";
@@ -50,6 +52,7 @@ namespace Azure.Identity
         internal const string UserAssignedManagedIdentityNotSupportedMessage = "User assigned managed identities are not supported in the {0} environment.";
         internal const string ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage = "Service Fabric user assigned managed identity ClientId or ResourceId is not configurable at runtime.";
         internal const string ManagedIdentitySourceAttemptedMessage = "ManagedIdentitySource {0} was attempted. IsSelected={1}.";
+        internal const string ManagedIdentityCredentialSelectedMessage = "Managed Identity source selected: {0} with ID: {1}";
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
@@ -395,7 +398,7 @@ namespace Azure.Identity
             }
         }
 
-        [Event(ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedEvent, Level = EventLevel.Warning, Message =ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage)]
+        [Event(ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedEvent, Level = EventLevel.Warning, Message = ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage)]
         public void ServiceFabricManagedIdentityRuntimeConfigurationNotSupported()
         {
             if (IsEnabled(EventLevel.Warning, EventKeywords.All))
@@ -404,12 +407,22 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(ManagedIdentitySourceAttemptedEvent, Level = EventLevel.Informational, Message = ManagedIdentitySourceAttemptedMessage)]
         public void ManagedIdentitySourceAttempted(string source, bool isSelected)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
                 WriteEvent(ManagedIdentitySourceAttemptedEvent, source, isSelected);
+            }
+        }
+
+        [Event(ManagedIdentityCredentialSelectedEvent, Level = EventLevel.Informational, Message = ManagedIdentityCredentialSelectedMessage)]
+        public void ManagedIdentityCredentialSelected(string credentialType, string id)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                WriteEvent(ManagedIdentityCredentialSelectedEvent, credentialType, id);
             }
         }
     }

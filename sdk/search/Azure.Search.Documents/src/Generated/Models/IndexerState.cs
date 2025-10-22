@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -12,6 +13,38 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents all of the state that defines and dictates the indexer's current execution. </summary>
     public partial class IndexerState
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
         internal IndexerState()
         {
@@ -19,9 +52,46 @@ namespace Azure.Search.Documents.Indexes.Models
             ResetDataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
+        /// <param name="mode"> The mode the indexer is running in. </param>
+        /// <param name="allDocsInitialTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
+        /// <param name="allDocsFinalTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
+        /// <param name="resetDocsInitialTrackingState"> Change tracking state used when indexing starts on select, reset documents in the datasource. </param>
+        /// <param name="resetDocsFinalTrackingState"> Change tracking state value when indexing finishes on select, reset documents in the datasource. </param>
+        /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
+        /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
+        /// <param name="resyncInitialTrackingState"> Change tracking state used when indexing starts on selective options from the datasource. </param>
+        /// <param name="resyncFinalTrackingState"> Change tracking state value when indexing finishes on selective options from the datasource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexerState(IndexingMode? mode, string allDocsInitialTrackingState, string allDocsFinalTrackingState, string resetDocsInitialTrackingState, string resetDocsFinalTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, string resyncInitialTrackingState, string resyncFinalTrackingState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Mode = mode;
+            AllDocsInitialTrackingState = allDocsInitialTrackingState;
+            AllDocsFinalTrackingState = allDocsFinalTrackingState;
+            ResetDocsInitialTrackingState = resetDocsInitialTrackingState;
+            ResetDocsFinalTrackingState = resetDocsFinalTrackingState;
+            ResetDocumentKeys = resetDocumentKeys;
+            ResetDataSourceDocumentIds = resetDataSourceDocumentIds;
+            ResyncInitialTrackingState = resyncInitialTrackingState;
+            ResyncFinalTrackingState = resyncFinalTrackingState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> The mode the indexer is running in. </summary>
         public IndexingMode? Mode { get; }
+        /// <summary> Change tracking state used when indexing starts on all documents in the datasource. </summary>
+        public string AllDocsInitialTrackingState { get; }
+        /// <summary> Change tracking state value when indexing finishes on all documents in the datasource. </summary>
+        public string AllDocsFinalTrackingState { get; }
+        /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
+        public string ResetDocsInitialTrackingState { get; }
+        /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
+        public string ResetDocsFinalTrackingState { get; }
         /// <summary> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </summary>
         public IReadOnlyList<string> ResetDocumentKeys { get; }
+        /// <summary> Change tracking state used when indexing starts on selective options from the datasource. </summary>
+        public string ResyncInitialTrackingState { get; }
+        /// <summary> Change tracking state value when indexing finishes on selective options from the datasource. </summary>
+        public string ResyncFinalTrackingState { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
         }
 
         DataReplicationVaultPatch IJsonModel<DataReplicationVaultPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             IDictionary<string, string> tags = default;
             DataReplicationVaultProperties properties = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -107,6 +114,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     properties = DataReplicationVaultProperties.DeserializeDataReplicationVaultProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -128,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,6 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
+                identity,
                 serializedAdditionalRawData);
         }
 
@@ -154,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationVaultPatch(document.RootElement, options);
                     }
                 default:

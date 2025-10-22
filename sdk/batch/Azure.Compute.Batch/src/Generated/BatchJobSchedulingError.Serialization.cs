@@ -64,7 +64,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            ErrorCategory category = default;
+            BatchErrorSourceCategory category = default;
             string code = default;
             string message = default;
             IReadOnlyList<NameValuePair> details = default;
@@ -103,7 +103,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("category"u8))
                 {
-                    category = new ErrorCategory(property.Value.GetString());
+                    category = new BatchErrorSourceCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("code"u8))
@@ -146,7 +146,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobSchedulingError)} does not support writing '{options.Format}' format.");
             }
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobSchedulingError(document.RootElement, options);
                     }
                 default:
@@ -174,7 +174,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchJobSchedulingError FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchJobSchedulingError(document.RootElement);
         }
 

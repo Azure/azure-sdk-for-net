@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support writing '{options.Format}' format.");
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceGuardProperties(document.RootElement, options);
                     }
                 default:

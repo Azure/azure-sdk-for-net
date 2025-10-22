@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceGetKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningWorkspaceGetKeysResult.DeserializeMachineLearningWorkspaceGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceGetKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningWorkspaceGetKeysResult.DeserializeMachineLearningWorkspaceGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceNotebookAccessTokenResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningWorkspaceNotebookAccessTokenResult.DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceNotebookAccessTokenResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningWorkspaceNotebookAccessTokenResult.DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceGetStorageAccountKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningWorkspaceGetStorageAccountKeysResult.DeserializeMachineLearningWorkspaceGetStorageAccountKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceGetStorageAccountKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningWorkspaceGetStorageAccountKeysResult.DeserializeMachineLearningWorkspaceGetStorageAccountKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceGetNotebookKeysResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningWorkspaceGetNotebookKeysResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1295,7 +1295,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         ExternalFqdnResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         ExternalFqdnResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExternalFqdnResponse.DeserializeExternalFqdnResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         WorkspaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkspaceListResult.DeserializeWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

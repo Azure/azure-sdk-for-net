@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                using (JsonDocument document = JsonDocument.Parse(Parameters, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Outputs);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Outputs))
+                using (JsonDocument document = JsonDocument.Parse(Outputs, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArmApplicationPatch(document.RootElement, options);
                     }
                 default:

@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             MigrateMISyncCompleteCommandInput input = default;
             MigrateMISyncCompleteCommandOutput output = default;
-            CommandType commandType = default;
-            IReadOnlyList<ODataError> errors = default;
-            CommandState? state = default;
+            DataMigrationCommandType commandType = default;
+            IReadOnlyList<DataMigrationODataError> errors = default;
+            DataMigrationCommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("commandType"u8))
                 {
-                    commandType = new CommandType(property.Value.GetString());
+                    commandType = new DataMigrationCommandType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ODataError> array = new List<ODataError>();
+                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item, options));
+                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new CommandState(property.Value.GetString());
+                    state = new DataMigrationCommandState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MigrateMISyncCompleteCommandProperties(
                 commandType,
-                errors ?? new ChangeTrackingList<ODataError>(),
+                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
                 serializedAdditionalRawData,
                 input,
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateMISyncCompleteCommandProperties(document.RootElement, options);
                     }
                 default:

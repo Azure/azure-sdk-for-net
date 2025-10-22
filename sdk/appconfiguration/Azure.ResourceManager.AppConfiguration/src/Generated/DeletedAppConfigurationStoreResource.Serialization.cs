@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class DeletedAppConfigurationStoreResource : IJsonModel<DeletedAppConfigurationStoreData>
     {
+        private static DeletedAppConfigurationStoreData s_dataDeserializationInstance;
+        private static DeletedAppConfigurationStoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeletedAppConfigurationStoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAppConfigurationStoreData>)Data).Write(writer, options);
 
-        DeletedAppConfigurationStoreData IJsonModel<DeletedAppConfigurationStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAppConfigurationStoreData>)Data).Create(ref reader, options);
+        DeletedAppConfigurationStoreData IJsonModel<DeletedAppConfigurationStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedAppConfigurationStoreData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedAppConfigurationStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeletedAppConfigurationStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedAppConfigurationStoreData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        DeletedAppConfigurationStoreData IPersistableModel<DeletedAppConfigurationStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedAppConfigurationStoreData>(data, options);
+        DeletedAppConfigurationStoreData IPersistableModel<DeletedAppConfigurationStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedAppConfigurationStoreData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<DeletedAppConfigurationStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedAppConfigurationStoreData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeletedAppConfigurationStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedAppConfigurationStoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

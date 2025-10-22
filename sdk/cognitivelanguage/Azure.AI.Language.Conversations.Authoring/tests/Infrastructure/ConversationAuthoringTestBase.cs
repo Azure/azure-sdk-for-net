@@ -11,14 +11,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
-        AuthoringClientOptions.ServiceVersion.V2023_04_01,
-        AuthoringClientOptions.ServiceVersion.V2023_04_15_Preview,
-        AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview
+        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2023_04_01,
+        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview,
+        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview
     )]
     [IgnoreServiceError(429, "429")]
     public abstract class ConversationAuthoringTestBase : RecordedTestBase<AuthoringClientTestEnvironment>
     {
-        protected ConversationAuthoringTestBase(bool isAsync, AuthoringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+        protected ConversationAuthoringTestBase(bool isAsync, ConversationAnalysisAuthoringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
             CompareBodies = false;
@@ -30,12 +30,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         /// <summary>
         /// Gets an instrumented client of type <typeparamref name="TClient"/>.
         /// </summary>
-        protected AnalyzeConversationAuthoring client { get; private set; }
+        protected ConversationAnalysisAuthoringClient client { get; private set; }
 
         /// <summary>
         /// Gets the service version used for this instance of the test fixture.
         /// </summary>
-        protected AuthoringClientOptions.ServiceVersion ServiceVersion { get; }
+        protected ConversationAnalysisAuthoringClientOptions.ServiceVersion ServiceVersion { get; }
 
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
@@ -44,12 +44,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         {
             await base.StartTestRecordingAsync();
 
-            AuthoringClientOptions options = new(ServiceVersion);
-            var authoringClient = CreateClient<AuthoringClient>(
+            ConversationAnalysisAuthoringClientOptions options = new(ServiceVersion);
+            client = CreateClient<ConversationAnalysisAuthoringClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(options));
-            client= authoringClient.GetAnalyzeConversationAuthoringClient();
         }
     }
 }

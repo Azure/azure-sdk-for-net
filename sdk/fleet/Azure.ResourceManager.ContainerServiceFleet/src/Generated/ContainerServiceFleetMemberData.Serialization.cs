@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
@@ -59,6 +60,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in Labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -90,6 +107,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ResourceIdentifier clusterResourceId = default;
             string group = default;
             FleetMemberProvisioningState? provisioningState = default;
+            IDictionary<string, string> labels = default;
+            ContainerServiceFleetMemberStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +143,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceFleetContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -159,6 +178,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             provisioningState = new FleetMemberProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("labels"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            labels = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = ContainerServiceFleetMemberStatus.DeserializeContainerServiceFleetMemberStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -177,6 +219,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 clusterResourceId,
                 group,
                 provisioningState,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                status,
                 serializedAdditionalRawData);
         }
 
@@ -187,7 +231,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support writing '{options.Format}' format.");
             }
@@ -201,7 +245,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerServiceFleetMemberData(document.RootElement, options);
                     }
                 default:

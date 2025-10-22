@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,10 +40,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(NetworkInterfaceIPConfigurationId))
+            if (Optional.IsDefined(NetworkInterfaceIPConfigurationResourceId))
             {
                 writer.WritePropertyName("networkInterfaceIPConfigurationId"u8);
-                writer.WriteObjectValue(NetworkInterfaceIPConfigurationId, options);
+                writer.WriteStringValue(NetworkInterfaceIPConfigurationResourceId);
             }
             if (Optional.IsDefined(State))
             {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ipAddress = default;
-            NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId = default;
+            ResourceIdentifier networkInterfaceIPConfigurationId = default;
             string state = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterfaceIPConfigurationId = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value, options);
+                    networkInterfaceIPConfigurationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -132,6 +133,105 @@ namespace Azure.ResourceManager.Network.Models
             return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId, state, reason, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPAddress))
+                {
+                    builder.Append("  ipAddress: ");
+                    if (IPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkInterfaceIPConfigurationResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkInterfaceIPConfigurationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkInterfaceIPConfigurationResourceId))
+                {
+                    builder.Append("  networkInterfaceIPConfigurationId: ");
+                    builder.AppendLine($"'{NetworkInterfaceIPConfigurationResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    if (State.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{State}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{State}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LoadBalancerHealthPerRulePerBackendAddress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerHealthPerRulePerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
@@ -139,7 +239,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancerHealthPerRulePerBackendAddress)} does not support writing '{options.Format}' format.");
             }
@@ -153,7 +255,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadBalancerHealthPerRulePerBackendAddress(document.RootElement, options);
                     }
                 default:

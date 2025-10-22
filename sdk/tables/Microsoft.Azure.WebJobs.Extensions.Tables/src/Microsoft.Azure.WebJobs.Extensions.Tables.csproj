@@ -1,23 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>1.4.0-beta.1</Version>
+        <Version>1.5.0-beta.1</Version>
         <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-        <ApiCompatVersion>1.3.2</ApiCompatVersion>
+        <ApiCompatVersion>1.4.0</ApiCompatVersion>
         <Description>This package extends the Microsoft.Azure.WebJobs library with Table triggers using Azure Table service.</Description>
         <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
         <NoWarn>$(NoWarn);
             SA1636;<!-- Some code was copied, we can't change the license header -->
             CS0618; <!-- Obsolete APIs -->
             CS1591; <!-- XML docs -->
+            SA1402; <!-- Webjobs sources package has files with multiple types -->
         </NoWarn>
         <InheritDocTrimLevel>internal</InheritDocTrimLevel>
+        <AotCompatOptOut>true</AotCompatOptOut>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs" />
         <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
         <PackageReference Include="Microsoft.Extensions.Azure" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +31,7 @@
       <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\StorageClientProvider.cs" />
       <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" />
       <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
+      <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
     </ItemGroup>
 
 </Project>

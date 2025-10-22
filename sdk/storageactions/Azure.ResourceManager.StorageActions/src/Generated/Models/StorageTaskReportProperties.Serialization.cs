@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
-    public partial class StorageTaskReportProperties : IUtf8JsonSerializable, IJsonModel<StorageTaskReportProperties>
+    /// <summary> Storage task execution report for a run instance. </summary>
+    public partial class StorageTaskReportProperties : IJsonModel<StorageTaskReportProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskReportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTaskReportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageTaskReportProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(TaskAssignmentId))
             {
                 writer.WritePropertyName("taskAssignmentId"u8);
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WritePropertyName("runResult"u8);
                 writer.WriteStringValue(RunResult.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -121,22 +122,27 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
-        StorageTaskReportProperties IJsonModel<StorageTaskReportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskReportProperties IJsonModel<StorageTaskReportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageTaskReportProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageTaskReportProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageTaskReportProperties(document.RootElement, options);
         }
 
-        internal static StorageTaskReportProperties DeserializeStorageTaskReportProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageTaskReportProperties DeserializeStorageTaskReportProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,106 +161,104 @@ namespace Azure.ResourceManager.StorageActions.Models
             ResourceIdentifier taskId = default;
             string taskVersion = default;
             StorageTaskRunResult? runResult = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("taskAssignmentId"u8))
+                if (prop.NameEquals("taskAssignmentId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    taskAssignmentId = new ResourceIdentifier(property.Value.GetString());
+                    taskAssignmentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"u8))
+                if (prop.NameEquals("storageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetString();
+                    startTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("finishTime"u8))
+                if (prop.NameEquals("finishTime"u8))
                 {
-                    finishTime = property.Value.GetString();
+                    finishTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectsTargetedCount"u8))
+                if (prop.NameEquals("objectsTargetedCount"u8))
                 {
-                    objectsTargetedCount = property.Value.GetString();
+                    objectsTargetedCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectsOperatedOnCount"u8))
+                if (prop.NameEquals("objectsOperatedOnCount"u8))
                 {
-                    objectsOperatedOnCount = property.Value.GetString();
+                    objectsOperatedOnCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectFailedCount"u8))
+                if (prop.NameEquals("objectFailedCount"u8))
                 {
-                    objectFailedCount = property.Value.GetString();
+                    objectFailedCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectsSucceededCount"u8))
+                if (prop.NameEquals("objectsSucceededCount"u8))
                 {
-                    objectsSucceededCount = property.Value.GetString();
+                    objectsSucceededCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runStatusError"u8))
+                if (prop.NameEquals("runStatusError"u8))
                 {
-                    runStatusError = property.Value.GetString();
+                    runStatusError = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runStatusEnum"u8))
+                if (prop.NameEquals("runStatusEnum"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runStatusEnum = new StorageTaskRunStatus(property.Value.GetString());
+                    runStatusEnum = new StorageTaskRunStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("summaryReportPath"u8))
+                if (prop.NameEquals("summaryReportPath"u8))
                 {
-                    summaryReportPath = property.Value.GetString();
+                    summaryReportPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskId"u8))
+                if (prop.NameEquals("taskId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    taskId = new ResourceIdentifier(property.Value.GetString());
+                    taskId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("taskVersion"u8))
+                if (prop.NameEquals("taskVersion"u8))
                 {
-                    taskVersion = property.Value.GetString();
+                    taskVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runResult"u8))
+                if (prop.NameEquals("runResult"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runResult = new StorageTaskRunResult(property.Value.GetString());
+                    runResult = new StorageTaskRunResult(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageTaskReportProperties(
                 taskAssignmentId,
                 storageAccountId,
@@ -270,31 +274,39 @@ namespace Azure.ResourceManager.StorageActions.Models
                 taskId,
                 taskVersion,
                 runResult,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<StorageTaskReportProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageTaskReportProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageActionsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StorageTaskReportProperties IPersistableModel<StorageTaskReportProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskReportProperties IPersistableModel<StorageTaskReportProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageTaskReportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageTaskReportProperties(document.RootElement, options);
                     }
                 default:
@@ -302,6 +314,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageTaskReportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

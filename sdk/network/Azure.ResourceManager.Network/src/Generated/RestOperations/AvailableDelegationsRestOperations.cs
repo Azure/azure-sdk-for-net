@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AvailableDelegationsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableDelegationsResult.DeserializeAvailableDelegationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AvailableDelegationsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableDelegationsResult.DeserializeAvailableDelegationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AvailableDelegationsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableDelegationsResult.DeserializeAvailableDelegationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         AvailableDelegationsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableDelegationsResult.DeserializeAvailableDelegationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

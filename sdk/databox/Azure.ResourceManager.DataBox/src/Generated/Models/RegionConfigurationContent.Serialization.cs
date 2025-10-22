@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("datacenterAddressRequest"u8);
                 writer.WriteObjectValue(DataCenterAddressRequest, options);
             }
+            if (Optional.IsDefined(DeviceCapabilityRequest))
+            {
+                writer.WritePropertyName("deviceCapabilityRequest"u8);
+                writer.WriteObjectValue(DeviceCapabilityRequest, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,8 +92,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             ScheduleAvailabilityContent scheduleAvailabilityRequest = default;
-            TransportAvailabilityRequest transportAvailabilityRequest = default;
-            DataCenterAddressContent dataCenterAddressRequest = default;
+            TransportAvailabilityContent transportAvailabilityRequest = default;
+            DataCenterAddressContent datacenterAddressRequest = default;
+            DeviceCapabilityContent deviceCapabilityRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value, options);
+                    transportAvailabilityRequest = TransportAvailabilityContent.DeserializeTransportAvailabilityContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressRequest"u8))
@@ -117,7 +123,16 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value, options);
+                    datacenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("deviceCapabilityRequest"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceCapabilityRequest = DeviceCapabilityContent.DeserializeDeviceCapabilityContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +141,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RegionConfigurationContent(scheduleAvailabilityRequest, transportAvailabilityRequest, dataCenterAddressRequest, serializedAdditionalRawData);
+            return new RegionConfigurationContent(scheduleAvailabilityRequest, transportAvailabilityRequest, datacenterAddressRequest, deviceCapabilityRequest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationContent>.Write(ModelReaderWriterOptions options)
@@ -136,7 +151,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support writing '{options.Format}' format.");
             }
@@ -150,7 +165,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRegionConfigurationContent(document.RootElement, options);
                     }
                 default:

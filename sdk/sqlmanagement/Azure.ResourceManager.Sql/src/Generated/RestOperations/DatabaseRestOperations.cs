@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of operations performed on the database. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseOperationListResult.DeserializeDatabaseOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of operations performed on the database. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseOperationListResult.DeserializeDatabaseOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -177,6 +177,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of operations performed on the database. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseOperationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseOperationListResult.DeserializeDatabaseOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of operations performed on the database. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Sql
                 case 200:
                     {
                         DatabaseOperationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseOperationListResult.DeserializeDatabaseOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -18,7 +18,7 @@ namespace Parameters.Spread
     {
         protected Model() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null) => throw null;
 

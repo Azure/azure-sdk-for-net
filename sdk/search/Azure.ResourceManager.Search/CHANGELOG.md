@@ -1,23 +1,46 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c3cc9abe085093ba880ee3eeb792edb4fa789553/specification/search/resource-manager/readme.md
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2025-07-23)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2025-02-01' to 'package-2025-05-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/6fa80ad3a37a580d5c29f5612e8ea536902fce4e/specification/search/resource-manager/readme.md.
+- Make `Azure.ResourceManager.Search` AOT-compatible.
+
+## 1.3.0-beta.5 (2025-04-29)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2025-02' to 'package-preview-2025-02-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5c73e496040fa9fec8725b7e26f8e45864211e62/specification/search/resource-manager/readme.md.
+
+## 1.3.0-beta.4 (2025-03-06)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2025-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2aaa7ef3c48b8f4b7cb0e1e9bbe0041eec62c92d/specification/search/resource-manager/readme.md.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.3.0-beta.3 (2024-05-16)
 
 ### Bugs Fixed
 
-- Correct casing of SkuName when using the ArmSearchModelFactory.
+- Corrected casing of SkuName when using the ArmSearchModelFactory.
 
 ## 1.3.0-beta.2 (2024-04-29)
 
 ### Features Added
 
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.3.0-beta.1 (2024-04-17)
 
@@ -29,14 +52,14 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
 
 ## 1.2.1 (2023-11-30)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -47,13 +70,13 @@
 ### Features Added
 
 - Added support for '2023-11-01' management plane API version.
-- Enable the [semantic search](https://learn.microsoft.com/azure/search/semantic-search-overview) feature
+- Enabled the [semantic search](https://learn.microsoft.com/azure/search/semantic-search-overview) feature
 
 ## 1.2.0-beta.1 (2023-05-31)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

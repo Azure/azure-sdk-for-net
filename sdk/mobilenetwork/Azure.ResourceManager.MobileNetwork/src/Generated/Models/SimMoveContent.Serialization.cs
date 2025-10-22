@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(TargetSimGroupId))
             {
                 writer.WritePropertyName("targetSimGroupId"u8);
-                JsonSerializer.Serialize(writer, TargetSimGroupId);
+                ((IJsonModel<SubResource>)TargetSimGroupId).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Sims))
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    targetSimGroupId = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    targetSimGroupId = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sims"u8))
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SimMoveContent)} does not support writing '{options.Format}' format.");
             }
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSimMoveContent(document.RootElement, options);
                     }
                 default:

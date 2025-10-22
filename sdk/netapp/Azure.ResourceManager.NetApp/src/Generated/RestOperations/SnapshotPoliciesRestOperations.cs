@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-09-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         SnapshotPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SnapshotPoliciesList.DeserializeSnapshotPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         SnapshotPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SnapshotPoliciesList.DeserializeSnapshotPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         SnapshotPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         SnapshotPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.NetApp
                 case 201:
                     {
                         SnapshotPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.NetApp
                 case 201:
                     {
                         SnapshotPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         SnapshotPolicyVolumeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SnapshotPolicyVolumeList.DeserializeSnapshotPolicyVolumeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                     {
                         SnapshotPolicyVolumeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SnapshotPolicyVolumeList.DeserializeSnapshotPolicyVolumeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

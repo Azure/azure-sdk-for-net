@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/result?stringIndexType=Utf16CodeUnit&api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/result?stringIndexType=Utf16CodeUnit&api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,14 +14,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "f5fd7642-b6dd-402a-88f2-a3eb176c62a3",
+        "apim-request-id": "1abafd74-7fbd-4b85-b941-550b09c33c64",
         "Content-Length": "20554",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 20 Nov 2024 05:06:31 GMT",
-        "request-id": "f5fd7642-b6dd-402a-88f2-a3eb176c62a3",
+        "Date": "Wed, 25 Jun 2025 02:08:34 GMT",
+        "request-id": "1abafd74-7fbd-4b85-b941-550b09c33c64",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "59",
+        "x-envoy-upstream-service-time": "96",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
@@ -1788,8 +1788,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "408413148"
+    "RandomSeed": "71776855"
   }
 }

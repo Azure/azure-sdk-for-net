@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         MonitoringTagRulesListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoringTagRulesListResponse.DeserializeMonitoringTagRulesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         MonitoringTagRulesListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoringTagRulesListResponse.DeserializeMonitoringTagRulesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticTagRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticTagRuleData.DeserializeElasticTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticTagRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticTagRuleData.DeserializeElasticTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticTagRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticTagRuleData.DeserializeElasticTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticTagRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticTagRuleData.DeserializeElasticTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         MonitoringTagRulesListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitoringTagRulesListResponse.DeserializeMonitoringTagRulesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         MonitoringTagRulesListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitoringTagRulesListResponse.DeserializeMonitoringTagRulesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

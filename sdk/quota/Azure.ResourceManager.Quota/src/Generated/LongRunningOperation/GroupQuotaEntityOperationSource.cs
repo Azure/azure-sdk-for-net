@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Quota
 
         GroupQuotaEntityResource IOperationSource<GroupQuotaEntityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GroupQuotaEntityData.DeserializeGroupQuotaEntityData(document.RootElement);
+            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new GroupQuotaEntityResource(_client, data);
         }
 
         async ValueTask<GroupQuotaEntityResource> IOperationSource<GroupQuotaEntityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GroupQuotaEntityData.DeserializeGroupQuotaEntityData(document.RootElement);
-            return new GroupQuotaEntityResource(_client, data);
+            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            return await Task.FromResult(new GroupQuotaEntityResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

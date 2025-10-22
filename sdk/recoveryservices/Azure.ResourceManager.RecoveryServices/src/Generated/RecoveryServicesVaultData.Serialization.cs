@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -37,15 +38,15 @@ namespace Azure.ResourceManager.RecoveryServices
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             RecoveryServicesVaultProperties properties = default;
+            ManagedServiceIdentity identity = default;
             RecoveryServicesSku sku = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
@@ -93,15 +94,6 @@ namespace Azure.ResourceManager.RecoveryServices
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -109,6 +101,15 @@ namespace Azure.ResourceManager.RecoveryServices
                         continue;
                     }
                     properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,8 +186,8 @@ namespace Azure.ResourceManager.RecoveryServices
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 properties,
+                identity,
                 sku,
                 etag,
                 serializedAdditionalRawData);
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RecoveryServicesVaultData)} does not support writing '{options.Format}' format.");
             }
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRecoveryServicesVaultData(document.RootElement, options);
                     }
                 default:

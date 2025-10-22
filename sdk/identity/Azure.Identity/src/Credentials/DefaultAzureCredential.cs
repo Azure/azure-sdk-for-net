@@ -22,13 +22,13 @@ namespace Azure.Identity
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
     /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
-    /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
-    /// <item><description><see cref="VisualStudioCodeCredential"/></description></item>
+    /// <item><description><see cref="VisualStudioCodeCredential"/> (enabled by default for SSO with VS Code on supported platforms when Azure.Identity.Broker is installed)</description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
     /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
     /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
     /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
+    /// <item><description>BrokerCredential (a broker-enabled instance of <see cref="InteractiveBrowserCredential"/> that requires Azure.Identity.Broker is installed)</description></item>
     /// </list>
     /// Consult the documentation of these credentials for more information on how they attempt authentication.
     /// </summary>
@@ -69,6 +69,11 @@ namespace Azure.Identity
         internal TokenCredential[] _sources;
 
         /// <summary>
+        /// The default environment variable name used for token credential configuration.
+        /// </summary>
+        public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
+
+        /// <summary>
         /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected DefaultAzureCredential() : this(false) { }
@@ -93,6 +98,19 @@ namespace Azure.Identity
         {
         }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="DefaultAzureCredential"/> class that reads credential configuration from a specified environment variable.
+        /// </summary>
+        /// <param name="configurationEnvironmentVariableName">The name of the environment variable to read credential configuration from. Pass <see cref="DefaultEnvironmentVariableName"/> or a custom environment variable name.</param>
+        /// <param name="options">Options that configure the management of the requests sent to Microsoft Entra ID, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="configurationEnvironmentVariableName"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="configurationEnvironmentVariableName"/> is empty.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the specified environment variable is not set or contains an invalid value.</exception>
+        public DefaultAzureCredential(string configurationEnvironmentVariableName, DefaultAzureCredentialOptions options = default)
+            : this(new DefaultAzureCredentialFactory(ValidateAuthorityHostOption(options), configurationEnvironmentVariableName))
+        {
+        }
+
         internal DefaultAzureCredential(DefaultAzureCredentialFactory factory)
         {
             _pipeline = factory.Pipeline;
@@ -101,7 +119,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the included credentials, returning the first successfully
         /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
         /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
@@ -119,7 +137,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the included credentials, returning the first successfully
         /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
         /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.

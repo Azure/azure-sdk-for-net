@@ -5,24 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DataChangeDetectionPolicy : IUtf8JsonSerializable
+    public partial class DataChangeDetectionPolicy : IUtf8JsonSerializable, IJsonModel<DataChangeDetectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataChangeDetectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataChangeDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DataChangeDetectionPolicy DeserializeDataChangeDetectionPolicy(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(ODataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DataChangeDetectionPolicy IJsonModel<DataChangeDetectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataChangeDetectionPolicy(document.RootElement, options);
+        }
+
+        internal static DataChangeDetectionPolicy DeserializeDataChangeDetectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,18 +77,49 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy": return HighWaterMarkChangeDetectionPolicy.DeserializeHighWaterMarkChangeDetectionPolicy(element);
-                    case "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy": return SqlIntegratedChangeTrackingPolicy.DeserializeSqlIntegratedChangeTrackingPolicy(element);
+                    case "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy": return HighWaterMarkChangeDetectionPolicy.DeserializeHighWaterMarkChangeDetectionPolicy(element, options);
+                    case "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy": return SqlIntegratedChangeTrackingPolicy.DeserializeSqlIntegratedChangeTrackingPolicy(element, options);
                 }
             }
-            return UnknownDataChangeDetectionPolicy.DeserializeUnknownDataChangeDetectionPolicy(element);
+            return UnknownDataChangeDetectionPolicy.DeserializeUnknownDataChangeDetectionPolicy(element, options);
         }
+
+        BinaryData IPersistableModel<DataChangeDetectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataChangeDetectionPolicy IPersistableModel<DataChangeDetectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataChangeDetectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataChangeDetectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DataChangeDetectionPolicy FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDataChangeDetectionPolicy(document.RootElement);
         }
 
@@ -50,7 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DeviceRegistryNamespace))
+            {
+                writer.WritePropertyName("deviceRegistryNamespace"u8);
+                writer.WriteObjectValue(DeviceRegistryNamespace, options);
+            }
             if (Optional.IsDefined(AllocationPolicy))
             {
                 writer.WritePropertyName("allocationPolicy"u8);
@@ -114,6 +119,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(IsDataResidencyEnabled.Value);
             }
+            if (Optional.IsDefined(PortalOperationsHostName))
+            {
+                writer.WritePropertyName("portalOperationsHostName"u8);
+                writer.WriteStringValue(PortalOperationsHostName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -122,7 +132,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -157,12 +167,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             string provisioningState = default;
             IList<IotHubDefinitionDescription> iotHubs = default;
+            DeviceRegistryNamespaceDescription deviceRegistryNamespace = default;
             DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default;
             string serviceOperationsHostName = default;
             string deviceProvisioningHostName = default;
             string idScope = default;
             IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default;
             bool? enableDataResidency = default;
+            string portalOperationsHostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,6 +244,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     iotHubs = array;
                     continue;
                 }
+                if (property.NameEquals("deviceRegistryNamespace"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceRegistryNamespace = DeviceRegistryNamespaceDescription.DeserializeDeviceRegistryNamespaceDescription(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("allocationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -279,6 +300,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     enableDataResidency = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("portalOperationsHostName"u8))
+                {
+                    portalOperationsHostName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -292,12 +318,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
                 provisioningState,
                 iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
+                deviceRegistryNamespace,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
                 idScope,
                 authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(),
                 enableDataResidency,
+                portalOperationsHostName,
                 serializedAdditionalRawData);
         }
 
@@ -308,7 +336,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -322,7 +350,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceProvisioningServiceProperties(document.RootElement, options);
                     }
                 default:

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -175,6 +177,165 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceSupportedRegion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceSupportedRegion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceSupportedRegion))
+                {
+                    builder.Append("  serviceSupportedRegion: ");
+                    if (ServiceSupportedRegion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceSupportedRegion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceSupportedRegion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommunityName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  communityName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommunityName))
+                {
+                    builder.Append("  communityName: ");
+                    if (CommunityName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommunityName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommunityName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommunityValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  communityValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommunityValue))
+                {
+                    builder.Append("  communityValue: ");
+                    if (CommunityValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommunityValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommunityValue}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommunityPrefixes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  communityPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CommunityPrefixes))
+                {
+                    if (CommunityPrefixes.Any())
+                    {
+                        builder.Append("  communityPrefixes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CommunityPrefixes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthorizedToUse), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isAuthorizedToUse: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAuthorizedToUse))
+                {
+                    builder.Append("  isAuthorizedToUse: ");
+                    var boolValue = IsAuthorizedToUse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceGroup), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceGroup: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceGroup))
+                {
+                    builder.Append("  serviceGroup: ");
+                    if (ServiceGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceGroup}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BgpCommunity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,7 +343,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{options.Format}' format.");
             }
@@ -196,7 +359,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBgpCommunity(document.RootElement, options);
                     }
                 default:

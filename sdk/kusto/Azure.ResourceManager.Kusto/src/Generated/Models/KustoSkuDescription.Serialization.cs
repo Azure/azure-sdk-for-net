@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.Kusto.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.Kusto.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -218,6 +220,164 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    builder.Append("  resourceType: ");
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tier))
+                {
+                    builder.Append("  tier: ");
+                    if (Tier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Tier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Tier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    if (Locations.Any())
+                    {
+                        builder.Append("  locations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locationInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocationInfo))
+                {
+                    if (LocationInfo.Any())
+                    {
+                        builder.Append("  locationInfo: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocationInfo)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locationInfo: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Restrictions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  restrictions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Restrictions))
+                {
+                    if (Restrictions.Any())
+                    {
+                        builder.Append("  restrictions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Restrictions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KustoSkuDescription>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
@@ -225,7 +385,9 @@ namespace Azure.ResourceManager.Kusto.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support writing '{options.Format}' format.");
             }
@@ -239,7 +401,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKustoSkuDescription(document.RootElement, options);
                     }
                 default:

@@ -19,23 +19,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> or <paramref name="operationalDetails"/> is null. </exception>
         internal ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails) : base(resourceDetails, operationalDetails)
         {
-            Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
-            Argument.AssertNotNull(operationalDetails, nameof(operationalDetails));
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceDetails, operationalDetails, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementDeletedEventData"/> for deserialization. </summary>
-        internal ResourceNotificationsResourceManagementDeletedEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, additionalBinaryDataProperties)
         {
         }
     }

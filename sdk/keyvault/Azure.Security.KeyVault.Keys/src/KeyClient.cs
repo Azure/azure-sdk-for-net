@@ -472,6 +472,74 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Gets the public part of a stored key along with its attestation blob.
+        /// </summary>
+        /// <remarks>
+        /// This operation is applicable to any key stored in Azure Key Vault Managed HSM.
+        /// This operation requires the keys/get permission.
+        /// </remarks>
+        /// <param name="name">The name of the key.</param>
+        /// <param name="version">Optional version of the key. If not specified, gets the latest version of the key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The key attestation.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> GetKeyAttestation(string name, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyAttestation)}");
+            scope.AddAttribute(OTelKeyNameKey, name);
+            scope.AddAttribute(OTelKeyVersionKey, version);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/", version, "/attestation");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the public part of a stored key along with its attestation blob.
+        /// </summary>
+        /// <remarks>
+        /// This operation is applicable to any key stored in Azure Key Vault Managed HSM.
+        /// This operation requires the keys/get permission.
+        /// </remarks>
+        /// <param name="name">The name of the key.</param>
+        /// <param name="version">Optional version of the key. If not specified, gets the latest version of the key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The key attestation.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> GetKeyAttestationAsync(string name, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyAttestation)}");
+            scope.AddAttribute(OTelKeyNameKey, name);
+            scope.AddAttribute(OTelKeyVersionKey, version);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/", version, "/attestation").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Lists the properties of all enabled and disabled keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
@@ -1011,7 +1079,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "/restore");
+                return _pipeline.SendRequest(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "restore");
             }
             catch (Exception e)
             {
@@ -1053,7 +1121,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "/restore").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "restore").ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string objectName = default;
-            ObjectType? objectType = default;
-            UpdateActionType? updateAction = default;
+            DataMigrationDatabaseObjectType? objectType = default;
+            MigrationValidatioUpdateActionType? updateAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    objectType = new ObjectType(property.Value.GetString());
+                    objectType = new DataMigrationDatabaseObjectType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("updateAction"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    updateAction = new UpdateActionType(property.Value.GetString());
+                    updateAction = new MigrationValidatioUpdateActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support writing '{options.Format}' format.");
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSchemaComparisonValidationResultType(document.RootElement, options);
                     }
                 default:

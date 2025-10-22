@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Elastic
 
         ElasticMonitorResource IOperationSource<ElasticMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
+            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticContext.Default);
             return new ElasticMonitorResource(_client, data);
         }
 
         async ValueTask<ElasticMonitorResource> IOperationSource<ElasticMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
-            return new ElasticMonitorResource(_client, data);
+            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticContext.Default);
+            return await Task.FromResult(new ElasticMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

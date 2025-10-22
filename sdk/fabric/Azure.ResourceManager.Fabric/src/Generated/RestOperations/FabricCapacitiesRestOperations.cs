@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -345,7 +345,6 @@ namespace Azure.ResourceManager.Fabric
             uri.AppendPath(capacityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -450,7 +449,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +476,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +529,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -555,7 +554,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -595,7 +594,6 @@ namespace Azure.ResourceManager.Fabric
             uri.AppendPath("/resume", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -681,7 +679,6 @@ namespace Azure.ResourceManager.Fabric
             uri.AppendPath("/suspend", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -791,7 +788,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricNameAvailabilityResult.DeserializeFabricNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -819,7 +816,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricNameAvailabilityResult.DeserializeFabricNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -867,7 +864,7 @@ namespace Azure.ResourceManager.Fabric
         /// <summary> List eligible SKUs for a Microsoft Fabric resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="capacityName"> The name of the capacity. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -884,7 +881,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -896,7 +893,7 @@ namespace Azure.ResourceManager.Fabric
         /// <summary> List eligible SKUs for a Microsoft Fabric resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="capacityName"> The name of the capacity. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -913,7 +910,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -966,7 +963,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -991,7 +988,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1042,7 +1039,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1071,7 +1068,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1120,7 +1117,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1147,7 +1144,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         FabricCapacityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FabricCapacityListResult.DeserializeFabricCapacityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1182,7 +1179,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="capacityName"> The name of the capacity. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1200,7 +1197,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1213,7 +1210,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="capacityName"> The name of the capacity. </param>
+        /// <param name="capacityName"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1231,7 +1228,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForExistingResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForExistingResourceResult.DeserializeRpSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1280,7 +1277,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1307,7 +1304,7 @@ namespace Azure.ResourceManager.Fabric
                 case 200:
                     {
                         RpSkuEnumerationForNewResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RpSkuEnumerationForNewResourceResult.DeserializeRpSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

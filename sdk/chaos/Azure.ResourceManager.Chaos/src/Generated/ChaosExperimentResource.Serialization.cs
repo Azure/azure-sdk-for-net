@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Chaos
 {
     public partial class ChaosExperimentResource : IJsonModel<ChaosExperimentData>
     {
+        private static ChaosExperimentData s_dataDeserializationInstance;
+        private static ChaosExperimentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ChaosExperimentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChaosExperimentData>)Data).Write(writer, options);
 
-        ChaosExperimentData IJsonModel<ChaosExperimentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosExperimentData>)Data).Create(ref reader, options);
+        ChaosExperimentData IJsonModel<ChaosExperimentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosExperimentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ChaosExperimentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ChaosExperimentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosExperimentData>(Data, options, AzureResourceManagerChaosContext.Default);
 
-        ChaosExperimentData IPersistableModel<ChaosExperimentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosExperimentData>(data, options);
+        ChaosExperimentData IPersistableModel<ChaosExperimentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosExperimentData>(data, options, AzureResourceManagerChaosContext.Default);
 
-        string IPersistableModel<ChaosExperimentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosExperimentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ChaosExperimentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosExperimentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

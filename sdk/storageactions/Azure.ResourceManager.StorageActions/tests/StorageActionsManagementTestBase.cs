@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.StorageActions.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
 
         protected StorageActionsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -38,6 +39,21 @@ namespace Azure.ResourceManager.StorageActions.Tests
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+        public async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("teststorageActionRG-");
+            ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return operation.Value;
         }
     }
 }

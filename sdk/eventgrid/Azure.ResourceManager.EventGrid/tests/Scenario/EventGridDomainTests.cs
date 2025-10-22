@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -20,6 +17,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
+
+        private const string OriginalTag1 = "originalTag1";
+        private const string OriginalValue1 = "originalValue1";
+        private const string OriginalTag2 = "originalTag2";
+        private const string OriginalValue2 = "originalValue2";
 
         private EventGridDomainCollection DomainCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
@@ -43,8 +45,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domain = new EventGridDomainData(location)
             {
                 Tags = {
-                    {"originalTag1", "originalValue1"},
-                    {"originalTag2", "originalValue2"}
+                    {OriginalTag1, OriginalValue1},
+                    {OriginalTag2, OriginalValue2}
                 },
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
@@ -63,11 +65,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(getDomainResponse);
             Assert.AreEqual(EventGridDomainProvisioningState.Succeeded, getDomainResponse.Data.ProvisioningState);
             Assert.AreEqual(location, getDomainResponse.Data.Location);
-            Assert.IsTrue(getDomainResponse.Data.Tags.Keys.Contains("originalTag1"));
-            Assert.AreEqual(getDomainResponse.Data.Tags["originalTag1"], "originalValue1");
-            Assert.IsTrue(getDomainResponse.Data.Tags.Keys.Contains("originalTag2"));
-            Assert.AreEqual(getDomainResponse.Data.Tags["originalTag2"], "originalValue2");
-
+            Assert.IsTrue(getDomainResponse.Data.Tags.Keys.Contains(OriginalTag1));
+            Assert.AreEqual(getDomainResponse.Data.Tags[OriginalTag1], OriginalValue1);
+            Assert.IsTrue(getDomainResponse.Data.Tags.Keys.Contains(OriginalTag2));
+            Assert.AreEqual(getDomainResponse.Data.Tags[OriginalTag2], OriginalValue2);
+            // get private link resource
+            var linkResource = await getDomainResponse.GetEventGridDomainPrivateLinkResourceAsync("domain");
+            Assert.IsNotNull(linkResource);
+            // list all private link resources
+            System.Collections.Generic.List<EventGridDomainPrivateLinkResource> list = await getDomainResponse.GetEventGridDomainPrivateLinkResources().ToEnumerableAsync();
+            Assert.NotNull(list);
             //// Diable test as identity is not part of GA Version yet.
             //// Assert.Null(getDomainResponse.Identity);
             Assert.AreEqual(getDomainResponse.Data.InboundIPRules.Count, 0);
@@ -77,7 +84,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(domainsInResourceGroup);
             Assert.GreaterOrEqual(domainsInResourceGroup.Count, 1);
             Assert.AreEqual(domainsInResourceGroup.FirstOrDefault().Data.Name, domainName);
-
             // Get all domains created within the subscription irrespective of the resourceGroup
             var domainsInAzureSubscription = await DefaultSubscription.GetEventGridDomainsAsync().ToEnumerableAsync();
             Assert.NotNull(domainsInAzureSubscription);
@@ -93,6 +99,30 @@ namespace Azure.ResourceManager.EventGrid.Tests
             }
             Assert.IsTrue(falseFlag);
 
+            // List keys for a domain.
+            // List the two keys used to publish to a domain.
+            Response<EventGridDomainSharedAccessKeys> keysResponse = await getDomainResponse.GetSharedAccessKeysAsync();
+
+            // Ensure the response is not null
+            Assert.IsNotNull(keysResponse, "Failed to list shared access keys");
+
+            // Ensure the keys object is not null
+            Assert.IsNotNull(keysResponse.Value, "Shared access keys response is null");
+
+            // Validate that primary and secondary keys exist
+            Assert.IsFalse(string.IsNullOrEmpty(keysResponse.Value.Key1), "Primary key is missing");
+            Assert.IsFalse(string.IsNullOrEmpty(keysResponse.Value.Key2), "Secondary key is missing");
+
+            // Regemerate key
+            var regenerateKeyContent = new EventGridDomainRegenerateKeyContent("key1");
+            var response = await getDomainResponse.RegenerateKeyAsync(regenerateKeyContent);
+
+            // Validate response and regenerated keys
+            Assert.IsNotNull(response, "Response should not be null");
+            Assert.IsNotNull(response.Value, "Shared access keys response is null");
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Key1), "Primary key is missing after regeneration");
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Key2), "Secondary key is missing after regeneration");
+
             // Replace the domain
             domain.Tags.Clear();
             domain.Tags.Add("replacedTag1", "replacedValue1");
@@ -100,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var replaceDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
 
             Assert.IsTrue(replaceDomainResponse.Data.Tags.Keys.Contains("replacedTag1"));
-            Assert.IsFalse(replaceDomainResponse.Data.Tags.Keys.Contains("originalTag1"));
+            Assert.IsFalse(replaceDomainResponse.Data.Tags.Keys.Contains(OriginalTag1));
 
             // Update the domain with tags & allow traffic from all ips
             var domainUpdateParameters = new EventGridDomainPatch()
@@ -127,8 +157,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(updateDomainResponseWithIpFilteringFeature.Data.PublicNetworkAccess == EventGridPublicNetworkAccess.Enabled);
             Assert.AreEqual(updateDomainResponseWithIpFilteringFeature.Data.InboundIPRules.Count, 2);
 
+            // Validate regenerate keys
+            var sharedAccessKeys = (await getDomainResponse.GetSharedAccessKeysAsync()).Value;
+            var sharedAccessKey1Before = sharedAccessKeys.Key1;
+            var sharedAccessKey2Before = sharedAccessKeys.Key2;
+            EventGridDomainRegenerateKeyContent domainRegenerateKeyContent = new EventGridDomainRegenerateKeyContent("key1");
+            var regenKeysResponse = (await getDomainResponse.RegenerateKeyAsync(domainRegenerateKeyContent)).Value;
+            // TODO: Uncomment when the bug is fixed in the service
+            // Assert.AreNotEqual(regenKeysResponse.Key1, sharedAccessKey1Before);
+            Assert.AreEqual(regenKeysResponse.Key2, sharedAccessKey2Before);
+
             // Create domain topic manually.
             var domainTopicCollection = updateDomainResponseWithIpFilteringFeature.GetDomainTopics();
+            // Ensure domain topics do not exist before creation
+            Assert.IsFalse((await domainTopicCollection.ExistsAsync(domainTopicName1)).Value, "Domain topic already exists before creation.");
+            Assert.IsFalse((await domainTopicCollection.ExistsAsync(domainTopicName2)).Value, "Domain topic already exists before creation.");
             var createDomainTopicResponse = (await domainTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainTopicName1)).Value;
 
             Assert.NotNull(createDomainTopicResponse);
@@ -171,6 +214,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(falseResult);
         }
 
+        // Enabling NetworkSecurityPerimeterConfigurations for 2025-04-01-preview version
         [Test]
         public async Task DomainNSPTests()
         {
@@ -182,8 +226,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domain = new EventGridDomainData(location)
             {
                 Tags = {
-                    {"originalTag1", "originalValue1"},
-                    {"originalTag2", "originalValue2"}
+                    {OriginalTag1, OriginalValue1},
+                    {OriginalTag2, OriginalValue2}
                 },
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
@@ -218,8 +262,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domain = new EventGridDomainData(location)
             {
                 Tags = {
-                    {"originalTag1", "originalValue1"},
-                    {"originalTag2", "originalValue2"}
+                    {OriginalTag1, OriginalValue1},
+                    {OriginalTag2, OriginalValue2}
                 },
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 IsLocalAuthDisabled = false,

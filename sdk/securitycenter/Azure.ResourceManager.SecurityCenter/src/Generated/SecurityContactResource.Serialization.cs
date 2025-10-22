@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityContactResource : IJsonModel<SecurityContactData>
     {
+        private static SecurityContactData s_dataDeserializationInstance;
+        private static SecurityContactData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityContactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)Data).Write(writer, options);
 
-        SecurityContactData IJsonModel<SecurityContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)Data).Create(ref reader, options);
+        SecurityContactData IJsonModel<SecurityContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityContactData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityContactData IPersistableModel<SecurityContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityContactData>(data, options);
+        SecurityContactData IPersistableModel<SecurityContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityContactData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityContactData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityContactData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

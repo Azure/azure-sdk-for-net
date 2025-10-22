@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoManagedPrivateEndpointResource : IJsonModel<KustoManagedPrivateEndpointData>
     {
+        private static KustoManagedPrivateEndpointData s_dataDeserializationInstance;
+        private static KustoManagedPrivateEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KustoManagedPrivateEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoManagedPrivateEndpointData>)Data).Write(writer, options);
 
-        KustoManagedPrivateEndpointData IJsonModel<KustoManagedPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoManagedPrivateEndpointData>)Data).Create(ref reader, options);
+        KustoManagedPrivateEndpointData IJsonModel<KustoManagedPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoManagedPrivateEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoManagedPrivateEndpointData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        KustoManagedPrivateEndpointData IPersistableModel<KustoManagedPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(data, options);
+        KustoManagedPrivateEndpointData IPersistableModel<KustoManagedPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoManagedPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoManagedPrivateEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KustoManagedPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoManagedPrivateEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

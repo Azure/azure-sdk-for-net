@@ -3,7 +3,6 @@
 
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -535,7 +534,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Read the CA.
             byte[] caCertificateBytes = Convert.FromBase64String(CaPublicKeyBase64);
+#if NET9_0_OR_GREATER
+
+            X509Certificate2 caCertificate = X509CertificateLoader.LoadCertificate(caCertificateBytes);
+#else
             X509Certificate2 caCertificate = new X509Certificate2(caCertificateBytes);
+#endif
 
             // Read CA private key since getting it from caCertificate above throws.
             AsymmetricCipherKeyPair caPrivateKey;
@@ -573,7 +577,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             MergeCertificateOptions options = new MergeCertificateOptions(serverCertificateName, new[] { serverSignedPublicKey.GetEncoded(), caCertificateBytes });
             KeyVaultCertificateWithPolicy mergedServerCertificate = await Client.MergeCertificateAsync(options);
 
+#if NET9_0_OR_GREATER
+            X509Certificate2 serverCertificate = X509CertificateLoader.LoadCertificate(mergedServerCertificate.Cer);
+#else
             X509Certificate2 serverCertificate = new X509Certificate2(mergedServerCertificate.Cer);
+#endif
             Assert.AreEqual(csrInfo.Subject.ToString(), serverCertificate.Subject);
             Assert.AreEqual(serverCertificateName, mergedServerCertificate.Name);
 
@@ -797,7 +805,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
+#if NET9_0_OR_GREATER
+            using X509Certificate2 pub = X509CertificateLoader.LoadCertificate(certificate.Cer);
+#else
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+#endif
 #if NET6_0_OR_GREATER
             using RSA pubkey = (RSA)pub.PublicKey.GetRSAPublicKey();
 #else
@@ -845,7 +857,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
             string version = certificate.Properties.Version;
 
+#if NET9_0_OR_GREATER
+            using X509Certificate2 pub = X509CertificateLoader.LoadCertificate(certificate.Cer);
+#else
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+#endif
 #if NET6_0_OR_GREATER
             using RSA pubkey = (RSA)pub.PublicKey.GetRSAPublicKey();
 #else
@@ -1106,5 +1122,62 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateTransparency = false,
             ContentType = CertificateContentType.Pkcs12
         };
+
+        [RecordedTest]
+        public async Task StartCreateCertificateWithPreserveCertificateOrder([Values(true, false)] bool preserveOrder)
+        {
+            string certName = Recording.GenerateId();
+            CertificateClient client = GetClient();
+
+            var policy = CertificatePolicy.Default;
+            var tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            };
+
+            CertificateOperation operation = await client.StartCreateCertificateAsync(
+                certName,
+                policy,
+                enabled: true,
+                tags: tags,
+                preserveCertificateOrder: preserveOrder);
+
+            Assert.That(operation, Is.Not.Null);
+            Assert.That(operation.Properties.Name, Is.EqualTo(certName));
+
+            KeyVaultCertificateWithPolicy cert = await operation.WaitForCompletionAsync();
+
+            Assert.That(cert, Is.Not.Null);
+            Assert.AreEqual(cert.Name, certName);
+            Assert.That(cert.Properties.Enabled, Is.True);
+            Assert.That(cert.Properties.Tags, Is.EquivalentTo(tags));
+            Assert.AreEqual(cert.PreserveCertificateOrder, preserveOrder, "Certificate should preserve the certificate order");
+        }
+
+        [RecordedTest]
+        public async Task ImportCertificateWithPreserveCertificateOrder([Values(true, false)] bool preserveOrder)
+        {
+            string certName = $"cert-{Recording.GenerateId()}";
+            CertificateClient client = GetClient();
+
+            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
+            ImportCertificateOptions importOptions = new ImportCertificateOptions(certName, certificateBytes)
+            {
+                Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=contoso.com")
+                {
+                    ContentType = CertificateContentType.Pem,
+                    Exportable = true
+                },
+                PreserveCertificateOrder = preserveOrder
+            };
+
+            KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
+
+            Assert.NotNull(cert.Cer, "Certificate should have a cer");
+            Assert.AreEqual(certName, cert.Name, "Certificate name should match the expected name");
+            Assert.IsTrue(cert.Properties.Enabled, "Certificate should be enabled");
+            Assert.AreEqual(cert.PreserveCertificateOrder, preserveOrder, "Certificate should preserve the certificate order");
+        }
     }
 }

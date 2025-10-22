@@ -65,6 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("enduser.id", "TestUser"); //authenticated user
+                activity.SetTag("enduser.pseudo.id", "TestPseudoUser"); // anonymous/pseudo user id
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
                 activity.SetTag("intArray", new int[] { 1, 2, 3 });
@@ -85,6 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
                 expectedAuthUserId: "TestUser",
+                expectedUserId: "TestPseudoUser",
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -114,6 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("enduser.id", "TestUser"); //authenticated user
+                activity.SetTag("enduser.pseudo.id", "TestPseudoUser"); // anonymous/pseudo user id
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
                 activity.SetTag("intArray", new int[] { 1, 2, 3 });
@@ -135,6 +138,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
                 expectedAuthUserId: "TestUser",
+                expectedUserId: "TestPseudoUser",
                 expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
@@ -163,6 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 spanId = activity.SpanId.ToHexString();
 
                 activity.SetTag("enduser.id", "TestUser"); //authenticated user
+                activity.SetTag("enduser.pseudo.id", "TestPseudoUser"); // anonymous/pseudo user id
 
                 try
                 {
@@ -171,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 catch (Exception ex)
                 {
                     activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex, new TagList
+                    activity?.AddException(ex, new TagList
                     {
                         { "someKey", "someValue" },
                     });
@@ -192,6 +197,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
                 expectedAuthUserId: "TestUser",
+                expectedUserId: "TestPseudoUser",
                 expectedProperties: null,
                 expectedSuccess: false);
 
@@ -259,6 +265,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 traceId = activity.TraceId.ToHexString();
 
                 activity.SetTag("enduser.id", "TestUser"); //authenticated user
+                activity.SetTag("enduser.pseudo.id", "TestPseudoUser"); // anonymous/pseudo user id
 
                 var logger = loggerFactory.CreateLogger(logCategoryName);
 
@@ -285,6 +292,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
                 expectedAuthUserId: "TestUser",
+                expectedUserId: "TestPseudoUser",
                 expectedProperties: null);
 
             Assert.True(logTelemetryItems?.Any(), "Unit test failed to collect telemetry.");

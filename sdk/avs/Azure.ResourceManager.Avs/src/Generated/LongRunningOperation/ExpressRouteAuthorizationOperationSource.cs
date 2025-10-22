@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Avs
 
         ExpressRouteAuthorizationResource IOperationSource<ExpressRouteAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
+            var data = ModelReaderWriter.Read<ExpressRouteAuthorizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new ExpressRouteAuthorizationResource(_client, data);
         }
 
         async ValueTask<ExpressRouteAuthorizationResource> IOperationSource<ExpressRouteAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
-            return new ExpressRouteAuthorizationResource(_client, data);
+            var data = ModelReaderWriter.Read<ExpressRouteAuthorizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new ExpressRouteAuthorizationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

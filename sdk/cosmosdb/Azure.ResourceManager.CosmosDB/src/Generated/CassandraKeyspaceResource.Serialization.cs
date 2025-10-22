@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CassandraKeyspaceResource : IJsonModel<CassandraKeyspaceData>
     {
+        private static CassandraKeyspaceData s_dataDeserializationInstance;
+        private static CassandraKeyspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CassandraKeyspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraKeyspaceData>)Data).Write(writer, options);
 
-        CassandraKeyspaceData IJsonModel<CassandraKeyspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraKeyspaceData>)Data).Create(ref reader, options);
+        CassandraKeyspaceData IJsonModel<CassandraKeyspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraKeyspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CassandraKeyspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CassandraKeyspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraKeyspaceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CassandraKeyspaceData IPersistableModel<CassandraKeyspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraKeyspaceData>(data, options);
+        CassandraKeyspaceData IPersistableModel<CassandraKeyspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraKeyspaceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CassandraKeyspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraKeyspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CassandraKeyspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraKeyspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

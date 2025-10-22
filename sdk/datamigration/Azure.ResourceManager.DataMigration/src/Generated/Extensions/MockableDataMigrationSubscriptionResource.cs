@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// The skus action returns the list of SKUs that DMS supports.
+        /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -127,21 +127,21 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataMigrationSku.DeserializeDataMigrationSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// The skus action returns the list of SKUs that DMS supports.
+        /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,21 +153,21 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataMigrationSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataMigrationSku.DeserializeDataMigrationSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service resources in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service resources in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,18 +248,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
-        public virtual async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckDataMigrationNameAvailabilityAsync(AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService");
+            using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability");
             scope.Start();
             try
             {
-                var response = await DataMigrationServiceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await DataMigrationServiceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,18 +291,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
-        public virtual Response<NameAvailabilityResponse> CheckNameAvailabilityService(AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DataMigrationServiceNameAvailabilityResult> CheckDataMigrationNameAvailability(AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService");
+            using var scope = DataMigrationServiceServicesClientDiagnostics.CreateScope("MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability");
             scope.Start();
             try
             {
-                var response = DataMigrationServiceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, location, nameAvailabilityRequest, cancellationToken);
+                var response = DataMigrationServiceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
+        /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -325,22 +325,22 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Quota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataMigrationQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Quota.DeserializeQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataMigrationQuota.DeserializeDataMigrationQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
+        /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -352,18 +352,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Quota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataMigrationQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Quota.DeserializeQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataMigrationQuota.DeserializeDataMigrationQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

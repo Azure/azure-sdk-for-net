@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="replicationExtensionName"> Gets or sets the replication extension name. </param>
         /// <param name="customProperties">
         /// Protected item model custom properties.
-        /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomProperties"/>, <see cref="GeneralProtectedItemModelCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationProtectedItemCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/>, <paramref name="replicationExtensionName"/> or <paramref name="customProperties"/> is null. </exception>
-        public DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, ProtectedItemModelCustomProperties customProperties)
+        public DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, DataReplicationProtectedItemCustomProperties customProperties)
         {
             Argument.AssertNotNull(policyName, nameof(policyName));
             Argument.AssertNotNull(replicationExtensionName, nameof(replicationExtensionName));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="policyName"> Gets or sets the policy name. </param>
         /// <param name="replicationExtensionName"> Gets or sets the replication extension name. </param>
         /// <param name="correlationId"> Gets or sets the protected item correlation Id. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state of the Dra. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the fabric agent. </param>
         /// <param name="protectionState"> Gets or sets the protection state. </param>
         /// <param name="protectionStateDescription"> Gets or sets the protection state description. </param>
         /// <param name="testFailoverState"> Gets or sets the test failover state. </param>
@@ -83,26 +83,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="targetFabricProviderId"> Gets or sets the target fabric provider Id. </param>
         /// <param name="fabricId"> Gets or sets the fabric Id. </param>
         /// <param name="targetFabricId"> Gets or sets the target fabric Id. </param>
-        /// <param name="draId"> Gets or sets the DRA Id. </param>
-        /// <param name="targetDraId"> Gets or sets the target DRA Id. </param>
+        /// <param name="fabricAgentId"> Gets or sets the fabric agent Id. </param>
+        /// <param name="targetFabricAgentId"> Gets or sets the target fabric agent Id. </param>
         /// <param name="isResyncRequired"> Gets or sets a value indicating whether resynchronization is required or not. </param>
         /// <param name="lastSuccessfulPlannedFailoverOn"> Gets or sets the Last successful planned failover time. </param>
         /// <param name="lastSuccessfulUnplannedFailoverOn"> Gets or sets the Last successful unplanned failover time. </param>
         /// <param name="lastSuccessfulTestFailoverOn"> Gets or sets the Last successful test failover time. </param>
-        /// <param name="currentJob"> Protected item job properties. </param>
+        /// <param name="currentJob"> Gets or sets the current scenario. </param>
         /// <param name="allowedJobs"> Gets or sets the allowed scenarios on the protected item. </param>
-        /// <param name="lastFailedEnableProtectionJob"> Protected item job properties. </param>
-        /// <param name="lastFailedPlannedFailoverJob"> Protected item job properties. </param>
-        /// <param name="lastTestFailoverJob"> Protected item job properties. </param>
+        /// <param name="lastFailedEnableProtectionJob"> Gets or sets the last failed enabled protection job. </param>
+        /// <param name="lastFailedPlannedFailoverJob"> Gets or sets the last failed planned failover job. </param>
+        /// <param name="lastTestFailoverJob"> Gets or sets the last test failover job. </param>
         /// <param name="replicationHealth"> Gets or sets protected item replication health. </param>
         /// <param name="healthErrors"> Gets or sets the list of health errors. </param>
         /// <param name="customProperties">
         /// Protected item model custom properties.
-        /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomProperties"/>, <see cref="GeneralProtectedItemModelCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationProtectedItemCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, string correlationId, DataReplicationProvisioningState? provisioningState, DataReplicationProtectionState? protectionState, string protectionStateDescription, DataReplicationTestFailoverState? testFailoverState, string testFailoverStateDescription, DataReplicationResynchronizationState? resynchronizationState, string fabricObjectId, string fabricObjectName, string sourceFabricProviderId, string targetFabricProviderId, string fabricId, string targetFabricId, string draId, string targetDraId, bool? isResyncRequired, DateTimeOffset? lastSuccessfulPlannedFailoverOn, DateTimeOffset? lastSuccessfulUnplannedFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, ProtectedItemJobProperties currentJob, IReadOnlyList<string> allowedJobs, ProtectedItemJobProperties lastFailedEnableProtectionJob, ProtectedItemJobProperties lastFailedPlannedFailoverJob, ProtectedItemJobProperties lastTestFailoverJob, DataReplicationHealthStatus? replicationHealth, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, ProtectedItemModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationProtectedItemProperties(string policyName, string replicationExtensionName, string correlationId, DataReplicationProvisioningState? provisioningState, DataReplicationProtectionState? protectionState, string protectionStateDescription, DataReplicationTestFailoverState? testFailoverState, string testFailoverStateDescription, DataReplicationResynchronizationState? resynchronizationState, string fabricObjectId, string fabricObjectName, string sourceFabricProviderId, string targetFabricProviderId, string fabricId, string targetFabricId, string fabricAgentId, string targetFabricAgentId, bool? isResyncRequired, DateTimeOffset? lastSuccessfulPlannedFailoverOn, DateTimeOffset? lastSuccessfulUnplannedFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, ProtectedItemJobProperties currentJob, IReadOnlyList<string> allowedJobs, ProtectedItemJobProperties lastFailedEnableProtectionJob, ProtectedItemJobProperties lastFailedPlannedFailoverJob, ProtectedItemJobProperties lastTestFailoverJob, DataReplicationHealthStatus? replicationHealth, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationProtectedItemCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyName = policyName;
             ReplicationExtensionName = replicationExtensionName;
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             TargetFabricProviderId = targetFabricProviderId;
             FabricId = fabricId;
             TargetFabricId = targetFabricId;
-            DraId = draId;
-            TargetDraId = targetDraId;
+            FabricAgentId = fabricAgentId;
+            TargetFabricAgentId = targetFabricAgentId;
             IsResyncRequired = isResyncRequired;
             LastSuccessfulPlannedFailoverOn = lastSuccessfulPlannedFailoverOn;
             LastSuccessfulUnplannedFailoverOn = lastSuccessfulUnplannedFailoverOn;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public string ReplicationExtensionName { get; set; }
         /// <summary> Gets or sets the protected item correlation Id. </summary>
         public string CorrelationId { get; }
-        /// <summary> Gets or sets the provisioning state of the Dra. </summary>
+        /// <summary> Gets or sets the provisioning state of the fabric agent. </summary>
         public DataReplicationProvisioningState? ProvisioningState { get; }
         /// <summary> Gets or sets the protection state. </summary>
         public DataReplicationProtectionState? ProtectionState { get; }
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public string FabricId { get; }
         /// <summary> Gets or sets the target fabric Id. </summary>
         public string TargetFabricId { get; }
-        /// <summary> Gets or sets the DRA Id. </summary>
-        public string DraId { get; }
-        /// <summary> Gets or sets the target DRA Id. </summary>
-        public string TargetDraId { get; }
+        /// <summary> Gets or sets the fabric agent Id. </summary>
+        public string FabricAgentId { get; }
+        /// <summary> Gets or sets the target fabric agent Id. </summary>
+        public string TargetFabricAgentId { get; }
         /// <summary> Gets or sets a value indicating whether resynchronization is required or not. </summary>
         public bool? IsResyncRequired { get; }
         /// <summary> Gets or sets the Last successful planned failover time. </summary>
@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public DateTimeOffset? LastSuccessfulUnplannedFailoverOn { get; }
         /// <summary> Gets or sets the Last successful test failover time. </summary>
         public DateTimeOffset? LastSuccessfulTestFailoverOn { get; }
-        /// <summary> Protected item job properties. </summary>
+        /// <summary> Gets or sets the current scenario. </summary>
         public ProtectedItemJobProperties CurrentJob { get; }
         /// <summary> Gets or sets the allowed scenarios on the protected item. </summary>
         public IReadOnlyList<string> AllowedJobs { get; }
-        /// <summary> Protected item job properties. </summary>
+        /// <summary> Gets or sets the last failed enabled protection job. </summary>
         public ProtectedItemJobProperties LastFailedEnableProtectionJob { get; }
-        /// <summary> Protected item job properties. </summary>
+        /// <summary> Gets or sets the last failed planned failover job. </summary>
         public ProtectedItemJobProperties LastFailedPlannedFailoverJob { get; }
-        /// <summary> Protected item job properties. </summary>
+        /// <summary> Gets or sets the last test failover job. </summary>
         public ProtectedItemJobProperties LastTestFailoverJob { get; }
         /// <summary> Gets or sets protected item replication health. </summary>
         public DataReplicationHealthStatus? ReplicationHealth { get; }
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IReadOnlyList<DataReplicationHealthErrorInfo> HealthErrors { get; }
         /// <summary>
         /// Protected item model custom properties.
-        /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemModelCustomProperties"/>, <see cref="GeneralProtectedItemModelCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationProtectedItemCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="VMwareToAzStackHciProtectedItemCustomProperties"/>.
         /// </summary>
-        public ProtectedItemModelCustomProperties CustomProperties { get; set; }
+        public DataReplicationProtectedItemCustomProperties CustomProperties { get; set; }
     }
 }

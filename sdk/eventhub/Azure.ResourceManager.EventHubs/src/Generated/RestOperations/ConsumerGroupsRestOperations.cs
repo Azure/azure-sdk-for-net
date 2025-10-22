@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsConsumerGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsConsumerGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsConsumerGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsConsumerGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         ConsumerGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         ConsumerGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         ConsumerGroupListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         ConsumerGroupListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumerGroupListResult.DeserializeConsumerGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="data"> The scale set object. </param>
         /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will result in error from server as they are not supported. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="data"> The scale set object. </param>
         /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will result in error from server as they are not supported. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

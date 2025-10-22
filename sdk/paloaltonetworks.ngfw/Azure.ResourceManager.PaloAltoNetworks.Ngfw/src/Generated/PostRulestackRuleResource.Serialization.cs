@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class PostRulestackRuleResource : IJsonModel<PostRulestackRuleData>
     {
+        private static PostRulestackRuleData s_dataDeserializationInstance;
+        private static PostRulestackRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostRulestackRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostRulestackRuleData>)Data).Write(writer, options);
 
-        PostRulestackRuleData IJsonModel<PostRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostRulestackRuleData>)Data).Create(ref reader, options);
+        PostRulestackRuleData IJsonModel<PostRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostRulestackRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostRulestackRuleData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        PostRulestackRuleData IPersistableModel<PostRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostRulestackRuleData>(data, options);
+        PostRulestackRuleData IPersistableModel<PostRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostRulestackRuleData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<PostRulestackRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostRulestackRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostRulestackRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostRulestackRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

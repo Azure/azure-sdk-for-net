@@ -4,8 +4,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -77,6 +79,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal static async Task<SearchResult<T>> DeserializeAsync(
             JsonElement element,
             ObjectSerializer serializer,
@@ -86,6 +89,89 @@ namespace Azure.Search.Documents.Models
         #pragma warning restore CS1572
         {
             Debug.Assert(options != null);
+            SearchResult<T> result = DeserializeEnvelope(element);
+
+            // Deserialize the model
+            if (serializer != null)
+            {
+                using Stream stream = element.ToStream();
+                T document = async ?
+                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
+                result.Document = document;
+            }
+            else
+            {
+                T document;
+                if (async)
+                {
+                    using Stream stream = element.ToStream();
+                    document = await JsonSerializer.DeserializeAsync<T>(stream, options, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), options);
+                }
+                result.Document = document;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deserialize a SearchResult and its model.
+        /// </summary>
+        /// <param name="element">A JSON element.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="typeInfo">Metadata about the type to deserialize.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchResults.</returns>
+        internal static async Task<SearchResult<T>> DeserializeAsync(
+            JsonElement element,
+            ObjectSerializer serializer,
+            JsonTypeInfo<T> typeInfo,
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CS1572
+        {
+            Debug.Assert(typeInfo != null);
+            SearchResult<T> result = DeserializeEnvelope(element);
+            // Deserialize the model
+            if (serializer != null)
+            {
+                using Stream stream = element.ToStream();
+                T document = async ?
+                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
+                result.Document = document;
+            }
+            else
+            {
+                T document;
+                if (async)
+                {
+                    using Stream stream = element.ToStream();
+                    document = await JsonSerializer.DeserializeAsync<T>(stream, typeInfo, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), typeInfo);
+                }
+                result.Document = document;
+            }
+
+            return result;
+        }
+
+        private static SearchResult<T> DeserializeEnvelope(JsonElement element)
+        {
             SearchResult<T> result = new SearchResult<T>();
             result.SemanticSearch = new SemanticSearchResult();
             foreach (JsonProperty prop in element.EnumerateObject())
@@ -114,6 +200,11 @@ namespace Azure.Search.Documents.Models
                 {
                     result.SemanticSearch.RerankerScore = prop.Value.GetDouble();
                 }
+                else if (prop.NameEquals(Constants.SearchRerankerBoostedScoreKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    result.SemanticSearch.RerankerBoostedScore = prop.Value.GetDouble();
+                }
                 else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
@@ -131,30 +222,6 @@ namespace Azure.Search.Documents.Models
                 }
             }
 
-            // Deserialize the model
-            if (serializer != null)
-            {
-                using Stream stream = element.ToStream();
-                T document = async ?
-                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
-                result.Document = document;
-            }
-            else
-            {
-                T document;
-                if (async)
-                {
-                    using Stream stream = element.ToStream();
-                    document = await JsonSerializer.DeserializeAsync<T>(stream, options, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), options);
-                }
-                result.Document = document;
-            }
-
             return result;
         }
     }
@@ -170,6 +237,13 @@ namespace Azure.Search.Documents.Models
         /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
         /// </summary>
         public double? RerankerScore { get; internal set; }
+
+        /// <summary>
+        /// The relevance score computed by boosting the Reranker Score. Search results are sorted by the
+        /// RerankerScore/RerankerBoostedScore based on useScoringProfileBoostedRanking in the Semantic Config.
+        /// RerankerBoostedScore is only returned for queries of type 'semantic'.
+        /// </summary>
+        public double? RerankerBoostedScore { get; internal set; }
 
         /// <summary>
         /// Captions are the most representative passages from the document relatively to the search query.
@@ -273,16 +347,33 @@ namespace Azure.Search.Documents.Models
                 DocumentDebugInfo = documentDebugInfo
             };
 
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResult"/>. </summary>
+        /// <summary> Initializes a new instance of SemanticSearchResult. </summary>
         /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. </param>
         /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. </param>
         /// <returns> A new <see cref="Models.SemanticSearchResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SemanticSearchResult SemanticSearchResult(
             double? rerankerScore,
             IReadOnlyList<QueryCaptionResult> captions) =>
           new SemanticSearchResult()
           {
               RerankerScore = rerankerScore,
+              Captions = captions
+          };
+
+        /// <summary> Initializes a new instance of SemanticSearchResult. </summary>
+        /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. </param>
+        /// <param name="rerankerBoostedScore"> The relevance score computed by boosting the Reranker Score. Search results are sorted by the RerankerScore/RerankerBoostedScore based on useScoringProfileBoostedRanking in the Semantic Config.</param>
+        /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. </param>
+        /// <returns> A new <see cref="Models.SemanticSearchResult"/> instance for mocking. </returns>
+        public static SemanticSearchResult SemanticSearchResult(
+            double? rerankerScore,
+            double? rerankerBoostedScore,
+            IReadOnlyList<QueryCaptionResult> captions) =>
+          new SemanticSearchResult()
+          {
+              RerankerScore = rerankerScore,
+              RerankerBoostedScore = rerankerBoostedScore,
               Captions = captions
           };
     }

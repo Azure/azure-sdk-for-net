@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.IotOperations.Models
 
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
+            if (Optional.IsDefined(HostType))
+            {
+                writer.WritePropertyName("hostType"u8);
+                writer.WriteStringValue(HostType.Value.ToString());
+            }
             if (Optional.IsDefined(DataExplorerSettings))
             {
                 writer.WritePropertyName("dataExplorerSettings"u8);
@@ -66,6 +71,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("mqttSettings"u8);
                 writer.WriteObjectValue(MqttSettings, options);
             }
+            if (Optional.IsDefined(OpenTelemetrySettings))
+            {
+                writer.WritePropertyName("openTelemetrySettings"u8);
+                writer.WriteObjectValue(OpenTelemetrySettings, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,12 +119,14 @@ namespace Azure.ResourceManager.IotOperations.Models
                 return null;
             }
             DataflowEndpointType endpointType = default;
+            DataflowEndpointHostType? hostType = default;
             DataflowEndpointDataExplorer dataExplorerSettings = default;
             DataflowEndpointDataLakeStorage dataLakeStorageSettings = default;
             DataflowEndpointFabricOneLake fabricOneLakeSettings = default;
             DataflowEndpointKafka kafkaSettings = default;
             DataflowEndpointLocalStorage localStorageSettings = default;
             DataflowEndpointMqtt mqttSettings = default;
+            DataflowEndpointOpenTelemetry openTelemetrySettings = default;
             IotOperationsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,6 +135,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new DataflowEndpointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("hostType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hostType = new DataflowEndpointHostType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataExplorerSettings"u8))
@@ -179,6 +200,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     mqttSettings = DataflowEndpointMqtt.DeserializeDataflowEndpointMqtt(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("openTelemetrySettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openTelemetrySettings = DataflowEndpointOpenTelemetry.DeserializeDataflowEndpointOpenTelemetry(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -196,12 +226,14 @@ namespace Azure.ResourceManager.IotOperations.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new IotOperationsDataflowEndpointProperties(
                 endpointType,
+                hostType,
                 dataExplorerSettings,
                 dataLakeStorageSettings,
                 fabricOneLakeSettings,
                 kafkaSettings,
                 localStorageSettings,
                 mqttSettings,
+                openTelemetrySettings,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -213,7 +245,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotOperationsDataflowEndpointProperties)} does not support writing '{options.Format}' format.");
             }
@@ -227,7 +259,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotOperationsDataflowEndpointProperties(document.RootElement, options);
                     }
                 default:

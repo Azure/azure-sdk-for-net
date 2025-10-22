@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsStorageContainerResource : IJsonModel<DataLakeAnalyticsStorageContainerData>
     {
+        private static DataLakeAnalyticsStorageContainerData s_dataDeserializationInstance;
+        private static DataLakeAnalyticsStorageContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeAnalyticsStorageContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageContainerData>)Data).Write(writer, options);
 
-        DataLakeAnalyticsStorageContainerData IJsonModel<DataLakeAnalyticsStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageContainerData>)Data).Create(ref reader, options);
+        DataLakeAnalyticsStorageContainerData IJsonModel<DataLakeAnalyticsStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsStorageContainerData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        DataLakeAnalyticsStorageContainerData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsStorageContainerData>(data, options);
+        DataLakeAnalyticsStorageContainerData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsStorageContainerData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        string IPersistableModel<DataLakeAnalyticsStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsStorageContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeAnalyticsStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsStorageContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

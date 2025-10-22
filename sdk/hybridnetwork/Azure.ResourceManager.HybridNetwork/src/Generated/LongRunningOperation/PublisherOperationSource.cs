@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork
 
         PublisherResource IOperationSource<PublisherResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PublisherData.DeserializePublisherData(document.RootElement);
+            var data = ModelReaderWriter.Read<PublisherData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
             return new PublisherResource(_client, data);
         }
 
         async ValueTask<PublisherResource> IOperationSource<PublisherResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PublisherData.DeserializePublisherData(document.RootElement);
-            return new PublisherResource(_client, data);
+            var data = ModelReaderWriter.Read<PublisherData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            return await Task.FromResult(new PublisherResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

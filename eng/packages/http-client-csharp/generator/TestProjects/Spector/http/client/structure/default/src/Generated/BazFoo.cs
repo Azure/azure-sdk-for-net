@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Client.Structure.Service
+namespace Client.Structure.Service._Baz
 {
     public partial class BazFoo
     {
         protected BazFoo() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Seven(RequestContext context) => throw null;
 

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 type,
                 systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

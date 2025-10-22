@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Confluent
 {
     public partial class ConfluentOrganizationResource : IJsonModel<ConfluentOrganizationData>
     {
+        private static ConfluentOrganizationData s_dataDeserializationInstance;
+        private static ConfluentOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConfluentOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConfluentOrganizationData>)Data).Write(writer, options);
 
-        ConfluentOrganizationData IJsonModel<ConfluentOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfluentOrganizationData>)Data).Create(ref reader, options);
+        ConfluentOrganizationData IJsonModel<ConfluentOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfluentOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfluentOrganizationData>(Data, options, AzureResourceManagerConfluentContext.Default);
 
-        ConfluentOrganizationData IPersistableModel<ConfluentOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfluentOrganizationData>(data, options);
+        ConfluentOrganizationData IPersistableModel<ConfluentOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfluentOrganizationData>(data, options, AzureResourceManagerConfluentContext.Default);
 
-        string IPersistableModel<ConfluentOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfluentOrganizationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConfluentOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfluentOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

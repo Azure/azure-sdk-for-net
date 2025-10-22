@@ -3,17 +3,18 @@
   <PropertyGroup>
     <Description>Microsoft Azure Key Vault key encryption support.</Description>
     <PackageTags>aspnetcore;dataprotection;azure;keyvault</PackageTags>
-    <Version>1.5.0-beta.1</Version>
+    <Version>1.7.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.4.0</ApiCompatVersion>
+    <ApiCompatVersion>1.6.1</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);AZC0102</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection" VersionOverride="8.0.11" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
   </ItemGroup>
 

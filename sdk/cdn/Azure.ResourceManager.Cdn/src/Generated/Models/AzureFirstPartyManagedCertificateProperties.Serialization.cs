@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (options.Format != "W" && Optional.IsDefined(SecretSource))
             {
                 writer.WritePropertyName("secretSource"u8);
-                JsonSerializer.Serialize(writer, SecretSource);
+                ((IJsonModel<WritableSubResource>)SecretSource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Subject))
             {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    secretSource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("subject"u8))
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureFirstPartyManagedCertificateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureFirstPartyManagedCertificateProperties(document.RootElement, options);
                     }
                 default:

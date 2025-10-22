@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentList.DeserializeSecurityAssessmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentList.DeserializeSecurityAssessmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         SecurityAssessmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         SecurityAssessmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentData.DeserializeSecurityAssessmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecurityAssessmentList.DeserializeSecurityAssessmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecurityAssessmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecurityAssessmentList.DeserializeSecurityAssessmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         StreamingJobResource IOperationSource<StreamingJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StreamingJobData.DeserializeStreamingJobData(document.RootElement);
+            var data = ModelReaderWriter.Read<StreamingJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStreamAnalyticsContext.Default);
             return new StreamingJobResource(_client, data);
         }
 
         async ValueTask<StreamingJobResource> IOperationSource<StreamingJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StreamingJobData.DeserializeStreamingJobData(document.RootElement);
-            return new StreamingJobResource(_client, data);
+            var data = ModelReaderWriter.Read<StreamingJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStreamAnalyticsContext.Default);
+            return await Task.FromResult(new StreamingJobResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

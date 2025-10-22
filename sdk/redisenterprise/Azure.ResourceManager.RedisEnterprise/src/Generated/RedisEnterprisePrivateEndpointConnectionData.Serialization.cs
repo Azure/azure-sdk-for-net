@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerRedisEnterpriseContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

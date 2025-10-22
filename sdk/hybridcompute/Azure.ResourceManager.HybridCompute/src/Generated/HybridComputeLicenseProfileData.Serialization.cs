@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProductFeatures))
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridCompute
                                     {
                                         continue;
                                     }
-                                    error = JsonSerializer.Deserialize<ResponseError>(property1.Value.GetRawText());
+                                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property1.Value.GetRawText())), options, AzureResourceManagerHybridComputeContext.Default);
                                     continue;
                                 }
                                 if (property1.NameEquals("productFeatures"u8))
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.HybridCompute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridComputeLicenseProfileData(document.RootElement, options);
                     }
                 default:

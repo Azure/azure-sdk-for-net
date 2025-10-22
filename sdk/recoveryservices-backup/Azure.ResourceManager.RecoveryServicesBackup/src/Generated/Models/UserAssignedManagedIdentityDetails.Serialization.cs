@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedIdentityProperties))
             {
                 writer.WritePropertyName("userAssignedIdentityProperties"u8);
-                JsonSerializer.Serialize(writer, UserAssignedIdentityProperties);
+                ((IJsonModel<UserAssignedIdentity>)UserAssignedIdentityProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedIdentityProperties = JsonSerializer.Deserialize<UserAssignedIdentity>(property.Value.GetRawText());
+                    userAssignedIdentityProperties = ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUserAssignedManagedIdentityDetails(document.RootElement, options);
                     }
                 default:

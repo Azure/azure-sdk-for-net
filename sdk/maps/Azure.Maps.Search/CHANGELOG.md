@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.5 (Unreleased)
+## 2.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.5 (2025-04-16)
+
+### Features Added
+
+- Support Search API `2025-01-01`. Support `StreetName` and `StreetNumber` in `Address` class and remove unused types
+
+### Bugs Fixed
+
+- Fix the issue where `Iso` is always `null` in the `GetReverseGeocoding` response
 
 ## 2.0.0-beta.4 (2024-09-30)
 

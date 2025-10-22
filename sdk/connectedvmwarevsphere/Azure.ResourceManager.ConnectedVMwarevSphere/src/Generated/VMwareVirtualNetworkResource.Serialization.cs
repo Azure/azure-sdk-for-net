@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareVirtualNetworkResource : IJsonModel<VMwareVirtualNetworkData>
     {
+        private static VMwareVirtualNetworkData s_dataDeserializationInstance;
+        private static VMwareVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VMwareVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVirtualNetworkData>)Data).Write(writer, options);
 
-        VMwareVirtualNetworkData IJsonModel<VMwareVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVirtualNetworkData>)Data).Create(ref reader, options);
+        VMwareVirtualNetworkData IJsonModel<VMwareVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VMwareVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareVirtualNetworkData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VMwareVirtualNetworkData IPersistableModel<VMwareVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVirtualNetworkData>(data, options);
+        VMwareVirtualNetworkData IPersistableModel<VMwareVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVirtualNetworkData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        string IPersistableModel<VMwareVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVirtualNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VMwareVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

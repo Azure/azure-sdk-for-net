@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EdgeIotRole)} does not support writing '{options.Format}' format.");
             }
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeIotRole(document.RootElement, options);
                     }
                 default:

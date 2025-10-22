@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApiCenter.Models;
@@ -37,20 +38,16 @@ namespace Azure.ResourceManager.ApiCenter
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         ApiCenterServiceData IJsonModel<ApiCenterServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 return null;
             }
+            ApiCenterServiceProperties properties = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -80,19 +78,26 @@ namespace Azure.ResourceManager.ApiCenter
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ApiCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ApiCenterServiceProperties.DeserializeApiCenterServiceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerApiCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -135,28 +140,7 @@ namespace Azure.ResourceManager.ApiCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ApiCenterProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiCenterContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,8 +156,8 @@ namespace Azure.ResourceManager.ApiCenter
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 identity,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -184,7 +168,7 @@ namespace Azure.ResourceManager.ApiCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApiCenterServiceData)} does not support writing '{options.Format}' format.");
             }
@@ -198,7 +182,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiCenterServiceData(document.RootElement, options);
                     }
                 default:

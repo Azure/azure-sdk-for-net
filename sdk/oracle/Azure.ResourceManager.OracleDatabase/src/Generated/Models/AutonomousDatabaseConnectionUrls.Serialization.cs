@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri databaseTransformsUrl = default;
             Uri graphStudioUrl = default;
             Uri machineLearningNotebookUrl = default;
-            Uri mongoDBUrl = default;
+            Uri mongoDbUrl = default;
             Uri ordsUrl = default;
             Uri sqlDevWebUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    mongoDBUrl = new Uri(property.Value.GetString());
+                    mongoDbUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ordsUrl"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseTransformsUrl,
                 graphStudioUrl,
                 machineLearningNotebookUrl,
-                mongoDBUrl,
+                mongoDbUrl,
                 ordsUrl,
                 sqlDevWebUrl,
                 serializedAdditionalRawData);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutonomousDatabaseConnectionUrls)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutonomousDatabaseConnectionUrls(document.RootElement, options);
                     }
                 default:

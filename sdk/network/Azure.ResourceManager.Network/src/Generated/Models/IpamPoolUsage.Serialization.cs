@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -263,6 +265,280 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressPrefixes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  addressPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AddressPrefixes))
+                {
+                    if (AddressPrefixes.Any())
+                    {
+                        builder.Append("  addressPrefixes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AddressPrefixes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChildPools), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  childPools: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ChildPools))
+                {
+                    if (ChildPools.Any())
+                    {
+                        builder.Append("  childPools: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ChildPools)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  childPools: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocatedAddressPrefixes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocatedAddressPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllocatedAddressPrefixes))
+                {
+                    if (AllocatedAddressPrefixes.Any())
+                    {
+                        builder.Append("  allocatedAddressPrefixes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllocatedAddressPrefixes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReservedAddressPrefixes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reservedAddressPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ReservedAddressPrefixes))
+                {
+                    if (ReservedAddressPrefixes.Any())
+                    {
+                        builder.Append("  reservedAddressPrefixes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ReservedAddressPrefixes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableAddressPrefixes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  availableAddressPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AvailableAddressPrefixes))
+                {
+                    if (AvailableAddressPrefixes.Any())
+                    {
+                        builder.Append("  availableAddressPrefixes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AvailableAddressPrefixes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalNumberOfIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  totalNumberOfIPAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalNumberOfIPAddresses))
+                {
+                    builder.Append("  totalNumberOfIPAddresses: ");
+                    if (TotalNumberOfIPAddresses.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TotalNumberOfIPAddresses}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TotalNumberOfIPAddresses}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfAllocatedIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfAllocatedIPAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfAllocatedIPAddresses))
+                {
+                    builder.Append("  numberOfAllocatedIPAddresses: ");
+                    if (NumberOfAllocatedIPAddresses.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NumberOfAllocatedIPAddresses}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NumberOfAllocatedIPAddresses}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfReservedIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfReservedIPAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfReservedIPAddresses))
+                {
+                    builder.Append("  numberOfReservedIPAddresses: ");
+                    if (NumberOfReservedIPAddresses.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NumberOfReservedIPAddresses}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NumberOfReservedIPAddresses}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfAvailableIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfAvailableIPAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfAvailableIPAddresses))
+                {
+                    builder.Append("  numberOfAvailableIPAddresses: ");
+                    if (NumberOfAvailableIPAddresses.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NumberOfAvailableIPAddresses}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NumberOfAvailableIPAddresses}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IpamPoolUsage>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IpamPoolUsage>)this).GetFormatFromOptions(options) : options.Format;
@@ -270,7 +546,9 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IpamPoolUsage)} does not support writing '{options.Format}' format.");
             }
@@ -284,7 +562,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIpamPoolUsage(document.RootElement, options);
                     }
                 default:

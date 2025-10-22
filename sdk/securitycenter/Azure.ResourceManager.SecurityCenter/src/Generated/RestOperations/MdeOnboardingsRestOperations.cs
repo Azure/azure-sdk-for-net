@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         MdeOnboardingDataList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MdeOnboardingDataList.DeserializeMdeOnboardingDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         MdeOnboardingDataList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MdeOnboardingDataList.DeserializeMdeOnboardingDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         MdeOnboarding value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MdeOnboarding.DeserializeMdeOnboarding(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         MdeOnboarding value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MdeOnboarding.DeserializeMdeOnboarding(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

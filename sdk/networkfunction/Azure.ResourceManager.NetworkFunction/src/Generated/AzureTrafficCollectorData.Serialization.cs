@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -51,14 +52,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WriteStartArray();
                 foreach (var item in CollectorPolicies)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<SubResource>)VirtualHub).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkFunctionContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.NetworkFunction
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkFunctionContext.Default));
                             }
                             collectorPolicies = array;
                             continue;
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.NetworkFunction
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkFunctionContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.NetworkFunction
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkFunctionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{options.Format}' format.");
             }
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureTrafficCollectorData(document.RootElement, options);
                     }
                 default:

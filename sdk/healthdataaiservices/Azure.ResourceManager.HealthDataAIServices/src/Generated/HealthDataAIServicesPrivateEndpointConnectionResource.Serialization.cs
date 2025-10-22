@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
 {
     public partial class HealthDataAIServicesPrivateEndpointConnectionResource : IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>
     {
+        private static HealthDataAIServicesPrivateEndpointConnectionResourceData s_dataDeserializationInstance;
+        private static HealthDataAIServicesPrivateEndpointConnectionResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)Data).Write(writer, options);
 
-        HealthDataAIServicesPrivateEndpointConnectionResourceData IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)Data).Create(ref reader, options);
+        HealthDataAIServicesPrivateEndpointConnectionResourceData IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthDataAIServicesPrivateEndpointConnectionResourceData>(Data, options, AzureResourceManagerHealthDataAIServicesContext.Default);
 
-        HealthDataAIServicesPrivateEndpointConnectionResourceData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthDataAIServicesPrivateEndpointConnectionResourceData>(data, options);
+        HealthDataAIServicesPrivateEndpointConnectionResourceData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthDataAIServicesPrivateEndpointConnectionResourceData>(data, options, AzureResourceManagerHealthDataAIServicesContext.Default);
 
-        string IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine"u8);
-                JsonSerializer.Serialize(writer, SourceVirtualMachine);
+                ((IJsonModel<WritableSubResource>)SourceVirtualMachine).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sourceVirtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sourceVirtualMachine = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskImagePatch)} does not support writing '{options.Format}' format.");
             }
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskImagePatch(document.RootElement, options);
                     }
                 default:

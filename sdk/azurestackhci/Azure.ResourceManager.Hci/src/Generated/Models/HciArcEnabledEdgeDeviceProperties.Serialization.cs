@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHciArcEnabledEdgeDeviceProperties(document.RootElement, options);
                     }
                 default:

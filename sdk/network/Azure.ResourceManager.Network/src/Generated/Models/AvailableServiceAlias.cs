@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource name of the service alias. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
     }
 }

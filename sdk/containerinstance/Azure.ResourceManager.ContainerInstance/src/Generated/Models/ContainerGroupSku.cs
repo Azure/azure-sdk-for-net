@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NotSpecifiedValue = "NotSpecified";
         private const string StandardValue = "Standard";
         private const string DedicatedValue = "Dedicated";
         private const string ConfidentialValue = "Confidential";
 
+        /// <summary> NotSpecified. </summary>
+        public static ContainerGroupSku NotSpecified { get; } = new ContainerGroupSku(NotSpecifiedValue);
         /// <summary> Standard. </summary>
         public static ContainerGroupSku Standard { get; } = new ContainerGroupSku(StandardValue);
         /// <summary> Dedicated. </summary>

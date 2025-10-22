@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseExtendedServerBlobAuditingPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseExtendedServerBlobAuditingPolicyData.DeserializeSynapseExtendedServerBlobAuditingPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseExtendedServerBlobAuditingPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseExtendedServerBlobAuditingPolicyData.DeserializeSynapseExtendedServerBlobAuditingPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseExtendedServerBlobAuditingPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseExtendedServerBlobAuditingPolicyListResult.DeserializeSynapseExtendedServerBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseExtendedServerBlobAuditingPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseExtendedServerBlobAuditingPolicyListResult.DeserializeSynapseExtendedServerBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseExtendedServerBlobAuditingPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseExtendedServerBlobAuditingPolicyListResult.DeserializeSynapseExtendedServerBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseExtendedServerBlobAuditingPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseExtendedServerBlobAuditingPolicyListResult.DeserializeSynapseExtendedServerBlobAuditingPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

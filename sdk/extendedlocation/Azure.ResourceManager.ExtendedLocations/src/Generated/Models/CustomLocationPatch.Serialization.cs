@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerExtendedLocationsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -273,7 +274,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerExtendedLocationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support writing '{options.Format}' format.");
             }
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomLocationPatch(document.RootElement, options);
                     }
                 default:

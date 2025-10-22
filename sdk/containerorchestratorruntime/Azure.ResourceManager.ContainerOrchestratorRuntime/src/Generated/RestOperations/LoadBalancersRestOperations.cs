@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         ConnectedClusterLoadBalancerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         ConnectedClusterLoadBalancerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             uri.AppendPath(loadBalancerName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         LoadBalancerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LoadBalancerListResult.DeserializeLoadBalancerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         LoadBalancerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LoadBalancerListResult.DeserializeLoadBalancerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +398,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         LoadBalancerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LoadBalancerListResult.DeserializeLoadBalancerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -425,7 +424,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                     {
                         LoadBalancerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LoadBalancerListResult.DeserializeLoadBalancerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

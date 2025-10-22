@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DeletedBackupInstanceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedBackupInstanceResourceList.DeserializeDeletedBackupInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DeletedBackupInstanceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedBackupInstanceResourceList.DeserializeDeletedBackupInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DeletedDataProtectionBackupInstanceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DeletedDataProtectionBackupInstanceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -274,6 +274,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
+        /// <summary> A long-running resource action. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
@@ -300,6 +301,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        /// <summary> A long-running resource action. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
@@ -370,7 +372,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DeletedBackupInstanceResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedBackupInstanceResourceList.DeserializeDeletedBackupInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +403,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DeletedBackupInstanceResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedBackupInstanceResourceList.DeserializeDeletedBackupInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

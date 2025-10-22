@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.DevCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterProjectData)} does not support writing '{options.Format}' format.");
             }
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevCenterProjectData(document.RootElement, options);
                     }
                 default:

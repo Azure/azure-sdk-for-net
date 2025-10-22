@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HealthcareApis
 {
+    public partial class AzureResourceManagerHealthcareApisContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHealthcareApisContext() { }
+        public static Azure.ResourceManager.HealthcareApis.AzureResourceManagerHealthcareApisContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DicomServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HealthcareApis.DicomServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.DicomServiceResource>, System.Collections.IEnumerable
     {
         protected DicomServiceCollection() { }

@@ -35,4 +35,22 @@ public enum CosmosDBServerVersion
     /// </summary>
     [DataMember(Name = "4.2")]
     V4_2,
+
+    /// <summary>
+    /// 5.0.
+    /// </summary>
+    [DataMember(Name = "5.0")]
+    Five0,
+
+    /// <summary>
+    /// 6.0.
+    /// </summary>
+    [DataMember(Name = "6.0")]
+    Six0,
+
+    /// <summary>
+    /// 7.0.
+    /// </summary>
+    [DataMember(Name = "7.0")]
+    Seven0,
 }

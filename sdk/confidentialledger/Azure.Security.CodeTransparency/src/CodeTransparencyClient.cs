@@ -2,18 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Formats.Cbor;
+using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.CodeTransparency.Receipt;
 
 namespace Azure.Security.CodeTransparency
 {
     [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetOperationRequest", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetEntryRequest", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetEntryStatementRequest", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CreateCreateEntryRequest", typeof(RequestContent), typeof(RequestContext))]
     public partial class CodeTransparencyClient
     {
+        /// <summary>
+        /// Prefix for receipts with unknown/unrecognized issuers.
+        /// </summary>
+        public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
+
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
@@ -43,6 +61,72 @@ namespace Azure.Security.CodeTransparency
                 new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
+        /// TLS CA cert to perform server cert authentication.
+        /// If the CA changes then there is a TTL which will help healing the long lived clients.
+        /// </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
+        {
+        }
+
+        private static List<(string IssuerHost, byte[] ReceiptBytes)> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)
+        {
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
+
+            if (!coseSign1Message.UnprotectedHeaders.
+            TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
+            out CoseHeaderValue embeddedReceipts))
+            {
+                throw new InvalidOperationException("embeddedReceipts not found");
+            }
+
+            CborReader cborReader = new CborReader(embeddedReceipts.EncodedValue);
+            cborReader.ReadStartArray();
+
+            var receiptList = new List<(string, byte[])>();
+            while (cborReader.PeekState() != CborReaderState.EndArray)
+            {
+                var receipt = cborReader.ReadByteString();
+                // the receipt could be from any other system and we can only validate the ones
+                // that originate in our service instances and have an issuer we can parse
+                // identify receipts with unknown issuers with appended index to avoid clashes
+                // verification logic has a separate path to handle unknown issuers
+                string issuer = string.Empty;
+                try
+                {
+                    issuer = GetReceiptIssuerHostStatic(receipt);
+                }
+                catch (InvalidOperationException)
+                {
+                    issuer = UnknownIssuerPrefix + receiptList.Count;
+                }
+                receiptList.Add((issuer, receipt));
+            }
+            cborReader.ReadEndArray();
+
+            return receiptList;
+        }
+
+        private static string GetReceiptIssuerHostStatic(byte[] receiptBytes)
+        {
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
+
+            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseReceiptCwtMapLabel), out CoseHeaderValue cwtMap))
+            {
+                throw new InvalidOperationException("CWT Claims map not found in receipt.");
+            }
+            string issuer = CborUtils.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
+            if (string.IsNullOrEmpty(issuer))
+            {
+                throw new InvalidOperationException("Issuer not found in receipt.");
+            }
+            return issuer;
         }
 
         /// <summary>
@@ -92,7 +176,7 @@ namespace Azure.Security.CodeTransparency
                 if (!isChainValid)
                     return false;
 
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
+                // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
                 X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
                 bool isChainRootedInTheTlsCert = rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint);
                 return isChainRootedInTheTlsCert;
@@ -101,11 +185,12 @@ namespace Azure.Security.CodeTransparency
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. The returned operation will have the entry id when it is complete. </summary>
-        /// <param name="body"> A raw CoseSign1 signature. </param>
+        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<GetOperationResult> CreateEntry(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -115,8 +200,32 @@ namespace Azure.Security.CodeTransparency
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
-                CreateEntryResult result = Response.FromValue(CreateEntryResult.FromResponse(response), response);
-                return new CreateEntryOperation(this, result.OperationId);
+
+                string operationId = string.Empty;
+                try
+                {
+                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
+                }
+
+                if (string.IsNullOrEmpty(operationId))
+                {
+                    throw new RequestFailedException(response);
+                }
+                else
+                {
+                    var entryOperation = new CreateEntryOperation(this, operationId);
+
+                    if (waitUntil == WaitUntil.Completed)
+                    {
+                        entryOperation.WaitForCompletionResponse(cancellationToken);
+                    }
+
+                    return entryOperation;
+                }
             }
             catch (Exception e)
             {
@@ -125,11 +234,12 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. The returned operation will have the entry id when it is complete. </summary>
-        /// <param name="body"> A raw CoseSign1 signature. </param>
+        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<GetOperationResult>> CreateEntryAsync(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -139,8 +249,32 @@ namespace Azure.Security.CodeTransparency
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
-                CreateEntryResult result = Response.FromValue(CreateEntryResult.FromResponse(response), response);
-                return new CreateEntryOperation(this, result.OperationId);
+
+                string operationId = string.Empty;
+                try
+                {
+                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
+                }
+
+                if (string.IsNullOrEmpty(operationId))
+                {
+                    throw new RequestFailedException(response);
+                }
+                else
+                {
+                    var entryOperation = new CreateEntryOperation(this, operationId);
+
+                    if (waitUntil == WaitUntil.Completed)
+                    {
+                        await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    return entryOperation;
+                }
             }
             catch (Exception e)
             {
@@ -149,9 +283,294 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
+        /// <summary>
+        /// Verify the receipt integrity against the COSE_Sign1 envelope
+        /// and check if receipt was endorsed by the given service certificate.
+        /// In the case of multiple receipts being embedded in the signature then verify
+        /// all of them.
+        /// </summary>
+        /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
+        [Obsolete("Use the static VerifyTransparentStatement method with options instead.")]
+        public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
+        {
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { _endpoint.Host },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
+            };
+            VerifyTransparentStatement(transparentStatementCoseSign1Bytes, verificationOptions);
+        }
+
+        /// <summary>
+        /// Verify the receipt integrity against the COSE_Sign1 envelope
+        /// and check if receipt was endorsed by the service public keys.
+        /// This method expects the issuer in the receipt to match the CodeTransparencyClient client endpoint.
+        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
+        /// </summary>
+        /// <param name="signedStatementCoseSign1Bytes">Signed statement in Cose_Sign1 cbor bytes.</param>
+        /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 cbor bytes.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
+        public virtual void RunTransparentStatementVerification(byte[] signedStatementCoseSign1Bytes, byte[] receiptCoseSign1Bytes)
+        {
+            CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(signedStatementCoseSign1Bytes);
+            inputSignedStatement.UnprotectedHeaders.Clear();
+            JsonWebKey jsonWebKey = GetServiceCertificateKey(receiptCoseSign1Bytes);
+            CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receiptCoseSign1Bytes, inputSignedStatement.Encode());
+        }
+
+        /// <summary>
+        /// Verify the receipt integrity against the COSE_Sign1 envelope and (optionally) enforce issuer domain authorized-list rules.
+        /// It will create an instance of CodeTransparencyClient for each issuer domain encountered in the verification process.
+        /// </summary>
+        /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
+        /// <param name="verificationOptions">Optional verification options. If null or if <see cref="CodeTransparencyVerificationOptions.AuthorizedDomains"/> is empty, all receipts are verified (original behavior).</param>
+        /// <param name="clientOptions"> The options for configuring the client instances that download public keys required for verification. </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when: no receipts exist; authorized-list is provided and no receipt matches any authorized domain; a unauthorized receipt exists while <see cref="UnauthorizedReceiptBehavior.FailIfPresent"/> is selected.
+        /// </exception>
+        /// <exception cref="AggregateException">Thrown containing individual failures encountered during verification.</exception>
+        public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, CodeTransparencyVerificationOptions verificationOptions = default, CodeTransparencyClientOptions clientOptions = default)
+        {
+            verificationOptions ??= new CodeTransparencyVerificationOptions();
+
+            List<Exception> authorizedFailures = new List<Exception>();
+            List<Exception> unauthorizedFailures = new List<Exception>();
+
+            List<(string, byte[])> receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
+            if (receiptList.Count == 0)
+            {
+                throw new InvalidOperationException("No receipts found in the transparent statement.");
+            }
+
+            Dictionary<string, CodeTransparencyClient> clientInstances = new Dictionary<string, CodeTransparencyClient>();
+
+            // Prepare authorized list state. If no authorized list provided, implicitly authorized all detected issuer domains encountered in receipts.
+            var configuredAuthorizedList = verificationOptions?.AuthorizedDomains ?? Array.Empty<string>();
+            bool userProvidedAuthorizedList = configuredAuthorizedList.Count > 0;
+            HashSet<string> authorizedListNormalized = new(StringComparer.OrdinalIgnoreCase);
+            if (userProvidedAuthorizedList)
+            {
+                foreach (var domain in configuredAuthorizedList)
+                {
+                    if (!string.IsNullOrWhiteSpace(domain) && !domain.StartsWith(UnknownIssuerPrefix))
+                    {
+                        authorizedListNormalized.Add(domain.Trim());
+                    }
+                }
+            }
+
+            // Tracking for behaviors
+            HashSet<string> validAuthorizedDomainsEncountered = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> authorizedDomainsWithReceipt = new(StringComparer.OrdinalIgnoreCase);
+
+            // Early failure if we must fail on presence of unauthorized receipts
+            if (verificationOptions.UnauthorizedReceiptBehavior == UnauthorizedReceiptBehavior.FailIfPresent)
+            {
+                foreach ((string issuer, byte[] receiptBytes) in receiptList)
+                {
+                    if (!authorizedListNormalized.Contains(issuer))
+                    {
+                        throw new InvalidOperationException($"Receipt issuer '{issuer}' is not in the authorized domain list.");
+                    }
+                }
+            }
+
+            foreach ((string issuer, byte[] receiptBytes) in receiptList)
+            {
+                bool isAuthorized = authorizedListNormalized.Contains(issuer);
+                if (isAuthorized)
+                {
+                    authorizedDomainsWithReceipt.Add(issuer);
+                }
+
+                // Determine if this receipt should be verified
+                bool shouldVerify;
+                if (isAuthorized)
+                {
+                    // Always verify receipts from authorized issuers; enforcement comes later.
+                    shouldVerify = true;
+                }
+                else
+                {
+                    // Unauthorized receipts handled per options
+                    shouldVerify = verificationOptions?.UnauthorizedReceiptBehavior switch
+                    {
+                        UnauthorizedReceiptBehavior.VerifyAll => true,
+                        UnauthorizedReceiptBehavior.IgnoreAll => false,
+                        UnauthorizedReceiptBehavior.FailIfPresent => false, // already handled in early phase
+                        _ => true
+                    };
+                }
+
+                if (!shouldVerify)
+                {
+                    continue;
+                }
+
+                if (issuer.StartsWith(UnknownIssuerPrefix))
+                {
+                    // Cannot verify receipts with unknown issuers
+                    unauthorizedFailures.Add(new InvalidOperationException($"Cannot verify receipt with unknown issuer '{issuer}'."));
+                    continue;
+                }
+
+                try
+                {
+                    if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
+                    {
+                        clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
+                        clientInstances[issuer] = clientInstance;
+                    }
+                    clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
+
+                    if (isAuthorized)
+                    {
+                        validAuthorizedDomainsEncountered.Add(issuer);
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (isAuthorized)
+                    {
+                        authorizedFailures.Add(e);
+                    }
+                    else
+                    {
+                        unauthorizedFailures.Add(e);
+                    }
+                }
+            }
+
+            // Post-processing based on authorized domain verification behavior (only applies to user-provided authorized list)
+            switch (verificationOptions.AuthorizedReceiptBehavior)
+            {
+                case AuthorizedReceiptBehavior.VerifyAnyMatching:
+                    if (validAuthorizedDomainsEncountered.Count == 0)
+                    {
+                        authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
+                    }
+                    else
+                    {
+                        // If at least one authorized receipt is valid, clear authorized failures
+                        authorizedFailures.Clear();
+                    }
+                    break;
+                case AuthorizedReceiptBehavior.VerifyAllMatching:
+                    // All receipts from authorized domains must be valid: i.e., any receipt from an authorized domain that failed adds failure (already captured) -> if any authorized domain had receipt but not all successful? We check failures now.
+                    if (authorizedDomainsWithReceipt.Count == 0)
+                    {
+                        authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
+                    }
+                    foreach (var domain in authorizedDomainsWithReceipt)
+                    {
+                        if (!validAuthorizedDomainsEncountered.Contains(domain))
+                        {
+                            authorizedFailures.Add(new InvalidOperationException($"A receipt from the required domain '{domain}' failed verification."));
+                        }
+                    }
+                    break;
+                case AuthorizedReceiptBehavior.RequireAll:
+                    foreach (var domain in authorizedListNormalized)
+                    {
+                        if (!validAuthorizedDomainsEncountered.Contains(domain))
+                        {
+                            authorizedFailures.Add(new InvalidOperationException($"No valid receipt found for a required domain '{domain}'."));
+                        }
+                    }
+                    break;
+            }
+
+            // Combine failures from both lists
+            List<Exception> allFailures = new List<Exception>();
+            allFailures.AddRange(authorizedFailures);
+            allFailures.AddRange(unauthorizedFailures);
+
+            if (allFailures.Count > 0)
+            {
+                throw new AggregateException(allFailures);
+            }
+        }
+
+        /// <summary>
+        /// Get the service certificate key from the JWKs service endpoint.
+        /// </summary>
+        /// <param name="receiptBytes">the COSE receipt bytes,
+        /// see https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.html#name-verifiable-data-structures-</param>
+        /// <returns>The service certificate key (JWK)</returns>
+        private JsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
+        {
+            string issuer = GetReceiptIssuerHostStatic(receiptBytes);
+
+            // Validate issuer and CTS instance are matching
+            if (!issuer.Equals(_endpoint.Host, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Issuer and service instance name are not matching.");
+            }
+
+            // Get all the public keys from the JWKS endpoint
+            JwksDocument jwksDocument = GetPublicKeys().Value;
+
+            // Ensure there is at least one entry in the JWKS document
+            if (jwksDocument.Keys.Count == 0)
+            {
+                throw new InvalidOperationException("No keys found in JWKS document.");
+            }
+
+            // Store all the keys in a new Dictionary to simplify lookup
+            var keysDict = new Dictionary<string, JsonWebKey>();
+            foreach (JsonWebKey jsonWebKey in jwksDocument.Keys)
+            {
+                keysDict[jsonWebKey.Kid] = jsonWebKey;
+            }
+
+            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
+
+            if (!coseSign1Message.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue receiptKid))
+            {
+                throw new InvalidOperationException("KID not found.");
+            }
+
+            string kidAsString = Encoding.UTF8.GetString(receiptKid.GetValueAsBytes());
+            if (!keysDict.TryGetValue(kidAsString, out JsonWebKey matchingKey))
+            {
+                throw new InvalidOperationException($"Key with ID '{kidAsString}' not found.");
+            }
+
+            return matchingKey;
+        }
+
+        internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/.well-known/transparency-configuration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/cbor");
+            return message;
+        }
+
+        internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jwks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -159,10 +578,63 @@ namespace Azure.Security.CodeTransparency
             uri.AppendPath("/entries", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/cose");
+            request.Headers.Add("Accept", "application/cose; application/cbor");
+            request.Headers.Add("Content-Type", "application/cose");
             request.Content = content;
             return message;
         }
+
+        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/cbor");
+            return message;
+        }
+
+        internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/entries/", false);
+            uri.AppendPath(entryId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/cose");
+            return message;
+        }
+
+        internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/entries/", false);
+            uri.AppendPath(entryId, true);
+            uri.AppendPath("/statement", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/cose");
+            return message;
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201202;
+        private static ResponseClassifier ResponseClassifier201202 => _responseClassifier201202 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
+        private static ResponseClassifier _responseClassifier200202;
+        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
     }
 }

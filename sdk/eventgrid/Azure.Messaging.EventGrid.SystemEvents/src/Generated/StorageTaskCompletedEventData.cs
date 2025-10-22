@@ -13,46 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskCompleted event. </summary>
     public partial class StorageTaskCompletedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/>. </summary>
-        /// <param name="summaryReportBlobUrl"> The summary report blob url for a storage task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summaryReportBlobUrl"/> is null. </exception>
-        internal StorageTaskCompletedEventData(Uri summaryReportBlobUrl)
+        /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
+        internal StorageTaskCompletedEventData(Uri summaryReportBlobUri)
         {
-            Argument.AssertNotNull(summaryReportBlobUrl, nameof(summaryReportBlobUrl));
-
-            SummaryReportBlobUrl = summaryReportBlobUrl;
+            SummaryReportBlobUri = summaryReportBlobUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/>. </summary>
@@ -60,32 +28,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="completedDateTime"> The time at which a storage task was completed. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <param name="taskName"> The task name for a storage task. </param>
-        /// <param name="summaryReportBlobUrl"> The summary report blob url for a storage task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskCompletedEventData(StorageTaskCompletedStatus? status, DateTimeOffset? completedDateTime, string taskExecutionId, string taskName, Uri summaryReportBlobUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTaskCompletedEventData(StorageTaskCompletedStatus? status, DateTimeOffset? completedDateTime, string taskExecutionId, string taskName, Uri summaryReportBlobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             CompletedDateTime = completedDateTime;
             TaskExecutionId = taskExecutionId;
             TaskName = taskName;
-            SummaryReportBlobUrl = summaryReportBlobUrl;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/> for deserialization. </summary>
-        internal StorageTaskCompletedEventData()
-        {
+            SummaryReportBlobUri = summaryReportBlobUri;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status for a storage task. </summary>
         public StorageTaskCompletedStatus? Status { get; }
+
         /// <summary> The time at which a storage task was completed. </summary>
         public DateTimeOffset? CompletedDateTime { get; }
+
         /// <summary> The execution id for a storage task. </summary>
         public string TaskExecutionId { get; }
+
         /// <summary> The task name for a storage task. </summary>
         public string TaskName { get; }
+
         /// <summary> The summary report blob url for a storage task. </summary>
-        public Uri SummaryReportBlobUrl { get; }
+        public Uri SummaryReportBlobUri { get; }
     }
 }

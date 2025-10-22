@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _instancePoolClientDiagnostics;
         private readonly InstancePoolsRestOperations _instancePoolRestClient;
-        private readonly ClientDiagnostics _usagesClientDiagnostics;
-        private readonly UsagesRestOperations _usagesRestClient;
         private readonly ClientDiagnostics _managedInstanceClientDiagnostics;
         private readonly ManagedInstancesRestOperations _managedInstanceRestClient;
+        private readonly ClientDiagnostics _usagesClientDiagnostics;
+        private readonly UsagesRestOperations _usagesRestClient;
         private readonly InstancePoolData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Sql
             _instancePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string instancePoolApiVersion);
             _instancePoolRestClient = new InstancePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion);
-            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _usagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _managedInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedInstanceResource.ResourceType, out string managedInstanceApiVersion);
             _managedInstanceRestClient = new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceApiVersion);
+            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _usagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,6 +100,71 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SqlInstancePoolOperationResources in the InstancePool. </summary>
+        /// <returns> An object representing collection of SqlInstancePoolOperationResources and their operations over a SqlInstancePoolOperationResource. </returns>
+        public virtual SqlInstancePoolOperationCollection GetSqlInstancePoolOperations()
+        {
+            return GetCachedClient(client => new SqlInstancePoolOperationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a management operation on a instance pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePoolOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetSqlInstancePoolOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlInstancePoolOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a management operation on a instance pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePoolOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlInstancePoolOperationResource> GetSqlInstancePoolOperation(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlInstancePoolOperations().Get(operationId, cancellationToken);
+        }
+
         /// <summary>
         /// Gets an instance pool.
         /// <list type="bullet">
@@ -113,7 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +218,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,7 +258,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -277,7 +342,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +388,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,60 +422,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets all instance pool usage metrics
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListByInstancePool</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstancePoolUsage> GetUsagesAsync(bool? expandChildren = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => InstancePoolUsage.DeserializeInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all instance pool usage metrics
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListByInstancePool</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstancePoolUsage> GetUsages(bool? expandChildren = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => InstancePoolUsage.DeserializeInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a list of all managed instances in an instance pool.
         /// <list type="bullet">
         /// <item>
@@ -423,7 +434,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +465,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -473,6 +484,60 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets all instance pool usage metrics
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByInstancePool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InstancePoolUsage> GetUsagesAsync(bool? expandChildren = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => InstancePoolUsage.DeserializeInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all instance pool usage metrics
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByInstancePool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InstancePoolUsage> GetUsages(bool? expandChildren = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => InstancePoolUsage.DeserializeInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -485,7 +550,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -547,7 +612,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -609,7 +674,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,7 +731,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -723,7 +788,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -783,7 +848,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Nginx
 {
     public partial class NginxDeploymentResource : IJsonModel<NginxDeploymentData>
     {
+        private static NginxDeploymentData s_dataDeserializationInstance;
+        private static NginxDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NginxDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentData>)Data).Write(writer, options);
 
-        NginxDeploymentData IJsonModel<NginxDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentData>)Data).Create(ref reader, options);
+        NginxDeploymentData IJsonModel<NginxDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxDeploymentData>(Data, options, AzureResourceManagerNginxContext.Default);
 
-        NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentData>(data, options);
+        NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentData>(data, options, AzureResourceManagerNginxContext.Default);
 
-        string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

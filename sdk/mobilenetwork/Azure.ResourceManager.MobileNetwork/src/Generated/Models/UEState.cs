@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// State of the UE.
-    /// Serialized Name: UeState
-    /// </summary>
+    /// <summary> State of the UE. </summary>
     public readonly partial struct UEState : IEquatable<UEState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string DeregisteredValue = "Deregistered";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Connected
-        /// Serialized Name: UeState.Connected
-        /// </summary>
+        /// <summary> Connected. </summary>
         public static UEState Connected { get; } = new UEState(ConnectedValue);
-        /// <summary>
-        /// Idle
-        /// Serialized Name: UeState.Idle
-        /// </summary>
+        /// <summary> Idle. </summary>
         public static UEState Idle { get; } = new UEState(IdleValue);
-        /// <summary>
-        /// Detached
-        /// Serialized Name: UeState.Detached
-        /// </summary>
+        /// <summary> Detached. </summary>
         public static UEState Detached { get; } = new UEState(DetachedValue);
-        /// <summary>
-        /// Deregistered
-        /// Serialized Name: UeState.Deregistered
-        /// </summary>
+        /// <summary> Deregistered. </summary>
         public static UEState Deregistered { get; } = new UEState(DeregisteredValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: UeState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static UEState Unknown { get; } = new UEState(UnknownValue);
         /// <summary> Determines if two <see cref="UEState"/> values are the same. </summary>
         public static bool operator ==(UEState left, UEState right) => left.Equals(right);

@@ -1,6 +1,12 @@
 # Release History
 
-## 7.19.0-beta.1 (Unreleased)
+## 7.21.0-beta.1 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
@@ -9,6 +15,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Several areas of the AMQP transport integration have been cleaned up, modernized, and made more efficient.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 7.20.1 (2025-06-12)
+
+### Bugs Fixed
+
+- Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
+
+### Other Changes
+
+- Updated retry policy behavior when the service is throttling and the `TryTimeout` is shorter than the standard throttling time of 30 seconds.  Previously, the operation was immediately canceled with a server busy exception.  With these changes, the operation will begin consuming retry attempts while throttling until either the server busy state is cleared or all configured retry attempts are exhausted.  ([#50121](https://github.com/Azure/azure-sdk-for-net/issues/50121))
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 7.19.0 (2025-04-08)
+
+### Features Added
+
+- `ServiceBusClientOptions` now supports registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
+### Other Changes
+
+- Added jitter to the lock renewal timer to reduce the likelihood of lock renewal collisions when using the `ServiceBusProcessor` or the `ServiceBusSessionProcessor`.
+
+- Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 7.18.4 (2025-02-11)
 
@@ -220,6 +254,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.13.0 (2023-03-08)
 
 ### Acknowledgments
+
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_

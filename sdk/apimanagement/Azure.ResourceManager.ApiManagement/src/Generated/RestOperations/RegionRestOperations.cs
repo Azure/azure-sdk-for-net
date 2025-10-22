@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01-preview";
+            _apiVersion = apiVersion ?? "2024-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         RegionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegionListResult.DeserializeRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         RegionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegionListResult.DeserializeRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         RegionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegionListResult.DeserializeRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         RegionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegionListResult.DeserializeRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

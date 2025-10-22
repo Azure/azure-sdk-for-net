@@ -48,10 +48,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("taskRootDirectory"u8);
                 writer.WriteStringValue(TaskRootDirectory);
             }
-            if (Optional.IsDefined(TaskRootDirectoryUrl))
+            if (Optional.IsDefined(TaskRootDirectoryUri))
             {
                 writer.WritePropertyName("taskRootDirectoryUrl"u8);
-                writer.WriteStringValue(TaskRootDirectoryUrl);
+                writer.WriteStringValue(TaskRootDirectoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExitCode))
             {
@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,7 +121,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset? endTime = default;
             BatchJobPreparationTaskState state = default;
             string taskRootDirectory = default;
-            string taskRootDirectoryUrl = default;
+            Uri taskRootDirectoryUrl = default;
             int? exitCode = default;
             BatchTaskContainerExecutionInfo containerInfo = default;
             BatchTaskFailureInfo failureInfo = default;
@@ -158,7 +158,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("taskRootDirectoryUrl"u8))
                 {
-                    taskRootDirectoryUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    taskRootDirectoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exitCode"u8))
@@ -239,7 +243,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobPreparationTaskExecutionInfo)} does not support writing '{options.Format}' format.");
             }
@@ -253,7 +257,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobPreparationTaskExecutionInfo(document.RootElement, options);
                     }
                 default:
@@ -267,7 +271,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchJobPreparationTaskExecutionInfo FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchJobPreparationTaskExecutionInfo(document.RootElement);
         }
 

@@ -60,6 +60,10 @@ namespace Azure.Compute.Batch
             writer.WriteNumberValue(Unusable);
             writer.WritePropertyName("waitingForStartTask"u8);
             writer.WriteNumberValue(WaitingForStartTask);
+            writer.WritePropertyName("deallocated"u8);
+            writer.WriteNumberValue(Deallocated);
+            writer.WritePropertyName("deallocating"u8);
+            writer.WriteNumberValue(Deallocating);
             writer.WritePropertyName("total"u8);
             writer.WriteNumberValue(Total);
             writer.WritePropertyName("upgradingOS"u8);
@@ -72,7 +76,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -114,6 +118,8 @@ namespace Azure.Compute.Batch
             int unknown = default;
             int unusable = default;
             int waitingForStartTask = default;
+            int deallocated = default;
+            int deallocating = default;
             int total = default;
             int upgradingOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -185,6 +191,16 @@ namespace Azure.Compute.Batch
                     waitingForStartTask = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("deallocated"u8))
+                {
+                    deallocated = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("deallocating"u8))
+                {
+                    deallocating = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("total"u8))
                 {
                     total = property.Value.GetInt32();
@@ -215,6 +231,8 @@ namespace Azure.Compute.Batch
                 unknown,
                 unusable,
                 waitingForStartTask,
+                deallocated,
+                deallocating,
                 total,
                 upgradingOS,
                 serializedAdditionalRawData);
@@ -227,7 +245,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeCounts)} does not support writing '{options.Format}' format.");
             }
@@ -241,7 +259,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchNodeCounts(document.RootElement, options);
                     }
                 default:
@@ -255,7 +273,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchNodeCounts FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchNodeCounts(document.RootElement);
         }
 

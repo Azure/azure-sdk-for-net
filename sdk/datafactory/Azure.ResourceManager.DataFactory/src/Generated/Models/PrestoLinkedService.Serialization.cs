@@ -40,8 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             JsonSerializer.Serialize(writer, Host);
-            writer.WritePropertyName("serverVersion"u8);
-            JsonSerializer.Serialize(writer, ServerVersion);
+            if (Optional.IsDefined(ServerVersion))
+            {
+                writer.WritePropertyName("serverVersion"u8);
+                JsonSerializer.Serialize(writer, ServerVersion);
+            }
             writer.WritePropertyName("catalog"u8);
             JsonSerializer.Serialize(writer, Catalog);
             if (Optional.IsDefined(Port))
@@ -65,6 +68,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("enableSsl"u8);
                 JsonSerializer.Serialize(writer, EnableSsl);
+            }
+            if (Optional.IsDefined(EnableServerCertificateValidation))
+            {
+                writer.WritePropertyName("enableServerCertificateValidation"u8);
+                JsonSerializer.Serialize(writer, EnableServerCertificateValidation);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -145,6 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> username = default;
             DataFactorySecret password = default;
             DataFactoryElement<bool> enableSsl = default;
+            DataFactoryElement<bool> enableServerCertificateValidation = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
             DataFactoryElement<bool> allowHostNameCNMismatch = default;
@@ -230,6 +239,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("serverVersion"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             serverVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
@@ -277,6 +290,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 continue;
                             }
                             enableSsl = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("enableServerCertificateValidation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableServerCertificateValidation = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"u8))
@@ -351,6 +373,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 username,
                 password,
                 enableSsl,
+                enableServerCertificateValidation,
                 trustedCertPath,
                 useSystemTrustStore,
                 allowHostNameCNMismatch,
@@ -366,7 +389,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrestoLinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -380,7 +403,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrestoLinkedService(document.RootElement, options);
                     }
                 default:

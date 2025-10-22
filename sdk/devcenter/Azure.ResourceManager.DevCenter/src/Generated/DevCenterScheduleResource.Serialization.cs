@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterScheduleResource : IJsonModel<DevCenterScheduleData>
     {
+        private static DevCenterScheduleData s_dataDeserializationInstance;
+        private static DevCenterScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevCenterScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterScheduleData>)Data).Write(writer, options);
 
-        DevCenterScheduleData IJsonModel<DevCenterScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterScheduleData>)Data).Create(ref reader, options);
+        DevCenterScheduleData IJsonModel<DevCenterScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterScheduleData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        DevCenterScheduleData IPersistableModel<DevCenterScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterScheduleData>(data, options);
+        DevCenterScheduleData IPersistableModel<DevCenterScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterScheduleData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

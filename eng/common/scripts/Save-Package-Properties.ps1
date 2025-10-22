@@ -141,12 +141,17 @@ foreach ($pkg in $allPackageProperties)
     Write-Host "Package Version: $($pkg.Version)"
     Write-Host "Package SDK Type: $($pkg.SdkType)"
     Write-Host "Artifact Name: $($pkg.ArtifactName)"
+    if (-not [System.String]::IsNullOrEmpty($pkg.Group)) {
+      Write-Host "GroupId: $($pkg.Group)"
+    }
     Write-Host "Release date: $($pkg.ReleaseStatus)"
     $configFilePrefix = $pkg.Name
 
-    if ($pkg.ArtifactName)
-    {
-      $configFilePrefix = $pkg.ArtifactName
+    # Any languages (like JS) which need to override the the packageInfo file name to be something
+    # other than the name just need to declare this function in their Language-Settings.ps1 return
+    # the desired string from there.
+    if (Test-Path "Function:Get-PackageInfoNameOverride") {
+      $configFilePrefix = Get-PackageInfoNameOverride $pkg
     }
 
     $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"

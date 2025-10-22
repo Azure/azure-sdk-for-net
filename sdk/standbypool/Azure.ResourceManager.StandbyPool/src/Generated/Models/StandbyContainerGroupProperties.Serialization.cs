@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerStandbyPoolContext.Default));
                     }
                     subnetIds = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyContainerGroupProperties)} does not support writing '{options.Format}' format.");
             }
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyContainerGroupProperties(document.RootElement, options);
                     }
                 default:

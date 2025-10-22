@@ -34,6 +34,25 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ApiGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApiGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApiGatewayResource"/> object. </returns>
+        public static ApiGatewayResource GetApiGatewayResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetApiGatewayResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApiResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -509,6 +528,44 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServiceWorkspaceDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceWorkspaceDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="ServiceWorkspaceDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetServiceWorkspaceDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceWorkspaceDiagnosticResource"/> object. </returns>
+        public static ServiceWorkspaceDiagnosticResource GetServiceWorkspaceDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetServiceWorkspaceDiagnosticResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceWorkspaceApiDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceWorkspaceApiDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="ServiceWorkspaceApiDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetServiceWorkspaceApiDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceWorkspaceApiDiagnosticResource"/> object. </returns>
+        public static ServiceWorkspaceApiDiagnosticResource GetServiceWorkspaceApiDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetServiceWorkspaceApiDiagnosticResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApiIssueResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApiIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -775,6 +832,25 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServiceWorkspaceBackendResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceWorkspaceBackendResource.CreateResourceIdentifier" /> to create a <see cref="ServiceWorkspaceBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetServiceWorkspaceBackendResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceWorkspaceBackendResource"/> object. </returns>
+        public static ServiceWorkspaceBackendResource GetServiceWorkspaceBackendResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetServiceWorkspaceBackendResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApiManagementCacheResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApiManagementCacheResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -810,6 +886,25 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApiManagementArmClient(client).GetApiManagementCertificateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceWorkspaceCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceWorkspaceCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ServiceWorkspaceCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetServiceWorkspaceCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceWorkspaceCertificateResource"/> object. </returns>
+        public static ServiceWorkspaceCertificateResource GetServiceWorkspaceCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetServiceWorkspaceCertificateResource(id);
         }
 
         /// <summary>
@@ -886,6 +981,25 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApiManagementArmClient(client).GetApiManagementEmailTemplateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiGatewayConfigConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiGatewayConfigConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiGatewayConfigConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiGatewayConfigConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApiGatewayConfigConnectionResource"/> object. </returns>
+        public static ApiGatewayConfigConnectionResource GetApiGatewayConfigConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetApiGatewayConfigConnectionResource(id);
         }
 
         /// <summary>
@@ -1022,6 +1136,25 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServiceWorkspaceLoggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceWorkspaceLoggerResource.CreateResourceIdentifier" /> to create a <see cref="ServiceWorkspaceLoggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetServiceWorkspaceLoggerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceWorkspaceLoggerResource"/> object. </returns>
+        public static ServiceWorkspaceLoggerResource GetServiceWorkspaceLoggerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetServiceWorkspaceLoggerResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApiManagementNamedValueResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApiManagementNamedValueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNamedValueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1152,6 +1285,25 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApiManagementArmClient(client).GetServiceWorkspacePolicyFragmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicyRestrictionContractResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyRestrictionContractResource.CreateResourceIdentifier" /> to create a <see cref="PolicyRestrictionContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetPolicyRestrictionContractResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PolicyRestrictionContractResource"/> object. </returns>
+        public static PolicyRestrictionContractResource GetPolicyRestrictionContractResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetPolicyRestrictionContractResource(id);
         }
 
         /// <summary>
@@ -1668,6 +1820,25 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ApiManagementWorkspaceLinksResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementWorkspaceLinksResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementWorkspaceLinksResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementWorkspaceLinksResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApiManagementWorkspaceLinksResource"/> object. </returns>
+        public static ApiManagementWorkspaceLinksResource GetApiManagementWorkspaceLinksResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApiManagementArmClient(client).GetApiManagementWorkspaceLinksResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="WorkspaceContractResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkspaceContractResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceContractResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1684,6 +1855,99 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApiManagementArmClient(client).GetWorkspaceContractResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiGatewayResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGateways()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiGatewayResources and their operations over a ApiGatewayResource. </returns>
+        public static ApiGatewayCollection GetApiGateways(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGateways();
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway resource description.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiGateway_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGatewayAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiGatewayResource>> GetApiGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGatewayAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway resource description.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiGateway_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGateway(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiGatewayResource> GetApiGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGateway(gatewayName, cancellationToken);
         }
 
         /// <summary>
@@ -1716,7 +1980,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1754,7 +2018,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1809,7 +2073,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1848,7 +2112,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1875,6 +2139,78 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// List all API Management gateways within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiGateway_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGateways(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewaysAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management gateways within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiGateway_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGateways(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiGatewayResource> GetApiGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGateways(cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all soft-deleted services available for undelete for the given subscription.
         /// <list type="bullet">
         /// <item>
@@ -1887,7 +2223,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1923,7 +2259,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1959,7 +2295,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1995,7 +2331,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2031,7 +2367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2067,7 +2403,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2103,7 +2439,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2138,7 +2474,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2173,7 +2509,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2205,7 +2541,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2222,6 +2558,74 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkus(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns operation results for long running operations executing DELETE or PATCH on the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsResults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetOperationsResult(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
+        public static async Task<Response> GetOperationsResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetOperationsResultAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns operation results for long running operations executing DELETE or PATCH on the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsResults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetOperationsResult(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
+        public static Response GetOperationsResult(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetOperationsResult(location, operationId, cancellationToken);
         }
     }
 }

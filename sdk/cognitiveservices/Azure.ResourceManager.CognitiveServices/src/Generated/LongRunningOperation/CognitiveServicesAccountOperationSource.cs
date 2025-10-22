@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesAccountResource IOperationSource<CognitiveServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<CognitiveServicesAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new CognitiveServicesAccountResource(_client, data);
         }
 
         async ValueTask<CognitiveServicesAccountResource> IOperationSource<CognitiveServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(document.RootElement);
-            return new CognitiveServicesAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<CognitiveServicesAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            return await Task.FromResult(new CognitiveServicesAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

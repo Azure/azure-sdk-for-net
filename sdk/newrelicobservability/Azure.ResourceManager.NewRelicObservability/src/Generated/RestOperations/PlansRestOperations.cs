@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List plans data. </summary>
+        /// <summary> Lists the plans data linked to your organization, providing an overview of the available plans. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List plans data. </summary>
+        /// <summary> Lists the plans data linked to your organization, providing an overview of the available plans. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List plans data. </summary>
+        /// <summary> Lists the plans data linked to your organization, providing an overview of the available plans. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="accountId"> Account Id. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List plans data. </summary>
+        /// <summary> Lists the plans data linked to your organization, providing an overview of the available plans. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="accountId"> Account Id. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case 200:
                     {
                         NewRelicPlanDataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NewRelicPlanDataListResult.DeserializeNewRelicPlanDataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

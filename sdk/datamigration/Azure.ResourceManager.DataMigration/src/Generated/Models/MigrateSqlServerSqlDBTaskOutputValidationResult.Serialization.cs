@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string migrationId = default;
             IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
-            ValidationStatus? status = default;
+            MigrationValidationStatus? status = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = new MigrationValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support writing '{options.Format}' format.");
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(document.RootElement, options);
                     }
                 default:

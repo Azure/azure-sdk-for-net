@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
+            IdentitySettings = new ChangeTrackingList<ContainerAppIdentitySettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
@@ -61,18 +62,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
+        /// <param name="runtime"> App runtime configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
         /// <param name="service"> Container App to be a dev Container App Service. </param>
+        /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, int? maxInactiveRevisions, Service service, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
             Ingress = ingress;
             Registries = registries;
             Dapr = dapr;
+            Runtime = runtime;
             MaxInactiveRevisions = maxInactiveRevisions;
             Service = service;
+            IdentitySettings = identitySettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,6 +99,21 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Dapr configuration for the Container App. </summary>
         [WirePath("dapr")]
         public ContainerAppDaprConfiguration Dapr { get; set; }
+        /// <summary> App runtime configuration for the Container App. </summary>
+        internal Runtime Runtime { get; set; }
+        /// <summary> Enable jmx core metrics for the java app. </summary>
+        [WirePath("runtime.java.enableMetrics")]
+        public bool? EnableMetrics
+        {
+            get => Runtime is null ? default : Runtime.EnableMetrics;
+            set
+            {
+                if (Runtime is null)
+                    Runtime = new Runtime();
+                Runtime.EnableMetrics = value;
+            }
+        }
+
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
         [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }
@@ -106,5 +126,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             get => Service is null ? default : Service.ServiceType;
             set => Service = new Service(value);
         }
+
+        /// <summary> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </summary>
+        [WirePath("identitySettings")]
+        public IList<ContainerAppIdentitySettings> IdentitySettings { get; }
     }
 }

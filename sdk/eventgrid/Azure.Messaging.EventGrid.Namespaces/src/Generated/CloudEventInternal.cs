@@ -7,43 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Properties of an event published to an Azure Messaging EventGrid Namespace topic using the CloudEvent 1.0 Schema. </summary>
     internal partial class CloudEventInternal
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/>. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
@@ -51,16 +22,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="type"> Type of event related to the originating occurrence. </param>
         /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/> or <paramref name="specversion"/> is null. </exception>
-        public CloudEventInternal(string id, string source, string type, string specversion)
+        public CloudEventInternal(string id, string source, string @type, string specversion)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(@type, nameof(@type));
             Argument.AssertNotNull(specversion, nameof(specversion));
 
             Id = id;
             Source = source;
-            Type = type;
+            Type = @type;
             Specversion = specversion;
         }
 
@@ -75,62 +46,56 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="dataschema"> Identifies the schema that data adheres to. </param>
         /// <param name="datacontenttype"> Content type of data value. </param>
         /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEventInternal(string id, string source, BinaryData data, BinaryData dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEventInternal(string id, string source, BinaryData data, BinaryData dataBase64, string @type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Source = source;
             Data = data;
             DataBase64 = dataBase64;
-            Type = type;
+            Type = @type;
             Time = time;
             Specversion = specversion;
             Dataschema = dataschema;
             Datacontenttype = datacontenttype;
             Subject = subject;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/> for deserialization. </summary>
-        internal CloudEventInternal()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>
         public string Id { get; set; }
+
         /// <summary> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </summary>
         public string Source { get; set; }
+
         /// <summary>
         /// Event data specific to the event type.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData Data { get; set; }
+
         /// <summary>
         /// Event data specific to the event type, encoded as a base64 string.
         /// <para>
@@ -141,23 +106,29 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData DataBase64 { get; set; }
+
         /// <summary> Type of event related to the originating occurrence. </summary>
         public string Type { get; set; }
+
         /// <summary> The time (in UTC) the event was generated, in RFC3339 format. </summary>
         public DateTimeOffset? Time { get; set; }
+
         /// <summary> The version of the CloudEvents specification which the event uses. </summary>
         public string Specversion { get; set; }
+
         /// <summary> Identifies the schema that data adheres to. </summary>
         public string Dataschema { get; set; }
+
         /// <summary> Content type of data value. </summary>
         public string Datacontenttype { get; set; }
+
         /// <summary> This describes the subject of the event in the context of the event producer (identified by source). </summary>
         public string Subject { get; set; }
     }

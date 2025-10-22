@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataShare
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            JsonSerializer.Serialize(writer, Identity);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataShare
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataShareContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DataShare
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataShareContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.DataShare
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataShareContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataShareAccountData)} does not support writing '{options.Format}' format.");
             }
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.DataShare
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataShareAccountData(document.RootElement, options);
                     }
                 default:

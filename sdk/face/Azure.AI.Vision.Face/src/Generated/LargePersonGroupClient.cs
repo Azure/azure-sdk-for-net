@@ -73,9 +73,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            CreateRequest createRequest = new CreateRequest(name, userData, recognitionModel, null);
+            CreateRequest1 createRequest1 = new CreateRequest1(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(createRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateAsync(createRequest1.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
@@ -91,9 +91,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            CreateRequest createRequest = new CreateRequest(name, userData, recognitionModel, null);
+            CreateRequest1 createRequest1 = new CreateRequest1(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(createRequest.ToRequestContent(), context);
+            Response response = Create(createRequest1.ToRequestContent(), context);
             return response;
         }
 
@@ -411,7 +411,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLargePersonGroupsAsync(start, top, returnRecognitionModel, context).ConfigureAwait(false);
             IReadOnlyList<LargePersonGroup> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LargePersonGroup> array = new List<LargePersonGroup>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -433,7 +433,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLargePersonGroups(start, top, returnRecognitionModel, context);
             IReadOnlyList<LargePersonGroup> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LargePersonGroup> array = new List<LargePersonGroup>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -962,7 +962,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetPersonsAsync(start, top, context).ConfigureAwait(false);
             IReadOnlyList<LargePersonGroupPerson> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<LargePersonGroupPerson> array = new List<LargePersonGroupPerson>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -983,7 +983,7 @@ namespace Azure.AI.Vision.Face
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetPersons(start, top, context);
             IReadOnlyList<LargePersonGroupPerson> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<LargePersonGroupPerson> array = new List<LargePersonGroupPerson>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -1080,9 +1080,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
+            AddFaceFromUrlRequest1 addFaceFromUrlRequest1 = new AddFaceFromUrlRequest1(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceFromUrlImplAsync(personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceFromUrlImplAsync(personId, addFaceFromUrlRequest1.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1099,9 +1099,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
+            AddFaceFromUrlRequest1 addFaceFromUrlRequest1 = new AddFaceFromUrlRequest1(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceFromUrlImpl(personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceFromUrlImpl(personId, addFaceFromUrlRequest1.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1623,7 +1623,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largepersongroups/", false);
             uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1641,7 +1640,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largepersongroups/", false);
             uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1677,7 +1675,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largepersongroups/", false);
             uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1740,7 +1737,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/train", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1777,7 +1773,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1813,7 +1808,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1926,7 +1920,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1966,7 +1959,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

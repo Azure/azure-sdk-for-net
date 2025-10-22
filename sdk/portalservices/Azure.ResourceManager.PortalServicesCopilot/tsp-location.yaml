@@ -1,0 +1,4 @@
+directory: specification/portalservices/CopilotSettings.Management
+commit: c90b62daed903080ed53766cefd53b6df2621cc6
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

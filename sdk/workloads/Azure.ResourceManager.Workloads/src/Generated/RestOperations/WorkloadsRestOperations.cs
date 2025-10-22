@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapSizingRecommendationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapSizingRecommendationResult.DeserializeSapSizingRecommendationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapSizingRecommendationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapSizingRecommendationResult.DeserializeSapSizingRecommendationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapSupportedResourceSkusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapSupportedResourceSkusResult.DeserializeSapSupportedResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapSupportedResourceSkusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapSupportedResourceSkusResult.DeserializeSapSupportedResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapDiskConfigurationsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiskConfigurationsResult.DeserializeSapDiskConfigurationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapDiskConfigurationsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiskConfigurationsResult.DeserializeSapDiskConfigurationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapAvailabilityZoneDetailsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapAvailabilityZoneDetailsResult.DeserializeSapAvailabilityZoneDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Workloads
                 case 200:
                     {
                         SapAvailabilityZoneDetailsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapAvailabilityZoneDetailsResult.DeserializeSapAvailabilityZoneDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

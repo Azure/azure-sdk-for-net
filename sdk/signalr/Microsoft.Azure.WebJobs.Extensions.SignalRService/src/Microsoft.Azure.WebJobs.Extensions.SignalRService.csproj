@@ -1,34 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
-    <Version>2.0.0-beta.1</Version>
+    <Version>2.2.0-beta.1</Version>
+    <ApiCompatVersion>2.1.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MessagePack" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-
-    <!--
-        Adding as a local override, as packages should not generally take this dependency.  It is
-        needed here due to a transitive version conflict due to the Microsoft.Azure.Functions.Extensions
-        reference.
-    -->
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride ="8.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
+    <!--Microsoft.Azure.SignalR.Management is not compatible with central version 1.2.0 yet.
+    Tracked by issue https://github.com/Azure/azure-sdk-for-net/issues/51460 -->
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" VersionOverride="1.0.15" />
   </ItemGroup>
 </Project>

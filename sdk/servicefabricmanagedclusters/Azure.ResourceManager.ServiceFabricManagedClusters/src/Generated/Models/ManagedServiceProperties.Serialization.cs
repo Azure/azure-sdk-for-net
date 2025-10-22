@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element, options);
                 }
             }
-            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);
+            return UnknownManagedServiceProperties.DeserializeUnknownManagedServiceProperties(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedServiceProperties(document.RootElement, options);
                     }
                 default:

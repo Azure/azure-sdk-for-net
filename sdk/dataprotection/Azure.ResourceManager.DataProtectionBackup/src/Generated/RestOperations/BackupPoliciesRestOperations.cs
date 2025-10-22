@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BaseBackupPolicyResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BaseBackupPolicyResourceList.DeserializeBaseBackupPolicyResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BaseBackupPolicyResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BaseBackupPolicyResourceList.DeserializeBaseBackupPolicyResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
-        /// <param name="backupPolicyName"> Name of the policy. </param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
-        /// <param name="backupPolicyName"> Name of the policy. </param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         DataProtectionBackupPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BaseBackupPolicyResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BaseBackupPolicyResourceList.DeserializeBaseBackupPolicyResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 case 200:
                     {
                         BaseBackupPolicyResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BaseBackupPolicyResourceList.DeserializeBaseBackupPolicyResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

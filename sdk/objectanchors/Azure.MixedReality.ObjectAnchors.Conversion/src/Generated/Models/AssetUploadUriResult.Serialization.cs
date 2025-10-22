@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -33,7 +34,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AssetUploadUriResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAssetUploadUriResult(document.RootElement);
         }
     }

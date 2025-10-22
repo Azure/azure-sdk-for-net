@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Support
 
         SupportTicketCommunicationResource IOperationSource<SupportTicketCommunicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement);
+            var data = ModelReaderWriter.Read<SupportTicketCommunicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSupportContext.Default);
             return new SupportTicketCommunicationResource(_client, data);
         }
 
         async ValueTask<SupportTicketCommunicationResource> IOperationSource<SupportTicketCommunicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(document.RootElement);
-            return new SupportTicketCommunicationResource(_client, data);
+            var data = ModelReaderWriter.Read<SupportTicketCommunicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSupportContext.Default);
+            return await Task.FromResult(new SupportTicketCommunicationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

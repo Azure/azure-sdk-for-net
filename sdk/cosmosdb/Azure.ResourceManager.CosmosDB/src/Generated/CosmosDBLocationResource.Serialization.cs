@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBLocationResource : IJsonModel<CosmosDBLocationData>
     {
+        private static CosmosDBLocationData s_dataDeserializationInstance;
+        private static CosmosDBLocationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBLocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBLocationData>)Data).Write(writer, options);
 
-        CosmosDBLocationData IJsonModel<CosmosDBLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBLocationData>)Data).Create(ref reader, options);
+        CosmosDBLocationData IJsonModel<CosmosDBLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBLocationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBLocationData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBLocationData IPersistableModel<CosmosDBLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBLocationData>(data, options);
+        CosmosDBLocationData IPersistableModel<CosmosDBLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBLocationData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBLocationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBLocationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

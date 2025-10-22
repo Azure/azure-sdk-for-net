@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in CapacityReservations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachinesAssociated)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,6 +80,11 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile, options);
+            }
+            if (Optional.IsDefined(ReservationType))
+            {
+                writer.WritePropertyName("reservationType"u8);
+                writer.WriteStringValue(ReservationType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -114,6 +120,7 @@ namespace Azure.ResourceManager.Compute
             IReadOnlyList<SubResource> virtualMachinesAssociated = default;
             CapacityReservationGroupInstanceView instanceView = default;
             ResourceSharingProfile sharingProfile = default;
+            CapacityReservationType? reservationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -193,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             capacityReservations = array;
                             continue;
@@ -207,7 +214,7 @@ namespace Azure.ResourceManager.Compute
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
                             }
                             virtualMachinesAssociated = array;
                             continue;
@@ -228,6 +235,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("reservationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reservationType = new CapacityReservationType(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -251,6 +267,7 @@ namespace Azure.ResourceManager.Compute
                 virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
                 instanceView,
                 sharingProfile,
+                reservationType,
                 serializedAdditionalRawData);
         }
 
@@ -261,7 +278,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CapacityReservationGroupData)} does not support writing '{options.Format}' format.");
             }
@@ -275,7 +292,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCapacityReservationGroupData(document.RootElement, options);
                     }
                 default:

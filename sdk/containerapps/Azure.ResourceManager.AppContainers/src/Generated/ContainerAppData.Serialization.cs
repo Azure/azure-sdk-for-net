@@ -48,13 +48,17 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
+            }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -62,6 +66,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RunningStatus))
+            {
+                writer.WritePropertyName("runningStatus"u8);
+                writer.WriteStringValue(RunningStatus.Value.ToString());
             }
             if (Optional.IsDefined(ManagedEnvironmentId))
             {
@@ -154,6 +163,7 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             string managedBy = default;
+            ContainerAppKind? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -161,6 +171,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             SystemData systemData = default;
             ContainerAppProvisioningState? provisioningState = default;
+            ContainerAppRunningStatus? runningStatus = default;
             ResourceIdentifier managedEnvironmentId = default;
             ResourceIdentifier environmentId = default;
             string workloadProfileName = default;
@@ -191,13 +202,21 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new ContainerAppKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -240,7 +259,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -259,6 +278,15 @@ namespace Azure.ResourceManager.AppContainers
                                 continue;
                             }
                             provisioningState = new ContainerAppProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("runningStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningStatus = new ContainerAppRunningStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managedEnvironmentId"u8))
@@ -371,7 +399,9 @@ namespace Azure.ResourceManager.AppContainers
                 extendedLocation,
                 identity,
                 managedBy,
+                kind,
                 provisioningState,
+                runningStatus,
                 managedEnvironmentId,
                 environmentId,
                 workloadProfileName,
@@ -522,6 +552,21 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -566,6 +611,21 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunningStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    runningStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunningStatus))
+                {
+                    builder.Append("    runningStatus: ");
+                    builder.AppendLine($"'{RunningStatus.Value.ToString()}'");
                 }
             }
 
@@ -799,7 +859,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -815,7 +875,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppData(document.RootElement, options);
                     }
                 default:

@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WritePropertyName("document"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definitions);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Definitions))
+                using (JsonDocument document = JsonDocument.Parse(Definitions, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -69,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Components);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Components))
+                using (JsonDocument document = JsonDocument.Parse(Components, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType type = default;
             SystemData systemData = default;
             string contentType = default;
+            string provisioningState = default;
             string value = default;
             BinaryData definitions = default;
             BinaryData components = default;
@@ -132,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,6 +153,11 @@ namespace Azure.ResourceManager.ApiManagement
                         if (property0.NameEquals("contentType"u8))
                         {
                             contentType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("document"u8))
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
                 type,
                 systemData,
                 contentType,
+                provisioningState,
                 value,
                 definitions,
                 components,
@@ -294,6 +306,29 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
             builder.Append("    document:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
@@ -362,7 +397,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -378,7 +413,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiSchemaData(document.RootElement, options);
                     }
                 default:

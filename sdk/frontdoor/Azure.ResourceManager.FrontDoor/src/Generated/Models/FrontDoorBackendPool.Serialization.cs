@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -51,12 +53,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                JsonSerializer.Serialize(writer, LoadBalancingSettings);
+                ((IJsonModel<WritableSubResource>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                JsonSerializer.Serialize(writer, HealthProbeSettings);
+                ((IJsonModel<WritableSubResource>)HealthProbeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -149,7 +151,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancingSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -158,7 +160,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            healthProbeSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))
@@ -190,6 +192,140 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 resourceState);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Backends), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backends: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Backends))
+                {
+                    if (Backends.Any())
+                    {
+                        builder.Append("    backends: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Backends)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    backends: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("LoadBalancingSettingsId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    loadBalancingSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      loadBalancingSettings: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(LoadBalancingSettings))
+                {
+                    builder.Append("    loadBalancingSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LoadBalancingSettings, options, 4, false, "    loadBalancingSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HealthProbeSettingsId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    healthProbeSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      healthProbeSettings: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(HealthProbeSettings))
+                {
+                    builder.Append("    healthProbeSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HealthProbeSettings, options, 4, false, "    healthProbeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceState))
+                {
+                    builder.Append("    resourceState: ");
+                    builder.AppendLine($"'{ResourceState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,7 +333,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support writing '{options.Format}' format.");
             }
@@ -211,7 +349,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFrontDoorBackendPool(document.RootElement, options);
                     }
                 default:

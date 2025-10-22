@@ -9,7 +9,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SimilarityAlgorithm
     {
         /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
-        private protected SimilarityAlgorithm()
+        internal SimilarityAlgorithm()
         {
         }
     }

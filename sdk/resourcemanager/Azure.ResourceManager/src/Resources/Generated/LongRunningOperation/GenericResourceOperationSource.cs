@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Resources
 
         GenericResource IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<GenericResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
             return new GenericResource(_client, data);
         }
 
         async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
-            return new GenericResource(_client, data);
+            var data = ModelReaderWriter.Read<GenericResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
+            return await Task.FromResult(new GenericResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

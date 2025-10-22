@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -43,6 +44,11 @@ namespace Azure.ResourceManager.StorageMover
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(JobType))
+            {
+                writer.WritePropertyName("jobType"u8);
+                writer.WriteStringValue(JobType.Value.ToString());
             }
             writer.WritePropertyName("copyMode"u8);
             writer.WriteStringValue(CopyMode.ToString());
@@ -95,6 +101,11 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
+            if (Optional.IsDefined(SourceTargetMap))
+            {
+                writer.WritePropertyName("sourceTargetMap"u8);
+                writer.WriteObjectValue(SourceTargetMap, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -128,6 +139,7 @@ namespace Azure.ResourceManager.StorageMover
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
+            JobType? jobType = default;
             StorageMoverCopyMode copyMode = default;
             string sourceName = default;
             ResourceIdentifier sourceResourceId = default;
@@ -140,6 +152,7 @@ namespace Azure.ResourceManager.StorageMover
             JobRunStatus? latestJobRunStatus = default;
             string agentName = default;
             ResourceIdentifier agentResourceId = default;
+            JobDefinitionPropertiesSourceTargetMap sourceTargetMap = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +179,7 @@ namespace Azure.ResourceManager.StorageMover
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,6 +194,15 @@ namespace Azure.ResourceManager.StorageMover
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("jobType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            jobType = new JobType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("copyMode"u8))
@@ -263,6 +285,15 @@ namespace Azure.ResourceManager.StorageMover
                             agentResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("sourceTargetMap"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceTargetMap = JobDefinitionPropertiesSourceTargetMap.DeserializeJobDefinitionPropertiesSourceTargetMap(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -287,6 +318,7 @@ namespace Azure.ResourceManager.StorageMover
                 type,
                 systemData,
                 description,
+                jobType,
                 copyMode,
                 sourceName,
                 sourceResourceId,
@@ -299,6 +331,7 @@ namespace Azure.ResourceManager.StorageMover
                 latestJobRunStatus,
                 agentName,
                 agentResourceId,
+                sourceTargetMap,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -310,7 +343,7 @@ namespace Azure.ResourceManager.StorageMover
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(JobDefinitionData)} does not support writing '{options.Format}' format.");
             }
@@ -324,7 +357,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJobDefinitionData(document.RootElement, options);
                     }
                 default:

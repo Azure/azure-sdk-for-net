@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             writer.WriteEndObject();
         }
 
@@ -131,6 +141,8 @@ namespace Azure.ResourceManager.AppContainers
             string secretStoreComponent = default;
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
+            DaprComponentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +168,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -239,6 +251,20 @@ namespace Azure.ResourceManager.AppContainers
                             scopes = array;
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DaprComponentProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deploymentErrors"u8))
+                        {
+                            deploymentErrors = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -261,6 +287,8 @@ namespace Azure.ResourceManager.AppContainers
                 secretStoreComponent,
                 metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
                 scopes ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                deploymentErrors,
                 serializedAdditionalRawData);
         }
 
@@ -520,6 +548,44 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deploymentErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentErrors))
+                {
+                    builder.Append("    deploymentErrors: ");
+                    if (DeploymentErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentErrors}'");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -532,7 +598,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -548,7 +614,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppDaprComponentData(document.RootElement, options);
                     }
                 default:

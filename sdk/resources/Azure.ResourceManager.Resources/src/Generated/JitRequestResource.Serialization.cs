@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class JitRequestResource : IJsonModel<JitRequestData>
     {
+        private static JitRequestData s_dataDeserializationInstance;
+        private static JitRequestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<JitRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<JitRequestData>)Data).Write(writer, options);
 
-        JitRequestData IJsonModel<JitRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitRequestData>)Data).Create(ref reader, options);
+        JitRequestData IJsonModel<JitRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitRequestData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JitRequestData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        JitRequestData IPersistableModel<JitRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitRequestData>(data, options);
+        JitRequestData IPersistableModel<JitRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitRequestData>(data, options, AzureResourceManagerResourcesContext.Default);
 
-        string IPersistableModel<JitRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitRequestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<JitRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitRequestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

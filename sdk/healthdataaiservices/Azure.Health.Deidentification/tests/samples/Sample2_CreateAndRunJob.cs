@@ -4,12 +4,9 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
@@ -19,7 +16,7 @@ namespace Azure.Health.Deidentification.Samples
         [Test]
         public void CreateAndRunJob()
         {
-            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
+            string serviceEndpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
             DeidentificationClient client = new(
@@ -35,7 +32,7 @@ namespace Azure.Health.Deidentification.Samples
             {
                 SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
                 TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
-                Operation = DeidentificationOperationType.Redact,
+                OperationType = DeidentificationOperationType.Redact,
             };
 
             job = client.DeidentifyDocuments(WaitUntil.Started, "my-job-1", job).Value;

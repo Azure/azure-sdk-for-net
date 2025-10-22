@@ -2,19 +2,23 @@
   <PropertyGroup>
     <Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services.</Description>
     <AssemblyTitle>Microsoft Azure.Messaging.EventGrid client library</AssemblyTitle>
-    <Version>4.31.0-beta.1</Version>
+    <Version>5.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>4.30.0</ApiCompatVersion>
+    <ApiCompatVersion>5.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. -->
+    </NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Azure.Messaging.EventGrid.SystemEvents" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -22,8 +26,5 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EventGridSourceGenerator\src\EventGridSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

@@ -5,31 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class SearchScoreThreshold : IUtf8JsonSerializable
+    public partial class SearchScoreThreshold : IUtf8JsonSerializable, IJsonModel<SearchScoreThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchScoreThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SearchScoreThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value"u8);
-            writer.WriteNumberValue(Value);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SearchScoreThreshold DeserializeSearchScoreThreshold(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchScoreThreshold)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("value"u8);
+            writer.WriteNumberValue(Value);
+        }
+
+        SearchScoreThreshold IJsonModel<SearchScoreThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchScoreThreshold)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchScoreThreshold(document.RootElement, options);
+        }
+
+        internal static SearchScoreThreshold DeserializeSearchScoreThreshold(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             double value = default;
             VectorThresholdKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,15 +75,51 @@ namespace Azure.Search.Documents.Models
                     kind = new VectorThresholdKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchScoreThreshold(kind, value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SearchScoreThreshold(kind, serializedAdditionalRawData, value);
         }
+
+        BinaryData IPersistableModel<SearchScoreThreshold>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchScoreThreshold)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchScoreThreshold IPersistableModel<SearchScoreThreshold>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchScoreThreshold>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchScoreThreshold(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchScoreThreshold)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchScoreThreshold>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new SearchScoreThreshold FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchScoreThreshold(document.RootElement);
         }
 
@@ -58,7 +127,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

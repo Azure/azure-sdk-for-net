@@ -79,6 +79,21 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("redactionPolicy"u8);
                 writer.WriteObjectValue(RedactionPolicy, options);
             }
+            if (Optional.IsDefined(ValueExclusionPolicy))
+            {
+                writer.WritePropertyName("valueExclusionPolicy"u8);
+                writer.WriteObjectValue(ValueExclusionPolicy, options);
+            }
+            if (Optional.IsCollectionDefined(EntitySynonyms))
+            {
+                writer.WritePropertyName("entitySynonyms"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntitySynonyms)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,7 +102,7 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -123,6 +138,8 @@ namespace Azure.AI.Language.Text
             StringIndexType? stringIndexType = default;
             IList<PiiCategoriesExclude> excludePiiCategories = default;
             BaseRedactionPolicy redactionPolicy = default;
+            ValueExclusionPolicy valueExclusionPolicy = default;
+            IList<EntitySynonyms> entitySynonyms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,6 +213,29 @@ namespace Azure.AI.Language.Text
                     redactionPolicy = BaseRedactionPolicy.DeserializeBaseRedactionPolicy(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("valueExclusionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    valueExclusionPolicy = ValueExclusionPolicy.DeserializeValueExclusionPolicy(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("entitySynonyms"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntitySynonyms> array = new List<EntitySynonyms>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Text.EntitySynonyms.DeserializeEntitySynonyms(item, options));
+                    }
+                    entitySynonyms = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -210,6 +250,8 @@ namespace Azure.AI.Language.Text
                 stringIndexType,
                 excludePiiCategories ?? new ChangeTrackingList<PiiCategoriesExclude>(),
                 redactionPolicy,
+                valueExclusionPolicy,
+                entitySynonyms ?? new ChangeTrackingList<EntitySynonyms>(),
                 serializedAdditionalRawData);
         }
 
@@ -220,7 +262,7 @@ namespace Azure.AI.Language.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PiiActionContent)} does not support writing '{options.Format}' format.");
             }
@@ -234,7 +276,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePiiActionContent(document.RootElement, options);
                     }
                 default:
@@ -248,7 +290,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PiiActionContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePiiActionContent(document.RootElement);
         }
 

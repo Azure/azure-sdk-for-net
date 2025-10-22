@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute
     {
         VirtualMachineStorageProfile IOperationSource<VirtualMachineStorageProfile>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(document.RootElement);
         }
 
         async ValueTask<VirtualMachineStorageProfile> IOperationSource<VirtualMachineStorageProfile>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(document.RootElement);
         }
     }

@@ -66,8 +66,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteObjectValue<object>(Host);
-            writer.WritePropertyName("serverVersion"u8);
-            writer.WriteObjectValue<object>(ServerVersion);
+            if (Optional.IsDefined(ServerVersion))
+            {
+                writer.WritePropertyName("serverVersion"u8);
+                writer.WriteObjectValue<object>(ServerVersion);
+            }
             writer.WritePropertyName("catalog"u8);
             writer.WriteObjectValue<object>(Catalog);
             if (Optional.IsDefined(Port))
@@ -91,6 +94,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("enableSsl"u8);
                 writer.WriteObjectValue<object>(EnableSsl);
+            }
+            if (Optional.IsDefined(EnableServerCertificateValidation))
+            {
+                writer.WritePropertyName("enableServerCertificateValidation"u8);
+                writer.WriteObjectValue<object>(EnableServerCertificateValidation);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
@@ -151,6 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object username = default;
             SecretBase password = default;
             object enableSsl = default;
+            object enableServerCertificateValidation = default;
             object trustedCertPath = default;
             object useSystemTrustStore = default;
             object allowHostNameCNMismatch = default;
@@ -236,6 +245,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("serverVersion"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             serverVersion = property0.Value.GetObject();
                             continue;
                         }
@@ -283,6 +296,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 continue;
                             }
                             enableSsl = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableServerCertificateValidation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableServerCertificateValidation = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"u8))
@@ -361,6 +383,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 username,
                 password,
                 enableSsl,
+                enableServerCertificateValidation,
                 trustedCertPath,
                 useSystemTrustStore,
                 allowHostNameCNMismatch,
@@ -373,7 +396,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new PrestoLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePrestoLinkedService(document.RootElement);
         }
 

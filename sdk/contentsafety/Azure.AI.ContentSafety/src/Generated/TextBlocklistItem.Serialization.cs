@@ -46,6 +46,11 @@ namespace Azure.AI.ContentSafety
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (Optional.IsDefined(IsRegex))
+            {
+                writer.WritePropertyName("isRegex"u8);
+                writer.WriteBooleanValue(IsRegex.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +59,7 @@ namespace Azure.AI.ContentSafety
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,6 +91,7 @@ namespace Azure.AI.ContentSafety
             string blocklistItemId = default;
             string description = default;
             string text = default;
+            bool? isRegex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +111,22 @@ namespace Azure.AI.ContentSafety
                     text = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("isRegex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRegex = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TextBlocklistItem(blocklistItemId, description, text, serializedAdditionalRawData);
+            return new TextBlocklistItem(blocklistItemId, description, text, isRegex, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextBlocklistItem>.Write(ModelReaderWriterOptions options)
@@ -121,7 +136,7 @@ namespace Azure.AI.ContentSafety
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +150,7 @@ namespace Azure.AI.ContentSafety
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTextBlocklistItem(document.RootElement, options);
                     }
                 default:
@@ -149,7 +164,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TextBlocklistItem FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTextBlocklistItem(document.RootElement);
         }
 

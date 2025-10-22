@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ImpactReporting
 
         ConnectorResource IOperationSource<ConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ConnectorData.DeserializeConnectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<ConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
             return new ConnectorResource(_client, data);
         }
 
         async ValueTask<ConnectorResource> IOperationSource<ConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ConnectorData.DeserializeConnectorData(document.RootElement);
-            return new ConnectorResource(_client, data);
+            var data = ModelReaderWriter.Read<ConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
+            return await Task.FromResult(new ConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

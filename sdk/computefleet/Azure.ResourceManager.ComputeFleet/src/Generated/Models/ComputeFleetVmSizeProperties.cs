@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// specified in the request body the default behavior is to set it to the value of
         /// vCPUs available for that VM size exposed in api response of [List all available
         /// virtual machine sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
+        /// region](https://learn.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// </param>
         /// <param name="vcpUsPerCore">
         /// Specifies the vCPU to physical core ratio. When this property is not specified
         /// in the request body the default behavior is set to the value of vCPUsPerCore
         /// for the VM Size exposed in api response of [List all available virtual machine
         /// sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
+        /// region](https://learn.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// **Setting this property to 1 also means that hyper-threading is disabled.**
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// specified in the request body the default behavior is to set it to the value of
         /// vCPUs available for that VM size exposed in api response of [List all available
         /// virtual machine sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
+        /// region](https://learn.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// </summary>
         public int? VCPUsAvailable { get; set; }
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// in the request body the default behavior is set to the value of vCPUsPerCore
         /// for the VM Size exposed in api response of [List all available virtual machine
         /// sizes in a
-        /// region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list).
+        /// region](https://learn.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// **Setting this property to 1 also means that hyper-threading is disabled.**
         /// </summary>
         public int? VCPUsPerCore { get; set; }

@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Azure.Storage
 {
@@ -16,11 +17,9 @@ namespace Azure.Storage
                 $"Either the source or destination resource, or both resources needs to be a web resource.");
 
         public static ArgumentException InvalidTransferId(string command, string transferId)
-            => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because " +
-                $"the respective transfer job does not exist or is no longer stored in the transfer manager.");
-
-        public static ArgumentException PlanFilesMissing(string path, string transferId)
-            => new ArgumentException($"Cannot resume transfer job, \"{transferId}\", because the job plan file(s) cannot be found at the checkpointer path: \"{path}\"");
+            => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". " +
+        $"The respective transfer does not exist, is no longer stored in the transfer manager. " +
+        $"The respective transfer may already be in a paused or completed state.");
 
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
@@ -53,6 +52,9 @@ namespace Azure.Storage
 
         public static ArgumentException CollisionJobPart(string transferId, int jobPart)
             => throw new ArgumentException($"Job Part Collision Checkpointer: The job part {jobPart} for transfer id {transferId}, already exists in the checkpointer.");
+
+        public static ArgumentException CollisionJobPlanFile(string transferId)
+            => throw new ArgumentException($"Job Plan File collision checkpointer: The job {transferId}, already exists in the checkpointer.");
 
         public static ArgumentException MissingCheckpointerPath(string directoryPath)
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
@@ -89,38 +91,16 @@ namespace Azure.Storage
         public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
             => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
 
-        public static ArgumentException InvalidDownloadOffset(long offset, long length)
-            => new ArgumentException($"Cannot find offset returned by Successful Download Range in the expected Range.\n" +
-                $"Offset: \"{offset}\"\n" +
-                $"Length: \"{length}\"");
-
         public static ArgumentException InvalidExpectedLength(long length)
             => new ArgumentException($"Expected positive non-zero length, but was given: {length}");
-
-        public static InvalidOperationException FailedDownloadRange(long offset, long bytesTransferred, string transferId)
-            => new InvalidOperationException($"Unexpected error: Experienced failed download range argument. " +
-                    $"Range: {offset} - {bytesTransferred} with Transfer ID: {transferId}");
-
-        public static FileNotFoundException TempChunkFileNotFound(long offset, long length, string filePath)
-            => new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
-                $"\"{offset}\" and Length: \"{length}\"," +
-                $"due to the chunk file missing: \"{filePath}\"");
 
         public static InvalidOperationException MismatchLengthTransferred(long expectedLength, long actualLength)
             => new InvalidOperationException($"Amount of bytes transferred exceeds expected length\n" +
                 $"Expected Bytes Transferred Length: {expectedLength}\n" +
                 $"Actual Bytes Transferred Length: {actualLength}.");
 
-        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred)
-            => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
-                    $"Offset: \"{offset}\"\n" +
-                    $"Length: \"{bytesTransferred}\"");
-
         public static InvalidOperationException InvalidTransferResourceTypes()
             => new InvalidOperationException("Invalid source and destination resource types.");
-
-        public static ArgumentException ResourceUriInvalid(string parameterResource)
-            => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
 
         public static ArgumentException NoResourceProviderFound(bool isSource, string providerId)
             => new ArgumentException($"Unable to find resource provider for transfer {(isSource ? "source" : "destination")} with provider id: {providerId}. " +
@@ -134,5 +114,15 @@ namespace Azure.Storage
 
         public static InvalidOperationException CollisionTransferId(string id)
             => new InvalidOperationException($"Transfer Id Collision: The transfer id, {id}, already exists in the transfer manager.");
+
+        public static InvalidOperationException SingleItemContainerNoChildren()
+            => new InvalidOperationException("Single item container has no children.");
+
+        public static InvalidOperationException SingleItemContainerNoGetProperties()
+            => new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
+
+        public static InvalidOperationException RequiredVersionClientAssembly(Assembly assembly, AssemblyInformationalVersionAttribute attribute)
+            => new InvalidOperationException(
+                    $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}'.");
     }
 }

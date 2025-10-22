@@ -228,7 +228,6 @@ function Get-GitHubIssues {
     -Headers (Get-GitHubApiHeaders -token $AuthToken) `
     -MaximumRetryCount 3
 }
-
 function Add-GitHubIssueComment {
   param (
     [Parameter(Mandatory = $true)]
@@ -252,6 +251,56 @@ function Add-GitHubIssueComment {
 
   return Invoke-RestMethod `
           -Method POST `
+          -Body ($parameters | ConvertTo-Json) `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
+function Get-GitHubIssueComments {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $IssueNumber,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+
+  )
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/comments"
+  return Invoke-RestMethod `
+          -Method GET `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
+function Update-GitHubIssueComment {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    [String]$CommentId,
+    [Parameter(Mandatory = $true)]
+    $Comment,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+
+  )
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/comments/$CommentId"
+
+  $parameters = @{
+    body = $Comment
+  }
+
+  return Invoke-RestMethod `
+          -Method PATCH `
           -Body ($parameters | ConvertTo-Json) `
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
@@ -504,4 +553,24 @@ function Search-GitHubCommit {
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
           -MaximumRetryCount 3
+}
+
+function Search-GitHubIssues {
+  param (
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $CommitHash,
+    $State="open",
+    $AuthToken
+  )
+  $uri = "https://api.github.com/search/issues?q=sha:$CommitHash+state:$State"
+  $params = @{
+    Method = 'GET'
+    Uri = $uri
+    MaximumRetryCount = 3
+  }
+  if ($AuthToken) {
+    $params.Headers = Get-GitHubApiHeaders -token $AuthToken
+  }
+  return Invoke-RestMethod @params
 }

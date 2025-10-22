@@ -35,6 +35,21 @@ namespace Azure.ResourceManager.Sql.Models
                 throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(StepStartOn))
+            {
+                writer.WritePropertyName("stepStartTime"u8);
+                writer.WriteStringValue(StepStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(StepEndOn))
+            {
+                writer.WritePropertyName("stepEndTime"u8);
+                writer.WriteStringValue(StepEndOn.Value, "O");
+            }
+            if (Optional.IsDefined(TimeElapsed))
+            {
+                writer.WritePropertyName("timeElapsed"u8);
+                writer.WriteStringValue(TimeElapsed);
+            }
             if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
@@ -45,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -58,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,6 +102,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
+            DateTimeOffset? stepStartTime = default;
+            DateTimeOffset? stepEndTime = default;
+            string timeElapsed = default;
             int? order = default;
             string name = default;
             UpsertManagedServerOperationStepStatus? status = default;
@@ -94,6 +112,29 @@ namespace Azure.ResourceManager.Sql.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("stepStartTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stepStartTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("stepEndTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stepEndTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("timeElapsed"u8))
+                {
+                    timeElapsed = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -123,7 +164,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UpsertManagedServerOperationStep(order, name, status, serializedAdditionalRawData);
+            return new UpsertManagedServerOperationStep(
+                stepStartTime,
+                stepEndTime,
+                timeElapsed,
+                order,
+                name,
+                status,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -136,6 +184,61 @@ namespace Azure.ResourceManager.Sql.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stepStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepStartOn))
+                {
+                    builder.Append("  stepStartTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StepStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stepEndTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepEndOn))
+                {
+                    builder.Append("  stepEndTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StepEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeElapsed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeElapsed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeElapsed))
+                {
+                    builder.Append("  timeElapsed: ");
+                    if (TimeElapsed.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TimeElapsed}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TimeElapsed}'");
+                    }
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
             if (hasPropertyOverride)
@@ -201,7 +304,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -217,7 +320,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUpsertManagedServerOperationStep(document.RootElement, options);
                     }
                 default:

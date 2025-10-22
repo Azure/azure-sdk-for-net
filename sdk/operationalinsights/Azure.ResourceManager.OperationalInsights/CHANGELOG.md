@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,29 @@
 
 ### Other Changes
 
+## 1.3.1 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.OperationalInsights` AOT-compatible
+
+## 1.3.0 (2025-04-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-10' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b713df239eb640a56fb4b4db9648ad4bf1388e3b/specification/operationalinsights/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.45.0
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
+
+## 1.3.0-beta.2 (2025-03-18)
+
+### Bugs Fixed
+
+- Fixed issue #48747, add custom serialization and deserialization methods for `KeyVaultUri` in `OperationalInsightsKeyVaultProperties`
+
 ## 1.3.0-beta.1 (2024-10-15)
 
 ### Features Added
@@ -17,12 +40,14 @@
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Bugs Fixed
-- Fix [BUG] Wrong request during the LRO of OperationaIInsights - Cluster - PUT #40606
+
+- Fixed [BUG] Wrong request during the LRO of OperationaIInsights - Cluster - PUT #40606.
+
 ## 1.2.2 (2024-05-07)
 
 ### Features Added
 
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Bugs Fixed
 
@@ -32,18 +57,18 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
 
 ### Bugs Fixed
 
-- Add `IsRetentionInDaysAsDefault`,`IsTotalRetentionInDaysAsDefault` to replace the original `RetentionInDaysAsDefault`, `TotalRetentionInDaysAsDefault` to solve the deserialization issue
+- Added `IsRetentionInDaysAsDefault`,`IsTotalRetentionInDaysAsDefault` to replace the original `RetentionInDaysAsDefault`, `TotalRetentionInDaysAsDefault` to solve the deserialization issue
 
 ## 1.2.0 (2023-11-29)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -53,7 +78,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

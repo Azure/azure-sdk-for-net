@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Parameters.Spread.Models
 {
     public partial class BodyParameter : IJsonModel<BodyParameter>
     {
+        internal BodyParameter() => throw null;
+
         void IJsonModel<BodyParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -35,7 +36,5 @@ namespace Parameters.Spread.Models
 
         /// <param name="bodyParameter"> The <see cref="BodyParameter"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(BodyParameter bodyParameter) => throw null;
-
-        public static explicit operator BodyParameter(Response result) => throw null;
     }
 }

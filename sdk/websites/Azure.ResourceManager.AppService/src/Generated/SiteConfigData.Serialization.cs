@@ -794,6 +794,18 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("http20Enabled");
                 }
             }
+            if (Optional.IsDefined(Http20ProxyFlag))
+            {
+                if (Http20ProxyFlag != null)
+                {
+                    writer.WritePropertyName("http20ProxyFlag"u8);
+                    writer.WriteNumberValue(Http20ProxyFlag.Value);
+                }
+                else
+                {
+                    writer.WriteNull("http20ProxyFlag");
+                }
+            }
             if (Optional.IsDefined(MinTlsVersion))
             {
                 if (MinTlsVersion != null)
@@ -1043,6 +1055,7 @@ namespace Azure.ResourceManager.AppService
             SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default;
             bool? scmIPSecurityRestrictionsUseMain = default;
             bool? http20Enabled = default;
+            int? http20ProxyFlag = default;
             AppServiceSupportedTlsVersion? minTlsVersion = default;
             AppServiceTlsCipherSuite? minTlsCipherSuite = default;
             AppServiceSupportedTlsVersion? scmMinTlsVersion = default;
@@ -1086,7 +1099,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -1728,6 +1741,16 @@ namespace Azure.ResourceManager.AppService
                             http20Enabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("http20ProxyFlag"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                http20ProxyFlag = null;
+                                continue;
+                            }
+                            http20ProxyFlag = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("minTlsVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -1936,6 +1959,7 @@ namespace Azure.ResourceManager.AppService
                 scmIPSecurityRestrictionsDefaultAction,
                 scmIPSecurityRestrictionsUseMain,
                 http20Enabled,
+                http20ProxyFlag,
                 minTlsVersion,
                 minTlsCipherSuite,
                 scmMinTlsVersion,
@@ -3185,6 +3209,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Http20ProxyFlag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    http20ProxyFlag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Http20ProxyFlag))
+                {
+                    builder.Append("    http20ProxyFlag: ");
+                    builder.AppendLine($"{Http20ProxyFlag.Value}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinTlsVersion), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -3426,7 +3465,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -3442,7 +3481,7 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSiteConfigData(document.RootElement, options);
                     }
                 default:

@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    /// <summary> Export parameter for individual resources. </summary>
+    /// <summary> Specified resources to be exported by their ids. </summary>
     public partial class ExportResourceTerraform : CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/>. </summary>
-        /// <param name="resourceIds"> The id of the resource to be exported. </param>
+        /// <param name="resourceIds"> The id(s) of the resource to be exported. Example: `["/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/my-rg"]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
         public ExportResourceTerraform(IEnumerable<ResourceIdentifier> resourceIds)
         {
@@ -28,20 +28,28 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
-        /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
+        /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
+        /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceIds"> The id of the resource to be exported. </param>
-        /// <param name="resourceName"> The Terraform resource name. Only works when `resourceIds` contains only one item. </param>
-        /// <param name="resourceType"> The Terraform resource type. Only works when `resourceIds` contains only one item. </param>
-        /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResourceTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, serializedAdditionalRawData)
+        /// <param name="resourceIds"> The id(s) of the resource to be exported. Example: `["/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/my-rg"]. </param>
+        /// <param name="resourceName"> The Terraform id of the exported resource. Only effective when `resourceIds` contains only one item. Defaults to `res-0`. </param>
+        /// <param name="resourceType"> The Terraform resource type to map to. Only effective when `resourceIds` has one item. Example: `azurerm_virtual_network`. Automatic type mapping will be performed if not provided. </param>
+        /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
+        /// <param name="recursive"> Recursively includes child resources. Defaults to `false`. </param>
+        /// <param name="includeResourceGroup"> Includes the resource group in the exported Terraform resources. Defaults to `false`. </param>
+        internal ExportResourceTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern, bool? recursive, bool? includeResourceGroup) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
         {
             ResourceIds = resourceIds;
             ResourceName = resourceName;
             ResourceType = resourceType;
             NamePattern = namePattern;
+            Recursive = recursive;
+            IncludeResourceGroup = includeResourceGroup;
             Type = type;
         }
 
@@ -50,13 +58,17 @@ namespace Azure.ResourceManager.Terraform.Models
         {
         }
 
-        /// <summary> The id of the resource to be exported. </summary>
+        /// <summary> The id(s) of the resource to be exported. Example: `["/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/my-rg"]. </summary>
         public IList<ResourceIdentifier> ResourceIds { get; }
-        /// <summary> The Terraform resource name. Only works when `resourceIds` contains only one item. </summary>
+        /// <summary> The Terraform id of the exported resource. Only effective when `resourceIds` contains only one item. Defaults to `res-0`. </summary>
         public string ResourceName { get; set; }
-        /// <summary> The Terraform resource type. Only works when `resourceIds` contains only one item. </summary>
+        /// <summary> The Terraform resource type to map to. Only effective when `resourceIds` has one item. Example: `azurerm_virtual_network`. Automatic type mapping will be performed if not provided. </summary>
         public string ResourceType { get; set; }
-        /// <summary> The name pattern of the Terraform resources. </summary>
+        /// <summary> The id prefix for the exported Terraform resources. Defaults to `res-`. </summary>
         public string NamePattern { get; set; }
+        /// <summary> Recursively includes child resources. Defaults to `false`. </summary>
+        public bool? Recursive { get; set; }
+        /// <summary> Includes the resource group in the exported Terraform resources. Defaults to `false`. </summary>
+        public bool? IncludeResourceGroup { get; set; }
     }
 }

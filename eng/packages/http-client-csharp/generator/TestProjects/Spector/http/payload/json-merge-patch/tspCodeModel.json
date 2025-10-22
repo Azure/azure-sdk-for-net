@@ -1,889 +1,1112 @@
 {
- "$id": "1",
- "Name": "Payload.JsonMergePatch",
- "ApiVersions": [],
- "Enums": [],
- "Models": [
-  {
-   "$id": "2",
-   "kind": "model",
-   "name": "Resource",
-   "clientNamespace": "Payload.JsonMergePatch",
-   "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource",
-   "usage": "Input,Output,Json",
-   "doc": "Details about a resource.",
-   "decorators": [],
-   "properties": [
+  "name": "Payload.JsonMergePatch",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
     {
-     "$id": "3",
-     "kind": "property",
-     "name": "name",
-     "serializedName": "name",
-     "type": {
-      "$id": "4",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
+      "$id": "1",
+      "kind": "constant",
+      "name": "createResourceContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
       "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.name",
-     "serializationOptions": {
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "createResourceContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
       "$id": "5",
-      "json": {
-       "$id": "6",
-       "name": "name"
-      }
-     }
+      "kind": "constant",
+      "name": "UpdateResourceRequestContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/merge-patch+json",
+      "decorators": []
     },
     {
-     "$id": "7",
-     "kind": "property",
-     "name": "description",
-     "serializedName": "description",
-     "type": {
-      "$id": "8",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
+      "$id": "7",
+      "kind": "constant",
+      "name": "updateResourceContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
       "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.description",
-     "serializationOptions": {
+    },
+    {
       "$id": "9",
-      "json": {
-       "$id": "10",
-       "name": "description"
-      }
-     }
+      "kind": "constant",
+      "name": "UpdateResourceRequestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/merge-patch+json",
+      "decorators": []
     },
     {
-     "$id": "11",
-     "kind": "property",
-     "name": "map",
-     "serializedName": "map",
-     "type": {
-      "$id": "12",
-      "kind": "dict",
-      "keyType": {
-       "$id": "13",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string",
-       "decorators": []
-      },
+      "$id": "11",
+      "kind": "constant",
+      "name": "UpdateResourceRequestContentType2",
+      "namespace": "",
+      "usage": "None",
       "valueType": {
-       "$id": "14",
-       "kind": "model",
-       "name": "InnerModel",
-       "clientNamespace": "Payload.JsonMergePatch",
-       "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel",
-       "usage": "Input,Output,JsonMergePatch,Json",
-       "doc": "It is the model used by Resource model",
-       "decorators": [],
-       "properties": [
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/merge-patch+json",
+      "decorators": []
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "updateOptionalResourceContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "UpdateResourceRequestContentType3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/merge-patch+json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "17",
+      "kind": "model",
+      "name": "Resource",
+      "namespace": "Payload.JsonMergePatch",
+      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource",
+      "usage": "Input,Output,Json",
+      "doc": "Details about a resource.",
+      "decorators": [],
+      "properties": [
         {
-         "$id": "15",
-         "kind": "property",
-         "name": "name",
-         "serializedName": "name",
-         "type": {
-          "$id": "16",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "optional": true,
-         "readOnly": false,
-         "discriminator": false,
-         "flatten": false,
-         "decorators": [],
-         "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel.name",
-         "serializationOptions": {
-          "$id": "17",
-          "json": {
-           "$id": "18",
-           "name": "name"
-          }
-         }
+          "$id": "18",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "19",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
         },
         {
-         "$id": "19",
-         "kind": "property",
-         "name": "description",
-         "serializedName": "description",
-         "type": {
           "$id": "20",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "optional": true,
-         "readOnly": false,
-         "discriminator": false,
-         "flatten": false,
-         "decorators": [],
-         "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel.description",
-         "serializationOptions": {
-          "$id": "21",
-          "json": {
-           "$id": "22",
-           "name": "description"
-          }
-         }
+          "kind": "property",
+          "name": "description",
+          "serializedName": "description",
+          "type": {
+            "$id": "21",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.description",
+          "serializationOptions": {
+            "json": {
+              "name": "description"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "22",
+          "kind": "property",
+          "name": "map",
+          "serializedName": "map",
+          "type": {
+            "$id": "23",
+            "kind": "dict",
+            "keyType": {
+              "$id": "24",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "valueType": {
+              "$id": "25",
+              "kind": "model",
+              "name": "InnerModel",
+              "namespace": "Payload.JsonMergePatch",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel",
+              "usage": "Input,Output,JsonMergePatch,Json",
+              "doc": "It is the model used by Resource model",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "26",
+                  "kind": "property",
+                  "name": "name",
+                  "serializedName": "name",
+                  "type": {
+                    "$id": "27",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel.name",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "name"
+                    }
+                  },
+                  "isHttpMetadata": false
+                },
+                {
+                  "$id": "28",
+                  "kind": "property",
+                  "name": "description",
+                  "serializedName": "description",
+                  "type": {
+                    "$id": "29",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel.description",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "description"
+                    }
+                  },
+                  "isHttpMetadata": false
+                }
+              ]
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.map",
+          "serializationOptions": {
+            "json": {
+              "name": "map"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "30",
+          "kind": "property",
+          "name": "array",
+          "serializedName": "array",
+          "type": {
+            "$id": "31",
+            "kind": "array",
+            "name": "ArrayInnerModel",
+            "valueType": {
+              "$ref": "25"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.array",
+          "serializationOptions": {
+            "json": {
+              "name": "array"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "32",
+          "kind": "property",
+          "name": "intValue",
+          "serializedName": "intValue",
+          "type": {
+            "$id": "33",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.intValue",
+          "serializationOptions": {
+            "json": {
+              "name": "intValue"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "34",
+          "kind": "property",
+          "name": "floatValue",
+          "serializedName": "floatValue",
+          "type": {
+            "$id": "35",
+            "kind": "float32",
+            "name": "float32",
+            "crossLanguageDefinitionId": "TypeSpec.float32",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.floatValue",
+          "serializationOptions": {
+            "json": {
+              "name": "floatValue"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "36",
+          "kind": "property",
+          "name": "innerModel",
+          "serializedName": "innerModel",
+          "type": {
+            "$ref": "25"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.innerModel",
+          "serializationOptions": {
+            "json": {
+              "name": "innerModel"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "37",
+          "kind": "property",
+          "name": "intArray",
+          "serializedName": "intArray",
+          "type": {
+            "$id": "38",
+            "kind": "array",
+            "name": "Array",
+            "valueType": {
+              "$id": "39",
+              "kind": "int32",
+              "name": "int32",
+              "crossLanguageDefinitionId": "TypeSpec.int32",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.intArray",
+          "serializationOptions": {
+            "json": {
+              "name": "intArray"
+            }
+          },
+          "isHttpMetadata": false
         }
-       ]
-      },
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.map",
-     "serializationOptions": {
-      "$id": "23",
-      "json": {
-       "$id": "24",
-       "name": "map"
-      }
-     }
+      ]
     },
     {
-     "$id": "25",
-     "kind": "property",
-     "name": "array",
-     "serializedName": "array",
-     "type": {
-      "$id": "26",
-      "kind": "array",
-      "name": "ArrayInnerModel",
-      "valueType": {
-       "$ref": "14"
-      },
-      "crossLanguageDefinitionId": "TypeSpec.Array",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.array",
-     "serializationOptions": {
-      "$id": "27",
-      "json": {
-       "$id": "28",
-       "name": "array"
-      }
-     }
+      "$ref": "25"
     },
     {
-     "$id": "29",
-     "kind": "property",
-     "name": "intValue",
-     "serializedName": "intValue",
-     "type": {
-      "$id": "30",
-      "kind": "int32",
-      "name": "int32",
-      "crossLanguageDefinitionId": "TypeSpec.int32",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.intValue",
-     "serializationOptions": {
-      "$id": "31",
-      "json": {
-       "$id": "32",
-       "name": "intValue"
-      }
-     }
-    },
-    {
-     "$id": "33",
-     "kind": "property",
-     "name": "floatValue",
-     "serializedName": "floatValue",
-     "type": {
-      "$id": "34",
-      "kind": "float32",
-      "name": "float32",
-      "crossLanguageDefinitionId": "TypeSpec.float32",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.floatValue",
-     "serializationOptions": {
-      "$id": "35",
-      "json": {
-       "$id": "36",
-       "name": "floatValue"
-      }
-     }
-    },
-    {
-     "$id": "37",
-     "kind": "property",
-     "name": "innerModel",
-     "serializedName": "innerModel",
-     "type": {
-      "$ref": "14"
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.innerModel",
-     "serializationOptions": {
-      "$id": "38",
-      "json": {
-       "$id": "39",
-       "name": "innerModel"
-      }
-     }
-    },
-    {
-     "$id": "40",
-     "kind": "property",
-     "name": "intArray",
-     "serializedName": "intArray",
-     "type": {
-      "$id": "41",
-      "kind": "array",
-      "name": "Array",
-      "valueType": {
-       "$id": "42",
-       "kind": "int32",
-       "name": "int32",
-       "crossLanguageDefinitionId": "TypeSpec.int32",
-       "decorators": []
-      },
-      "crossLanguageDefinitionId": "TypeSpec.Array",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.intArray",
-     "serializationOptions": {
-      "$id": "43",
-      "json": {
-       "$id": "44",
-       "name": "intArray"
-      }
-     }
+      "$id": "40",
+      "kind": "model",
+      "name": "ResourcePatch",
+      "namespace": "Payload.JsonMergePatch",
+      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch",
+      "usage": "Input,JsonMergePatch,Json",
+      "doc": "Details about a resource for patch operation.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "41",
+          "kind": "property",
+          "name": "description",
+          "serializedName": "description",
+          "type": {
+            "$id": "42",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.description",
+          "serializationOptions": {
+            "json": {
+              "name": "description"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "43",
+          "kind": "property",
+          "name": "map",
+          "serializedName": "map",
+          "type": {
+            "$ref": "23"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.map",
+          "serializationOptions": {
+            "json": {
+              "name": "map"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "44",
+          "kind": "property",
+          "name": "array",
+          "serializedName": "array",
+          "type": {
+            "$ref": "31"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.array",
+          "serializationOptions": {
+            "json": {
+              "name": "array"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "45",
+          "kind": "property",
+          "name": "intValue",
+          "serializedName": "intValue",
+          "type": {
+            "$id": "46",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.intValue",
+          "serializationOptions": {
+            "json": {
+              "name": "intValue"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "47",
+          "kind": "property",
+          "name": "floatValue",
+          "serializedName": "floatValue",
+          "type": {
+            "$id": "48",
+            "kind": "float32",
+            "name": "float32",
+            "crossLanguageDefinitionId": "TypeSpec.float32",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.floatValue",
+          "serializationOptions": {
+            "json": {
+              "name": "floatValue"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "49",
+          "kind": "property",
+          "name": "innerModel",
+          "serializedName": "innerModel",
+          "type": {
+            "$ref": "25"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.innerModel",
+          "serializationOptions": {
+            "json": {
+              "name": "innerModel"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "50",
+          "kind": "property",
+          "name": "intArray",
+          "serializedName": "intArray",
+          "type": {
+            "$ref": "38"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.intArray",
+          "serializationOptions": {
+            "json": {
+              "name": "intArray"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
     }
-   ]
-  },
-  {
-   "$ref": "14"
-  },
-  {
-   "$id": "45",
-   "kind": "model",
-   "name": "ResourcePatch",
-   "clientNamespace": "Payload.JsonMergePatch",
-   "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch",
-   "usage": "Input,JsonMergePatch,Json",
-   "doc": "Details about a resource for patch operation.",
-   "decorators": [],
-   "properties": [
+  ],
+  "clients": [
     {
-     "$id": "46",
-     "kind": "property",
-     "name": "description",
-     "serializedName": "description",
-     "type": {
-      "$id": "47",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.description",
-     "serializationOptions": {
-      "$id": "48",
-      "json": {
-       "$id": "49",
-       "name": "description"
-      }
-     }
-    },
-    {
-     "$id": "50",
-     "kind": "property",
-     "name": "map",
-     "serializedName": "map",
-     "type": {
       "$id": "51",
-      "kind": "dict",
-      "keyType": {
-       "$id": "52",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string",
-       "decorators": []
-      },
-      "valueType": {
-       "$ref": "14"
-      },
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.map",
-     "serializationOptions": {
-      "$id": "53",
-      "json": {
-       "$id": "54",
-       "name": "map"
-      }
-     }
-    },
-    {
-     "$id": "55",
-     "kind": "property",
-     "name": "array",
-     "serializedName": "array",
-     "type": {
-      "$id": "56",
-      "kind": "array",
-      "name": "ArrayInnerModel",
-      "valueType": {
-       "$ref": "14"
-      },
-      "crossLanguageDefinitionId": "TypeSpec.Array",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.array",
-     "serializationOptions": {
-      "$id": "57",
-      "json": {
-       "$id": "58",
-       "name": "array"
-      }
-     }
-    },
-    {
-     "$id": "59",
-     "kind": "property",
-     "name": "intValue",
-     "serializedName": "intValue",
-     "type": {
-      "$id": "60",
-      "kind": "int32",
-      "name": "int32",
-      "crossLanguageDefinitionId": "TypeSpec.int32",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.intValue",
-     "serializationOptions": {
-      "$id": "61",
-      "json": {
-       "$id": "62",
-       "name": "intValue"
-      }
-     }
-    },
-    {
-     "$id": "63",
-     "kind": "property",
-     "name": "floatValue",
-     "serializedName": "floatValue",
-     "type": {
-      "$id": "64",
-      "kind": "float32",
-      "name": "float32",
-      "crossLanguageDefinitionId": "TypeSpec.float32",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.floatValue",
-     "serializationOptions": {
-      "$id": "65",
-      "json": {
-       "$id": "66",
-       "name": "floatValue"
-      }
-     }
-    },
-    {
-     "$id": "67",
-     "kind": "property",
-     "name": "innerModel",
-     "serializedName": "innerModel",
-     "type": {
-      "$ref": "14"
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.innerModel",
-     "serializationOptions": {
-      "$id": "68",
-      "json": {
-       "$id": "69",
-       "name": "innerModel"
-      }
-     }
-    },
-    {
-     "$id": "70",
-     "kind": "property",
-     "name": "intArray",
-     "serializedName": "intArray",
-     "type": {
-      "$id": "71",
-      "kind": "array",
-      "name": "Array",
-      "valueType": {
-       "$id": "72",
-       "kind": "int32",
-       "name": "int32",
-       "crossLanguageDefinitionId": "TypeSpec.int32",
-       "decorators": []
-      },
-      "crossLanguageDefinitionId": "TypeSpec.Array",
-      "decorators": []
-     },
-     "optional": true,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.intArray",
-     "serializationOptions": {
-      "$id": "73",
-      "json": {
-       "$id": "74",
-       "name": "intArray"
-      }
-     }
+      "kind": "client",
+      "name": "JsonMergePatchClient",
+      "namespace": "Payload.JsonMergePatch",
+      "doc": "Test for merge-patch+json content-type",
+      "methods": [
+        {
+          "$id": "52",
+          "kind": "basic",
+          "name": "createResource",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Test content-type: application/merge-patch+json with required body",
+          "operation": {
+            "$id": "53",
+            "name": "createResource",
+            "resourceName": "JsonMergePatch",
+            "doc": "Test content-type: application/merge-patch+json with required body",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "54",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource.contentType"
+              },
+              {
+                "$id": "55",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "3"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource.accept"
+              },
+              {
+                "$id": "56",
+                "kind": "body",
+                "name": "body",
+                "serializedName": "body",
+                "type": {
+                  "$ref": "17"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource.body"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "17"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/json-merge-patch/create/resource",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "57",
+              "kind": "method",
+              "name": "body",
+              "serializedName": "body",
+              "type": {
+                "$ref": "17"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource.body",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "58",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "59",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "3"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "17"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource"
+        },
+        {
+          "$id": "60",
+          "kind": "basic",
+          "name": "updateResource",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Test content-type: application/merge-patch+json with required body",
+          "operation": {
+            "$id": "61",
+            "name": "updateResource",
+            "resourceName": "JsonMergePatch",
+            "doc": "Test content-type: application/merge-patch+json with required body",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "62",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "type": {
+                  "$ref": "5"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource.contentType"
+              },
+              {
+                "$id": "63",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "7"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource.accept"
+              },
+              {
+                "$id": "64",
+                "kind": "body",
+                "name": "body",
+                "serializedName": "body",
+                "type": {
+                  "$ref": "40"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/merge-patch+json"
+                ],
+                "defaultContentType": "application/merge-patch+json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource.body"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "17"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PATCH",
+            "uri": "{endpoint}",
+            "path": "/json-merge-patch/update/resource",
+            "requestMediaTypes": [
+              "application/merge-patch+json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": false,
+            "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "65",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "66",
+              "kind": "method",
+              "name": "body",
+              "serializedName": "body",
+              "type": {
+                "$ref": "40"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource.body",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "67",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "7"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "17"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource"
+        },
+        {
+          "$id": "68",
+          "kind": "basic",
+          "name": "updateOptionalResource",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Test content-type: application/merge-patch+json with optional body",
+          "operation": {
+            "$id": "69",
+            "name": "updateOptionalResource",
+            "resourceName": "JsonMergePatch",
+            "doc": "Test content-type: application/merge-patch+json with optional body",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "70",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "type": {
+                  "$ref": "11"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource.contentType"
+              },
+              {
+                "$id": "71",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "13"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource.accept"
+              },
+              {
+                "$id": "72",
+                "kind": "body",
+                "name": "body",
+                "serializedName": "body",
+                "type": {
+                  "$ref": "40"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/merge-patch+json"
+                ],
+                "defaultContentType": "application/merge-patch+json",
+                "optional": true,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource.body"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "17"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PATCH",
+            "uri": "{endpoint}",
+            "path": "/json-merge-patch/update/resource/optional",
+            "requestMediaTypes": [
+              "application/merge-patch+json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": false,
+            "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "73",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "type": {
+                "$ref": "15"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "74",
+              "kind": "method",
+              "name": "body",
+              "serializedName": "body",
+              "type": {
+                "$ref": "40"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource.body",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "75",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "13"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "17"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "76",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "77",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "78",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Payload.JsonMergePatch.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Payload.JsonMergePatch",
+      "apiVersions": []
     }
-   ]
-  }
- ],
- "Clients": [
-  {
-   "$id": "75",
-   "Name": "JsonMergePatchClient",
-   "ClientNamespace": "Payload.JsonMergePatch",
-   "Doc": "Test for merge-patch+json content-type",
-   "Operations": [
-    {
-     "$id": "76",
-     "Name": "createResource",
-     "ResourceName": "JsonMergePatch",
-     "Doc": "Test content-type: application/merge-patch+json with required body",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "77",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "Body parameter's content type. Known values are application/json",
-       "Type": {
-        "$id": "78",
-        "kind": "constant",
-        "valueType": {
-         "$id": "79",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "80",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "81",
-        "kind": "constant",
-        "valueType": {
-         "$id": "82",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "83",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "84",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "PUT",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/json-merge-patch/create/resource",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Payload.JsonMergePatch.createResource",
-     "Decorators": []
-    },
-    {
-     "$id": "85",
-     "Name": "updateResource",
-     "ResourceName": "JsonMergePatch",
-     "Doc": "Test content-type: application/merge-patch+json with required body",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "86",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "87",
-        "kind": "constant",
-        "valueType": {
-         "$id": "88",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "89",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "90",
-        "kind": "constant",
-        "valueType": {
-         "$id": "91",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "92",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "45"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "93",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/json-merge-patch/update/resource",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource",
-     "Decorators": []
-    },
-    {
-     "$id": "94",
-     "Name": "updateOptionalResource",
-     "ResourceName": "JsonMergePatch",
-     "Doc": "Test content-type: application/merge-patch+json with optional body",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "95",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "96",
-        "kind": "constant",
-        "valueType": {
-         "$id": "97",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "98",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "99",
-        "kind": "constant",
-        "valueType": {
-         "$id": "100",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "101",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "45"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": false,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "102",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/json-merge-patch/update/resource/optional",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "103"
-   },
-   "Parameters": [
-    {
-     "$id": "104",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "105",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "106",
-      "Type": {
-       "$id": "107",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": []
-  }
- ]
+  ]
 }

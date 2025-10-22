@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Kusto
 
         KustoScriptResource IOperationSource<KustoScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = KustoScriptData.DeserializeKustoScriptData(document.RootElement);
+            var data = ModelReaderWriter.Read<KustoScriptData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return new KustoScriptResource(_client, data);
         }
 
         async ValueTask<KustoScriptResource> IOperationSource<KustoScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = KustoScriptData.DeserializeKustoScriptData(document.RootElement);
-            return new KustoScriptResource(_client, data);
+            var data = ModelReaderWriter.Read<KustoScriptData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            return await Task.FromResult(new KustoScriptResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

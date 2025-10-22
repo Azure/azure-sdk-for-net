@@ -22,6 +22,7 @@ using OpenAI.Embeddings;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Images;
+using OpenAI.Responses;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
@@ -363,7 +364,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     protected virtual TClient GetTestClient(IConfiguration? config, TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
     {
         AzureOpenAIClient topLevelClient = GetTestTopLevelClient(config, options, tokenCredential, keyCredential);
-        return GetTestClient<TClient>(topLevelClient, config!);
+        return GetTestClient<TClient>(topLevelClient, config!, deploymentName: null, wrapClient: options?.DisableClientWrapping != true);
     }
 
     /// <summary>
@@ -375,7 +376,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     /// <param name="config">The configuration to use to get the deployment information (if needed).</param>
     /// <returns>The instrumented client instance to use.</returns>
     /// <exception cref="NotImplementedException">Support for the type of client being requested has not been implemented yet.</exception>
-    protected virtual TExplicitClient GetTestClient<TExplicitClient>(AzureOpenAIClient topLevelClient, IConfiguration config, string? deploymentName = null)
+    protected virtual TExplicitClient GetTestClient<TExplicitClient>(AzureOpenAIClient topLevelClient, IConfiguration config, string? deploymentName = null, bool wrapClient = true)
     {
         Func<string> getDeployment = () => deploymentName ?? config?.Deployment ?? throw CreateKeyNotFoundEx("deployment");
         object clientObject;
@@ -406,6 +407,9 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ImageClient):
                 clientObject = topLevelClient.GetImageClient(getDeployment());
                 break;
+            case nameof(OpenAIResponseClient):
+                clientObject = topLevelClient.GetOpenAIResponseClient(getDeployment());
+                break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();
                 break;
@@ -419,6 +423,11 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
         };
+
+        if (!wrapClient)
+        {
+            return (TExplicitClient)clientObject;
+        }
 
         object instrumented = WrapClient(
             typeof(TExplicitClient),
@@ -591,8 +600,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ThreadMessage):
                 _threadIdsWithMessageIdsToDelete.Add((parentId, id));
                 break;
-            case nameof(VectorStoreFileAssociation):
-                _vectorStoreFileAssociationsToRemove.Add((parentId, id));
+            case nameof(VectorStoreFile):
+                _vectorStoreFilesToRemove.Add((parentId, id));
                 break;
             default:
                 throw new NotImplementedException();
@@ -612,9 +621,9 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         {
             ValidateById<ThreadMessage>(message.Id, message.ThreadId);
         }
-        else if (target is VectorStoreFileAssociation fileAssociation)
+        else if (target is VectorStoreFile vectorStoreFile)
         {
-            ValidateById<VectorStoreFileAssociation>(fileAssociation.VectorStoreId, fileAssociation.FileId);
+            ValidateById<VectorStoreFile>(vectorStoreFile.VectorStoreId, vectorStoreFile.FileId);
         }
         else
         {
@@ -677,9 +686,9 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         {
             WriteIfNotSuppressed($"Cleanup: {threadId} -> {client.DeleteThread(threadId, requestOptions)?.GetRawResponse().Status}");
         }
-        foreach ((string vectorStoreId, string fileId) in _vectorStoreFileAssociationsToRemove)
+        foreach ((string vectorStoreId, string fileId) in _vectorStoreFilesToRemove)
         {
-            WriteIfNotSuppressed($"Cleanup: {vectorStoreId}<->{fileId} => {vectorStoreClient.RemoveFileFromStore(vectorStoreId, fileId, requestOptions)?.GetRawResponse().Status}");
+            WriteIfNotSuppressed($"Cleanup: {vectorStoreId}<->{fileId} => {vectorStoreClient.RemoveFileFromVectorStore(vectorStoreId, fileId, requestOptions)?.GetRawResponse().Status}");
         }
         foreach (string vectorStoreId in _vectorStoreIdsToDelete)
         {
@@ -688,7 +697,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         _threadIdsWithMessageIdsToDelete.Clear();
         _assistantIdsToDelete.Clear();
         _threadIdsToDelete.Clear();
-        _vectorStoreFileAssociationsToRemove.Clear();
+        _vectorStoreFilesToRemove.Clear();
         _vectorStoreIdsToDelete.Clear();
 #endif
 
@@ -751,7 +760,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     private readonly List<string> _threadIdsToDelete = [];
     private readonly List<(string, string)> _threadIdsWithMessageIdsToDelete = [];
     private readonly List<string> _fileIdsToDelete = [];
-    private readonly List<(string, string)> _vectorStoreFileAssociationsToRemove = [];
+    private readonly List<(string, string)> _vectorStoreFilesToRemove = [];
     private readonly List<string> _vectorStoreIdsToDelete = [];
     private readonly List<string> _batchIdsToDelete = [];
 }
@@ -766,4 +775,5 @@ public class TestClientOptions : AzureOpenAIClientOptions
 
     public bool ShouldOutputRequests { get; set; } = Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true";
     public bool ShouldOutputResponses { get; set; } = Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true";
+    public bool DisableClientWrapping { get; set; }
 }

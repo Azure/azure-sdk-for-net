@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Properties))
+                using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStreamAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support writing '{options.Format}' format.");
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeParquetFormatSerialization(document.RootElement, options);
                     }
                 default:

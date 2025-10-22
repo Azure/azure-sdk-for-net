@@ -8,16 +8,21 @@ azure-arm: true
 csharp: true
 library-name: TrafficManager
 namespace: Azure.ResourceManager.TrafficManager
-require: https://github.com/Azure/azure-rest-api-specs/blob/4f4073bdb028bc84bc3e6405c1cbaf8e89b83caf/specification/trafficmanager/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ff99df7c551a54d3a3e9e395cb5cf6c62c8c53f7/specification/trafficmanager/resource-manager/readme.md
+tag: package-preview-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 use-model-reader-writer: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 rename-mapping:
+  AlwaysServe: TrafficManagerEndpointAlwaysServeStatus
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityContent
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters.type: -|resource-type
   Endpoint.properties.targetResourceId: -|arm-id
@@ -29,8 +34,9 @@ rename-mapping:
   HeatMapModel: TrafficManagerHeatMap
   MonitorConfigCustomHeadersItem: TrafficManagerMonitorConfigCustomHeaderInfo
   MonitorConfigExpectedStatusCodeRangesItem: ExpectedStatusCodeRangeInfo
-  QueryExperience: TrafficManagerHeatMapQueryExperience
   ProxyResource: TrafficManagerProxyResourceData
+  QueryExperience: TrafficManagerHeatMapQueryExperience
+  RecordType: TrafficManagerProfileRecordType
   Resource.id: -|arm-id
   Resource.type: -|resource-type
   TrafficFlow: TrafficManagerHeatMapTrafficFlow
@@ -42,7 +48,6 @@ rename-mapping:
   TrafficManagerNameAvailability.reason: UnavailableReason
   TrafficManagerNameAvailability.type: -|resource-type
   UserMetricsModel: TrafficManagerUserMetrics
-  AlwaysServe: TrafficManagerEndpointAlwaysServeStatus
 
 prepend-rp-prefix:
   - DnsConfig

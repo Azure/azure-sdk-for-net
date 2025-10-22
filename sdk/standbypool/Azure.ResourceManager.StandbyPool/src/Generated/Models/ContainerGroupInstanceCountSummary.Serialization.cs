@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 throw new FormatException($"The model {nameof(ContainerGroupInstanceCountSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("instanceCountsByState"u8);
-            writer.WriteStartArray();
-            foreach (var item in InstanceCountsByState)
+            if (Optional.IsDefined(Zone))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("zone"u8);
+                writer.WriteNumberValue(Zone.Value);
             }
-            writer.WriteEndArray();
+            writer.WritePropertyName("instanceCountsByState"u8);
+            InstanceCountsByStateSerial(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,17 +78,27 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            IReadOnlyList<PoolResourceStateCount> instanceCountsByState = default;
+            long? zone = default;
+            IReadOnlyList<PoolContainerGroupStateCount> instanceCountsByState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("zone"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zone = property.Value.GetInt64();
+                    continue;
+                }
                 if (property.NameEquals("instanceCountsByState"u8))
                 {
-                    List<PoolResourceStateCount> array = new List<PoolResourceStateCount>();
+                    List<PoolContainerGroupStateCount> array = new List<PoolContainerGroupStateCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolResourceStateCount.DeserializePoolResourceStateCount(item, options));
+                        array.Add(PoolContainerGroupStateCount.DeserializePoolContainerGroupStateCount(item, options));
                     }
                     instanceCountsByState = array;
                     continue;
@@ -99,7 +109,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerGroupInstanceCountSummary(instanceCountsByState, serializedAdditionalRawData);
+            return new ContainerGroupInstanceCountSummary(zone, instanceCountsByState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupInstanceCountSummary>.Write(ModelReaderWriterOptions options)
@@ -109,7 +119,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupInstanceCountSummary)} does not support writing '{options.Format}' format.");
             }
@@ -123,7 +133,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerGroupInstanceCountSummary(document.RootElement, options);
                     }
                 default:

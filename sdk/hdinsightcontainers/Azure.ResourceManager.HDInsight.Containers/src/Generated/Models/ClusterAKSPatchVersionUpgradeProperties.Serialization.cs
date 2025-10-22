@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContainersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ClusterAKSPatchVersionUpgradeProperties)} does not support writing '{options.Format}' format.");
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClusterAKSPatchVersionUpgradeProperties(document.RootElement, options);
                     }
                 default:

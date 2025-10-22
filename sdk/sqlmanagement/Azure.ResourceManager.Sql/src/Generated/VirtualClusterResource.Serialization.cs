@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class VirtualClusterResource : IJsonModel<VirtualClusterData>
     {
+        private static VirtualClusterData s_dataDeserializationInstance;
+        private static VirtualClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualClusterData>)Data).Write(writer, options);
 
-        VirtualClusterData IJsonModel<VirtualClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualClusterData>)Data).Create(ref reader, options);
+        VirtualClusterData IJsonModel<VirtualClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualClusterData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        VirtualClusterData IPersistableModel<VirtualClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualClusterData>(data, options);
+        VirtualClusterData IPersistableModel<VirtualClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualClusterData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<VirtualClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

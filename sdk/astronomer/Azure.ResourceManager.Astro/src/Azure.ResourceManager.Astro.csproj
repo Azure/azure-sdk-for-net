@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageId>Azure.ResourceManager.Astro</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Astronomer.Astro.</Description>
     <PackageTags>azure;management;arm;resource manager;astronomer.astro</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

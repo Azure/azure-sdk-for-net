@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-10";
+            _apiVersion = apiVersion ?? "2025-08-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummaryListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public async Task<Response<SummaryResourceListResult>> ListByFirmwareAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        SummaryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
+                        SummaryResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SummaryResourceListResult.DeserializeSummaryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummaryListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public Response<SummaryResourceListResult> ListByFirmware(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        SummaryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
+                        SummaryResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SummaryResourceListResult.DeserializeSummaryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             uri.AppendPath("/firmwares/", false);
             uri.AppendPath(firmwareId, true);
             uri.AppendPath("/summaries/", false);
-            uri.AppendPath(summaryName.ToString(), true);
+            uri.AppendPath(summaryType.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             uri.AppendPath("/firmwares/", false);
             uri.AppendPath(firmwareId, true);
             uri.AppendPath("/summaries/", false);
-            uri.AppendPath(summaryName.ToString(), true);
+            uri.AppendPath(summaryType.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -185,25 +185,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="firmwareId"> The id of the firmware. </param>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirmwareAnalysisSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public async Task<Response<FirmwareAnalysisSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId, summaryName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId, summaryType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         FirmwareAnalysisSummaryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,25 +219,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="firmwareId"> The id of the firmware. </param>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirmwareAnalysisSummaryData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public Response<FirmwareAnalysisSummaryData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId, summaryName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, firmwareId, summaryType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         FirmwareAnalysisSummaryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FirmwareAnalysisSummaryData.DeserializeFirmwareAnalysisSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummaryListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public async Task<Response<SummaryResourceListResult>> ListByFirmwareNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -293,9 +293,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        SummaryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
+                        SummaryResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SummaryResourceListResult.DeserializeSummaryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="firmwareId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummaryListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
+        public Response<SummaryResourceListResult> ListByFirmwareNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case 200:
                     {
-                        SummaryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SummaryListResult.DeserializeSummaryListResult(document.RootElement);
+                        SummaryResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SummaryResourceListResult.DeserializeSummaryResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

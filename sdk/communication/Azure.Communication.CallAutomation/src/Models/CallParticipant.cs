@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callParticipantInternal"> The internal call participant. </param>
         internal CallParticipant(CallParticipantInternal callParticipantInternal)
         {
-            Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
+            Identifier = CommunicationIdentifierSerializer_2025_06_30.Deserialize(callParticipantInternal.Identifier);
             IsMuted = (bool)callParticipantInternal.IsMuted;
             IsOnHold = callParticipantInternal.IsOnHold.GetValueOrDefault(false);
         }

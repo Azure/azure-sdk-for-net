@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         DeviceProvisioningServiceResource IOperationSource<DeviceProvisioningServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
             return new DeviceProvisioningServiceResource(_client, data);
         }
 
         async ValueTask<DeviceProvisioningServiceResource> IOperationSource<DeviceProvisioningServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
-            return new DeviceProvisioningServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+            return await Task.FromResult(new DeviceProvisioningServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

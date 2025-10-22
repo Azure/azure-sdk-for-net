@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                JsonSerializer.Serialize(writer, Parent);
+                ((IJsonModel<SubResource>)Parent).Write(writer, options);
             }
             if (Optional.IsDefined(Permissions))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             {
                                 continue;
                             }
-                            parent = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            parent = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("permissions"u8))
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEntityData(document.RootElement, options);
                     }
                 default:

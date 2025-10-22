@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(document.RootElement, options);
                     }
                 default:

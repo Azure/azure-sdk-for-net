@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class FirewallPolicyDraftResource : IJsonModel<FirewallPolicyDraftData>
     {
+        private static FirewallPolicyDraftData s_dataDeserializationInstance;
+        private static FirewallPolicyDraftData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FirewallPolicyDraftData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyDraftData>)Data).Write(writer, options);
 
-        FirewallPolicyDraftData IJsonModel<FirewallPolicyDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyDraftData>)Data).Create(ref reader, options);
+        FirewallPolicyDraftData IJsonModel<FirewallPolicyDraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirewallPolicyDraftData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FirewallPolicyDraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FirewallPolicyDraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirewallPolicyDraftData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        FirewallPolicyDraftData IPersistableModel<FirewallPolicyDraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirewallPolicyDraftData>(data, options);
+        FirewallPolicyDraftData IPersistableModel<FirewallPolicyDraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirewallPolicyDraftData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<FirewallPolicyDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirewallPolicyDraftData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FirewallPolicyDraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirewallPolicyDraftData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

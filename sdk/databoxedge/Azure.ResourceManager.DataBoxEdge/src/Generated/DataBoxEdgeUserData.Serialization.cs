@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxEdgeUserData(document.RootElement, options);
                     }
                 default:

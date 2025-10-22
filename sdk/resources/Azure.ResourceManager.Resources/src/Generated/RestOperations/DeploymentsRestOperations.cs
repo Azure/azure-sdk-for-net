@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-11-01";
+            _apiVersion = apiVersion ?? "2025-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmDeploymentData.DeserializeArmDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmDeploymentData.DeserializeArmDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentExportResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmDeploymentExportResult.DeserializeArmDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentExportResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmDeploymentExportResult.DeserializeArmDeploymentExportResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmDeploymentListResult.DeserializeArmDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmDeploymentListResult.DeserializeArmDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1075,7 +1075,7 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(template);
 #else
-            using (JsonDocument document = JsonDocument.Parse(template))
+            using (JsonDocument document = JsonDocument.Parse(template, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateHashResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TemplateHashResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TemplateHashResult.DeserializeTemplateHashResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1174,7 +1174,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArmDeploymentListResult.DeserializeArmDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         ArmDeploymentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArmDeploymentListResult.DeserializeArmDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

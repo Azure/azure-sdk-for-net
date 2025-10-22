@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCognitiveServicesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CognitiveServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCommitmentPlanAccountAssociationData(document.RootElement, options);
                     }
                 default:

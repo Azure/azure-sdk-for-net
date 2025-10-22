@@ -108,6 +108,12 @@ namespace Azure.AI.ContentSafety
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIContentSafetyContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIContentSafetyContext() { }
+        public static Azure.AI.ContentSafety.AzureAIContentSafetyContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BlocklistClient
     {
         protected BlocklistClient() { }
@@ -167,13 +173,22 @@ namespace Azure.AI.ContentSafety
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextResult>> AnalyzeTextAsync(Azure.AI.ContentSafety.AnalyzeTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeTextAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextResult>> AnalyzeTextAsync(string text, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult> DetectTextProtectedMaterial(Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DetectTextProtectedMaterial(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>> DetectTextProtectedMaterialAsync(Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DetectTextProtectedMaterialAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.ShieldPromptResult> ShieldPrompt(Azure.AI.ContentSafety.ShieldPromptOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ShieldPrompt(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.ShieldPromptResult>> ShieldPromptAsync(Azure.AI.ContentSafety.ShieldPromptOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ShieldPromptAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class ContentSafetyClientOptions : Azure.Core.ClientOptions
     {
-        public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2023_10_01) { }
+        public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2024_09_01) { }
         public enum ServiceVersion
         {
             V2023_10_01 = 1,
+            V2024_09_01 = 2,
         }
     }
     public partial class ContentSafetyImageData : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ContentSafetyImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>
@@ -195,11 +210,51 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.AnalyzeImageResult AnalyzeImageResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.ImageCategoriesAnalysis> categoriesAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeTextOptions AnalyzeTextOptions(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategory> categories = null, System.Collections.Generic.IEnumerable<string> blocklistNames = null, bool? haltOnBlocklistHit = default(bool?), Azure.AI.ContentSafety.AnalyzeTextOutputType? outputType = default(Azure.AI.ContentSafety.AnalyzeTextOutputType?)) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeTextResult AnalyzeTextResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistMatch> blocklistsMatch = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategoriesAnalysis> categoriesAnalysis = null) { throw null; }
+        public static Azure.AI.ContentSafety.DetectTextProtectedMaterialResult DetectTextProtectedMaterialResult(Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult protectedMaterialAnalysis = null) { throw null; }
+        public static Azure.AI.ContentSafety.DocumentInjectionAnalysisResult DocumentInjectionAnalysisResult(bool attackDetected = false) { throw null; }
         public static Azure.AI.ContentSafety.ImageCategoriesAnalysis ImageCategoriesAnalysis(Azure.AI.ContentSafety.ImageCategory category = default(Azure.AI.ContentSafety.ImageCategory), int? severity = default(int?)) { throw null; }
+        public static Azure.AI.ContentSafety.ShieldPromptResult ShieldPromptResult(Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult userPromptAnalysis = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult> documentsAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklist TextBlocklist(string name = null, string description = null) { throw null; }
-        public static Azure.AI.ContentSafety.TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.AI.ContentSafety.TextBlocklistItem TextBlocklistItem(string blocklistItemId, string description, string text) { throw null; }
+        public static Azure.AI.ContentSafety.TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null, bool? isRegex = default(bool?)) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklistMatch TextBlocklistMatch(string blocklistName = null, string blocklistItemId = null, string blocklistItemText = null) { throw null; }
         public static Azure.AI.ContentSafety.TextCategoriesAnalysis TextCategoriesAnalysis(Azure.AI.ContentSafety.TextCategory category = default(Azure.AI.ContentSafety.TextCategory), int? severity = default(int?)) { throw null; }
+        public static Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult TextProtectedMaterialAnalysisResult(bool detected = false) { throw null; }
+        public static Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult UserPromptInjectionAnalysisResult(bool attackDetected = false) { throw null; }
+    }
+    public partial class DetectTextProtectedMaterialOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>
+    {
+        public DetectTextProtectedMaterialOptions(string text) { }
+        public string Text { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DetectTextProtectedMaterialResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>
+    {
+        internal DetectTextProtectedMaterialResult() { }
+        public Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult ProtectedMaterialAnalysis { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectTextProtectedMaterialResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DetectTextProtectedMaterialResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DetectTextProtectedMaterialResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DocumentInjectionAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>
+    {
+        internal DocumentInjectionAnalysisResult() { }
+        public bool AttackDetected { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DocumentInjectionAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.DocumentInjectionAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ImageCategoriesAnalysis : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ImageCategoriesAnalysis>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ImageCategoriesAnalysis>
     {
@@ -244,6 +299,30 @@ namespace Azure.AI.ContentSafety
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ShieldPromptOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ShieldPromptOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptOptions>
+    {
+        public ShieldPromptOptions() { }
+        public System.Collections.Generic.IList<string> Documents { get { throw null; } }
+        public string UserPrompt { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ShieldPromptOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ShieldPromptOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ShieldPromptOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ShieldPromptOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ShieldPromptResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ShieldPromptResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptResult>
+    {
+        internal ShieldPromptResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.ContentSafety.DocumentInjectionAnalysisResult> DocumentsAnalysis { get { throw null; } }
+        public Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult UserPromptAnalysis { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ShieldPromptResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ShieldPromptResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ShieldPromptResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ShieldPromptResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ShieldPromptResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TextBlocklist : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklist>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextBlocklist>
     {
         internal TextBlocklist() { }
@@ -261,6 +340,7 @@ namespace Azure.AI.ContentSafety
         public TextBlocklistItem(string text) { }
         public string BlocklistItemId { get { throw null; } }
         public string Description { get { throw null; } set { } }
+        public bool? IsRegex { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.ContentSafety.TextBlocklistItem System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextBlocklistItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -314,6 +394,28 @@ namespace Azure.AI.ContentSafety
         public static bool operator !=(Azure.AI.ContentSafety.TextCategory left, Azure.AI.ContentSafety.TextCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class TextProtectedMaterialAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>
+    {
+        internal TextProtectedMaterialAnalysisResult() { }
+        public bool Detected { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.TextProtectedMaterialAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UserPromptInjectionAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>
+    {
+        internal UserPromptInjectionAnalysisResult() { }
+        public bool AttackDetected { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.UserPromptInjectionAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
 }
 namespace Microsoft.Extensions.Azure
 {
@@ -321,9 +423,11 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.BlocklistClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddBlocklistClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.BlocklistClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddBlocklistClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.BlocklistClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddBlocklistClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentSafetyClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentSafetyClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentSafetyClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentSafetyClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ContentSafety.ContentSafetyClient, Azure.AI.ContentSafety.ContentSafetyClientOptions> AddContentSafetyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

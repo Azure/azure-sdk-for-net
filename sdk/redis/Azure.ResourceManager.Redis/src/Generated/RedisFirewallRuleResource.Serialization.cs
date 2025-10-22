@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Redis
 {
     public partial class RedisFirewallRuleResource : IJsonModel<RedisFirewallRuleData>
     {
+        private static RedisFirewallRuleData s_dataDeserializationInstance;
+        private static RedisFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RedisFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisFirewallRuleData>)Data).Write(writer, options);
 
-        RedisFirewallRuleData IJsonModel<RedisFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisFirewallRuleData>)Data).Create(ref reader, options);
+        RedisFirewallRuleData IJsonModel<RedisFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisFirewallRuleData>(Data, options, AzureResourceManagerRedisContext.Default);
 
-        RedisFirewallRuleData IPersistableModel<RedisFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisFirewallRuleData>(data, options);
+        RedisFirewallRuleData IPersistableModel<RedisFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisFirewallRuleData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RedisFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

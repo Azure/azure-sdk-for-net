@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -60,10 +60,20 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
             if (Optional.IsDefined(HostingMode))
             {
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ComputeType))
+            {
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteStringValue(ComputeType.Value.ToString());
             }
             if (Optional.IsDefined(PublicInternetAccess))
             {
@@ -90,11 +100,11 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet, options);
             }
-            if (Optional.IsCollectionDefined(DisabledDataExfiltrationOptions))
+            if (Optional.IsCollectionDefined(DataExfiltrationProtections))
             {
-                writer.WritePropertyName("disabledDataExfiltrationOptions"u8);
+                writer.WritePropertyName("dataExfiltrationProtections"u8);
                 writer.WriteStartArray();
-                foreach (var item in DisabledDataExfiltrationOptions)
+                foreach (var item in DataExfiltrationProtections)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -159,6 +169,16 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (Optional.IsDefined(IsUpgradeAvailable))
+            {
+                writer.WritePropertyName("upgradeAvailable"u8);
+                writer.WriteStringValue(IsUpgradeAvailable.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceUpgradedOn))
+            {
+                writer.WritePropertyName("serviceUpgradedAt"u8);
+                writer.WriteStringValue(ServiceUpgradedOn.Value, "O");
+            }
             writer.WriteEndObject();
         }
 
@@ -192,13 +212,15 @@ namespace Azure.ResourceManager.Search.Models
             SystemData systemData = default;
             int? replicaCount = default;
             int? partitionCount = default;
+            Uri endpoint = default;
             SearchServiceHostingMode? hostingMode = default;
+            SearchServiceComputeType? computeType = default;
             SearchServicePublicInternetAccess? publicNetworkAccess = default;
             SearchServiceStatus? status = default;
             string statusDetails = default;
             SearchServiceProvisioningState? provisioningState = default;
             SearchServiceNetworkRuleSet networkRuleSet = default;
-            IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = default;
+            IList<SearchDataExfiltrationProtection> dataExfiltrationProtections = default;
             SearchEncryptionWithCmk encryptionWithCmk = default;
             bool? disableLocalAuth = default;
             SearchAadAuthDataPlaneAuthOptions authOptions = default;
@@ -206,6 +228,8 @@ namespace Azure.ResourceManager.Search.Models
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
+            SearchServiceUpgradeAvailable? upgradeAvailable = default;
+            DateTimeOffset? serviceUpgradedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +249,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -268,7 +292,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -298,6 +322,15 @@ namespace Azure.ResourceManager.Search.Models
                             partitionCount = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("endpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            endpoint = new Uri(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("hostingMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -305,6 +338,15 @@ namespace Azure.ResourceManager.Search.Models
                                 continue;
                             }
                             hostingMode = property0.Value.GetString().ToSearchServiceHostingMode();
+                            continue;
+                        }
+                        if (property0.NameEquals("computeType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            computeType = new SearchServiceComputeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -348,18 +390,18 @@ namespace Azure.ResourceManager.Search.Models
                             networkRuleSet = SearchServiceNetworkRuleSet.DeserializeSearchServiceNetworkRuleSet(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("disabledDataExfiltrationOptions"u8))
+                        if (property0.NameEquals("dataExfiltrationProtections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<SearchDisabledDataExfiltrationOption> array = new List<SearchDisabledDataExfiltrationOption>();
+                            List<SearchDataExfiltrationProtection> array = new List<SearchDataExfiltrationProtection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new SearchDisabledDataExfiltrationOption(item.GetString()));
+                                array.Add(new SearchDataExfiltrationProtection(item.GetString()));
                             }
-                            disabledDataExfiltrationOptions = array;
+                            dataExfiltrationProtections = array;
                             continue;
                         }
                         if (property0.NameEquals("encryptionWithCmk"u8))
@@ -437,6 +479,24 @@ namespace Azure.ResourceManager.Search.Models
                             eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("upgradeAvailable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeAvailable = new SearchServiceUpgradeAvailable(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceUpgradedAt"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceUpgradedAt = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -457,13 +517,15 @@ namespace Azure.ResourceManager.Search.Models
                 identity,
                 replicaCount,
                 partitionCount,
+                endpoint,
                 hostingMode,
+                computeType,
                 publicNetworkAccess,
                 status,
                 statusDetails,
                 provisioningState,
                 networkRuleSet,
-                disabledDataExfiltrationOptions ?? new ChangeTrackingList<SearchDisabledDataExfiltrationOption>(),
+                dataExfiltrationProtections ?? new ChangeTrackingList<SearchDataExfiltrationProtection>(),
                 encryptionWithCmk,
                 disableLocalAuth,
                 authOptions,
@@ -471,6 +533,8 @@ namespace Azure.ResourceManager.Search.Models
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 eTag,
+                upgradeAvailable,
+                serviceUpgradedAt,
                 serializedAdditionalRawData);
         }
 
@@ -652,6 +716,21 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    builder.Append("    endpoint: ");
+                    builder.AppendLine($"'{Endpoint.AbsoluteUri}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -664,6 +743,21 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     builder.Append("    hostingMode: ");
                     builder.AppendLine($"'{HostingMode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    computeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComputeType))
+                {
+                    builder.Append("    computeType: ");
+                    builder.AppendLine($"'{ComputeType.Value.ToString()}'");
                 }
             }
 
@@ -750,21 +844,21 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisabledDataExfiltrationOptions), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataExfiltrationProtections), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    disabledDataExfiltrationOptions: ");
+                builder.Append("    dataExfiltrationProtections: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsCollectionDefined(DisabledDataExfiltrationOptions))
+                if (Optional.IsCollectionDefined(DataExfiltrationProtections))
                 {
-                    if (DisabledDataExfiltrationOptions.Any())
+                    if (DataExfiltrationProtections.Any())
                     {
-                        builder.Append("    disabledDataExfiltrationOptions: ");
+                        builder.Append("    dataExfiltrationProtections: ");
                         builder.AppendLine("[");
-                        foreach (var item in DisabledDataExfiltrationOptions)
+                        foreach (var item in DataExfiltrationProtections)
                         {
                             builder.AppendLine($"      '{item.ToString()}'");
                         }
@@ -895,6 +989,37 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUpgradeAvailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    upgradeAvailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUpgradeAvailable))
+                {
+                    builder.Append("    upgradeAvailable: ");
+                    builder.AppendLine($"'{IsUpgradeAvailable.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUpgradedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceUpgradedAt: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUpgradedOn))
+                {
+                    builder.Append("    serviceUpgradedAt: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ServiceUpgradedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -907,7 +1032,7 @@ namespace Azure.ResourceManager.Search.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -923,7 +1048,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchServicePatch(document.RootElement, options);
                     }
                 default:

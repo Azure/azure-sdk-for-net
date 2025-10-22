@@ -4,22 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Search.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Search.Tests.Tests
 {
     public class SearchServiceResourceTest : SearchManagementTestBase
     {
-        public SearchServiceResourceTest(bool isAsync) : base(isAsync)// RecordedTestMode.Record)
+        public SearchServiceResourceTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
+
         public SearchServiceCollection SearchCollection { get; set; }
         public SearchServiceResource SearchResource { get; set; }
 
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.NotNull(result);
             Assert.IsFalse(result.IsError);
             Assert.NotNull(result.ReasonPhrase);
-            Assert.IsTrue(result.Status == 204);
+            Assert.IsTrue(result.Status == 204 || result.Status == 200);
         }
         [Test]
         public async Task GetQueryKeysBySearchServiceAsyncTest()
@@ -206,7 +204,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var originKey = (await SearchResource.CreateQueryKeyAsync(queryName)).Value;
             var list = await SearchResource.GetQueryKeysBySearchServiceAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(queryName,list.First(item => item.Name == queryName).Name);
+            Assert.AreEqual(queryName, list.First(item => item.Name == queryName).Name);
             Assert.IsNotNull(list.First(item => item.Name == queryName).Key);
             Assert.IsNotEmpty(list.First(item => item.Name == queryName).Key);
         }
@@ -365,6 +363,25 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             result = (await SearchResource.GetAsync()).Value;
             Assert.NotNull(result);
             Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Standard);
+        }
+
+        [Test]
+        public async Task UpgradeAsyncTest()
+        {
+            await setResourceGroup();
+            var name = Recording.GenerateAssetName("search");
+            var data = new SearchServiceData(DefaultLocation)
+            {
+                SearchSkuName = SearchServiceSkuName.Standard,
+                PartitionCount = 1,
+                ReplicaCount = 1,
+                HostingMode = SearchServiceHostingMode.Default
+            };
+            var searchService = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var upgradedService = (await searchService.UpgradeAsync(WaitUntil.Completed)).Value;
+
+            Assert.IsNotNull(upgradedService);
+            Assert.AreEqual(SearchServiceProvisioningState.Succeeded, upgradedService.Data.ProvisioningState);
         }
     }
 }

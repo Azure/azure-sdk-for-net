@@ -35,40 +35,40 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TotalCertificates))
+            if (Optional.IsDefined(TotalCertificateCount))
             {
-                writer.WritePropertyName("totalCertificates"u8);
-                writer.WriteNumberValue(TotalCertificates.Value);
+                writer.WritePropertyName("totalCertificateCount"u8);
+                writer.WriteNumberValue(TotalCertificateCount.Value);
             }
-            if (Optional.IsDefined(PairedKeys))
+            if (Optional.IsDefined(PairedKeyCount))
             {
-                writer.WritePropertyName("pairedKeys"u8);
-                writer.WriteNumberValue(PairedKeys.Value);
+                writer.WritePropertyName("pairedKeyCount"u8);
+                writer.WriteNumberValue(PairedKeyCount.Value);
             }
-            if (Optional.IsDefined(Expired))
+            if (Optional.IsDefined(ExpiredCertificateCount))
             {
-                writer.WritePropertyName("expired"u8);
-                writer.WriteNumberValue(Expired.Value);
+                writer.WritePropertyName("expiredCertificateCount"u8);
+                writer.WriteNumberValue(ExpiredCertificateCount.Value);
             }
-            if (Optional.IsDefined(ExpiringSoon))
+            if (Optional.IsDefined(ExpiringSoonCertificateCount))
             {
-                writer.WritePropertyName("expiringSoon"u8);
-                writer.WriteNumberValue(ExpiringSoon.Value);
+                writer.WritePropertyName("expiringSoonCertificateCount"u8);
+                writer.WriteNumberValue(ExpiringSoonCertificateCount.Value);
             }
-            if (Optional.IsDefined(WeakSignature))
+            if (Optional.IsDefined(WeakSignatureCount))
             {
-                writer.WritePropertyName("weakSignature"u8);
-                writer.WriteNumberValue(WeakSignature.Value);
+                writer.WritePropertyName("weakSignatureCount"u8);
+                writer.WriteNumberValue(WeakSignatureCount.Value);
             }
-            if (Optional.IsDefined(SelfSigned))
+            if (Optional.IsDefined(SelfSignedCertificateCount))
             {
-                writer.WritePropertyName("selfSigned"u8);
-                writer.WriteNumberValue(SelfSigned.Value);
+                writer.WritePropertyName("selfSignedCertificateCount"u8);
+                writer.WriteNumberValue(SelfSignedCertificateCount.Value);
             }
-            if (Optional.IsDefined(ShortKeySize))
+            if (Optional.IsDefined(ShortKeySizeCount))
             {
-                writer.WritePropertyName("shortKeySize"u8);
-                writer.WriteNumberValue(ShortKeySize.Value);
+                writer.WritePropertyName("shortKeySizeCount"u8);
+                writer.WriteNumberValue(ShortKeySizeCount.Value);
             }
         }
 
@@ -92,84 +92,94 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            long? totalCertificates = default;
-            long? pairedKeys = default;
-            long? expired = default;
-            long? expiringSoon = default;
-            long? weakSignature = default;
-            long? selfSigned = default;
-            long? shortKeySize = default;
+            long? totalCertificateCount = default;
+            long? pairedKeyCount = default;
+            long? expiredCertificateCount = default;
+            long? expiringSoonCertificateCount = default;
+            long? weakSignatureCount = default;
+            long? selfSignedCertificateCount = default;
+            long? shortKeySizeCount = default;
             FirmwareAnalysisSummaryType summaryType = default;
+            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalCertificates"u8))
+                if (property.NameEquals("totalCertificateCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalCertificates = property.Value.GetInt64();
+                    totalCertificateCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("pairedKeys"u8))
+                if (property.NameEquals("pairedKeyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pairedKeys = property.Value.GetInt64();
+                    pairedKeyCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("expired"u8))
+                if (property.NameEquals("expiredCertificateCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expired = property.Value.GetInt64();
+                    expiredCertificateCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("expiringSoon"u8))
+                if (property.NameEquals("expiringSoonCertificateCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiringSoon = property.Value.GetInt64();
+                    expiringSoonCertificateCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("weakSignature"u8))
+                if (property.NameEquals("weakSignatureCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    weakSignature = property.Value.GetInt64();
+                    weakSignatureCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("selfSigned"u8))
+                if (property.NameEquals("selfSignedCertificateCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selfSigned = property.Value.GetInt64();
+                    selfSignedCertificateCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("shortKeySize"u8))
+                if (property.NameEquals("shortKeySizeCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shortKeySize = property.Value.GetInt64();
+                    shortKeySizeCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,14 +190,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new CryptoCertificateSummary(
                 summaryType,
+                provisioningState,
                 serializedAdditionalRawData,
-                totalCertificates,
-                pairedKeys,
-                expired,
-                expiringSoon,
-                weakSignature,
-                selfSigned,
-                shortKeySize);
+                totalCertificateCount,
+                pairedKeyCount,
+                expiredCertificateCount,
+                expiringSoonCertificateCount,
+                weakSignatureCount,
+                selfSignedCertificateCount,
+                shortKeySizeCount);
         }
 
         BinaryData IPersistableModel<CryptoCertificateSummary>.Write(ModelReaderWriterOptions options)
@@ -197,7 +208,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CryptoCertificateSummary)} does not support writing '{options.Format}' format.");
             }
@@ -211,7 +222,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCryptoCertificateSummary(document.RootElement, options);
                     }
                 default:

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("securityPolicyName"u8);
             writer.WriteStringValue(SecurityPolicyName);
             writer.WritePropertyName("changeToWafPolicy"u8);
-            JsonSerializer.Serialize(writer, ChangeToWafPolicy);
+            ((IJsonModel<WritableSubResource>)ChangeToWafPolicy).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("changeToWafPolicy"u8))
                 {
-                    changeToWafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    changeToWafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support writing '{options.Format}' format.");
             }
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeProfileChangeSkuWafMapping(document.RootElement, options);
                     }
                 default:

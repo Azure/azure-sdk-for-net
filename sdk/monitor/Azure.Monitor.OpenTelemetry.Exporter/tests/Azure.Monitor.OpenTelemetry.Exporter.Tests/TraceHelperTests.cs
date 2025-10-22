@@ -185,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     ActivityTraceId.CreateRandom(),
                     ActivitySpanId.CreateRandom(),
                     ActivityTraceFlags.None), null);
-                    links.Add(activityLink);
+                links.Add(activityLink);
             }
 
             using var activity = activitySource.StartActivity(
@@ -237,16 +237,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server);
 
             Assert.NotNull(activity);
-            activity.RecordException(new Exception(exceptionMessage));
+            activity.AddException(new Exception(exceptionMessage));
 
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
-            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal(2, telemetryItems.Count);
             Assert.Equal("Exception", telemetryItems[0].Name);
             Assert.Equal("Request", telemetryItems[1].Name);
 
@@ -255,6 +255,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(exceptionMessage, telemetryExceptionData.Exceptions.First().Message);
             Assert.Equal("System.Exception", telemetryExceptionData.Exceptions.First().TypeName);
             Assert.Equal("System.Exception: Exception Message", telemetryExceptionData.Exceptions.First().Stack);
+
+            // Verify counters
+            Assert.Equal(1, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(1, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         [Fact]
@@ -281,9 +287,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
-            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal(2, telemetryItems.Count);
             Assert.Equal("Message", telemetryItems[0].Name);
             Assert.Equal("Request", telemetryItems[1].Name);
 
@@ -292,6 +298,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(messageData.Properties.TryGetValue("key1", out var value));
             Assert.Equal("value1", value);
             Assert.Null(messageData.SeverityLevel);
+
+            // Verify counters
+            Assert.Equal(1, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._exceptionCount);
+            Assert.Equal(1, telemetryCounter._traceCount);
         }
 
         [Fact]
@@ -307,17 +319,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Checking with empty string here as OTel
             // adds the exception only if it non-null and non-empty.
             // https://github.com/open-telemetry/opentelemetry-dotnet/blob/872a52f5291804c7af19e90307b5cc097b2da709/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L102-L104
-            activity.RecordException(new Exception(""));
+            activity.AddException(new Exception(""));
 
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
 
             Assert.Single(telemetryItems);
-            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
+            Assert.Equal("Request", telemetryItems[0].Name);
+
+            // Verify counters
+            Assert.Equal(1, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         [Fact]
@@ -347,10 +365,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
             var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
+            var (telemetryItems, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
 
             Assert.Single(telemetryItems);
             Assert.Equal("Request", telemetryItems[0].Name);
+
+            // Verify counters
+            Assert.Equal(1, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._exceptionCount);
+            Assert.Equal(0, telemetryCounter._traceCount);
         }
 
         private string? GetExpectedMSlinks(IEnumerable<ActivityLink> links)

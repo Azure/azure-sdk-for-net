@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CassandraTableResource : IJsonModel<CassandraTableData>
     {
+        private static CassandraTableData s_dataDeserializationInstance;
+        private static CassandraTableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CassandraTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraTableData>)Data).Write(writer, options);
 
-        CassandraTableData IJsonModel<CassandraTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraTableData>)Data).Create(ref reader, options);
+        CassandraTableData IJsonModel<CassandraTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraTableData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CassandraTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CassandraTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraTableData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CassandraTableData IPersistableModel<CassandraTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraTableData>(data, options);
+        CassandraTableData IPersistableModel<CassandraTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraTableData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CassandraTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraTableData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CassandraTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraTableData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

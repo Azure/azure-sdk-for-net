@@ -18,8 +18,8 @@ namespace Azure.AI.Inference
     /// <summary> The Embeddings service client. </summary>
 
     [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
-    [CodeGenSuppress("Embed", typeof(IEnumerable<string>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
-    [CodeGenSuppress("EmbedAsync", typeof(IEnumerable<string>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("Embed", typeof(EmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("EmbedAsync", typeof(EmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class EmbeddingsClient
     {
         /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
@@ -49,7 +49,7 @@ namespace Azure.AI.Inference
         /// <param name="embeddingsOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        /// <include file="../Generated/Docs/EmbeddingsClient.xml" path="doc/members/member[@name='EmbedAsync(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
+        /// <include file="./Docs/EmbeddingsClient.xml" path="doc/members/member[@name='EmbedAsync(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
         public virtual async Task<Response<EmbeddingsResult>> EmbedAsync(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
@@ -75,7 +75,7 @@ namespace Azure.AI.Inference
         /// <param name="embeddingsOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
-        /// <include file="../Generated/Docs/EmbeddingsClient.xml" path="doc/members/member[@name='Embed(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
+        /// <include file="./Docs/EmbeddingsClient.xml" path="doc/members/member[@name='Embed(EmbeddingsOptions,ExtraParameters?,CancellationToken)']/*" />
         public virtual Response<EmbeddingsResult> Embed(EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));

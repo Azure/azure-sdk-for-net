@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterIdentity))
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -1705,7 +1705,7 @@ namespace Azure.ResourceManager.ContainerService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1721,7 +1721,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
                     }
                 default:

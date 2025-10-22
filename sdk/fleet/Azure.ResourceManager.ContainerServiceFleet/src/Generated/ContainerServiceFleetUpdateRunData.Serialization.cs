@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
@@ -69,6 +70,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(AutoUpgradeProfileId))
+            {
+                writer.WritePropertyName("autoUpgradeProfileId"u8);
+                writer.WriteStringValue(AutoUpgradeProfileId);
+            }
             writer.WriteEndObject();
         }
 
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ContainerServiceFleetUpdateRunStrategy strategy = default;
             ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default;
             ContainerServiceFleetUpdateRunStatus status = default;
+            ResourceIdentifier autoUpgradeProfileId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +143,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceFleetContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -193,6 +200,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             status = ContainerServiceFleetUpdateRunStatus.DeserializeContainerServiceFleetUpdateRunStatus(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("autoUpgradeProfileId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoUpgradeProfileId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -213,6 +229,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 strategy,
                 managedClusterUpdate,
                 status,
+                autoUpgradeProfileId,
                 serializedAdditionalRawData);
         }
 
@@ -223,7 +240,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support writing '{options.Format}' format.");
             }
@@ -237,7 +254,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerServiceFleetUpdateRunData(document.RootElement, options);
                     }
                 default:

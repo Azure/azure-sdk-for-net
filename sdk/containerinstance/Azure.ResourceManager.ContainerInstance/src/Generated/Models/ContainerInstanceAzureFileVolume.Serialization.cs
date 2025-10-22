@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
             }
+            if (Optional.IsDefined(StorageAccountKeyReference))
+            {
+                writer.WritePropertyName("storageAccountKeyReference"u8);
+                writer.WriteStringValue(StorageAccountKeyReference);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             bool? readOnly = default;
             string storageAccountName = default;
             string storageAccountKey = default;
+            string storageAccountKeyReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +123,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     storageAccountKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("storageAccountKeyReference"u8))
+                {
+                    storageAccountKeyReference = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerInstanceAzureFileVolume(shareName, readOnly, storageAccountName, storageAccountKey, serializedAdditionalRawData);
+            return new ContainerInstanceAzureFileVolume(
+                shareName,
+                readOnly,
+                storageAccountName,
+                storageAccountKey,
+                storageAccountKeyReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceAzureFileVolume>.Write(ModelReaderWriterOptions options)
@@ -133,7 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support writing '{options.Format}' format.");
             }
@@ -147,7 +164,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerInstanceAzureFileVolume(document.RootElement, options);
                     }
                 default:

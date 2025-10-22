@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public StaticCidrsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public StaticCidrsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         StaticCidrList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StaticCidrList.DeserializeStaticCidrList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         StaticCidrList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StaticCidrList.DeserializeStaticCidrList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         StaticCidrData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     {
                         StaticCidrData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         StaticCidrData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         StaticCidrData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StaticCidrData.DeserializeStaticCidrData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         StaticCidrList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StaticCidrList.DeserializeStaticCidrList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         StaticCidrList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StaticCidrList.DeserializeStaticCidrList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

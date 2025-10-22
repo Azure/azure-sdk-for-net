@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Billing
 {
+    public partial class AzureResourceManagerBillingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerBillingContext() { }
+        public static Azure.ResourceManager.Billing.AzureResourceManagerBillingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BillingAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.BillingAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingAccountResource>, System.Collections.IEnumerable
     {
         protected BillingAccountCollection() { }

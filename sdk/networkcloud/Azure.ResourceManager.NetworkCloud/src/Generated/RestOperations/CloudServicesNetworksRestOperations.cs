@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,10 +44,18 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/cloudServicesNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,6 +66,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/cloudServicesNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -66,21 +82,23 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Get a list of cloud services networks in the provided subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudServicesNetworkList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServicesNetworkList>> ListBySubscriptionAsync(string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            using var message = CreateListBySubscriptionRequest(subscriptionId, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -91,21 +109,23 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Get a list of cloud services networks in the provided subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudServicesNetworkList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<CloudServicesNetworkList> ListBySubscription(string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            using var message = CreateListBySubscriptionRequest(subscriptionId, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -114,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -124,10 +144,18 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/cloudServicesNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,6 +168,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetworkCloud/cloudServicesNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -149,22 +185,24 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Get a list of cloud services networks in the provided resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudServicesNetworkList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServicesNetworkList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,22 +214,24 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Get a list of cloud services networks in the provided resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudServicesNetworkList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<CloudServicesNetworkList> ListByResourceGroup(string subscriptionId, string resourceGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +294,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudCloudServicesNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +325,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                     {
                         NetworkCloudCloudServicesNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -310,7 +350,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,6 +365,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(cloudServicesNetworkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -339,17 +387,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -366,17 +416,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -388,7 +440,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +454,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -417,6 +469,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(cloudServicesNetworkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -426,16 +486,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -452,16 +514,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -474,7 +538,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -488,7 +552,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -503,6 +567,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(cloudServicesNetworkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -517,17 +589,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServicesNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, patch, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -544,17 +618,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServicesNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, cloudServicesNetworkName, patch, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -566,7 +642,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -574,7 +650,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -591,22 +667,24 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Get a list of cloud services networks in the provided subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudServicesNetworkList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServicesNetworkList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -618,22 +696,24 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Get a list of cloud services networks in the provided subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudServicesNetworkList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<CloudServicesNetworkList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -642,7 +722,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -650,7 +730,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -668,23 +748,25 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudServicesNetworkList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServicesNetworkList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -697,23 +779,25 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudServicesNetworkList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<CloudServicesNetworkList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CloudServicesNetworkList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServicesNetworkList.DeserializeCloudServicesNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

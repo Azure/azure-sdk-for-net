@@ -43,6 +43,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("timeSpanFormat"u8);
                 writer.WriteObjectValue<object>(TimeSpanFormat);
             }
+            if (Optional.IsDefined(TimeFormat))
+            {
+                writer.WritePropertyName("timeFormat"u8);
+                writer.WriteObjectValue<object>(TimeFormat);
+            }
+            if (Optional.IsDefined(DateFormat))
+            {
+                writer.WritePropertyName("dateFormat"u8);
+                writer.WriteObjectValue<object>(DateFormat);
+            }
             if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
@@ -62,6 +72,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object dateTimeFormat = default;
             object dateTimeOffsetFormat = default;
             object timeSpanFormat = default;
+            object timeFormat = default;
+            object dateFormat = default;
             object culture = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -110,6 +122,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     timeSpanFormat = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("timeFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeFormat = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("dateFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dateFormat = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("culture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -126,6 +156,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 dateTimeFormat,
                 dateTimeOffsetFormat,
                 timeSpanFormat,
+                timeFormat,
+                dateFormat,
                 culture);
         }
 
@@ -133,7 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TypeConversionSettings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTypeConversionSettings(document.RootElement);
         }
 

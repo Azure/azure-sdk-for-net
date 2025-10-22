@@ -406,11 +406,13 @@ namespace Azure.Storage.Test.Shared
                 return "auth token";
             }
 
-            scopes ??= new string[] { "https://storage.azure.com/.default" };
+            scopes ??= Scopes;
             TokenRequestContext tokenRequestContext = new TokenRequestContext(scopes);
             AccessToken accessToken = await TestEnvironment.Credential.GetTokenAsync(tokenRequestContext, CancellationToken.None);
             return accessToken.Token;
         }
+
+        public string[] Scopes => ["https://storage.azure.com/.default"];
 
         public string CreateRandomDirectory(string parentPath, string directoryName = default)
         {

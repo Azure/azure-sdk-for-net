@@ -59,17 +59,18 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            int expectedDataSizeInTerabytes = default;
+            int expectedDataSizeInTeraBytes = default;
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
+            DeviceModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
                 {
-                    expectedDataSizeInTerabytes = property.Value.GetInt32();
+                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("storageLocation"u8))
@@ -87,13 +88,28 @@ namespace Azure.ResourceManager.DataBox.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = property.Value.GetString().ToDeviceModelName();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData, expectedDataSizeInTerabytes);
+            return new DiskScheduleAvailabilityContent(
+                storageLocation,
+                skuName,
+                country,
+                model,
+                serializedAdditionalRawData,
+                expectedDataSizeInTeraBytes);
         }
 
         BinaryData IPersistableModel<DiskScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -103,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
@@ -117,7 +133,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:

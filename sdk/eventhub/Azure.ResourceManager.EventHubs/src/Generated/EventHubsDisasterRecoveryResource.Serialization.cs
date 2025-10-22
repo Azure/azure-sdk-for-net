@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsDisasterRecoveryResource : IJsonModel<EventHubsDisasterRecoveryData>
     {
+        private static EventHubsDisasterRecoveryData s_dataDeserializationInstance;
+        private static EventHubsDisasterRecoveryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventHubsDisasterRecoveryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsDisasterRecoveryData>)Data).Write(writer, options);
 
-        EventHubsDisasterRecoveryData IJsonModel<EventHubsDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsDisasterRecoveryData>)Data).Create(ref reader, options);
+        EventHubsDisasterRecoveryData IJsonModel<EventHubsDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsDisasterRecoveryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsDisasterRecoveryData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
-        EventHubsDisasterRecoveryData IPersistableModel<EventHubsDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsDisasterRecoveryData>(data, options);
+        EventHubsDisasterRecoveryData IPersistableModel<EventHubsDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsDisasterRecoveryData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsDisasterRecoveryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventHubsDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsDisasterRecoveryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

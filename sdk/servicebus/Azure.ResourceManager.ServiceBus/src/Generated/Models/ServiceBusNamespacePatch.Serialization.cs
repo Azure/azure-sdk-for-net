@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceBusContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceBusNamespacePatch(document.RootElement, options);
                     }
                 default:

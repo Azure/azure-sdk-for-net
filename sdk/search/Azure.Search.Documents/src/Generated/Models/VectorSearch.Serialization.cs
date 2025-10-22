@@ -5,24 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class VectorSearch : IUtf8JsonSerializable
+    public partial class VectorSearch : IUtf8JsonSerializable, IJsonModel<VectorSearch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorSearch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VectorSearch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorSearch)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Algorithms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Vectorizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,15 +70,43 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Compressions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static VectorSearch DeserializeVectorSearch(JsonElement element)
+        VectorSearch IJsonModel<VectorSearch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorSearch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVectorSearch(document.RootElement, options);
+        }
+
+        internal static VectorSearch DeserializeVectorSearch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +115,8 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<VectorSearchAlgorithmConfiguration> algorithms = default;
             IList<VectorSearchVectorizer> vectorizers = default;
             IList<VectorSearchCompression> compressions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -80,7 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchProfile> array = new List<VectorSearchProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item));
+                        array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item, options));
                     }
                     profiles = array;
                     continue;
@@ -94,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchAlgorithmConfiguration> array = new List<VectorSearchAlgorithmConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item));
+                        array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item, options));
                     }
                     algorithms = array;
                     continue;
@@ -108,7 +156,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchVectorizer> array = new List<VectorSearchVectorizer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item));
+                        array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item, options));
                     }
                     vectorizers = array;
                     continue;
@@ -122,20 +170,56 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchCompression> array = new List<VectorSearchCompression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchCompression.DeserializeVectorSearchCompression(item));
+                        array.Add(VectorSearchCompression.DeserializeVectorSearchCompression(item, options));
                     }
                     compressions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompression>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompression>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VectorSearch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VectorSearch IPersistableModel<VectorSearch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVectorSearch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VectorSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VectorSearch FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorSearch(document.RootElement);
         }
 
@@ -143,7 +227,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

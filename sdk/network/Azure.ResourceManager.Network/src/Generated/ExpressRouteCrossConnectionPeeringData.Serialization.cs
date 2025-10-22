@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -344,6 +345,358 @@ namespace Azure.ResourceManager.Network
                 ipv6PeeringConfig);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peeringType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeeringType))
+                {
+                    builder.Append("    peeringType: ");
+                    builder.AppendLine($"'{PeeringType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("    state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureASN), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureASN: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureASN))
+                {
+                    builder.Append("    azureASN: ");
+                    builder.AppendLine($"{AzureASN.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeerASN), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peerASN: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeerASN))
+                {
+                    builder.Append("    peerASN: ");
+                    builder.AppendLine($"'{PeerASN.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryPeerAddressPrefix), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryPeerAddressPrefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryPeerAddressPrefix))
+                {
+                    builder.Append("    primaryPeerAddressPrefix: ");
+                    if (PrimaryPeerAddressPrefix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryPeerAddressPrefix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryPeerAddressPrefix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryPeerAddressPrefix), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    secondaryPeerAddressPrefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryPeerAddressPrefix))
+                {
+                    builder.Append("    secondaryPeerAddressPrefix: ");
+                    if (SecondaryPeerAddressPrefix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryPeerAddressPrefix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryPeerAddressPrefix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAzurePort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryAzurePort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryAzurePort))
+                {
+                    builder.Append("    primaryAzurePort: ");
+                    if (PrimaryAzurePort.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryAzurePort}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryAzurePort}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAzurePort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    secondaryAzurePort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryAzurePort))
+                {
+                    builder.Append("    secondaryAzurePort: ");
+                    if (SecondaryAzurePort.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryAzurePort}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryAzurePort}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sharedKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedKey))
+                {
+                    builder.Append("    sharedKey: ");
+                    if (SharedKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SharedKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SharedKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VlanId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vlanId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VlanId))
+                {
+                    builder.Append("    vlanId: ");
+                    builder.AppendLine($"{VlanId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftPeeringConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    microsoftPeeringConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MicrosoftPeeringConfig))
+                {
+                    builder.Append("    microsoftPeeringConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MicrosoftPeeringConfig, options, 4, false, "    microsoftPeeringConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayManagerETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gatewayManagerEtag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GatewayManagerETag))
+                {
+                    builder.Append("    gatewayManagerEtag: ");
+                    if (GatewayManagerETag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GatewayManagerETag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GatewayManagerETag}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastModifiedBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedBy))
+                {
+                    builder.Append("    lastModifiedBy: ");
+                    if (LastModifiedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastModifiedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastModifiedBy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv6PeeringConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ipv6PeeringConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPv6PeeringConfig))
+                {
+                    builder.Append("    ipv6PeeringConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IPv6PeeringConfig, options, 4, false, "    ipv6PeeringConfig: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
@@ -351,7 +704,9 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support writing '{options.Format}' format.");
             }
@@ -365,7 +720,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement, options);
                     }
                 default:

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCacheImportJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         StorageCacheImportJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Create or update an import job. Import jobs are automatically deleted 72 hours after completion. </summary>
+        /// <summary> Create or update an import job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Create or update an import job. Import jobs are automatically deleted 72 hours after completion. </summary>
+        /// <summary> Create or update an import job. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         ImportJobsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         ImportJobsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         ImportJobsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.StorageCache
                 case 200:
                     {
                         ImportJobsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImportJobsListResult.DeserializeImportJobsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

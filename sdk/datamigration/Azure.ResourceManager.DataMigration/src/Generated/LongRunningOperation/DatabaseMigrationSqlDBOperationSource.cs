@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DataMigration
 
         DatabaseMigrationSqlDBResource IOperationSource<DatabaseMigrationSqlDBResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DatabaseMigrationSqlDBData.DeserializeDatabaseMigrationSqlDBData(document.RootElement);
+            var data = ModelReaderWriter.Read<DatabaseMigrationSqlDBData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
             return new DatabaseMigrationSqlDBResource(_client, data);
         }
 
         async ValueTask<DatabaseMigrationSqlDBResource> IOperationSource<DatabaseMigrationSqlDBResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DatabaseMigrationSqlDBData.DeserializeDatabaseMigrationSqlDBData(document.RootElement);
-            return new DatabaseMigrationSqlDBResource(_client, data);
+            var data = ModelReaderWriter.Read<DatabaseMigrationSqlDBData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
+            return await Task.FromResult(new DatabaseMigrationSqlDBResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

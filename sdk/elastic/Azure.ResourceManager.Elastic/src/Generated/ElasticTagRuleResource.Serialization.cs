@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Elastic
 {
     public partial class ElasticTagRuleResource : IJsonModel<ElasticTagRuleData>
     {
+        private static ElasticTagRuleData s_dataDeserializationInstance;
+        private static ElasticTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ElasticTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticTagRuleData>)Data).Write(writer, options);
 
-        ElasticTagRuleData IJsonModel<ElasticTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticTagRuleData>)Data).Create(ref reader, options);
+        ElasticTagRuleData IJsonModel<ElasticTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ElasticTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ElasticTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticTagRuleData>(Data, options, AzureResourceManagerElasticContext.Default);
 
-        ElasticTagRuleData IPersistableModel<ElasticTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticTagRuleData>(data, options);
+        ElasticTagRuleData IPersistableModel<ElasticTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticTagRuleData>(data, options, AzureResourceManagerElasticContext.Default);
 
-        string IPersistableModel<ElasticTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticTagRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ElasticTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

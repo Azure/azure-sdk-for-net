@@ -70,9 +70,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 case "ExceptionData":
                     WriteExceptionData((TelemetryExceptionData)baseData);
                     break;
+                case "EventData":
+                    WriteEventData((TelemetryEventData)baseData);
+                    break;
                 default:
                     output.WriteLine($"***WriteBaseData not implemented for '{baseType}'***");
                     break;
+            }
+        }
+
+        private void WriteEventData(TelemetryEventData eventData)
+        {
+            output.WriteLine($"Name: {eventData.Name}");
+
+            output.WriteLine($"Properties: {eventData.Properties.Count}");
+            foreach (var prop in eventData.Properties)
+            {
+                output.WriteLine($"\t{prop.Key}: {prop.Value}");
             }
         }
 

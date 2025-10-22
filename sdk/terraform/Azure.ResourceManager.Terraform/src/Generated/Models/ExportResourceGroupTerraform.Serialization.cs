@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Terraform.Models
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
+            bool? includeRoleAssignment = default;
+            bool? includeManagedResource = default;
+            IList<string> excludeAzureResource = default;
+            IList<string> excludeTerraformResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,6 +120,52 @@ namespace Azure.ResourceManager.Terraform.Models
                     maskSensitive = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("includeRoleAssignment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeRoleAssignment = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("includeManagedResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeManagedResource = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("excludeAzureResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    excludeAzureResource = array;
+                    continue;
+                }
+                if (property.NameEquals("excludeTerraformResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    excludeTerraformResource = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -127,6 +177,10 @@ namespace Azure.ResourceManager.Terraform.Models
                 targetProvider,
                 fullProperties,
                 maskSensitive,
+                includeRoleAssignment,
+                includeManagedResource,
+                excludeAzureResource ?? new ChangeTrackingList<string>(),
+                excludeTerraformResource ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 resourceGroupName,
                 namePattern);
@@ -139,7 +193,7 @@ namespace Azure.ResourceManager.Terraform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTerraformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExportResourceGroupTerraform)} does not support writing '{options.Format}' format.");
             }
@@ -153,7 +207,7 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExportResourceGroupTerraform(document.RootElement, options);
                     }
                 default:

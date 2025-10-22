@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerSkill : IUtf8JsonSerializable
+    public partial class SearchIndexerSkill : IUtf8JsonSerializable, IJsonModel<SearchIndexerSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexerSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SearchIndexerSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -37,21 +55,49 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue<InputFieldMappingEntry>(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item, options);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SearchIndexerSkill DeserializeSearchIndexerSkill(JsonElement element)
+        SearchIndexerSkill IJsonModel<SearchIndexerSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchIndexerSkill(document.RootElement, options);
+        }
+
+        internal static SearchIndexerSkill DeserializeSearchIndexerSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,38 +106,70 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Skills.Custom.AmlSkill": return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element);
-                    case "#Microsoft.Skills.Custom.WebApiSkill": return WebApiSkill.DeserializeWebApiSkill(element);
-                    case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill": return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element);
-                    case "#Microsoft.Skills.Text.CustomEntityLookupSkill": return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element);
-                    case "#Microsoft.Skills.Text.EntityRecognitionSkill": return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element);
-                    case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill": return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element);
-                    case "#Microsoft.Skills.Text.LanguageDetectionSkill": return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element);
-                    case "#Microsoft.Skills.Text.MergeSkill": return MergeSkill.DeserializeMergeSkill(element);
-                    case "#Microsoft.Skills.Text.PIIDetectionSkill": return PiiDetectionSkill.DeserializePiiDetectionSkill(element);
-                    case "#Microsoft.Skills.Text.SentimentSkill": return SentimentSkill.DeserializeSentimentSkill(element);
-                    case "#Microsoft.Skills.Text.SplitSkill": return SplitSkill.DeserializeSplitSkill(element);
-                    case "#Microsoft.Skills.Text.TranslationSkill": return TextTranslationSkill.DeserializeTextTranslationSkill(element);
-                    case "#Microsoft.Skills.Text.V3.EntityLinkingSkill": return EntityLinkingSkill.DeserializeEntityLinkingSkill(element);
-                    case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill": return EntityRecognitionSkillV3.DeserializeEntityRecognitionSkillV3(element);
-                    case "#Microsoft.Skills.Text.V3.SentimentSkill": return SentimentSkillV3.DeserializeSentimentSkillV3(element);
-                    case "#Microsoft.Skills.Util.ConditionalSkill": return ConditionalSkill.DeserializeConditionalSkill(element);
-                    case "#Microsoft.Skills.Util.DocumentExtractionSkill": return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element);
-                    case "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill": return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element);
-                    case "#Microsoft.Skills.Util.ShaperSkill": return ShaperSkill.DeserializeShaperSkill(element);
-                    case "#Microsoft.Skills.Vision.ImageAnalysisSkill": return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element);
-                    case "#Microsoft.Skills.Vision.OcrSkill": return OcrSkill.DeserializeOcrSkill(element);
-                    case "#Microsoft.Skills.Vision.VectorizeSkill": return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element);
+                    case "#Microsoft.Skills.Custom.AmlSkill": return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
+                    case "#Microsoft.Skills.Custom.ChatCompletionSkill": return ChatCompletionSkill.DeserializeChatCompletionSkill(element, options);
+                    case "#Microsoft.Skills.Custom.WebApiSkill": return WebApiSkill.DeserializeWebApiSkill(element, options);
+                    case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill": return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
+                    case "#Microsoft.Skills.Text.CustomEntityLookupSkill": return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element, options);
+                    case "#Microsoft.Skills.Text.EntityRecognitionSkill": return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element, options);
+                    case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill": return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element, options);
+                    case "#Microsoft.Skills.Text.LanguageDetectionSkill": return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element, options);
+                    case "#Microsoft.Skills.Text.MergeSkill": return MergeSkill.DeserializeMergeSkill(element, options);
+                    case "#Microsoft.Skills.Text.PIIDetectionSkill": return PiiDetectionSkill.DeserializePiiDetectionSkill(element, options);
+                    case "#Microsoft.Skills.Text.SentimentSkill": return SentimentSkill.DeserializeSentimentSkill(element, options);
+                    case "#Microsoft.Skills.Text.SplitSkill": return SplitSkill.DeserializeSplitSkill(element, options);
+                    case "#Microsoft.Skills.Text.TranslationSkill": return TextTranslationSkill.DeserializeTextTranslationSkill(element, options);
+                    case "#Microsoft.Skills.Text.V3.EntityLinkingSkill": return EntityLinkingSkill.DeserializeEntityLinkingSkill(element, options);
+                    case "#Microsoft.Skills.Text.V3.EntityRecognitionSkill": return EntityRecognitionSkillV3.DeserializeEntityRecognitionSkillV3(element, options);
+                    case "#Microsoft.Skills.Text.V3.SentimentSkill": return SentimentSkillV3.DeserializeSentimentSkillV3(element, options);
+                    case "#Microsoft.Skills.Util.ConditionalSkill": return ConditionalSkill.DeserializeConditionalSkill(element, options);
+                    case "#Microsoft.Skills.Util.DocumentExtractionSkill": return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element, options);
+                    case "#Microsoft.Skills.Util.DocumentIntelligenceLayoutSkill": return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
+                    case "#Microsoft.Skills.Util.ShaperSkill": return ShaperSkill.DeserializeShaperSkill(element, options);
+                    case "#Microsoft.Skills.Vision.ImageAnalysisSkill": return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element, options);
+                    case "#Microsoft.Skills.Vision.OcrSkill": return OcrSkill.DeserializeOcrSkill(element, options);
+                    case "#Microsoft.Skills.Vision.VectorizeSkill": return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
                 }
             }
-            return UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element);
+            return UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element, options);
         }
+
+        BinaryData IPersistableModel<SearchIndexerSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchIndexerSkill IPersistableModel<SearchIndexerSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchIndexerSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchIndexerSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchIndexerSkill FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchIndexerSkill(document.RootElement);
         }
 
@@ -99,7 +177,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

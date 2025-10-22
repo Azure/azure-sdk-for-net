@@ -70,10 +70,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
+        /// <param name="etag"> String representing unique etag for the resource document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,6 +85,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
+        [WirePath("properties")]
         public IpamPoolProperties Properties { get; set; }
+        /// <summary> String representing unique etag for the resource document. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
     }
 }

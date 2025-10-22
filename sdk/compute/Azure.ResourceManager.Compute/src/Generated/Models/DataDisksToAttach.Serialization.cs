@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
-                JsonSerializer.Serialize(writer, DiskEncryptionSet);
+                ((IJsonModel<WritableSubResource>)DiskEncryptionSet).Write(writer, options);
             }
             if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    diskEncryptionSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"u8))
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support writing '{options.Format}' format.");
             }
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataDisksToAttach(document.RootElement, options);
                     }
                 default:

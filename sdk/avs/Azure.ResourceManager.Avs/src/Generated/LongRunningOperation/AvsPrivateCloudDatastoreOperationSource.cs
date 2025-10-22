@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Avs
 
         AvsPrivateCloudDatastoreResource IOperationSource<AvsPrivateCloudDatastoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(document.RootElement);
+            var data = ModelReaderWriter.Read<AvsPrivateCloudDatastoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new AvsPrivateCloudDatastoreResource(_client, data);
         }
 
         async ValueTask<AvsPrivateCloudDatastoreResource> IOperationSource<AvsPrivateCloudDatastoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(document.RootElement);
-            return new AvsPrivateCloudDatastoreResource(_client, data);
+            var data = ModelReaderWriter.Read<AvsPrivateCloudDatastoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new AvsPrivateCloudDatastoreResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

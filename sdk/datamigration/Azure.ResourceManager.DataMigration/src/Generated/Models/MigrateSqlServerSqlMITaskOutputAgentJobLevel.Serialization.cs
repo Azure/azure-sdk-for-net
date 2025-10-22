@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string name = default;
             bool? isEnabled = default;
-            MigrationState? state = default;
+            DataMigrationState? state = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             string message = default;
-            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startedOn"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 startedOn,
                 endedOn,
                 message,
-                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>.Write(ModelReaderWriterOptions options)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support writing '{options.Format}' format.");
             }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(document.RootElement, options);
                     }
                 default:

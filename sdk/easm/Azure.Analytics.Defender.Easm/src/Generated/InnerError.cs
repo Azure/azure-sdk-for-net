@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> This is an object containing more specific information than the current object about the error. </summary>
+    /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
     public partial class InnerError
     {
         /// <summary>
@@ -51,48 +51,19 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
-        /// <param name="code"> This is a more specific error code than was provided by the containing error. </param>
-        /// <param name="value"> This is an additional field representing the value that caused the error to help with debugging. </param>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="innererror"> Inner error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InnerError(string code, BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InnerError(string code, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
-            Value = value;
+            Innererror = innererror;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This is a more specific error code than was provided by the containing error. </summary>
+        /// <summary> One of a server-defined set of error codes. </summary>
         public string Code { get; }
-        /// <summary>
-        /// This is an additional field representing the value that caused the error to help with debugging.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Value { get; }
+        /// <summary> Inner error. </summary>
+        public InnerError Innererror { get; }
     }
 }

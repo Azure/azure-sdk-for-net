@@ -11,16 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
+    /// <summary></summary>
     public partial class DeviceRegistryAssetEndpointProfileResource : IJsonModel<DeviceRegistryAssetEndpointProfileData>
     {
+        private static IJsonModel<DeviceRegistryAssetEndpointProfileData> s_dataDeserializationInstance;
+
+        private static IJsonModel<DeviceRegistryAssetEndpointProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceRegistryAssetEndpointProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryAssetEndpointProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryAssetEndpointProfileData>)Data).Write(writer, options);
 
-        DeviceRegistryAssetEndpointProfileData IJsonModel<DeviceRegistryAssetEndpointProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryAssetEndpointProfileData>)Data).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryAssetEndpointProfileData IJsonModel<DeviceRegistryAssetEndpointProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistryAssetEndpointProfileData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        DeviceRegistryAssetEndpointProfileData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(data, options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryAssetEndpointProfileData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        string IPersistableModel<DeviceRegistryAssetEndpointProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryAssetEndpointProfileData>)Data).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistryAssetEndpointProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

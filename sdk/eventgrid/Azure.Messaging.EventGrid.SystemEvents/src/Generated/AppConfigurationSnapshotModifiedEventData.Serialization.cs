@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AppConfigurationSnapshotModifiedEventData : IUtf8JsonSerializable, IJsonModel<AppConfigurationSnapshotModifiedEventData>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
+    [JsonConverter(typeof(AppConfigurationSnapshotModifiedEventDataConverter))]
+    public partial class AppConfigurationSnapshotModifiedEventData : AppConfigurationSnapshotEventData, IJsonModel<AppConfigurationSnapshotModifiedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationSnapshotModifiedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/> for deserialization. </summary>
+        internal AppConfigurationSnapshotModifiedEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationSnapshotModifiedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,88 +35,98 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppConfigurationSnapshotModifiedEventData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        AppConfigurationSnapshotModifiedEventData IJsonModel<AppConfigurationSnapshotModifiedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationSnapshotModifiedEventData IJsonModel<AppConfigurationSnapshotModifiedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppConfigurationSnapshotModifiedEventData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AppConfigurationSnapshotEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppConfigurationSnapshotModifiedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppConfigurationSnapshotModifiedEventData(document.RootElement, options);
         }
 
-        internal static AppConfigurationSnapshotModifiedEventData DeserializeAppConfigurationSnapshotModifiedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppConfigurationSnapshotModifiedEventData DeserializeAppConfigurationSnapshotModifiedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string etag = default;
+            string eTag = default;
             string syncToken = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    eTag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("syncToken"u8))
+                if (prop.NameEquals("syncToken"u8))
                 {
-                    syncToken = property.Value.GetString();
+                    syncToken = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AppConfigurationSnapshotModifiedEventData(name, etag, syncToken, serializedAdditionalRawData);
+            return new AppConfigurationSnapshotModifiedEventData(name, eTag, syncToken, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AppConfigurationSnapshotModifiedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppConfigurationSnapshotModifiedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationSnapshotModifiedEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AppConfigurationSnapshotModifiedEventData IPersistableModel<AppConfigurationSnapshotModifiedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationSnapshotModifiedEventData IPersistableModel<AppConfigurationSnapshotModifiedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppConfigurationSnapshotModifiedEventData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AppConfigurationSnapshotEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppConfigurationSnapshotModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppConfigurationSnapshotModifiedEventData(document.RootElement, options);
                     }
                 default:
@@ -117,22 +134,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppConfigurationSnapshotModifiedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AppConfigurationSnapshotModifiedEventData FromResponse(Response response)
+        internal partial class AppConfigurationSnapshotModifiedEventDataConverter : JsonConverter<AppConfigurationSnapshotModifiedEventData>
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAppConfigurationSnapshotModifiedEventData(document.RootElement);
-        }
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, AppConfigurationSnapshotModifiedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<AppConfigurationSnapshotModifiedEventData>>(model, ModelSerializationExtensions.WireOptions);
+            }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override AppConfigurationSnapshotModifiedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAppConfigurationSnapshotModifiedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementCertificateResource : IJsonModel<ApiManagementCertificateData>
     {
+        private static ApiManagementCertificateData s_dataDeserializationInstance;
+        private static ApiManagementCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCertificateData>)Data).Write(writer, options);
 
-        ApiManagementCertificateData IJsonModel<ApiManagementCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCertificateData>)Data).Create(ref reader, options);
+        ApiManagementCertificateData IJsonModel<ApiManagementCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementCertificateData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementCertificateData IPersistableModel<ApiManagementCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementCertificateData>(data, options);
+        ApiManagementCertificateData IPersistableModel<ApiManagementCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementCertificateData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -116,6 +116,31 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ZonePinning))
+            {
+                writer.WritePropertyName("zonePinning"u8);
+                writer.WriteBooleanValue(ZonePinning.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
+            {
+                writer.WritePropertyName("supportedZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedZones)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFreeLimitExhaustionBehaviors))
+            {
+                writer.WritePropertyName("supportedFreeLimitExhaustionBehaviors"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFreeLimitExhaustionBehaviors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -134,7 +159,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -175,6 +200,9 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
             string computeModel = default;
             IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
+            bool? zonePinning = default;
+            IReadOnlyList<ZonePinningCapability> supportedZones = default;
+            IReadOnlyList<FreeLimitExhaustionBehaviorCapability> supportedFreeLimitExhaustionBehaviors = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -301,6 +329,43 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMaintenanceConfigurations = array;
                     continue;
                 }
+                if (property.NameEquals("zonePinning"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zonePinning = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("supportedZones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ZonePinningCapability> array = new List<ZonePinningCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ZonePinningCapability.DeserializeZonePinningCapability(item, options));
+                    }
+                    supportedZones = array;
+                    continue;
+                }
+                if (property.NameEquals("supportedFreeLimitExhaustionBehaviors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FreeLimitExhaustionBehaviorCapability> array = new List<FreeLimitExhaustionBehaviorCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FreeLimitExhaustionBehaviorCapability.DeserializeFreeLimitExhaustionBehaviorCapability(item, options));
+                    }
+                    supportedFreeLimitExhaustionBehaviors = array;
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -334,6 +399,9 @@ namespace Azure.ResourceManager.Sql.Models
                 supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
                 computeModel,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                zonePinning,
+                supportedZones ?? new ChangeTrackingList<ZonePinningCapability>(),
+                supportedFreeLimitExhaustionBehaviors ?? new ChangeTrackingList<FreeLimitExhaustionBehaviorCapability>(),
                 status,
                 reason,
                 serializedAdditionalRawData);
@@ -579,6 +647,68 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZonePinning), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zonePinning: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ZonePinning))
+                {
+                    builder.Append("  zonePinning: ");
+                    var boolValue = ZonePinning.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedZones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedZones))
+                {
+                    if (SupportedZones.Any())
+                    {
+                        builder.Append("  supportedZones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedZones)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedZones: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFreeLimitExhaustionBehaviors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedFreeLimitExhaustionBehaviors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedFreeLimitExhaustionBehaviors))
+                {
+                    if (SupportedFreeLimitExhaustionBehaviors.Any())
+                    {
+                        builder.Append("  supportedFreeLimitExhaustionBehaviors: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFreeLimitExhaustionBehaviors)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFreeLimitExhaustionBehaviors: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -628,7 +758,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -644,7 +774,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceObjectiveCapability(document.RootElement, options);
                     }
                 default:

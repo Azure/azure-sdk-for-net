@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs.Models;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevTestLabsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevTestLabServiceRunnerData(document.RootElement, options);
                     }
                 default:

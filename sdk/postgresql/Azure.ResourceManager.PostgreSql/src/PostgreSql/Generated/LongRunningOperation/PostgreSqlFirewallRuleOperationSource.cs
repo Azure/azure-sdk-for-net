@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlFirewallRuleResource IOperationSource<PostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlFirewallRuleResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFirewallRuleResource> IOperationSource<PostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(document.RootElement);
-            return new PostgreSqlFirewallRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            return await Task.FromResult(new PostgreSqlFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

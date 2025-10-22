@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryFileTaskRunContent(document.RootElement, options);
                     }
                 default:

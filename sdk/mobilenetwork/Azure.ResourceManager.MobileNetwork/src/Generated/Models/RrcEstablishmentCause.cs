@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Radio connection establishment cause
-    /// Serialized Name: RrcEstablishmentCause
-    /// </summary>
+    /// <summary> Radio connection establishment cause. </summary>
     public readonly partial struct RrcEstablishmentCause : IEquatable<RrcEstablishmentCause>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string MobileTerminatedDataValue = "MobileTerminatedData";
         private const string SmsValue = "SMS";
 
-        /// <summary>
-        /// Emergency
-        /// Serialized Name: RrcEstablishmentCause.Emergency
-        /// </summary>
+        /// <summary> Emergency. </summary>
         public static RrcEstablishmentCause Emergency { get; } = new RrcEstablishmentCause(EmergencyValue);
-        /// <summary>
-        /// MobileOriginatedSignaling
-        /// Serialized Name: RrcEstablishmentCause.MobileOriginatedSignaling
-        /// </summary>
+        /// <summary> MobileOriginatedSignaling. </summary>
         public static RrcEstablishmentCause MobileOriginatedSignaling { get; } = new RrcEstablishmentCause(MobileOriginatedSignalingValue);
-        /// <summary>
-        /// MobileTerminatedSignaling
-        /// Serialized Name: RrcEstablishmentCause.MobileTerminatedSignaling
-        /// </summary>
+        /// <summary> MobileTerminatedSignaling. </summary>
         public static RrcEstablishmentCause MobileTerminatedSignaling { get; } = new RrcEstablishmentCause(MobileTerminatedSignalingValue);
-        /// <summary>
-        /// MobileOriginatedData
-        /// Serialized Name: RrcEstablishmentCause.MobileOriginatedData
-        /// </summary>
+        /// <summary> MobileOriginatedData. </summary>
         public static RrcEstablishmentCause MobileOriginatedData { get; } = new RrcEstablishmentCause(MobileOriginatedDataValue);
-        /// <summary>
-        /// MobileTerminatedData
-        /// Serialized Name: RrcEstablishmentCause.MobileTerminatedData
-        /// </summary>
+        /// <summary> MobileTerminatedData. </summary>
         public static RrcEstablishmentCause MobileTerminatedData { get; } = new RrcEstablishmentCause(MobileTerminatedDataValue);
-        /// <summary>
-        /// SMS
-        /// Serialized Name: RrcEstablishmentCause.SMS
-        /// </summary>
+        /// <summary> SMS. </summary>
         public static RrcEstablishmentCause Sms { get; } = new RrcEstablishmentCause(SmsValue);
         /// <summary> Determines if two <see cref="RrcEstablishmentCause"/> values are the same. </summary>
         public static bool operator ==(RrcEstablishmentCause left, RrcEstablishmentCause right) => left.Equals(right);

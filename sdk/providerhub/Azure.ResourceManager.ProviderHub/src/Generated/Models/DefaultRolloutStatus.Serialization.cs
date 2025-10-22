@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("subscriptionReregistrationResult"u8);
                 writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
             }
+            if (Optional.IsDefined(ManifestCheckinStatus))
+            {
+                writer.WritePropertyName("manifestCheckinStatus"u8);
+                writer.WriteObjectValue(ManifestCheckinStatus, options);
+            }
         }
 
         DefaultRolloutStatus IJsonModel<DefaultRolloutStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TrafficRegionCategory? nextTrafficRegion = default;
             DateTimeOffset? nextTrafficRegionScheduledTime = default;
             SubscriptionReregistrationResult? subscriptionReregistrationResult = default;
+            CheckinManifestInfo manifestCheckinStatus = default;
             IList<AzureLocation> completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,6 +112,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     subscriptionReregistrationResult = new SubscriptionReregistrationResult(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("manifestCheckinStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manifestCheckinStatus = CheckinManifestInfo.DeserializeCheckinManifestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("completedRegions"u8))
@@ -148,7 +163,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 serializedAdditionalRawData,
                 nextTrafficRegion,
                 nextTrafficRegionScheduledTime,
-                subscriptionReregistrationResult);
+                subscriptionReregistrationResult,
+                manifestCheckinStatus);
         }
 
         BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)
@@ -158,7 +174,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DefaultRolloutStatus)} does not support writing '{options.Format}' format.");
             }
@@ -172,7 +188,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDefaultRolloutStatus(document.RootElement, options);
                     }
                 default:

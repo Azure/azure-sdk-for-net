@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ComputeFleet.Models;
@@ -55,13 +56,12 @@ namespace Azure.ResourceManager.ComputeFleet
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
         }
 
@@ -128,8 +128,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.ComputeFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComputeFleetData)} does not support writing '{options.Format}' format.");
             }
@@ -225,7 +224,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetData(document.RootElement, options);
                     }
                 default:

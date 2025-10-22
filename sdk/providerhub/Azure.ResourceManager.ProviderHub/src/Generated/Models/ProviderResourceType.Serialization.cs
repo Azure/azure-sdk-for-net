@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("routingType"u8);
                 writer.WriteStringValue(RoutingType.Value.ToString());
             }
+            if (Optional.IsDefined(AdditionalOptions))
+            {
+                writer.WritePropertyName("additionalOptions"u8);
+                writer.WriteStringValue(AdditionalOptions.Value.ToString());
+            }
+            if (Optional.IsDefined(CrossTenantTokenValidation))
+            {
+                writer.WritePropertyName("crossTenantTokenValidation"u8);
+                writer.WriteStringValue(CrossTenantTokenValidation.Value.ToString());
+            }
             if (Optional.IsDefined(ResourceValidation))
             {
                 writer.WritePropertyName("resourceValidation"u8);
@@ -56,6 +66,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in AllowedUnauthorizedActions)
                 {
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AllowedUnauthorizedActionsExtensions))
+            {
+                writer.WritePropertyName("allowedUnauthorizedActionsExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedUnauthorizedActionsExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +150,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                using (JsonDocument document = JsonDocument.Parse(Metadata, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -221,6 +241,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsDefined(QuotaRule))
+            {
+                writer.WritePropertyName("quotaRule"u8);
+                writer.WriteObjectValue(QuotaRule, options);
+            }
+            if (Optional.IsCollectionDefined(Notifications))
+            {
+                writer.WritePropertyName("notifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in Notifications)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LinkedNotificationRules))
+            {
+                writer.WritePropertyName("linkedNotificationRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedNotificationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceProviderAuthorizationRules))
+            {
+                writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
+                writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -229,7 +279,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -260,8 +310,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string name = default;
             ResourceRoutingType? routingType = default;
+            AdditionalOptionResourceType? additionalOptions = default;
+            CrossTenantTokenValidation? crossTenantTokenValidation = default;
             ResourceValidation? resourceValidation = default;
             IReadOnlyList<string> allowedUnauthorizedActions = default;
+            IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = default;
             IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings = default;
             IReadOnlyList<LinkedAccessCheck> linkedAccessChecks = default;
             string defaultApiVersion = default;
@@ -272,16 +325,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IdentityManagement identityManagement = default;
             BinaryData metadata = default;
             IReadOnlyList<string> requiredFeatures = default;
-            FeaturesRule featuresRule = default;
+            ProviderFeaturesRule featuresRule = default;
             IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
-            RequestHeaderOptions requestHeaderOptions = default;
+            ProviderRequestHeaderOptions requestHeaderOptions = default;
             string skuLink = default;
             IReadOnlyList<string> disallowedActionVerbs = default;
             TemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
             ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            ProviderQuotaRule quotaRule = default;
+            IReadOnlyList<ProviderNotification> notifications = default;
+            IReadOnlyList<LinkedNotificationRule> linkedNotificationRules = default;
+            ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,6 +355,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     routingType = new ResourceRoutingType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("additionalOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalOptions = new AdditionalOptionResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("crossTenantTokenValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossTenantTokenValidation = new CrossTenantTokenValidation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceValidation"u8))
@@ -321,6 +396,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(item.GetString());
                     }
                     allowedUnauthorizedActions = array;
+                    continue;
+                }
+                if (property.NameEquals("allowedUnauthorizedActionsExtensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AllowedUnauthorizedActionsExtension> array = new List<AllowedUnauthorizedActionsExtension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AllowedUnauthorizedActionsExtension.DeserializeAllowedUnauthorizedActionsExtension(item, options));
+                    }
+                    allowedUnauthorizedActionsExtensions = array;
                     continue;
                 }
                 if (property.NameEquals("authorizationActionMappings"u8))
@@ -445,7 +534,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionStateRules"u8))
@@ -482,7 +571,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skuLink"u8))
@@ -550,6 +639,52 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceDeletionPolicy = new ManifestResourceDeletionPolicy(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("quotaRule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quotaRule = ProviderQuotaRule.DeserializeProviderQuotaRule(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("notifications"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProviderNotification> array = new List<ProviderNotification>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProviderNotification.DeserializeProviderNotification(item, options));
+                    }
+                    notifications = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedNotificationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LinkedNotificationRule> array = new List<LinkedNotificationRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LinkedNotificationRule.DeserializeLinkedNotificationRule(item, options));
+                    }
+                    linkedNotificationRules = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceProviderAuthorizationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -559,8 +694,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderResourceType(
                 name,
                 routingType,
+                additionalOptions,
+                crossTenantTokenValidation,
                 resourceValidation,
                 allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
+                allowedUnauthorizedActionsExtensions ?? new ChangeTrackingList<AllowedUnauthorizedActionsExtension>(),
                 authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
                 linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
                 defaultApiVersion,
@@ -581,6 +719,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
                 resourceDeletionPolicy,
+                quotaRule,
+                notifications ?? new ChangeTrackingList<ProviderNotification>(),
+                linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),
+                resourceProviderAuthorizationRules,
                 serializedAdditionalRawData);
         }
 
@@ -591,7 +733,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{options.Format}' format.");
             }
@@ -605,7 +747,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeProviderResourceType(document.RootElement, options);
                     }
                 default:

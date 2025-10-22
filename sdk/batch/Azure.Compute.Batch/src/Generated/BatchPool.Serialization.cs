@@ -44,15 +44,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -175,6 +175,16 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CertificateReferences))
+            {
+                writer.WritePropertyName("certificateReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in CertificateReferences)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
@@ -215,10 +225,10 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Stats))
+            if (options.Format != "W" && Optional.IsDefined(PoolStatistics))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                writer.WriteObjectValue(PoolStatistics, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -258,7 +268,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -289,8 +299,8 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             string displayName = default;
-            string url = default;
-            string eTag = default;
+            Uri url = default;
+            ETag? eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchPoolState? state = default;
@@ -313,11 +323,12 @@ namespace Azure.Compute.Batch
             bool? enableInterNodeCommunication = default;
             NetworkConfiguration networkConfiguration = default;
             BatchStartTask startTask = default;
+            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences = default;
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             IReadOnlyList<UserAccount> userAccounts = default;
-            IReadOnlyList<MetadataItem> metadata = default;
+            IReadOnlyList<BatchMetadataItem> metadata = default;
             BatchPoolStatistics stats = default;
             IReadOnlyList<MountConfiguration> mountConfiguration = default;
             BatchPoolIdentity identity = default;
@@ -340,12 +351,20 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    eTag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
@@ -548,6 +567,20 @@ namespace Azure.Compute.Batch
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("certificateReferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
+                    }
+                    certificateReferences = array;
+                    continue;
+                }
                 if (property.NameEquals("applicationPackageReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -600,10 +633,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<MetadataItem> array = new List<MetadataItem>();
+                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
+                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -700,11 +733,12 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
+                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
-                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 stats,
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 identity,
@@ -721,7 +755,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPool)} does not support writing '{options.Format}' format.");
             }
@@ -735,7 +769,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchPool(document.RootElement, options);
                     }
                 default:
@@ -749,7 +783,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchPool FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchPool(document.RootElement);
         }
 

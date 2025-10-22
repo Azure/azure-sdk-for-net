@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridComputeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridComputePatchSettingsStatus(document.RootElement, options);
                     }
                 default:

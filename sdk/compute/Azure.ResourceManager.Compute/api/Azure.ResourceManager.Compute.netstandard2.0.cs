@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.AvailabilitySetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.AvailabilitySetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.AvailabilitySetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -42,6 +43,10 @@ namespace Azure.ResourceManager.Compute
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CancelMigrationToVirtualMachineScaleSet(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelMigrationToVirtualMachineScaleSetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ConvertToVirtualMachineScaleSet(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ConvertToVirtualMachineScaleSetAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string availabilitySetName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -53,6 +58,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response StartMigrationToVirtualMachineScaleSet(Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StartMigrationToVirtualMachineScaleSetAsync(Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Compute.AvailabilitySetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.AvailabilitySetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.AvailabilitySetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.AvailabilitySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.AvailabilitySetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -60,6 +67,14 @@ namespace Azure.ResourceManager.Compute
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.AvailabilitySetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource> Update(Azure.ResourceManager.Compute.Models.AvailabilitySetPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource>> UpdateAsync(Azure.ResourceManager.Compute.Models.AvailabilitySetPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ValidateMigrationToVirtualMachineScaleSet(Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateMigrationToVirtualMachineScaleSetAsync(Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzureResourceManagerComputeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerComputeContext() { }
+        public static Azure.ResourceManager.Compute.AzureResourceManagerComputeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class CapacityReservationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CapacityReservationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservationResource>, System.Collections.IEnumerable
     {
@@ -86,6 +101,7 @@ namespace Azure.ResourceManager.Compute
         public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ReservationId { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ScheduleProfile ScheduleProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
@@ -121,6 +137,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -796,6 +813,8 @@ namespace Azure.ResourceManager.Compute
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetVirtualMachineImageSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineImage> GetVirtualMachineImagesWithProperties(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImage> GetVirtualMachineImagesWithPropertiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineResource GetVirtualMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Compute.Models.RunCommandDocument> GetVirtualMachineRunCommand(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.RunCommandDocument>> GetVirtualMachineRunCommandAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1203,24 +1222,24 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskRestorePointData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.DiskRestorePointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.DiskRestorePointData>
     {
-        internal DiskRestorePointData() { }
-        public float? CompletionPercent { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } }
+        public DiskRestorePointData() { }
+        public float? CompletionPercent { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } }
         public string FamilyId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public int? LogicalSectorSize { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
         public string ReplicationState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DiskSecurityProfile SecurityProfile { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
         public Azure.Core.AzureLocation? SourceResourceLocation { get { throw null; } }
         public string SourceUniqueId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } }
-        public bool? SupportsHibernation { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } set { } }
+        public bool? SupportsHibernation { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.DiskRestorePointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.DiskRestorePointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1705,6 +1724,7 @@ namespace Azure.ResourceManager.Compute
     public partial class ManagedDiskData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.ManagedDiskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.ManagedDiskData>
     {
         public ManagedDiskData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay? AvailabilityActionOnDiskDelay { get { throw null; } set { } }
         public bool? BurstingEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? BurstingEnabledOn { get { throw null; } }
         public float? CompletionPercent { get { throw null; } set { } }
@@ -2139,6 +2159,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SnapshotAccessState? SnapshotAccessState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } set { } }
         public bool? SupportsHibernation { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
@@ -2479,6 +2500,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Models.VirtualMachineInstallPatchesResult>> InstallPatchesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.VirtualMachineInstallPatchesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineInstanceView> InstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineInstanceView>> InstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation MigrateToVirtualMachineScaleSet(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> MigrateToVirtualMachineScaleSetAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PerformMaintenance(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PerformMaintenanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PowerOff(Azure.WaitUntil waitUntil, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2622,6 +2645,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.OrchestrationMode? OrchestrationMode { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? Overprovision { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachinePlacement Placement { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
@@ -2786,6 +2810,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ScaleOut(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ScaleOutAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SetOrchestrationServiceState(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.OrchestrationServiceStateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SetOrchestrationServiceStateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.OrchestrationServiceStateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2879,29 +2905,50 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetVmData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData>
     {
         public VirtualMachineScaleSetVmData(Azure.Core.AzureLocation location) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public string ETag { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string InstanceId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView InstanceView { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? LatestModelApplied { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string LicenseType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ModelDefinitionApplied { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile OSProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePlan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties Properties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ProvisioningState { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus? ResilientVmDeletionStatus { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Resources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string UserData { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string VmId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3262,6 +3309,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetVirtualMachineImageSkus(Azure.Core.AzureLocation location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(Azure.Core.AzureLocation location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineImage> GetVirtualMachineImagesWithProperties(Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImage> GetVirtualMachineImagesWithPropertiesAsync(Azure.ResourceManager.Compute.Models.SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.RunCommandDocument> GetVirtualMachineRunCommand(Azure.Core.AzureLocation location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.RunCommandDocument>> GetVirtualMachineRunCommandAsync(Azure.Core.AzureLocation location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.RunCommandDocumentBase> GetVirtualMachineRunCommands(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3308,6 +3357,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal AccessUri() { }
         public string AccessSas { get { throw null; } }
         public string SecurityDataAccessSas { get { throw null; } }
+        public string SecurityMetadataAccessSas { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.AccessUri System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AccessUri>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AccessUri>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3373,6 +3423,17 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.AggregatedReplicationState left, Azure.ResourceManager.Compute.Models.AggregatedReplicationState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AllInstancesDown : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>
+    {
+        public AllInstancesDown() { }
+        public bool? AutomaticallyApprove { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.AllInstancesDown System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.AllInstancesDown System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AllInstancesDown>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArchitectureType : System.IEquatable<Azure.ResourceManager.Compute.Models.ArchitectureType>
     {
@@ -3393,24 +3454,38 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public static partial class ArmComputeModelFactory
     {
-        public static Azure.ResourceManager.Compute.Models.AccessUri AccessUri(string accessSas = null, string securityDataAccessSas = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.AccessUri AccessUri(string accessSas, string securityDataAccessSas) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.AccessUri AccessUri(string accessSas = null, string securityDataAccessSas = null, string securityMetadataAccessSas = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.AvailabilitySetData AvailabilitySetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines, Azure.Core.ResourceIdentifier proximityPlacementGroupId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses) { throw null; }
-        public static Azure.ResourceManager.Compute.AvailabilitySetData AvailabilitySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.AvailabilitySetData AvailabilitySetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines, Azure.Core.ResourceIdentifier proximityPlacementGroupId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy) { throw null; }
+        public static Azure.ResourceManager.Compute.AvailabilitySetData AvailabilitySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.Models.AvailabilitySetPatch AvailabilitySetPatch(System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Compute.Models.ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines, Azure.Core.ResourceIdentifier proximityPlacementGroupId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.AvailabilitySetPatch AvailabilitySetPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.AvailabilitySetPatch AvailabilitySetPatch(System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Compute.Models.ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines, Azure.Core.ResourceIdentifier proximityPlacementGroupId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.AvailabilitySetPatch AvailabilitySetPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualMachines = null, Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.AvailablePatchSummary AvailablePatchSummary(Azure.ResourceManager.Compute.Models.PatchOperationStatus? status = default(Azure.ResourceManager.Compute.Models.PatchOperationStatus?), string assessmentActivityId = null, bool? rebootPending = default(bool?), int? criticalAndSecurityPatchCount = default(int?), int? otherPatchCount = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.ComputeApiError error = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView BootDiagnosticsInstanceView(System.Uri consoleScreenshotBlobUri = null, System.Uri serialConsoleLogBlobUri = null, Azure.ResourceManager.Compute.Models.InstanceViewStatus status = null) { throw null; }
-        public static Azure.ResourceManager.Compute.CapacityReservationData CapacityReservationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, string reservationId = null, int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, System.DateTimeOffset? provisioningOn = default(System.DateTimeOffset?), string provisioningState = null, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.CapacityReservationData CapacityReservationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku, System.Collections.Generic.IEnumerable<string> zones, string reservationId, int? platformFaultDomainCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, System.DateTimeOffset? provisioningOn, string provisioningState, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView, System.DateTimeOffset? timeCreated) { throw null; }
+        public static Azure.ResourceManager.Compute.CapacityReservationData CapacityReservationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, string reservationId = null, int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, System.DateTimeOffset? provisioningOn = default(System.DateTimeOffset?), string provisioningState = null, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.ScheduleProfile scheduleProfile = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> zones, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds) { throw null; }
+        public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null, Azure.ResourceManager.Compute.Models.CapacityReservationType? reservationType = default(Azure.ResourceManager.Compute.Models.CapacityReservationType?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.CapacityReservationGroupData CapacityReservationGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> zones, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> instanceViewCapacityReservations) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView CapacityReservationGroupInstanceView(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> sharedSubscriptionIds = null) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch CapacityReservationGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch CapacityReservationGroupPatch(System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationGroupPatch CapacityReservationGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> capacityReservations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView instanceView = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sharingSubscriptionIds = null, Azure.ResourceManager.Compute.Models.CapacityReservationType? reservationType = default(Azure.ResourceManager.Compute.Models.CapacityReservationType?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView CapacityReservationInstanceView(Azure.ResourceManager.Compute.Models.CapacityReservationUtilization utilizationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName CapacityReservationInstanceViewWithName(Azure.ResourceManager.Compute.Models.CapacityReservationUtilization utilizationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.CapacityReservationPatch CapacityReservationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, string reservationId = null, int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, System.DateTimeOffset? provisioningOn = default(System.DateTimeOffset?), string provisioningState = null, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationPatch CapacityReservationPatch(System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Compute.Models.ComputeSku sku, string reservationId, int? platformFaultDomainCount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated, System.DateTimeOffset? provisioningOn, string provisioningState, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView, System.DateTimeOffset? timeCreated) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationPatch CapacityReservationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, string reservationId = null, int? platformFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAssociated = null, System.DateTimeOffset? provisioningOn = default(System.DateTimeOffset?), string provisioningState = null, Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView instanceView = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.ScheduleProfile scheduleProfile = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CapacityReservationUtilization CapacityReservationUtilization(int? currentCapacity = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachinesAllocated = null) { throw null; }
         public static Azure.ResourceManager.Compute.CloudServiceData CloudServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Uri packageUri = null, string configuration = null, System.Uri configurationUri = null, bool? startCloudService = default(bool?), bool? allowModelOverride = default(bool?), Azure.ResourceManager.Compute.Models.CloudServiceUpgradeMode? upgradeMode = default(Azure.ResourceManager.Compute.Models.CloudServiceUpgradeMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties> roles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup> osSecrets = null, Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile networkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.CloudServiceExtension> extensions = null, string provisioningState = null, string uniqueId = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CloudServiceExtension CloudServiceExtension(string name = null, string publisher = null, string cloudServiceExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault = null, string forceUpdateTag = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> rolesAppliedTo = null) { throw null; }
@@ -3460,10 +3535,13 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView DedicatedHostInstanceView(string assetId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.DedicatedHostAllocatableVm> availableCapacityAllocatableVms = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName DedicatedHostInstanceViewWithName(string assetId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.DedicatedHostAllocatableVm> availableCapacityAllocatableVms = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.DedicatedHostPatch DedicatedHostPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> virtualMachines = null, Azure.ResourceManager.Compute.Models.DedicatedHostLicenseType? licenseType = default(Azure.ResourceManager.Compute.Models.DedicatedHostLicenseType?), System.DateTimeOffset? provisioningOn = default(System.DateTimeOffset?), string provisioningState = null, Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView instanceView = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = default(bool?), Azure.Core.ResourceIdentifier defaultVirtualMachineScaleSetId = null) { throw null; }
         public static Azure.ResourceManager.Compute.DiskAccessData DiskAccessData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.Models.DiskCreationData DiskCreationData(Azure.ResourceManager.Compute.Models.DiskCreateOption createOption, Azure.Core.ResourceIdentifier storageAccountId, Azure.ResourceManager.Compute.Models.ImageDiskReference imageReference, Azure.ResourceManager.Compute.Models.ImageDiskReference galleryImageReference, System.Uri sourceUri, Azure.Core.ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, System.Uri securityDataUri, bool? isPerformancePlusEnabled, Azure.Core.ResourceIdentifier elasticSanResourceId) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskCreationData DiskCreationData(Azure.ResourceManager.Compute.Models.DiskCreateOption createOption = default(Azure.ResourceManager.Compute.Models.DiskCreateOption), Azure.Core.ResourceIdentifier storageAccountId = null, Azure.ResourceManager.Compute.Models.ImageDiskReference imageReference = null, Azure.ResourceManager.Compute.Models.ImageDiskReference galleryImageReference = null, System.Uri sourceUri = null, Azure.Core.ResourceIdentifier sourceResourceId = null, string sourceUniqueId = null, long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), System.Uri securityDataUri = null, bool? isPerformancePlusEnabled = default(bool?), Azure.Core.ResourceIdentifier elasticSanResourceId = null, Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default(Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.DiskCreationData DiskCreationData(Azure.ResourceManager.Compute.Models.DiskCreateOption createOption, Azure.Core.ResourceIdentifier storageAccountId, Azure.ResourceManager.Compute.Models.ImageDiskReference imageReference, Azure.ResourceManager.Compute.Models.ImageDiskReference galleryImageReference, System.Uri sourceUri, Azure.Core.ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, System.Uri securityDataUri, bool? isPerformancePlusEnabled, Azure.Core.ResourceIdentifier elasticSanResourceId, Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.DiskCreationData DiskCreationData(Azure.ResourceManager.Compute.Models.DiskCreateOption createOption = default(Azure.ResourceManager.Compute.Models.DiskCreateOption), Azure.Core.ResourceIdentifier storageAccountId = null, Azure.ResourceManager.Compute.Models.ImageDiskReference imageReference = null, Azure.ResourceManager.Compute.Models.ImageDiskReference galleryImageReference = null, System.Uri sourceUri = null, Azure.Core.ResourceIdentifier sourceResourceId = null, string sourceUniqueId = null, long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), System.Uri securityDataUri = null, System.Uri securityMetadataUri = null, bool? isPerformancePlusEnabled = default(bool?), Azure.Core.ResourceIdentifier elasticSanResourceId = null, Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default(Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption?), long? instantAccessDurationMinutes = default(long?)) { throw null; }
         public static Azure.ResourceManager.Compute.DiskEncryptionSetData DiskEncryptionSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Compute.Models.DiskEncryptionSetType? encryptionType = default(Azure.ResourceManager.Compute.Models.DiskEncryptionSetType?), Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet activeKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet> previousKeys = null, string provisioningState = null, bool? rotationToLatestKeyVersionEnabled = default(bool?), System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.ComputeApiError autoKeyRotationError = null, string federatedClientId = null) { throw null; }
         public static Azure.ResourceManager.Compute.DiskImageData DiskImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.Core.ResourceIdentifier sourceVirtualMachineId = null, Azure.ResourceManager.Compute.Models.ImageStorageProfile storageProfile = null, string provisioningState = null, Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.DiskImagePatch DiskImagePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.ResourceIdentifier sourceVirtualMachineId = null, Azure.ResourceManager.Compute.Models.ImageStorageProfile storageProfile = null, string provisioningState = null, Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?)) { throw null; }
@@ -3526,9 +3604,15 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.LogAnalytics LogAnalytics(string logAnalyticsOutput = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.LogAnalyticsInputBase LogAnalyticsInputBase(System.Uri blobContainerSasUri = null, System.DateTimeOffset fromTime = default(System.DateTimeOffset), System.DateTimeOffset toTime = default(System.DateTimeOffset), bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?), bool? groupByClientApplicationId = default(bool?), bool? groupByUserAgent = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed = default(bool?), System.DateTimeOffset? preMaintenanceWindowStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? preMaintenanceWindowEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceWindowStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceWindowEndOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.MaintenanceOperationResultCodeType? lastOperationResultCode = default(Azure.ResourceManager.Compute.Models.MaintenanceOperationResultCodeType?), string lastOperationMessage = null) { throw null; }
-        public static Azure.ResourceManager.Compute.ManagedDiskData ManagedDiskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier managedBy = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> managedByExtended = null, Azure.ResourceManager.Compute.Models.DiskSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?), Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan = null, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, Azure.ResourceManager.Compute.Models.DiskCreationData creationData = null, int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = null, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, string provisioningState = null, long? diskIopsReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIopsReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), Azure.ResourceManager.Compute.Models.DiskState? diskState = default(Azure.ResourceManager.Compute.Models.DiskState?), Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, int? maxShares = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.ShareInfoElement> shareInfo = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, System.DateTimeOffset? burstingEnabledOn = default(System.DateTimeOffset?), string tier = null, bool? burstingEnabled = default(bool?), string propertyUpdatesInProgressTargetTier = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskSecurityProfile securityProfile = null, float? completionPercent = default(float?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?), bool? isOptimizedForFrequentAttach = default(bool?), System.DateTimeOffset? lastOwnershipUpdateOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ManagedDiskPatch ManagedDiskPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.DiskSku sku = null, Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), int? diskSizeGB = default(int?), Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, long? diskIopsReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIopsReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, string tier = null, bool? burstingEnabled = default(bool?), Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan = null, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, string propertyUpdatesInProgressTargetTier = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?), bool? isOptimizedForFrequentAttach = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary OrchestrationServiceSummary(Azure.ResourceManager.Compute.Models.OrchestrationServiceName? serviceName = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceName?), Azure.ResourceManager.Compute.Models.OrchestrationServiceState? serviceState = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.ManagedDiskData ManagedDiskData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier managedBy, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> managedByExtended, Azure.ResourceManager.Compute.Models.DiskSku sku, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, System.DateTimeOffset? timeCreated, Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType, Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration, Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities, Azure.ResourceManager.Compute.Models.DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, Azure.ResourceManager.Compute.Models.DiskState? diskState, Azure.ResourceManager.Compute.Models.DiskEncryption encryption, int? maxShares, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.ShareInfoElement> shareInfo, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy, Azure.Core.ResourceIdentifier diskAccessId, System.DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, Azure.ResourceManager.Compute.Models.DiskSecurityProfile securityProfile, float? completionPercent, Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, System.DateTimeOffset? lastOwnershipUpdateOn) { throw null; }
+        public static Azure.ResourceManager.Compute.ManagedDiskData ManagedDiskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier managedBy = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> managedByExtended = null, Azure.ResourceManager.Compute.Models.DiskSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?), Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan = null, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, Azure.ResourceManager.Compute.Models.DiskCreationData creationData = null, int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = null, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, string provisioningState = null, long? diskIopsReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIopsReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), Azure.ResourceManager.Compute.Models.DiskState? diskState = default(Azure.ResourceManager.Compute.Models.DiskState?), Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, int? maxShares = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.ShareInfoElement> shareInfo = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, System.DateTimeOffset? burstingEnabledOn = default(System.DateTimeOffset?), string tier = null, bool? burstingEnabled = default(bool?), string propertyUpdatesInProgressTargetTier = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskSecurityProfile securityProfile = null, float? completionPercent = default(float?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?), bool? isOptimizedForFrequentAttach = default(bool?), System.DateTimeOffset? lastOwnershipUpdateOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default(Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.ManagedDiskPatch ManagedDiskPatch(System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Compute.Models.DiskSku sku, Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType, int? diskSizeGB, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, Azure.ResourceManager.Compute.Models.DiskEncryption encryption, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy, Azure.Core.ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ManagedDiskPatch ManagedDiskPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.DiskSku sku = null, Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), int? diskSizeGB = default(int?), Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, long? diskIopsReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIopsReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, string tier = null, bool? burstingEnabled = default(bool?), Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan = null, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, string propertyUpdatesInProgressTargetTier = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?), bool? isOptimizedForFrequentAttach = default(bool?), Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default(Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary OrchestrationServiceSummary(Azure.ResourceManager.Compute.Models.OrchestrationServiceName? serviceName, Azure.ResourceManager.Compute.Models.OrchestrationServiceState? serviceState) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary OrchestrationServiceSummary(Azure.ResourceManager.Compute.Models.OrchestrationServiceName? serviceName = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceName?), Azure.ResourceManager.Compute.Models.OrchestrationServiceState? serviceState = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceState?), Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus? latestOperationStatus = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus?), System.DateTimeOffset? lastStatusChangedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase OSVersionPropertiesBase(string version = null, string label = null, bool? isDefault = default(bool?), bool? isActive = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.PatchInstallationDetail PatchInstallationDetail(string patchId = null, string name = null, string version = null, string kbId = null, System.Collections.Generic.IEnumerable<string> classifications = null, Azure.ResourceManager.Compute.Models.PatchInstallationState? installationState = default(Azure.ResourceManager.Compute.Models.PatchInstallationState?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string uniqueId = null) { throw null; }
@@ -3576,7 +3660,10 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.ShareInfoElement ShareInfoElement(System.Uri vmUri = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.SharingProfile SharingProfile(Azure.ResourceManager.Compute.Models.GallerySharingPermissionType? permission = default(Azure.ResourceManager.Compute.Models.GallerySharingPermissionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.SharingProfileGroup> groups = null, Azure.ResourceManager.Compute.Models.CommunityGalleryInfo communityGalleryInfo = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.SharingStatus SharingStatus(Azure.ResourceManager.Compute.Models.SharingState? aggregatedState = default(Azure.ResourceManager.Compute.Models.SharingState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.RegionalSharingStatus> summary = null) { throw null; }
-        public static Azure.ResourceManager.Compute.SnapshotData SnapshotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string managedBy = null, Azure.ResourceManager.Compute.Models.SnapshotSku sku = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?), Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan = null, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, Azure.ResourceManager.Compute.Models.DiskCreationData creationData = null, int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), Azure.ResourceManager.Compute.Models.DiskState? diskState = default(Azure.ResourceManager.Compute.Models.DiskState?), string uniqueId = null, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, string provisioningState = null, bool? incremental = default(bool?), string incrementalSnapshotFamilyId = null, Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, Azure.ResourceManager.Compute.Models.DiskSecurityProfile securityProfile = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), float? completionPercent = default(float?), Azure.ResourceManager.Compute.Models.CopyCompletionError copyCompletionError = null, Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.SnapshotData SnapshotData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string managedBy, Azure.ResourceManager.Compute.Models.SnapshotSku sku, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, System.DateTimeOffset? timeCreated, Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType, Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration, Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities, Azure.ResourceManager.Compute.Models.DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, Azure.ResourceManager.Compute.Models.DiskState? diskState, string uniqueId, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, Azure.ResourceManager.Compute.Models.DiskEncryption encryption, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy, Azure.Core.ResourceIdentifier diskAccessId, Azure.ResourceManager.Compute.Models.DiskSecurityProfile securityProfile, bool? supportsHibernation, Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, Azure.ResourceManager.Compute.Models.CopyCompletionError copyCompletionError, Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode) { throw null; }
+        public static Azure.ResourceManager.Compute.SnapshotData SnapshotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string managedBy = null, Azure.ResourceManager.Compute.Models.SnapshotSku sku = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?), Azure.ResourceManager.Compute.Models.DiskPurchasePlan purchasePlan = null, Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, Azure.ResourceManager.Compute.Models.DiskCreationData creationData = null, int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), Azure.ResourceManager.Compute.Models.DiskState? diskState = default(Azure.ResourceManager.Compute.Models.DiskState?), string uniqueId = null, Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, string provisioningState = null, bool? incremental = default(bool?), string incrementalSnapshotFamilyId = null, Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, Azure.ResourceManager.Compute.Models.DiskSecurityProfile securityProfile = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), float? completionPercent = default(float?), Azure.ResourceManager.Compute.Models.CopyCompletionError copyCompletionError = null, Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?), Azure.ResourceManager.Compute.Models.SnapshotAccessState? snapshotAccessState = default(Azure.ResourceManager.Compute.Models.SnapshotAccessState?)) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.SnapshotPatch SnapshotPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.SnapshotSku sku = null, Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? osType = default(Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType?), int? diskSizeGB = default(int?), Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup encryptionSettingsGroup = null, Azure.ResourceManager.Compute.Models.DiskEncryption encryption = null, Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? networkAccessPolicy = default(Azure.ResourceManager.Compute.Models.NetworkAccessPolicy?), Azure.Core.ResourceIdentifier diskAccessId = null, bool? supportsHibernation = default(bool?), Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess?), Azure.ResourceManager.Compute.Models.DataAccessAuthMode? dataAccessAuthMode = default(Azure.ResourceManager.Compute.Models.DataAccessAuthMode?), Azure.ResourceManager.Compute.Models.SupportedCapabilities supportedCapabilities = null, Azure.ResourceManager.Compute.Models.SnapshotAccessState? snapshotAccessState = default(Azure.ResourceManager.Compute.Models.SnapshotAccessState?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.SnapshotSku SnapshotSku(Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType? name = default(Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType?), string tier = null) { throw null; }
         public static Azure.ResourceManager.Compute.SshPublicKeyData SshPublicKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string publicKey = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.SshPublicKeyGenerateKeyPairResult SshPublicKeyGenerateKeyPairResult(string privateKey = null, string publicKey = null, Azure.Core.ResourceIdentifier id = null) { throw null; }
@@ -3615,7 +3702,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandInstanceView VirtualMachineRunCommandInstanceView(Azure.ResourceManager.Compute.Models.ExecutionState? executionState = default(Azure.ResourceManager.Compute.Models.ExecutionState?), string executionMessage = null, int? exitCode = default(int?), string output = null, string error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandResult VirtualMachineRunCommandResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> value = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandUpdate VirtualMachineRunCommandUpdate(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandScriptSource source = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = default(bool?), string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = default(int?), System.Uri outputBlobUri = null, System.Uri errorBlobUri = null, Azure.ResourceManager.Compute.Models.RunCommandManagedIdentity outputBlobManagedIdentity = null, Azure.ResourceManager.Compute.Models.RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, Azure.ResourceManager.Compute.Models.VirtualMachineRunCommandInstanceView instanceView = null, bool? treatFailureAsDeploymentFailure = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetData VirtualMachineScaleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, Azure.ResourceManager.Compute.Models.ComputePlan plan = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string etag = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetData VirtualMachineScaleSetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku, Azure.ResourceManager.Compute.Models.ComputePlan plan, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties properties, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, string etag) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetData VirtualMachineScaleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, Azure.ResourceManager.Compute.Models.ComputePlan plan = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string etag = null, Azure.ResourceManager.Compute.Models.VirtualMachinePlacement placement = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetData VirtualMachineScaleSetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku, Azure.ResourceManager.Compute.Models.ComputePlan plan, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy upgradePolicy, Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy automaticRepairsPolicy, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, Azure.Core.ResourceIdentifier proximityPlacementGroupId, Azure.Core.ResourceIdentifier hostGroupId, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities, Azure.ResourceManager.Compute.Models.ScaleInPolicy scaleInPolicy, Azure.ResourceManager.Compute.Models.OrchestrationMode? orchestrationMode, Azure.ResourceManager.Compute.Models.SpotRestorePolicy spotRestorePolicy, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, System.DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3627,18 +3716,29 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null, bool? suppressFailures = default(bool?), Azure.ResourceManager.Compute.Models.KeyVaultSecretReference keyVaultProtectedSettings = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionPatch VirtualMachineScaleSetExtensionPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, string provisioningState = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null, bool? suppressFailures = default(bool?), Azure.ResourceManager.Compute.Models.KeyVaultSecretReference keyVaultProtectedSettings = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView VirtualMachineScaleSetInstanceView(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineStatusCodeCount> virtualMachineStatusesSummary = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmExtensionsSummary> extensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary> orchestrationServices = null) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy upgradePolicy = null, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy = null, Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy automaticRepairsPolicy = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile virtualMachineProfile = null, string provisioningState = null, bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVms = default(bool?), string uniqueId = null, bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, Azure.Core.ResourceIdentifier hostGroupId = null, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities = null, Azure.ResourceManager.Compute.Models.ScaleInPolicy scaleInPolicy = null, Azure.ResourceManager.Compute.Models.OrchestrationMode? orchestrationMode = default(Azure.ResourceManager.Compute.Models.OrchestrationMode?), Azure.ResourceManager.Compute.Models.SpotRestorePolicy spotRestorePolicy = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), bool? isMaximumCapacityConstrained = default(bool?), Azure.ResourceManager.Compute.Models.ResiliencyPolicy resiliencyPolicy = null, Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default(Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode?), Azure.ResourceManager.Compute.Models.ComputeSkuProfile skuProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo(Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo = null, Azure.Core.ResourceIdentifier migrateToVirtualMachineScaleSetId = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy upgradePolicy, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy, Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy automaticRepairsPolicy, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, Azure.Core.ResourceIdentifier proximityPlacementGroupId, Azure.Core.ResourceIdentifier hostGroupId, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities, Azure.ResourceManager.Compute.Models.ScaleInPolicy scaleInPolicy, Azure.ResourceManager.Compute.Models.OrchestrationMode? orchestrationMode, Azure.ResourceManager.Compute.Models.SpotRestorePolicy spotRestorePolicy, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, System.DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, Azure.ResourceManager.Compute.Models.ResiliencyPolicy resiliencyPolicy, Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, Azure.ResourceManager.Compute.Models.ComputeSkuProfile skuProfile, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpgradePolicy upgradePolicy = null, Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy scheduledEventsPolicy = null, Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy automaticRepairsPolicy = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile virtualMachineProfile = null, string provisioningState = null, bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVms = default(bool?), string uniqueId = null, bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), Azure.Core.ResourceIdentifier proximityPlacementGroupId = null, Azure.Core.ResourceIdentifier hostGroupId = null, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities = null, Azure.ResourceManager.Compute.Models.ScaleInPolicy scaleInPolicy = null, Azure.ResourceManager.Compute.Models.OrchestrationMode? orchestrationMode = default(Azure.ResourceManager.Compute.Models.OrchestrationMode?), Azure.ResourceManager.Compute.Models.SpotRestorePolicy spotRestorePolicy = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), bool? isMaximumCapacityConstrained = default(bool?), Azure.ResourceManager.Compute.Models.ResiliencyPolicy resiliencyPolicy = null, Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default(Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode?), Azure.ResourceManager.Compute.Models.ComputeSkuProfile skuProfile = null, Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default(Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgradeData VirtualMachineScaleSetRollingUpgradeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.RollingUpgradePolicy policy = null, Azure.ResourceManager.Compute.Models.RollingUpgradeRunningStatus runningStatus = null, Azure.ResourceManager.Compute.Models.RollingUpgradeProgressInfo progress = null, Azure.ResourceManager.Compute.Models.ComputeApiError error = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent VirtualMachineScaleSetScaleOutContent(long capacity = (long)0, string virtualMachineScaleSetScaleOutInputZone = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSku VirtualMachineScaleSetSku(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Compute.Models.ComputeSku sku = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSkuCapacity capacity = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSkuCapacity VirtualMachineScaleSetSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? defaultCapacity = default(long?), Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSkuScaleType? scaleType = default(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSkuScaleType?)) { throw null; }
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties properties = null, string instanceId = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, Azure.ResourceManager.Compute.Models.ComputePlan plan = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> resources = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string etag = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string instanceId, Azure.ResourceManager.Compute.Models.ComputeSku sku, Azure.ResourceManager.Compute.Models.ComputePlan plan, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> resources, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView instanceView, Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile hardwareProfile, Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile storageProfile, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities, Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile osProfile, Azure.ResourceManager.Compute.Models.SecurityProfile securityProfile, Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile networkProfile, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, Azure.ResourceManager.Compute.Models.BootDiagnostics bootDiagnostics, Azure.Core.ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, System.DateTimeOffset? timeCreated) { throw null; }
-        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string instanceId = null, Azure.ResourceManager.Compute.Models.ComputeSku sku = null, Azure.ResourceManager.Compute.Models.ComputePlan plan = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> resources = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string etag = null, bool? latestModelApplied = default(bool?), string vmId = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView instanceView = null, Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile hardwareProfile = null, Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile storageProfile = null, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities = null, Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile osProfile = null, Azure.ResourceManager.Compute.Models.SecurityProfile securityProfile = null, Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile networkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, Azure.ResourceManager.Compute.Models.BootDiagnostics bootDiagnostics = null, Azure.Core.ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string instanceId, Azure.ResourceManager.Compute.Models.ComputeSku sku, Azure.ResourceManager.Compute.Models.ComputePlan plan, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> resources, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string etag, bool? latestModelApplied, string vmId, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView instanceView, Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile hardwareProfile, Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile storageProfile, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities, Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile osProfile, Azure.ResourceManager.Compute.Models.SecurityProfile securityProfile, Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile networkProfile, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, Azure.ResourceManager.Compute.Models.BootDiagnostics bootDiagnostics, Azure.Core.ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, System.DateTimeOffset? timeCreated) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string instanceId, Azure.ResourceManager.Compute.Models.ComputeSku sku, Azure.ResourceManager.Compute.Models.ComputePlan plan = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> resources = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string etag = null, bool? latestModelApplied = default(bool?), string vmId = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView instanceView = null, Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile hardwareProfile = null, Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus? resilientVmDeletionStatus = default(Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus?), Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile storageProfile = null, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities = null, Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile osProfile = null, Azure.ResourceManager.Compute.Models.SecurityProfile securityProfile = null, Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile networkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, Azure.ResourceManager.Compute.Models.BootDiagnostics bootDiagnostics = null, Azure.Core.ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string instanceId, Azure.ResourceManager.Compute.Models.ComputeSku sku, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties properties, Azure.ResourceManager.Compute.Models.ComputePlan plan = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> resources = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string etag = null) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, string provisioningState = null, Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView instanceView = null, bool? suppressFailures = default(bool?), Azure.ResourceManager.Compute.Models.KeyVaultSecretReference keyVaultProtectedSettings = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmExtensionPatch VirtualMachineScaleSetVmExtensionPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, bool? suppressFailures = default(bool?), Azure.ResourceManager.Compute.Models.KeyVaultSecretReference keyVaultProtectedSettings = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmExtensionsSummary VirtualMachineScaleSetVmExtensionsSummary(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineStatusCodeCount> statusesSummary = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = null, Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView vmAgent = null, Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus maintenanceRedeployStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.DiskInstanceView> disks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView> extensions = null, Azure.ResourceManager.Compute.Models.InstanceViewStatus vmHealthStatus = null, Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView bootDiagnostics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.InstanceViewStatus> statuses = null, Azure.Core.ResourceIdentifier assignedHost = null, string placementGroupId = null, string computerName = null, string osName = null, string osVersion = null, Azure.ResourceManager.Compute.Models.HyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Compute.Models.HyperVGeneration?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetOSProfile osProfile = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetStorageProfile storageProfile = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkProfile networkProfile = null, Azure.ResourceManager.Compute.Models.SecurityProfile securityProfile = null, Azure.ResourceManager.Compute.Models.BootDiagnostics bootDiagnostics = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionProfile extensionProfile = null, string licenseType = null, Azure.ResourceManager.Compute.Models.VirtualMachinePriorityType? priority = default(Azure.ResourceManager.Compute.Models.VirtualMachinePriorityType?), Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? evictionPolicy = default(Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType?), double? billingMaxPrice = default(double?), Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineGalleryApplication> galleryApplications = null, Azure.ResourceManager.Compute.Models.VirtualMachineSizeProperties hardwareVmSizeProperties = null, Azure.Core.ResourceIdentifier serviceArtifactReferenceId = null, Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference securityPostureReference = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default(bool?), string vmId = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView instanceView = null, Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile hardwareProfile = null, Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus? resilientVmDeletionStatus = default(Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus?), Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile storageProfile = null, Azure.ResourceManager.Compute.Models.AdditionalCapabilities additionalCapabilities = null, Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile osProfile = null, Azure.ResourceManager.Compute.Models.SecurityProfile securityProfile = null, Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile networkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, Azure.ResourceManager.Compute.Models.BootDiagnostics bootDiagnostics = null, Azure.Core.ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineSize VirtualMachineSize(string name = null, int? numberOfCores = default(int?), int? osDiskSizeInMB = default(int?), int? resourceDiskSizeInMB = default(int?), int? memoryInMB = default(int?), int? maxDataDiskCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineSoftwarePatchProperties VirtualMachineSoftwarePatchProperties(string patchId = null, string name = null, string version = null, string kbId = null, System.Collections.Generic.IEnumerable<string> classifications = null, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior? rebootBehavior = default(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior?), string activityId = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Models.PatchAssessmentState? assessmentState = default(Azure.ResourceManager.Compute.Models.PatchAssessmentState?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.VirtualMachineStatusCodeCount VirtualMachineStatusCodeCount(string code = null, int? count = default(int?)) { throw null; }
@@ -3683,6 +3783,37 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AutomaticZoneRebalancingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>
+    {
+        public AutomaticZoneRebalancingPolicy() { }
+        public bool? Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior? RebalanceBehavior { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy? RebalanceStrategy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvailabilityPolicyDiskDelay : System.IEquatable<Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvailabilityPolicyDiskDelay(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay AutomaticReattach { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay left, Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay left, Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AvailabilitySetPatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AvailabilitySetPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.AvailabilitySetPatch>
     {
         public AvailabilitySetPatch() { }
@@ -3693,6 +3824,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.AvailabilitySetPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AvailabilitySetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.AvailabilitySetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3803,6 +3935,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3862,6 +3995,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ReservationId { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ScheduleProfile ScheduleProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
@@ -3871,6 +4005,24 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.CapacityReservationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapacityReservationType : System.IEquatable<Azure.ResourceManager.Compute.Models.CapacityReservationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapacityReservationType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationType Block { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.CapacityReservationType Targeted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.CapacityReservationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.CapacityReservationType left, Azure.ResourceManager.Compute.Models.CapacityReservationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.CapacityReservationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.CapacityReservationType left, Azure.ResourceManager.Compute.Models.CapacityReservationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CapacityReservationUtilization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>
     {
@@ -4125,6 +4277,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeAllocationStrategy(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy CapacityOptimized { get { throw null; } }
         public static Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy LowestPrice { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy Prioritized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -4608,6 +4761,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public ComputeSkuProfileVmSize() { }
         public string Name { get { throw null; } set { } }
+        public int? Rank { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4735,6 +4889,17 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.ConsistencyModeType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ConsistencyModeType left, Azure.ResourceManager.Compute.Models.ConsistencyModeType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ConvertToVirtualMachineScaleSetContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>
+    {
+        public ConvertToVirtualMachineScaleSetContent() { }
+        public string VirtualMachineScaleSetName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ConvertToVirtualMachineScaleSetContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CopyCompletionError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CopyCompletionError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CopyCompletionError>
     {
@@ -4911,6 +5076,18 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DedicatedHostPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DedicatedHostPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DefaultVirtualMachineScaleSetInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>
+    {
+        internal DefaultVirtualMachineScaleSetInfo() { }
+        public bool? ConstrainedMaximumCapacity { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DefaultVirtualMachineScaleSetId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiffDiskOption : System.IEquatable<Azure.ResourceManager.Compute.Models.DiffDiskOption>
     {
@@ -5043,10 +5220,12 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.ResourceIdentifier ElasticSanResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference GalleryImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference ImageReference { get { throw null; } set { } }
+        public long? InstantAccessDurationMinutes { get { throw null; } set { } }
         public bool? IsPerformancePlusEnabled { get { throw null; } set { } }
         public int? LogicalSectorSize { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption? ProvisionedBandwidthCopySpeed { get { throw null; } set { } }
         public System.Uri SecurityDataUri { get { throw null; } set { } }
+        public System.Uri SecurityMetadataUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public string SourceUniqueId { get { throw null; } }
         public System.Uri SourceUri { get { throw null; } set { } }
@@ -5446,6 +5625,18 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EventGridAndResourceGraph : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>
+    {
+        public EventGridAndResourceGraph() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public string ScheduledEventsApiVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExecutionState : System.IEquatable<Azure.ResourceManager.Compute.Models.ExecutionState>
@@ -6202,6 +6393,24 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.GetVirtualMachineExpandType left, Azure.ResourceManager.Compute.Models.GetVirtualMachineExpandType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GetVirtualMachineImagesWithPropertiesExpand : System.IEquatable<Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GetVirtualMachineImagesWithPropertiesExpand(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand Properties { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand left, Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand left, Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GrantAccessData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GrantAccessData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GrantAccessData>
     {
         public GrantAccessData(Azure.ResourceManager.Compute.Models.AccessLevel access, int durationInSeconds) { }
@@ -6216,11 +6425,60 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GrantAccessData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GrantAccessData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HighSpeedInterconnectPlacement : System.IEquatable<Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HighSpeedInterconnectPlacement(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement None { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement Trunk { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement left, Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement left, Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum HostCaching
     {
         None = 0,
         ReadOnly = 1,
         ReadWrite = 2,
+    }
+    public partial class HostEndpointSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>
+    {
+        public HostEndpointSettings() { }
+        public string InVmAccessControlProfileReferenceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode? Mode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.HostEndpointSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.HostEndpointSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.HostEndpointSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HostEndpointSettingsMode : System.IEquatable<Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HostEndpointSettingsMode(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode Audit { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode Enforce { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode left, Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode left, Azure.ResourceManager.Compute.Models.HostEndpointSettingsMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HyperVGeneration : System.IEquatable<Azure.ResourceManager.Compute.Models.HyperVGeneration>
@@ -6465,6 +6723,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         InstanceView = 0,
         UserData = 1,
+        ResiliencyView = 2,
     }
     public enum IntervalInMins
     {
@@ -6758,6 +7017,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ManagedDiskPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ManagedDiskPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ManagedDiskPatch>
     {
         public ManagedDiskPatch() { }
+        public Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay? AvailabilityActionOnDiskDelay { get { throw null; } set { } }
         public bool? BurstingEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DataAccessAuthMode? DataAccessAuthMode { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
@@ -6786,6 +7046,42 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.ManagedDiskPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ManagedDiskPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ManagedDiskPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ManagedDiskPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MaxInstancePercentPerZonePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>
+    {
+        public MaxInstancePercentPerZonePolicy() { }
+        public bool? Enabled { get { throw null; } set { } }
+        public int? Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MigrateToVirtualMachineScaleSetInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>
+    {
+        public MigrateToVirtualMachineScaleSetInput(Azure.ResourceManager.Resources.Models.WritableSubResource virtualMachineScaleSetFlexible) { }
+        public Azure.Core.ResourceIdentifier VirtualMachineScaleSetFlexibleId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MigrateVmToVirtualMachineScaleSetContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>
+    {
+        public MigrateVmToVirtualMachineScaleSetContent() { }
+        public int? TargetFaultDomain { get { throw null; } set { } }
+        public string TargetVmSize { get { throw null; } set { } }
+        public string TargetZone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Mode : System.IEquatable<Azure.ResourceManager.Compute.Models.Mode>
@@ -6830,7 +7126,10 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NetworkApiVersion(string value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.Models.NetworkApiVersion TwoThousandTwenty1101 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2020_11_01 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.NetworkApiVersion v2022_11_01 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.NetworkApiVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -6889,6 +7188,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly int _dummyPrimitive;
         public OrchestrationServiceName(string value) { throw null; }
         public static Azure.ResourceManager.Compute.Models.OrchestrationServiceName AutomaticRepairs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceName AutomaticZoneRebalancing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.OrchestrationServiceName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -6897,6 +7197,24 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.OrchestrationServiceName left, Azure.ResourceManager.Compute.Models.OrchestrationServiceName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.OrchestrationServiceName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.OrchestrationServiceName left, Azure.ResourceManager.Compute.Models.OrchestrationServiceName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OrchestrationServiceOperationStatus : System.IEquatable<Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OrchestrationServiceOperationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus left, Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus left, Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6951,6 +7269,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class OrchestrationServiceSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary>
     {
         internal OrchestrationServiceSummary() { }
+        public System.DateTimeOffset? LastStatusChangedOn { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus? LatestOperationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OrchestrationServiceName? ServiceName { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OrchestrationServiceState? ServiceState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7217,9 +7537,12 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ProxyAgentSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>
     {
         public ProxyAgentSettings() { }
+        public bool? AddProxyAgentExtension { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HostEndpointSettings Imds { get { throw null; } set { } }
         public int? KeyIncarnationId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.Mode? Mode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HostEndpointSettings WireServer { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ProxyAgentSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ProxyAgentSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7392,14 +7715,36 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ResiliencyPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>
     {
         public ResiliencyPolicy() { }
+        public Azure.ResourceManager.Compute.Models.AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get { throw null; } set { } }
         public bool? ResilientVmCreationPolicyEnabled { get { throw null; } set { } }
         public bool? ResilientVmDeletionPolicyEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ResiliencyPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ResiliencyPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResiliencyPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResilientVmDeletionStatus : System.IEquatable<Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResilientVmDeletionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus left, Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus left, Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceIdOptionsForGetCapacityReservationGroup : System.IEquatable<Azure.ResourceManager.Compute.Models.ResourceIdOptionsForGetCapacityReservationGroup>
@@ -7826,6 +8171,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public ScaleInPolicy() { }
         public bool? ForceDeletion { get { throw null; } set { } }
+        public bool? PrioritizeUnhealthyVms { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule> Rules { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ScaleInPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ScaleInPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7837,8 +8183,11 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ScheduledEventsPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy>
     {
         public ScheduledEventsPolicy() { }
+        public Azure.ResourceManager.Compute.Models.AllInstancesDown AllInstancesDown { get { throw null; } set { } }
         public bool? AutomaticallyApprove { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? Enable { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.EventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UserInitiatedRedeploy UserInitiatedRedeploy { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7846,6 +8195,36 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScheduleProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>
+    {
+        public ScheduleProfile() { }
+        public string End { get { throw null; } set { } }
+        public string Start { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ScheduleProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ScheduleProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ScheduleProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScriptShellType : System.IEquatable<Azure.ResourceManager.Compute.Models.ScriptShellType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScriptShellType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ScriptShellType Default { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ScriptShellType Powershell7 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ScriptShellType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ScriptShellType left, Azure.ResourceManager.Compute.Models.ScriptShellType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ScriptShellType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ScriptShellType left, Azure.ResourceManager.Compute.Models.ScriptShellType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityEncryptionType : System.IEquatable<Azure.ResourceManager.Compute.Models.SecurityEncryptionType>
@@ -8133,6 +8512,27 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.SharingUpdateOperationType left, Azure.ResourceManager.Compute.Models.SharingUpdateOperationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SnapshotAccessState : System.IEquatable<Azure.ResourceManager.Compute.Models.SnapshotAccessState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SnapshotAccessState(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.SnapshotAccessState Available { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotAccessState AvailableWithInstantAccess { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotAccessState InstantAccess { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotAccessState Pending { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotAccessState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.SnapshotAccessState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.SnapshotAccessState left, Azure.ResourceManager.Compute.Models.SnapshotAccessState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.SnapshotAccessState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.SnapshotAccessState left, Azure.ResourceManager.Compute.Models.SnapshotAccessState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SnapshotPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SnapshotPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SnapshotPatch>
     {
         public SnapshotPatch() { }
@@ -8145,6 +8545,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.SupportedOperatingSystemType? OSType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SnapshotAccessState? SnapshotAccessState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } set { } }
         public bool? SupportsHibernation { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -8331,12 +8732,27 @@ namespace Azure.ResourceManager.Compute.Models
         public string Skus { get { throw null; } }
         public int? Top { get { throw null; } set { } }
     }
+    public partial class SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions
+    {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(Azure.Core.AzureLocation location, string publisherName, string offer, string skus, Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand expand) { }
+        public SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(Azure.Core.AzureLocation location, string publisherName, string offer, string skus, string expandOption) { }
+        public Azure.ResourceManager.Compute.Models.GetVirtualMachineImagesWithPropertiesExpand Expand { get { throw null; } }
+        public string ExpandOption { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
+        public string Offer { get { throw null; } }
+        public string Orderby { get { throw null; } set { } }
+        public string PublisherName { get { throw null; } }
+        public string Skus { get { throw null; } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class SupportedCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SupportedCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SupportedCapabilities>
     {
         public SupportedCapabilities() { }
         public bool? AcceleratedNetwork { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } set { } }
         public string DiskControllerTypes { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SupportedSecurityOption? SupportedSecurityOption { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.SupportedCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SupportedCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SupportedCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8348,6 +8764,24 @@ namespace Azure.ResourceManager.Compute.Models
     {
         Windows = 0,
         Linux = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SupportedSecurityOption : System.IEquatable<Azure.ResourceManager.Compute.Models.SupportedSecurityOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SupportedSecurityOption(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.SupportedSecurityOption TrustedLaunchAndConfidentialVmSupported { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SupportedSecurityOption TrustedLaunchSupported { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.SupportedSecurityOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.SupportedSecurityOption left, Azure.ResourceManager.Compute.Models.SupportedSecurityOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.SupportedSecurityOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.SupportedSecurityOption left, Azure.ResourceManager.Compute.Models.SupportedSecurityOption right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TargetRegion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.TargetRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.TargetRegion>
     {
@@ -8960,6 +9394,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9152,6 +9587,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.PublicIPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePublicIPAddressSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9217,7 +9653,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineRunCommandScriptSource() { }
         public string CommandId { get { throw null; } set { } }
+        public string GalleryScriptReferenceId { get { throw null; } set { } }
         public string Script { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ScriptShellType? ScriptShell { get { throw null; } set { } }
         public System.Uri ScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RunCommandManagedIdentity ScriptUriManagedIdentity { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9395,6 +9833,18 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class VirtualMachineScaleSetMigrationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>
+    {
+        internal VirtualMachineScaleSetMigrationInfo() { }
+        public Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo { get { throw null; } }
+        public Azure.Core.ResourceIdentifier MigrateToVirtualMachineScaleSetId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class VirtualMachineScaleSetNetworkConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration>
     {
         public VirtualMachineScaleSetNetworkConfiguration(string name) { }
@@ -9412,6 +9862,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9558,6 +10009,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
         public bool? IsMaximumCapacityConstrained { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OrchestrationMode? OrchestrationMode { get { throw null; } set { } }
@@ -9598,6 +10050,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePublicIPAddressSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9646,6 +10099,18 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule left, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRule right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class VirtualMachineScaleSetScaleOutContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>
+    {
+        public VirtualMachineScaleSetScaleOutContent(long capacity) { }
+        public long Capacity { get { throw null; } }
+        public string VmScaleSetScaleOutInputZone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleOutContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VirtualMachineScaleSetSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSku>
     {
@@ -9731,6 +10196,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9793,6 +10259,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9969,6 +10436,36 @@ namespace Azure.ResourceManager.Compute.Models
         Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VirtualMachineScaleSetVmProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>
+    {
+        public VirtualMachineScaleSetVmProperties() { }
+        public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView InstanceView { get { throw null; } }
+        public bool? LatestModelApplied { get { throw null; } }
+        public string LicenseType { get { throw null; } set { } }
+        public string ModelDefinitionApplied { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile OSProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ResilientVmDeletionStatus? ResilientVmDeletionStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
+        public System.DateTimeOffset? TimeCreated { get { throw null; } }
+        public string UserData { get { throw null; } set { } }
+        public string VmId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VirtualMachineScaleSetVmProtectionPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmProtectionPolicy>
     {
@@ -10239,6 +10736,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile>
     {
         public VirtualMachineStorageProfile() { }
+        public bool? AlignRegionalDisksToVmZone { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineDataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskControllerType? DiskControllerType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageReference ImageReference { get { throw null; } set { } }
@@ -10354,6 +10852,40 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus left, Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmssRebalanceBehavior : System.IEquatable<Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmssRebalanceBehavior(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior CreateBeforeDelete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior left, Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior left, Azure.ResourceManager.Compute.Models.VmssRebalanceBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmssRebalanceStrategy : System.IEquatable<Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmssRebalanceStrategy(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy Recreate { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy left, Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy left, Azure.ResourceManager.Compute.Models.VmssRebalanceStrategy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WindowsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.WindowsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.WindowsConfiguration>
     {
         public WindowsConfiguration() { }
@@ -10381,6 +10913,8 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
         public System.DateTimeOffset? MaxPatchPublishOn { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PatchNameMasksToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> PatchNameMasksToInclude { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.WindowsParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.WindowsParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.WindowsParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10491,5 +11025,17 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode left, Azure.ResourceManager.Compute.Models.ZonalPlatformFaultDomainAlignMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ZoneAllocationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>
+    {
+        public ZoneAllocationPolicy() { }
+        public Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy MaxInstancePercentPerZonePolicy { get { throw null; } set { } }
+        public int? MaxZoneCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ZoneAllocationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

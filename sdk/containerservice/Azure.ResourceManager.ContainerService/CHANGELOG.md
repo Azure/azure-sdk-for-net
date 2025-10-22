@@ -4,13 +4,29 @@
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.5 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.ContainerService` AOT-compatible
+
+## 1.2.4 (2025-06-24)
+
+### Bugs Fixed
+
+- Removed `[EditorBrowsable]` and `[Obsolete]` attributes on some properties that are incorrectly hidden/deprecated in previous versions.
+
+## 1.2.3 (2025-03-05)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.2 (2024-06-17)
 

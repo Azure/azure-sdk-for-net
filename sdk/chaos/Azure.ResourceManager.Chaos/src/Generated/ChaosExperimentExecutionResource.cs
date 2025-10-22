@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Chaos
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _chaosExperimentExecutionExperimentsClientDiagnostics;
-        private readonly ExperimentsRestOperations _chaosExperimentExecutionExperimentsRestClient;
+        private readonly ClientDiagnostics _chaosExperimentExecutionExperimentExecutionsClientDiagnostics;
+        private readonly ExperimentExecutionsRestOperations _chaosExperimentExecutionExperimentExecutionsRestClient;
         private readonly ChaosExperimentExecutionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ChaosExperimentExecutionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _chaosExperimentExecutionExperimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string chaosExperimentExecutionExperimentsApiVersion);
-            _chaosExperimentExecutionExperimentsRestClient = new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosExperimentExecutionExperimentsApiVersion);
+            _chaosExperimentExecutionExperimentExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string chaosExperimentExecutionExperimentExecutionsApiVersion);
+            _chaosExperimentExecutionExperimentExecutionsRestClient = new ExperimentExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosExperimentExecutionExperimentExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ChaosExperimentExecutionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.Get");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.Get");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExecutionExperimentsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ChaosExperimentExecutionResource(Client, response.Value), response.GetRawResponse());
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ChaosExperimentExecutionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.Get");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.Get");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExecutionExperimentsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ChaosExperimentExecutionResource(Client, response.Value), response.GetRawResponse());
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_ExecutionDetails</description>
+        /// <description>ExperimentExecutions_ExecutionDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ExperimentExecutionDetails>> ExecutionDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.ExecutionDetails");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.ExecutionDetails");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExecutionExperimentsRestClient.ExecutionDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _chaosExperimentExecutionExperimentExecutionsRestClient.ExecutionDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_ExecutionDetails</description>
+        /// <description>ExperimentExecutions_ExecutionDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExperimentExecutionDetails> ExecutionDetails(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.ExecutionDetails");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionResource.ExecutionDetails");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExecutionExperimentsRestClient.ExecutionDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _chaosExperimentExecutionExperimentExecutionsRestClient.ExecutionDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

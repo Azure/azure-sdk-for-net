@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
@@ -30,7 +31,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-01-05". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2026-02-06". </param>
         /// <param name="xMsLeaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, int? xMsLeaseDuration = null)
@@ -192,7 +193,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Create File | Create Directory | Rename File | Rename Directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be "file" or "directory". </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". </param>
@@ -227,7 +228,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*". </remarks>
+        /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*". </remarks>
         public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext);
@@ -243,7 +244,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Create File | Create Directory | Rename File | Rename Directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be "file" or "directory". </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". </param>
@@ -278,7 +279,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="encryptionContext"> Specifies the encryption context to set on the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*". </remarks>
+        /// <remarks> Create or rename a file or directory.    By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken.  This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*". </remarks>
         public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string owner = null, string group = null, string acl = null, string proposedLeaseId = null, long? leaseDuration = null, PathExpiryOptions? expiryOptions = null, string expiresOn = null, string encryptionContext = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm, owner, group, acl, proposedLeaseId, leaseDuration, expiryOptions, expiresOn, encryptionContext);
@@ -418,7 +419,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="action"> The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive. </param>
         /// <param name="mode"> Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
         /// <param name="body"> Initial data. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="maxRecords"> Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
         /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAccessControlRecursive operation. </param>
         /// <param name="forceFlag"> Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
@@ -446,7 +447,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public async Task<ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders>> UpdateAsync(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -462,7 +463,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         SetAccessControlRecursiveResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -477,7 +478,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="action"> The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive. </param>
         /// <param name="mode"> Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
         /// <param name="body"> Initial data. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="maxRecords"> Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
         /// <param name="continuation"> Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAccessControlRecursive operation. </param>
         /// <param name="forceFlag"> Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
@@ -505,7 +506,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Uploads data to be appended to a file, flushes (writes) previously uploaded data to a file, sets properties for a file or directory, or sets access control for a file or directory. Data can only be appended to a file. Concurrent writes to the same file using multiple clients are not supported. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public ResponseWithHeaders<SetAccessControlRecursiveResponse, PathUpdateHeaders> Update(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout = null, int? maxRecords = null, string continuation = null, bool? forceFlag = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string properties = null, string owner = null, string group = null, string permissions = null, string acl = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -521,7 +522,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         SetAccessControlRecursiveResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -584,7 +585,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Lease Path. </summary>
         /// <param name="xMsLeaseAction"> There are five lease actions: "acquire", "break", "change", "renew", and "release". Use "acquire" and specify the "x-ms-proposed-lease-id" and "x-ms-lease-duration" to acquire a new lease. Use "break" to break an existing lease. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the file. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired. Use "change" and specify the current lease ID in "x-ms-lease-id" and the new lease ID in "x-ms-proposed-lease-id" to change the lease ID of an active lease. Use "renew" and specify the "x-ms-lease-id" to renew an existing lease. Use "release" and specify the "x-ms-lease-id" to release a lease. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="xMsLeaseBreakPeriod"> The lease break period duration is optional to break a lease, and  specifies the break period of the lease in seconds.  The lease break  duration must be between 0 and 60 seconds. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
@@ -593,7 +594,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public async Task<ResponseWithHeaders<PathLeaseHeaders>> LeaseAsync(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseBreakPeriod, leaseId, proposedLeaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
@@ -612,7 +613,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Lease Path. </summary>
         /// <param name="xMsLeaseAction"> There are five lease actions: "acquire", "break", "change", "renew", and "release". Use "acquire" and specify the "x-ms-proposed-lease-id" and "x-ms-lease-duration" to acquire a new lease. Use "break" to break an existing lease. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the file. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired. Use "change" and specify the current lease ID in "x-ms-lease-id" and the new lease ID in "x-ms-proposed-lease-id" to change the lease ID of an active lease. Use "renew" and specify the "x-ms-lease-id" to renew an existing lease. Use "release" and specify the "x-ms-lease-id" to release a lease. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="xMsLeaseBreakPeriod"> The lease break period duration is optional to break a lease, and  specifies the break period of the lease in seconds.  The lease break  duration must be between 0 and 60 seconds. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
@@ -621,7 +622,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Create and manage a lease to restrict write and delete access to the path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public ResponseWithHeaders<PathLeaseHeaders> Lease(PathLeaseAction xMsLeaseAction, int? timeout = null, int? xMsLeaseBreakPeriod = null, string leaseId = null, string proposedLeaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateLeaseRequest(xMsLeaseAction, timeout, xMsLeaseBreakPeriod, leaseId, proposedLeaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
@@ -697,7 +698,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Read File. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="xMsRangeGetContentMd5"> Optional. When this header is set to "true" and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. If this header is specified without the Range header, the service returns status code 400 (Bad Request). If this header is set to true when the range exceeds 4 MB in size, the service returns status code 400 (Bad Request). </param>
@@ -709,7 +710,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public async Task<ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
@@ -729,7 +730,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Read File. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> The HTTP Range request header specifies one or more byte ranges of the resource to be retrieved. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="xMsRangeGetContentMd5"> Optional. When this header is set to "true" and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4MB in size. If this header is specified without the Range header, the service returns status code 400 (Bad Request). If this header is set to true when the range exceeds 4 MB in size, the service returns status code 400 (Bad Request). </param>
@@ -741,7 +742,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Read the contents of a file.  For read operations, range requests are supported. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
@@ -806,7 +807,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Get Properties | Get Status | Get Access Control List. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="action"> Optional. If the value is "getStatus" only the system defined properties for the path are returned. If the value is "getAccessControl" the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -815,7 +816,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public async Task<ResponseWithHeaders<PathGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
@@ -831,7 +832,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Get Properties | Get Status | Get Access Control List. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="action"> Optional. If the value is "getStatus" only the system defined properties for the path are returned. If the value is "getAccessControl" the access control list is returned in the response headers (Hierarchical Namespace must be enabled for the account), otherwise the properties are returned. </param>
         /// <param name="upn"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -840,7 +841,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Get Properties returns all system and user defined properties for a path. Get Status returns all system defined properties for a path. Get Access Control List returns the access control list for a path. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public ResponseWithHeaders<PathGetPropertiesHeaders> GetProperties(int? timeout = null, PathGetPropertiesAction? action = null, bool? upn = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, action, upn, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
@@ -905,7 +906,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Delete File | Delete Directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -915,7 +916,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="paginated"> If true, paginated behavior will be seen. Pagination is for the recursive ACL checks as a POSIX requirement in the server and Delete in an atomic operation once the ACL checks are completed. If false or missing, normal default behavior will kick in, which may timeout in case of very large directories due to recursive ACL checks. This new parameter is introduced for backward compatibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public async Task<ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, paginated);
@@ -932,7 +933,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Delete File | Delete Directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="recursive"> Required. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -942,7 +943,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="paginated"> If true, paginated behavior will be seen. Pagination is for the recursive ACL checks as a POSIX requirement in the server and Delete in an atomic operation once the ACL checks are completed. If false or missing, normal default behavior will kick in, which may timeout in case of very large directories due to recursive ACL checks. This new parameter is introduced for backward compatibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
+        /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
         public ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, paginated);
@@ -1013,7 +1014,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Set the owner, group, permissions, or access control list for a path. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
@@ -1039,7 +1040,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Set the owner, group, permissions, or access control list for a path. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="owner"> Optional. The owner of the blob or directory. </param>
         /// <param name="group"> Optional. The owning group of the blob or directory. </param>
@@ -1101,7 +1102,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Set the access control list for a path and sub-paths. </summary>
         /// <param name="mode"> Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="forceFlag"> Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
         /// <param name="maxRecords"> Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
@@ -1117,7 +1118,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         SetAccessControlRecursiveResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -1128,7 +1129,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Set the access control list for a path and sub-paths. </summary>
         /// <param name="mode"> Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="forceFlag"> Optional. Valid for "SetAccessControlRecursive" operation. If set to false, the operation will terminate quickly on encountering user errors (4XX). If true, the operation will ignore user errors and proceed with the operation on other sub-entities of the directory. Continuation token will only be returned when forceFlag is true in case of user errors. If not set the default value is false for this. </param>
         /// <param name="maxRecords"> Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items. </param>
@@ -1144,7 +1145,7 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         SetAccessControlRecursiveResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SetAccessControlRecursiveResponse.DeserializeSetAccessControlRecursiveResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -1252,7 +1253,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Set the owner, group, permissions, or access control list for a path. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed.". </param>
@@ -1290,7 +1291,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Set the owner, group, permissions, or access control list for a path. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
         /// <param name="retainUncommittedData"> Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation. </param>
         /// <param name="close"> Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed.". </param>
@@ -1406,7 +1407,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Append data to the file. </summary>
         /// <param name="body"> Initial data. </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentLength"> Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data". </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
@@ -1444,7 +1445,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Append data to the file. </summary>
         /// <param name="body"> Initial data. </param>
         /// <param name="position"> This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentLength"> Required for "Append Data" and "Flush Data".  Must be 0 for "Flush Data".  Must be the length of the request content in bytes for "Append Data". </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
@@ -1504,7 +1505,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<PathSetExpiryHeaders>> SetExpiryAsync(PathExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
@@ -1523,7 +1524,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<PathSetExpiryHeaders> SetExpiry(PathExpiryOptions expiryOptions, int? timeout = null, string expiresOn = null, CancellationToken cancellationToken = default)
@@ -1563,7 +1564,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Undelete a path that was previously soft deleted. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<PathUndeleteHeaders>> UndeleteAsync(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)
@@ -1581,7 +1582,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Undelete a path that was previously soft deleted. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="undeleteSource"> Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<PathUndeleteHeaders> Undelete(int? timeout = null, string undeleteSource = null, CancellationToken cancellationToken = default)

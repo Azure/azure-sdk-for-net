@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
-                writer.WriteStringValue(CreatedOn);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ParentTaskId))
             {
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             MigrateSqlServerSqlMITaskInput input = default;
             IReadOnlyList<MigrateSqlServerSqlMITaskOutput> output = default;
             string taskId = default;
-            string createdOn = default;
+            DateTimeOffset? createdOn = default;
             string parentTaskId = default;
             bool? isCloneable = default;
-            TaskType taskType = default;
-            IReadOnlyList<ODataError> errors = default;
-            TaskState? state = default;
-            IReadOnlyList<CommandProperties> commands = default;
+            DataMigrationTaskType taskType = default;
+            IReadOnlyList<DataMigrationODataError> errors = default;
+            DataMigrationTaskState? state = default;
+            IReadOnlyList<DataMigrationCommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("createdOn"u8))
                 {
-                    createdOn = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("parentTaskId"u8))
@@ -156,7 +160,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("taskType"u8))
                 {
-                    taskType = new TaskType(property.Value.GetString());
+                    taskType = new DataMigrationTaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -165,10 +169,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ODataError> array = new List<ODataError>();
+                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item, options));
+                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new TaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commands"u8))
@@ -188,10 +192,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<CommandProperties> array = new List<CommandProperties>();
+                    List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
+                        array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -218,9 +222,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MigrateSqlServerSqlMITaskProperties(
                 taskType,
-                errors ?? new ChangeTrackingList<ODataError>(),
+                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
-                commands ?? new ChangeTrackingList<CommandProperties>(),
+                commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 input,
@@ -238,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support writing '{options.Format}' format.");
             }
@@ -252,7 +256,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateSqlServerSqlMITaskProperties(document.RootElement, options);
                     }
                 default:

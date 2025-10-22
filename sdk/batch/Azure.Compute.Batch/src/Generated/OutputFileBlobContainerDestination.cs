@@ -46,26 +46,26 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OutputFileBlobContainerDestination"/>. </summary>
-        /// <param name="containerUrl"> The URL of the container within Azure Blob Storage to which to upload the file(s). If not using a managed identity, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
-        public OutputFileBlobContainerDestination(string containerUrl)
+        /// <param name="containerUri"> The URL of the container within Azure Blob Storage to which to upload the file(s). If not using a managed identity, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
+        public OutputFileBlobContainerDestination(Uri containerUri)
         {
-            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
 
-            ContainerUrl = containerUrl;
-            UploadHeaders = new ChangeTrackingList<HttpHeader>();
+            ContainerUri = containerUri;
+            UploadHeaders = new ChangeTrackingList<OutputFileUploadHeader>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutputFileBlobContainerDestination"/>. </summary>
         /// <param name="path"> The destination blob or virtual directory within the Azure Storage container. If filePattern refers to a specific file (i.e. contains no wildcards), then path is the name of the blob to which to upload that file. If filePattern contains one or more wildcards (and therefore may match multiple files), then path is the name of the blob virtual directory (which is prepended to each blob name) to which to upload the file(s). If omitted, file(s) are uploaded to the root of the container with a blob name matching their file name. </param>
-        /// <param name="containerUrl"> The URL of the container within Azure Blob Storage to which to upload the file(s). If not using a managed identity, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. </param>
+        /// <param name="containerUri"> The URL of the container within Azure Blob Storage to which to upload the file(s). If not using a managed identity, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. </param>
         /// <param name="identityReference"> The reference to the user assigned identity to use to access Azure Blob Storage specified by containerUrl. The identity must have write access to the Azure Blob Storage container. </param>
-        /// <param name="uploadHeaders"> A list of name-value pairs for headers to be used in uploading output files. These headers will be specified when uploading files to Azure Storage. Official document on allowed headers when uploading blobs: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob#request-headers-all-blob-types. </param>
+        /// <param name="uploadHeaders"> A list of name-value pairs for headers to be used in uploading output files. These headers will be specified when uploading files to Azure Storage. Official document on allowed headers when uploading blobs: https://learn.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OutputFileBlobContainerDestination(string path, string containerUrl, BatchNodeIdentityReference identityReference, IList<HttpHeader> uploadHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OutputFileBlobContainerDestination(string path, Uri containerUri, BatchNodeIdentityReference identityReference, IList<OutputFileUploadHeader> uploadHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
-            ContainerUrl = containerUrl;
+            ContainerUri = containerUri;
             IdentityReference = identityReference;
             UploadHeaders = uploadHeaders;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -79,10 +79,10 @@ namespace Azure.Compute.Batch
         /// <summary> The destination blob or virtual directory within the Azure Storage container. If filePattern refers to a specific file (i.e. contains no wildcards), then path is the name of the blob to which to upload that file. If filePattern contains one or more wildcards (and therefore may match multiple files), then path is the name of the blob virtual directory (which is prepended to each blob name) to which to upload the file(s). If omitted, file(s) are uploaded to the root of the container with a blob name matching their file name. </summary>
         public string Path { get; set; }
         /// <summary> The URL of the container within Azure Blob Storage to which to upload the file(s). If not using a managed identity, the URL must include a Shared Access Signature (SAS) granting write permissions to the container. </summary>
-        public string ContainerUrl { get; set; }
+        public Uri ContainerUri { get; set; }
         /// <summary> The reference to the user assigned identity to use to access Azure Blob Storage specified by containerUrl. The identity must have write access to the Azure Blob Storage container. </summary>
         public BatchNodeIdentityReference IdentityReference { get; set; }
-        /// <summary> A list of name-value pairs for headers to be used in uploading output files. These headers will be specified when uploading files to Azure Storage. Official document on allowed headers when uploading blobs: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob#request-headers-all-blob-types. </summary>
-        public IList<HttpHeader> UploadHeaders { get; }
+        /// <summary> A list of name-value pairs for headers to be used in uploading output files. These headers will be specified when uploading files to Azure Storage. Official document on allowed headers when uploading blobs: https://learn.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types. </summary>
+        public IList<OutputFileUploadHeader> UploadHeaders { get; }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 return new(callCount.ToString(), DateTimeOffset.Now.AddHours(2));
             }, true);
 
-            KeyVaultBackupClient client = new(
+            KeyVaultAccessControlClient accessClient = new(
             VaultUri,
             credential,
             new KeyVaultAdministrationClientOptions()
@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             try
             {
-                KeyVaultBackupOperation operation = await client.StartBackupAsync(VaultUri);
+                var results = await accessClient.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, "0001", "0000001");
             }
             catch (RequestFailedException ex)
             {

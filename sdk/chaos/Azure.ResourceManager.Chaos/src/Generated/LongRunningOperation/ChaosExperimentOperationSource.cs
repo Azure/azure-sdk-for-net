@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Chaos
 
         ChaosExperimentResource IOperationSource<ChaosExperimentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
+            var data = ModelReaderWriter.Read<ChaosExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerChaosContext.Default);
             return new ChaosExperimentResource(_client, data);
         }
 
         async ValueTask<ChaosExperimentResource> IOperationSource<ChaosExperimentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
-            return new ChaosExperimentResource(_client, data);
+            var data = ModelReaderWriter.Read<ChaosExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerChaosContext.Default);
+            return await Task.FromResult(new ChaosExperimentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -25,6 +25,8 @@
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="System.ServiceModel.Primitives" />
+    <PackageReference Include="System.Formats.Asn1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
     <ProjectReference Include="..\src\Microsoft.WCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
 

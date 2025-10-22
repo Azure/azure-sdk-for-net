@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                writer.WriteObjectValue<object>(Value);
             }
             if (Optional.IsCollectionDefined(Operators))
             {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             ExpressionV2Type? type = default;
-            string value = default;
+            object value = default;
             IList<string> operators = default;
             IList<ExpressionV2> operands = default;
             foreach (var property in element.EnumerateObject())
@@ -75,7 +75,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    value = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("operators"u8))
@@ -114,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ExpressionV2 FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeExpressionV2(document.RootElement);
         }
 

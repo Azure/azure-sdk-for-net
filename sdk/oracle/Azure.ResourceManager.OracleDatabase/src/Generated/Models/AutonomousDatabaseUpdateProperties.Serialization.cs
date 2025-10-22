@@ -109,10 +109,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("licenseModel"u8);
                 writer.WriteStringValue(LicenseModel.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledOperations))
+            if (Optional.IsCollectionDefined(ScheduledOperationsList))
             {
-                writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue(ScheduledOperations, options);
+                writer.WritePropertyName("scheduledOperationsList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScheduledOperationsList)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DatabaseEdition))
             {
@@ -167,7 +172,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -206,11 +211,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            string peerDBId = default;
+            string peerDbId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isMtlsConnectionRequired = default;
             OracleLicenseModel? licenseModel = default;
-            ScheduledOperationsTypeUpdate scheduledOperations = default;
+            IList<ScheduledOperationsTypeUpdate> scheduledOperationsList = default;
             OracleDatabaseEditionType? databaseEdition = default;
             LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
@@ -312,7 +317,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDBId = property.Value.GetString();
+                    peerDbId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLocalDataGuardEnabled"u8))
@@ -342,13 +347,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     licenseModel = new OracleLicenseModel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduledOperations"u8))
+                if (property.NameEquals("scheduledOperationsList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsTypeUpdate.DeserializeScheduledOperationsTypeUpdate(property.Value, options);
+                    List<ScheduledOperationsTypeUpdate> array = new List<ScheduledOperationsTypeUpdate>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ScheduledOperationsTypeUpdate.DeserializeScheduledOperationsTypeUpdate(item, options));
+                    }
+                    scheduledOperationsList = array;
                     continue;
                 }
                 if (property.NameEquals("databaseEdition"u8))
@@ -445,11 +455,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBId,
+                peerDbId,
                 isLocalDataGuardEnabled,
                 isMtlsConnectionRequired,
                 licenseModel,
-                scheduledOperations,
+                scheduledOperationsList ?? new ChangeTrackingList<ScheduledOperationsTypeUpdate>(),
                 databaseEdition,
                 longTermBackupSchedule,
                 localAdgAutoFailoverMaxDataLossLimit,
@@ -468,7 +478,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutonomousDatabaseUpdateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -482,7 +492,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutonomousDatabaseUpdateProperties(document.RootElement, options);
                     }
                 default:

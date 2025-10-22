@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkManagerRoutingConfigurationResource : IJsonModel<NetworkManagerRoutingConfigurationData>
     {
+        private static NetworkManagerRoutingConfigurationData s_dataDeserializationInstance;
+        private static NetworkManagerRoutingConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkManagerRoutingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerRoutingConfigurationData>)Data).Write(writer, options);
 
-        NetworkManagerRoutingConfigurationData IJsonModel<NetworkManagerRoutingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerRoutingConfigurationData>)Data).Create(ref reader, options);
+        NetworkManagerRoutingConfigurationData IJsonModel<NetworkManagerRoutingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerRoutingConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkManagerRoutingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkManagerRoutingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerRoutingConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkManagerRoutingConfigurationData IPersistableModel<NetworkManagerRoutingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerRoutingConfigurationData>(data, options);
+        NetworkManagerRoutingConfigurationData IPersistableModel<NetworkManagerRoutingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerRoutingConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkManagerRoutingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerRoutingConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkManagerRoutingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerRoutingConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class GrafanaConfigurations : IUtf8JsonSerializable, IJsonModel<GrafanaConfigurations>
+    public partial class GrafanaConfigurations : IUtf8JsonSerializable, IJsonModel<GrafanaConfigurations>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GrafanaConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +39,26 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("smtp"u8);
                 writer.WriteObjectValue(Smtp, options);
             }
+            if (Optional.IsDefined(Snapshots))
+            {
+                writer.WritePropertyName("snapshots"u8);
+                writer.WriteObjectValue(Snapshots, options);
+            }
+            if (Optional.IsDefined(Users))
+            {
+                writer.WritePropertyName("users"u8);
+                writer.WriteObjectValue(Users, options);
+            }
+            if (Optional.IsDefined(Security))
+            {
+                writer.WritePropertyName("security"u8);
+                writer.WriteObjectValue(Security, options);
+            }
+            if (Optional.IsDefined(UnifiedAlertingScreenshots))
+            {
+                writer.WritePropertyName("unifiedAlertingScreenshots"u8);
+                writer.WriteObjectValue(UnifiedAlertingScreenshots, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +67,7 @@ namespace Azure.ResourceManager.Grafana.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,7 +96,11 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Smtp smtp = default;
+            GrafanaSmtpSettings smtp = default;
+            GrafanaSnapshotsSettings snapshots = default;
+            GrafanaUserSettings users = default;
+            GrafanaSecuritySettings security = default;
+            UnifiedAlertingScreenshots unifiedAlertingScreenshots = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +111,43 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    smtp = Smtp.DeserializeSmtp(property.Value, options);
+                    smtp = GrafanaSmtpSettings.DeserializeGrafanaSmtpSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("snapshots"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshots = GrafanaSnapshotsSettings.DeserializeGrafanaSnapshotsSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("users"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    users = GrafanaUserSettings.DeserializeGrafanaUserSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("security"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    security = GrafanaSecuritySettings.DeserializeGrafanaSecuritySettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("unifiedAlertingScreenshots"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    unifiedAlertingScreenshots = UnifiedAlertingScreenshots.DeserializeUnifiedAlertingScreenshots(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -96,7 +156,13 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GrafanaConfigurations(smtp, serializedAdditionalRawData);
+            return new GrafanaConfigurations(
+                smtp,
+                snapshots,
+                users,
+                security,
+                unifiedAlertingScreenshots,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaConfigurations>.Write(ModelReaderWriterOptions options)
@@ -106,7 +172,7 @@ namespace Azure.ResourceManager.Grafana.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GrafanaConfigurations)} does not support writing '{options.Format}' format.");
             }
@@ -120,7 +186,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGrafanaConfigurations(document.RootElement, options);
                     }
                 default:

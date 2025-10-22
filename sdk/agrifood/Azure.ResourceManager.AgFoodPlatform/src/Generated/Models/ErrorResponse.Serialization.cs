@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAgFoodPlatformContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAgFoodPlatformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ErrorResponse)} does not support writing '{options.Format}' format.");
             }
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeErrorResponse(document.RootElement, options);
                     }
                 default:

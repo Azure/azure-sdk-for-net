@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageTaskAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                     {
                         StorageTaskAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, int? top)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -445,15 +445,15 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/storageTaskAssignments", false);
-            if (maxpagesize != null)
+            if (top != null)
             {
-                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("$top", top.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -467,9 +467,9 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/storageTaskAssignments", false);
-            if (maxpagesize != null)
+            if (top != null)
             {
-                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("$top", top.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -482,24 +482,24 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
+        /// <param name="top"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageTaskAssignmentsList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageTaskAssignmentsList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         StorageTaskAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -512,24 +512,24 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
+        /// <param name="top"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageTaskAssignmentsList> List(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<StorageTaskAssignmentsList> List(string subscriptionId, string resourceGroupName, string accountName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         StorageTaskAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? top)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Storage
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -565,25 +565,25 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
+        /// <param name="top"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageTaskAssignmentsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageTaskAssignmentsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, maxpagesize);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         StorageTaskAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -597,25 +597,25 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
+        /// <param name="top"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageTaskAssignmentsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<StorageTaskAssignmentsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, maxpagesize);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         StorageTaskAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

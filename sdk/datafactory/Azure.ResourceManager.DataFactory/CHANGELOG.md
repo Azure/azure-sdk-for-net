@@ -1,14 +1,45 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.10.0 (2025-09-03)
+
+### Features Added
+- Added Managed Identity (MI) authentication support for Lakehouse, Warehouse, and HDInsight linked services.
+- Added support for custom number precision and scale in Oracle V2.
+
+## 1.9.0 (2025-06-13)
 
 ### Features Added
 
-### Breaking Changes
+- Added property to Spark V2 linked service definition.
+- Added property to Hive V2 linked service definition.
+- Added Databricks Activity to dataFactory pipeline.
+
+### Bugs Fixed
+- Fixed ExpressionV2 for value type from string to object.
+
+## 1.8.0 (2025-05-09)
+
+### Features Added
+
+- Added support for Amazon RDS for Oracle V2 linked service.
+- Added property to Azure Databricks linked service definition.
+- Added certificate authentication support for Microsoft 365 SharePoint linked service.
+- Added Snowflake V2 linked service definition.
+
+## 1.7.0 (2025-03-18)
+
+### Features Added
+
+- Added swagger support for handling multiple result sets in Snowflake scripts.
+- Added connection properties to LinkedService definitions for Greenplum V2 support.
+- Added support for Teradata connection properties and Teradata sink.
+- Added support for Oracle connection properties.
+- Added support for PostgreSQL Entra.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the sncMode property of the LinkedService in SAPTable.
+- Fixed the problem of an unknown linked service type 'LakeHouse'.
 
 ## 1.6.0 (2024-11-11)
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in AssessmentDefinitions)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerSecurityCenterContext.Default));
                             }
                             assessmentDefinitions = array;
                             continue;
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{options.Format}' format.");
             }
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecureScoreControlDefinitionItem(document.RootElement, options);
                     }
                 default:

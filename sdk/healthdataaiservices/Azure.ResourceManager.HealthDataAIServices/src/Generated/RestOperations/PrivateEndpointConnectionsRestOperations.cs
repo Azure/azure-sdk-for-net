@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         HealthDataAIServicesPrivateEndpointConnectionResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         HealthDataAIServicesPrivateEndpointConnectionResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,7 +273,6 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -388,7 +387,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         PrivateEndpointConnectionResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionResourceListResult.DeserializePrivateEndpointConnectionResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +416,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         PrivateEndpointConnectionResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionResourceListResult.DeserializePrivateEndpointConnectionResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -470,7 +469,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         PrivateEndpointConnectionResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionResourceListResult.DeserializePrivateEndpointConnectionResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +500,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 case 200:
                     {
                         PrivateEndpointConnectionResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionResourceListResult.DeserializePrivateEndpointConnectionResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.OracleDatabase
 
         AutonomousDatabaseResource IOperationSource<AutonomousDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AutonomousDatabaseData.DeserializeAutonomousDatabaseData(document.RootElement);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new AutonomousDatabaseResource(_client, data);
         }
 
         async ValueTask<AutonomousDatabaseResource> IOperationSource<AutonomousDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AutonomousDatabaseData.DeserializeAutonomousDatabaseData(document.RootElement);
-            return new AutonomousDatabaseResource(_client, data);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new AutonomousDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

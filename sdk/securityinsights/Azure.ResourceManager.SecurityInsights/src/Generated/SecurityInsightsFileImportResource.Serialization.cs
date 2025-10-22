@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsFileImportResource : IJsonModel<SecurityInsightsFileImportData>
     {
+        private static SecurityInsightsFileImportData s_dataDeserializationInstance;
+        private static SecurityInsightsFileImportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsFileImportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsFileImportData>)Data).Write(writer, options);
 
-        SecurityInsightsFileImportData IJsonModel<SecurityInsightsFileImportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsFileImportData>)Data).Create(ref reader, options);
+        SecurityInsightsFileImportData IJsonModel<SecurityInsightsFileImportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsFileImportData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsFileImportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsFileImportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsFileImportData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsFileImportData IPersistableModel<SecurityInsightsFileImportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsFileImportData>(data, options);
+        SecurityInsightsFileImportData IPersistableModel<SecurityInsightsFileImportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsFileImportData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsFileImportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsFileImportData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsFileImportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsFileImportData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

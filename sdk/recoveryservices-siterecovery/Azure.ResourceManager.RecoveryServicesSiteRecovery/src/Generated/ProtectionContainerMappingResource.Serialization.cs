@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class ProtectionContainerMappingResource : IJsonModel<ProtectionContainerMappingData>
     {
+        private static ProtectionContainerMappingData s_dataDeserializationInstance;
+        private static ProtectionContainerMappingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProtectionContainerMappingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProtectionContainerMappingData>)Data).Write(writer, options);
 
-        ProtectionContainerMappingData IJsonModel<ProtectionContainerMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProtectionContainerMappingData>)Data).Create(ref reader, options);
+        ProtectionContainerMappingData IJsonModel<ProtectionContainerMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProtectionContainerMappingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProtectionContainerMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProtectionContainerMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProtectionContainerMappingData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        ProtectionContainerMappingData IPersistableModel<ProtectionContainerMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProtectionContainerMappingData>(data, options);
+        ProtectionContainerMappingData IPersistableModel<ProtectionContainerMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProtectionContainerMappingData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<ProtectionContainerMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProtectionContainerMappingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProtectionContainerMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProtectionContainerMappingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

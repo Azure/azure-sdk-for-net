@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute
     {
         AccessUri IOperationSource<AccessUri>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return AccessUri.DeserializeAccessUri(document.RootElement);
         }
 
         async ValueTask<AccessUri> IOperationSource<AccessUri>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return AccessUri.DeserializeAccessUri(document.RootElement);
         }
     }

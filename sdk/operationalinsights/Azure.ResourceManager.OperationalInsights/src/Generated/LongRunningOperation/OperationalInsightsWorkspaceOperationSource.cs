@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.OperationalInsights
 
         OperationalInsightsWorkspaceResource IOperationSource<OperationalInsightsWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(document.RootElement);
+            var data = ModelReaderWriter.Read<OperationalInsightsWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
             return new OperationalInsightsWorkspaceResource(_client, data);
         }
 
         async ValueTask<OperationalInsightsWorkspaceResource> IOperationSource<OperationalInsightsWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(document.RootElement);
-            return new OperationalInsightsWorkspaceResource(_client, data);
+            var data = ModelReaderWriter.Read<OperationalInsightsWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
+            return await Task.FromResult(new OperationalInsightsWorkspaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

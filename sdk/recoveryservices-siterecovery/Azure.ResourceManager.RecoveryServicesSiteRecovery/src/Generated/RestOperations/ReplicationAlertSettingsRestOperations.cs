@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-08-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryAlertListResult.DeserializeSiteRecoveryAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryAlertListResult.DeserializeSiteRecoveryAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteRecoveryAlertListResult.DeserializeSiteRecoveryAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         SiteRecoveryAlertListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteRecoveryAlertListResult.DeserializeSiteRecoveryAlertListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

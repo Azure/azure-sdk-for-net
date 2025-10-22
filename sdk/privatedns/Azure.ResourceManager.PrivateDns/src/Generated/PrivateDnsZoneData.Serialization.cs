@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPrivateDnsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.PrivateDns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateDnsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrivateDnsZoneData(document.RootElement, options);
                     }
                 default:

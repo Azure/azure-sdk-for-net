@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRunActionScopeRepetitionResource : IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>
     {
+        private static LogicWorkflowRunActionRepetitionDefinitionData s_dataDeserializationInstance;
+        private static LogicWorkflowRunActionRepetitionDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>)Data).Write(writer, options);
 
-        LogicWorkflowRunActionRepetitionDefinitionData IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>)Data).Create(ref reader, options);
+        LogicWorkflowRunActionRepetitionDefinitionData IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicWorkflowRunActionRepetitionDefinitionData>(Data, options, AzureResourceManagerLogicContext.Default);
 
-        LogicWorkflowRunActionRepetitionDefinitionData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowRunActionRepetitionDefinitionData>(data, options);
+        LogicWorkflowRunActionRepetitionDefinitionData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowRunActionRepetitionDefinitionData>(data, options, AzureResourceManagerLogicContext.Default);
 
-        string IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

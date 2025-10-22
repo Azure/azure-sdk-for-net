@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics;
-        private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics;
+        private readonly GroupIdInformationsRestOperations _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient;
         private readonly DeviceProvisioningServicesPrivateLinkResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceProvisioningServicesPrivateLinkResourceIotDpsResourceApiVersion);
-            _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient = new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceIotDpsResourceApiVersion);
+            _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsApiVersion);
+            _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient = new GroupIdInformationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceProvisioningServicesPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResource.Get");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceProvisioningServicesPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResource.Get");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());

@@ -6,16 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenModel("AzureContentFilterResultForPrompt")]
+[CodeGenType("AzureContentFilterResultForPrompt")]
 public partial class RequestContentFilterResult
 {
     internal int? PromptIndex { get; }
     /// <summary> Gets the content filter results. </summary>
     [CodeGenMember("ContentFilterResults")]
     internal InternalAzureContentFilterResultForPromptContentFilterResults InternalResults { get; }
-
-    /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Error"/>
-    internal InternalAzureContentFilterResultForChoiceError Error { get; set; }
 
     /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Sexual"/>
     public ContentFilterSeverityResult Sexual => InternalResults?.Sexual;

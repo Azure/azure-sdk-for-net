@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class SubscriptionQuotaAllocationsListResource : IJsonModel<SubscriptionQuotaAllocationsListData>
     {
+        private static SubscriptionQuotaAllocationsListData s_dataDeserializationInstance;
+        private static SubscriptionQuotaAllocationsListData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SubscriptionQuotaAllocationsListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionQuotaAllocationsListData>)Data).Write(writer, options);
 
-        SubscriptionQuotaAllocationsListData IJsonModel<SubscriptionQuotaAllocationsListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionQuotaAllocationsListData>)Data).Create(ref reader, options);
+        SubscriptionQuotaAllocationsListData IJsonModel<SubscriptionQuotaAllocationsListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionQuotaAllocationsListData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SubscriptionQuotaAllocationsListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SubscriptionQuotaAllocationsListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionQuotaAllocationsListData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
-        SubscriptionQuotaAllocationsListData IPersistableModel<SubscriptionQuotaAllocationsListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(data, options);
+        SubscriptionQuotaAllocationsListData IPersistableModel<SubscriptionQuotaAllocationsListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<SubscriptionQuotaAllocationsListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionQuotaAllocationsListData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SubscriptionQuotaAllocationsListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionQuotaAllocationsListData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

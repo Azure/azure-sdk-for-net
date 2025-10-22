@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The status of the diagnostics package collection.
-    /// Serialized Name: DiagnosticsPackageStatus
-    /// </summary>
+    /// <summary> The status of the diagnostics package collection. </summary>
     public readonly partial struct MobileNetworkDiagnosticsPackageStatus : IEquatable<MobileNetworkDiagnosticsPackageStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string CollectedValue = "Collected";
         private const string ErrorValue = "Error";
 
-        /// <summary>
-        /// NotStarted
-        /// Serialized Name: DiagnosticsPackageStatus.NotStarted
-        /// </summary>
+        /// <summary> NotStarted. </summary>
         public static MobileNetworkDiagnosticsPackageStatus NotStarted { get; } = new MobileNetworkDiagnosticsPackageStatus(NotStartedValue);
-        /// <summary>
-        /// Collecting
-        /// Serialized Name: DiagnosticsPackageStatus.Collecting
-        /// </summary>
+        /// <summary> Collecting. </summary>
         public static MobileNetworkDiagnosticsPackageStatus Collecting { get; } = new MobileNetworkDiagnosticsPackageStatus(CollectingValue);
-        /// <summary>
-        /// Collected
-        /// Serialized Name: DiagnosticsPackageStatus.Collected
-        /// </summary>
+        /// <summary> Collected. </summary>
         public static MobileNetworkDiagnosticsPackageStatus Collected { get; } = new MobileNetworkDiagnosticsPackageStatus(CollectedValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: DiagnosticsPackageStatus.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static MobileNetworkDiagnosticsPackageStatus Error { get; } = new MobileNetworkDiagnosticsPackageStatus(ErrorValue);
         /// <summary> Determines if two <see cref="MobileNetworkDiagnosticsPackageStatus"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkDiagnosticsPackageStatus left, MobileNetworkDiagnosticsPackageStatus right) => left.Equals(right);

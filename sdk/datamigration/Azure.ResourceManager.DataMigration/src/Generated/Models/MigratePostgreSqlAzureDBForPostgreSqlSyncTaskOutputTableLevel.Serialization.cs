@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("cdcDeleteCounter"u8);
                 writer.WriteNumberValue(CdcDeleteCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishOn))
+            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishedOn))
             {
                 writer.WritePropertyName("fullLoadEstFinishTime"u8);
-                writer.WriteStringValue(FullLoadEstFinishOn.Value, "O");
+                writer.WriteStringValue(FullLoadEstFinishedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(FullLoadStartedOn))
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel)} does not support writing '{options.Format}' format.");
             }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(document.RootElement, options);
                     }
                 default:

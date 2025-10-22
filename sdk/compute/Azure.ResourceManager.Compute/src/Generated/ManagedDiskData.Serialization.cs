@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -245,6 +246,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("LastOwnershipUpdateTime"u8);
                 writer.WriteStringValue(LastOwnershipUpdateOn.Value, "O");
             }
+            if (Optional.IsDefined(AvailabilityPolicy))
+            {
+                writer.WritePropertyName("availabilityPolicy"u8);
+                writer.WriteObjectValue(AvailabilityPolicy, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -311,6 +317,7 @@ namespace Azure.ResourceManager.Compute
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
             DateTimeOffset? lastOwnershipUpdateTime = default;
+            AvailabilityPolicy availabilityPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -374,7 +381,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -417,7 +424,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -710,6 +717,15 @@ namespace Azure.ResourceManager.Compute
                             lastOwnershipUpdateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("availabilityPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityPolicy = AvailabilityPolicy.DeserializeAvailabilityPolicy(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -763,6 +779,7 @@ namespace Azure.ResourceManager.Compute
                 dataAccessAuthMode,
                 optimizedForFrequentAttach,
                 lastOwnershipUpdateTime,
+                availabilityPolicy,
                 serializedAdditionalRawData);
         }
 
@@ -773,7 +790,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedDiskData)} does not support writing '{options.Format}' format.");
             }
@@ -787,7 +804,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedDiskData(document.RootElement, options);
                     }
                 default:

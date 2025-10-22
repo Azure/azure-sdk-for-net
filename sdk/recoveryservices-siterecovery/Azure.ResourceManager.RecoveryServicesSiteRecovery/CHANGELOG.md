@@ -1,16 +1,31 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-05-09)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-08' to 'package-2025-01-01'.
+- Changes related to Azure shared disk cluster scenarios.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.37.0 to 1.41.0
+
+## 1.2.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.0 (2024-02-20)
 

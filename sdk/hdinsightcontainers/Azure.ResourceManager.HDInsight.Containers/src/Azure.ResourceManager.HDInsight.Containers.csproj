@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageId>Azure.ResourceManager.HDInsight.Containers</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider HDInsight On AKS.</Description>
     <PackageTags>azure;management;arm;resource manager;hdinsight;hdinsightcontainers</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

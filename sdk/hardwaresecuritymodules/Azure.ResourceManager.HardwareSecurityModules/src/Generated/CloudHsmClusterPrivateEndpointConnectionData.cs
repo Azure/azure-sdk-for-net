@@ -72,10 +72,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Resource properties. </summary>
-        [WirePath("properties")]
         public CloudHsmClusterPrivateEndpointConnectionProperties Properties { get; set; }
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

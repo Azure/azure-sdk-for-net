@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,12 +163,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudRackResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudRackResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -185,7 +187,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +195,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudRackResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudRackResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackRacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackRacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), _networkCloudRackRacksClientDiagnostics, Pipeline, "NetworkCloudRackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +262,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,7 +350,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

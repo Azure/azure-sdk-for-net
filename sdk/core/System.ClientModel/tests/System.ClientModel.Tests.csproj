@@ -5,6 +5,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
     <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);SCME0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,21 +17,29 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     <PackageReference Include="Microsoft.Extensions.Primitives" VersionOverride="8.0.0" />
     <PackageReference Include="Polly" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\System.ClientModel.csproj" />
     <ProjectReference Include="client\System.ClientModel.Tests.Client.csproj" />
   </ItemGroup>
 
+  <!-- We purposely have multiple ModelReaderWriterContexts in this project for samples so removing the SourceGeneration -->
+  <Target Name="RemoveAnalyzer" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Analyzer Remove="@(Analyzer->WithMetadataValue('NuGetPackageId', 'System.ClientModel'))" />
+    </ItemGroup>
+  </Target>
+  
   <ItemGroup>
     <None Remove="client/**" />
     <Compile Remove="client/**" />
     <Compile Remove="internal/**" />
     <Compile Remove="internal.perf/**" />
     <None Remove="internal.perf/**" />
+    <Compile Remove="gen*/**" /> 
   </ItemGroup>
 
 </Project>
