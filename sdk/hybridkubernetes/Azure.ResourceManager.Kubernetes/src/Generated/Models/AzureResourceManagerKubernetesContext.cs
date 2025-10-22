@@ -30,13 +30,11 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(Gateway))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
     [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OidcIssuerProfile))]
     [ModelReaderWriterBuildable(typeof(SecurityProfile))]
     [ModelReaderWriterBuildable(typeof(SecurityProfileWorkloadIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemComponent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext
     {
     }
