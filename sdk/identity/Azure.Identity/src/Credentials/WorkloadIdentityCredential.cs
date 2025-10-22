@@ -53,7 +53,9 @@ namespace Azure.Identity
                     var proxyConfig = KubernetesProxyConfig.TryCreate();
                     if (proxyConfig != null)
                     {
-                        // TODO: Add proxy policy to pipeline
+                        var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
+                        var httpClient = new System.Net.Http.HttpClient(proxyHandler);
+                        clientAssertionCredentialOptions.Transport = new Azure.Core.Pipeline.HttpClientTransport(httpClient);
                     }
                 }
 
