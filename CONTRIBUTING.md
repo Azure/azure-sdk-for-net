@@ -308,13 +308,13 @@ You can add the dev feed to your NuGet.Config file, which can be at the Solution
 
 ##### Unauthorized access to the feed
 
-If you are getting a 401 error, similar to `401 (Unauthorized - No local versions of package `xyz`; please provide authentication to access versions from upstream that have not yet been saved to your feed.)` it means you are trying 
+If you are getting a 401 error, similar to `401 (Unauthorized - No local versions of package "xyz"; please provide authentication to access versions from upstream that have not yet been saved to your feed.)` it means you are trying 
 to access a package version that is not on the feed but is on the upstream feed `nuget.org` and you don't have permissions to pull that version into the feed. There are two possible solutions to this issue:
 
 1. If you are a member of the team with access and want to update a version of the package in the feed you will need to authenticate to the feed. For local authentication you will want to use [Azure Artifacts Credential Provider](https://github.com/microsoft/artifacts-credprovider#azure-artifacts-credential-provider).
    If you need to authenticate a pipeline in our teams DevOps org you will want login via the [NuGetAuthenticate](https://learn.microsoft.com/azure/devops/pipelines/tasks/package/nuget-authenticate?view=azure-devops#dotnet) task.
 1. If you are external user and just want to consume packages in the feed you can scope the packages for the feed to just the ones you want by using [packageSourceMapping](https://learn.microsoft.com/nuget/reference/nuget-config-file#packagesource) similar to:
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <packageSources>
