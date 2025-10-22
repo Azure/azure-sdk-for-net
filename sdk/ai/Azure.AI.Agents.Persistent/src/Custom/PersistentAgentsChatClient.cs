@@ -390,7 +390,7 @@ namespace Azure.AI.Agents.Persistent
                                 break;
 
                             case HostedMcpServerTool mcpTool:
-                                MCPToolDefinition mcp = new(mcpTool.ServerName, mcpTool.Url.AbsoluteUri);
+                                MCPToolDefinition mcp = new(mcpTool.ServerName, mcpTool.ServerAddress);
 
                                 if (mcpTool.AllowedTools is { Count: > 0 })
                                 {
@@ -400,8 +400,8 @@ namespace Azure.AI.Agents.Persistent
                                     }
                                 }
 
-                                MCPToolResource mcpResource = mcpTool.Headers is { } headers ?
-                                    new(mcpTool.ServerName, headers) :
+                                MCPToolResource mcpResource = !string.IsNullOrEmpty(mcpTool.AuthorizationToken) ?
+                                    new(mcpTool.ServerName, new Dictionary<string, string>() { ["Authorization"] = $"Bearer {mcpTool.AuthorizationToken}" }) :
                                     new(mcpTool.ServerName);
 
                                 switch (mcpTool.ApprovalMode)
