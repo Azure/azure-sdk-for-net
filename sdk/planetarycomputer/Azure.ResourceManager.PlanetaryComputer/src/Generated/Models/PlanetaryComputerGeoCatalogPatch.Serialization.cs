@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PlanetaryComputer;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
@@ -56,7 +54,14 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Identity);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Identity))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
+            BinaryData identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +137,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPlanetaryComputerContext.Default);
+                    identity = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
