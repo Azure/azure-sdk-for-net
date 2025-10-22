@@ -232,12 +232,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        // The following tests have been moved to WorkloadIdentityCredentialLiveTests.cs
-        // as they require a real AKS environment with valid certificates:
-        // - AuthenticateWithWorkloadIdentity_KubernetesProxyWithCaFile
-        // - AuthenticateWithWorkloadIdentity_KubernetesProxyWithCaData
-        // - AuthenticateWithWorkloadIdentity_KubernetesProxyWithSniName
-
         [TearDown]
         public void CleanupTestAssertionFiles()
         {
