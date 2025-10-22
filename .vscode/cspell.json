@@ -1365,6 +1365,12 @@
       ]
     },
     {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "agentic"
+      ]
+    },
+    {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
         "dscp",
