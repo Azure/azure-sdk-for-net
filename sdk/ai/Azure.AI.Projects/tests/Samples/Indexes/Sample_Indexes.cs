@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Tests
 {
     public class Sample_Indexes : SamplesBase<AIProjectsTestEnvironment>
     {
-        private AIProjectClient CreateDebugClient(string endpoint)
+        private static AIProjectClient CreateDebugClient(string endpoint)
         {
             var options = new AIProjectClientOptions();
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Tests
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
 
-            AIProjectClient projectClient = CreateDebugClient(endpoint);
+            AIProjectClient projectClient = Sample_Indexes.CreateDebugClient(endpoint);
 #endif
             Console.WriteLine("Create a local Index with configurable data, referencing an existing AI Search resource");
             AzureAISearchIndex searchIndex = new AzureAISearchIndex(aiSearchConnectionName, aiSearchIndexName)
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Tests
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
 
-            AIProjectClient projectClient = CreateDebugClient(endpoint);
+            AIProjectClient projectClient = Sample_Indexes.CreateDebugClient(endpoint);
 #endif
             Console.WriteLine("Create a local Index with configurable data, referencing an existing AI Search resource");
             AzureAISearchIndex searchIndex = new AzureAISearchIndex(aiSearchConnectionName, aiSearchIndexName)

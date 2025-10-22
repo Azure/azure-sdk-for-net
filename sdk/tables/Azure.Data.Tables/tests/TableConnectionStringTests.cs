@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedDevStoraageCred)), "The Credentials should have matched.");
+            Assert.That(TableConnectionStringTests.GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedDevStoraageCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"http://{TableConstants.ConnectionStrings.Localhost}:{TableConstants.ConnectionStrings.TableEndpointPortNumber}/{TableConstants.ConnectionStrings.DevStoreAccountName}")), "The PrimaryUri should have matched.");
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Data.Tables.Tests
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+            Assert.That(TableConnectionStringTests.GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
         }
@@ -92,7 +92,7 @@ namespace Azure.Data.Tables.Tests
             var tcs = TableConnectionString.Parse(connString);
 
             Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+            Assert.That(TableConnectionStringTests.GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")), "The SecondaryUri should have matched.");
         }
@@ -116,7 +116,7 @@ namespace Azure.Data.Tables.Tests
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
+            Assert.That(TableConnectionStringTests.GetCredString(tcs.Credentials), Is.EqualTo(TableConnectionStringTests.GetExpectedHash(_expectedCred)), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.{domain}:443/")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.{domain}:443/")), "The SecondaryUri should have matched.");
         }
@@ -139,7 +139,7 @@ namespace Azure.Data.Tables.Tests
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
+            Assert.That(TableConnectionStringTests.GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/?{SasToken}")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/?{SasToken}")), "The SecondaryUri should have matched.");
         }
@@ -159,7 +159,7 @@ namespace Azure.Data.Tables.Tests
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
-            Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
+            Assert.That(TableConnectionStringTests.GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com/?{SasToken}")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com/?{SasToken}")), "The SecondaryUri should have matched.");
             Assert.AreEqual(AccountName,tcs._accountName);
@@ -270,7 +270,7 @@ namespace Azure.Data.Tables.Tests
 
         private static string GetExpectedHash(TableSharedKeyCredential cred) => cred.ComputeHMACSHA256("message");
 
-        private string GetCredString(object credential) => credential switch
+        private static string GetCredString(object credential) => credential switch
         {
             TableSharedKeyCredential cred => TableConnectionStringTests.GetExpectedHash(cred),
             string sas => sas,

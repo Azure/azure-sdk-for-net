@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Tests;
 
 public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 {
-    private void EnableSystemClientModelDebugging()
+    private static void EnableSystemClientModelDebugging()
     {
         // Enable System.ClientModel diagnostics
         ActivitySource.AddActivityListener(new ActivityListener
@@ -27,7 +27,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         });
     }
 
-    private AIProjectClient CreateDebugClient(string endpoint)
+    private static AIProjectClient CreateDebugClient(string endpoint)
     {
         var options = new AIProjectClientOptions();
 
@@ -78,10 +78,10 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         // Enable debugging for System.ClientModel
-        EnableSystemClientModelDebugging();
+        Sample_Deployment.EnableSystemClientModelDebugging();
 
         // Create client with debugging enabled
-        AIProjectClient projectClient = CreateDebugClient(endpoint);
+        AIProjectClient projectClient = Sample_Deployment.CreateDebugClient(endpoint);
 #endif
 
         Console.WriteLine("List all deployments:");
@@ -119,10 +119,10 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         // Enable debugging for System.ClientModel
-        EnableSystemClientModelDebugging();
+        Sample_Deployment.EnableSystemClientModelDebugging();
 
         // Create client with debugging enabled
-        AIProjectClient projectClient = CreateDebugClient(endpoint);
+        AIProjectClient projectClient = Sample_Deployment.CreateDebugClient(endpoint);
 #endif
 
         Console.WriteLine("List all deployments:");

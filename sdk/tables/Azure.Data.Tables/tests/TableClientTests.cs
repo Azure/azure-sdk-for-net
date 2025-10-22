@@ -39,6 +39,7 @@ namespace Azure.Data.Tables.Tests
         private TableEntity validEntity =
             new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
         private static readonly string[] expected = new[] { "PartitionKey", "RowKey", "MyFoo" };
+        private static readonly string[] select = new[] { "mySelect" };
 
         [SetUp]
         public void TestSetup()
@@ -714,7 +715,7 @@ namespace Azure.Data.Tables.Tests
 
             try
             {
-                await client.QueryAsync<TableEntity>(filter: "myFilter", maxPerPage: 987, select: new[] { "mySelect" }).ToEnumerableAsync().ConfigureAwait(false);
+                await client.QueryAsync<TableEntity>(filter: "myFilter", maxPerPage: 987, select: select).ToEnumerableAsync().ConfigureAwait(false);
             }
             catch {/* don't throw */}
 

@@ -31,15 +31,15 @@ public class DeploymentTest : ProjectsClientTestBase
 
         if (IsAsync)
         {
-            await DeploymentTestAsync(projectClient, modelDeploymentName, modelPublisher);
+            await DeploymentTest.DeploymentTestAsync(projectClient, modelDeploymentName, modelPublisher);
         }
         else
         {
-            DeploymentTestSync(projectClient, modelDeploymentName, modelPublisher);
+            DeploymentTest.DeploymentTestSync(projectClient, modelDeploymentName, modelPublisher);
         }
     }
 
-    private void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
+    private static void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
     {
         Console.WriteLine("List all deployments:");
         foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
@@ -57,7 +57,7 @@ public class DeploymentTest : ProjectsClientTestBase
         ModelDeployment deploymentDetails = (ModelDeployment) projectClient.Deployments.GetDeployment(modelDeploymentName);
         ValidateDeployment(deploymentDetails);
     }
-    private async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
+    private static async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
     {
         Console.WriteLine("List all deployments:");
         await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())

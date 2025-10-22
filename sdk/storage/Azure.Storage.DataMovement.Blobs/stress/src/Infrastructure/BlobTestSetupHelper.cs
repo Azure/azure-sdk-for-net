@@ -94,7 +94,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             long? objectLength = Constants.KB * 4,
             CancellationToken cancellationToken = default)
         {
-            Assert.IsTrue(objectLength.Value % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(objectLength.Value % (Constants.KB / 2, Is.True) == 0, "Cannot create page blob that's not a multiple of 512");
             await pageBlobClient.CreateIfNotExistsAsync(objectLength.Value);
             if (objectLength.Value > 0)
             {

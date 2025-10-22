@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Tests
     /// This class now uses a hybrid approach - it extends the standard Azure.Core RecordedTestBase
     /// but provides manual transport configuration for System.ClientModel compatibility.
     /// </summary>
-    public class ProjectsClientTestBase : RecordedTestBase<AIProjectsTestEnvironment>
+    public partial class ProjectsClientTestBase : RecordedTestBase<AIProjectsTestEnvironment>
     {
         public ProjectsClientTestBase(bool isAsync) : base(isAsync)
         {
@@ -95,10 +95,7 @@ namespace Azure.AI.Projects.Tests
         }
 
         // Regular expression describing the pattern of an Application Insights connection string
-        internal static readonly Regex RegexAppInsightsConnectionString = new(
-            @"^InstrumentationKey=[0-9a-fA-F-]{36};IngestionEndpoint=https://.+\.applicationinsights\.azure\.com/;LiveEndpoint=https://.+\.monitor\.azure\.com/;ApplicationId=[0-9a-fA-F-]{36}$",
-            RegexOptions.Compiled
-        );
+        internal static readonly Regex RegexAppInsightsConnectionString = MyRegex();
 
         /// <summary>
         /// Asserts that the actual value is not null, and optionally equals the expected value if provided.
@@ -272,5 +269,8 @@ namespace Azure.AI.Projects.Tests
             return !string.IsNullOrEmpty(connectionString) &&
                    RegexAppInsightsConnectionString.IsMatch(connectionString);
         }
+
+        [GeneratedRegex(@"^InstrumentationKey=[0-9a-fA-F-]{36};IngestionEndpoint=https://.+\.applicationinsights\.azure\.com/;LiveEndpoint=https://.+\.monitor\.azure\.com/;ApplicationId=[0-9a-fA-F-]{36}$", RegexOptions.Compiled)]
+        private static partial Regex MyRegex();
     }
 }

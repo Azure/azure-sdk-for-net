@@ -19,9 +19,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
 {
-    public class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
+    public partial class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
     {
-        private void EnableSystemClientModelDebugging()
+        private static void EnableSystemClientModelDebugging()
         {
             // Enable System.ClientModel diagnostics
             ActivitySource.AddActivityListener(new ActivityListener
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Tests
             });
         }
 
-        private AIProjectClient CreateDebugClient(string endpoint)
+        private static AIProjectClient CreateDebugClient(string endpoint)
         {
             var options = new AIProjectClientOptions();
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Tests
         [SyncOnly]
         public void DatasetsExample()
         {
-            EnableSystemClientModelDebugging();
+            Sample_Datasets.EnableSystemClientModelDebugging();
 
             #region Snippet:AI_Projects_DatasetsExampleSync
 #if SNIPPET
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects.Tests
                 datasetVersion2 = "2.0";
             }
 
-            AIProjectClient projectClient = CreateDebugClient(endpoint);
+            AIProjectClient projectClient = Sample_Datasets.CreateDebugClient(endpoint);
 #endif
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects.Tests
                 version: datasetVersion2,
                 folderPath: folderPath,
                 connectionName: connectionName,
-                filePattern: new Regex(".*\\.txt")
+                filePattern: MyRegex()
             );
             Console.WriteLine(folderDataset);
 
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Tests
         [AsyncOnly]
         public async Task DatasetsExampleAsync()
         {
-            EnableSystemClientModelDebugging();
+            Sample_Datasets.EnableSystemClientModelDebugging();
 
             #region Snippet:AI_Projects_DatasetsExampleAsync
 #if SNIPPET
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects.Tests
                 datasetVersion2 = "2.0";
             }
 
-            AIProjectClient projectClient = CreateDebugClient(endpoint);
+            AIProjectClient projectClient = Sample_Datasets.CreateDebugClient(endpoint);
 #endif
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects.Tests
                 version: datasetVersion2,
                 folderPath: folderPath,
                 connectionName: connectionName,
-                filePattern: new Regex(".*\\.txt")
+                filePattern: MyRegex()
             );
             Console.WriteLine(folderDataset);
 
@@ -311,7 +311,7 @@ namespace Azure.AI.Projects.Tests
                 datasetVersion = "1.0";
             }
 
-            AIProjectClient projectClient = CreateDebugClient(endpoint);
+            AIProjectClient projectClient = Sample_Datasets.CreateDebugClient(endpoint);
 #endif
             #endregion
 
@@ -374,5 +374,8 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine($"Cleaning up - deleting Dataset {datasetName} version {datasetVersion}");
             projectClient.Datasets.Delete(datasetName, datasetVersion);
         }
+
+        [GeneratedRegex(".*\\.txt")]
+        private static partial Regex MyRegex();
     }
 }

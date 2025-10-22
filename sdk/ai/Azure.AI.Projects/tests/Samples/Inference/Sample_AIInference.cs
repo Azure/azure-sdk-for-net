@@ -16,6 +16,8 @@ namespace Azure.AI.Projects.Tests;
 
 public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
 {
+    private static readonly string[] scopes = new string[] { "https://ai.azure.com/.default" };
+
     [Test]
     [SyncOnly]
     public void InferenceChatCompletion()
@@ -33,7 +35,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, scopes);
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -51,6 +53,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(response.Value.Content);
         #endregion
     }
+    private static readonly string[] scopes = new string[] { "https://ai.azure.com/.default" };
 
     [Test]
     [AsyncOnly]
@@ -69,7 +72,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, scopes);
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -87,6 +90,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(response.Value.Content);
         #endregion
     }
+    private static readonly string[] scopes = new string[] { "https://ai.azure.com/.default" };
 
     [Test]
     [SyncOnly]
@@ -105,7 +109,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, scopes);
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -124,6 +128,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         }
         #endregion
     }
+    private static readonly string[] scopes = new string[] { "https://ai.azure.com/.default" };
 
     [Test]
     [AsyncOnly]
@@ -142,7 +147,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, scopes);
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -161,6 +166,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         }
         #endregion
     }
+    private static readonly string[] scopes = new string[] { "https://ai.azure.com/.default" };
 
     [Test]
     [SyncOnly]
@@ -179,7 +185,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, scopes);
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -218,6 +224,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
             Assert.That(embedding.Count, Is.GreaterThan(0));
         }
     }
+    private static readonly string[] scopes = new string[] { "https://ai.azure.com/.default" };
 
     [Test]
     [AsyncOnly]
@@ -236,7 +243,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
         var credential = new DefaultAzureCredential();
-        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, scopes);
         clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
         ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
