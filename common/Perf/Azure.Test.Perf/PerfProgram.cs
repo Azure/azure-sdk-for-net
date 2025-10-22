@@ -494,12 +494,13 @@ namespace Azure.Test.Perf
         private static void PrintLatencies(string header, IList<IList<TimeSpan>> latencies)
         {
             Console.WriteLine($"=== {header} ===");
-            var sortedLatencies = latencies.Aggregate<IEnumerable<TimeSpan>>((list1, list2) => list1.Concat(list2)).ToArray();
+            var sortedLatencies = latencies.SelectMany(l => l).ToArray();
             Array.Sort(sortedLatencies);
             var percentiles = new double[] { 0.5, 0.75, 0.9, 0.99, 0.999, 0.9999, 0.99999, 1.0 };
             foreach (var percentile in percentiles)
             {
-                Console.WriteLine($"{percentile * 100,7:N3}%   {sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds,8:N2}ms");
+                var index = Math.Max(0, (int)(sortedLatencies.Length * percentile) - 1);
+                Console.WriteLine($"{percentile * 100,7:N3}%   {sortedLatencies[index].TotalMilliseconds,8:N2}ms");
             }
             Console.WriteLine();
         }
