@@ -911,8 +911,33 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region UserDelegationKey
         /// <summary>
-        /// Creates a new <see cref="UserDelegationKey"/> instance for mocking.
+        /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string, string)"/> instance for mocking.
         /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId,
+            string signedTenantId,
+            DateTimeOffset signedStart,
+            DateTimeOffset signedExpiry,
+            string signedService,
+            string signedVersion,
+            string signedDelegatedUserTenantId,
+            string value)
+            => new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStart,
+                SignedExpiresOn = signedExpiry,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                Value = value,
+                SignedDelegatedUserTenantId = signedDelegatedUserTenantId
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string)"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserDelegationKey UserDelegationKey(
             string signedObjectId,
             string signedTenantId,

@@ -4260,7 +4260,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -4293,7 +4293,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -4325,7 +4325,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -4353,7 +4353,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.

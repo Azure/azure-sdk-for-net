@@ -1509,7 +1509,7 @@ namespace Azure.Storage.Blobs
             GetUserDelegationKeyInternal(
                 options?.StartsOn,
                 expiresOn,
-                options?.DelegatedUserTid,
+                options?.DelegatedUserTenantId,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1548,7 +1548,7 @@ namespace Azure.Storage.Blobs
             await GetUserDelegationKeyInternal(
                 options?.StartsOn,
                 expiresOn,
-                options?.DelegatedUserTid,
+                options?.DelegatedUserTenantId,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1660,7 +1660,7 @@ namespace Azure.Storage.Blobs
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
-        /// <param name="delegatedUserTid">
+        /// <param name="delegatedUserTenantId">
         /// The delegated user tenant id in Azure AD.
         /// </param>
         /// <param name="cancellationToken">
@@ -1681,7 +1681,7 @@ namespace Azure.Storage.Blobs
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            string delegatedUserTid,
+            string delegatedUserTenantId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1708,7 +1708,7 @@ namespace Azure.Storage.Blobs
                     KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
                     {
                         Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
-                        DelegatedUserTid = delegatedUserTid
+                        DelegatedUserTid = delegatedUserTenantId
                     };
 
                     ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;

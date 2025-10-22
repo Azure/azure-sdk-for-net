@@ -1436,21 +1436,16 @@ namespace Azure.Storage.Files.Shares
 
         #region GetUserDelegationKey
         /// <summary>
-        /// The <see cref="GetUserDelegationKey"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKey(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="ShareSasBuilder"/>.
         /// </summary>
-        /// <param name="startsOn">
-        /// Start time for the key's validity, with null indicating an
-        /// immediate start.  The time should be specified in UTC.
-        ///
-        /// Note: If you set the start time to the current time, failures
-        /// might occur intermittently for the first few minutes. This is due to different
-        /// machines having slightly different current times (known as clock skew).
-        /// </param>
         /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1468,18 +1463,58 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
+            ShareGetUserDelegationKeyOptions options = default,
             CancellationToken cancellationToken = default) =>
             GetUserDelegationKeyInternal(
-                startsOn,
+                options?.StartsOn,
                 expiresOn,
+                options?.DelegatedUserTenantId,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="ShareSasBuilder"/>.
+        /// </summary>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+            DateTimeOffset expiresOn,
+            ShareGetUserDelegationKeyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await GetUserDelegationKeyInternal(
+                options?.StartsOn,
+                expiresOn,
+                options?.DelegatedUserTenantId,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKey(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="ShareSasBuilder"/>.
         /// </summary>
@@ -1510,6 +1545,52 @@ namespace Azure.Storage.Files.Shares
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(
+            DateTimeOffset? startsOn,
+            DateTimeOffset expiresOn,
+            CancellationToken cancellationToken = default) =>
+            GetUserDelegationKeyInternal(
+                startsOn,
+                expiresOn,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="ShareSasBuilder"/>.
+        /// </summary>
+        /// <param name="startsOn">
+        /// Start time for the key's validity, with null indicating an
+        /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
+        /// </param>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
+        /// the service replication statistics.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -1517,6 +1598,7 @@ namespace Azure.Storage.Files.Shares
             await GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1538,6 +1620,9 @@ namespace Azure.Storage.Files.Shares
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
+        /// <param name="delegatedUserTenantId">
+        /// The delegated user tenant id in Azure AD.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1556,6 +1641,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
+            string delegatedUserTenantId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1584,7 +1670,8 @@ namespace Azure.Storage.Files.Shares
 
                     KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
                     {
-                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture)
+                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
+                        DelegatedUserTid = delegatedUserTenantId
                     };
 
                     ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;

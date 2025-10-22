@@ -115,8 +115,7 @@ namespace Azure.Storage.Sas
                 correlationId,
                 directoryDepth: null,
                 encryptionScope,
-                delegatedUserObjectId,
-                delegatedUserTenantId)
+                delegatedUserObjectId)
         {
             KeyProperties = new UserDelegationKeyProperties
             {
@@ -125,7 +124,8 @@ namespace Azure.Storage.Sas
                 StartsOn = keyStart,
                 ExpiresOn = keyExpiry,
                 Service = keyService,
-                Version = keyVersion
+                Version = keyVersion,
+                SignedDelegatedUserTenantId = delegatedUserTenantId
             };
         }
 

@@ -46,9 +46,9 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="signedExpiresOn"> The date-time the key expires. </param>
         /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
         /// <param name="signedVersion"> The service version that created the key. </param>
-        /// <param name="signedDelegatedUserTid"> The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified. </param>
+        /// <param name="signedDelegatedUserTenantId"> The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTid, string value)
+        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value)
         {
             SignedObjectId = signedObjectId;
             SignedTenantId = signedTenantId;
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Models
             SignedExpiresOn = signedExpiresOn;
             SignedService = signedService;
             SignedVersion = signedVersion;
-            SignedDelegatedUserTid = signedDelegatedUserTid;
+            SignedDelegatedUserTenantId = signedDelegatedUserTenantId;
             Value = value;
         }
     }

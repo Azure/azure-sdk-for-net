@@ -82,7 +82,8 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyExpiry = default,
             string keyService = default,
             string keyVersion = default,
-            string delegatedUserObjectId = default)
+            string delegatedUserObjectId = default,
+            string delegatedUserTenantId = default)
             : base(
                 version,
                 services,
@@ -114,7 +115,8 @@ namespace Azure.Storage.Sas
                 StartsOn = keyStart,
                 ExpiresOn = keyExpiry,
                 Service = keyService,
-                Version = keyVersion
+                Version = keyVersion,
+                SignedDelegatedUserTenantId = delegatedUserTenantId
             };
         }
 

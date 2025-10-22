@@ -3,12 +3,12 @@
 
 using System;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// Optional parameters for Get User Delegation Key.
     /// </summary>
-    public class BlobGetUserDelegationKeyOptions
+    public class QueueGetUserDelegationKeyOptions
     {
         /// <summary>
         /// Start time for the key's validity, with null indicating an

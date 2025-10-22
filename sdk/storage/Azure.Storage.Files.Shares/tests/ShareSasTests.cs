@@ -968,6 +968,167 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedTenantId()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions()
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.Read, expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName);
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act
+            Response<ShareProperties> response = await sasShare.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedTenantId_Fail()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions()
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.Read, expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                // We are deliberately not passing in DelegatedUserObjectId to cause an auth failure
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName);
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasShare.GetPropertiesAsync(),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedTenantId_Roundtrip()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            ShareGetUserDelegationKeyOptions options = new ShareGetUserDelegationKeyOptions()
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.Read, expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName);
+
+            ShareUriBuilder originalShareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareUriBuilder roundtripShareUriBuilder = new ShareUriBuilder(originalShareUriBuilder.ToUri());
+
+            Assert.AreEqual(originalShareUriBuilder.ToUri(), roundtripShareUriBuilder.ToUri());
+            Assert.AreEqual(originalShareUriBuilder.Sas.ToString(), roundtripShareUriBuilder.Sas.ToString()); // need to fix bug to get this to pass
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ShareClient_UserDelegationSas_DelegatedObjectId()
         {

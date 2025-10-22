@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Models
         /// The delegated user tenant id in Azure AD. Return if DelegatedUserTid is specified.
         /// </summary>
         [CodeGenMember("SignedDelegatedUserTid")]
-        public string SignedDelegatedUserTid { get; internal set; }
+        public string SignedDelegatedUserTenantId { get; internal set; }
 
         /// <summary>
         /// The key as a base64 string.

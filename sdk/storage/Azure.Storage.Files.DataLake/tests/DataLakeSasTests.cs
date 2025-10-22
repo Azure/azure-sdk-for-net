@@ -382,6 +382,180 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task FileSystemIdentitySAS_DelegatedTenantId()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName, service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await file.CreateAsync();
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions()
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                FileSystemName = test.Container.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            DataLakeSasQueryParameters dataLakeSasQueryParameters = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri)
+            {
+                Sas = dataLakeSasQueryParameters
+            };
+
+            DataLakeFileClient identitySasFile = InstrumentClient(new DataLakeFileClient(dataLakeUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act
+            Response<PathProperties> response = await identitySasFile.GetPropertiesAsync();
+            AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey.Value);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task FileSystemIdentitySAS_DelegatedTenantId_Fail()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName, service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await file.CreateAsync();
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions()
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                FileSystemName = test.Container.Name,
+                // We are deliberately not passing in DelegatedUserObjectId to cause an auth failure
+            };
+
+            DataLakeSasQueryParameters dataLakeSasQueryParameters = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri)
+            {
+                Sas = dataLakeSasQueryParameters
+            };
+
+            DataLakeFileClient identitySasFile = InstrumentClient(new DataLakeFileClient(dataLakeUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasFile.GetPropertiesAsync(),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task FileSystemIdentitySAS_DelegatedTenantId_Roundtrip()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName, service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await file.CreateAsync();
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions()
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                FileSystemName = test.Container.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            DataLakeSasQueryParameters dataLakeSasQueryParameters = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            DataLakeUriBuilder originalDataLakeUriBuilder = new DataLakeUriBuilder(file.Uri)
+            {
+                Sas = dataLakeSasQueryParameters
+            };
+
+            DataLakeUriBuilder roundtripDataLakeUriBuilder = new DataLakeUriBuilder(originalDataLakeUriBuilder.ToUri());
+
+            Assert.AreEqual(originalDataLakeUriBuilder.ToUri(), roundtripDataLakeUriBuilder.ToUri());
+            Assert.AreEqual(originalDataLakeUriBuilder.Sas.ToString(), roundtripDataLakeUriBuilder.Sas.ToString());
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task FileSystemIdentitySAS_DelegatedObjectId()
         {

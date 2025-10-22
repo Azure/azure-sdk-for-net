@@ -100,9 +100,6 @@ namespace Azure.Storage.Sas
         // sduoid
         private string _delegatedUserObjectId;
 
-        // skdutid
-        private string _delegatedUserTenantId;
-
         /// <summary>
         /// Gets the storage service version to use to authenticate requests
         /// made with this shared access signature, and the service version to
@@ -256,14 +253,6 @@ namespace Azure.Storage.Sas
         public string DelegatedUserObjectId => _delegatedUserObjectId ?? string.Empty;
 
         /// <summary>
-        /// Gets the Delegated User Tenant Id associated with the shared access signature.
-        /// Optional. This value specifies the Entra ID of the tenant that is authorized to
-        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
-        /// issued to the tenant specified in this value.
-        /// </summary>
-        public string DelegatedUserTenantId => _delegatedUserTenantId ?? string.Empty;
-
-        /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
         /// fields that must be verified in order to authenticate the request.
         /// The signature is an HMAC computed over the string-to-sign and key
@@ -366,9 +355,6 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.DelegatedUserObjectIdUpper:
                         _delegatedUserObjectId = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.DelegatedUserTenantIdUpper:
-                        _delegatedUserTenantId = kv.Value;
-                        break;
 
                     // We didn't recognize the query parameter
                     default:
@@ -387,62 +373,6 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new SasQueryParameters instance.
         /// </summary>
-        protected SasQueryParameters(
-            string version,
-            AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
-            SasProtocol protocol,
-            DateTimeOffset startsOn,
-            DateTimeOffset expiresOn,
-            SasIPRange ipRange,
-            string identifier,
-            string resource,
-            string permissions,
-            string signature,
-            string cacheControl = default,
-            string contentDisposition = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            string contentType = default,
-            string authorizedAadObjectId = default,
-            string unauthorizedAadObjectId = default,
-            string correlationId = default,
-            int? directoryDepth = default,
-            string encryptionScope = default,
-            string delegatedUserObjectId = default,
-            string delegatedUserTenantId = default)
-        {
-            _version = version;
-            _services = (services, services?.ToPermissionsString());
-            _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
-            _protocol = (protocol, protocol.ToProtocolString());
-            _startTime = startsOn;
-            _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
-            _expiryTime = expiresOn;
-            _expiryTimeString = expiresOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
-            _ipRange = ipRange;
-            _identifier = identifier;
-            _resource = resource;
-            _permissions = permissions;
-            _signature = signature;
-            _cacheControl = cacheControl;
-            _contentDisposition = contentDisposition;
-            _contentEncoding = contentEncoding;
-            _contentLanguage = contentLanguage;
-            _contentType = contentType;
-            _preauthorizedAgentObjectId = authorizedAadObjectId;
-            _agentObjectId = unauthorizedAadObjectId;
-            _correlationId = correlationId;
-            _directoryDepth = directoryDepth;
-            _encryptionScope = encryptionScope;
-            _delegatedUserObjectId = delegatedUserObjectId;
-            _delegatedUserTenantId = delegatedUserTenantId;
-        }
-
-        /// <summary>
-        /// Creates a new SasQueryParameters instance.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected SasQueryParameters(
             string version,
             AccountSasServices? services,
@@ -654,59 +584,6 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new SasQueryParameters instance.
         /// </summary>
-        protected static SasQueryParameters Create(
-            string version,
-            AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
-            SasProtocol protocol,
-            DateTimeOffset startsOn,
-            DateTimeOffset expiresOn,
-            SasIPRange ipRange,
-            string identifier,
-            string resource,
-            string permissions,
-            string signature,
-            string cacheControl = default,
-            string contentDisposition = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            string contentType = default,
-            string authorizedAadObjectId = default,
-            string unauthorizedAadObjectId = default,
-            string correlationId = default,
-            int? directoryDepth = default,
-            string encryptionScope = default,
-            string delegatedUserObjectId = default,
-            string delegatedUserTenantId = default) =>
-            new SasQueryParameters(
-                version: version,
-                services: services,
-                resourceTypes: resourceTypes,
-                protocol: protocol,
-                startsOn: startsOn,
-                expiresOn: expiresOn,
-                ipRange: ipRange,
-                identifier: identifier,
-                resource: resource,
-                permissions: permissions,
-                signature: signature,
-                cacheControl: cacheControl,
-                contentDisposition: contentDisposition,
-                contentEncoding: contentEncoding,
-                contentLanguage: contentLanguage,
-                contentType: contentType,
-                authorizedAadObjectId: authorizedAadObjectId,
-                unauthorizedAadObjectId: unauthorizedAadObjectId,
-                correlationId: correlationId,
-                directoryDepth: directoryDepth,
-                encryptionScope: encryptionScope,
-                delegatedUserObjectId: delegatedUserObjectId,
-                delegatedUserTenantId: delegatedUserTenantId);
-
-        /// <summary>
-        /// Creates a new SasQueryParameters instance.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected static SasQueryParameters Create(
             string version,
             AccountSasServices? services,
@@ -1009,11 +886,6 @@ namespace Azure.Storage.Sas
             if (!string.IsNullOrWhiteSpace(EncryptionScope))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.EncryptionScope, WebUtility.UrlEncode(EncryptionScope));
-            }
-
-            if (!string.IsNullOrWhiteSpace(DelegatedUserTenantId))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.DelegatedUserTenantId, WebUtility.UrlEncode(DelegatedUserTenantId));
             }
 
             if (!string.IsNullOrWhiteSpace(DelegatedUserObjectId))

@@ -681,6 +681,33 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset signedExpiresOn = default,
             string signedService = default,
             string signedVersion = default,
+            string signedDelegatedUserTenantId = default,
+            string value = default)
+        {
+            return new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStartsOn,
+                SignedExpiresOn = signedExpiresOn,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                SignedDelegatedUserTenantId = signedDelegatedUserTenantId,
+                Value = value
+            };
+        }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId = default,
+            string signedTenantId = default,
+            DateTimeOffset signedStartsOn = default,
+            DateTimeOffset signedExpiresOn = default,
+            string signedService = default,
+            string signedVersion = default,
             string value = default)
         {
             return new UserDelegationKey()

@@ -61,6 +61,9 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.KeyVersionUpper:
                         parameters.KeyProperties.Version = kv.Value;
                         break;
+                    case Constants.Sas.Parameters.DelegatedUserTenantIdUpper:
+                        parameters.KeyProperties.SignedDelegatedUserTenantId = kv.Value;
+                        break;
 
                     default:
                         isSasKey = false;

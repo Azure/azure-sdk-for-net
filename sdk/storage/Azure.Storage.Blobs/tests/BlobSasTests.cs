@@ -286,7 +286,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
         public async Task ContainerIdentitySAS_DelegatedTenantId()
         {
             BlobServiceClient oauthService = GetServiceClient_OAuth();
@@ -308,21 +308,20 @@ namespace Azure.Storage.Blobs.Test
 
             BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions()
             {
-                DelegatedUserTid = tenantId?.ToString()
+                DelegatedUserTenantId = tenantId?.ToString()
             };
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
-            Assert.IsNotNull(userDelegationKey.Value.SignedDelegatedUserTid);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
             {
                 BlobContainerName = test.Container.Name,
-                DelegatedUserTenantId = tenantId?.ToString(),
                 DelegatedUserObjectId = objectId?.ToString()
             };
 
@@ -345,7 +344,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
         public async Task ContainerIdentitySAS_DelegatedTenantId_Fail()
         {
             BlobServiceClient oauthService = GetServiceClient_OAuth();
@@ -367,22 +366,21 @@ namespace Azure.Storage.Blobs.Test
 
             BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions()
             {
-                DelegatedUserTid = tenantId?.ToString()
+                DelegatedUserTenantId = tenantId?.ToString()
             };
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
-            Assert.IsNotNull(userDelegationKey.Value.SignedDelegatedUserTid);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
             {
                 BlobContainerName = test.Container.Name,
-                DelegatedUserTenantId = tenantId?.ToString(),
-                DelegatedUserObjectId = objectId?.ToString()
+                // We are deliberately not passing in DelegatedUserObjectId to cause an auth failure
             };
 
             BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
@@ -392,8 +390,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = blobSasQueryParameters
             };
 
-            // We are deliberately not using the token credential to cause an auth failure
-            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -425,21 +422,20 @@ namespace Azure.Storage.Blobs.Test
 
             BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions()
             {
-                DelegatedUserTid = tenantId?.ToString()
+                DelegatedUserTenantId = tenantId?.ToString()
             };
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
-            Assert.IsNotNull(userDelegationKey.Value.SignedDelegatedUserTid);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
             {
                 BlobContainerName = test.Container.Name,
-                DelegatedUserTenantId = tenantId?.ToString(),
                 DelegatedUserObjectId = objectId?.ToString()
             };
 

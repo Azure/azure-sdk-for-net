@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
@@ -367,7 +368,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -384,7 +385,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -427,7 +428,8 @@ namespace Azure.Storage.Sas
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
-                delegatedUserObjectId: DelegatedUserObjectId);
+                delegatedUserObjectId: DelegatedUserObjectId,
+                delegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
             return p;
         }
 
@@ -450,7 +452,7 @@ namespace Azure.Storage.Sas
                     signedExpiry,
                     userDelegationKey.SignedService,
                     userDelegationKey.SignedVersion,
-                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                    userDelegationKey.SignedDelegatedUserTenantId,
                     DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),

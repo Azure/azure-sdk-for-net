@@ -94,7 +94,8 @@ namespace Azure.Storage.Sas
             string correlationId = default,
             int? directoryDepth = default,
             string encryptionScope = default,
-            string delegatedUserObjectId = default)
+            string delegatedUserObjectId = default,
+            string delegatedUserTenantId = default)
             : base(
                 version: version,
                 services: services,
@@ -126,7 +127,8 @@ namespace Azure.Storage.Sas
                 StartsOn = keyStart,
                 ExpiresOn = keyExpiry,
                 Service = keyService,
-                Version = keyVersion
+                Version = keyVersion,
+                SignedDelegatedUserTenantId = delegatedUserTenantId
             };
         }
 

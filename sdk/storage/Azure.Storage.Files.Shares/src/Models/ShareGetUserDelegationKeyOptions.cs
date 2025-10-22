@@ -3,12 +3,12 @@
 
 using System;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// Optional parameters for Get User Delegation Key.
     /// </summary>
-    public class BlobGetUserDelegationKeyOptions
+    public class ShareGetUserDelegationKeyOptions
     {
         /// <summary>
         /// Start time for the key's validity, with null indicating an

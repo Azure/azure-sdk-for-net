@@ -191,13 +191,6 @@ namespace Azure.Storage.Sas
         public string DelegatedUserObjectId { get; set; }
 
         /// <summary>
-        /// Optional. This value  specifies the Entra ID of the tenant that is authorized to
-        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
-        /// issued to the user specified in this value.
-        /// </summary>
-        public string DelegatedUserTenantId { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -470,7 +463,6 @@ namespace Azure.Storage.Sas
             EnsureState();
 
             stringToSign = ToStringToSign(userDelegationKey, accountName);
-            Console.WriteLine($"StringToSign = \n{stringToSign}\nEND");
 
             string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -501,7 +493,7 @@ namespace Azure.Storage.Sas
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                delegatedUserTenantId: DelegatedUserTenantId);
+                delegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
             return p;
         }
 
@@ -527,7 +519,7 @@ namespace Azure.Storage.Sas
                     PreauthorizedAgentObjectId,
                     null, // AgentObjectId - enabled only in HNS accounts
                     CorrelationId,
-                    DelegatedUserTenantId,
+                    userDelegationKey.SignedDelegatedUserTenantId,
                     DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),
@@ -535,6 +527,8 @@ namespace Azure.Storage.Sas
                     Resource,
                     Snapshot ?? BlobVersionId,
                     EncryptionScope,
+                    null, // RequestHeader
+                    null, // RequestQueryParameter
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,

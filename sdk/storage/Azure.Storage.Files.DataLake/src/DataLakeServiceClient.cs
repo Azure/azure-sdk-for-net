@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using PublicAccessType = Azure.Storage.Files.DataLake.Models.PublicAccessType;
+using UserDelegationKey = Azure.Storage.Files.DataLake.Models.UserDelegationKey;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -451,7 +454,128 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get User Delegation Key
         /// <summary>
-        /// The <see cref="GetUserDelegationKey"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKey(DateTimeOffset, DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
+        /// </summary>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{UserDelegationKey}"/> describing
+        /// the use delegation key.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(
+            DateTimeOffset expiresOn,
+            DataLakeGetUserDelegationKeyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobGetUserDelegationKeyOptions blobOptions = MapOptions(options);
+
+                Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
+                    expiresOn,
+                    blobOptions,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new UserDelegationKey(response.Value),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset, DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// key that can be used to delegate Active Directory authorization to
+        /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
+        /// </summary>
+        /// <param name="expiresOn">
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{UserDelegationKey}"/> describing
+        /// the use delegation key.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+            DateTimeOffset expiresOn,
+            DataLakeGetUserDelegationKeyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobGetUserDelegationKeyOptions blobOptions = MapOptions(options);
+
+                Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
+                    expiresOn,
+                    blobOptions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new UserDelegationKey(response.Value),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetUserDelegationKey(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
@@ -482,6 +606,7 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -514,7 +639,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
@@ -545,6 +670,7 @@ namespace Azure.Storage.Files.DataLake
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -577,6 +703,16 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        private static BlobGetUserDelegationKeyOptions MapOptions(DataLakeGetUserDelegationKeyOptions options)
+        {
+            if (options == null)
+                return null;
+            return new BlobGetUserDelegationKeyOptions
+            {
+                StartsOn = options.StartsOn,
+                DelegatedUserTenantId = options.DelegatedUserTenantId
+            };
+        }
         #endregion Get User Delegation Key
 
         #region Get File Systems
