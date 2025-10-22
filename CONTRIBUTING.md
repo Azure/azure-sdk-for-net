@@ -313,7 +313,7 @@ to access a package version that is not on the feed but is on the upstream feed 
 
 1. If you are a member of the team with access and want to update a version of the package in the feed you will need to authenticate to the feed. For local authentication you will want to use [Azure Artifacts Credential Provider](https://github.com/microsoft/artifacts-credprovider#azure-artifacts-credential-provider).
    If you need to authenticate a pipeline in our teams DevOps org you will want login via the [NuGetAuthenticate](https://learn.microsoft.com/azure/devops/pipelines/tasks/package/nuget-authenticate?view=azure-devops#dotnet) task.
-1. If you are extneral user and just want to consume packages in the feed you can scope the packages for the feed to just the ones you want by using [packageSourceMapping](https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file#packagesource) similar to:
+1. If you are external user and just want to consume packages in the feed you can scope the packages for the feed to just the ones you want by using [packageSourceMapping](https://learn.microsoft.com/nuget/reference/nuget-config-file#packagesource) similar to:
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
