@@ -195,6 +195,7 @@ rename-mapping:
     ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
     ObjectType: BlobInventoryPolicyObjectType
     Permissions: StorageAccountSasPermission
+    PriorityReplicationEnabled: IsPriorityReplicationEnabled
     PrivateLinkResource: StoragePrivateLinkResourceData
     ProtocolSettings: FileServiceProtocolSettings
     ProtocolSettings.smb: SmbSetting
