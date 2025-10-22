@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    internal partial class QumuloFileSystemResourceListResult : IUtf8JsonSerializable, IJsonModel<QumuloFileSystemResourceListResult>
+    internal partial class FileSystemResourceListResult : IUtf8JsonSerializable, IJsonModel<FileSystemResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QumuloFileSystemResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileSystemResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloFileSystemResourceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
         }
 
-        QumuloFileSystemResourceListResult IJsonModel<QumuloFileSystemResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FileSystemResourceListResult IJsonModel<FileSystemResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloFileSystemResourceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQumuloFileSystemResourceListResult(document.RootElement, options);
+            return DeserializeFileSystemResourceListResult(document.RootElement, options);
         }
 
-        internal static QumuloFileSystemResourceListResult DeserializeQumuloFileSystemResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FileSystemResourceListResult DeserializeFileSystemResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 return null;
             }
             IReadOnlyList<QumuloFileSystemResourceData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,11 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,38 +114,38 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QumuloFileSystemResourceListResult(value, nextLink, serializedAdditionalRawData);
+            return new FileSystemResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QumuloFileSystemResourceListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FileSystemResourceListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QumuloFileSystemResourceListResult IPersistableModel<QumuloFileSystemResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FileSystemResourceListResult IPersistableModel<FileSystemResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeQumuloFileSystemResourceListResult(document.RootElement, options);
+                        return DeserializeFileSystemResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QumuloFileSystemResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileSystemResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
