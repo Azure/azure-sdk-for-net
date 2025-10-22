@@ -1,26 +1,37 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
+- Added new `TelcoMessagingClient` with improved architecture using sub-clients:
+  - `TelcoMessagingClient.Sms` - for sending SMS messages
+  - `TelcoMessagingClient.OptOuts` - for managing opt-out preferences
+  - `TelcoMessagingClient.DeliveryReports` - for retrieving message delivery status
+- Added `DeliveryReportsClient` for getting delivery reports of sent messages
+- Added comprehensive samples demonstrating the new `TelcoMessagingClient` functionality
+
 ### Breaking Changes
 
-### Bugs Fixed
-
 ### Other Changes
+
+- `SmsClient` will be deprecated in an upcoming release. Migrate to `TelcoMessagingClient` for new development
+- Updated documentation and README.md with migration guidance from `SmsClient` to `TelcoMessagingClient`
+- Added comprehensive unit tests for the new client architecture
+- Improved API consistency: `DeliveryReportsRestClient.GetAsync` now returns `Response<DeliveryReport>` instead of `Response<object>`
 
 ## 1.1.0-beta.3 (2025-06-12)
 
 ### Features Added
- - Introduced Messaging Connect support in the .NET SDK.
-    - Added a new MessagingConnect field to the SmsSendOptions model.
-    - The MessagingConnect structure includes:
-        - apiKey: used for authenticating Messaging Connect requests.
-        - partner: identifies the Messaging Connect partner.
-    - Supports:
-        - Incoming and outgoing flows for long codes.
-        - Outgoing flow for Dynamic Alpha Sender IDs (DASID).
+
+- Introduced Messaging Connect support in the .NET SDK.
+  - Added a new MessagingConnect field to the SmsSendOptions model.
+  - The MessagingConnect structure includes:
+    - apiKey: used for authenticating Messaging Connect requests.
+    - partner: identifies the Messaging Connect partner.
+  - Supports:
+    - Incoming and outgoing flows for long codes.
+    - Outgoing flow for Dynamic Alpha Sender IDs (DASID).
 
 ## 1.1.0-beta.2 (2024-12-10)
 
