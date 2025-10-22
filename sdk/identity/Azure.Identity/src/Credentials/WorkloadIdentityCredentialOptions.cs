@@ -40,6 +40,13 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get; set; }
 
         /// <summary>
+        /// Enables Azure Kubernetes token proxy mode to work around Entra's limit on federated identity credentials.
+        /// When enabled and proxy configuration environment variables are set, requests are sent to the AKS proxy instead of directly to Entra ID.
+        /// This feature is not supported when using DefaultAzureCredential.
+        /// </summary>
+        public bool AzureKubernetesTokenProxy { get; set; }
+
+        /// <summary>
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
