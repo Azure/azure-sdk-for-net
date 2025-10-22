@@ -114,13 +114,55 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 properties);
         }
 
+        /// <param name="marketplace"> Marketplace details of the resource. </param>
+        /// <param name="user"> Details of the user. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="accessControlEnabled"></param>
-        /// <param name="provisioningState"></param>
         /// <param name="metaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDatas = default)
+        public static FooSettingsProperties FooSettingsProperties(MarketplaceDetails marketplace = default, UserDetails user = default, ResourceProvisioningState? provisioningState = default, bool? accessControlEnabled = default, IList<string> metaDatas = default)
         {
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new FooSettingsProperties(
+                marketplace,
+                user,
+                provisioningState,
+                accessControlEnabled,
+                metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Marketplace details for an organization. </summary>
+        /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
+        /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
+        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
+        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, OfferDetails offerDetails = default)
+        {
+            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="renewalMode"> Subscription renewal mode. </param>
+        /// <param name="endOn"> Current subscription end date and time. </param>
+        /// <returns> A new <see cref="Models.OfferDetails"/> instance for mocking. </returns>
+        public static OfferDetails OfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default, RenewalMode? renewalMode = default, DateTimeOffset? endOn = default)
+        {
+            return new OfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                renewalMode,
+                endOn,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>

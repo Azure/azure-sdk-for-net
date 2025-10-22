@@ -46,6 +46,11 @@ namespace Azure.Generator.Visitors
                 return type;
             }
 
+            if (type is SerializationFormatDefinition)
+            {
+                return type;
+            }
+
             if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider
                 || type is MrwSerializationTypeDefinition || type is FixedEnumSerializationProvider || type is ExtensibleEnumSerializationProvider)
             {

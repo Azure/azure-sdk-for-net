@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.30",
+    "@azure-tools/typespec-autorest": "0.61.0",
     "@azure-tools/typespec-azure-core": "0.61.0",
     "@azure-tools/typespec-azure-resource-manager": "0.61.0",
     "@azure-tools/typespec-azure-rulesets": "0.61.0",
@@ -70,6 +71,7 @@
     "vitest": "^3.0.5"
   },
   "azure-sdk/emitter-package-json-pinning": [
+    "@azure-tools/typespec-autorest",
     "@azure-tools/typespec-azure-core",
     "@azure-tools/typespec-azure-resource-manager",
     "@azure-tools/typespec-azure-rulesets",

@@ -33,24 +33,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal FooSettingsUpdateProperties Properties { get; set; }
-
-        /// <summary> Gets or sets the AccessControlEnabled. </summary>
-        [WirePath("properties.accessControlEnabled")]
-        public bool? AccessControlEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AccessControlEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FooSettingsUpdateProperties();
-                }
-                Properties.AccessControlEnabled = value;
-            }
-        }
+        public FooSettingsUpdateProperties Properties { get; set; }
     }
 }
