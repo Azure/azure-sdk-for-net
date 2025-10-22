@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Monitor.Ingestion
 {
     internal static partial class TypeFormatters
     {

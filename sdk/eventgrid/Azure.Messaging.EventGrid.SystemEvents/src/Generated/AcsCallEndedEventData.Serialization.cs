@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             if (Optional.IsDefined(CallDuration))
             {
                 writer.WritePropertyName("callDurationInSeconds"u8);
-                writer.WriteNumberValue(Convert.ToDouble(CallDuration.Value.ToString("s\\.FFFFFF")));
+                writer.WriteNumberValue(CallDuration.Value.TotalSeconds);
             }
         }
 
