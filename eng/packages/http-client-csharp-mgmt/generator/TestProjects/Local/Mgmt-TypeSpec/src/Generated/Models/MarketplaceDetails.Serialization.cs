@@ -13,12 +13,17 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The updatable properties of the FooSettings. </summary>
-    public partial class FooSettingsUpdateProperties : IJsonModel<FooSettingsUpdateProperties>
+    /// <summary> Marketplace details for an organization. </summary>
+    public partial class MarketplaceDetails : IJsonModel<MarketplaceDetails>
     {
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/> for deserialization. </summary>
+        internal MarketplaceDetails()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FooSettingsUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,26 +34,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FooSettingsUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Marketplace))
+            if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("marketplace"u8);
-                writer.WriteObjectValue(Marketplace, options);
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(User))
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionStatus))
             {
-                writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue(User, options);
+                writer.WritePropertyName("subscriptionStatus"u8);
+                writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(AccessControlEnabled))
-            {
-                writer.WritePropertyName("accessControlEnabled"u8);
-                writer.WriteBooleanValue(AccessControlEnabled.Value);
-            }
+            writer.WritePropertyName("offerDetails"u8);
+            writer.WriteObjectValue(OfferDetails, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -68,60 +70,52 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooSettingsUpdateProperties IJsonModel<FooSettingsUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MarketplaceDetails IJsonModel<MarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooSettingsUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MarketplaceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FooSettingsUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFooSettingsUpdateProperties(document.RootElement, options);
+            return DeserializeMarketplaceDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FooSettingsUpdateProperties DeserializeFooSettingsUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MarketplaceDetails DeserializeMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
-            UserDetails user = default;
-            bool? accessControlEnabled = default;
+            string subscriptionId = default;
+            MarketplaceSubscriptionStatus? subscriptionStatus = default;
+            OfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("marketplace"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("user"u8))
+                if (prop.NameEquals("subscriptionStatus"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    user = UserDetails.DeserializeUserDetails(prop.Value, options);
+                    subscriptionStatus = new MarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("accessControlEnabled"u8))
+                if (prop.NameEquals("offerDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accessControlEnabled = prop.Value.GetBoolean();
+                    offerDetails = OfferDetails.DeserializeOfferDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,47 +123,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooSettingsUpdateProperties(marketplace, user, accessControlEnabled, additionalBinaryDataProperties);
+            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooSettingsUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MarketplaceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FooSettingsUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooSettingsUpdateProperties IPersistableModel<FooSettingsUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MarketplaceDetails IPersistableModel<MarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooSettingsUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeFooSettingsUpdateProperties(document.RootElement, options);
+                        return DeserializeMarketplaceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FooSettingsUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooSettingsUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
