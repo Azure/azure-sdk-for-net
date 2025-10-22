@@ -47,6 +47,16 @@ namespace Azure.Identity
                 clientAssertionCredentialOptions.Pipeline = options.Pipeline;
                 clientAssertionCredentialOptions.MsalClient = options.MsalClient;
 
+                // Configure Kubernetes token proxy if user opted in
+                if (options.AzureKubernetesTokenProxy)
+                {
+                    var proxyConfig = KubernetesProxyConfig.TryCreate();
+                    if (proxyConfig != null)
+                    {
+                        // TODO: Add proxy policy to pipeline
+                    }
+                }
+
                 _clientAssertionCredential = new ClientAssertionCredential(options.TenantId, options.ClientId, _tokenFileCache.GetTokenFileContentsAsync, clientAssertionCredentialOptions);
             }
             _pipeline = _clientAssertionCredential?.Pipeline ?? CredentialPipeline.GetInstance(default);
