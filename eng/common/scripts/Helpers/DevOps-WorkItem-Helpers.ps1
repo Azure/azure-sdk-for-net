@@ -1209,7 +1209,11 @@ function Get-TriagesForCPEXAttestation()
 
 function Update-AttestationStatusInWorkItem($workItemId, $fieldName, $status)
 {
-  $fields = "`"${fieldName}=${status}`""
+  $dateFieldName = $fieldName -replace 'Status$', 'Date'
+
+  $fields = @()
+  $fields += "`"${fieldName}=${status}`""
+  $fields += "`"${dateFieldName}=$(Get-Date)`""
 
   Write-Host "Updating Work Item [$workItemId] with status [$status] for field [$fieldName]."
   $workItem = UpdateWorkItem -id $workItemId -fields $fields
