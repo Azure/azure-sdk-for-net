@@ -97,6 +97,147 @@ namespace Azure.Identity.Tests
             return InstrumentClient(new WorkloadIdentityCredential(workloadOptions));
         }
 
+        [Test]
+        public void KubernetesProxy_DisabledByDefault()
+        {
+            var tokenFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(tokenFilePath, "test-token");
+
+            var options = new WorkloadIdentityCredentialOptions
+            {
+                TenantId = TenantId,
+                ClientId = ClientId,
+                TokenFilePath = tokenFilePath,
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null)
+            };
+
+            // Should not throw even with invalid proxy config
+            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "http://invalid&proxy#url"))
+            using (new TestEnvVar("AZURE_KUBERNETES_CA_DATA", "invalid-cert-data"))
+            {
+                var credential = new WorkloadIdentityCredential(options);
+                Assert.IsNotNull(credential);
+            }
+        }
+
+        [Test]
+        public void KubernetesProxy_OptInWithoutEnvVars_NoError()
+        {
+            var tokenFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(tokenFilePath, "test-token");
+
+            var options = new WorkloadIdentityCredentialOptions
+            {
+                TenantId = TenantId,
+                ClientId = ClientId,
+                TokenFilePath = tokenFilePath,
+                AzureKubernetesTokenProxy = true,
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null)
+            };
+
+            // Should not throw when proxy is enabled but env vars are not set
+            var credential = new WorkloadIdentityCredential(options);
+            Assert.IsNotNull(credential);
+        }
+
+        [Test]
+        public void KubernetesProxy_InvalidProxyUrl_ThrowsInvalidOperation()
+        {
+            var tokenFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(tokenFilePath, "test-token");
+
+            var options = new WorkloadIdentityCredentialOptions
+            {
+                TenantId = TenantId,
+                ClientId = ClientId,
+                TokenFilePath = tokenFilePath,
+                AzureKubernetesTokenProxy = true,
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null)
+            };
+
+            // Invalid URL schemes
+            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "http://not-https"))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                Assert.That(ex.Message, Does.Contain("HTTPS"));
+            }
+
+            // URL with query string
+            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local?query=value"))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                Assert.That(ex.Message, Does.Contain("query"));
+            }
+
+            // URL with fragment
+            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local#fragment"))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                Assert.That(ex.Message, Does.Contain("fragment"));
+            }
+        }
+
+        [Test]
+        public void KubernetesProxy_BothCaFileAndCaData_ThrowsInvalidOperation()
+        {
+            var tokenFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(tokenFilePath, "test-token");
+
+            var caFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(caFilePath, "-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----");
+
+            var options = new WorkloadIdentityCredentialOptions
+            {
+                TenantId = TenantId,
+                ClientId = ClientId,
+                TokenFilePath = tokenFilePath,
+                AzureKubernetesTokenProxy = true,
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null)
+            };
+
+            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local"))
+            using (new TestEnvVar("AZURE_KUBERNETES_CA_FILE", caFilePath))
+            using (new TestEnvVar("AZURE_KUBERNETES_CA_DATA", "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t"))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                Assert.That(ex.Message, Does.Contain("ambiguous"));
+            }
+        }
+
+        [Test]
+        public void KubernetesProxy_CaFileDoesNotExist_ThrowsInvalidOperation()
+        {
+            var tokenFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(tokenFilePath, "test-token");
+
+            var options = new WorkloadIdentityCredentialOptions
+            {
+                TenantId = TenantId,
+                ClientId = ClientId,
+                TokenFilePath = tokenFilePath,
+                AzureKubernetesTokenProxy = true,
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null)
+            };
+
+            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local"))
+            using (new TestEnvVar("AZURE_KUBERNETES_CA_FILE", "/path/does/not/exist.pem"))
+            {
+                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                Assert.That(ex.Message, Does.Contain("does not exist"));
+            }
+        }
+
+        // The following tests have been moved to WorkloadIdentityCredentialLiveTests.cs
+        // as they require a real AKS environment with valid certificates:
+        // - AuthenticateWithWorkloadIdentity_KubernetesProxyWithCaFile
+        // - AuthenticateWithWorkloadIdentity_KubernetesProxyWithCaData
+        // - AuthenticateWithWorkloadIdentity_KubernetesProxyWithSniName
+
         [TearDown]
         public void CleanupTestAssertionFiles()
         {
