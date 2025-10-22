@@ -1,14 +1,11 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2025-10-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version of Policy Insights to 2024-10-01.
+- Make `Azure.ResourceManager.Compute` AOT-compatible.
 
 ## 1.2.1 (2025-03-11)
 
