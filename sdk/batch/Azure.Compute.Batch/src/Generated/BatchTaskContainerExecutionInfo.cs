@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Contains information about the container which a Task is executing. </summary>
     public partial class BatchTaskContainerExecutionInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskContainerExecutionInfo"/>. </summary>
         internal BatchTaskContainerExecutionInfo()
@@ -54,19 +25,21 @@ namespace Azure.Compute.Batch
         /// <param name="containerId"> The ID of the container. </param>
         /// <param name="state"> The state of the container. This is the state of the container according to the Docker service. It is equivalent to the status field returned by "docker inspect". </param>
         /// <param name="error"> Detailed error information about the container. This is the detailed error string from the Docker service, if available. It is equivalent to the error field returned by "docker inspect". </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskContainerExecutionInfo(string containerId, string state, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchTaskContainerExecutionInfo(string containerId, string state, string error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerId = containerId;
             State = state;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the container. </summary>
         public string ContainerId { get; }
+
         /// <summary> The state of the container. This is the state of the container according to the Docker service. It is equivalent to the status field returned by "docker inspect". </summary>
         public string State { get; }
+
         /// <summary> Detailed error information about the container. This is the detailed error string from the Docker service, if available. It is equivalent to the error field returned by "docker inspect". </summary>
         public string Error { get; }
     }

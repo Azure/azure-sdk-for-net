@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class AzureBlobFileSystemConfiguration : IUtf8JsonSerializable, IJsonModel<AzureBlobFileSystemConfiguration>
+    /// <summary> Information used to connect to an Azure Storage Container using Blobfuse. </summary>
+    public partial class AzureBlobFileSystemConfiguration : IJsonModel<AzureBlobFileSystemConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobFileSystemConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFileSystemConfiguration"/> for deserialization. </summary>
+        internal AzureBlobFileSystemConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureBlobFileSystemConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureBlobFileSystemConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("containerName"u8);
@@ -60,15 +64,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(IdentityReference, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,22 +81,27 @@ namespace Azure.Compute.Batch
             }
         }
 
-        AzureBlobFileSystemConfiguration IJsonModel<AzureBlobFileSystemConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureBlobFileSystemConfiguration IJsonModel<AzureBlobFileSystemConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureBlobFileSystemConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureBlobFileSystemConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureBlobFileSystemConfiguration(document.RootElement, options);
         }
 
-        internal static AzureBlobFileSystemConfiguration DeserializeAzureBlobFileSystemConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureBlobFileSystemConfiguration DeserializeAzureBlobFileSystemConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,55 +113,53 @@ namespace Azure.Compute.Batch
             string blobfuseOptions = default;
             string relativeMountPath = default;
             BatchNodeIdentityReference identityReference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"u8))
+                if (prop.NameEquals("accountName"u8))
                 {
-                    accountName = property.Value.GetString();
+                    accountName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    containerName = property.Value.GetString();
+                    containerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountKey"u8))
+                if (prop.NameEquals("accountKey"u8))
                 {
-                    accountKey = property.Value.GetString();
+                    accountKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasKey"u8))
+                if (prop.NameEquals("sasKey"u8))
                 {
-                    sasKey = property.Value.GetString();
+                    sasKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobfuseOptions"u8))
+                if (prop.NameEquals("blobfuseOptions"u8))
                 {
-                    blobfuseOptions = property.Value.GetString();
+                    blobfuseOptions = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeMountPath"u8))
+                if (prop.NameEquals("relativeMountPath"u8))
                 {
-                    relativeMountPath = property.Value.GetString();
+                    relativeMountPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityReference"u8))
+                if (prop.NameEquals("identityReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identityReference = BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(property.Value, options);
+                    identityReference = BatchNodeIdentityReference.DeserializeBatchNodeIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AzureBlobFileSystemConfiguration(
                 accountName,
                 containerName,
@@ -161,13 +168,16 @@ namespace Azure.Compute.Batch
                 blobfuseOptions,
                 relativeMountPath,
                 identityReference,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AzureBlobFileSystemConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureBlobFileSystemConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -177,15 +187,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        AzureBlobFileSystemConfiguration IPersistableModel<AzureBlobFileSystemConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureBlobFileSystemConfiguration IPersistableModel<AzureBlobFileSystemConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureBlobFileSystemConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureBlobFileSystemConfiguration(document.RootElement, options);
                     }
                 default:
@@ -193,22 +208,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureBlobFileSystemConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureBlobFileSystemConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureBlobFileSystemConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

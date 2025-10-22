@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchNodeCounts : IUtf8JsonSerializable, IJsonModel<BatchNodeCounts>
+    /// <summary> The number of Compute Nodes in each Compute Node state. </summary>
+    public partial class BatchNodeCounts : IJsonModel<BatchNodeCounts>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNodeCounts>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/> for deserialization. </summary>
+        internal BatchNodeCounts()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchNodeCounts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchNodeCounts)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("creating"u8);
             writer.WriteNumberValue(Creating);
             writer.WritePropertyName("idle"u8);
@@ -68,15 +72,15 @@ namespace Azure.Compute.Batch
             writer.WriteNumberValue(Total);
             writer.WritePropertyName("upgradingOS"u8);
             writer.WriteNumberValue(UpgradingOs);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -85,22 +89,27 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchNodeCounts IJsonModel<BatchNodeCounts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchNodeCounts IJsonModel<BatchNodeCounts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchNodeCounts JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchNodeCounts)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchNodeCounts(document.RootElement, options);
         }
 
-        internal static BatchNodeCounts DeserializeBatchNodeCounts(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchNodeCounts DeserializeBatchNodeCounts(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -121,102 +130,100 @@ namespace Azure.Compute.Batch
             int deallocated = default;
             int deallocating = default;
             int total = default;
-            int upgradingOS = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            int upgradingOs = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("creating"u8))
+                if (prop.NameEquals("creating"u8))
                 {
-                    creating = property.Value.GetInt32();
+                    creating = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("idle"u8))
+                if (prop.NameEquals("idle"u8))
                 {
-                    idle = property.Value.GetInt32();
+                    idle = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("offline"u8))
+                if (prop.NameEquals("offline"u8))
                 {
-                    offline = property.Value.GetInt32();
+                    offline = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preempted"u8))
+                if (prop.NameEquals("preempted"u8))
                 {
-                    preempted = property.Value.GetInt32();
+                    preempted = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rebooting"u8))
+                if (prop.NameEquals("rebooting"u8))
                 {
-                    rebooting = property.Value.GetInt32();
+                    rebooting = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("reimaging"u8))
+                if (prop.NameEquals("reimaging"u8))
                 {
-                    reimaging = property.Value.GetInt32();
+                    reimaging = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("running"u8))
+                if (prop.NameEquals("running"u8))
                 {
-                    running = property.Value.GetInt32();
+                    running = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("starting"u8))
+                if (prop.NameEquals("starting"u8))
                 {
-                    starting = property.Value.GetInt32();
+                    starting = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTaskFailed"u8))
+                if (prop.NameEquals("startTaskFailed"u8))
                 {
-                    startTaskFailed = property.Value.GetInt32();
+                    startTaskFailed = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("leavingPool"u8))
+                if (prop.NameEquals("leavingPool"u8))
                 {
-                    leavingPool = property.Value.GetInt32();
+                    leavingPool = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unknown"u8))
+                if (prop.NameEquals("unknown"u8))
                 {
-                    unknown = property.Value.GetInt32();
+                    unknown = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unusable"u8))
+                if (prop.NameEquals("unusable"u8))
                 {
-                    unusable = property.Value.GetInt32();
+                    unusable = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("waitingForStartTask"u8))
+                if (prop.NameEquals("waitingForStartTask"u8))
                 {
-                    waitingForStartTask = property.Value.GetInt32();
+                    waitingForStartTask = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("deallocated"u8))
+                if (prop.NameEquals("deallocated"u8))
                 {
-                    deallocated = property.Value.GetInt32();
+                    deallocated = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("deallocating"u8))
+                if (prop.NameEquals("deallocating"u8))
                 {
-                    deallocating = property.Value.GetInt32();
+                    deallocating = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("total"u8))
+                if (prop.NameEquals("total"u8))
                 {
-                    total = property.Value.GetInt32();
+                    total = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("upgradingOS"u8))
+                if (prop.NameEquals("upgradingOS"u8))
                 {
-                    upgradingOS = property.Value.GetInt32();
+                    upgradingOs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchNodeCounts(
                 creating,
                 idle,
@@ -234,14 +241,17 @@ namespace Azure.Compute.Batch
                 deallocated,
                 deallocating,
                 total,
-                upgradingOS,
-                serializedAdditionalRawData);
+                upgradingOs,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchNodeCounts>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchNodeCounts>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -251,15 +261,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchNodeCounts IPersistableModel<BatchNodeCounts>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchNodeCounts IPersistableModel<BatchNodeCounts>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchNodeCounts PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchNodeCounts(document.RootElement, options);
                     }
                 default:
@@ -267,22 +282,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchNodeCounts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchNodeCounts FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchNodeCounts(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

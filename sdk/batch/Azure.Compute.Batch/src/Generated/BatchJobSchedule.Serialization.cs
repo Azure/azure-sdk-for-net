@@ -9,14 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJobSchedule : IUtf8JsonSerializable, IJsonModel<BatchJobSchedule>
+    /// <summary>
+    /// A Job Schedule that allows recurring Jobs by specifying when to run Jobs and a
+    /// specification used to create each Job.
+    /// </summary>
+    public partial class BatchJobSchedule : IJsonModel<BatchJobSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchJobSchedule"/> for deserialization. </summary>
+        internal BatchJobSchedule()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +38,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -100,7 +109,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (var item in Metadata)
+                foreach (BatchMetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -111,15 +120,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("stats"u8);
                 writer.WriteObjectValue(JobScheduleStatistics, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,29 +137,34 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobSchedule IJsonModel<BatchJobSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobSchedule IJsonModel<BatchJobSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobSchedule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchJobSchedule(document.RootElement, options);
         }
 
-        internal static BatchJobSchedule DeserializeBatchJobSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchJobSchedule DeserializeBatchJobSchedule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
             string displayName = default;
-            Uri url = default;
+            Uri uri = default;
             ETag? eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
@@ -162,149 +176,147 @@ namespace Azure.Compute.Batch
             BatchJobSpecification jobSpecification = default;
             BatchJobScheduleExecutionInfo executionInfo = default;
             IList<BatchMetadataItem> metadata = default;
-            BatchJobScheduleStatistics stats = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            BatchJobScheduleStatistics jobScheduleStatistics = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("eTag"u8))
+                if (prop.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastModified"u8))
+                if (prop.NameEquals("lastModified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModified = property.Value.GetDateTimeOffset("O");
+                    lastModified = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("creationTime"u8))
+                if (prop.NameEquals("creationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationTime = property.Value.GetDateTimeOffset("O");
+                    creationTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new BatchJobScheduleState(property.Value.GetString());
+                    state = new BatchJobScheduleState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stateTransitionTime"u8))
+                if (prop.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    stateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("previousState"u8))
+                if (prop.NameEquals("previousState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    previousState = new BatchJobScheduleState(property.Value.GetString());
+                    previousState = new BatchJobScheduleState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("previousStateTransitionTime"u8))
+                if (prop.NameEquals("previousStateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    previousStateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    previousStateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("schedule"u8))
+                if (prop.NameEquals("schedule"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(property.Value, options);
+                    schedule = BatchJobScheduleConfiguration.DeserializeBatchJobScheduleConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("jobSpecification"u8))
+                if (prop.NameEquals("jobSpecification"u8))
                 {
-                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(property.Value, options);
+                    jobSpecification = BatchJobSpecification.DeserializeBatchJobSpecification(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("executionInfo"u8))
+                if (prop.NameEquals("executionInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    executionInfo = BatchJobScheduleExecutionInfo.DeserializeBatchJobScheduleExecutionInfo(property.Value, options);
+                    executionInfo = BatchJobScheduleExecutionInfo.DeserializeBatchJobScheduleExecutionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("metadata"u8))
+                if (prop.NameEquals("metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchMetadataItem> array = new List<BatchMetadataItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
                 }
-                if (property.NameEquals("stats"u8))
+                if (prop.NameEquals("stats"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stats = BatchJobScheduleStatistics.DeserializeBatchJobScheduleStatistics(property.Value, options);
+                    jobScheduleStatistics = BatchJobScheduleStatistics.DeserializeBatchJobScheduleStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchJobSchedule(
                 id,
                 displayName,
-                url,
+                uri,
                 eTag,
                 lastModified,
                 creationTime,
@@ -316,14 +328,17 @@ namespace Azure.Compute.Batch
                 jobSpecification,
                 executionInfo,
                 metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
-                stats,
-                serializedAdditionalRawData);
+                jobScheduleStatistics,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchJobSchedule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -333,15 +348,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobSchedule IPersistableModel<BatchJobSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobSchedule IPersistableModel<BatchJobSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobSchedule(document.RootElement, options);
                     }
                 default:
@@ -349,22 +369,27 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJobSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchJobSchedule FromResponse(Response response)
+        /// <param name="batchJobSchedule"> The <see cref="BatchJobSchedule"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchJobSchedule batchJobSchedule)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchJobSchedule(document.RootElement);
+            if (batchJobSchedule == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchJobSchedule, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BatchJobSchedule"/> from. </param>
+        public static explicit operator BatchJobSchedule(Response result)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchJobSchedule(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

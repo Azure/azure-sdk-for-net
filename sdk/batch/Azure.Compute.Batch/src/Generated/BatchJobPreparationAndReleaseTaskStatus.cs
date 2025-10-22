@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> The status of the Job Preparation and Job Release Tasks on a Compute Node. </summary>
     public partial class BatchJobPreparationAndReleaseTaskStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobPreparationAndReleaseTaskStatus"/>. </summary>
         internal BatchJobPreparationAndReleaseTaskStatus()
@@ -56,25 +27,29 @@ namespace Azure.Compute.Batch
         /// <param name="nodeUri"> The URL of the Compute Node to which this entry refers. </param>
         /// <param name="jobPreparationTaskExecutionInfo"> Information about the execution status of the Job Preparation Task on this Compute Node. </param>
         /// <param name="jobReleaseTaskExecutionInfo"> Information about the execution status of the Job Release Task on this Compute Node. This property is set only if the Job Release Task has run on the Compute Node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobPreparationAndReleaseTaskStatus(string poolId, string nodeId, Uri nodeUri, BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo, BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchJobPreparationAndReleaseTaskStatus(string poolId, string nodeId, Uri nodeUri, BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo, BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PoolId = poolId;
             NodeId = nodeId;
             NodeUri = nodeUri;
             JobPreparationTaskExecutionInfo = jobPreparationTaskExecutionInfo;
             JobReleaseTaskExecutionInfo = jobReleaseTaskExecutionInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the Pool containing the Compute Node to which this entry refers. </summary>
         public string PoolId { get; }
+
         /// <summary> The ID of the Compute Node to which this entry refers. </summary>
         public string NodeId { get; }
+
         /// <summary> The URL of the Compute Node to which this entry refers. </summary>
         public Uri NodeUri { get; }
+
         /// <summary> Information about the execution status of the Job Preparation Task on this Compute Node. </summary>
         public BatchJobPreparationTaskExecutionInfo JobPreparationTaskExecutionInfo { get; }
+
         /// <summary> Information about the execution status of the Job Release Task on this Compute Node. This property is set only if the Job Release Task has run on the Compute Node. </summary>
         public BatchJobReleaseTaskExecutionInfo JobReleaseTaskExecutionInfo { get; }
     }

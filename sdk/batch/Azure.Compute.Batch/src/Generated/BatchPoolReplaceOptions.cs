@@ -14,37 +14,8 @@ namespace Azure.Compute.Batch
     /// <summary> Parameters for replacing properties on an Azure Batch Pool. </summary>
     public partial class BatchPoolReplaceOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolReplaceOptions"/>. </summary>
         /// <param name="certificateReferences">
@@ -82,24 +53,20 @@ namespace Azure.Compute.Batch
         /// <param name="applicationPackageReferences"> The list of Application Packages to be installed on each Compute Node in the Pool. The list replaces any existing Application Package references on the Pool. Changes to Application Package references affect all new Compute Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Application Package references on any given Pool. If omitted, or if you specify an empty collection, any existing Application Packages references are removed from the Pool. A maximum of 10 references may be specified on a given Pool. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. This list replaces any existing metadata configured on the Pool. If omitted, or if you specify an empty collection, any existing metadata is removed from the Pool. </param>
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. This setting replaces any existing targetNodeCommunication setting on the Pool. If omitted, the existing setting is default. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolReplaceOptions(BatchStartTask startTask, IList<BatchCertificateReference> certificateReferences, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<BatchMetadataItem> metadata, BatchNodeCommunicationMode? targetNodeCommunicationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPoolReplaceOptions(BatchStartTask startTask, IList<BatchCertificateReference> certificateReferences, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<BatchMetadataItem> metadata, BatchNodeCommunicationMode? targetNodeCommunicationMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
             Metadata = metadata;
             TargetNodeCommunicationMode = targetNodeCommunicationMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchPoolReplaceOptions"/> for deserialization. </summary>
-        internal BatchPoolReplaceOptions()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A Task to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. If this element is present, it overwrites any existing StartTask. If omitted, any existing StartTask is removed from the Pool. </summary>
         public BatchStartTask StartTask { get; set; }
+
         /// <summary>
         /// This list replaces any existing Certificate references configured on the Pool.
         /// If you specify an empty collection, any existing Certificate references are removed from the Pool.
@@ -109,10 +76,13 @@ namespace Azure.Compute.Batch
         /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// </summary>
         public IList<BatchCertificateReference> CertificateReferences { get; }
+
         /// <summary> The list of Application Packages to be installed on each Compute Node in the Pool. The list replaces any existing Application Package references on the Pool. Changes to Application Package references affect all new Compute Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Application Package references on any given Pool. If omitted, or if you specify an empty collection, any existing Application Packages references are removed from the Pool. A maximum of 10 references may be specified on a given Pool. </summary>
         public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+
         /// <summary> A list of name-value pairs associated with the Pool as metadata. This list replaces any existing metadata configured on the Pool. If omitted, or if you specify an empty collection, any existing metadata is removed from the Pool. </summary>
         public IList<BatchMetadataItem> Metadata { get; }
+
         /// <summary> The desired node communication mode for the pool. This setting replaces any existing targetNodeCommunication setting on the Pool. If omitted, the existing setting is default. </summary>
         public BatchNodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
     }
