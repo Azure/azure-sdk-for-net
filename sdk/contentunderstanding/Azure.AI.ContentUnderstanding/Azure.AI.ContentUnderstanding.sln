@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListAnalyzers", "samples\Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAnalyzer", "samples\UpdateAnalyzer\UpdateAnalyzer.csproj", "{H8I9J0K1-L2M3-4567-8901-234567123456}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassifyBinary", "samples\ClassifyBinary\ClassifyBinary.csproj", "{I9J0K1L2-M3N4-5678-9012-345678234567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetResultFile", "samples\GetResultFile\GetResultFile.csproj", "{J0K1L2M3-N4O5-6789-0123-456789345678}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{H8I9J0K1-L2M3-4567-8901-234567123456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{H8I9J0K1-L2M3-4567-8901-234567123456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{H8I9J0K1-L2M3-4567-8901-234567123456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{I9J0K1L2-M3N4-5678-9012-345678234567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{I9J0K1L2-M3N4-5678-9012-345678234567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{I9J0K1L2-M3N4-5678-9012-345678234567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{I9J0K1L2-M3N4-5678-9012-345678234567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{J0K1L2M3-N4O5-6789-0123-456789345678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{J0K1L2M3-N4O5-6789-0123-456789345678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{J0K1L2M3-N4O5-6789-0123-456789345678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{J0K1L2M3-N4O5-6789-0123-456789345678}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
