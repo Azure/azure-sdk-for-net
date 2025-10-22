@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             BandwidthScheduleResource bandwidthSchedule = client.GetBandwidthScheduleResource(bandwidthScheduleResourceId);
 
             // invoke the operation
-            BandwidthScheduleData data = new BandwidthScheduleData("0:0:0", "13:59:0", 100, new DataBoxEdgeDayOfWeek[] { DataBoxEdgeDayOfWeek.Sunday, DataBoxEdgeDayOfWeek.Monday });
+            BandwidthScheduleData data = new BandwidthScheduleData(XmlConvert.ToTimeSpan("0:0:0"), XmlConvert.ToTimeSpan("13:59:0"), 100, new DataBoxEdgeDayOfWeek[] { DataBoxEdgeDayOfWeek.Sunday, DataBoxEdgeDayOfWeek.Monday });
             ArmOperation<BandwidthScheduleResource> lro = await bandwidthSchedule.UpdateAsync(WaitUntil.Completed, data);
             BandwidthScheduleResource result = lro.Value;
 

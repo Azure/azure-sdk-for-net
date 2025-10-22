@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTimeInUTC"u8);
-                writer.WriteStringValue(ExpireOn);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             string publicKey = default;
             string privateKey = default;
-            string expiryTimeInUtc = default;
+            DateTimeOffset? expiryTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("expiryTimeInUTC"u8))
                 {
-                    expiryTimeInUtc = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiryTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// </param>
         /// <param name="expireOn"> Gets or sets expiry time in UTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateCertResult(string publicKey, string privateKey, string expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GenerateCertResult(string publicKey, string privateKey, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicKey = publicKey;
             PrivateKey = privateKey;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// </summary>
         public string PrivateKey { get; }
         /// <summary> Gets or sets expiry time in UTC. </summary>
-        public string ExpireOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
     }
 }

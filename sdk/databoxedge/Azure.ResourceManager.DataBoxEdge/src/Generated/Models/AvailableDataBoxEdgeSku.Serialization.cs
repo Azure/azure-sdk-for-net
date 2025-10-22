@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DataBoxEdgeSkuTier? tier = default;
             string size = default;
             string family = default;
-            IReadOnlyList<string> locations = default;
+            IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> apiVersions = default;
             IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo = default;
             IReadOnlyList<DataBoxEdgeSkuCost> costs = default;
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 tier,
                 size,
                 family,
-                locations ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
                 apiVersions ?? new ChangeTrackingList<string>(),
                 locationInfo ?? new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>(),
                 costs ?? new ChangeTrackingList<DataBoxEdgeSkuCost>(),

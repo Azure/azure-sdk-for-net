@@ -57,11 +57,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startOn"/>, <paramref name="stopOn"/> or <paramref name="days"/> is null. </exception>
-        public BandwidthScheduleData(string startOn, string stopOn, int rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
+        /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
+        public BandwidthScheduleData(TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
         {
-            Argument.AssertNotNull(startOn, nameof(startOn));
-            Argument.AssertNotNull(stopOn, nameof(stopOn));
             Argument.AssertNotNull(days, nameof(days));
 
             StartOn = startOn;
@@ -80,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startOn, string stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             StopOn = stopOn;
@@ -95,9 +93,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> The start time of the schedule in UTC. </summary>
-        public string StartOn { get; set; }
+        public TimeSpan StartOn { get; set; }
         /// <summary> The stop time of the schedule in UTC. </summary>
-        public string StopOn { get; set; }
+        public TimeSpan StopOn { get; set; }
         /// <summary> The bandwidth rate in Mbps. </summary>
         public int RateInMbps { get; set; }
         /// <summary> The days of the week when this schedule is applicable. </summary>

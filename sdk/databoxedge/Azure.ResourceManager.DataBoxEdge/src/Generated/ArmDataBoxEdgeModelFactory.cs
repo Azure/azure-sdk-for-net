@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="shipmentTypes"> List of Shipment Types supported by this SKU. </param>
         /// <param name="capabilities"> The capability info of the SKU. </param>
         /// <returns> A new <see cref="Models.AvailableDataBoxEdgeSku"/> instance for mocking. </returns>
-        public static AvailableDataBoxEdgeSku AvailableDataBoxEdgeSku(string resourceType = null, DataBoxEdgeSkuName? name = null, string kind = null, DataBoxEdgeSkuTier? tier = null, string size = null, string family = null, IEnumerable<string> locations = null, IEnumerable<string> apiVersions = null, IEnumerable<DataBoxEdgeSkuLocationInfo> locationInfo = null, IEnumerable<DataBoxEdgeSkuCost> costs = null, DataBoxEdgeSkuSignupOption? signupOption = null, DataBoxEdgeSkuVersion? version = null, DataBoxEdgeSkuAvailability? availability = null, IEnumerable<DataBoxEdgeShipmentType> shipmentTypes = null, IEnumerable<DataBoxEdgeSkuCapability> capabilities = null)
+        public static AvailableDataBoxEdgeSku AvailableDataBoxEdgeSku(string resourceType = null, DataBoxEdgeSkuName? name = null, string kind = null, DataBoxEdgeSkuTier? tier = null, string size = null, string family = null, IEnumerable<AzureLocation> locations = null, IEnumerable<string> apiVersions = null, IEnumerable<DataBoxEdgeSkuLocationInfo> locationInfo = null, IEnumerable<DataBoxEdgeSkuCost> costs = null, DataBoxEdgeSkuSignupOption? signupOption = null, DataBoxEdgeSkuVersion? version = null, DataBoxEdgeSkuAvailability? availability = null, IEnumerable<DataBoxEdgeShipmentType> shipmentTypes = null, IEnumerable<DataBoxEdgeSkuCapability> capabilities = null)
         {
-            locations ??= new List<string>();
+            locations ??= new List<AzureLocation>();
             apiVersions ??= new List<string>();
             locationInfo ??= new List<DataBoxEdgeSkuLocationInfo>();
             costs ??= new List<DataBoxEdgeSkuCost>();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
         /// <returns> A new <see cref="DataBoxEdge.BandwidthScheduleData"/> instance for mocking. </returns>
-        public static BandwidthScheduleData BandwidthScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string startOn = null, string stopOn = null, int rateInMbps = default, IEnumerable<DataBoxEdgeDayOfWeek> days = null)
+        public static BandwidthScheduleData BandwidthScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TimeSpan startOn = default, TimeSpan stopOn = default, int rateInMbps = default, IEnumerable<DataBoxEdgeDayOfWeek> days = null)
         {
             days ??= new List<DataBoxEdgeDayOfWeek>();
 
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// </param>
         /// <param name="expireOn"> Gets or sets expiry time in UTC. </param>
         /// <returns> A new <see cref="Models.GenerateCertResult"/> instance for mocking. </returns>
-        public static GenerateCertResult GenerateCertResult(string publicKey = null, string privateKey = null, string expireOn = null)
+        public static GenerateCertResult GenerateCertResult(string publicKey = null, string privateKey = null, DateTimeOffset? expireOn = null)
         {
             return new GenerateCertResult(publicKey, privateKey, expireOn, serializedAdditionalRawData: null);
         }
