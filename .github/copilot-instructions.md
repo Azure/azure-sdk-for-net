@@ -23,4 +23,4 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 ## SDK release
 
-For detailed workflow instructions, see [SDK Release](../eng/common/instructions/copilot/sdk-release.instructions.md).
+For detailed workflow instructions, see [SDK Release](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/common/instructions/copilot/sdk-release.instructions.md).
