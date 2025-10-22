@@ -150,12 +150,6 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
-    // Dictionary to hold property name renaming mappings
-    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
-        {
-            {"Etag", "ETag"}
-        };
-
     // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
     private static readonly Dictionary<string, string> _nounToVerbDicts = new()
         {
@@ -202,6 +196,12 @@ internal class NameVisitor : ScmLibraryVisitor
             }
         }
     }
+
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
+        {
+            {"Etag", "ETag"}
+        };
 
     private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
     {
