@@ -1,9 +1,11 @@
 import "@azure-tools/typespec-client-generator-core";
+import "@azure-tools/typespec-liftr-base";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
+using LiftrBase;
 
 namespace MgmtTypeSpec;
 
@@ -81,7 +83,7 @@ interface FooSettingsOperations {
   delete is ArmResourceDeleteSync<FooSettings>;
 }
 
-model FooSettingsProperties {
+model FooSettingsProperties is BaseResourceProperties {
   accessControlEnabled?: boolean;
 
   @visibility(Lifecycle.Read)
