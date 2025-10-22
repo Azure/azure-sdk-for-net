@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DataBoxEdgeDeviceGetByName()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByName.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DataBoxEdgeDeviceGetByName.json
             // this example is just showing the usage of "Devices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DataBoxEdgeDeviceGetByNameWithDataResidency()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceGetByNameWithDataResidency.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DataBoxEdgeDeviceGetByNameWithDataResidency.json
             // this example is just showing the usage of "Devices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DataBoxEdgeDeviceDelete()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDeviceDelete.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DataBoxEdgeDeviceDelete.json
             // this example is just showing the usage of "Devices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DataBoxEdgeDevicePatch()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DataBoxEdgeDevicePatch.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DataBoxEdgeDevicePatch.json
             // this example is just showing the usage of "Devices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DownloadUpdates_DownloadUpdatesPost()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DownloadUpdatesPost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DownloadUpdatesPost.json
             // this example is just showing the usage of "Devices_DownloadUpdates" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateCertificate_GenerateCertificate()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/GenerateCertificate.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/GenerateCertificate.json
             // this example is just showing the usage of "Devices_GenerateCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExtendedInformation_ExtendedInfoPost()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/ExtendedInfoPost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/ExtendedInfoPost.json
             // this example is just showing the usage of "Devices_GetExtendedInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task InstallUpdates_InstallUpdatesPost()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/InstallUpdatesPost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/InstallUpdatesPost.json
             // this example is just showing the usage of "Devices_InstallUpdates" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkSettings_NetworkSettingsGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/NetworkSettingsGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/NetworkSettingsGet.json
             // this example is just showing the usage of "Devices_GetNetworkSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ScanForUpdates_ScanForUpdatesPost()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/ScanForUpdatesPost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/ScanForUpdatesPost.json
             // this example is just showing the usage of "Devices_ScanForUpdates" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateSecuritySettings_CreateOrUpdateSecuritySettings()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SecuritySettingsUpdatePost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/SecuritySettingsUpdatePost.json
             // this example is just showing the usage of "Devices_CreateOrUpdateSecuritySettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateExtendedInformation_GetUpdateExtendedInfo()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/GetUpdateExtendedInfo.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/GetUpdateExtendedInfo.json
             // this example is just showing the usage of "Devices_UpdateExtendedInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUpdateSummary_UpdateSummaryGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UpdateSummaryGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/UpdateSummaryGet.json
             // this example is just showing the usage of "Devices_GetUpdateSummary" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UploadCertificate_UploadCertificatePost()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UploadCertificatePost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/UploadCertificatePost.json
             // this example is just showing the usage of "Devices_UploadCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckResourceCreationFeasibility_DeviceCapacityRequestPost()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DeviceCapacityRequestPost.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DeviceCapacityRequestPost.json
             // this example is just showing the usage of "DeviceCapacityCheck_CheckResourceCreationFeasibility" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -437,7 +437,7 @@ new string[]{"Standard_D2_v2"}
         [Ignore("Only validating compilation of examples")]
         public async Task GetDeviceCapacityInfo_DeviceCapacityGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DeviceCapacityGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DeviceCapacityGet.json
             // this example is just showing the usage of "DeviceCapacityInfo_GetDeviceCapacityInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -463,7 +463,7 @@ new string[]{"Standard_D2_v2"}
         [Ignore("Only validating compilation of examples")]
         public async Task GetEdgeNodes_NodesGetAllInDevice()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/NodeGetAllInDevice.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/NodeGetAllInDevice.json
             // this example is just showing the usage of "Nodes_ListByDataBoxEdgeDevice" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -492,7 +492,7 @@ new string[]{"Standard_D2_v2"}
         [Ignore("Only validating compilation of examples")]
         public async Task TriggerSupportPackage_TriggerSupportPackage()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/TriggerSupportPackage.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/TriggerSupportPackage.json
             // this example is just showing the usage of "SupportPackages_TriggerSupportPackage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

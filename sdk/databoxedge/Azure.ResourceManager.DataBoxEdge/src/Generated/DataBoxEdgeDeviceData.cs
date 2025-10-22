@@ -86,8 +86,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
         /// <param name="edgeProfile"> The details of Edge Profile for this resource. </param>
         /// <param name="dataResidency"> The details of data-residency related properties for this resource. </param>
+        /// <param name="kubernetesWorkloadProfile"> Kubernetes Workload Profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, string kubernetesWorkloadProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -110,6 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceMoveDetails = resourceMoveDetails;
             EdgeProfile = edgeProfile;
             DataResidency = dataResidency;
+            KubernetesWorkloadProfile = kubernetesWorkloadProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -177,5 +179,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                 DataResidency.ResidencyType = value;
             }
         }
+
+        /// <summary> Kubernetes Workload Profile. </summary>
+        public string KubernetesWorkloadProfile { get; }
     }
 }

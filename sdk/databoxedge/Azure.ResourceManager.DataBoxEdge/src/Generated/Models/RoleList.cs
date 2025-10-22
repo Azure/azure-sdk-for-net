@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -46,33 +47,43 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RoleList"/>. </summary>
-        internal RoleList()
+        /// <param name="value">
+        /// The Role items on this page
+        /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
+        /// </param>
+        internal RoleList(IEnumerable<DataBoxEdgeRoleData> value)
         {
-            Value = new ChangeTrackingList<DataBoxEdgeRoleData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleList"/>. </summary>
         /// <param name="value">
-        /// The Value.
+        /// The Role items on this page
         /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
         /// </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleList(IReadOnlyList<DataBoxEdgeRoleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoleList(IReadOnlyList<DataBoxEdgeRoleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RoleList"/> for deserialization. </summary>
+        internal RoleList()
+        {
+        }
+
         /// <summary>
-        /// The Value.
+        /// The Role items on this page
         /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
         /// </summary>
         public IReadOnlyList<DataBoxEdgeRoleData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

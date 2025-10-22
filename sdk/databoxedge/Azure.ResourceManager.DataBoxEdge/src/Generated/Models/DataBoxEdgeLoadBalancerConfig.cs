@@ -48,16 +48,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeLoadBalancerConfig"/>. </summary>
         internal DataBoxEdgeLoadBalancerConfig()
         {
+            IPRange = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeLoadBalancerConfig"/>. </summary>
         /// <param name="loadBalancerConfigType"> Load balancer type. </param>
         /// <param name="version"> Load balancer version. </param>
+        /// <param name="ipRange"> Load balancer ipconfig. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version, IReadOnlyList<string> ipRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoadBalancerConfigType = loadBalancerConfigType;
             Version = version;
+            IPRange = ipRange;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +68,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string LoadBalancerConfigType { get; }
         /// <summary> Load balancer version. </summary>
         public string Version { get; }
+        /// <summary> Load balancer ipconfig. </summary>
+        public IReadOnlyList<string> IPRange { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMonitoringConfig()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/GetMonitoringConfig.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/GetMonitoringConfig.json
             // this example is just showing the usage of "MonitoringConfig_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteMonitoringConfig()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/DeleteMonitoringConfig.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/DeleteMonitoringConfig.json
             // this example is just showing the usage of "MonitoringConfig_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutMonitoringConfig()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/PutMonitoringConfig.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/PutMonitoringConfig.json
             // this example is just showing the usage of "MonitoringConfig_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

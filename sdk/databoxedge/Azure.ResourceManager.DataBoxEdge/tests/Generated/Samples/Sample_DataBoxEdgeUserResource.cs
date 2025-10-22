@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_UserGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UserGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/UserGet.json
             // this example is just showing the usage of "Users_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_UserDelete()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UserDelete.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/UserDelete.json
             // this example is just showing the usage of "Users_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UserPut()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UserPut.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/UserPut.json
             // this example is just showing the usage of "Users_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

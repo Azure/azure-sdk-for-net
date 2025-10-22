@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2023-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets a StorageAccount by name. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets a StorageAccount by name. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Creates a new StorageAccount or updates an existing StorageAccount on the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="storageAccountName"> The StorageAccount name. </param>
+        /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="data"> The StorageAccount properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="data"/> is null. </exception>
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Creates a new StorageAccount or updates an existing StorageAccount on the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="storageAccountName"> The StorageAccount name. </param>
+        /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="data"> The StorageAccount properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="data"/> is null. </exception>
@@ -373,10 +373,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Deletes the StorageAccount on the Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="storageAccountName"> The StorageAccount name. </param>
+        /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -400,10 +400,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Deletes the StorageAccount on the Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="storageAccountName"> The StorageAccount name. </param>
+        /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
@@ -481,8 +481,8 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>

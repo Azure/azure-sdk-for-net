@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UserList"/>. </summary>
-        internal UserList()
+        /// <param name="value"> The User items on this page. </param>
+        internal UserList(IEnumerable<DataBoxEdgeUserData> value)
         {
-            Value = new ChangeTrackingList<DataBoxEdgeUserData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserList"/>. </summary>
-        /// <param name="value"> The list of users. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value"> The User items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserList(IReadOnlyList<DataBoxEdgeUserData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserList(IReadOnlyList<DataBoxEdgeUserData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of users. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserList"/> for deserialization. </summary>
+        internal UserList()
+        {
+        }
+
+        /// <summary> The User items on this page. </summary>
         public IReadOnlyList<DataBoxEdgeUserData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

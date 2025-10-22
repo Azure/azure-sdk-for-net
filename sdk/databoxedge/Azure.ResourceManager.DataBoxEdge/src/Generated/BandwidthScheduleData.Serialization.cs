@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("start"u8);
-            writer.WriteStringValue(StartOn, "T");
+            writer.WriteStringValue(StartOn);
             writer.WritePropertyName("stop"u8);
-            writer.WriteStringValue(StopOn, "T");
+            writer.WriteStringValue(StopOn);
             writer.WritePropertyName("rateInMbps"u8);
             writer.WriteNumberValue(RateInMbps);
             writer.WritePropertyName("days"u8);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            TimeSpan start = default;
-            TimeSpan stop = default;
+            string start = default;
+            string stop = default;
             int rateInMbps = default;
             IList<DataBoxEdgeDayOfWeek> days = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         if (property0.NameEquals("start"u8))
                         {
-                            start = property0.Value.GetTimeSpan("T");
+                            start = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("stop"u8))
                         {
-                            stop = property0.Value.GetTimeSpan("T");
+                            stop = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("rateInMbps"u8))

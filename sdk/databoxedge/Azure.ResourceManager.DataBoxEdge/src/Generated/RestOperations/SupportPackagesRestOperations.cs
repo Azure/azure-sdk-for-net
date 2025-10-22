@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2023-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Triggers support package on the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="content"> The trigger support package request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Triggers support package on the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="content"> The trigger support package request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

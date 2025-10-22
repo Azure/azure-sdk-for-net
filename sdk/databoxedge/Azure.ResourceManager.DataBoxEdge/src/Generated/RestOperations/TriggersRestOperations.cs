@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2023-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Lists all the triggers configured in the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Lists all the triggers configured in the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Get a specific trigger by name. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="name"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Get a specific trigger by name. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="name"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> Creates or updates a trigger. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="deviceName"> The device name. </param>
         /// <param name="name"> The trigger name. </param>
         /// <param name="data"> The trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> Creates or updates a trigger. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="deviceName"> The device name. </param>
         /// <param name="name"> The trigger name. </param>
         /// <param name="data"> The trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -383,8 +383,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Deletes the trigger on the gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="name"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -411,8 +411,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Deletes the trigger on the gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="name"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -462,8 +462,8 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Lists all the triggers configured in the device. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -494,8 +494,8 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Lists all the triggers configured in the device. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
