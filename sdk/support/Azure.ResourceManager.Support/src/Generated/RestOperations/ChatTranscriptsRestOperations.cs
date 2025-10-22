@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all chat transcripts for a support ticket under subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all chat transcripts for a support ticket under subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Returns chatTranscript details for a support ticket under a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="chatTranscriptName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Returns chatTranscript details for a support ticket under a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="chatTranscriptName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Lists all chat transcripts for a support ticket under subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Lists all chat transcripts for a support ticket under subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>

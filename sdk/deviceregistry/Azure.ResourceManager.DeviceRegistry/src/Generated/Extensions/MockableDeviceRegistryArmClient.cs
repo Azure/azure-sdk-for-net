@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDeviceRegistryArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceRegistryArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDeviceRegistryArmClient for mocking. </summary>
         protected MockableDeviceRegistryArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceRegistryArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDeviceRegistryArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDeviceRegistryArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDeviceRegistryArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryAssetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryAssetResource"/> object. </returns>
         public virtual DeviceRegistryAssetResource GetDeviceRegistryAssetResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryAssetResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryAssetEndpointProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetEndpointProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryAssetEndpointProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryAssetEndpointProfileResource"/> object. </returns>
         public virtual DeviceRegistryAssetEndpointProfileResource GetDeviceRegistryAssetEndpointProfileResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryAssetEndpointProfileResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryBillingContainerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryBillingContainerResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryBillingContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryBillingContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryBillingContainerResource"/> object. </returns>
         public virtual DeviceRegistryBillingContainerResource GetDeviceRegistryBillingContainerResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryBillingContainerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceResource GetDeviceRegistryNamespaceResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryNamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryNamespaceAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceAssetResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceAssetResource GetDeviceRegistryNamespaceAssetResource(ResourceIdentifier id)
@@ -94,10 +71,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceAssetResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryNamespaceDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryNamespaceDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceDeviceResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceDeviceResource GetDeviceRegistryNamespaceDeviceResource(ResourceIdentifier id)
@@ -106,10 +80,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceDeviceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryNamespaceDiscoveredAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceDiscoveredAssetResource GetDeviceRegistryNamespaceDiscoveredAssetResource(ResourceIdentifier id)
@@ -118,10 +89,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceDiscoveredAssetResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> object. </returns>
         public virtual DeviceRegistryNamespaceDiscoveredDeviceResource GetDeviceRegistryNamespaceDiscoveredDeviceResource(ResourceIdentifier id)
@@ -130,10 +98,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistrySchemaRegistryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistrySchemaRegistryResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistrySchemaRegistryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistrySchemaRegistryResource"/> object. </returns>
         public virtual DeviceRegistrySchemaRegistryResource GetDeviceRegistrySchemaRegistryResource(ResourceIdentifier id)
@@ -142,10 +107,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistrySchemaRegistryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistrySchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistrySchemaResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistrySchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistrySchemaResource"/> object. </returns>
         public virtual DeviceRegistrySchemaResource GetDeviceRegistrySchemaResource(ResourceIdentifier id)
@@ -154,10 +116,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistrySchemaResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistrySchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistrySchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeviceRegistrySchemaVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistrySchemaVersionResource"/> object. </returns>
         public virtual DeviceRegistrySchemaVersionResource GetDeviceRegistrySchemaVersionResource(ResourceIdentifier id)

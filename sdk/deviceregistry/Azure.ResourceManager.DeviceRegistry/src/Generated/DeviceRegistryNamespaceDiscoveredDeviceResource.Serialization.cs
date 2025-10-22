@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
+    /// <summary></summary>
     public partial class DeviceRegistryNamespaceDiscoveredDeviceResource : IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData>
     {
-        private static DeviceRegistryNamespaceDiscoveredDeviceData s_dataDeserializationInstance;
-        private static DeviceRegistryNamespaceDiscoveredDeviceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceRegistryNamespaceDiscoveredDeviceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData>)Data).Write(writer, options);
 
-        DeviceRegistryNamespaceDiscoveredDeviceData IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryNamespaceDiscoveredDeviceData IJsonModel<DeviceRegistryNamespaceDiscoveredDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeviceRegistryNamespaceDiscoveredDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistryNamespaceDiscoveredDeviceData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeviceRegistryNamespaceDiscoveredDeviceData IPersistableModel<DeviceRegistryNamespaceDiscoveredDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryNamespaceDiscoveredDeviceData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        string IPersistableModel<DeviceRegistryNamespaceDiscoveredDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryNamespaceDiscoveredDeviceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistryNamespaceDiscoveredDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
