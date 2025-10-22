@@ -507,7 +507,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             tracerProvider?.ForceFlush();
             WaitForActivityExport(traceTelemetryItems);
 
-            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+            // Wait for performance counter collection cycle to complete
+            // Performance counters are collected periodically, so we need to wait for at least one collection cycle
+            var perfCountersCollected = SpinWait.SpinUntil(
+                condition: () =>
+                {
+                    standardMetricCustomProcessor._meterProvider?.ForceFlush();
+                    Thread.Sleep(100);
+                    var requestRate = metricTelemetryItems
+                        .Select(ti => (MetricsData)ti.Data.BaseData)
+                        .FirstOrDefault(md => md.Metrics.Count > 0 && md.Metrics[0].Name == PerfCounterConstants.RequestRateMetricIdValue);
+                    return requestRate != null && requestRate.Metrics[0].Value >= 1;
+                },
+                timeout: TimeSpan.FromSeconds(5));
+
+            Assert.True(perfCountersCollected, "Performance counter metrics were not collected within the timeout period.");
 
             // We expect multiple metric telemetry items now (at least one per perf counter plus request duration histogram).
             Assert.True(metricTelemetryItems.Count >= 2, "Expected multiple metric telemetry items including perf counters.");
