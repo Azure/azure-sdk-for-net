@@ -87,9 +87,6 @@ model FooSettingsProperties is BaseResourceProperties {
   accessControlEnabled?: boolean;
 
   @visibility(Lifecycle.Read)
-  provisioningState?: ResourceProvisioningState;
-
-  @visibility(Lifecycle.Read)
   metaData?: FooSettingsPropertiesMetaData;
 }
 
