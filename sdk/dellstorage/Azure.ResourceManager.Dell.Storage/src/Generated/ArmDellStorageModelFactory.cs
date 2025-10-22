@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="oneFsUri"> OneFS url. </param>
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         /// <returns> A new <see cref="Models.DellFileSystemProperties"/> instance for mocking. </returns>
         public static DellFileSystemProperties DellFileSystemProperties(DellFileSystemCapacity capacity = default, DellFileSystemMarketplaceDetails marketplace = default, DellFileSystemProvisioningState? provisioningState = default, ResourceIdentifier delegatedSubnetId = default, string delegatedSubnetCidr = default, string userEmail = default, string fileSystemId = default, string smartConnectFqdn = default, Uri oneFsUri = default, string dellReferenceNumber = default, DellFileSystemEncryptionProperties encryption = default)
         {
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
         /// <returns> A new <see cref="Models.DellFileSystemPatch"/> instance for mocking. </returns>
-        public static DellFileSystemPatch DellFileSystemPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, DellFileSystemPatchProperties properties = default)
+        public static DellFileSystemPatch DellFileSystemPatch(BinaryData identity = default, IDictionary<string, string> tags = default, DellFileSystemPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
