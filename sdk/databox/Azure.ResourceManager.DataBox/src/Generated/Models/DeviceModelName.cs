@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBox.Models
         DataBoxHeavy,
         /// <summary> Data Box Customer Disk. </summary>
         DataBoxCustomerDisk,
-        /// <summary> Data Box V2 with 125TB usable capacity. </summary>
+        /// <summary> Data Box V2 with 120TB usable capacity. </summary>
         AzureDataBox120,
-        /// <summary> Data Box V2 with 500TB usable capacity. </summary>
+        /// <summary> Data Box V2 with 525TB usable capacity. </summary>
         AzureDataBox525
     }
 }

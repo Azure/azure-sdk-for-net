@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionOptions"/>. </summary>
-        /// <param name="resourceCreationBegin"></param>
+        /// <param name="resourceCreationBegin"> Resource creation begin. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeExtensionOptions(ExtensionOptions resourceCreationBegin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the resource creation begin. </summary>
+        /// <summary> Resource creation begin. </summary>
         public ExtensionOptions ResourceCreationBegin { get; set; }
     }
 }

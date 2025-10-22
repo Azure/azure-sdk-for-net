@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Playwright.Models
     /// <summary> Playwright workspace quota resource properties. </summary>
     public partial class PlaywrightWorkspaceQuotaProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceQuotaProperties"/>. </summary>
         internal PlaywrightWorkspaceQuotaProperties()
@@ -51,18 +22,19 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceQuotaProperties"/>. </summary>
-        /// <param name="freeTrial"> The Playwright workspace quota resource free-trial properties. </param>
+        /// <param name="freeTrial"> The Playwright workspace quota free trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial, PlaywrightProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial, PlaywrightProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FreeTrial = freeTrial;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Playwright workspace quota resource free-trial properties. </summary>
+        /// <summary> The Playwright workspace quota free trial properties. </summary>
         public PlaywrightWorkspaceFreeTrialProperties FreeTrial { get; }
+
         /// <summary> The status of the last resource operation. </summary>
         public PlaywrightProvisioningState? ProvisioningState { get; }
     }

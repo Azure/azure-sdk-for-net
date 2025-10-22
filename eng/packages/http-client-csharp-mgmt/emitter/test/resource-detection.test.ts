@@ -9,7 +9,12 @@ import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { getAllClients, updateClients } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
-import { resourceMetadata } from "../src/sdk-context-options.js";
+import {
+  resourceMetadata,
+  tenantResource,
+  subscriptionResource,
+  resourceGroupResource
+} from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
@@ -171,13 +176,16 @@ interface Employees2 {
       getMethod.crossLanguageDefinitionId
     );
     strictEqual(resourceMetadataDecorator.arguments.methods[0].kind, "Get");
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].operationPath,
+    strictEqual(
+      resourceMetadataDecorator.arguments.methods[0].operationPath,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].operationScope,
+    strictEqual(
+      resourceMetadataDecorator.arguments.methods[0].operationScope,
       ResourceScope.ResourceGroup
     );
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].resourceScope,
+    strictEqual(
+      resourceMetadataDecorator.arguments.methods[0].resourceScope,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -231,7 +239,8 @@ interface Employees2 {
 
     // Validate ListByResourceGroup (list by parent)
     const listByRgEntry = resourceMetadataDecorator.arguments.methods.find(
-      (m: any) => m.methodId === listByResourceGroupMethod.crossLanguageDefinitionId
+      (m: any) =>
+        m.methodId === listByResourceGroupMethod.crossLanguageDefinitionId
     );
     ok(listByRgEntry);
     strictEqual(listByRgEntry.kind, "List");
@@ -247,11 +256,15 @@ interface Employees2 {
 
     // Validate ListBySubscription
     const listBySubEntry = resourceMetadataDecorator.arguments.methods.find(
-      (m: any) => m.methodId === listBySubscriptionMethod.crossLanguageDefinitionId
+      (m: any) =>
+        m.methodId === listBySubscriptionMethod.crossLanguageDefinitionId
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
-    strictEqual(listBySubEntry.operationPath, "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees");
+    strictEqual(
+      listBySubEntry.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
+    );
     strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
     strictEqual(listBySubEntry.resourceScope, undefined);
   });
@@ -962,5 +975,78 @@ interface Employees {
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadataDecorator.arguments.resourceName, "Employee");
+  });
+
+  it("resource scope determined from Get method when no explicit decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+@parentResource(SubscriptionLocationResource)
+model Employee is ProxyResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee, Type = EmployeeType>;
+}
+
+model EmployeeProperties {
+  age?: int32;
+}
+
+union EmployeeType {
+  string,
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const employeeClient = getAllClients(root).find(
+      (c) => c.name === "Employees"
+    );
+    ok(employeeClient);
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+    const getMethod = employeeClient.methods.find((m) => m.name === "get");
+    ok(getMethod);
+
+    const resourceMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(resourceMetadataDecorator);
+    ok(resourceMetadataDecorator.arguments);
+
+    // Verify that the model has NO scope-related decorators
+    const hasNoScopeDecorators = !employeeModel.decorators?.some(
+      (d) =>
+        d.name === tenantResource ||
+        d.name === subscriptionResource ||
+        d.name === resourceGroupResource
+    );
+    ok(
+      hasNoScopeDecorators,
+      "Model should have no scope-related decorators to test fallback logic"
+    );
+
+    // The model should inherit its resourceScope from the Get method's operationScope (Subscription)
+    // because the Get method operates at subscription scope and there are no explicit scope decorators
+    strictEqual(
+      resourceMetadataDecorator.arguments.resourceScope,
+      "Subscription"
+    );
+
+    // Verify the Get method itself has the correct scope
+    const getMethodEntry = resourceMetadataDecorator.arguments.methods.find(
+      (m: any) => m.methodId === getMethod.crossLanguageDefinitionId
+    );
+    ok(getMethodEntry);
+    strictEqual(getMethodEntry.kind, "Get");
+    strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
   });
 });

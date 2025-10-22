@@ -116,21 +116,26 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
-#pragma warning restore AZC0014 // Avoid using banned types in public API
+        public override ValueExpression DeserializeJsonValue(
+            Type valueType,
+            ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
         {
-            var expression = DeserializeJsonValueCore(valueType, element, format);
-            return expression ?? base.DeserializeJsonValue(valueType, element, format);
+            var expression = DeserializeJsonValueCore(valueType, element, data, mrwOptionsParameter, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
         }
 
         private ValueExpression? DeserializeJsonValueCore(
             Type valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
         {
             return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
-                deserializationExpression(valueType, element, format) :
+                deserializationExpression(valueType, element, data, mrwOptionsParameter, format) :
                 null;
         }
 

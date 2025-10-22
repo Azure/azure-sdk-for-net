@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52801")]
         public async Task CreateLoadBalancerAsync()
         {
             var connectedCluster = ConnectedClusterResource.CreateResourceIdentifier("b9e38f20-7c9c-4497-a25d-1a0c5eef2108", "xinyuhe-canary", "test-cluster-euap-arc");

@@ -54,23 +54,27 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowEndpointProperties"/>. </summary>
         /// <param name="endpointType"> Endpoint Type. </param>
+        /// <param name="hostType"> The type of the Kafka host. E.g FabricRT, EventGrid. </param>
         /// <param name="dataExplorerSettings"> Azure Data Explorer endpoint. </param>
         /// <param name="dataLakeStorageSettings"> Azure Data Lake endpoint. </param>
         /// <param name="fabricOneLakeSettings"> Microsoft Fabric endpoint. </param>
         /// <param name="kafkaSettings"> Kafka endpoint. </param>
         /// <param name="localStorageSettings"> Local persistent volume endpoint. </param>
         /// <param name="mqttSettings"> Broker endpoint. </param>
+        /// <param name="openTelemetrySettings"> OpenTelemetry endpoint. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowEndpointProperties(DataflowEndpointType endpointType, DataflowEndpointDataExplorer dataExplorerSettings, DataflowEndpointDataLakeStorage dataLakeStorageSettings, DataflowEndpointFabricOneLake fabricOneLakeSettings, DataflowEndpointKafka kafkaSettings, DataflowEndpointLocalStorage localStorageSettings, DataflowEndpointMqtt mqttSettings, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotOperationsDataflowEndpointProperties(DataflowEndpointType endpointType, DataflowEndpointHostType? hostType, DataflowEndpointDataExplorer dataExplorerSettings, DataflowEndpointDataLakeStorage dataLakeStorageSettings, DataflowEndpointFabricOneLake fabricOneLakeSettings, DataflowEndpointKafka kafkaSettings, DataflowEndpointLocalStorage localStorageSettings, DataflowEndpointMqtt mqttSettings, DataflowEndpointOpenTelemetry openTelemetrySettings, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+            HostType = hostType;
             DataExplorerSettings = dataExplorerSettings;
             DataLakeStorageSettings = dataLakeStorageSettings;
             FabricOneLakeSettings = fabricOneLakeSettings;
             KafkaSettings = kafkaSettings;
             LocalStorageSettings = localStorageSettings;
             MqttSettings = mqttSettings;
+            OpenTelemetrySettings = openTelemetrySettings;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -82,6 +86,8 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Endpoint Type. </summary>
         public DataflowEndpointType EndpointType { get; set; }
+        /// <summary> The type of the Kafka host. E.g FabricRT, EventGrid. </summary>
+        public DataflowEndpointHostType? HostType { get; set; }
         /// <summary> Azure Data Explorer endpoint. </summary>
         public DataflowEndpointDataExplorer DataExplorerSettings { get; set; }
         /// <summary> Azure Data Lake endpoint. </summary>
@@ -101,6 +107,8 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Broker endpoint. </summary>
         public DataflowEndpointMqtt MqttSettings { get; set; }
+        /// <summary> OpenTelemetry endpoint. </summary>
+        public DataflowEndpointOpenTelemetry OpenTelemetrySettings { get; set; }
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
     }

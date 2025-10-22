@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// #nullable disable
+#nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
@@ -38,8 +39,18 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 
 #endif
         Console.WriteLine("Create the Azure OpenAI chat client");
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        var credential = new DefaultAzureCredential();
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+        ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+        {
+            throw new InvalidOperationException("Invalid URI.");
+        }
+        uri = new Uri($"https://{uri.Host}");
+
+        AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
         ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Complete a chat");
@@ -71,8 +82,18 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         }
 #endif
         Console.WriteLine("Create the Azure OpenAI chat client");
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        var credential = new DefaultAzureCredential();
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+        ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+        {
+            throw new InvalidOperationException("Invalid URI.");
+        }
+        uri = new Uri($"https://{uri.Host}");
+
+        AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
         ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Complete a chat");

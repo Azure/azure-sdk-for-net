@@ -42,12 +42,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="metricsReferenceIdentityId"> Resource Id of the managed identity referencing the metrics. </param>
         /// <param name="engineBuiltInIdentityType"> Type of the managed identity built in load test engines. </param>
         /// <param name="engineBuiltInIdentityIds"> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </param>
+        /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTest"/> instance for mocking. </returns>
-        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, TestSecret> secrets = null, TestCertificate certificate = null, IDictionary<string, string> environmentVariables = null, LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, LoadTestKind? kind = null, bool? publicIpDisabled = null, string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, LoadTestingManagedIdentityType? metricsReferenceIdentityType = null, string metricsReferenceIdentityId = null, LoadTestingManagedIdentityType? engineBuiltInIdentityType = null, IEnumerable<string> engineBuiltInIdentityIds = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, TestSecret> secrets = null, TestCertificate certificate = null, IDictionary<string, string> environmentVariables = null, LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, LoadTestKind? kind = null, bool? publicIpDisabled = null, string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, LoadTestingManagedIdentityType? metricsReferenceIdentityType = null, string metricsReferenceIdentityId = null, LoadTestingManagedIdentityType? engineBuiltInIdentityType = null, IEnumerable<string> engineBuiltInIdentityIds = null, double? estimatedVirtualUserHours = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, TestSecret>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -74,6 +75,7 @@ namespace Azure.Developer.LoadTesting
                 metricsReferenceIdentityId,
                 engineBuiltInIdentityType,
                 engineBuiltInIdentityIds?.ToList(),
+                estimatedVirtualUserHours,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
@@ -311,6 +313,167 @@ namespace Azure.Developer.LoadTesting
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingTrigger"/>. </summary>
+        /// <param name="triggerId"> The unique identifier of the trigger. </param>
+        /// <param name="displayName"> The name of the trigger. </param>
+        /// <param name="description"> The description of the trigger. </param>
+        /// <param name="kind"> The type of the trigger. </param>
+        /// <param name="state"> The current state of the trigger. </param>
+        /// <param name="stateDetails"> Details of current state of the trigger. </param>
+        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdBy"> The user that created. </param>
+        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedBy"> The user that last modified. </param>
+        /// <returns> A new <see cref="LoadTesting.LoadTestingTrigger"/> instance for mocking. </returns>
+        public static LoadTestingTrigger LoadTestingTrigger(string triggerId = null, string displayName = null, string description = null, string kind = null, TriggerState? state = null, StateDetails stateDetails = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        {
+            return new UnknownLoadTestingTrigger(
+                triggerId,
+                displayName,
+                description,
+                kind == null ? default : new TriggerType(kind),
+                state,
+                stateDetails,
+                createdDateTime,
+                createdBy,
+                lastModifiedDateTime,
+                lastModifiedBy,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.StateDetails"/>. </summary>
+        /// <param name="message"> The error message if the trigger is in disabled state. </param>
+        /// <returns> A new <see cref="LoadTesting.StateDetails"/> instance for mocking. </returns>
+        public static StateDetails StateDetails(string message = null)
+        {
+            return new StateDetails(message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.ScheduleTestsTrigger"/>. </summary>
+        /// <param name="triggerId"> The unique identifier of the trigger. </param>
+        /// <param name="displayName"> The name of the trigger. </param>
+        /// <param name="description"> The description of the trigger. </param>
+        /// <param name="state"> The current state of the trigger. </param>
+        /// <param name="stateDetails"> Details of current state of the trigger. </param>
+        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdBy"> The user that created. </param>
+        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedBy"> The user that last modified. </param>
+        /// <param name="testIds"> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </param>
+        /// <param name="startDateTime"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
+        /// <param name="recurrenceStatus"></param>
+        /// <param name="recurrence">
+        /// Recurrence details of the trigger. Null if schedule is not recurring.
+        /// Please note <see cref="LoadTestingRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RecurrenceWithCron"/>, <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="MonthlyRecurrenceByWeekDays"/> and <see cref="WeeklyRecurrence"/>.
+        /// </param>
+        /// <returns> A new <see cref="LoadTesting.ScheduleTestsTrigger"/> instance for mocking. </returns>
+        public static ScheduleTestsTrigger ScheduleTestsTrigger(string triggerId = null, string displayName = null, string description = null, TriggerState? state = null, StateDetails stateDetails = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null, IEnumerable<string> testIds = null, DateTimeOffset? startDateTime = null, RecurrenceStatus recurrenceStatus = null, LoadTestingRecurrence recurrence = null)
+        {
+            testIds ??= new List<string>();
+
+            return new ScheduleTestsTrigger(
+                triggerId,
+                displayName,
+                description,
+                TriggerType.ScheduleTestsTrigger,
+                state,
+                stateDetails,
+                createdDateTime,
+                createdBy,
+                lastModifiedDateTime,
+                lastModifiedBy,
+                serializedAdditionalRawData: null,
+                testIds?.ToList(),
+                startDateTime,
+                recurrenceStatus,
+                recurrence);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.RecurrenceStatus"/>. </summary>
+        /// <param name="remainingOccurrences"> The number of occurrences remaining for the trigger. Null if recurrence end has end date instead of number of occurrences. </param>
+        /// <param name="nextScheduledDateTimes"> The next three execution times of the trigger. (RFC 3339 literal format). </param>
+        /// <returns> A new <see cref="LoadTesting.RecurrenceStatus"/> instance for mocking. </returns>
+        public static RecurrenceStatus RecurrenceStatus(int? remainingOccurrences = null, IEnumerable<DateTimeOffset> nextScheduledDateTimes = null)
+        {
+            nextScheduledDateTimes ??= new List<DateTimeOffset>();
+
+            return new RecurrenceStatus(remainingOccurrences, nextScheduledDateTimes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.NotificationRule"/>. </summary>
+        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
+        /// <param name="displayName"> The name of the notification rule. </param>
+        /// <param name="actionGroupIds"> The action groups to notify. </param>
+        /// <param name="scope"> The scope of the notification rule. </param>
+        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdBy"> The user that created. </param>
+        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedBy"> The user that last modified. </param>
+        /// <returns> A new <see cref="LoadTesting.NotificationRule"/> instance for mocking. </returns>
+        public static NotificationRule NotificationRule(string notificationRuleId = null, string displayName = null, IEnumerable<string> actionGroupIds = null, string scope = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        {
+            actionGroupIds ??= new List<string>();
+
+            return new UnknownNotificationRule(
+                notificationRuleId,
+                displayName,
+                actionGroupIds?.ToList(),
+                scope == null ? default : new NotificationScopeType(scope),
+                createdDateTime,
+                createdBy,
+                lastModifiedDateTime,
+                lastModifiedBy,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.TestsNotificationRule"/>. </summary>
+        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
+        /// <param name="displayName"> The name of the notification rule. </param>
+        /// <param name="actionGroupIds"> The action groups to notify. </param>
+        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdBy"> The user that created. </param>
+        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedBy"> The user that last modified. </param>
+        /// <param name="testIds"> The test ids to include. If not provided, notification will be sent for all testIds. </param>
+        /// <param name="eventFilters">
+        /// The event to receive notifications for along with filtering conditions.
+        /// Key is a user-assigned identifier for the event filter.
+        /// Please note <see cref="TestsNotificationEventFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TestRunEndedNotificationEventFilter"/>, <see cref="TestRunStartedNotificationEventFilter"/>, <see cref="TriggerCompletedNotificationEventFilter"/> and <see cref="TriggerDisabledNotificationEventFilter"/>.
+        /// </param>
+        /// <returns> A new <see cref="LoadTesting.TestsNotificationRule"/> instance for mocking. </returns>
+        public static TestsNotificationRule TestsNotificationRule(string notificationRuleId = null, string displayName = null, IEnumerable<string> actionGroupIds = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null, IEnumerable<string> testIds = null, IDictionary<string, TestsNotificationEventFilter> eventFilters = null)
+        {
+            actionGroupIds ??= new List<string>();
+            testIds ??= new List<string>();
+            eventFilters ??= new Dictionary<string, TestsNotificationEventFilter>();
+
+            return new TestsNotificationRule(
+                notificationRuleId,
+                displayName,
+                actionGroupIds?.ToList(),
+                NotificationScopeType.Tests,
+                createdDateTime,
+                createdBy,
+                lastModifiedDateTime,
+                lastModifiedBy,
+                serializedAdditionalRawData: null,
+                testIds?.ToList(),
+                eventFilters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.OperationStatus"/>. </summary>
+        /// <param name="id"> The unique ID of the operation. </param>
+        /// <param name="status"> The state of the operation. </param>
+        /// <param name="kind"> The kind of the operation. </param>
+        /// <param name="error"> Error object that describes the error when status is "Failed". </param>
+        /// <returns> A new <see cref="LoadTesting.OperationStatus"/> instance for mocking. </returns>
+        public static OperationStatus OperationStatus(string id = null, OperationState status = default, OperationKind kind = default, ResponseError error = null)
+        {
+            return new OperationStatus(id, status, kind, error, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestRun"/>. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
@@ -355,12 +518,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="debugLogsEnabled"> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </param>
         /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
+        /// <param name="createdByUri"> The URI pointing to the entity that created the test run. </param>
+        /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test run. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestRun"/> instance for mocking. </returns>
-        public static LoadTestRun LoadTestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, TestSecret> secrets = null, TestCertificate certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, Uri portalUri = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, LoadTestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static LoadTestRun LoadTestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, TestSecret> secrets = null, TestCertificate certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, Uri portalUri = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, LoadTestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, Uri createdByUri = null, double? estimatedVirtualUserHours = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, TestSecret>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -398,6 +563,8 @@ namespace Azure.Developer.LoadTesting
                 debugLogsEnabled,
                 publicIpDisabled,
                 createdByType,
+                createdByUri,
+                estimatedVirtualUserHours,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
@@ -406,11 +573,15 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTesting.ErrorDetails"/>. </summary>
+        /// <param name="code"> Error code if there is any failure in load test run. </param>
         /// <param name="message"> Error details in case test run was not successfully run. </param>
+        /// <param name="properties"> A dictionary for storing additional error information for better context. Each key is a property name (e.g., "Description", "Resolution", "Category", "Region"), and its value is an array of strings with relevant details. </param>
         /// <returns> A new <see cref="LoadTesting.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string message = null)
+        public static ErrorDetails ErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, IList<string>> properties = null)
         {
-            return new ErrorDetails(message, serializedAdditionalRawData: null);
+            properties ??= new Dictionary<string, IList<string>>();
+
+            return new ErrorDetails(code, message, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTesting.TestRunStatistics"/>. </summary>
@@ -768,6 +939,29 @@ namespace Azure.Developer.LoadTesting
             configurations ??= new List<string>();
 
             return new TestProfileRunRecommendation(category, configurations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.TestRunInsights"/>. </summary>
+        /// <param name="columns"> The columns of the insights. </param>
+        /// <param name="rows"> The rows of the insights. </param>
+        /// <param name="version"> The version of the insights. </param>
+        /// <param name="status"> The status of the insights. </param>
+        /// <returns> A new <see cref="LoadTesting.TestRunInsights"/> instance for mocking. </returns>
+        public static TestRunInsights TestRunInsights(IEnumerable<TestRunInsightColumn> columns = null, IEnumerable<IDictionary<string, string>> rows = null, long? version = null, OperationState? status = null)
+        {
+            columns ??= new List<TestRunInsightColumn>();
+            rows ??= new List<IDictionary<string, string>>();
+
+            return new TestRunInsights(columns?.ToList(), rows?.ToList(), version, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.TestRunInsightColumn"/>. </summary>
+        /// <param name="name"> Name of the column. </param>
+        /// <param name="dataType"> The data type of the column. </param>
+        /// <returns> A new <see cref="LoadTesting.TestRunInsightColumn"/> instance for mocking. </returns>
+        public static TestRunInsightColumn TestRunInsightColumn(string name = null, string dataType = null)
+        {
+            return new TestRunInsightColumn(name, dataType, serializedAdditionalRawData: null);
         }
     }
 }

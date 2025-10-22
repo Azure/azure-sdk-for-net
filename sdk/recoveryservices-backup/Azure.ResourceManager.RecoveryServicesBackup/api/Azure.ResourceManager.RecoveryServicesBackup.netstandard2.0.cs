@@ -1313,7 +1313,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType AzureSql { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType AzureStorage { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType AzureWorkload { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType BackupProtectedItemCountSummary { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType BackupProtectionContainerCountSummary { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType DefaultBackup { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType Dpm { get { throw null; } }

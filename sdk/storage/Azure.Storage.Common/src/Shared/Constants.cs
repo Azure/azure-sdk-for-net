@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2025-11-05";
+        public const string DefaultSasVersion = "2026-02-06";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -435,6 +435,8 @@ namespace Azure.Storage
             public const string UriSubDomain = "queue";
 
             public const string QueueTraitsMetadata = "metadata";
+
+            public const string Name = "Queue";
         }
 
         /// <summary>
@@ -539,6 +541,8 @@ namespace Azure.Storage
         /// </summary>
         internal static class Sas
         {
+            public const string ObjectId = "oid";
+
             internal static class Permissions
             {
                 public const char Read = 'r';
@@ -616,6 +620,8 @@ namespace Azure.Storage
                 public const string DirectoryDepthUpper = "SDD";
                 public const string EncryptionScope = "ses";
                 public const string EncryptionScopeUpper = "SES";
+                public const string DelegatedUserObjectId = "sduoid";
+                public const string DelegatedUserObjectIdUpper = "SDUOID";
             }
 
             internal static class Resource
@@ -627,6 +633,7 @@ namespace Azure.Storage
                 public const string File = "f";
                 public const string Share = "s";
                 public const string Directory = "d";
+                public const string Queue = "q";
             }
 
             internal static class AccountServices

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarQuotaProperties. </summary>
-    public partial class BarQuotaProperties
+    internal partial class BarQuotaProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,6 +34,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> enabled. </summary>
+        [WirePath("left")]
         public int Left { get; set; }
     }
 }
