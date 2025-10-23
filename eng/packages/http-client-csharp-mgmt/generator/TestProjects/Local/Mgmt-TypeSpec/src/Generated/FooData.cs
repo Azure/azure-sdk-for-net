@@ -71,7 +71,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> something. </summary>
         [WirePath("properties.something")]
-        public string Something
+        public ManagedServiceIdentity Something
         {
             get
             {

@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -47,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             writer.WritePropertyName("something"u8);
-            writer.WriteStringValue(Something);
+            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options);
             if (Optional.IsDefined(BoolValue))
             {
                 writer.WritePropertyName("boolValue"u8);
@@ -130,7 +132,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             Uri serviceUri = default;
-            string something = default;
+            ManagedServiceIdentity something = default;
             bool? boolValue = default;
             float? floatValue = default;
             double? doubleValue = default;
@@ -151,7 +153,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (prop.NameEquals("something"u8))
                 {
-                    something = prop.Value.GetString();
+                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolValue"u8))
