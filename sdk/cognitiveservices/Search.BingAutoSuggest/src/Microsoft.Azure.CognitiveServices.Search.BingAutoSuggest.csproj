@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"> 
+<Project Sdk="Microsoft.NET.Sdk"> 
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services AutoSuggest Client Library</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services AutoSuggest API.</Description>
@@ -11,6 +11,7 @@
     2. Change client class name to `AutoSuggestClient`.
     ]]>
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

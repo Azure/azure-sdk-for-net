@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Network.Models
         private const string VirtualNetworkGatewayValue = "VirtualNetworkGateway";
         private const string VnetLocalValue = "VnetLocal";
 
-        /// <summary> Internet. </summary>
+        /// <summary> Forward traffic to the Internet. </summary>
         public static RoutingRuleNextHopType Internet { get; } = new RoutingRuleNextHopType(InternetValue);
-        /// <summary> NoNextHop. </summary>
+        /// <summary> No next hop will be used. </summary>
         public static RoutingRuleNextHopType NoNextHop { get; } = new RoutingRuleNextHopType(NoNextHopValue);
-        /// <summary> VirtualAppliance. </summary>
+        /// <summary> Forward traffic to a specified virtual appliance IP address. </summary>
         public static RoutingRuleNextHopType VirtualAppliance { get; } = new RoutingRuleNextHopType(VirtualApplianceValue);
-        /// <summary> VirtualNetworkGateway. </summary>
+        /// <summary> Forward traffic to the virtual network gateway. </summary>
         public static RoutingRuleNextHopType VirtualNetworkGateway { get; } = new RoutingRuleNextHopType(VirtualNetworkGatewayValue);
-        /// <summary> VnetLocal. </summary>
+        /// <summary> Keep traffic within the local virtual network. </summary>
         public static RoutingRuleNextHopType VnetLocal { get; } = new RoutingRuleNextHopType(VnetLocalValue);
         /// <summary> Determines if two <see cref="RoutingRuleNextHopType"/> values are the same. </summary>
         public static bool operator ==(RoutingRuleNextHopType left, RoutingRuleNextHopType right) => left.Equals(right);

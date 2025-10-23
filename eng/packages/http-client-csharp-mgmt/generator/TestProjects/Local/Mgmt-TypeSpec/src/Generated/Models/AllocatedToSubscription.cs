@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> SubscriptionIds and quota allocated to subscriptions from the GroupQuota. </summary>
     public partial class AllocatedToSubscription
@@ -33,9 +34,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> An Azure subscriptionId. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
 
         /// <summary> The amount of quota allocated to this subscriptionId from the GroupQuotasEntity. </summary>
+        [WirePath("quotaAllocated")]
         public long? QuotaAllocated { get; }
     }
 }

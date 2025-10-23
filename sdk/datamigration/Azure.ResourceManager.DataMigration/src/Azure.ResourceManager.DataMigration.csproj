@@ -7,5 +7,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DataMigration.</Description>
     <PackageTags>azure;management;arm;resource manager;datamigration</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TrafficRegionCategory. </summary>
+    /// <summary> The next traffic region. </summary>
     public readonly partial struct TrafficRegionCategory : IEquatable<TrafficRegionCategory>
     {
         private readonly string _value;

@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.LoadTesting</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.LoadTestService.</Description>
     <PackageTags>azure;management;arm;resource manager;loadtesting</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

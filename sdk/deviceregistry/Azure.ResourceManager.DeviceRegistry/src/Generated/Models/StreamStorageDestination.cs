@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -21,31 +22,31 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Argument.AssertNotNull(configuration, nameof(configuration));
 
             Configuration = configuration;
-            Target = StreamDestinationTarget.Storage;
         }
 
         /// <summary> Initializes a new instance of <see cref="StreamStorageDestination"/>. </summary>
         /// <param name="target"> Target destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configuration"> The storage destination configuration. </param>
-        internal StreamStorageDestination(StreamDestinationTarget? target, IDictionary<string, BinaryData> serializedAdditionalRawData, StorageDestinationConfiguration configuration) : base(target, serializedAdditionalRawData)
+        internal StreamStorageDestination(StreamDestinationTarget? target, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageDestinationConfiguration configuration) : base(target, additionalBinaryDataProperties)
         {
             Configuration = configuration;
-            Target = target;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StreamStorageDestination"/> for deserialization. </summary>
-        internal StreamStorageDestination()
-        {
         }
 
         /// <summary> The storage destination configuration. </summary>
         internal StorageDestinationConfiguration Configuration { get; set; }
+
         /// <summary> The storage destination path. </summary>
         public string Path
         {
-            get => Configuration is null ? default : Configuration.Path;
-            set => Configuration = new StorageDestinationConfiguration(value);
+            get
+            {
+                return Configuration is null ? default : Configuration.Path;
+            }
+            set
+            {
+                Configuration = new StorageDestinationConfiguration(value);
+            }
         }
     }
 }

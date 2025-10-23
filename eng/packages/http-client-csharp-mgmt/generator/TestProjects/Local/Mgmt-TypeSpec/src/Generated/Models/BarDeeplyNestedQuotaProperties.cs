@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarDeeplyNestedQuotaProperties. </summary>
     internal partial class BarDeeplyNestedQuotaProperties
@@ -39,9 +39,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
+        [WirePath("innerProp1")]
         public int? InnerProp1 { get; set; }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
+        [WirePath("innerProp2")]
         public string InnerProp2 { get; set; }
     }
 }
