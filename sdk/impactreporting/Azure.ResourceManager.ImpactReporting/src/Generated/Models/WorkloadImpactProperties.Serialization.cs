@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             ImpactedWorkload workload = default;
             string impactGroupId = default;
             ImpactConfidenceLevel? confidenceLevel = default;
-            ClientIncidentDetails clientIncidentDetails = default;
+            ImpactClientIncidentDetails clientIncidentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    clientIncidentDetails = ClientIncidentDetails.DeserializeClientIncidentDetails(property.Value, options);
+                    clientIncidentDetails = ImpactClientIncidentDetails.DeserializeImpactClientIncidentDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

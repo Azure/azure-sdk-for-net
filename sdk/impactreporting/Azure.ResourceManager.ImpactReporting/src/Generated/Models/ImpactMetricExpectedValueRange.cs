@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
     /// <summary> Max and Min Threshold values for the metric. </summary>
-    public partial class ExpectedValueRange
+    public partial class ImpactMetricExpectedValueRange
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,28 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExpectedValueRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactMetricExpectedValueRange"/>. </summary>
         /// <param name="min"> Min threshold value for the metric. </param>
         /// <param name="max"> Max threshold value for the metric. </param>
-        public ExpectedValueRange(double min, double max)
+        public ImpactMetricExpectedValueRange(double min, double max)
         {
             Min = min;
             Max = max;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpectedValueRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactMetricExpectedValueRange"/>. </summary>
         /// <param name="min"> Min threshold value for the metric. </param>
         /// <param name="max"> Max threshold value for the metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpectedValueRange(double min, double max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImpactMetricExpectedValueRange(double min, double max, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Min = min;
             Max = max;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpectedValueRange"/> for deserialization. </summary>
-        internal ExpectedValueRange()
+        /// <summary> Initializes a new instance of <see cref="ImpactMetricExpectedValueRange"/> for deserialization. </summary>
+        internal ImpactMetricExpectedValueRange()
         {
         }
 

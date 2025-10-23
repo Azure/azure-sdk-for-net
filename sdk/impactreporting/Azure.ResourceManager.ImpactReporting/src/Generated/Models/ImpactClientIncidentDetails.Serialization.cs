@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
-    public partial class ClientIncidentDetails : IUtf8JsonSerializable, IJsonModel<ClientIncidentDetails>
+    public partial class ImpactClientIncidentDetails : IUtf8JsonSerializable, IJsonModel<ImpactClientIncidentDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientIncidentDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImpactClientIncidentDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClientIncidentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImpactClientIncidentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientIncidentDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImpactClientIncidentDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ClientIncidentId))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
-        ClientIncidentDetails IJsonModel<ClientIncidentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ImpactClientIncidentDetails IJsonModel<ImpactClientIncidentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientIncidentDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImpactClientIncidentDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClientIncidentDetails(document.RootElement, options);
+            return DeserializeImpactClientIncidentDetails(document.RootElement, options);
         }
 
-        internal static ClientIncidentDetails DeserializeClientIncidentDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ImpactClientIncidentDetails DeserializeImpactClientIncidentDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClientIncidentDetails(clientIncidentId, clientIncidentSource, serializedAdditionalRawData);
+            return new ImpactClientIncidentDetails(clientIncidentId, clientIncidentSource, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClientIncidentDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ImpactClientIncidentDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClientIncidentDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImpactClientIncidentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClientIncidentDetails IPersistableModel<ClientIncidentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ImpactClientIncidentDetails IPersistableModel<ImpactClientIncidentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactClientIncidentDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClientIncidentDetails(document.RootElement, options);
+                        return DeserializeImpactClientIncidentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientIncidentDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImpactClientIncidentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClientIncidentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImpactClientIncidentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

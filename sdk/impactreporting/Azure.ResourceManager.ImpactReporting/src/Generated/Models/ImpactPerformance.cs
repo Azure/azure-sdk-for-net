@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="expectedValueRange"> Max and Min Threshold values for the metric. </param>
         /// <param name="unit"> Unit of the metric ex: Bytes, Percentage, Count, Seconds, Milliseconds, Bytes/Second, Count/Second, etc.., Other. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactPerformance(string metricName, double? expected, double? actual, ExpectedValueRange expectedValueRange, ImpactMetricUnit? unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImpactPerformance(string metricName, double? expected, double? actual, ImpactMetricExpectedValueRange expectedValueRange, ImpactMetricUnit? unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricName = metricName;
             Expected = expected;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <summary> Observed value for the metric. </summary>
         public double? Actual { get; set; }
         /// <summary> Max and Min Threshold values for the metric. </summary>
-        public ExpectedValueRange ExpectedValueRange { get; set; }
+        public ImpactMetricExpectedValueRange ExpectedValueRange { get; set; }
         /// <summary> Unit of the metric ex: Bytes, Percentage, Count, Seconds, Milliseconds, Bytes/Second, Count/Second, etc.., Other. </summary>
         public ImpactMetricUnit? Unit { get; set; }
     }

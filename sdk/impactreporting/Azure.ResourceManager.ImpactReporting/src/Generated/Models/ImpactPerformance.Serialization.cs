@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             string metricName = default;
             double? expected = default;
             double? actual = default;
-            ExpectedValueRange expectedValueRange = default;
+            ImpactMetricExpectedValueRange expectedValueRange = default;
             ImpactMetricUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    expectedValueRange = ExpectedValueRange.DeserializeExpectedValueRange(property.Value, options);
+                    expectedValueRange = ImpactMetricExpectedValueRange.DeserializeImpactMetricExpectedValueRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

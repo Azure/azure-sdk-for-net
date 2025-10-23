@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
-    public partial class ExpectedValueRange : IUtf8JsonSerializable, IJsonModel<ExpectedValueRange>
+    public partial class ImpactMetricExpectedValueRange : IUtf8JsonSerializable, IJsonModel<ImpactMetricExpectedValueRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpectedValueRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImpactMetricExpectedValueRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExpectedValueRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImpactMetricExpectedValueRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactMetricExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpectedValueRange)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImpactMetricExpectedValueRange)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("min"u8);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
-        ExpectedValueRange IJsonModel<ExpectedValueRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ImpactMetricExpectedValueRange IJsonModel<ImpactMetricExpectedValueRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactMetricExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpectedValueRange)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImpactMetricExpectedValueRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExpectedValueRange(document.RootElement, options);
+            return DeserializeImpactMetricExpectedValueRange(document.RootElement, options);
         }
 
-        internal static ExpectedValueRange DeserializeExpectedValueRange(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ImpactMetricExpectedValueRange DeserializeImpactMetricExpectedValueRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExpectedValueRange(min, max, serializedAdditionalRawData);
+            return new ImpactMetricExpectedValueRange(min, max, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExpectedValueRange>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ImpactMetricExpectedValueRange>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactMetricExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExpectedValueRange)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImpactMetricExpectedValueRange)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExpectedValueRange IPersistableModel<ExpectedValueRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ImpactMetricExpectedValueRange IPersistableModel<ImpactMetricExpectedValueRange>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactMetricExpectedValueRange>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExpectedValueRange(document.RootElement, options);
+                        return DeserializeImpactMetricExpectedValueRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpectedValueRange)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImpactMetricExpectedValueRange)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExpectedValueRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImpactMetricExpectedValueRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

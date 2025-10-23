@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
                         Context = "webapp/scenario1",
                         Toolset = ImpactToolset.Other,
                     },
-                    ClientIncidentDetails = new ClientIncidentDetails
+                    ClientIncidentDetails = new ImpactClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
                         ClientIncidentSource = ImpactIncidentSource.Jira,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
                         Context = "webapp/scenario1",
                         Toolset = ImpactToolset.Other,
                     },
-                    ClientIncidentDetails = new ClientIncidentDetails
+                    ClientIncidentDetails = new ImpactClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
                         ClientIncidentSource = ImpactIncidentSource.Jira,
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
                         Context = "webapp/scenario1",
                         Toolset = ImpactToolset.Other,
                     },
-                    ClientIncidentDetails = new ClientIncidentDetails
+                    ClientIncidentDetails = new ImpactClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
                         ClientIncidentSource = ImpactIncidentSource.Jira,
@@ -256,7 +256,7 @@ Unit = new ImpactMetricUnit("garbage"),
                         Context = "webapp/scenario1",
                         Toolset = ImpactToolset.Other,
                     },
-                    ClientIncidentDetails = new ClientIncidentDetails
+                    ClientIncidentDetails = new ImpactClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
                         ClientIncidentSource = ImpactIncidentSource.Jira,

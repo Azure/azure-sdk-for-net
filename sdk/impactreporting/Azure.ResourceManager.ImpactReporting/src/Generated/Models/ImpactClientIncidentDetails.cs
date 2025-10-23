@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
     /// <summary> Client incident details ex: incidentId , incident source. </summary>
-    public partial class ClientIncidentDetails
+    public partial class ImpactClientIncidentDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClientIncidentDetails"/>. </summary>
-        public ClientIncidentDetails()
+        /// <summary> Initializes a new instance of <see cref="ImpactClientIncidentDetails"/>. </summary>
+        public ImpactClientIncidentDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientIncidentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactClientIncidentDetails"/>. </summary>
         /// <param name="clientIncidentId"> Client incident id. ex : id of the incident created to investigate and address the impact if any. </param>
         /// <param name="clientIncidentSource"> Client incident source. ex : source system name where the incident is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientIncidentDetails(string clientIncidentId, ImpactIncidentSource? clientIncidentSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImpactClientIncidentDetails(string clientIncidentId, ImpactIncidentSource? clientIncidentSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientIncidentId = clientIncidentId;
             ClientIncidentSource = clientIncidentSource;

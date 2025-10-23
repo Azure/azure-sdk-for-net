@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<ImpactPerformance> performance, ImpactConnectivityDetails connectivity, IDictionary<string, BinaryData> additionalProperties, ImpactErrorDetails errorDetails, ImpactedWorkload workload, string impactGroupId, ImpactConfidenceLevel? confidenceLevel, ClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<ImpactPerformance> performance, ImpactConnectivityDetails connectivity, IDictionary<string, BinaryData> additionalProperties, ImpactErrorDetails errorDetails, ImpactedWorkload workload, string impactGroupId, ImpactConfidenceLevel? confidenceLevel, ImpactClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StartOn = startOn;
@@ -172,6 +172,6 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <summary> Degree of confidence on the impact being a platform issue. </summary>
         public ImpactConfidenceLevel? ConfidenceLevel { get; set; }
         /// <summary> Client incident details ex: incidentId , incident source. </summary>
-        public ClientIncidentDetails ClientIncidentDetails { get; set; }
+        public ImpactClientIncidentDetails ClientIncidentDetails { get; set; }
     }
 }

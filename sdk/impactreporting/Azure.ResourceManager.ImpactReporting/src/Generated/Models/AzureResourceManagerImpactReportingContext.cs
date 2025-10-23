@@ -15,14 +15,13 @@ namespace Azure.ResourceManager.ImpactReporting
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ClientIncidentDetails))]
     [ModelReaderWriterBuildable(typeof(ConnectorListResult))]
     [ModelReaderWriterBuildable(typeof(ConnectorUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ExpectedValueRange))]
     [ModelReaderWriterBuildable(typeof(ImpactCategoryData))]
     [ModelReaderWriterBuildable(typeof(ImpactCategoryListResult))]
     [ModelReaderWriterBuildable(typeof(ImpactCategoryProperties))]
     [ModelReaderWriterBuildable(typeof(ImpactCategoryResource))]
+    [ModelReaderWriterBuildable(typeof(ImpactClientIncidentDetails))]
     [ModelReaderWriterBuildable(typeof(ImpactConnectivityDetails))]
     [ModelReaderWriterBuildable(typeof(ImpactConnectorData))]
     [ModelReaderWriterBuildable(typeof(ImpactConnectorPatch))]
@@ -35,6 +34,7 @@ namespace Azure.ResourceManager.ImpactReporting
     [ModelReaderWriterBuildable(typeof(ImpactInsightData))]
     [ModelReaderWriterBuildable(typeof(ImpactInsightProperties))]
     [ModelReaderWriterBuildable(typeof(ImpactInsightResource))]
+    [ModelReaderWriterBuildable(typeof(ImpactMetricExpectedValueRange))]
     [ModelReaderWriterBuildable(typeof(ImpactPerformance))]
     [ModelReaderWriterBuildable(typeof(ImpactSourceOrTarget))]
     [ModelReaderWriterBuildable(typeof(InsightListResult))]
