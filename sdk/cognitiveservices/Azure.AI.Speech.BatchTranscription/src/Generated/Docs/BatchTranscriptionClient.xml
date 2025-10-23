@@ -23,12 +23,12 @@ TranscriptionJob resource = new TranscriptionJob(new TranscriptionProperties(123
     WordLevelTimestampsEnabled = true,
     DisplayFormWordLevelTimestampsEnabled = true,
     Channels = { 1234 },
-    DestinationContainerUrl = new Uri("http://localhost:3000"),
+    DestinationContainer = new Uri("http://localhost:3000"),
     PunctuationMode = PunctuationMode.None,
     ProfanityFilterMode = ProfanityFilterMode.None,
     Error = new EntityError(),
     Diarization = new DiarizationProperties(true, 1234),
-    LanguageIdentification = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
+    LanguageIdentificationProperties = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
     {
         Mode = LanguageIdentificationMode.Continuous,
         SpeechModelMapping =
@@ -40,8 +40,8 @@ TranscriptionJob resource = new TranscriptionJob(new TranscriptionProperties(123
 {
     Model = default,
     Dataset = default,
-    ContentUrls = { new Uri("http://localhost:3000") },
-    ContentContainerUrl = new Uri("http://localhost:3000"),
+    Contents = { new Uri("http://localhost:3000") },
+    SourceContainer = new Uri("http://localhost:3000"),
     Description = "<description>",
     CustomProperties =
     {
@@ -73,12 +73,12 @@ TranscriptionJob resource = new TranscriptionJob(new TranscriptionProperties(123
     WordLevelTimestampsEnabled = true,
     DisplayFormWordLevelTimestampsEnabled = true,
     Channels = { 1234 },
-    DestinationContainerUrl = new Uri("http://localhost:3000"),
+    DestinationContainer = new Uri("http://localhost:3000"),
     PunctuationMode = PunctuationMode.None,
     ProfanityFilterMode = ProfanityFilterMode.None,
     Error = new EntityError(),
     Diarization = new DiarizationProperties(true, 1234),
-    LanguageIdentification = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
+    LanguageIdentificationProperties = new LanguageIdentificationProperties(new string[] { "<candidateLocales>" })
     {
         Mode = LanguageIdentificationMode.Continuous,
         SpeechModelMapping =
@@ -90,8 +90,8 @@ TranscriptionJob resource = new TranscriptionJob(new TranscriptionProperties(123
 {
     Model = default,
     Dataset = default,
-    ContentUrls = { new Uri("http://localhost:3000") },
-    ContentContainerUrl = new Uri("http://localhost:3000"),
+    Contents = { new Uri("http://localhost:3000") },
+    SourceContainer = new Uri("http://localhost:3000"),
     Description = "<description>",
     CustomProperties =
     {

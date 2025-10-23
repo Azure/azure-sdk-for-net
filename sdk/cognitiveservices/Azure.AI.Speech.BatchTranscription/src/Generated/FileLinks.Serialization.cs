@@ -35,7 +35,7 @@ namespace Azure.AI.Speech.BatchTranscription
             }
 
             writer.WritePropertyName("contentUrl"u8);
-            writer.WriteStringValue(ContentUrl.AbsoluteUri);
+            writer.WriteStringValue(Content.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
