@@ -237,7 +237,7 @@ namespace Azure.Storage.Queues.Test
             Response<QueueProperties> response = await identityQueueClient.GetPropertiesAsync();
 
             // Assert
-            Assert.NotNull(response.Value);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [RecordedTest]
