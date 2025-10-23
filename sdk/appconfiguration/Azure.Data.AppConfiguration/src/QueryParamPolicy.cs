@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -28,37 +25,34 @@ namespace Azure.Data.AppConfiguration
                 Uri originalUri = message.Request.Uri.ToUri();
                 string queryString = originalUri.Query;
 
-                // If no query string, nothing to normalize
                 if (string.IsNullOrEmpty(queryString))
                 {
                     return;
                 }
 
-                // Remove leading '?'
                 if (queryString.StartsWith("?"))
                 {
                     queryString = queryString.Substring(1);
                 }
 
-                List<QueryParameterEntry> segments = new List<QueryParameterEntry>();
-                NameValueCollection paramsCollection = HttpUtility.ParseQueryString(queryString);
-                // URL encoded characters are decoded and multiple occurrences of the same query string parameter are listed as a single entry with a comma separating each value.
-                // See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.web.httputility.parsequerystring
-                foreach (var key in paramsCollection.AllKeys)
+                var segments = new List<QueryParameterEntry>();
+                foreach (string entry in queryString.Split('&'))
                 {
-                    if (!string.IsNullOrEmpty(key))
+                    if (string.IsNullOrEmpty(entry))
                     {
-                        var values = paramsCollection.GetValues(key);
-                        foreach (var val in values)
-                        {
-                            segments.Add(new QueryParameterEntry
-                            {
-                                LowerName = key.ToLower(),
-                                Value = val == null ? string.Empty : Uri.EscapeDataString(val),
-                                Index = segments.Count
-                            });
-                        }
+                        continue;
                     }
+                    // Use char[] overload for .NET Standard 2.0 compatibility
+                    // The Split(char, int) overload is only available in .NET Standard 2.1+
+                    string[] parts = entry.Split(new[] { '=' }, 2);
+                    string name = parts[0];
+                    string value = parts.Length > 1 ? parts[1] : string.Empty;
+                    segments.Add(new QueryParameterEntry
+                    {
+                        LowerName = name.ToLower(),
+                        Value = value,
+                        Index = segments.Count
+                    });
                 }
 
                 // List<T>.Sort method is not stable. See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort
@@ -71,9 +65,9 @@ namespace Azure.Data.AppConfiguration
                     return a.Index.CompareTo(b.Index); // stability for duplicates
                 });
 
-                var normalizedQuery = string.Join("&", segments.Select(e => $"{e.LowerName}={e.Value}"));
+                string normalizedQuery = "?" + string.Join("&", segments.Select(e => $"{e.LowerName}={e.Value}"));
 
-                var newUrl = $"{originalUri.Scheme}://{originalUri.Host}{originalUri.AbsolutePath}{(normalizedQuery.Length > 0 ? "?" + normalizedQuery : "")}{originalUri.Fragment}";
+                string newUrl = $"{originalUri.Scheme}://{originalUri.Host}{originalUri.AbsolutePath}{normalizedQuery}{originalUri.Fragment}";
 
                 if (newUrl != message.Request.Uri.ToString())
                 {
