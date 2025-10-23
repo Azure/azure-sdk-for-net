@@ -44,7 +44,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="extendedLocation"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -79,7 +79,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
