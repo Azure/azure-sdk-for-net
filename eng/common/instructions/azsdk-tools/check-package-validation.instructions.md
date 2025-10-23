@@ -2,7 +2,7 @@
 description: 'Check if the package validation checks have passed for the SDK package.'
 ---
 ## Goal
-Check the validation checks for the SDK package by collecting the required information from the user and executing the run_check command.
+Check the validation checks for the SDK package by collecting the required information from the user and executing the azsdk_package_run_check command.
 
 ## Instructions
 1. **Collect Required Information**:
@@ -13,18 +13,7 @@ Check the validation checks for the SDK package by collecting the required infor
       - JavaScript
       - .NET
       - Go
-    - Prompt the user to select the check type to run (default to "all" if not specified):
-      - all
-      - changelog
-      - dependency
-      - readme
-      - cspell
-      - snippets
-      - linting
-      - format
-      - checkaotcompat
-      - generatedcodechecks
-      - samples
+    - Prompt the user specify values for each of the parameters required by the azsdk_package_run_check tool. Present the user with options to pick from for the allowed values specified by the parameter schema.
 
 2. **Execute Check**:
     - Use the `azsdk_package_run_check` tool with the package path and check type.
