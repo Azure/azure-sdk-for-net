@@ -252,8 +252,8 @@ Here is an example to create the session for liveness detection.
 
 ```C# Snippet:CreateLivenessSession
 var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
-    SendResultsToClient = true,
     DeviceCorrelationId = Guid.NewGuid().ToString(),
+    UserCorrelationId = Guid.NewGuid().ToString(),
 };
 
 var createResponse = sessionClient.CreateLivenessSession(createContent);
@@ -268,15 +268,11 @@ After you've performed liveness detection, you can retrieve the result by provid
 ```C# Snippet:GetLivenessSessionResult
 var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
 var sessionResult = getResultResponse.Value;
-Console.WriteLine($"Id: {sessionResult.Id}");
-Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+Console.WriteLine($"Id: {sessionResult.SessionId}");
 Console.WriteLine($"Status: {sessionResult.Status}");
-Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-if (sessionResult.Result != null) {
-    WriteLivenessSessionAuditEntry(sessionResult.Result);
+if (sessionResult.Results != null)
+{
+    WriteLivenessSessionResults(sessionResult.Results);
 }
 ```
 

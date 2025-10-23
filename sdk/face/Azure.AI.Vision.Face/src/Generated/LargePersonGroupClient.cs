@@ -49,7 +49,7 @@ namespace Azure.AI.Vision.Face
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
         /// <param name="largePersonGroupId"> ID of the container. </param>
-        /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
+        /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1" | "v1.2" | "v1.3-preview.1". </param>
         internal LargePersonGroupClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string largePersonGroupId, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;

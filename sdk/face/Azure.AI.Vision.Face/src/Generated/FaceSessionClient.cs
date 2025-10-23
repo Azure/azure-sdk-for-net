@@ -108,14 +108,14 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-session for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSessionAsync(CreateLivenessSessionContent,CancellationToken)']/*" />
-        public virtual async Task<Response<CreateLivenessSessionResult>> CreateLivenessSessionAsync(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LivenessSession>> CreateLivenessSessionAsync(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateLivenessSessionAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(CreateLivenessSessionResult.FromResponse(response), response);
+            return Response.FromValue(LivenessSession.FromResponse(response), response);
         }
 
         /// <summary> Create a new detect liveness session. </summary>
@@ -124,14 +124,14 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-session for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSession(CreateLivenessSessionContent,CancellationToken)']/*" />
-        public virtual Response<CreateLivenessSessionResult> CreateLivenessSession(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
+        public virtual Response<LivenessSession> CreateLivenessSession(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateLivenessSession(content, context);
-            return Response.FromValue(CreateLivenessSessionResult.FromResponse(response), response);
+            return Response.FromValue(LivenessSession.FromResponse(response), response);
         }
 
         /// <summary>
@@ -394,288 +394,40 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Lists sessions for /detectLiveness/SingleModal. </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-sessions for more details. </remarks>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionsAsync(string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<LivenessSessionItem>>> GetLivenessSessionsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLivenessSessionsAsync(start, top, context).ConfigureAwait(false);
-            IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<LivenessSessionItem> array = new List<LivenessSessionItem>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionItem.DeserializeLivenessSessionItem(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Lists sessions for /detectLiveness/SingleModal. </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-sessions for more details. </remarks>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessions(string,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<LivenessSessionItem>> GetLivenessSessions(string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLivenessSessions(start, top, context);
-            IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<LivenessSessionItem> array = new List<LivenessSessionItem>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionItem.DeserializeLivenessSessionItem(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists sessions for /detectLiveness/SingleModal.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessSessionsAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionsAsync(string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLivenessSessionsAsync(string start, int? top, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessSessions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessSessionsRequest(start, top, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists sessions for /detectLiveness/SingleModal.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessSessions(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessions(string,int?,RequestContext)']/*" />
-        public virtual Response GetLivenessSessions(string start, int? top, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessSessions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessSessionsRequest(start, top, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details. </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionAuditEntriesAsync(string,string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<LivenessSessionAuditEntry>>> GetLivenessSessionAuditEntriesAsync(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLivenessSessionAuditEntriesAsync(sessionId, start, top, context).ConfigureAwait(false);
-            IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details. </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionAuditEntries(string,string,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<LivenessSessionAuditEntry>> GetLivenessSessionAuditEntries(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLivenessSessionAuditEntries(sessionId, start, top, context);
-            IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessSessionAuditEntriesAsync(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionAuditEntriesAsync(string,string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLivenessSessionAuditEntriesAsync(string sessionId, string start, int? top, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessSessionAuditEntries");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessSessionAuditEntriesRequest(sessionId, start, top, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessSessionAuditEntries(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionAuditEntries(string,string,int?,RequestContext)']/*" />
-        public virtual Response GetLivenessSessionAuditEntries(string sessionId, string start, int? top, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessSessionAuditEntries");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessSessionAuditEntriesRequest(sessionId, start, top, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
+        /// <param name="body"> Request content of liveness with verify session creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session for more details. </remarks>
-        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionContent body, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionContent,CancellationToken)']/*" />
+        public virtual async Task<Response<LivenessWithVerifySession>> CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateLivenessWithVerifySessionAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(CreateLivenessWithVerifySessionResult.FromResponse(response), response);
+            Response response = await CreateLivenessWithVerifySessionAsync(content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(LivenessWithVerifySession.FromResponse(response), response);
         }
 
-        /// <summary> Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call. </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
+        /// <param name="body"> Request content of liveness with verify session creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session for more details. </remarks>
-        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionContent body, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionContent,CancellationToken)']/*" />
+        public virtual Response<LivenessWithVerifySession> CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateLivenessWithVerifySession(content, context);
-            return Response.FromValue(CreateLivenessWithVerifySessionResult.FromResponse(response), response);
+            Response response = CreateLivenessWithVerifySession(content, content.ContentType, context);
+            return Response.FromValue(LivenessWithVerifySession.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call.
+        /// [Protocol Method] Create a new liveness session with verify. Provide the verify image during session creation.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -690,11 +442,13 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateLivenessWithVerifySessionAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessWithVerifySessionAsync(RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> CreateLivenessWithVerifySessionAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -702,7 +456,7 @@ namespace Azure.AI.Vision.Face
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLivenessWithVerifySessionRequest(content, context);
+                using HttpMessage message = CreateCreateLivenessWithVerifySessionRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -713,7 +467,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call.
+        /// [Protocol Method] Create a new liveness session with verify. Provide the verify image during session creation.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -728,11 +482,13 @@ namespace Azure.AI.Vision.Face
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateLivenessWithVerifySession(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessWithVerifySession(RequestContent,string,RequestContext)']/*" />
+        public virtual Response CreateLivenessWithVerifySession(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -740,115 +496,7 @@ namespace Azure.AI.Vision.Face
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLivenessWithVerifySessionRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
-        /// <param name="body"> Request content of liveness with verify session creation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
-        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionMultipartContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateLivenessWithVerifySessionWithVerifyImageAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(CreateLivenessWithVerifySessionResult.FromResponse(response), response);
-        }
-
-        /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
-        /// <param name="body"> Request content of liveness with verify session creation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
-        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionMultipartContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateLivenessWithVerifySessionWithVerifyImage(content, content.ContentType, context);
-            return Response.FromValue(CreateLivenessWithVerifySessionResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new liveness session with verify. Provide the verify image during session creation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionMultipartContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateLivenessWithVerifySessionWithVerifyImageAsync(RequestContent content, string contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.CreateLivenessWithVerifySessionWithVerifyImage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateLivenessWithVerifySessionWithVerifyImageRequest(content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new liveness session with verify. Provide the verify image during session creation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionMultipartContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateLivenessWithVerifySessionWithVerifyImage(RequestContent content, string contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.CreateLivenessWithVerifySessionWithVerifyImage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateLivenessWithVerifySessionWithVerifyImageRequest(content, contentType, context);
+                using HttpMessage message = CreateCreateLivenessWithVerifySessionRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1031,256 +679,6 @@ namespace Azure.AI.Vision.Face
             try
             {
                 using HttpMessage message = CreateGetLivenessWithVerifySessionResultRequest(sessionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists sessions for /detectLivenessWithVerify/SingleModal. </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-sessions for more details. </remarks>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionsAsync(string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<LivenessSessionItem>>> GetLivenessWithVerifySessionsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLivenessWithVerifySessionsAsync(start, top, context).ConfigureAwait(false);
-            IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<LivenessSessionItem> array = new List<LivenessSessionItem>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionItem.DeserializeLivenessSessionItem(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Lists sessions for /detectLivenessWithVerify/SingleModal. </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-sessions for more details. </remarks>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessions(string,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<LivenessSessionItem>> GetLivenessWithVerifySessions(string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLivenessWithVerifySessions(start, top, context);
-            IReadOnlyList<LivenessSessionItem> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<LivenessSessionItem> array = new List<LivenessSessionItem>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionItem.DeserializeLivenessSessionItem(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists sessions for /detectLivenessWithVerify/SingleModal.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessWithVerifySessionsAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionsAsync(string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLivenessWithVerifySessionsAsync(string start, int? top, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessWithVerifySessions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessWithVerifySessionsRequest(start, top, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists sessions for /detectLivenessWithVerify/SingleModal.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessWithVerifySessions(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessions(string,int?,RequestContext)']/*" />
-        public virtual Response GetLivenessWithVerifySessions(string start, int? top, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessWithVerifySessions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessWithVerifySessionsRequest(start, top, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details. </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionAuditEntriesAsync(string,string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<LivenessSessionAuditEntry>>> GetLivenessWithVerifySessionAuditEntriesAsync(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLivenessWithVerifySessionAuditEntriesAsync(sessionId, start, top, context).ConfigureAwait(false);
-            IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details. </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionAuditEntries(string,string,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<LivenessSessionAuditEntry>> GetLivenessWithVerifySessionAuditEntries(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLivenessWithVerifySessionAuditEntries(sessionId, start, top, context);
-            IReadOnlyList<LivenessSessionAuditEntry> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<LivenessSessionAuditEntry> array = new List<LivenessSessionAuditEntry>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessWithVerifySessionAuditEntriesAsync(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionAuditEntriesAsync(string,string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLivenessWithVerifySessionAuditEntriesAsync(string sessionId, string start, int? top, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessWithVerifySessionAuditEntries");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessWithVerifySessionAuditEntriesRequest(sessionId, start, top, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLivenessWithVerifySessionAuditEntries(string,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sessionId"> The unique ID to reference this session. </param>
-        /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
-        /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionAuditEntries(string,string,int?,RequestContext)']/*" />
-        public virtual Response GetLivenessWithVerifySessionAuditEntries(string sessionId, string start, int? top, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetLivenessWithVerifySessionAuditEntries");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLivenessWithVerifySessionAuditEntriesRequest(sessionId, start, top, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1563,7 +961,7 @@ namespace Azure.AI.Vision.Face
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLiveness/singleModal/sessions", false);
+            uri.AppendPath("/detectLiveness-sessions", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1573,14 +971,14 @@ namespace Azure.AI.Vision.Face
 
         internal HttpMessage CreateDeleteLivenessSessionRequest(string sessionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLiveness/singleModal/sessions/", false);
+            uri.AppendPath("/detectLiveness-sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
             return message;
@@ -1595,62 +993,14 @@ namespace Azure.AI.Vision.Face
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLiveness/singleModal/sessions/", false);
+            uri.AppendPath("/detectLiveness-sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetLivenessSessionsRequest(string start, int? top, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLiveness/singleModal/sessions", false);
-            if (start != null)
-            {
-                uri.AppendQuery("start", start, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetLivenessSessionAuditEntriesRequest(string sessionId, string start, int? top, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLiveness/singleModal/sessions/", false);
-            uri.AppendPath(sessionId, true);
-            uri.AppendPath("/audit", false);
-            if (start != null)
-            {
-                uri.AppendQuery("start", start, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateLivenessWithVerifySessionRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateLivenessWithVerifySessionRequest(RequestContent content, string contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1659,24 +1009,7 @@ namespace Azure.AI.Vision.Face
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateLivenessWithVerifySessionWithVerifyImageRequest(RequestContent content, string contentType, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions", false);
+            uri.AppendPath("/detectLivenessWithVerify-sessions", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", contentType);
@@ -1686,14 +1019,14 @@ namespace Azure.AI.Vision.Face
 
         internal HttpMessage CreateDeleteLivenessWithVerifySessionRequest(string sessionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions/", false);
+            uri.AppendPath("/detectLivenessWithVerify-sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
             return message;
@@ -1708,56 +1041,8 @@ namespace Azure.AI.Vision.Face
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions/", false);
+            uri.AppendPath("/detectLivenessWithVerify-sessions/", false);
             uri.AppendPath(sessionId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetLivenessWithVerifySessionsRequest(string start, int? top, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions", false);
-            if (start != null)
-            {
-                uri.AppendQuery("start", start, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetLivenessWithVerifySessionAuditEntriesRequest(string sessionId, string start, int? top, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions/", false);
-            uri.AppendPath(sessionId, true);
-            uri.AppendPath("/audit", false);
-            if (start != null)
-            {
-                uri.AppendQuery("start", start, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1817,7 +1102,7 @@ namespace Azure.AI.Vision.Face
             uri.Reset(_endpoint);
             uri.AppendRaw("/face/", false);
             uri.AppendRaw(_apiVersion, true);
-            uri.AppendPath("/session/sessionImages/", false);
+            uri.AppendPath("/sessionImages/", false);
             uri.AppendPath(sessionImageId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
@@ -1837,5 +1122,7 @@ namespace Azure.AI.Vision.Face
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }
