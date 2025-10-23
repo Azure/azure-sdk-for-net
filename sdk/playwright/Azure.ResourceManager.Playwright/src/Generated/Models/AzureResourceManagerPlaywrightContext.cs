@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(PlaywrightFreeTrialProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightNameAvailabilityContent))]
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Playwright
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPlaywrightContext : ModelReaderWriterContext
     {

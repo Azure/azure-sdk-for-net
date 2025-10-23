@@ -162,6 +162,15 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(explicitOperator!.BodyStatements);
             var result = explicitOperator!.BodyStatements!.ToDisplayString();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+
+            // does not mutate an already mutated operator
+            visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
+            serializationProvider = responseModelProvider!.SerializationProviders[0];
+            explicitOperator = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
+            result = explicitOperator!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
         }
 
         [Test]

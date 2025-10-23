@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : ResourceData, IJsonModel<BarSettingsResourceData>
@@ -75,6 +75,8 @@ namespace MgmtTypeSpec
                 writer.WritePropertyName("optionalFlattenProperty"u8);
                 writer.WriteObjectValue(OptionalFlattenProperty, options);
             }
+            writer.WritePropertyName("discriminatorProperty"u8);
+            writer.WriteObjectValue(DiscriminatorProperty, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -113,6 +115,7 @@ namespace MgmtTypeSpec
             BarQuotaProperties anotherProperty = default;
             BarNestedQuotaProperties flattenedNestedProperty = default;
             OptionalFlattenPropertyType optionalFlattenProperty = default;
+            LimitJsonObject discriminatorProperty = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -144,7 +147,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -201,6 +204,11 @@ namespace MgmtTypeSpec
                     optionalFlattenProperty = OptionalFlattenPropertyType.DeserializeOptionalFlattenPropertyType(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("discriminatorProperty"u8))
+                {
+                    discriminatorProperty = LimitJsonObject.DeserializeLimitJsonObject(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -217,7 +225,8 @@ namespace MgmtTypeSpec
                 @property,
                 anotherProperty,
                 flattenedNestedProperty,
-                optionalFlattenProperty);
+                optionalFlattenProperty,
+                discriminatorProperty);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -230,7 +239,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support writing '{options.Format}' format.");
             }

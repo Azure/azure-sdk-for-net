@@ -48,26 +48,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthorization"/>. </summary>
         public ResourceProviderAuthorization()
         {
+            AllowedThirdPartyExtensions = new ChangeTrackingList<ThirdPartyExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthorization"/>. </summary>
-        /// <param name="applicationId"></param>
-        /// <param name="roleDefinitionId"></param>
-        /// <param name="managedByRoleDefinitionId"></param>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="roleDefinitionId"> The role definition id. </param>
+        /// <param name="managedByRoleDefinitionId"> The managed by role definition id. </param>
+        /// <param name="managedByAuthorization"> Managed by authorization. </param>
+        /// <param name="allowedThirdPartyExtensions"> The allowed third party extensions. </param>
+        /// <param name="groupingTag"> The grouping tag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderAuthorization(string applicationId, string roleDefinitionId, string managedByRoleDefinitionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceProviderAuthorization(string applicationId, string roleDefinitionId, string managedByRoleDefinitionId, ResourceProviderManagedByAuthorization managedByAuthorization, IList<ThirdPartyExtension> allowedThirdPartyExtensions, string groupingTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationId = applicationId;
             RoleDefinitionId = roleDefinitionId;
             ManagedByRoleDefinitionId = managedByRoleDefinitionId;
+            ManagedByAuthorization = managedByAuthorization;
+            AllowedThirdPartyExtensions = allowedThirdPartyExtensions;
+            GroupingTag = groupingTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the application id. </summary>
+        /// <summary> The application id. </summary>
         public string ApplicationId { get; set; }
-        /// <summary> Gets or sets the role definition id. </summary>
+        /// <summary> The role definition id. </summary>
         public string RoleDefinitionId { get; set; }
-        /// <summary> Gets or sets the managed by role definition id. </summary>
+        /// <summary> The managed by role definition id. </summary>
         public string ManagedByRoleDefinitionId { get; set; }
+        /// <summary> Managed by authorization. </summary>
+        public ResourceProviderManagedByAuthorization ManagedByAuthorization { get; set; }
+        /// <summary> The allowed third party extensions. </summary>
+        public IList<ThirdPartyExtension> AllowedThirdPartyExtensions { get; }
+        /// <summary> The grouping tag. </summary>
+        public string GroupingTag { get; set; }
     }
 }
