@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> Unknown version of EventDestination. </summary>
     internal partial class UnknownEventDestination : EventDestination
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEventDestination"/>. </summary>
         /// <param name="target"> Target destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEventDestination(EventDestinationTarget? target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(target, serializedAdditionalRawData)
-        {
-            Target = target;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEventDestination"/> for deserialization. </summary>
-        internal UnknownEventDestination()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEventDestination(EventDestinationTarget? target, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(target != default ? target : "unknown", additionalBinaryDataProperties)
         {
         }
     }

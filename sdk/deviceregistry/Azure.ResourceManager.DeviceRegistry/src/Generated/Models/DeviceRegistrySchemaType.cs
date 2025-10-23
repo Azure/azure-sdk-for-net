@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public readonly partial struct DeviceRegistrySchemaType : IEquatable<DeviceRegistrySchemaType>
     {
         private readonly string _value;
+        /// <summary> Message Schema schema type. </summary>
+        private const string MessageSchemaValue = "MessageSchema";
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceRegistrySchemaType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MessageSchemaValue = "MessageSchema";
+            _value = value;
+        }
 
         /// <summary> Message Schema schema type. </summary>
         public static DeviceRegistrySchemaType MessageSchema { get; } = new DeviceRegistrySchemaType(MessageSchemaValue);
+
         /// <summary> Determines if two <see cref="DeviceRegistrySchemaType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceRegistrySchemaType left, DeviceRegistrySchemaType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceRegistrySchemaType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceRegistrySchemaType left, DeviceRegistrySchemaType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceRegistrySchemaType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceRegistrySchemaType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceRegistrySchemaType(string value) => new DeviceRegistrySchemaType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceRegistrySchemaType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceRegistrySchemaType?(string value) => value == null ? null : new DeviceRegistrySchemaType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceRegistrySchemaType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceRegistrySchemaType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

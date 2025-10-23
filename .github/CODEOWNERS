@@ -175,9 +175,6 @@
 # ServiceLabel: %Blueprint
 # ServiceOwners:                                                   @alex-frankel @filizt
 
-# ServiceLabel: %Bot Service
-# ServiceOwners:                                                   @sgellock
-
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                                              @conhua @mengaims @juaduan @moreOver0
 
@@ -1039,6 +1036,12 @@
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
 
+# PRLabel: %Impact Reporting
+/sdk/impactreporting/Azure.ResourceManager.*/                      @adityareddy305
+
+# ServiceLabel: %Impact Reporting %Mgmt
+# ServiceOwners:                                                   @adityareddy305
+
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @ArcturusZhang @ArthurMa1978
 
@@ -1202,4 +1205,4 @@
 # AzureSdkOwners:                                                  @live1206 @ArcturusZhang @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang @ArthurMa1978

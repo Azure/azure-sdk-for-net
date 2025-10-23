@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> Unknown version of StreamDestination. </summary>
     internal partial class UnknownStreamDestination : StreamDestination
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStreamDestination"/>. </summary>
         /// <param name="target"> Target destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStreamDestination(StreamDestinationTarget? target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(target, serializedAdditionalRawData)
-        {
-            Target = target;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownStreamDestination"/> for deserialization. </summary>
-        internal UnknownStreamDestination()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownStreamDestination(StreamDestinationTarget? target, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(target != default ? target : "unknown", additionalBinaryDataProperties)
         {
         }
     }

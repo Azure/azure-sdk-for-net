@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ResourcePatchBeginValue = "ResourcePatchBegin";
         private const string ResourceMoveBeginValue = "ResourceMoveBegin";
         private const string ResourceMoveCompletedValue = "ResourceMoveCompleted";
+        private const string BestMatchOperationBeginValue = "BestMatchOperationBegin";
+        private const string SubscriptionLifecycleNotificationDeletionValue = "SubscriptionLifecycleNotificationDeletion";
 
         /// <summary> NotSpecified. </summary>
         public static ResourceTypeExtensionCategory NotSpecified { get; } = new ResourceTypeExtensionCategory(NotSpecifiedValue);
@@ -71,6 +73,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceTypeExtensionCategory ResourceMoveBegin { get; } = new ResourceTypeExtensionCategory(ResourceMoveBeginValue);
         /// <summary> ResourceMoveCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceMoveCompleted { get; } = new ResourceTypeExtensionCategory(ResourceMoveCompletedValue);
+        /// <summary> BestMatchOperationBegin. </summary>
+        public static ResourceTypeExtensionCategory BestMatchOperationBegin { get; } = new ResourceTypeExtensionCategory(BestMatchOperationBeginValue);
+        /// <summary> SubscriptionLifecycleNotificationDeletion. </summary>
+        public static ResourceTypeExtensionCategory SubscriptionLifecycleNotificationDeletion { get; } = new ResourceTypeExtensionCategory(SubscriptionLifecycleNotificationDeletionValue);
         /// <summary> Determines if two <see cref="ResourceTypeExtensionCategory"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeExtensionCategory left, ResourceTypeExtensionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeExtensionCategory"/> values are not the same. </summary>

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Group Quota details. </summary>
     public partial class GroupQuotaDetails
@@ -41,24 +42,31 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The resource name, such as SKU name. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
 
         /// <summary> The current Group Quota Limit at the parentId level. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
 
         /// <summary> Any comment related to quota request. </summary>
+        [WirePath("comment")]
         public string Comment { get; }
 
         /// <summary> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </summary>
+        [WirePath("availableLimit")]
         public long? AvailableLimit { get; }
 
         /// <summary> Quota allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions")]
         internal AllocatedQuotaToSubscriptionList AllocatedToSubscriptions { get; }
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions.value")]
         public IList<AllocatedToSubscription> AllocatedToSubscriptionsValue
         {
             get

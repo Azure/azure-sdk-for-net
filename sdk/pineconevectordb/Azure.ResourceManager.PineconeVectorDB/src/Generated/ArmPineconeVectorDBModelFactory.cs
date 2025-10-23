@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerDisplayName"> Pinecone Organization Name. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerDisplayName"/> is null. </exception>
         /// <returns> A new <see cref="Models.PineconeVectorDBOrganizationProperties"/> instance for mocking. </returns>
         public static PineconeVectorDBOrganizationProperties PineconeVectorDBOrganizationProperties(PineconeVectorDBMarketplaceDetails marketplace = default, PineconeVectorDBUserDetails user = default, PineconeVectorDBProvisioningState? provisioningState = default, string partnerDisplayName = default, PineconeVectorDBSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
