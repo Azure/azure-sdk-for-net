@@ -9,50 +9,52 @@ param(
     [string]$packagePath   # Absolute path to the root folder of the local SDK project.
 )
 
-# Function to normalize paths for cross-platform compatibility
-function Normalize-Path {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$Path
-    )
-    
-    # Convert all separators to platform-specific directory separator and trim trailing separator
-    return $Path.Replace('/', [System.IO.Path]::DirectorySeparatorChar).Replace('\', [System.IO.Path]::DirectorySeparatorChar).TrimEnd([System.IO.Path]::DirectorySeparatorChar)
+# Step 1: Resolve both paths to absolute paths
+try {
+    $resolvedPackage = Resolve-Path -Path $packagePath -ErrorAction Stop
+    $fullPackagePath = $resolvedPackage.ProviderPath
+} catch {
+    # If it's not resolvable (e.g., path doesn't exist), fall back to raw input
+    $fullPackagePath = $packagePath
 }
-
-# Extract service name from package path
-# Normalize paths to use consistent separators
-$normalizedSdkRepoPath = Normalize-Path $sdkRepoPath
-$normalizedPackagePath = Normalize-Path $packagePath
-
-# Remove the SDK repo path from the package path
-if (-not $normalizedPackagePath.StartsWith($normalizedSdkRepoPath, [System.StringComparison]::OrdinalIgnoreCase)) {
-    Write-Error "Package path '$packagePath' does not start with SDK repo path '$sdkRepoPath'"
-    exit 1
-}
-
-$relativePath = $normalizedPackagePath.Substring($normalizedSdkRepoPath.Length).TrimStart([System.IO.Path]::DirectorySeparatorChar)
-
-# Split the relative path by directory separators
-$pathSegments = $relativePath -split [regex]::Escape([System.IO.Path]::DirectorySeparatorChar) | Where-Object { $_ -ne "" }
-
-# The service name is the second segment (after 'sdk')
-# Expected format: sdk/<serviceName>/<packageName>
-if ($pathSegments.Count -ge 2 -and $pathSegments[0] -eq "sdk") {
-    $serviceName = $pathSegments[1]
-    Write-Host "Extracted service name: $serviceName"
-} else {
-    $separator = [System.IO.Path]::DirectorySeparatorChar
-    Write-Error "Invalid package path format. Expected: <sdkRepoPath>${separator}sdk${separator}<serviceName>${separator}<packageName>"
-    exit 1
-}
-
-# Call Export-API.ps1 script with the service name
-$exportApiScript = Join-Path $sdkRepoPath "eng" "scripts" "Export-API.ps1"
-Write-Host "Calling Export-API.ps1 with service name: $serviceName"
 
 try {
-    & $exportApiScript $serviceName
+    $resolvedRepo = Resolve-Path -Path $sdkRepoPath -ErrorAction Stop
+    $fullRepoPath = $resolvedRepo.ProviderPath
+} catch {
+    $fullRepoPath = $sdkRepoPath
+}
+
+# Step 2: Remove repo root from package path to get relative path
+$fullRepoPath = $fullRepoPath.TrimEnd('\', '/')
+if (-not $fullPackagePath.StartsWith($fullRepoPath, [System.StringComparison]::OrdinalIgnoreCase)) {
+    Write-Error "Package path '$fullPackagePath' does not start with repo path '$fullRepoPath'"
+    exit 1
+}
+
+$relativePath = $fullPackagePath.Substring($fullRepoPath.Length).TrimStart('\', '/')
+
+# Step 3: Split relative path and find 'sdk' segment
+$parts = $relativePath -split '[\\/]+'
+
+$sdkIndex = $parts.IndexOf('sdk')
+if ($sdkIndex -lt 0 -or $sdkIndex -ge ($parts.Count - 1)) {
+    Write-Error "The relative path does not contain a valid 'sdk' segment: $relativePath"
+    exit 1
+}
+
+# Extract everything after 'sdk'
+$slugParts = $parts[($sdkIndex + 1)..($parts.Count - 1)]
+$packagePath = ($slugParts -join '/')
+
+Write-Host "Extracted package path: $packagePath"
+
+# Call Export-API.ps1 script with the package path
+$exportApiScript = Join-Path $sdkRepoPath "eng" "scripts" "Export-API.ps1"
+Write-Host "Calling Export-API.ps1 with package path: $packagePath"
+
+try {
+    & $exportApiScript $packagePath
     Write-Host "Export-API.ps1 completed successfully"
 } catch {
     Write-Error "Failed to execute Export-API.ps1: $($_.Exception.Message)"
