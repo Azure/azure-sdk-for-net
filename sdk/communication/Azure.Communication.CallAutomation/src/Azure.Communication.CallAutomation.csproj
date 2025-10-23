@@ -11,6 +11,9 @@
     <PackageTags>Microsoft Azure Communication CallAutomation Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallAutomation Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
