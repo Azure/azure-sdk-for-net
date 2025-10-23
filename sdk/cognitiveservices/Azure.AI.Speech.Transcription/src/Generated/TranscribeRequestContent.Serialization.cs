@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.AI.Speech.Transcription
 {
-    public partial class TranscribeRequestContent : IUtf8JsonSerializable, IJsonModel<TranscribeRequestContent>
+    internal partial class TranscribeRequestContent : IUtf8JsonSerializable, IJsonModel<TranscribeRequestContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranscribeRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

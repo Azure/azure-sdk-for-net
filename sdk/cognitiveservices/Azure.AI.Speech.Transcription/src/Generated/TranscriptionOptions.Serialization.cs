@@ -34,10 +34,10 @@ namespace Azure.AI.Speech.Transcription
                 throw new FormatException($"The model {nameof(TranscriptionOptions)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(AudioUrl))
+            if (Optional.IsDefined(AudioUri))
             {
                 writer.WritePropertyName("audioUrl"u8);
-                writer.WriteStringValue(AudioUrl.AbsoluteUri);
+                writer.WriteStringValue(AudioUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Locales))
             {

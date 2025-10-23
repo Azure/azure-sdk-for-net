@@ -92,8 +92,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='TranscribeAsync(TranscribeRequestContent,CancellationToken)']/*" />
-        public virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscribeRequestContent body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscribeRequestContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -107,8 +106,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='Transcribe(TranscribeRequestContent,CancellationToken)']/*" />
-        public virtual Response<TranscriptionResult> Transcribe(TranscribeRequestContent body, CancellationToken cancellationToken = default)
+        internal virtual Response<TranscriptionResult> Transcribe(TranscribeRequestContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -139,8 +137,7 @@ namespace Azure.AI.Speech.Transcription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='TranscribeAsync(RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> TranscribeAsync(RequestContent content, string contentType, RequestContext context = null)
+        internal virtual async Task<Response> TranscribeAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -179,8 +176,7 @@ namespace Azure.AI.Speech.Transcription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TranscriptionClient.xml" path="doc/members/member[@name='Transcribe(RequestContent,string,RequestContext)']/*" />
-        public virtual Response Transcribe(RequestContent content, string contentType, RequestContext context = null)
+        internal virtual Response Transcribe(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 

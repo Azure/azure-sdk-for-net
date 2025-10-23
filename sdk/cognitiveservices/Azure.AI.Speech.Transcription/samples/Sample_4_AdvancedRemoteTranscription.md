@@ -11,18 +11,10 @@ Transcribe an audio file directly from a public URL without downloading it first
 Uri audioUrl = new Uri("https://example.com/audio/sample.wav");
 
 // Configure transcription to use the remote URL
-TranscriptionOptions options = new TranscriptionOptions
-{
-    AudioUrl = audioUrl
-};
+TranscriptionOptions options = new TranscriptionOptions(audioUrl);
 
 // No audio stream needed - the service fetches the file from the URL
-TranscribeRequestContent request = new TranscribeRequestContent
-{
-    Options = options
-};
-
-Response<TranscriptionResult> response = await client.TranscribeAsync(request);
+Response<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
 Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
@@ -75,17 +67,9 @@ Transcribe audio files stored in Azure Blob Storage using SAS URLs.
 Uri blobSasUrl = new Uri(
     "https://mystorageaccount.blob.core.windows.net/audio-files/recording.wav?sv=2021-06-08&st=...");
 
-TranscriptionOptions options = new TranscriptionOptions
-{
-    AudioUrl = blobSasUrl
-};
+TranscriptionOptions options = new TranscriptionOptions(blobSasUrl);
 
-TranscribeRequestContent request = new TranscribeRequestContent
-{
-    Options = options
-};
-
-Response<TranscriptionResult> response = await client.TranscribeAsync(request);
+Response<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
 Console.WriteLine($"Transcribed audio from Azure Blob Storage");
@@ -103,9 +87,8 @@ Combine remote file transcription with transcription options like locale and dia
 Uri audioUrl = new Uri("https://example.com/audio/spanish-interview.mp3");
 
 // Configure transcription options for remote audio
-TranscriptionOptions options = new TranscriptionOptions
+TranscriptionOptions options = new TranscriptionOptions(audioUrl)
 {
-    AudioUrl = audioUrl,
     ProfanityFilterMode = ProfanityFilterMode.Masked,
     DiarizationOptions = new TranscriptionDiarizationOptions
     {
@@ -117,12 +100,7 @@ TranscriptionOptions options = new TranscriptionOptions
 // Add Spanish locale
 options.Locales.Add("es-ES");
 
-TranscribeRequestContent request = new TranscribeRequestContent
-{
-    Options = options
-};
-
-Response<TranscriptionResult> response = await client.TranscribeAsync(request);
+Response<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Remote transcription with options:");
@@ -152,17 +130,9 @@ Uri[] audioUrls = new[]
 Task<Response<TranscriptionResult>>[] transcriptionTasks = audioUrls
     .Select(url =>
     {
-        TranscriptionOptions options = new TranscriptionOptions
-        {
-            AudioUrl = url
-        };
+        TranscriptionOptions options = new TranscriptionOptions(url);
 
-        TranscribeRequestContent request = new TranscribeRequestContent
-        {
-            Options = options
-        };
-
-        return client.TranscribeAsync(request);
+        return client.TranscribeAsync(options);
     })
     .ToArray();
 

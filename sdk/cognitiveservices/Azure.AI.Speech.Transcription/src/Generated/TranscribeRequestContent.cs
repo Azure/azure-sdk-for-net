@@ -12,7 +12,7 @@ using System.IO;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> Request model for transcription operation. </summary>
-    public partial class TranscribeRequestContent
+    internal partial class TranscribeRequestContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
