@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -48,6 +49,9 @@ namespace Azure.Generator.Management.Utilities
             var methodsInResource = new List<ResourceMethod>();
             var methodsInCollection = new List<ResourceMethod>();
             var methodsInExtension = new List<ResourceMethod>();
+            ResourceMethod? updateMethod = null;
+            ResourceMethod? createMethod = null;
+
             foreach (var method in resourceMetadata.Methods)
             {
                 var isSingleton = resourceMetadata.SingletonResourceName is not null;
@@ -63,6 +67,7 @@ namespace Azure.Generator.Management.Utilities
                         {
                             methodsInCollection.Add(method);
                         }
+                        createMethod = method;
                         break;
                     case ResourceOperationKind.Get:
                         // both resource and collection should have get method
@@ -70,6 +75,9 @@ namespace Azure.Generator.Management.Utilities
                         methodsInCollection.Add(method);
                         break;
                     case ResourceOperationKind.Update:
+                        updateMethod = method;
+                        methodsInResource.Add(method);
+                        break;
                     case ResourceOperationKind.Delete:
                         // only resource has get
                         methodsInResource.Add(method);
@@ -112,6 +120,12 @@ namespace Azure.Generator.Management.Utilities
                             $"Unknown resource operation kind '{method.Kind}' for method '{method.OperationPath}' in resource '{resourceMetadata.ResourceIdPattern}'.");
                         break;
                 }
+            }
+
+            // Check if this is an update operation (PUT or Patch method for non-singleton resource)
+            if (resourceMetadata.SingletonResourceName is null && updateMethod is null && createMethod is not null)
+            {
+                methodsInResource.Add(createMethod);
             }
 
             return new(methodsInResource, methodsInCollection, methodsInExtension);
