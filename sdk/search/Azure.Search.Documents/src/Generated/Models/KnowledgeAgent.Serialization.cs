@@ -5,37 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeAgent : IUtf8JsonSerializable
+    public partial class KnowledgeAgent : IUtf8JsonSerializable, IJsonModel<KnowledgeAgent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KnowledgeAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KnowledgeAgent)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("models"u8);
             writer.WriteStartArray();
             foreach (var item in Models)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("targetIndexes"u8);
+            writer.WritePropertyName("knowledgeSources"u8);
             writer.WriteStartArray();
-            foreach (var item in TargetIndexes)
+            foreach (var item in KnowledgeSources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(OutputConfiguration))
+            {
+                writer.WritePropertyName("outputConfiguration"u8);
+                writer.WriteObjectValue(OutputConfiguration, options);
+            }
             if (Optional.IsDefined(RequestLimits))
             {
                 writer.WritePropertyName("requestLimits"u8);
-                writer.WriteObjectValue(RequestLimits);
+                writer.WriteObjectValue(RequestLimits, options);
+            }
+            if (Optional.IsDefined(RetrievalInstructions))
+            {
+                writer.WritePropertyName("retrievalInstructions"u8);
+                writer.WriteStringValue(RetrievalInstructions);
             }
             if (Optional.IsDefined(_eTag))
             {
@@ -47,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey, options);
                 }
                 else
                 {
@@ -59,22 +87,54 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KnowledgeAgent DeserializeKnowledgeAgent(JsonElement element)
+        KnowledgeAgent IJsonModel<KnowledgeAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KnowledgeAgent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeAgent(document.RootElement, options);
+        }
+
+        internal static KnowledgeAgent DeserializeKnowledgeAgent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             IList<KnowledgeAgentModel> models = default;
-            IList<KnowledgeAgentTargetIndex> targetIndexes = default;
+            IList<KnowledgeSourceReference> knowledgeSources = default;
+            KnowledgeAgentOutputConfiguration outputConfiguration = default;
             KnowledgeAgentRequestLimits requestLimits = default;
+            string retrievalInstructions = default;
             string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,19 +147,28 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<KnowledgeAgentModel> array = new List<KnowledgeAgentModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeAgentModel.DeserializeKnowledgeAgentModel(item));
+                        array.Add(KnowledgeAgentModel.DeserializeKnowledgeAgentModel(item, options));
                     }
                     models = array;
                     continue;
                 }
-                if (property.NameEquals("targetIndexes"u8))
+                if (property.NameEquals("knowledgeSources"u8))
                 {
-                    List<KnowledgeAgentTargetIndex> array = new List<KnowledgeAgentTargetIndex>();
+                    List<KnowledgeSourceReference> array = new List<KnowledgeSourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeAgentTargetIndex.DeserializeKnowledgeAgentTargetIndex(item));
+                        array.Add(KnowledgeSourceReference.DeserializeKnowledgeSourceReference(item, options));
                     }
-                    targetIndexes = array;
+                    knowledgeSources = array;
+                    continue;
+                }
+                if (property.NameEquals("outputConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputConfiguration = KnowledgeAgentOutputConfiguration.DeserializeKnowledgeAgentOutputConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestLimits"u8))
@@ -108,7 +177,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    requestLimits = KnowledgeAgentRequestLimits.DeserializeKnowledgeAgentRequestLimits(property.Value);
+                    requestLimits = KnowledgeAgentRequestLimits.DeserializeKnowledgeAgentRequestLimits(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("retrievalInstructions"u8))
+                {
+                    retrievalInstructions = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))
@@ -123,7 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -131,16 +205,55 @@ namespace Azure.Search.Documents.Indexes.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new KnowledgeAgent(
                 name,
                 models,
-                targetIndexes,
+                knowledgeSources,
+                outputConfiguration,
                 requestLimits,
+                retrievalInstructions,
                 odataEtag,
                 encryptionKey,
-                description);
+                description,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KnowledgeAgent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeAgent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KnowledgeAgent IPersistableModel<KnowledgeAgent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKnowledgeAgent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeAgent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KnowledgeAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -154,7 +267,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -1,9 +1,11 @@
 import "@azure-tools/typespec-client-generator-core";
+import "@azure-tools/typespec-liftr-base";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
+using LiftrBase;
 
 namespace MgmtTypeSpec;
 
@@ -20,7 +22,7 @@ model FooProperties {
   serviceUrl?: url;
 
   /** something */
-  something?: string;
+  something: string;
 
   /** boolean value */
   boolValue?: boolean;
@@ -30,6 +32,15 @@ model FooProperties {
 
   /** double value */
   doubleValue?: float64;
+
+  prop1: string[];
+  prop2?: int32[];
+
+  nestedProperty: NestedFooModel;
+}
+
+model NestedFooModel {
+  properties: FooProperties;
 }
 
 @armResourceOperations
@@ -43,6 +54,8 @@ interface Foos {
   update is ArmCustomPatchAsync<Foo, Foo>;
 
   list is ArmResourceListByParent<Foo>;
+
+  listBySubscription is ArmListBySubscription<Foo>;
 }
 
 @singleton
@@ -70,9 +83,13 @@ interface FooSettingsOperations {
   delete is ArmResourceDeleteSync<FooSettings>;
 }
 
-model FooSettingsProperties {
-  accessControlEnabled: boolean;
+model FooSettingsProperties is BaseResourceProperties {
+  accessControlEnabled?: boolean;
 
   @visibility(Lifecycle.Read)
-  provisioningState?: ResourceProvisioningState;
+  metaData?: FooSettingsPropertiesMetaData;
+}
+
+model FooSettingsPropertiesMetaData {
+  metaDatas?: string[];
 }

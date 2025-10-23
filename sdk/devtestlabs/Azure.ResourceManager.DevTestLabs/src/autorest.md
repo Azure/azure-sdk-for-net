@@ -184,7 +184,6 @@ rename-mapping:
   UserSecretStore.keyVaultId: -|arm-id
   VirtualMachineCreationSource: DevTestLabVmCreationSource
   WeekDetails: DevTestLabWeekDetails
-  WindowsOSState: DevTestLabWindowsOSState
   ArmTemplate.properties.enabled: IsEnabled
   LabAnnouncementProperties.expired: IsExpired
   CustomImagePropertiesCustom.sysPrep: IsSysPrepEnabled

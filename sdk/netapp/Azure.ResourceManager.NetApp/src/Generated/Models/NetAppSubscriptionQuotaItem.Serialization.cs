@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -48,6 +49,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(Usage))
+            {
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteNumberValue(Usage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("usage");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -77,6 +90,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SystemData systemData = default;
             int? current = default;
             int? @default = default;
+            int? usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -132,6 +146,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             @default = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("usage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                usage = null;
+                                continue;
+                            }
+                            usage = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -148,6 +172,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 current,
                 @default,
+                usage,
                 serializedAdditionalRawData);
         }
 

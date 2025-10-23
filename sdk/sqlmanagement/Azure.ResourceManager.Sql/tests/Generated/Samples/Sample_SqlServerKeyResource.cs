@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheServerKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerKeyGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ServerKeyGet.json
             // this example is just showing the usage of "ServerKeys_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,9 +49,40 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetTheServerKeyWithVersionlessKey()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ServerKeyGetWithVersionlessKey.json
+            // this example is just showing the usage of "ServerKeys_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerKeyResource created on azure
+            // for more information of creating SqlServerKeyResource, please refer to the document of SqlServerKeyResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            string keyName = "someVault_someKey";
+            ResourceIdentifier sqlServerKeyResourceId = SqlServerKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, keyName);
+            SqlServerKeyResource sqlServerKey = client.GetSqlServerKeyResource(sqlServerKeyResourceId);
+
+            // invoke the operation
+            SqlServerKeyResource result = await sqlServerKey.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SqlServerKeyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheServerKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerKeyDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ServerKeyDelete.json
             // this example is just showing the usage of "ServerKeys_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesAServerKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerKeyCreateOrUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ServerKeyCreateOrUpdate.json
             // this example is just showing the usage of "ServerKeys_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,6 +131,43 @@ namespace Azure.ResourceManager.Sql.Samples
             {
                 ServerKeyType = SqlServerKeyType.AzureKeyVault,
                 Uri = new Uri("https://someVault.vault.azure.net/keys/someKey/01234567890123456789012345678901"),
+            };
+            ArmOperation<SqlServerKeyResource> lro = await sqlServerKey.UpdateAsync(WaitUntil.Completed, data);
+            SqlServerKeyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SqlServerKeyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreatesOrUpdatesAServerKeyWithVersionlessKey()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ServerKeyCreateOrUpdateWithVersionlessKey.json
+            // this example is just showing the usage of "ServerKeys_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerKeyResource created on azure
+            // for more information of creating SqlServerKeyResource, please refer to the document of SqlServerKeyResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            string keyName = "someVault_someKey";
+            ResourceIdentifier sqlServerKeyResourceId = SqlServerKeyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, keyName);
+            SqlServerKeyResource sqlServerKey = client.GetSqlServerKeyResource(sqlServerKeyResourceId);
+
+            // invoke the operation
+            SqlServerKeyData data = new SqlServerKeyData
+            {
+                ServerKeyType = SqlServerKeyType.AzureKeyVault,
+                Uri = new Uri("https://someVault.vault.azure.net/keys/someKey"),
             };
             ArmOperation<SqlServerKeyResource> lro = await sqlServerKey.UpdateAsync(WaitUntil.Completed, data);
             SqlServerKeyResource result = lro.Value;

@@ -1,34 +1,5 @@
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterBackupResultProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku))]
     public partial class AzureResourceManagerHardwareSecurityModulesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHardwareSecurityModulesContext() { }
@@ -174,6 +145,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     }
     public partial class DedicatedHsmData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData>
     {
+        public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku sku) { }
         public DedicatedHsmData(Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku sku, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties) { }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? SkuName { get { throw null; } set { } }
@@ -275,7 +247,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent CloudHsmClusterRestoreContent(System.Uri azureStorageBlobContainerUri = null, string token = null, string backupId = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult CloudHsmClusterRestoreResult(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties CloudHsmProperties(string fqdn = null, string state = null, string stateMessage = null) { throw null; }
-        public static Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData DedicatedHsmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? skuName = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData DedicatedHsmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? skuName = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData DedicatedHsmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? skuName, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint DedicatedHsmEgressEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency> endpoints = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency DedicatedHsmEndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail DedicatedHsmEndpointDetail(string ipAddress = null, int? port = default(int?), string protocol = null, string description = null) { throw null; }

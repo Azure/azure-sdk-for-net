@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Marketplace.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -13,6 +15,69 @@ namespace Azure.ResourceManager.Marketplace
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AcknowledgeOfferNotificationContent))]
+    [ModelReaderWriterBuildable(typeof(AnyExistingOffersInTheCollectionsResult))]
+    [ModelReaderWriterBuildable(typeof(BulkCollectionsActionContent))]
+    [ModelReaderWriterBuildable(typeof(BulkCollectionsActionResult))]
+    [ModelReaderWriterBuildable(typeof(CollectionOffersByAllContextsPayload))]
+    [ModelReaderWriterBuildable(typeof(CollectionOffersByContext))]
+    [ModelReaderWriterBuildable(typeof(CollectionOffersByContextList))]
+    [ModelReaderWriterBuildable(typeof(CollectionsList))]
+    [ModelReaderWriterBuildable(typeof(CollectionsSubscriptionsMappingDetails))]
+    [ModelReaderWriterBuildable(typeof(CollectionsToSubscriptionsMappingContent))]
+    [ModelReaderWriterBuildable(typeof(CollectionsToSubscriptionsMappingProperties))]
+    [ModelReaderWriterBuildable(typeof(CollectionsToSubscriptionsMappingResult))]
+    [ModelReaderWriterBuildable(typeof(ContextAndPlansDetails))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceAdminApprovalRequestData))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceAdminApprovalRequestList))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceAdminApprovalRequestResource))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceApprovalRequestData))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceApprovalRequestResource))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceRule))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSubscription))]
+    [ModelReaderWriterBuildable(typeof(MultiContextAndPlansContent))]
+    [ModelReaderWriterBuildable(typeof(NewPlanNotification))]
+    [ModelReaderWriterBuildable(typeof(NewPlanNotificationListResult))]
+    [ModelReaderWriterBuildable(typeof(NotificationRecipient))]
+    [ModelReaderWriterBuildable(typeof(OfferListResponse))]
+    [ModelReaderWriterBuildable(typeof(PlanNotificationDetails))]
+    [ModelReaderWriterBuildable(typeof(PlanRequesterDetails))]
+    [ModelReaderWriterBuildable(typeof(PlanRequesterInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreBillingAccountsResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreCollectionDetails))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreCollectionInfoData))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreCollectionInfoResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreData))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreList))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreNotificationsState))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreOfferData))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreOfferResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreOfferResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateStorePlan))]
+    [ModelReaderWriterBuildable(typeof(PrivateStorePlanDetails))]
+    [ModelReaderWriterBuildable(typeof(PrivateStoreResource))]
+    [ModelReaderWriterBuildable(typeof(QueryApprovalRequestContent))]
+    [ModelReaderWriterBuildable(typeof(QueryApprovalRequestResult))]
+    [ModelReaderWriterBuildable(typeof(QueryApprovedPlansContent))]
+    [ModelReaderWriterBuildable(typeof(QueryApprovedPlansDetails))]
+    [ModelReaderWriterBuildable(typeof(QueryApprovedPlansResult))]
+    [ModelReaderWriterBuildable(typeof(QueryOffers))]
+    [ModelReaderWriterBuildable(typeof(QueryUserOffersContent))]
+    [ModelReaderWriterBuildable(typeof(QueryUserRulesContent))]
+    [ModelReaderWriterBuildable(typeof(RequestApprovalsDetails))]
+    [ModelReaderWriterBuildable(typeof(RequestApprovalsList))]
+    [ModelReaderWriterBuildable(typeof(SetRulesContent))]
+    [ModelReaderWriterBuildable(typeof(StopSellNotifications))]
+    [ModelReaderWriterBuildable(typeof(StopSellOffersPlansNotificationsList))]
+    [ModelReaderWriterBuildable(typeof(StopSellOffersPlansNotificationsResult))]
+    [ModelReaderWriterBuildable(typeof(StopSellSubscriptions))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionsContextList))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionsResponse))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TransferOffersContent))]
+    [ModelReaderWriterBuildable(typeof(TransferOffersResult))]
+    [ModelReaderWriterBuildable(typeof(WithdrawPlanContent))]
     public partial class AzureResourceManagerMarketplaceContext : ModelReaderWriterContext
     {
     }

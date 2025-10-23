@@ -1,43 +1,5 @@
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.AutomaticResourcePredictionsProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureOrganizationProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDisk))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsGitHubOrganization))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsGitHubOrganizationProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsImageVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganization))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganizationProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOSProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolAgentProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceDetailsProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceQuota))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceQuotaName))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceSkuProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStateful))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStatelessAgentProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsVmssFabricProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ManualResourcePredictionsProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.PoolUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourcePredictions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourcePredictionsProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuCapabilities))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuLocationInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictionInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuZoneDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.SecretsManagementSettings))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDevOpsInfrastructureContext() { }
@@ -46,6 +8,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     }
     public static partial class DevOpsInfrastructureExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource> GetDevOpsPool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource>> GetDevOpsPoolAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource GetDevOpsPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -99,6 +63,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string poolName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteResources(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteResourcesAsync(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceDetails> GetResourceDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -135,6 +101,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
     public partial class MockableDevOpsInfrastructureSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDevOpsInfrastructureSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource> GetDevOpsPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource> GetDevOpsPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceSku> GetSkusByLocation(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -147,8 +115,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     public static partial class ArmDevOpsInfrastructureModelFactory
     {
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult DevOpsCheckNameAvailabilityResult(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus available = default(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus), string message = null, string name = null, Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason reason = default(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason)) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsImageVersion DevOpsImageVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string imageVersion = null) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile DevOpsNetworkProfile(string subnetId = null, int? staticIPAddressCount = default(int?), System.Collections.Generic.IEnumerable<string> ipAddresses = null) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolData DevOpsPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = null, string wellKnownImageName = null, System.Collections.Generic.IEnumerable<string> aliases = null, string buffer = null, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType? ephemeralType = default(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType?), bool? isEphemeral = default(bool?)) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceDetails DevOpsResourceDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceDetailsProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceDetailsProperties DevOpsResourceDetailsProperties(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus status = default(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceStatus), string image = null, string imageVersion = null) { throw null; }
         public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceQuota DevOpsResourceQuota(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsResourceQuotaName name = null, Azure.Core.ResourceIdentifier id = null, string unit = null, long currentValue = (long)0, long limit = (long)0) { throw null; }
@@ -172,9 +143,76 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.AutomaticResourcePredictionsProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.AutomaticResourcePredictionsProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CertificateStoreNameOption : System.IEquatable<Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CertificateStoreNameOption(string value) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption My { get { throw null; } }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption Root { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption left, Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption left, Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CheckNameAvailability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>
+    {
+        public CheckNameAvailability(string name, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType type) { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CheckNameAvailabilityReason(string value) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevOpsAvailabilityStatus : System.IEquatable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevOpsAvailabilityStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus Available { get { throw null; } }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus Unavailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevOpsAzureOrganizationProfile : Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganizationProfile, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureOrganizationProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureOrganizationProfile>
     {
         public DevOpsAzureOrganizationProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganization> organizations) { }
+        public string Alias { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganization> Organizations { get { throw null; } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzurePermissionProfile PermissionProfile { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -227,6 +265,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DevOpsCheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>
+    {
+        internal DevOpsCheckNameAvailabilityResult() { }
+        public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAvailabilityStatus Available { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.DevOpsInfrastructure.Models.CheckNameAvailabilityReason Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsCheckNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DevOpsDataDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDisk>
     {
         public DevOpsDataDisk() { }
@@ -258,6 +310,36 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDataDiskCachingType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DevOpsDeleteResourcesDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>
+    {
+        public DevOpsDeleteResourcesDetails(System.Collections.Generic.IEnumerable<string> resourceIds) { }
+        public System.Collections.Generic.IList<string> ResourceIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsDeleteResourcesDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevOpsEphemeralType : System.IEquatable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevOpsEphemeralType(string value) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType Automatic { get { throw null; } }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType CacheDisk { get { throw null; } }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType ResourceDisk { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class DevOpsFabricProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsFabricProfile>
@@ -328,6 +410,23 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevOpsInfrastructureResourceType : System.IEquatable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevOpsInfrastructureResourceType(string value) { throw null; }
+        public static Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType MicrosoftDevOpsInfrastructurePools { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureResourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevOpsLogonType : System.IEquatable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType>
     {
         private readonly object _dummy;
@@ -345,9 +444,24 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator !=(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType left, Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsLogonType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DevOpsNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>
+    {
+        public DevOpsNetworkProfile(string subnetId) { }
+        public System.Collections.Generic.IReadOnlyList<string> IPAddresses { get { throw null; } }
+        public int? StaticIPAddressCount { get { throw null; } set { } }
+        public string SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DevOpsOrganization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganization>
     {
         public DevOpsOrganization(System.Uri uri) { }
+        public string Alias { get { throw null; } set { } }
+        public bool? OpenAccess { get { throw null; } set { } }
         public int? Parallelism { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Projects { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
@@ -414,6 +528,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public int MaximumConcurrency { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganizationProfile OrganizationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public string RuntimeWorkFolder { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -426,6 +541,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public DevOpsPoolVmImage() { }
         public System.Collections.Generic.IList<string> Aliases { get { throw null; } }
         public string Buffer { get { throw null; } set { } }
+        public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsEphemeralType? EphemeralType { get { throw null; } set { } }
+        public bool? IsEphemeral { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
         public string WellKnownImageName { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -601,7 +718,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     {
         public DevOpsVmssFabricProfile(Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsAzureSku sku, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> images) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsPoolVmImage> Images { get { throw null; } }
-        public string NetworkSubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOSProfile OSProfile { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsStorageProfile StorageProfile { get { throw null; } set { } }
@@ -650,6 +767,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public int? MaximumConcurrency { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsOrganizationProfile OrganizationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.DevOpsInfrastructure.Models.DevOpsInfrastructureProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public string RuntimeWorkFolder { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevOpsInfrastructure.Models.PoolUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.PoolUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevOpsInfrastructure.Models.PoolUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -801,6 +919,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     {
         public SecretsManagementSettings(System.Collections.Generic.IEnumerable<System.Uri> observedCertificates, bool keyExportable) { }
         public string CertificateStoreLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.DevOpsInfrastructure.Models.CertificateStoreNameOption? CertificateStoreName { get { throw null; } set { } }
         public bool KeyExportable { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Uri> ObservedCertificates { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

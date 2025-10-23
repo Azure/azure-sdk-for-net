@@ -1,20 +1,5 @@
 namespace Azure.ResourceManager.IotCentral
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.IotCentralAppData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.IotCentralAppResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.IotCentralPrivateLinkResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.IotCentralPrivateLinkResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralAppPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplateLocation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSetIPRule))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSets))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotCentral.Models.IotCentralPrivateLinkServiceConnectionState))]
     public partial class AzureResourceManagerIotCentralContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerIotCentralContext() { }

@@ -49,16 +49,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents the model training status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/>, <paramref name="trainingConfigVersion"/> or <paramref name="trainingStatus"/> is null. </exception>
-        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringSubTrainingState trainingStatus)
+        /// <param name="dataGenerationStatus"> Represents the model data generation status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/>, <paramref name="trainingConfigVersion"/>, <paramref name="trainingStatus"/> or <paramref name="dataGenerationStatus"/> is null. </exception>
+        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState dataGenerationStatus)
         {
             Argument.AssertNotNull(modelLabel, nameof(modelLabel));
             Argument.AssertNotNull(trainingConfigVersion, nameof(trainingConfigVersion));
             Argument.AssertNotNull(trainingStatus, nameof(trainingStatus));
+            Argument.AssertNotNull(dataGenerationStatus, nameof(dataGenerationStatus));
 
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             TrainingStatus = trainingStatus;
+            DataGenerationStatus = dataGenerationStatus;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingJobResult"/>. </summary>
@@ -66,15 +69,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="trainingStatus"> Represents the model training status. </param>
+        /// <param name="dataGenerationStatus"> Represents the model data generation status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState dataGenerationStatus, ConversationAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             TrainingMode = trainingMode;
             TrainingStatus = trainingStatus;
+            DataGenerationStatus = dataGenerationStatus;
             EvaluationStatus = evaluationStatus;
             EstimatedEndOn = estimatedEndOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -93,6 +98,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ConversationAuthoringTrainingMode? TrainingMode { get; }
         /// <summary> Represents the model training status. </summary>
         public ConversationAuthoringSubTrainingState TrainingStatus { get; }
+        /// <summary> Represents the model data generation status. </summary>
+        public ConversationAuthoringSubTrainingState DataGenerationStatus { get; }
         /// <summary> Represents model evaluation status. </summary>
         public ConversationAuthoringSubTrainingState EvaluationStatus { get; }
         /// <summary> Represents the estimated end date time for training and evaluation. </summary>

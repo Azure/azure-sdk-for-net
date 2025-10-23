@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="etag"> etag for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal RecoveryServicesVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesVaultProperties properties, ManagedServiceIdentity identity, RecoveryServicesSku sku, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             Properties = properties;
+            Identity = identity;
             Sku = sku;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.RecoveryServices
         {
         }
 
-        /// <summary> Identity for the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Properties of the vault. </summary>
         public RecoveryServicesVaultProperties Properties { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Identifies the unique system identifier for each Azure resource. </summary>
         public RecoveryServicesSku Sku { get; set; }
-        /// <summary> Optional ETag. </summary>
+        /// <summary> etag for the resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

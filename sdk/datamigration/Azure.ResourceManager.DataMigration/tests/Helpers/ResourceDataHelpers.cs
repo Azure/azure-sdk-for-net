@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
             var data = new DataMigrationServiceData(AzureLocation.EastUS)
             {
                 VirtualSubnetId = subnetId,
-                Sku = new ServiceSku()
+                Sku = new DataMigrationServiceSku()
                 {
                     Name = "Premium_4vCores",
                     Tier = "Premium"
@@ -58,37 +58,37 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
         #endregion
 
         #region project
-        public static ProjectData GetProject()
+        public static DataMigrationProjectData GetProject()
         {
-            var data = new ProjectData(AzureLocation.EastUS)
+            var data = new DataMigrationProjectData(AzureLocation.EastUS)
             {
-                SourcePlatform = ProjectSourcePlatform.Sql,
-                TargetPlatform = ProjectTargetPlatform.SqlDB
+                SourcePlatform = DataMigrationProjectSourcePlatform.Sql,
+                TargetPlatform = DataMigrationProjectTargetPlatform.SqlDB
             };
             return data;
         }
 
-        public static void AssertProjectData(ProjectData data1, ProjectData data2)
+        public static void AssertProjectData(DataMigrationProjectData data1, DataMigrationProjectData data2)
         {
-            AssertTrackedResource(data1 as ProjectData, data2);
+            AssertTrackedResource(data1 as DataMigrationProjectData, data2);
             Assert.AreEqual(data1.SourcePlatform, data2.SourcePlatform);
             Assert.AreEqual(data1.TargetPlatform, data2.TargetPlatform);
         }
         #endregion
 
         #region flie
-        public static ProjectFileData GetProjectFileData()
+        public static DataMigrationProjectFileData GetProjectFileData()
         {
-            var data = new ProjectFileData()
+            var data = new DataMigrationProjectFileData()
             {
-                Properties = new ProjectFileProperties()
+                Properties = new DataMigrationProjectFileProperties()
                 {
                     FilePath = "NorthWind.sql"
                 }
             };
             return data;
         }
-        public static void AssertFlieData(ProjectFileData data1, ProjectFileData data2)
+        public static void AssertFlieData(DataMigrationProjectFileData data1, DataMigrationProjectFileData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Properties.FilePath, data2.Properties.FilePath);
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
         #endregion
 
         #region Project(Test For Task)
-        public static ProjectData GetTaskProject()
+        public static DataMigrationProjectData GetTaskProject()
         {
-            var data = new ProjectData(AzureLocation.EastUS)
+            var data = new DataMigrationProjectData(AzureLocation.EastUS)
             {
-                SourcePlatform = ProjectSourcePlatform.MySql,
-                TargetPlatform = ProjectTargetPlatform.AzureDBForMySql
+                SourcePlatform = DataMigrationProjectSourcePlatform.MySql,
+                TargetPlatform = DataMigrationProjectTargetPlatform.AzureDBForMySql
             };
             return data;
         }
         #endregion
 
         #region project task(MigrateMySqlAzureDBForMySqlOfflineTask)
-        public static ProjectTaskData GetProjectTaskData()
+        public static DataMigrationProjectTaskData GetProjectTaskData()
         {
-            var sourceInfo = new MySqlConnectionInfo("someSourceServerName", 0)
+            var sourceInfo = new DataMigrationMySqlConnectionInfo("someSourceServerName", 0)
             {
                 UserName = "someSourceUser",
                 Password = "password"
             };
-            var targetInfo = new MySqlConnectionInfo("someTargetServerName", 0)
+            var targetInfo = new DataMigrationMySqlConnectionInfo("someTargetServerName", 0)
             {
                 UserName = "someTargetUser",
                 Password = "someTargetPassword"
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
                     }
                 }
             };
-            var data = new ProjectTaskData()
+            var data = new DataMigrationProjectTaskData()
             {
                 Properties = new MigrateMySqlAzureDBForMySqlOfflineTaskProperties()
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration.Tests.Helpers
             return data;
         }
 
-        public static void AssertMySqlOfflineTaskData(ProjectTaskData data1, ProjectTaskData data2)
+        public static void AssertMySqlOfflineTaskData(DataMigrationProjectTaskData data1, DataMigrationProjectTaskData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Properties.TaskType, data2.Properties.TaskType);

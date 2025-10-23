@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            IReadOnlyList<Quota> value = default;
+            IReadOnlyList<DataMigrationQuota> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<Quota> array = new List<Quota>();
+                    List<DataMigrationQuota> array = new List<DataMigrationQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Quota.DeserializeQuota(item, options));
+                        array.Add(DataMigrationQuota.DeserializeDataMigrationQuota(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QuotaList(value ?? new ChangeTrackingList<Quota>(), nextLink, serializedAdditionalRawData);
+            return new QuotaList(value ?? new ChangeTrackingList<DataMigrationQuota>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaList>.Write(ModelReaderWriterOptions options)

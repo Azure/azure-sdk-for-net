@@ -152,7 +152,7 @@ foreach (DocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
 }
 ```
 
-The new features — `ValueExclusion`, `Synonyms`, and `new entity types` — are supported in version V2025_05_15_Preview or later.
+The new features ï¿½ `ValueExclusion`, `Synonyms`, and `new entity types` ï¿½ are supported in version V2025_05_15_Preview or later.
 ```C#
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");

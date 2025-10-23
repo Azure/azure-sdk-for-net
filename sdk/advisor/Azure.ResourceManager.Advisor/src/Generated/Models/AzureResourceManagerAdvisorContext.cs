@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Advisor.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
@@ -13,6 +15,22 @@ namespace Azure.ResourceManager.Advisor
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ConfigData))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(DigestConfig))]
+    [ModelReaderWriterBuildable(typeof(MetadataEntityData))]
+    [ModelReaderWriterBuildable(typeof(MetadataEntityListResult))]
+    [ModelReaderWriterBuildable(typeof(MetadataEntityResource))]
+    [ModelReaderWriterBuildable(typeof(MetadataSupportedValueDetail))]
+    [ModelReaderWriterBuildable(typeof(ResourceMetadata))]
+    [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseData))]
+    [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseResource))]
+    [ModelReaderWriterBuildable(typeof(ShortDescription))]
+    [ModelReaderWriterBuildable(typeof(SuppressionContractData))]
+    [ModelReaderWriterBuildable(typeof(SuppressionContractListResult))]
+    [ModelReaderWriterBuildable(typeof(SuppressionContractResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAdvisorContext : ModelReaderWriterContext
     {
     }

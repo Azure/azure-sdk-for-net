@@ -47,6 +47,7 @@ namespace Azure.Developer.LoadTesting
         public bool? AutoStopDisabled { get { throw null; } set { } }
         public float? ErrorRate { get { throw null; } set { } }
         public System.TimeSpan? ErrorRateTimeWindow { get { throw null; } set { } }
+        public int? MaximumVirtualUsersPerEngine { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Developer.LoadTesting.AutoStopCriteria System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.AutoStopCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.AutoStopCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -54,50 +55,6 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.AutoStopCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.AutoStopCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.ArtifactsContainerInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.AutoStopCriteria))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.DimensionFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.DimensionValue))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.ErrorDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.LoadTest))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.LoadTestConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.LoadTestingAppComponent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.LoadTestRun))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricAvailability))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricDefinitions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricNamespace))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricNamespaces))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricsFilters))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.MetricValue))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.NameAndDescription))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.OptionalLoadTestConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.PassFailCriteria))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.PassFailMetric))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.PassFailServerMetric))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.RegionalConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.ResourceMetric))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TargetResourceConfigurations))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestAppComponents))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestCertificate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestFileInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestInputArtifacts))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestProfileRun))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestProfileRunRecommendation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunAppComponents))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunArtifacts))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunFileInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunInputArtifacts))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunOutputArtifacts))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestRunStatistics))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestSecret))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestServerMetricsConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TimeSeriesElement))]
     public partial class AzureDeveloperLoadTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDeveloperLoadTestingContext() { }
@@ -127,6 +84,8 @@ namespace Azure.Developer.LoadTesting
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CreatedByType(string value) { throw null; }
+        public static Azure.Developer.LoadTesting.CreatedByType AzurePipelines { get { throw null; } }
+        public static Azure.Developer.LoadTesting.CreatedByType GitHubWorkflows { get { throw null; } }
         public static Azure.Developer.LoadTesting.CreatedByType ScheduledTrigger { get { throw null; } }
         public static Azure.Developer.LoadTesting.CreatedByType User { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.CreatedByType other) { throw null; }
@@ -138,6 +97,17 @@ namespace Azure.Developer.LoadTesting
         public static implicit operator Azure.Developer.LoadTesting.CreatedByType (string value) { throw null; }
         public static bool operator !=(Azure.Developer.LoadTesting.CreatedByType left, Azure.Developer.LoadTesting.CreatedByType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DailyRecurrence : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.DailyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.DailyRecurrence>
+    {
+        public DailyRecurrence(int interval) { }
+        public int Interval { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.DailyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.DailyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.DailyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.DailyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.DailyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.DailyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.DailyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DimensionFilter : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.DimensionFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.DimensionFilter>
     {
@@ -166,7 +136,9 @@ namespace Azure.Developer.LoadTesting
     public partial class ErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorDetails>
     {
         internal ErrorDetails() { }
+        public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> Properties { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Developer.LoadTesting.ErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -230,6 +202,17 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HourlyRecurrence : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.HourlyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.HourlyRecurrence>
+    {
+        public HourlyRecurrence(int interval) { }
+        public int Interval { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.HourlyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.HourlyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.HourlyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.HourlyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.HourlyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.HourlyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.HourlyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LoadTest : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTest>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTest>
     {
         public LoadTest() { }
@@ -243,6 +226,7 @@ namespace Azure.Developer.LoadTesting
         public System.Collections.Generic.IList<string> EngineBuiltInIdentityIds { get { throw null; } }
         public Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? EngineBuiltInIdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
+        public double? EstimatedVirtualUserHours { get { throw null; } }
         public Azure.Developer.LoadTesting.TestInputArtifacts InputArtifacts { get { throw null; } }
         public string KeyvaultReferenceIdentityId { get { throw null; } set { } }
         public string KeyvaultReferenceIdentityType { get { throw null; } set { } }
@@ -270,24 +254,48 @@ namespace Azure.Developer.LoadTesting
         public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CloneTest(Azure.WaitUntil waitUntil, string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.Developer.LoadTesting.LoadTest> CloneTest(Azure.WaitUntil waitUntil, string testId, string newTestId, string displayName = null, string description = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CloneTestAsync(Azure.WaitUntil waitUntil, string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Developer.LoadTesting.LoadTest>> CloneTestAsync(Azure.WaitUntil waitUntil, string testId, string newTestId, string displayName = null, string description = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateNotificationRule(string notificationRuleId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateNotificationRuleAsync(string notificationRuleId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateServerMetricsConfigAsync(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateTest(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTestAsync(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateTestProfile(string testProfileId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTestProfileAsync(string testProfileId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateTrigger(string triggerId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTriggerAsync(string triggerId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteNotificationRule(string notificationRuleId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteNotificationRuleAsync(string notificationRuleId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTest(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestAsync(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTestFile(string testId, string fileName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestFileAsync(string testId, string fileName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTestProfile(string testProfileId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestProfileAsync(string testProfileId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteTrigger(string triggerId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTriggerAsync(string triggerId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetAppComponents(string testId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestAppComponents> GetAppComponents(string testId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAppComponentsAsync(string testId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.TestAppComponents>> GetAppComponentsAsync(string testId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetNotificationRule(string notificationRuleId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Developer.LoadTesting.NotificationRule> GetNotificationRule(string notificationRuleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetNotificationRuleAsync(string notificationRuleId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.NotificationRule>> GetNotificationRuleAsync(string notificationRuleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetNotificationRules(string testIds, string scopes, System.DateTimeOffset? lastModifiedStartTime, System.DateTimeOffset? lastModifiedEndTime, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Developer.LoadTesting.NotificationRule> GetNotificationRules(string testIds = null, string scopes = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetNotificationRulesAsync(string testIds, string scopes, System.DateTimeOffset? lastModifiedStartTime, System.DateTimeOffset? lastModifiedEndTime, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.NotificationRule> GetNotificationRulesAsync(string testIds = null, string scopes = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetOperationStatus(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Developer.LoadTesting.OperationStatus> GetOperationStatus(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.OperationStatus>> GetOperationStatusAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetServerMetricsConfig(string testId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestServerMetricsConfiguration> GetServerMetricsConfig(string testId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigAsync(string testId, Azure.RequestContext context) { throw null; }
@@ -316,6 +324,14 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTest> GetTests(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestsAsync(string orderby, string search, System.DateTimeOffset? lastModifiedStartTime, System.DateTimeOffset? lastModifiedEndTime, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTest> GetTestsAsync(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetTrigger(string triggerId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Developer.LoadTesting.LoadTestingTrigger> GetTrigger(string triggerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTriggerAsync(string triggerId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.LoadTestingTrigger>> GetTriggerAsync(string triggerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTestingTrigger> GetTriggers(string testIds = null, Azure.Developer.LoadTesting.TriggerState? states = default(Azure.Developer.LoadTesting.TriggerState?), System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTriggers(string testIds, string states, System.DateTimeOffset? lastModifiedStartTime, System.DateTimeOffset? lastModifiedEndTime, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTestingTrigger> GetTriggersAsync(string testIds = null, Azure.Developer.LoadTesting.TriggerState? states = default(Azure.Developer.LoadTesting.TriggerState?), System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTriggersAsync(string testIds, string states, System.DateTimeOffset? lastModifiedStartTime, System.DateTimeOffset? lastModifiedEndTime, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.Developer.LoadTesting.FileUploadResultOperation UploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadResultOperation> UploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
     }
@@ -353,7 +369,7 @@ namespace Azure.Developer.LoadTesting
     }
     public partial class LoadTestingClientOptions : Azure.Core.ClientOptions
     {
-        public LoadTestingClientOptions(Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion version = Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2024_12_01_Preview) { }
+        public LoadTestingClientOptions(Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion version = Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2025_03_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_11_01 = 1,
@@ -362,6 +378,7 @@ namespace Azure.Developer.LoadTesting
             V2024_05_01_Preview = 4,
             V2024_07_01_Preview = 5,
             V2024_12_01_Preview = 6,
+            V2025_03_01_Preview = 7,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -408,10 +425,11 @@ namespace Azure.Developer.LoadTesting
     {
         public static Azure.Developer.LoadTesting.ArtifactsContainerInfo ArtifactsContainerInfo(System.Uri uri = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Developer.LoadTesting.DimensionValue DimensionValue(string name = null, string value = null) { throw null; }
-        public static Azure.Developer.LoadTesting.ErrorDetails ErrorDetails(string message = null) { throw null; }
-        public static Azure.Developer.LoadTesting.LoadTest LoadTest(Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, Azure.Developer.LoadTesting.TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), bool? publicIpDisabled = default(bool?), string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? metricsReferenceIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), string metricsReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? engineBuiltInIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), System.Collections.Generic.IEnumerable<string> engineBuiltInIdentityIds = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.ErrorDetails ErrorDetails(string code = null, string message = null, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> properties = null) { throw null; }
+        public static Azure.Developer.LoadTesting.LoadTest LoadTest(Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, Azure.Developer.LoadTesting.TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), bool? publicIpDisabled = default(bool?), string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? metricsReferenceIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), string metricsReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? engineBuiltInIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), System.Collections.Generic.IEnumerable<string> engineBuiltInIdentityIds = null, double? estimatedVirtualUserHours = default(double?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.LoadTestingAppComponent LoadTestingAppComponent(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null) { throw null; }
-        public static Azure.Developer.LoadTesting.LoadTestRun LoadTestRun(string testRunId = null, Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.ErrorDetails> errorDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, Azure.Developer.LoadTesting.TestRunArtifacts testArtifacts = null, Azure.Developer.LoadTesting.PassFailTestResult? testResult = default(Azure.Developer.LoadTesting.PassFailTestResult?), int? virtualUsers = default(int?), string displayName = null, string testId = null, string description = null, Azure.Developer.LoadTesting.TestRunStatus? status = default(Azure.Developer.LoadTesting.TestRunStatus?), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? executedDateTime = default(System.DateTimeOffset?), System.Uri portalUri = null, long? duration = default(long?), double? virtualUserHours = default(double?), string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), Azure.Developer.LoadTesting.RequestDataLevel? requestDataLevel = default(Azure.Developer.LoadTesting.RequestDataLevel?), bool? debugLogsEnabled = default(bool?), bool? publicIpDisabled = default(bool?), Azure.Developer.LoadTesting.CreatedByType? createdByType = default(Azure.Developer.LoadTesting.CreatedByType?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.LoadTestingTrigger LoadTestingTrigger(string triggerId = null, string displayName = null, string description = null, string kind = null, Azure.Developer.LoadTesting.TriggerState? state = default(Azure.Developer.LoadTesting.TriggerState?), Azure.Developer.LoadTesting.StateDetails stateDetails = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.LoadTestRun LoadTestRun(string testRunId = null, Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.ErrorDetails> errorDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, Azure.Developer.LoadTesting.TestRunArtifacts testArtifacts = null, Azure.Developer.LoadTesting.PassFailTestResult? testResult = default(Azure.Developer.LoadTesting.PassFailTestResult?), int? virtualUsers = default(int?), string displayName = null, string testId = null, string description = null, Azure.Developer.LoadTesting.TestRunStatus? status = default(Azure.Developer.LoadTesting.TestRunStatus?), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? executedDateTime = default(System.DateTimeOffset?), System.Uri portalUri = null, long? duration = default(long?), double? virtualUserHours = default(double?), string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), Azure.Developer.LoadTesting.RequestDataLevel? requestDataLevel = default(Azure.Developer.LoadTesting.RequestDataLevel?), bool? debugLogsEnabled = default(bool?), bool? publicIpDisabled = default(bool?), Azure.Developer.LoadTesting.CreatedByType? createdByType = default(Azure.Developer.LoadTesting.CreatedByType?), System.Uri createdByUri = null, double? estimatedVirtualUserHours = default(double?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.MetricAvailability MetricAvailability(Azure.Developer.LoadTesting.TimeGrain? timeGrain = default(Azure.Developer.LoadTesting.TimeGrain?)) { throw null; }
         public static Azure.Developer.LoadTesting.MetricDefinition MetricDefinition(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.NameAndDescription> dimensions = null, string description = null, string name = null, string @namespace = null, Azure.Developer.LoadTesting.AggregationType? primaryAggregationType = default(Azure.Developer.LoadTesting.AggregationType?), System.Collections.Generic.IEnumerable<string> supportedAggregationTypes = null, Azure.Developer.LoadTesting.MetricUnit? unit = default(Azure.Developer.LoadTesting.MetricUnit?), System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.MetricAvailability> metricAvailabilities = null) { throw null; }
         public static Azure.Developer.LoadTesting.MetricDefinitions MetricDefinitions(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.MetricDefinition> value = null) { throw null; }
@@ -419,9 +437,14 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.MetricNamespaces MetricNamespaces(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.MetricNamespace> value = null) { throw null; }
         public static Azure.Developer.LoadTesting.MetricValue MetricValue(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), double? value = default(double?)) { throw null; }
         public static Azure.Developer.LoadTesting.NameAndDescription NameAndDescription(string description = null, string name = null) { throw null; }
+        public static Azure.Developer.LoadTesting.NotificationRule NotificationRule(string notificationRuleId = null, string displayName = null, System.Collections.Generic.IEnumerable<string> actionGroupIds = null, string scope = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.OperationStatus OperationStatus(string id = null, Azure.Developer.LoadTesting.OperationState status = default(Azure.Developer.LoadTesting.OperationState), Azure.Developer.LoadTesting.OperationKind kind = default(Azure.Developer.LoadTesting.OperationKind), Azure.ResponseError error = null) { throw null; }
         public static Azure.Developer.LoadTesting.PassFailMetric PassFailMetric(Azure.Developer.LoadTesting.PfMetrics? clientMetric = default(Azure.Developer.LoadTesting.PfMetrics?), Azure.Developer.LoadTesting.PassFailAggregationFunction? aggregate = default(Azure.Developer.LoadTesting.PassFailAggregationFunction?), string condition = null, string requestName = null, double? value = default(double?), Azure.Developer.LoadTesting.PassFailAction? action = default(Azure.Developer.LoadTesting.PassFailAction?), double? actualValue = default(double?), Azure.Developer.LoadTesting.PassFailResult? result = default(Azure.Developer.LoadTesting.PassFailResult?)) { throw null; }
         public static Azure.Developer.LoadTesting.PassFailServerMetric PassFailServerMetric(Azure.Core.ResourceIdentifier resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = 0, Azure.Developer.LoadTesting.PassFailAction? action = default(Azure.Developer.LoadTesting.PassFailAction?), double? actualValue = default(double?), Azure.Developer.LoadTesting.PassFailResult? result = default(Azure.Developer.LoadTesting.PassFailResult?)) { throw null; }
+        public static Azure.Developer.LoadTesting.RecurrenceStatus RecurrenceStatus(int? remainingOccurrences = default(int?), System.Collections.Generic.IEnumerable<System.DateTimeOffset> nextScheduledDateTimes = null) { throw null; }
         public static Azure.Developer.LoadTesting.ResourceMetric ResourceMetric(string id = null, Azure.Core.ResourceIdentifier resourceId = null, string metricNamespace = null, string displayDescription = null, string name = null, string aggregation = null, string unit = null, string resourceType = null) { throw null; }
+        public static Azure.Developer.LoadTesting.ScheduleTestsTrigger ScheduleTestsTrigger(string triggerId = null, string displayName = null, string description = null, Azure.Developer.LoadTesting.TriggerState? state = default(Azure.Developer.LoadTesting.TriggerState?), Azure.Developer.LoadTesting.StateDetails stateDetails = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null, System.Collections.Generic.IEnumerable<string> testIds = null, System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), Azure.Developer.LoadTesting.RecurrenceStatus recurrenceStatus = null, Azure.Developer.LoadTesting.LoadTestingRecurrence recurrence = null) { throw null; }
+        public static Azure.Developer.LoadTesting.StateDetails StateDetails(string message = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestAppComponents TestAppComponents(System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.LoadTestingAppComponent> components = null, string testId = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestFileInfo TestFileInfo(string fileName = null, System.Uri uri = null, Azure.Developer.LoadTesting.LoadTestingFileType? fileType = default(Azure.Developer.LoadTesting.LoadTestingFileType?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.Developer.LoadTesting.FileValidationStatus? validationStatus = default(Azure.Developer.LoadTesting.FileValidationStatus?), string validationFailureDetails = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestInputArtifacts TestInputArtifacts(Azure.Developer.LoadTesting.TestFileInfo configFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo testScriptFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo userPropertyFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo inputArtifactsZipFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo urlTestConfigFileInfo = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestFileInfo> additionalFileInfo = null) { throw null; }
@@ -433,11 +456,44 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TestRunDetail TestRunDetail(Azure.Developer.LoadTesting.TestRunStatus status = default(Azure.Developer.LoadTesting.TestRunStatus), string configurationId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunFileInfo TestRunFileInfo(string fileName = null, System.Uri uri = null, Azure.Developer.LoadTesting.LoadTestingFileType? fileType = default(Azure.Developer.LoadTesting.LoadTestingFileType?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.Developer.LoadTesting.FileValidationStatus? validationStatus = default(Azure.Developer.LoadTesting.FileValidationStatus?), string validationFailureDetails = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunInputArtifacts TestRunInputArtifacts(Azure.Developer.LoadTesting.TestRunFileInfo configFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo testScriptFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo userPropertyFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo inputArtifactsZipFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo urlTestConfigFileInfo = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestRunFileInfo> additionalFileInfo = null) { throw null; }
+        public static Azure.Developer.LoadTesting.TestRunInsightColumn TestRunInsightColumn(string name = null, string dataType = null) { throw null; }
+        public static Azure.Developer.LoadTesting.TestRunInsights TestRunInsights(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestRunInsightColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, string>> rows = null, long? version = default(long?), Azure.Developer.LoadTesting.OperationState? status = default(Azure.Developer.LoadTesting.OperationState?)) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunOutputArtifacts TestRunOutputArtifacts(Azure.Developer.LoadTesting.TestRunFileInfo resultFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo logsFileInfo = null, Azure.Developer.LoadTesting.ArtifactsContainerInfo artifactsContainerInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo reportFileInfo = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.ResourceMetric> metrics = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunStatistics TestRunStatistics(string transaction = null, double? sampleCount = default(double?), double? errorCount = default(double?), double? errorPercentage = default(double?), double? meanResponseTime = default(double?), double? medianResponseTime = default(double?), double? maxResponseTime = default(double?), double? minResponseTime = default(double?), double? percentile90ResponseTime = default(double?), double? percentile95ResponseTime = default(double?), double? percentile99ResponseTime = default(double?), double? percentile75ResponseTime = default(double?), double? percentile96ResponseTime = default(double?), double? percentile97ResponseTime = default(double?), double? percentile98ResponseTime = default(double?), double? percentile999ResponseTime = default(double?), double? percentile9999ResponseTime = default(double?), double? throughput = default(double?), double? receivedKBytesPerSec = default(double?), double? sentKBytesPerSec = default(double?)) { throw null; }
         public static Azure.Developer.LoadTesting.TestServerMetricsConfiguration TestServerMetricsConfiguration(string testId = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.ResourceMetric> metrics = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.TestsNotificationRule TestsNotificationRule(string notificationRuleId = null, string displayName = null, System.Collections.Generic.IEnumerable<string> actionGroupIds = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null, System.Collections.Generic.IEnumerable<string> testIds = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters = null) { throw null; }
         public static Azure.Developer.LoadTesting.TimeSeriesElement TimeSeriesElement(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.MetricValue> data = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.DimensionValue> dimensionValues = null) { throw null; }
+    }
+    public abstract partial class LoadTestingRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>
+    {
+        protected LoadTestingRecurrence() { }
+        public Azure.Developer.LoadTesting.RecurrenceEnd RecurrenceEnd { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.LoadTestingRecurrence System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.LoadTestingRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class LoadTestingTrigger : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestingTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingTrigger>
+    {
+        protected LoadTestingTrigger(string displayName) { }
+        public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public string LastModifiedBy { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedDateTime { get { throw null; } }
+        public Azure.Developer.LoadTesting.TriggerState? State { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.StateDetails StateDetails { get { throw null; } }
+        public string TriggerId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.LoadTestingTrigger System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestingTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestingTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.LoadTestingTrigger System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestingTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadTestKind : System.IEquatable<Azure.Developer.LoadTesting.LoadTestKind>
@@ -465,6 +521,7 @@ namespace Azure.Developer.LoadTesting
         public Azure.Developer.LoadTesting.TestCertificate Certificate { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } }
         public Azure.Developer.LoadTesting.CreatedByType? CreatedByType { get { throw null; } set { } }
+        public System.Uri CreatedByUri { get { throw null; } }
         public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
         public bool? DebugLogsEnabled { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -473,6 +530,7 @@ namespace Azure.Developer.LoadTesting
         public System.DateTimeOffset? EndDateTime { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Developer.LoadTesting.ErrorDetails> ErrorDetails { get { throw null; } }
+        public double? EstimatedVirtualUserHours { get { throw null; } }
         public System.DateTimeOffset? ExecutedDateTime { get { throw null; } }
         public Azure.Developer.LoadTesting.LoadTestKind? Kind { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
@@ -519,10 +577,16 @@ namespace Azure.Developer.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestProfileRunAsync(string testProfileRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestRunAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation GenerateTestRunInsights(Azure.WaitUntil waitUntil, string testRunId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> GenerateTestRunInsightsAsync(Azure.WaitUntil waitUntil, string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetAppComponents(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestRunAppComponents> GetAppComponents(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAppComponentsAsync(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.TestRunAppComponents>> GetAppComponentsAsync(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetLatestTestRunInsights(string testRunId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Developer.LoadTesting.TestRunInsights> GetLatestTestRunInsights(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestTestRunInsightsAsync(string testRunId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.TestRunInsights>> GetLatestTestRunInsightsAsync(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetMetricDefinitions(string testRunId, string metricNamespace, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.MetricDefinitions> GetMetricDefinitions(string testRunId, string metricNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, Azure.RequestContext context) { throw null; }
@@ -559,10 +623,18 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestRunFileInfo> GetTestRunFile(string testRunId, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTestRunFileAsync(string testRunId, string fileName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.TestRunFileInfo>> GetTestRunFileAsync(string testRunId, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<System.BinaryData> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, int? maxpagesize, System.Collections.Generic.IEnumerable<string> createdByTypes, System.Collections.Generic.IEnumerable<string> testIds, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, int? maxpagesize = default(int?), System.Collections.Generic.IEnumerable<string> createdByTypes = null, System.Collections.Generic.IEnumerable<string> testIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, int? maxpagesize, System.Collections.Generic.IEnumerable<string> createdByTypes, System.Collections.Generic.IEnumerable<string> testIds, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, int? maxpagesize = default(int?), System.Collections.Generic.IEnumerable<string> createdByTypes = null, System.Collections.Generic.IEnumerable<string> testIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response StopTestProfileRun(string testProfileRunId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestProfileRun> StopTestProfileRun(string testProfileRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTestProfileRunAsync(string testProfileRunId, Azure.RequestContext context) { throw null; }
@@ -682,6 +754,31 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MetricValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MetricValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MonthlyRecurrenceByDates : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>
+    {
+        public MonthlyRecurrenceByDates() { }
+        public System.Collections.Generic.IList<int> DatesInMonth { get { throw null; } }
+        public int? Interval { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.MonthlyRecurrenceByDates System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.MonthlyRecurrenceByDates System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByDates>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MonthlyRecurrenceByWeekDays : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>
+    {
+        public MonthlyRecurrenceByWeekDays(int index, int interval) { }
+        public int Index { get { throw null; } set { } }
+        public int Interval { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Developer.LoadTesting.WeekDays> WeekDaysInMonth { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NameAndDescription : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.NameAndDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NameAndDescription>
     {
         internal NameAndDescription() { }
@@ -693,6 +790,76 @@ namespace Azure.Developer.LoadTesting
         Azure.Developer.LoadTesting.NameAndDescription System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NameAndDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NameAndDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NameAndDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class NotificationRule : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.NotificationRule>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NotificationRule>
+    {
+        protected NotificationRule(string displayName, System.Collections.Generic.IEnumerable<string> actionGroupIds) { }
+        public System.Collections.Generic.IList<string> ActionGroupIds { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public string DisplayName { get { throw null; } set { } }
+        public string LastModifiedBy { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedDateTime { get { throw null; } }
+        public string NotificationRuleId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.NotificationRule System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.NotificationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.NotificationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.NotificationRule System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NotificationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NotificationRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.NotificationRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationKind : System.IEquatable<Azure.Developer.LoadTesting.OperationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationKind(string value) { throw null; }
+        public static Azure.Developer.LoadTesting.OperationKind CloneTest { get { throw null; } }
+        public static Azure.Developer.LoadTesting.OperationKind GenerateTestRunInsights { get { throw null; } }
+        public bool Equals(Azure.Developer.LoadTesting.OperationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.LoadTesting.OperationKind left, Azure.Developer.LoadTesting.OperationKind right) { throw null; }
+        public static implicit operator Azure.Developer.LoadTesting.OperationKind (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.LoadTesting.OperationKind left, Azure.Developer.LoadTesting.OperationKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationState : System.IEquatable<Azure.Developer.LoadTesting.OperationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationState(string value) { throw null; }
+        public static Azure.Developer.LoadTesting.OperationState Canceled { get { throw null; } }
+        public static Azure.Developer.LoadTesting.OperationState Failed { get { throw null; } }
+        public static Azure.Developer.LoadTesting.OperationState NotStarted { get { throw null; } }
+        public static Azure.Developer.LoadTesting.OperationState Running { get { throw null; } }
+        public static Azure.Developer.LoadTesting.OperationState Succeeded { get { throw null; } }
+        public bool Equals(Azure.Developer.LoadTesting.OperationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.LoadTesting.OperationState left, Azure.Developer.LoadTesting.OperationState right) { throw null; }
+        public static implicit operator Azure.Developer.LoadTesting.OperationState (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.LoadTesting.OperationState left, Azure.Developer.LoadTesting.OperationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.OperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.OperationStatus>
+    {
+        internal OperationStatus() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Developer.LoadTesting.OperationKind Kind { get { throw null; } }
+        public Azure.Developer.LoadTesting.OperationState Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.OperationStatus System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.OperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.OperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.OperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.OperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.OperationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.OperationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OptionalLoadTestConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.OptionalLoadTestConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.OptionalLoadTestConfiguration>
     {
@@ -885,6 +1052,41 @@ namespace Azure.Developer.LoadTesting
         public static bool operator !=(Azure.Developer.LoadTesting.RecommendationCategory left, Azure.Developer.LoadTesting.RecommendationCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RecurrenceEnd : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceEnd>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceEnd>
+    {
+        public RecurrenceEnd() { }
+        public System.DateTimeOffset? EndDateTime { get { throw null; } set { } }
+        public int? NumberOfOccurrences { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.RecurrenceEnd System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceEnd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceEnd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.RecurrenceEnd System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceEnd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceEnd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceEnd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RecurrenceStatus : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceStatus>
+    {
+        internal RecurrenceStatus() { }
+        public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> NextScheduledDateTimes { get { throw null; } }
+        public int? RemainingOccurrences { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.RecurrenceStatus System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.RecurrenceStatus System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RecurrenceWithCron : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceWithCron>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceWithCron>
+    {
+        public RecurrenceWithCron(string cronExpression) { }
+        public string CronExpression { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.RecurrenceWithCron System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceWithCron>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceWithCron>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.RecurrenceWithCron System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceWithCron>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceWithCron>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceWithCron>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RegionalConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RegionalConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RegionalConfiguration>
     {
         public RegionalConfiguration(int engineInstances, Azure.Core.AzureLocation region) { }
@@ -933,6 +1135,20 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ResourceMetric>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ResourceMetric>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ScheduleTestsTrigger : Azure.Developer.LoadTesting.LoadTestingTrigger, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>
+    {
+        public ScheduleTestsTrigger(string displayName, System.Collections.Generic.IEnumerable<string> testIds) : base (default(string)) { }
+        public Azure.Developer.LoadTesting.LoadTestingRecurrence Recurrence { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.RecurrenceStatus RecurrenceStatus { get { throw null; } }
+        public System.DateTimeOffset? StartDateTime { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TestIds { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.ScheduleTestsTrigger System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.ScheduleTestsTrigger System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecretType : System.IEquatable<Azure.Developer.LoadTesting.SecretType>
     {
@@ -950,6 +1166,17 @@ namespace Azure.Developer.LoadTesting
         public static implicit operator Azure.Developer.LoadTesting.SecretType (string value) { throw null; }
         public static bool operator !=(Azure.Developer.LoadTesting.SecretType left, Azure.Developer.LoadTesting.SecretType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class StateDetails : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.StateDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.StateDetails>
+    {
+        internal StateDetails() { }
+        public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.StateDetails System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.StateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.StateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.StateDetails System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.StateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.StateDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.StateDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class TargetResourceConfigurations : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TargetResourceConfigurations>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TargetResourceConfigurations>
     {
@@ -1157,6 +1384,29 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class TestRunEndedEventCondition : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>
+    {
+        public TestRunEndedEventCondition() { }
+        public System.Collections.Generic.IList<Azure.Developer.LoadTesting.PassFailTestResult> TestRunResults { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Developer.LoadTesting.TestRunStatus> TestRunStatuses { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunEndedEventCondition System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunEndedEventCondition System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedEventCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TestRunEndedNotificationEventFilter : Azure.Developer.LoadTesting.TestsNotificationEventFilter, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>
+    {
+        public TestRunEndedNotificationEventFilter() { }
+        public Azure.Developer.LoadTesting.TestRunEndedEventCondition Condition { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunEndedNotificationEventFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TestRunFileInfo : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunFileInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunFileInfo>
     {
         internal TestRunFileInfo() { }
@@ -1188,6 +1438,32 @@ namespace Azure.Developer.LoadTesting
         Azure.Developer.LoadTesting.TestRunInputArtifacts System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInputArtifacts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInputArtifacts>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInputArtifacts>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TestRunInsightColumn : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsightColumn>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsightColumn>
+    {
+        internal TestRunInsightColumn() { }
+        public string DataType { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunInsightColumn System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsightColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsightColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunInsightColumn System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsightColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsightColumn>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsightColumn>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TestRunInsights : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsights>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsights>
+    {
+        internal TestRunInsights() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Developer.LoadTesting.TestRunInsightColumn> Columns { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Rows { get { throw null; } }
+        public Azure.Developer.LoadTesting.OperationState? Status { get { throw null; } }
+        public long? Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunInsights System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsights>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsights>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunInsights System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsights>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsights>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsights>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TestRunOutputArtifacts : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunOutputArtifacts>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunOutputArtifacts>
     {
@@ -1230,6 +1506,16 @@ namespace Azure.Developer.LoadTesting
         Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TestRunStartedNotificationEventFilter : Azure.Developer.LoadTesting.TestsNotificationEventFilter, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>
+    {
+        public TestRunStartedNotificationEventFilter() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TestRunStatistics : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunStatistics>
     {
@@ -1321,6 +1607,28 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestServerMetricsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestServerMetricsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class TestsNotificationEventFilter : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>
+    {
+        protected TestsNotificationEventFilter() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestsNotificationEventFilter System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestsNotificationEventFilter System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationEventFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TestsNotificationRule : Azure.Developer.LoadTesting.NotificationRule, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationRule>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationRule>
+    {
+        public TestsNotificationRule(string displayName, System.Collections.Generic.IEnumerable<string> actionGroupIds, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters) : base (default(string), default(System.Collections.Generic.IEnumerable<string>)) { }
+        public System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestsNotificationEventFilter> EventFilters { get { throw null; } }
+        public System.Collections.Generic.IList<string> TestIds { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestsNotificationRule System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestsNotificationRule System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TimeGrain : System.IEquatable<Azure.Developer.LoadTesting.TimeGrain>
     {
@@ -1353,6 +1661,81 @@ namespace Azure.Developer.LoadTesting
         Azure.Developer.LoadTesting.TimeSeriesElement System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TimeSeriesElement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TimeSeriesElement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TimeSeriesElement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TriggerCompletedNotificationEventFilter : Azure.Developer.LoadTesting.TestsNotificationEventFilter, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>
+    {
+        public TriggerCompletedNotificationEventFilter() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerCompletedNotificationEventFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TriggerDisabledNotificationEventFilter : Azure.Developer.LoadTesting.TestsNotificationEventFilter, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>
+    {
+        public TriggerDisabledNotificationEventFilter() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TriggerDisabledNotificationEventFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TriggerState : System.IEquatable<Azure.Developer.LoadTesting.TriggerState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TriggerState(string value) { throw null; }
+        public static Azure.Developer.LoadTesting.TriggerState Active { get { throw null; } }
+        public static Azure.Developer.LoadTesting.TriggerState Completed { get { throw null; } }
+        public static Azure.Developer.LoadTesting.TriggerState Disabled { get { throw null; } }
+        public static Azure.Developer.LoadTesting.TriggerState Paused { get { throw null; } }
+        public bool Equals(Azure.Developer.LoadTesting.TriggerState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.LoadTesting.TriggerState left, Azure.Developer.LoadTesting.TriggerState right) { throw null; }
+        public static implicit operator Azure.Developer.LoadTesting.TriggerState (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.LoadTesting.TriggerState left, Azure.Developer.LoadTesting.TriggerState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WeekDays : System.IEquatable<Azure.Developer.LoadTesting.WeekDays>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WeekDays(string value) { throw null; }
+        public static Azure.Developer.LoadTesting.WeekDays Friday { get { throw null; } }
+        public static Azure.Developer.LoadTesting.WeekDays Monday { get { throw null; } }
+        public static Azure.Developer.LoadTesting.WeekDays Saturday { get { throw null; } }
+        public static Azure.Developer.LoadTesting.WeekDays Sunday { get { throw null; } }
+        public static Azure.Developer.LoadTesting.WeekDays Thursday { get { throw null; } }
+        public static Azure.Developer.LoadTesting.WeekDays Tuesday { get { throw null; } }
+        public static Azure.Developer.LoadTesting.WeekDays Wednesday { get { throw null; } }
+        public bool Equals(Azure.Developer.LoadTesting.WeekDays other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.LoadTesting.WeekDays left, Azure.Developer.LoadTesting.WeekDays right) { throw null; }
+        public static implicit operator Azure.Developer.LoadTesting.WeekDays (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.LoadTesting.WeekDays left, Azure.Developer.LoadTesting.WeekDays right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class WeeklyRecurrence : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.WeeklyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.WeeklyRecurrence>
+    {
+        public WeeklyRecurrence() { }
+        public System.Collections.Generic.IList<Azure.Developer.LoadTesting.WeekDays> DaysOfWeek { get { throw null; } }
+        public int? Interval { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.WeeklyRecurrence System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.WeeklyRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.WeeklyRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.WeeklyRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.WeeklyRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.WeeklyRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.WeeklyRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

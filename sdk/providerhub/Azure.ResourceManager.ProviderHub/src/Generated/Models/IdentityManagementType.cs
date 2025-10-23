@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The IdentityManagementType. </summary>
+    /// <summary> The type. </summary>
     public readonly partial struct IdentityManagementType : IEquatable<IdentityManagementType>
     {
         private readonly string _value;

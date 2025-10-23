@@ -33,10 +33,8 @@ namespace Azure.ResourceManager.Quota
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics;
-        private readonly GroupQuotaLimitsRestOperations _groupQuotaLimitListGroupQuotaLimitsRestClient;
-        private readonly ClientDiagnostics _groupQuotaLimitListGroupQuotaLimitsRequestClientDiagnostics;
-        private readonly GroupQuotaLimitsRequestRestOperations _groupQuotaLimitListGroupQuotaLimitsRequestRestClient;
+        private readonly ClientDiagnostics _groupQuotaLimitListClientDiagnostics;
+        private readonly GroupQuotaLimitListsRestOperations _groupQuotaLimitListRestClient;
         private readonly GroupQuotaLimitListData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,12 +59,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GroupQuotaLimitListResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string groupQuotaLimitListGroupQuotaLimitsApiVersion);
-            _groupQuotaLimitListGroupQuotaLimitsRestClient = new GroupQuotaLimitsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListGroupQuotaLimitsApiVersion);
-            _groupQuotaLimitListGroupQuotaLimitsRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string groupQuotaLimitListGroupQuotaLimitsRequestApiVersion);
-            _groupQuotaLimitListGroupQuotaLimitsRequestRestClient = new GroupQuotaLimitsRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListGroupQuotaLimitsRequestApiVersion);
+            _groupQuotaLimitListClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string groupQuotaLimitListApiVersion);
+            _groupQuotaLimitListRestClient = new GroupQuotaLimitListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,11 +97,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,11 +112,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GroupQuotaLimitListResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Get");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaLimitListGroupQuotaLimitsRestClient.ListAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
@@ -142,11 +137,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_List</description>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,11 +152,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GroupQuotaLimitListResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Get");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaLimitListGroupQuotaLimitsRestClient.List(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken);
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
@@ -183,11 +178,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_Update</description>
+        /// <description>GroupQuotaLimitList_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,12 +198,12 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
             scope.Start();
             try
             {
-                var response = await _groupQuotaLimitListGroupQuotaLimitsRequestRestClient.UpdateAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<GroupQuotaLimitListResource>(new GroupQuotaLimitListOperationSource(Client), _groupQuotaLimitListGroupQuotaLimitsRequestClientDiagnostics, Pipeline, _groupQuotaLimitListGroupQuotaLimitsRequestRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
+                var response = await _groupQuotaLimitListRestClient.UpdateAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation<GroupQuotaLimitListResource>(new GroupQuotaLimitListOperationSource(Client), _groupQuotaLimitListClientDiagnostics, Pipeline, _groupQuotaLimitListRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,11 +225,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_Update</description>
+        /// <description>GroupQuotaLimitList_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,12 +245,12 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _groupQuotaLimitListGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
             scope.Start();
             try
             {
-                var response = _groupQuotaLimitListGroupQuotaLimitsRequestRestClient.Update(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken);
-                var operation = new QuotaArmOperation<GroupQuotaLimitListResource>(new GroupQuotaLimitListOperationSource(Client), _groupQuotaLimitListGroupQuotaLimitsRequestClientDiagnostics, Pipeline, _groupQuotaLimitListGroupQuotaLimitsRequestRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
+                var response = _groupQuotaLimitListRestClient.Update(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data, cancellationToken);
+                var operation = new QuotaArmOperation<GroupQuotaLimitListResource>(new GroupQuotaLimitListOperationSource(Client), _groupQuotaLimitListClientDiagnostics, Pipeline, _groupQuotaLimitListRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new AzureLocation(Id.Name), data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

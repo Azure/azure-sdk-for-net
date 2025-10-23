@@ -8,8 +8,10 @@
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- AZC0012 - Single word class names are too generic for Entity.cs class  -->
-    <NoWarn>$(NoWarn);3021;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);3021;AZC0012;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

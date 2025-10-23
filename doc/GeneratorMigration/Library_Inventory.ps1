@@ -1,12 +1,12 @@
 # Azure SDK for .NET Libraries Inventory Generator
-# 
+#
 # This script generates an inventory of libraries in the Azure SDK for .NET repository,
 # categorizing them as data plane or management plane, and by the type of generator used
 # (Swagger or TypeSpec).
 #
 # Usage:
 #     powershell Library_Inventory.ps1 [-Json]
-#     
+#
 # Options:
 #     -Json    Generate a JSON file with the inventory data
 
@@ -15,69 +15,59 @@ Param (
     [switch]$Json
 )
 
+$EmitterMap = @{
+    'eng/azure-typespec-http-client-csharp-emitter-package.json' = '@azure-typespec/http-client-csharp'
+    'eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json' = '@azure-typespec/http-client-csharp-mgmt'
+    'eng/http-client-csharp-emitter-package.json' = '@typespec/http-client-csharp'
+}
+
 function Test-MgmtLibrary {
     param([string]$Path)
-    
+
     # Check if a library is a management plane library
     return ($Path -match "Azure\.ResourceManager" -or $Path -match "\.Management\.")
 }
 
 function Get-GeneratorType {
     param([string]$Path)
-    
+
     # Identify if a library is generated using swagger or tsp.
     # Returns: "Swagger", a specific TypeSpec generator name, "TSP-Old", or "No Generator"
-    
+
     # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
     if ((Split-Path $Path -Leaf) -eq "Azure.AI.OpenAI" -and $Path -match "openai") {
-        return "@azure-typespec/http-client-csharp"
+        return "@typespec/http-client-csharp"
     }
-    
+
     # First check for direct TypeSpec indicators
     $tspConfigPath = Join-Path $Path "src\tspconfig.yaml"
     $tspDir = Join-Path $Path "src\tsp"
     $tspFiles = Get-ChildItem -Path (Join-Path $Path "src") -Filter "*.tsp" -ErrorAction SilentlyContinue
-    
+
     # Check for tsp-location.yaml files
     $tspLocationPaths = @()
     if (Test-Path $Path) {
         $tspLocationPaths = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }
     }
-    
+
     # If there's a tsp-location.yaml file and it contains emitterPackageJsonPath, extract the generator name
     foreach ($tspLocationPath in $tspLocationPaths) {
-        try {
+        try
+        {
             $content = Get-Content $tspLocationPath -Raw -ErrorAction SilentlyContinue
             if ($content -and $content -match "emitterPackageJsonPath") {
                 # Extract the emitterPackageJsonPath value
-                if ($content -match 'emitterPackageJsonPath:\s*"([^"]+)"') {
-                    $emitterPath = $Matches[1]
-                    # Construct absolute path to the emitter package JSON
-                    $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..") 
-                    $emitterJsonPath = Join-Path $repoRoot $emitterPath
-                    
-                    # Try to read the generator name from the emitter package JSON
-                    if (Test-Path $emitterJsonPath) {
-                        try {
-                            $packageJson = Get-Content $emitterJsonPath -Raw | ConvertFrom-Json
-                            # Look for TypeSpec generator in dependencies
-                            if ($packageJson.dependencies) {
-                                foreach ($dep in $packageJson.dependencies.PSObject.Properties.Name) {
-                                    if ($dep -match "^@azure-typespec/") {
-                                        # Return the fully qualified name of the emitter package
-                                        return $dep
-                                    }
-                                }
-                            }
-                        }
-                        catch {
-                            # Fall back to generic name if can't extract
-                        }
+                if ($content -match 'emitterPackageJsonPath:\s*(?<val>"[^"]+"|[^,\s]+)\s*,?') {
+                    $emitterPath = $matches['val'].Trim('"')
+
+                    if ($EmitterMap.ContainsKey($emitterPath))
+                    {
+                        return $EmitterMap[$emitterPath]
                     }
+
+                    # If we couldn't extract a specific name, use a default fully qualified name
+                    return "Unknown TypeSpec Generator: $emitterPath"
                 }
-                
-                # If we couldn't extract a specific name, use a default fully qualified name
-                return "@azure-typespec/http-client-csharp"  # Default name for new generator
             }
             else {
                 # Found tsp-location.yaml but no emitterPackageJsonPath, it's using the old TypeSpec generator
@@ -88,52 +78,34 @@ function Get-GeneratorType {
             # Continue to next file if error
         }
     }
-    
+
     if ((Test-Path $tspConfigPath) -or (Test-Path $tspDir) -or $tspFiles) {
         return "TSP-Old"
     }
-    
+
     # Check autorest.md for generator information
     $autorestMdPath = Join-Path $Path "src\autorest.md"
     if (Test-Path $autorestMdPath) {
         # If autorest.md exists, assume it's a Swagger library
         return "Swagger"
     }
-    
+
     # No autorest.md but Generated folder exists, assume Swagger
     if (Test-Path (Join-Path $Path "src\Generated")) {
         return "Swagger"
     }
-    
-    # Check if there's any file in src with "// <auto-generated/>" comment
-    # which is typically found in AutoRest generated code
-    $srcDir = Join-Path $Path "src"
-    if (Test-Path $srcDir) {
-        $csFiles = Get-ChildItem -Path $srcDir -Recurse -Filter "*.cs" -ErrorAction SilentlyContinue
-        foreach ($file in $csFiles) {
-            try {
-                $firstLines = Get-Content $file.FullName -TotalCount 10 -ErrorAction SilentlyContinue
-                if ($firstLines -and ($firstLines -join "`n") -match "<auto-generated/>") {
-                    return "Swagger"  # Default to Swagger if we see auto-generated code
-                }
-            }
-            catch {
-                # Continue to next file if error
-            }
-        }
-    }
-    
+
     # If we couldn't identify a generator, it's "No Generator"
     return "No Generator"
 }
 
 function Get-SdkLibraries {
     param([string]$SdkRoot)
-    
+
     # Scan all libraries in the sdk directory.
-    
+
     $libraries = @()
-    
+
     # Scan through all service directories
     $serviceDirs = Get-ChildItem -Path $SdkRoot -Directory -Force -ErrorAction SilentlyContinue
     foreach ($serviceDir in $serviceDirs) {
@@ -144,25 +116,25 @@ function Get-SdkLibraries {
             if ($libraryDir.Name -in @("tests", "samples", "perf", "assets", "docs")) {
                 continue
             }
-            
+
             # Skip libraries that start with "Microsoft."
             if ($libraryDir.Name.StartsWith("Microsoft.")) {
                 continue
             }
-            
+
             # If it has a /src directory or a csproj file, it's likely a library
             $srcPath = Join-Path $libraryDir.FullName "src"
             $csprojFiles = Get-ChildItem -Path $libraryDir.FullName -Filter "*.csproj" -ErrorAction SilentlyContinue
-            
+
             if ((Test-Path $srcPath) -or $csprojFiles) {
                 $libraryType = if (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
                 $generator = Get-GeneratorType $libraryDir.FullName
-                
+
                 # Calculate relative path from parent of SDK root (to include 'sdk' prefix)
                 $repoRoot = Split-Path $SdkRoot -Parent
                 $relativePath = $libraryDir.FullName.Substring($repoRoot.Length + 1)  # +1 to remove leading separator
                 $relativePath = $relativePath -replace "\\", "/"  # Normalize to forward slashes
-                
+
                 $libraries += [PSCustomObject]@{
                     service = $serviceDir.Name
                     library = $libraryDir.Name
@@ -173,63 +145,63 @@ function Get-SdkLibraries {
             }
         }
     }
-    
+
     return $libraries
 }
 
 function New-MarkdownReport {
     param([array]$Libraries)
-    
+
     # Generate a markdown report from the library inventory.
-    
+
     # Group by type and generator
     $mgmtSwagger = $Libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "Swagger" }
     $dataSwagger = $Libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "Swagger" }
-    
+
     # Old TypeSpec libraries
     $mgmtTspOld = $Libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "TSP-Old" }
     $dataTspOld = $Libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "TSP-Old" }
-    
+
     # Group by specific TypeSpec generator
     # First, identify all unique new generator types
-    $newGeneratorTypes = $Libraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") } | 
+    $newGeneratorTypes = $Libraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") } |
                         Select-Object -ExpandProperty generator -Unique | Sort-Object
-    
+
     # Create groups for each generator type
     $mgmtTspByGenerator = @{}
     $dataTspByGenerator = @{}
-    
+
     foreach ($genType in $newGeneratorTypes) {
         $mgmtTspByGenerator[$genType] = $Libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq $genType }
         $dataTspByGenerator[$genType] = $Libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq $genType }
     }
-    
+
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
-    
+
     $report = @()
     $report += "# Azure SDK for .NET Libraries Inventory`n"
-    
+
     $report += "## Summary`n"
     $report += "- Total libraries: $($Libraries.Count)"
     $report += "- Management Plane (Swagger): $($mgmtSwagger.Count)"
     $report += "- Management Plane (TSP-Old): $($mgmtTspOld.Count)"
-    
+
     # List all new generator types with counts
     foreach ($genType in $newGeneratorTypes) {
         $report += "- Management Plane (TypeSpec - $genType): $($mgmtTspByGenerator[$genType].Count)"
     }
-    
+
     $report += "- Data Plane (Swagger): $($dataSwagger.Count)"
     $report += "- Data Plane (TSP-Old): $($dataTspOld.Count)"
-    
+
     # List all new generator types with counts for data plane
     foreach ($genType in $newGeneratorTypes) {
         $report += "- Data Plane (TypeSpec - $genType): $($dataTspByGenerator[$genType].Count)"
     }
-    
+
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
-    
+
     # Add sections for each TypeSpec generator for Data Plane
     foreach ($genType in $newGeneratorTypes) {
         if ($dataTspByGenerator[$genType].Count -gt 0) {
@@ -244,7 +216,7 @@ function New-MarkdownReport {
             $report += "`n"
         }
     }
-    
+
     # Old TypeSpec Data Plane Libraries
     if ($dataTspOld.Count -gt 0) {
         $report += "## Data Plane Libraries using TypeSpec (Old Generator)`n"
@@ -257,7 +229,7 @@ function New-MarkdownReport {
         }
         $report += "`n"
     }
-    
+
     # Data Plane Swagger Libraries
     if ($dataSwagger.Count -gt 0) {
         $report += "## Data Plane Libraries using Swagger`n"
@@ -270,7 +242,7 @@ function New-MarkdownReport {
         }
         $report += "`n"
     }
-    
+
     # Add sections for each TypeSpec generator for Management Plane
     foreach ($genType in $newGeneratorTypes) {
         if ($mgmtTspByGenerator[$genType].Count -gt 0) {
@@ -285,7 +257,7 @@ function New-MarkdownReport {
             $report += "`n"
         }
     }
-    
+
     # Old TypeSpec Management Plane Libraries
     if ($mgmtTspOld.Count -gt 0) {
         $report += "## Management Plane Libraries using TypeSpec (Old Generator)`n"
@@ -298,7 +270,7 @@ function New-MarkdownReport {
         }
         $report += "`n"
     }
-    
+
     # Management Plane Swagger Libraries
     if ($mgmtSwagger.Count -gt 0) {
         $report += "## Management Plane Libraries using Swagger`n"
@@ -311,7 +283,7 @@ function New-MarkdownReport {
         }
         $report += "`n"
     }
-    
+
     # No Generator Libraries
     $report += "## Libraries with No Generator`n"
     $report += "Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: $($noGenerator.Count)`n"
@@ -321,7 +293,7 @@ function New-MarkdownReport {
     foreach ($lib in $sortedLibs) {
         $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
     }
-    
+
     return ($report -join "`n")
 }
 
@@ -330,26 +302,26 @@ try {
     # Define the path to the SDK root directory
     $sdkRoot = Join-Path $PSScriptRoot "..\..\sdk"
     $sdkRoot = Resolve-Path $sdkRoot
-    
+
     # Scan libraries
     Write-Host "Scanning libraries..." -ForegroundColor Green
     $libraries = Get-SdkLibraries $sdkRoot
-    
+
     # Print summary counts
     $mgmtSwagger = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "Swagger" }).Count
     $mgmtTspOld = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "TSP-Old" }).Count
     $dataSwagger = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "Swagger" }).Count
     $dataTspOld = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "TSP-Old" }).Count
     $noGenerator = ($libraries | Where-Object { $_.generator -eq "No Generator" }).Count
-    
+
     # Get counts for specific TypeSpec generators
-    $newGeneratorTypes = $libraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") } | 
+    $newGeneratorTypes = $libraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") } |
                         Select-Object -ExpandProperty generator -Unique | Sort-Object
-    
+
     Write-Host "Total libraries found: $($libraries.Count)"
     Write-Host "Management Plane (Swagger): $mgmtSwagger"
     Write-Host "Management Plane (TSP-Old): $mgmtTspOld"
-    
+
     # Print counts for each new generator type in Management Plane
     foreach ($genType in $newGeneratorTypes) {
         $mgmtGenCount = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq $genType }).Count
@@ -357,10 +329,10 @@ try {
             Write-Host "Management Plane (TypeSpec - $genType): $mgmtGenCount"
         }
     }
-    
+
     Write-Host "Data Plane (Swagger): $dataSwagger"
     Write-Host "Data Plane (TSP-Old): $dataTspOld"
-    
+
     # Print counts for each new generator type in Data Plane
     foreach ($genType in $newGeneratorTypes) {
         $dataGenCount = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq $genType }).Count
@@ -368,16 +340,16 @@ try {
             Write-Host "Data Plane (TypeSpec - $genType): $dataGenCount"
         }
     }
-    
+
     Write-Host "No generator: $noGenerator"
-    
+
     # Generate the inventory markdown file
     $markdownReport = New-MarkdownReport $libraries
     $inventoryMdPath = Join-Path $PSScriptRoot "Library_Inventory.md"
     $markdownReport | Out-File -FilePath $inventoryMdPath -Encoding UTF8
-    
+
     Write-Host "Library inventory markdown generated at: $inventoryMdPath"
-    
+
     # Export JSON only if requested via the -Json flag
     if ($Json) {
         $jsonPath = Join-Path $PSScriptRoot "Library_Inventory.json"

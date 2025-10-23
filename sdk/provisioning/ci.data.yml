@@ -14,9 +14,12 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.FrontDoor
     - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
+    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.SignalR
@@ -41,9 +44,12 @@ pr:
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.FrontDoor
     - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
+    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.SignalR
@@ -74,8 +80,16 @@ parameters:
     displayName: 'Azure.Provisioning.EventHubs'
     type: boolean
     default: false
+  - name: release_Azure_Provisioning_FrontDoor
+    displayName: 'Azure.Provisioning.FrontDoor'
+    type: boolean
+    default: false
   - name: release_Azure_Provisioning_KeyVault
     displayName: 'Azure.Provisioning.KeyVault'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Kusto
+    displayName: 'Azure.Provisioning.Kusto'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_PostgreSql
@@ -84,6 +98,9 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_Redis
     displayName: 'Azure.Provisioning.Redis'
+    type: boolean
+  - name: release_Azure_Provisioning_RedisEnterprise
+    displayName: 'Azure.Provisioning.RedisEnterprise'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Search
@@ -133,15 +150,24 @@ extends:
     - name: Azure.Provisioning.EventHubs
       safeName: AzureProvisioningEventHubs
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_EventHubs }}
+    - name: Azure.Provisioning.FrontDoor
+      safeName: AzureProvisioningFrontDoor
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_FrontDoor }}
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}
+    - name: Azure.Provisioning.Kusto
+      safeName: AzureProvisioningKusto
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
     - name: Azure.Provisioning.PostgreSql
       safeName: AzureProvisioningPostgreSql
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_PostgreSql }}
     - name: Azure.Provisioning.Redis
       safeName: AzureProvisioningRedis
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Redis }}
+    - name: Azure.Provisioning.RedisEnterprise
+      safeName: AzureProvisioningRedisEnterprise
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_RedisEnterprise }}
     - name: Azure.Provisioning.Search
       safeName: AzureProvisioningSearch
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Search }}

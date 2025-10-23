@@ -3,24 +3,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.EventHubs.Tests;
 
-public class BasicEventHubsTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicEventHubsTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventhub/event-hubs-create-event-hub-and-consumer-group/main.bicep")]
-    public async Task CreateEventHubAndConsumerGroup()
+    internal static Trycep CreateEventHubAndConsumerGroupTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:EventHubsBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
@@ -57,10 +52,18 @@ public class BasicEventHubsTests(bool async)
                         UserMetadata = BinaryData.FromObjectAsJson(new { foo = 1, bar = "hello" }).ToString()
                     };
                 infra.Add(group);
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventhub/event-hubs-create-event-hub-and-consumer-group/main.bicep")]
+    public async Task CreateEventHubAndConsumerGroup()
+    {
+        await using Trycep test = CreateEventHubAndConsumerGroupTest();
+        test.Compare(
             """
             param hubName string = 'orders'
 
@@ -91,8 +94,6 @@ public class BasicEventHubsTests(bool async)
               }
               parent: hub
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
+    /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an <see cref="HttpHeader.Names.Authorization"/> header.
     /// </summary>
     public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {

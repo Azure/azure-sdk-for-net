@@ -1,33 +1,10 @@
 namespace Azure.ResourceManager.SiteManager
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.EdgeSiteData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.EdgeSiteResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.SiteAddressProperties))]
     public partial class AzureResourceManagerSiteManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSiteManagerContext() { }
         public static Azure.ResourceManager.SiteManager.AzureResourceManagerSiteManagerContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
-    public partial class EdgeSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.EdgeSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.EdgeSiteResource>, System.Collections.IEnumerable
-    {
-        protected EdgeSiteCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SiteManager.EdgeSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.EdgeSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SiteManager.EdgeSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.EdgeSiteResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class EdgeSiteData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>
     {
@@ -40,51 +17,128 @@ namespace Azure.ResourceManager.SiteManager
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EdgeSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>
+    public partial class ResourceGroupEdgeSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>, System.Collections.IEnumerable
+    {
+        protected ResourceGroupEdgeSiteCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ResourceGroupEdgeSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected EdgeSiteResource() { }
+        protected ResourceGroupEdgeSiteResource() { }
         public virtual Azure.ResourceManager.SiteManager.EdgeSiteData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.SiteManager.EdgeSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SiteManager.EdgeSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> Update(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> UpdateAsync(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> Update(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> UpdateAsync(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ServiceGroupEdgeSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>, System.Collections.IEnumerable
+    {
+        protected ServiceGroupEdgeSiteCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceGroupEdgeSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServiceGroupEdgeSiteResource() { }
+        public virtual Azure.ResourceManager.SiteManager.EdgeSiteData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string servicegroupName, string siteName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SiteManager.EdgeSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SiteManager.EdgeSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> Update(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> UpdateAsync(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class SiteManagerExtensions
     {
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource> CreateOrUpdateSitesByServiceGroup(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource>> CreateOrUpdateSitesByServiceGroupAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource> CreateOrUpdateSitesBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource>> CreateOrUpdateSitesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response DeleteSitesByServiceGroup(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response> DeleteSitesByServiceGroupAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response DeleteSitesBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response> DeleteSitesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetEdgeSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SiteManager.EdgeSiteResource GetEdgeSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SiteManager.EdgeSiteCollection GetEdgeSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSites(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSites(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSitesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSitesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetSitesByServiceGroup(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetSitesByServiceGroupAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetSitesBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetSitesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> UpdateSitesByServiceGroup(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> UpdateSitesByServiceGroupAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> UpdateSitesBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> UpdateSitesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> GetResourceGroupEdgeSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteCollection GetResourceGroupEdgeSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> GetServiceGroupEdgeSite(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> GetServiceGroupEdgeSiteAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> GetSubscriptionEdgeSite(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> GetSubscriptionEdgeSiteAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteCollection GetSubscriptionEdgeSites(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+    }
+    public partial class SubscriptionEdgeSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>, System.Collections.IEnumerable
+    {
+        protected SubscriptionEdgeSiteCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> Get(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> GetAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> GetIfExists(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> GetIfExistsAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SubscriptionEdgeSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SubscriptionEdgeSiteResource() { }
+        public virtual Azure.ResourceManager.SiteManager.EdgeSiteData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string siteName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SiteManager.EdgeSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SiteManager.EdgeSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.EdgeSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> Update(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> UpdateAsync(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SiteManager.Mocking
@@ -92,42 +146,26 @@ namespace Azure.ResourceManager.SiteManager.Mocking
     public partial class MockableSiteManagerArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableSiteManagerArmClient() { }
-        public virtual Azure.ResourceManager.SiteManager.EdgeSiteResource GetEdgeSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource GetResourceGroupEdgeSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource> GetServiceGroupEdgeSite(Azure.Core.ResourceIdentifier scope, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource>> GetServiceGroupEdgeSiteAsync(Azure.Core.ResourceIdentifier scope, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteResource GetServiceGroupEdgeSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SiteManager.ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource GetSubscriptionEdgeSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableSiteManagerResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSiteManagerResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetEdgeSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SiteManager.EdgeSiteCollection GetEdgeSites() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteResource>> GetResourceGroupEdgeSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SiteManager.ResourceGroupEdgeSiteCollection GetResourceGroupEdgeSites() { throw null; }
     }
     public partial class MockableSiteManagerSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSiteManagerSubscriptionResource() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource> CreateOrUpdateSitesBySubscription(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource>> CreateOrUpdateSitesBySubscriptionAsync(Azure.WaitUntil waitUntil, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteSitesBySubscription(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSitesBySubscriptionAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSites(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSitesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetSitesBySubscription(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetSitesBySubscriptionAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> UpdateSitesBySubscription(string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> UpdateSitesBySubscriptionAsync(string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MockableSiteManagerTenantResource : Azure.ResourceManager.ArmResource
-    {
-        protected MockableSiteManagerTenantResource() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource> CreateOrUpdateSitesByServiceGroup(Azure.WaitUntil waitUntil, string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SiteManager.EdgeSiteResource>> CreateOrUpdateSitesByServiceGroupAsync(Azure.WaitUntil waitUntil, string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.EdgeSiteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteSitesByServiceGroup(string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSitesByServiceGroupAsync(string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSites(string servicegroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetEdgeSitesAsync(string servicegroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> GetSitesByServiceGroup(string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> GetSitesByServiceGroupAsync(string servicegroupName, string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource> UpdateSitesByServiceGroup(string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.EdgeSiteResource>> UpdateSitesByServiceGroupAsync(string servicegroupName, string siteName, Azure.ResourceManager.SiteManager.Models.EdgeSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource> GetSubscriptionEdgeSite(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteResource>> GetSubscriptionEdgeSiteAsync(string siteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SiteManager.SubscriptionEdgeSiteCollection GetSubscriptionEdgeSites() { throw null; }
     }
 }
 namespace Azure.ResourceManager.SiteManager.Models
@@ -135,7 +173,23 @@ namespace Azure.ResourceManager.SiteManager.Models
     public static partial class ArmSiteManagerModelFactory
     {
         public static Azure.ResourceManager.SiteManager.EdgeSiteData EdgeSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, Azure.ResourceManager.SiteManager.Models.SiteAddressProperties siteAddress = null, System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? provisioningState = default(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties siteAddress = null, System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? provisioningState = default(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState?)) { throw null; }
+    }
+    public partial class EdgeSiteAddressProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>
+    {
+        public EdgeSiteAddressProperties() { }
+        public string City { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string StateOrProvince { get { throw null; } set { } }
+        public string StreetAddress1 { get { throw null; } set { } }
+        public string StreetAddress2 { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EdgeSitePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatch>
     {
@@ -154,7 +208,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
-        public Azure.ResourceManager.SiteManager.Models.SiteAddressProperties SiteAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties SiteAddress { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -169,7 +223,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Labels { get { throw null; } }
         public Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.SiteManager.Models.SiteAddressProperties SiteAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties SiteAddress { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -195,21 +249,5 @@ namespace Azure.ResourceManager.SiteManager.Models
         public static implicit operator Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState left, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SiteAddressProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>
-    {
-        public SiteAddressProperties() { }
-        public string City { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public string PostalCode { get { throw null; } set { } }
-        public string StateOrProvince { get { throw null; } set { } }
-        public string StreetAddress1 { get { throw null; } set { } }
-        public string StreetAddress2 { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SiteManager.Models.SiteAddressProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SiteManager.Models.SiteAddressProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SiteManager.Models.SiteAddressProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

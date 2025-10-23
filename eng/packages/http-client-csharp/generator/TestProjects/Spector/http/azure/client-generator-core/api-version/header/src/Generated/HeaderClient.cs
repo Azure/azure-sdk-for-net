@@ -15,11 +15,9 @@ namespace Client.AlternateApiVersion.Service.Header
 {
     public partial class HeaderClient
     {
-        protected HeaderClient() => throw null;
+        public HeaderClient() : this(new Uri("http://localhost:3000"), new HeaderClientOptions()) => throw null;
 
-        public HeaderClient(string version) : this(new Uri("http://localhost:3000"), version, new HeaderClientOptions()) => throw null;
-
-        public HeaderClient(Uri endpoint, string version, HeaderClientOptions options) => throw null;
+        public HeaderClient(Uri endpoint, HeaderClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

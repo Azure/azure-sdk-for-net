@@ -67,7 +67,7 @@ internal class PlaywrightVersion : IPlaywrightVersion
         }
     }
 
-    internal string GetPlaywrightVersion()
+    public string GetPlaywrightVersion()
     {
         return "1.52.0";
     }

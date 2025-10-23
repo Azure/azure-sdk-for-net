@@ -50,15 +50,32 @@ namespace Azure.Generator.Management
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
+            // renaming should come first
+            AddVisitor(new NameVisitor());
+            AddVisitor(new SerializationVisitor());
+            AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
-            AddVisitor(new NameVisitor());
             AddVisitor(new TypeFilterVisitor());
-            AddVisitor(new SerializationVisitor());
             AddVisitor(new PaginationVisitor());
-            AddVisitor(new SafeFlattenVisitor());
             AddVisitor(new ModelFactoryVisitor());
+            if (IsWirePathEnabled())
+            {
+                AddVisitor(new WirePathVisitor());
+            }
+        }
+
+        private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+
+        private bool IsWirePathEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(EnableWirePathFeatureFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
         }
     }
 }

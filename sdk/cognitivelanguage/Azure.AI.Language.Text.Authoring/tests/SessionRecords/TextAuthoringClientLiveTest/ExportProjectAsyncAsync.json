@@ -1,0 +1,98 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/:export?stringIndexType=Utf16CodeUnit&api-version=2025-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "0",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250628.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "85c2a418-bd4a-4529-9230-4dbb76cfa185",
+        "Content-Length": "0",
+        "Date": "Sun, 29 Jun 2025 00:34:31 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/export/jobs/568a829a-4c37-49e5-a8e6-52a6eb58dab9_638867520000000000?api-version=2025-05-15-preview",
+        "request-id": "85c2a418-bd4a-4529-9230-4dbb76cfa185",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "51",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/export/jobs/568a829a-4c37-49e5-a8e6-52a6eb58dab9_638867520000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250628.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "92cbb63c-3c1c-4b45-bbd4-c91a0c82477b",
+        "Content-Length": "219",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 29 Jun 2025 00:34:31 GMT",
+        "request-id": "92cbb63c-3c1c-4b45-bbd4-c91a0c82477b",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "38",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "568a829a-4c37-49e5-a8e6-52a6eb58dab9_638867520000000000",
+        "createdDateTime": "2025-06-29T00:34:32Z",
+        "lastUpdatedDateTime": "2025-06-29T00:34:32Z",
+        "expirationDateTime": "2025-07-06T00:34:32Z",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/export/jobs/568a829a-4c37-49e5-a8e6-52a6eb58dab9_638867520000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250628.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "2f2d6298-c3f7-4b1b-8f02-641c70782ceb",
+        "Content-Length": "448",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 29 Jun 2025 00:34:33 GMT",
+        "request-id": "2f2d6298-c3f7-4b1b-8f02-641c70782ceb",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "resultUrl": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/export/jobs/568a829a-4c37-49e5-a8e6-52a6eb58dab9_638867520000000000/result?api-version=2025-05-15-preview",
+        "jobId": "568a829a-4c37-49e5-a8e6-52a6eb58dab9_638867520000000000",
+        "createdDateTime": "2025-06-29T00:34:32Z",
+        "lastUpdatedDateTime": "2025-06-29T00:34:32Z",
+        "expirationDateTime": "2025-07-06T00:34:32Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "302685925"
+  }
+}

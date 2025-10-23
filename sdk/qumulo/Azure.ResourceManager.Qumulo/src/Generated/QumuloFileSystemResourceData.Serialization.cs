@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -41,23 +42,37 @@ namespace Azure.ResourceManager.Qumulo
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
+            writer.WritePropertyName("initialCapacity"u8);
+            writer.WriteNumberValue(InitialCapacity);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails, options);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(MarketplaceDetails))
+            {
+                writer.WritePropertyName("marketplaceDetails"u8);
+                writer.WriteObjectValue(MarketplaceDetails, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ArmProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ArmProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("storageSku"u8);
-            writer.WriteStringValue(StorageSku.ToSerialString());
-            writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue(UserDetails, options);
-            writer.WritePropertyName("delegatedSubnetId"u8);
-            writer.WriteStringValue(DelegatedSubnetId);
+            if (Optional.IsDefined(StorageSkuName))
+            {
+                writer.WritePropertyName("storageSku"u8);
+                writer.WriteStringValue(StorageSkuName);
+            }
+            if (Optional.IsDefined(UserDetails))
+            {
+                writer.WritePropertyName("userDetails"u8);
+                writer.WriteObjectValue(UserDetails, options);
+            }
+            if (Optional.IsDefined(DelegatedSubnetId))
+            {
+                writer.WritePropertyName("delegatedSubnetId"u8);
+                writer.WriteStringValue(DelegatedSubnetId);
+            }
             if (Optional.IsDefined(ClusterLoginUri))
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
@@ -78,10 +93,11 @@ namespace Azure.ResourceManager.Qumulo
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("adminPassword"u8);
-            writer.WriteStringValue(AdminPassword);
-            writer.WritePropertyName("initialCapacity"u8);
-            writer.WriteNumberValue(InitialCapacity);
+            if (Optional.IsDefined(AdminPassword))
+            {
+                writer.WritePropertyName("adminPassword"u8);
+                writer.WriteStringValue(AdminPassword);
+            }
             if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
@@ -111,6 +127,7 @@ namespace Azure.ResourceManager.Qumulo
                 return null;
             }
             ManagedServiceIdentity identity = default;
+            int initialCapacity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -118,14 +135,13 @@ namespace Azure.ResourceManager.Qumulo
             ResourceType type = default;
             SystemData systemData = default;
             MarketplaceDetails marketplaceDetails = default;
-            QumuloProvisioningState? provisioningState = default;
-            StorageSku storageSku = default;
+            QumuloArmProvisioningState? provisioningState = default;
+            string storageSku = default;
             QumuloUserDetails userDetails = default;
             string delegatedSubnetId = default;
             Uri clusterLoginUrl = default;
             IList<IPAddress> privateIPs = default;
             string adminPassword = default;
-            int initialCapacity = default;
             string availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +153,16 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerQumuloContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("initialCapacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialCapacity = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +205,7 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerQumuloContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,6 +219,10 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         if (property0.NameEquals("marketplaceDetails"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property0.Value, options);
                             continue;
                         }
@@ -203,16 +232,20 @@ namespace Azure.ResourceManager.Qumulo
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToQumuloProvisioningState();
+                            provisioningState = new QumuloArmProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageSku"u8))
                         {
-                            storageSku = property0.Value.GetString().ToStorageSku();
+                            storageSku = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("userDetails"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property0.Value, options);
                             continue;
                         }
@@ -256,11 +289,6 @@ namespace Azure.ResourceManager.Qumulo
                             adminPassword = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("initialCapacity"u8))
-                        {
-                            initialCapacity = property0.Value.GetInt32();
-                            continue;
-                        }
                         if (property0.NameEquals("availabilityZone"u8))
                         {
                             availabilityZone = property0.Value.GetString();
@@ -282,7 +310,6 @@ namespace Azure.ResourceManager.Qumulo
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 marketplaceDetails,
                 provisioningState,
                 storageSku,
@@ -291,8 +318,9 @@ namespace Azure.ResourceManager.Qumulo
                 clusterLoginUrl,
                 privateIPs ?? new ChangeTrackingList<IPAddress>(),
                 adminPassword,
-                initialCapacity,
                 availabilityZone,
+                identity,
+                initialCapacity,
                 serializedAdditionalRawData);
         }
 

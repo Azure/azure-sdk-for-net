@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2025-10-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-01' to 'package-2025-06'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/1e7684349abdacee94cbf89200f319cd49e323f2/specification/storage/resource-manager/readme.md.
+    - Supported new property GeoPriorityReplicationStatus.IsBlobEnabled on Storage accounts.
+    - Supported new ObjectReplicationPolicy Properties: PriorityReplication.Enabled.
+
+## 1.5.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-01' to 'package-2025-01'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/9e8f84cab64ffb562abbb0790f2b1e7a707b5ad6/specification/storage/resource-manager/readme.md.
+    - Supported new property isSmbOauth on Storage accounts.
+    - Supported new properties Zone and ZonePlacementPolicy on Storage accounts.
+    - Supported new property EncryptionInTransit in NFS and SMB settings.
+
+## 1.4.4 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Storage` AOT-compatible
 
 ## 1.4.3 (2025-06-24)
 

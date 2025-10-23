@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Dns.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
@@ -13,6 +16,36 @@ namespace Azure.ResourceManager.Dns
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DelegationSignerInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsAaaaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsARecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsCaaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsCnameRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsDSRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsMXRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsNaptrRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsNSRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsPtrRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsRecordListResult))]
+    [ModelReaderWriterBuildable(typeof(DnsResourceReference))]
+    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceContent))]
+    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResult))]
+    [ModelReaderWriterBuildable(typeof(DnssecConfigData))]
+    [ModelReaderWriterBuildable(typeof(DnssecConfigListResult))]
+    [ModelReaderWriterBuildable(typeof(DnssecConfigResource))]
+    [ModelReaderWriterBuildable(typeof(DnsSigningKey))]
+    [ModelReaderWriterBuildable(typeof(DnsSoaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsSrvRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsTlsaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsTxtRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsZoneData))]
+    [ModelReaderWriterBuildable(typeof(DnsZoneListResult))]
+    [ModelReaderWriterBuildable(typeof(DnsZonePatch))]
+    [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(Models.SystemData))]
+    [ModelReaderWriterBuildable(typeof(ResourceManager.Models.SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerDnsContext : ModelReaderWriterContext
     {
     }

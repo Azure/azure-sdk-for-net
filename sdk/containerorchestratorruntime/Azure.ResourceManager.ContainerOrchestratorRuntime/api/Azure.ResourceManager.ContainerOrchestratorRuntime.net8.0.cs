@@ -1,26 +1,5 @@
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterBgpPeerData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterBgpPeerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterLoadBalancerData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterLoadBalancerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterServiceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterServiceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterStorageClassData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterStorageClassResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.BlobStorageClassTypeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ConnectedClusterBgpPeerProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ConnectedClusterLoadBalancerProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ConnectedClusterServiceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ConnectedClusterStorageClassPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.ConnectedClusterStorageClassProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NativeStorageClassTypeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.NfsStorageClassTypeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.RwxStorageClassTypeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.SmbStorageClassTypeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassPropertiesUpdate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassTypeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassTypePropertiesUpdate))]
     public partial class AzureResourceManagerContainerOrchestratorRuntimeContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerContainerOrchestratorRuntimeContext() { }

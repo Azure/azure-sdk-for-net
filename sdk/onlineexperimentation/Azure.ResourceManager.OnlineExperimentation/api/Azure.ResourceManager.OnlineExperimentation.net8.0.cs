@@ -1,13 +1,5 @@
 namespace Azure.ResourceManager.OnlineExperimentation
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspacePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspacePatchProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.OnlineExperimentationWorkspaceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.OnlineExperimentationWorkspaceResource))]
     public partial class AzureResourceManagerOnlineExperimentationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerOnlineExperimentationContext() { }

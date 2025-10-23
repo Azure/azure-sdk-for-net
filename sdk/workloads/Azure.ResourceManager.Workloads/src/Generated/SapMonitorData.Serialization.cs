@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                JsonSerializer.Serialize(writer, Errors);
+                ((IJsonModel<ResponseError>)Errors).Write(writer, options);
             }
             if (Optional.IsDefined(AppLocation))
             {
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            errors = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerWorkloadsContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("appLocation"u8))

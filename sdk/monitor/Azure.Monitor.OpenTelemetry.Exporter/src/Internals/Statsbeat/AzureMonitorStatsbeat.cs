@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        private static VmMetadataResponse? GetVmMetadataResponse()
+        internal static VmMetadataResponse? GetVmMetadataResponse()
         {
             try
             {
@@ -153,6 +153,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private void SetResourceProviderDetails(IPlatform platform)
         {
+            var functionsWorkerRuntime = platform.GetEnvironmentVariable(EnvironmentVariableConstants.FUNCTIONS_WORKER_RUNTIME);
+            if (functionsWorkerRuntime != null)
+            {
+                _resourceProvider = "functions";
+                _resourceProviderId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_HOSTNAME);
+
+                return;
+            }
+
             var appSvcWebsiteName = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME);
             if (appSvcWebsiteName != null)
             {
@@ -163,15 +172,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 {
                     _resourceProviderId += "/" + appSvcWebsiteHostName;
                 }
-
-                return;
-            }
-
-            var functionsWorkerRuntime = platform.GetEnvironmentVariable(EnvironmentVariableConstants.FUNCTIONS_WORKER_RUNTIME);
-            if (functionsWorkerRuntime != null)
-            {
-                _resourceProvider = "functions";
-                _resourceProviderId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_HOSTNAME);
 
                 return;
             }

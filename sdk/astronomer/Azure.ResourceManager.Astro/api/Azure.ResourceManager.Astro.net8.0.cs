@@ -63,18 +63,6 @@ namespace Azure.ResourceManager.Astro
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Astro.AstroOrganizationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Astro.Models.AstroOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Astro.AstroOrganizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Astro.Models.AstroOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.AstroOrganizationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.AstroOrganizationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroOfferDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroOrganizationPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroOrganizationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroUserDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails))]
     public partial class AzureResourceManagerAstroContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAstroContext() { }

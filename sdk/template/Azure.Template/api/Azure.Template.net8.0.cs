@@ -1,9 +1,5 @@
 namespace Azure.Template
 {
-    public partial class AzureTemplateContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureTemplateContext() { }
-    }
     public partial class TemplateClient
     {
         protected TemplateClient() { }

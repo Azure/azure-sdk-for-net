@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/7f6e17564770ef938595a0c7c9929753fa51047d/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0ddf6bed82bb62f5b07efb86ef62e74fd63b3fc1/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -82,230 +82,233 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VirtualMachineScaleSetVmRunCommand
 
 override-operation-name:
-  VirtualMachines_Start: PowerOn
-  VirtualMachineScaleSets_Start: PowerOn
-  VirtualMachineScaleSetVMs_Start: PowerOn
   CloudServices_Start: PowerOn
   CloudServicesUpdateDomain_GetUpdateDomain: GetUpdateDomain
   CloudServicesUpdateDomain_ListUpdateDomains: GetUpdateDomains
   CloudServicesUpdateDomain_WalkUpdateDomain: WalkUpdateDomain
   GallerySharingProfile_Update: UpdateSharingProfile
-  VirtualMachineImages_ListPublishers: GetVirtualMachineImagePublishers
-  VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
-  VirtualMachineImages_ListOffers: GetVirtualMachineImageOffers
-  VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
-  VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
   LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
   ResourceSkus_List: GetComputeResourceSkus
+  VirtualMachineImages_ListOffers: GetVirtualMachineImageOffers
+  VirtualMachineImages_ListPublishers: GetVirtualMachineImagePublishers
+  VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
   VirtualMachineImages_ListWithProperties: GetVirtualMachineImagesWithProperties
+  VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
   VirtualMachines_MigrateToVmScaleSet: MigrateToVirtualMachineScaleSet
+  VirtualMachines_Start: PowerOn
+  VirtualMachineScaleSets_Start: PowerOn
+  VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
+  VirtualMachineScaleSetVMs_Start: PowerOn
 
 request-path-to-resource-data:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}: CommunityGallery
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
 
 prepend-rp-prefix:
-- UsageName
-- UsageUnit
 - ApiError
 - ApiErrorBase
 - DeleteOptions
-- ResourceSku
-- ResourceSkuCapacity
-- ResourceSkuLocationInfo
-- ResourceSkuRestrictions
-- ResourceSkuRestrictionInfo
-- ResourceSkuRestrictionsReasonCode
-- ResourceSkuRestrictionsType
-- ResourceSkuZoneDetails
-- ResourceSkuCapacityScaleType
 - EncryptionType
 - PublicIPAddressSku
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
+- ResourceSku
+- ResourceSkuCapacity
+- ResourceSkuCapacityScaleType
+- ResourceSkuLocationInfo
+- ResourceSkuRestrictionInfo
+- ResourceSkuRestrictions
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+- ResourceSkuZoneDetails
 - StatusLevelTypes
+- UsageName
+- UsageUnit
 
 rename-mapping:
-  DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
-  SubResource: ComputeWriteableSubResourceData
-  SubResourceReadOnly: ComputeSubResourceData
-  HyperVGenerationType: HyperVGeneration
-  HyperVGenerationTypes: HyperVGeneration
-  VirtualMachineExtension.properties.type: ExtensionType
-  VirtualMachineExtensionUpdate.properties.type: ExtensionType
-  VirtualMachineScaleSetExtension.properties.type: ExtensionType
-  VirtualMachineScaleSetExtensionUpdate.properties.type: ExtensionType
-  VirtualMachineScaleSetVMExtension.properties.type: ExtensionType
-  VirtualMachineScaleSetVMExtensionUpdate.properties.type: ExtensionType
-  RollingUpgradeStatusInfo: VirtualMachineScaleSetRollingUpgrade
-  OperatingSystemTypes: SupportedOperatingSystemType
-  VirtualMachineImageResource: VirtualMachineImageBase
-  RestorePointCollectionSourceProperties: RestorePointCollectionSource
-  RestorePointExpandOptions: RestorePointExpand
-  RestorePointCollectionExpandOptions: RestorePointCollectionExpand
-  ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
-  UpdateResource: ComputeResourcePatch
-  SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
-  SshPublicKey: SshPublicKeyConfiguration
-  SshPublicKeyResource: SshPublicKey
-  LogAnalyticsOperationResult: LogAnalytics
-  PrivateLinkResource: ComputePrivateLinkResourceData
-  PrivateLinkResource.properties.groupId: -|arm-id
-  Disk: ManagedDisk
-  Disk.managedBy: -|arm-id
-  Disk.managedByExtended: -|arm-id
-  Disk.properties.diskAccessId: -|arm-id
-  DiskUpdate.properties.diskAccessId: -|arm-id
-  DiskRestorePoint.properties.sourceResourceId: -|arm-id
-  DiskRestorePoint.properties.diskAccessId: -|arm-id
-  DiskRestorePoint.properties.sourceResourceLocation: -|azure-location
-  Encryption: DiskEncryption
-  Encryption.diskEncryptionSetId: -|arm-id
-  Encryption.type: EncryptionType
-  CreationData: DiskCreationData
-  CreationData.storageAccountId: -|arm-id
-  CreationData.sourceResourceId: -|arm-id
-  Architecture: ArchitectureType
-  OSFamily: CloudServiceOSFamily
-  OSFamily.name: ResourceName
-  OSFamily.properties.name: OSFamilyName
-  OSVersion: CloudServiceOSVersion
-  UpdateDomain: UpdateDomainIdentifier
-  UpdateDomain.id: -|arm-id
-  Extension: CloudServiceExtension
-  RoleInstance: CloudServiceRoleInstance
-  UpdateResourceDefinition: GalleryUpdateResourceData
-  StorageAccountType: ImageStorageAccountType
-  SharingProfile.permissions: permission
-  UserArtifactManage: UserArtifactManagement
-  GalleryExpandParams: GalleryExpand
-  PirResource: PirResourceData
-  PirSharedGalleryResource: PirSharedGalleryResourceData
-  PirCommunityGalleryResource: PirCommunityGalleryResourceData
-  PirCommunityGalleryResource.type: ResourceType|resource-type
-  ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
-  ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
-  DedicatedHostGroup.properties.hosts: DedicatedHosts
-  UefiSettings.secureBootEnabled: IsSecureBootEnabled
-  UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
-  NetworkProfile: VirtualMachineNetworkProfile
-  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
-  Image: DiskImage
-  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
-  VmDiskTypes: VirtualMachineDiskType
-  VMGalleryApplication: VirtualMachineGalleryApplication
-  VMSizeProperties: VirtualMachineSizeProperties
-  ManagedDiskParameters: VirtualMachineManagedDisk
-  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
-  StorageProfile: VirtualMachineStorageProfile
-  OSProfile: VirtualMachineOSProfile
-  OSDisk: VirtualMachineOSDisk
-  DataDisk: VirtualMachineDataDisk
-  HardwareProfile: VirtualMachineHardwareProfile
-  PublicNetworkAccess: DiskPublicNetworkAccess
-  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
-  LoadBalancerConfiguration.id: -|arm-id
-  ReplicationMode: GalleryReplicationMode
-  ReplicationState: RegionalReplicationState
-  RunCommandResult: VirtualMachineRunCommandResult
-  UpgradeMode: VirtualMachineScaleSetUpgradeMode
-  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
-  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
-  ProtocolTypes: WinRMListenerProtocolType
-  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
-  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
-  VirtualMachineScaleSetExtension.type: ResourceType|resource-type
-  VirtualMachineScaleSetExtensionUpdate.type: ResourceType|resource-type
-  VirtualMachineScaleSetVMExtension.type: ResourceType|resource-type
-  VirtualMachineScaleSetVMExtensionUpdate.type: ResourceType|resource-type
-  VirtualMachineScaleSetSku.resourceType: ResourceType|resource-type
-  VirtualMachineScaleSetVMInstanceView.assignedHost: -|arm-id
-  RestorePointCollectionSourceProperties.id: -|arm-id
-  SshPublicKeyGenerateKeyPairResult.id: -|arm-id
-  Snapshot.properties.diskAccessId: -|arm-id
-  SnapshotUpdate.properties.diskAccessId: -|arm-id
-  DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
-  ImageDiskReference.id: -|arm-id
-  DiskImageEncryption.diskEncryptionSetId: -|arm-id
-  GalleryDiskImage.source: GallerySource
-  GalleryDiskImageSource.storageAccountId: -|arm-id
-  GalleryImageVersionStorageProfile.source: GallerySource
-  GalleryArtifactVersionSource.id: -|arm-id
-  VirtualMachineExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
-  VirtualMachineScaleSetExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
-  VirtualMachineScaleSetExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
-  VirtualMachineScaleSetVMExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
-  VirtualMachineExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
-  VirtualMachineScaleSetVMExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
-  Disk.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
-  DiskUpdate.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
-  CreationData.performancePlus: IsPerformancePlusEnabled
-  GalleryApplicationCustomActionParameter.required: IsRequired
-  GalleryImageVersionSafetyProfile.reportedForPolicyViolation: IsReportedForPolicyViolation
-  LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
-  LinuxConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
-  WindowsConfiguration.enableAutomaticUpdates: IsAutomaticUpdatesEnabled
-  WindowsConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
-  PolicyViolation: GalleryImageVersionPolicyViolation
-  PolicyViolationCategory: GalleryImageVersionPolicyViolationCategory
-  PriorityMixPolicy: VirtualMachineScaleSetPriorityMixPolicy
-  CommunityGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
-  SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
-  GalleryArtifactPublishingProfileBase.excludeFromLatest: IsExcludedFromLatest
-  TargetRegion.excludeFromLatest: IsExcludedFromLatest
-  VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
-  VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
-  VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
-  AlternativeOption: ImageAlternativeOption
-  AlternativeType: ImageAlternativeType
-  VirtualMachineScaleSetProperties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
-  VirtualMachineScaleSetUpdateProperties: VirtualMachineScaleSetPatchProperties
-  RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
-  ScheduledEventsProfile: ComputeScheduledEventsProfile
-  ExpandTypeForListVMs: GetVirtualMachineExpandType
-  ExpandTypesForListVm: GetVirtualMachineExpandType
-  RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
-  SecurityPostureReference.id: -|arm-id
-  CommunityGalleryImage.properties.identifier: ImageIdentifier
-  GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
-  FileFormat: DiskImageFileFormat
-  CreationData.elasticSanResourceId: -|arm-id
-  NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
-  NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
-  CommunityGalleryInfo.publisherUri: PublisherUriString
-  GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
-  SecurityPostureReference: ComputeSecurityPostureReference
-  SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
-  SkuProfile : ComputeSkuProfile
-  SkuProfileVMSize : ComputeSkuProfileVMSize
-  AllocationStrategy : ComputeAllocationStrategy
-  GalleryImageVersion.properties.restore: IsRestoreEnabled
-  EndpointAccess: ComputeGalleryEndpointAccess
-  EndpointTypes: ComputeGalleryEndpointTypes
-  GallerySoftDeletedResource : GallerySoftDeletedResourceDetails
-  GallerySoftDeletedResource.properties.softDeletedTime: -|date-time
-  PlatformAttribute: ComputeGalleryPlatformAttribute
-  ValidationStatus: ComputeGalleryValidationStatus
   AccessControlRules: GalleryInVmAccessControlRules
   AccessControlRulesIdentity: GalleryInVmAccessControlRulesIdentity
   AccessControlRulesMode: GalleryInVmAccessControlRulesMode
   AccessControlRulesPrivilege: GalleryInVmAccessControlRulesPrivilege
   AccessControlRulesRole: GalleryInVmAccessControlRulesRole
   AccessControlRulesRoleAssignment: GalleryInVmAccessControlRulesRoleAssignment
-  ValidationsProfile: GalleryImageValidationsProfile
-  SoftDeletedArtifactTypes: GallerySoftDeletedArtifactType
-  GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
+  AllocationStrategy : ComputeAllocationStrategy
+  AlternativeOption: ImageAlternativeOption
+  AlternativeType: ImageAlternativeType
+  Architecture: ArchitectureType
+  CommunityGalleryImage.properties.identifier: ImageIdentifier
+  CommunityGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  CommunityGalleryInfo.publisherUri: PublisherUriString
+  CreationData: DiskCreationData
+  CreationData.elasticSanResourceId: -|arm-id
+  CreationData.performancePlus: IsPerformancePlusEnabled
+  CreationData.sourceResourceId: -|arm-id
+  CreationData.storageAccountId: -|arm-id
+  DataDisk: VirtualMachineDataDisk
+  DedicatedHostGroup.properties.hosts: DedicatedHosts
+  Disk: ManagedDisk
+  Disk.managedBy: -|arm-id
+  Disk.managedByExtended: -|arm-id
+  Disk.properties.diskAccessId: -|arm-id
+  Disk.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  DiskImageEncryption.diskEncryptionSetId: -|arm-id
+  DiskRestorePoint.properties.diskAccessId: -|arm-id
+  DiskRestorePoint.properties.sourceResourceId: -|arm-id
+  DiskRestorePoint.properties.sourceResourceLocation: -|azure-location
+  DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
+  DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
+  DiskUpdate.properties.diskAccessId: -|arm-id
+  DiskUpdate.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  EndpointAccess: ComputeGalleryEndpointAccess
+  EndpointTypes: ComputeGalleryEndpointTypes
+  Encryption: DiskEncryption
+  Encryption.diskEncryptionSetId: -|arm-id
+  Encryption.type: EncryptionType
+  EventGridAndResourceGraph.enable: IsEnabled
   ExecutedValidation: GalleryImageExecutedValidation
-  Placement: VirtualMachinePlacement
-  Modes: HostEndpointSettingsMode
   Expand: GetVirtualMachineImagesWithPropertiesExpand
+  ExpandTypeForListVMs: GetVirtualMachineExpandType
+  ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
+  ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
+  ExpandTypesForListVm: GetVirtualMachineExpandType
+  Extension: CloudServiceExtension
+  FileFormat: DiskImageFileFormat
+  GalleryArtifactPublishingProfileBase.excludeFromLatest: IsExcludedFromLatest
+  GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
+  GalleryArtifactVersionSource.id: -|arm-id
+  GalleryApplicationCustomActionParameter.required: IsRequired
+  GalleryDiskImage.source: GallerySource
+  GalleryDiskImageSource.storageAccountId: -|arm-id
+  GalleryExpandParams: GalleryExpand
+  GalleryImageVersion.properties.restore: IsRestoreEnabled
+  GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
+  GalleryImageVersionSafetyProfile.reportedForPolicyViolation: IsReportedForPolicyViolation
+  GalleryImageVersionStorageProfile.source: GallerySource
+  GallerySoftDeletedResource : GallerySoftDeletedResourceDetails
+  GallerySoftDeletedResource.properties.softDeletedTime: -|date-time
+  GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
+  HardwareProfile: VirtualMachineHardwareProfile
+  HyperVGenerationType: HyperVGeneration
+  HyperVGenerationTypes: HyperVGeneration
+  Image: DiskImage
+  ImageDiskReference.id: -|arm-id
+  ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
+  LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
+  LinuxConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
+  LoadBalancerConfiguration.id: -|arm-id
+  LogAnalyticsOperationResult: LogAnalytics
+  ManagedDiskParameters: VirtualMachineManagedDisk
+  Modes: HostEndpointSettingsMode
+  NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
+  NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
+  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
+  NetworkProfile: VirtualMachineNetworkProfile
+  OperatingSystemTypes: SupportedOperatingSystemType
+  OrchestrationServiceSummary.lastStatusChangeTime: LastStatusChangedOn
+  OSFamily: CloudServiceOSFamily
+  OSFamily.name: ResourceName
+  OSFamily.properties.name: OSFamilyName
+  OSDisk: VirtualMachineOSDisk
+  OSProfile: VirtualMachineOSProfile
+  OSVersion: CloudServiceOSVersion
+  PirCommunityGalleryResource: PirCommunityGalleryResourceData
+  PirCommunityGalleryResource.type: ResourceType|resource-type
+  PirResource: PirResourceData
+  PirSharedGalleryResource: PirSharedGalleryResourceData
+  Placement: VirtualMachinePlacement
+  PlatformAttribute: ComputeGalleryPlatformAttribute
+  PolicyViolation: GalleryImageVersionPolicyViolation
+  PolicyViolationCategory: GalleryImageVersionPolicyViolationCategory
+  PriorityMixPolicy: VirtualMachineScaleSetPriorityMixPolicy
+  PrivateLinkResource: ComputePrivateLinkResourceData
+  PrivateLinkResource.properties.groupId: -|arm-id
+  ProtocolTypes: WinRMListenerProtocolType
+  PublicNetworkAccess: DiskPublicNetworkAccess
   RebalanceBehavior: VmssRebalanceBehavior
   RebalanceStrategy: VmssRebalanceStrategy
+  ReplicationMode: GalleryReplicationMode
+  ReplicationState: RegionalReplicationState
+  ReservationType : CapacityReservationType
+  RestorePointCollectionExpandOptions: RestorePointCollectionExpand
+  RestorePointCollectionSourceProperties: RestorePointCollectionSource
+  RestorePointCollectionSourceProperties.id: -|arm-id
+  RestorePointExpandOptions: RestorePointExpand
+  RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  RoleInstance: CloudServiceRoleInstance
+  RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
+  RollingUpgradeStatusInfo: VirtualMachineScaleSetRollingUpgrade
+  RunCommandResult: VirtualMachineRunCommandResult
+  ScheduledEventsProfile: ComputeScheduledEventsProfile
+  SecurityPostureReference: ComputeSecurityPostureReference
+  SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
+  SecurityPostureReference.id: -|arm-id
+  SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  SharingProfile.permissions: permission
+  SkuProfile : ComputeSkuProfile
+  SkuProfileVMSize : ComputeSkuProfileVMSize
+  Snapshot.properties.diskAccessId: -|arm-id
+  SnapshotUpdate.properties.diskAccessId: -|arm-id
+  SoftDeletedArtifactTypes: GallerySoftDeletedArtifactType
+  SshPublicKey: SshPublicKeyConfiguration
+  SshPublicKeyGenerateKeyPairResult.id: -|arm-id
+  SshPublicKeyResource: SshPublicKey
+  StorageAccountType: ImageStorageAccountType
+  StorageProfile: VirtualMachineStorageProfile
+  SubResource: ComputeWriteableSubResourceData
+  SubResourceReadOnly: ComputeSubResourceData
+  SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
+  TargetRegion.excludeFromLatest: IsExcludedFromLatest
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
+  UpdateDomain: UpdateDomainIdentifier
+  UpdateDomain.id: -|arm-id
+  UpdateResource: ComputeResourcePatch
+  UpdateResourceDefinition: GalleryUpdateResourceData
+  UpgradeMode: VirtualMachineScaleSetUpgradeMode
+  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  UserArtifactManage: UserArtifactManagement
+  ValidationStatus: ComputeGalleryValidationStatus
+  ValidationsProfile: GalleryImageValidationsProfile
+  VirtualMachineExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineExtension.properties.type: ExtensionType
+  VirtualMachineExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineImageResource: VirtualMachineImageBase
+  VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetExtension.type: ResourceType|resource-type
+  VirtualMachineScaleSetExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetExtensionUpdate.type: ResourceType|resource-type
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetProperties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetSku.resourceType: ResourceType|resource-type
+  VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetUpdateProperties: VirtualMachineScaleSetPatchProperties
+  VirtualMachineScaleSetVMExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtension.type: ResourceType|resource-type
+  VirtualMachineScaleSetVMExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtensionUpdate.type: ResourceType|resource-type
+  VirtualMachineScaleSetVMInstanceView.assignedHost: -|arm-id
+  VmDiskTypes: VirtualMachineDiskType
+  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  VMGalleryApplication: VirtualMachineGalleryApplication
+  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
+  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
+  VMSizeProperties: VirtualMachineSizeProperties
+  WindowsConfiguration.enableAutomaticUpdates: IsAutomaticUpdatesEnabled
+  WindowsConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -407,13 +410,20 @@ directive:
   - from: ComputeRP.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
-  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
+  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and AllInstancesDown
   - from: ComputeRP.json
     where: $.definitions.UserInitiatedRedeploy.properties
     transform: >
       $.dummyProperty = {
         "type": "string",
         "description": "This is a dummy property to prevent flattening."
+      };
+  - from: ComputeRP.json
+    where: $.definitions.AllInstancesDown.properties
+    transform: >
+      $.dummyPropertyTwo = {
+        "type": "string",
+        "description": "This is a dummy property two to prevent flattening."
       };
   # add additionalproperties to a few models to support private properties supported by the service
   - from: ComputeRP.json

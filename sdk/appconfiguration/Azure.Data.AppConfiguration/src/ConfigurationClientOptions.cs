@@ -4,12 +4,14 @@
 using System;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("ConfigurationClientOptions")]
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Suppressed generated client options.
     /// <summary>
     /// Options that allow users to configure the requests sent to the App Configuration service.
     /// </summary>
+    [CodeGenSuppress("ConfigurationClientOptions", typeof(ServiceVersion))]
     public partial class ConfigurationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;

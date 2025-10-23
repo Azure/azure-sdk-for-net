@@ -1,77 +1,47 @@
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignDeploymentResourcesDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedDeploymentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentMetadata))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentsMetadata))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringConfusionMatrixCell))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringConfusionMatrixRow))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCopyProjectDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCopyProjectState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateProjectDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeleteDeploymentDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResourcesState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEntityEvalSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvalSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityListSynonym))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntitySublist))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedModelDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedModelState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProject))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectAsset))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedTrainedModel))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportProjectState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringImportProjectState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringLoadSnapshotState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringPrebuiltEntity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectDeletionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectDeployment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectMetadata))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectSettings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectTrainedModel))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringResourceMetadata))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSupportedLanguage))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSwapDeploymentsDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSwapDeploymentsState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingConfigVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringUnassignDeploymentResourcesDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationExportedProjectAsset))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.EntitiesEvaluationSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestrationDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedEntityRegexExpression))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedLuisOrchestrationDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedOrchestrationDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestrationDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.IntentEvaluationSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.IntentsEvaluationSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceEntitiesEvaluationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceEvaluationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceIntentsEvaluationResult))]
+    public partial class AnalyzeConversationAuthoringDataGenerationConnectionInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>
+    {
+        public AnalyzeConversationAuthoringDataGenerationConnectionInfo(Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind kind, string deploymentName) { }
+        public string DeploymentName { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind Kind { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AnalyzeConversationAuthoringDataGenerationConnectionKind : System.IEquatable<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AnalyzeConversationAuthoringDataGenerationConnectionKind(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind AzureOpenAI { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind left, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind left, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AnalyzeConversationAuthoringDataGenerationSettings : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>
+    {
+        public AnalyzeConversationAuthoringDataGenerationSettings(bool enableDataGeneration, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo dataGenerationConnectionInfo) { }
+        public Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo DataGenerationConnectionInfo { get { throw null; } }
+        public bool EnableDataGeneration { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AzureAILanguageConversationsAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAILanguageConversationsAuthoringContext() { }
@@ -133,12 +103,12 @@ namespace Azure.AI.Language.Conversations.Authoring
     }
     public partial class ConversationAnalysisAuthoringClientOptions : Azure.Core.ClientOptions
     {
-        public ConversationAnalysisAuthoringClientOptions(Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview) { }
+        public ConversationAnalysisAuthoringClientOptions(Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.Authoring.ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview) { }
         public enum ServiceVersion
         {
             V2023_04_01 = 1,
-            V2023_04_15_Preview = 2,
-            V2024_11_15_Preview = 3,
+            V2024_11_15_Preview = 2,
+            V2025_05_15_Preview = 3,
         }
     }
     public static partial class ConversationAnalysisAuthoringModelFactory
@@ -149,10 +119,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringConfusionMatrixCell ConversationAuthoringConfusionMatrixCell(float normalizedValue = 0f, float rawValue = 0f) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringConfusionMatrixRow ConversationAuthoringConfusionMatrixRow(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCopyProjectState ConversationAuthoringCopyProjectState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus status = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel = null, System.Collections.Generic.IEnumerable<string> assignedResourceIds = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource> assignedResources = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateProjectDetails ConversationAuthoringCreateProjectDetails(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind projectKind = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = default(bool?), string description = null, string language = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState ConversationAuthoringDeploymentDeleteFromResourcesState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus status = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource ConversationAuthoringDeploymentResource(string resourceId = null, string region = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResourcesState ConversationAuthoringDeploymentResourcesState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus status = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentState ConversationAuthoringDeploymentState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus status = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEntityEvalSummary ConversationAuthoringEntityEvalSummary(double f1 = 0, double precision = 0, double recall = 0, int truePositiveCount = 0, int trueNegativeCount = 0, int falsePositiveCount = 0, int falseNegativeCount = 0) { throw null; }
@@ -174,10 +143,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSupportedLanguage ConversationAuthoringSupportedLanguage(string languageName = null, string languageCode = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSwapDeploymentsState ConversationAuthoringSwapDeploymentsState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus status = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingConfigVersion ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion = null, System.DateTimeOffset modelExpirationDate = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails ConversationAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode trainingMode = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationDetails evaluationOptions = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult ConversationAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode? trainingMode = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState trainingStatus = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState evaluationStatus = null, System.DateTimeOffset? estimatedEndOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails ConversationAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode trainingMode = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationDetails evaluationOptions = null, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings dataGenerationSettings = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult ConversationAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode? trainingMode = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState trainingStatus = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState dataGenerationStatus = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState evaluationStatus = null, System.DateTimeOffset? estimatedEndOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingState ConversationAuthoringTrainingState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus status = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult result = null) { throw null; }
-        public static Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity ConversationExportedEntity(string category = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode? compositionMode = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList entities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> prebuilts = null, Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex regex = null, System.Collections.Generic.IEnumerable<string> requiredComponents = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity ConversationExportedEntity(string category = null, string description = null, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode? compositionMode = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode?), Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList entities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> prebuilts = null, Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex regex = null, System.Collections.Generic.IEnumerable<string> requiredComponents = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent ConversationExportedIntent(string category = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel> associatedEntities = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ConversationExportedUtterance ConversationExportedUtterance(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.ExportedUtteranceEntityLabel> entities = null, string text = null, string language = null, string intent = null, Azure.AI.Language.Conversations.Authoring.DatasetType? dataset = default(Azure.AI.Language.Conversations.Authoring.DatasetType?)) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.EntitiesEvaluationSummary EntitiesEvaluationSummary(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEntityEvalSummary> entities = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestrationDetails ExportedConversationOrchestrationDetails(Azure.AI.Language.Conversations.Authoring.ExportedConversationOrchestration conversationOrchestration = null) { throw null; }
@@ -186,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public static Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestrationDetails ExportedQuestionAnsweringOrchestrationDetails(Azure.AI.Language.Conversations.Authoring.ExportedQuestionAnsweringOrchestration questionAnsweringOrchestration = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.IntentEvaluationSummary IntentEvaluationSummary(double f1 = 0, double precision = 0, double recall = 0, int truePositiveCount = 0, int trueNegativeCount = 0, int falsePositiveCount = 0, int falseNegativeCount = 0) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.IntentsEvaluationSummary IntentsEvaluationSummary(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.Authoring.IntentEvaluationSummary> intents = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
-        public static Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent OrchestrationExportedIntent(Azure.AI.Language.Conversations.Authoring.ExportedOrchestrationDetails orchestration = null, string category = null) { throw null; }
+        public static Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent OrchestrationExportedIntent(Azure.AI.Language.Conversations.Authoring.ExportedOrchestrationDetails orchestration = null, string category = null, string description = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance OrchestrationExportedUtterance(string text = null, string language = null, string intent = null, string dataset = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.UtteranceEntitiesEvaluationResult UtteranceEntitiesEvaluationResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> expectedEntities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult> predictedEntities = null) { throw null; }
         public static Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult UtteranceEntityEvaluationResult(string category = null, int offset = 0, int length = 0) { throw null; }
@@ -320,7 +290,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringCreateDeploymentDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>
     {
         public ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel) { }
-        public System.Collections.Generic.IList<string> AssignedResourceIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource> AssignedResources { get { throw null; } }
         public string TrainedModelLabel { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCreateDeploymentDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -408,9 +378,10 @@ namespace Azure.AI.Language.Conversations.Authoring
     }
     public partial class ConversationAuthoringDeploymentResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>
     {
-        internal ConversationAuthoringDeploymentResource() { }
-        public string Region { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public ConversationAuthoringDeploymentResource(string resourceId, string region) { }
+        public Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo AssignedAoaiResource { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -855,10 +826,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         public virtual Azure.Response<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUnassignDeploymentResourcesStatusAsync(string jobId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProject exportedProject, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat? exportedProjectFormat = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string exportedProjectFormat = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProject exportedProject, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat? exportedProjectFormat = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string exportedProjectFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProject exportedProject, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat? projectFormat = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string projectFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, string projectJson, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat? projectFormat = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProject exportedProject, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat? projectFormat = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string projectFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, string projectJson, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat? projectFormat = default(Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedProjectFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation SwapDeployments(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSwapDeploymentsDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation SwapDeployments(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> SwapDeploymentsAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSwapDeploymentsDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1096,6 +1069,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringTrainingJobDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobDetails>
     {
         public ConversationAuthoringTrainingJobDetails(string modelLabel, Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingMode trainingMode) { }
+        public Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringDataGenerationSettings DataGenerationSettings { get { throw null; } set { } }
         public Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationDetails EvaluationOptions { get { throw null; } set { } }
         public string ModelLabel { get { throw null; } }
         public string TrainingConfigVersion { get { throw null; } set { } }
@@ -1110,6 +1084,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringTrainingJobResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingJobResult>
     {
         internal ConversationAuthoringTrainingJobResult() { }
+        public Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState DataGenerationStatus { get { throw null; } }
         public System.DateTimeOffset? EstimatedEndOn { get { throw null; } }
         public Azure.AI.Language.Conversations.Authoring.ConversationAuthoringSubTrainingState EvaluationStatus { get { throw null; } }
         public string ModelLabel { get { throw null; } }
@@ -1170,11 +1145,23 @@ namespace Azure.AI.Language.Conversations.Authoring
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringUnassignDeploymentResourcesDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringUnassignDeploymentResourcesDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ConversationExportedAssociatedEntityLabel : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>
+    {
+        public ConversationExportedAssociatedEntityLabel(string category) { }
+        public string Category { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ConversationExportedEntity : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedEntity>
     {
         public ConversationExportedEntity(string category) { }
         public string Category { get { throw null; } }
         public Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode? CompositionMode { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedEntityList Entities { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedPrebuiltEntity> Prebuilts { get { throw null; } }
         public Azure.AI.Language.Conversations.Authoring.ExportedEntityRegex Regex { get { throw null; } set { } }
@@ -1189,7 +1176,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationExportedIntent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent>
     {
         public ConversationExportedIntent(string category) { }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Authoring.ConversationExportedAssociatedEntityLabel> AssociatedEntities { get { throw null; } }
         public string Category { get { throw null; } }
+        public string Description { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.ConversationExportedIntent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1416,6 +1405,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     {
         public OrchestrationExportedIntent(string category) { }
         public string Category { get { throw null; } }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.Language.Conversations.Authoring.ExportedOrchestrationDetails Orchestration { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

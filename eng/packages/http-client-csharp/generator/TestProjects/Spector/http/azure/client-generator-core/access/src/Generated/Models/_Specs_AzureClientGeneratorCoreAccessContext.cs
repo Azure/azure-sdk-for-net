@@ -6,9 +6,24 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Access
 {
+    [ModelReaderWriterBuildable(typeof(AbstractModel))]
+    [ModelReaderWriterBuildable(typeof(BaseModel))]
+    [ModelReaderWriterBuildable(typeof(InnerModel))]
+    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInInternal))]
+    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInPublic))]
+    [ModelReaderWriterBuildable(typeof(OuterModel))]
+    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInInternal))]
+    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInPublic))]
+    [ModelReaderWriterBuildable(typeof(RealModel))]
+    [ModelReaderWriterBuildable(typeof(SharedModel))]
+    [ModelReaderWriterBuildable(typeof(UnknownAbstractModel))]
     public partial class _Specs_AzureClientGeneratorCoreAccessContext : ModelReaderWriterContext
     {
     }

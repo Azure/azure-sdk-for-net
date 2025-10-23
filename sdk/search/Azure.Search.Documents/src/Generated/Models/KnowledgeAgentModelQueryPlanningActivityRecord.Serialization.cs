@@ -5,23 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Agents.Models
 {
-    public partial class KnowledgeAgentModelQueryPlanningActivityRecord
+    public partial class KnowledgeAgentModelQueryPlanningActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentModelQueryPlanningActivityRecord>
     {
-        internal static KnowledgeAgentModelQueryPlanningActivityRecord DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentModelQueryPlanningActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KnowledgeAgentModelQueryPlanningActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KnowledgeAgentModelQueryPlanningActivityRecord)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(InputTokens))
+            {
+                writer.WritePropertyName("inputTokens"u8);
+                writer.WriteNumberValue(InputTokens.Value);
+            }
+            if (Optional.IsDefined(OutputTokens))
+            {
+                writer.WritePropertyName("outputTokens"u8);
+                writer.WriteNumberValue(OutputTokens.Value);
+            }
+        }
+
+        KnowledgeAgentModelQueryPlanningActivityRecord IJsonModel<KnowledgeAgentModelQueryPlanningActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KnowledgeAgentModelQueryPlanningActivityRecord)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(document.RootElement, options);
+        }
+
+        internal static KnowledgeAgentModelQueryPlanningActivityRecord DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? inputTokens = default;
             int? outputTokens = default;
-            int? elapsedMs = default;
             int id = default;
             string type = default;
+            int? elapsedMs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputTokens"u8))
@@ -42,15 +94,6 @@ namespace Azure.Search.Documents.Agents.Models
                     outputTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("elapsedMs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    elapsedMs = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetInt32();
@@ -61,9 +104,60 @@ namespace Azure.Search.Documents.Agents.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("elapsedMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elapsedMs = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KnowledgeAgentModelQueryPlanningActivityRecord(id, type, inputTokens, outputTokens, elapsedMs);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KnowledgeAgentModelQueryPlanningActivityRecord(
+                id,
+                type,
+                elapsedMs,
+                serializedAdditionalRawData,
+                inputTokens,
+                outputTokens);
         }
+
+        BinaryData IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeAgentModelQueryPlanningActivityRecord)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KnowledgeAgentModelQueryPlanningActivityRecord IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeAgentModelQueryPlanningActivityRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -71,6 +165,14 @@ namespace Azure.Search.Documents.Agents.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

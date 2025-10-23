@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.1.2 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.MySql` AOT-compatible
+
 ## 1.1.1 (2025-03-11)
 
 ### Features Added

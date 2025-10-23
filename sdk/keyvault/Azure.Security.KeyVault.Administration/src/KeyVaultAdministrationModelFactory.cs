@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
         public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType? settingType = null)
         {
-            return new KeyVaultSetting(name, settingType, content, new Dictionary<string, BinaryData>());
+            return new KeyVaultSetting(name, content, settingType, new Dictionary<string, BinaryData>());
         }
     }
 }

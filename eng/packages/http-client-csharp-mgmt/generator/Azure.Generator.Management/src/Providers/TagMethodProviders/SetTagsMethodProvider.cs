@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -15,12 +17,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public SetTagsMethodProvider(
             ResourceClientProvider resource,
-            MethodProvider updateMethodProvider,
-            ClientProvider restClient,
-            FieldProvider clientDiagnosticsField,
-            FieldProvider restClientField,
+            RequestPathPattern contextualPath,
+            ResourceOperationMethodProvider updateMethodProvider,
+            InputServiceMethod getMethod,
+            RestClientInfo updateRestClientInfo,
+            RestClientInfo getRestClientInfo,
+            bool isPatch,
             bool isAsync)
-            : base(resource, updateMethodProvider, restClient, clientDiagnosticsField, restClientField, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {
@@ -39,7 +43,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var tagsParam = _signature.Parameters[0];
             var cancellationTokenParam = _signature.Parameters[1];
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _clientDiagnosticsField, "SetTags", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _updateClientDiagnosticsField, "SetTags", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();

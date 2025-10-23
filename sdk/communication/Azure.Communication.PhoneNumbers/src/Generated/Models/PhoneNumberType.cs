@@ -24,11 +24,14 @@ namespace Azure.Communication.PhoneNumbers
 
         private const string GeographicValue = "geographic";
         private const string TollFreeValue = "tollFree";
+        private const string MobileValue = "mobile";
 
         /// <summary> geographic. </summary>
         public static PhoneNumberType Geographic { get; } = new PhoneNumberType(GeographicValue);
         /// <summary> tollFree. </summary>
         public static PhoneNumberType TollFree { get; } = new PhoneNumberType(TollFreeValue);
+        /// <summary> mobile. </summary>
+        public static PhoneNumberType Mobile { get; } = new PhoneNumberType(MobileValue);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberType left, PhoneNumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are not the same. </summary>

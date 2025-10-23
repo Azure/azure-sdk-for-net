@@ -46,6 +46,11 @@ namespace Azure.Generator.Visitors
                 return type;
             }
 
+            if (type is SerializationFormatDefinition)
+            {
+                return type;
+            }
+
             if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider
                 || type is MrwSerializationTypeDefinition || type is FixedEnumSerializationProvider || type is ExtensibleEnumSerializationProvider)
             {
@@ -73,7 +78,8 @@ namespace Azure.Generator.Visitors
                 // here to make diffs easier to review while migrating. Calculate the fileName as it won't always match the Name
                 // property, e.g. for serialization providers.
                 // https://github.com/Azure/azure-sdk-for-net/issues/50286
-                if (type.RelativeFilePath.Contains("Models"))
+                var separator = Path.DirectorySeparatorChar;
+                if (type.RelativeFilePath.Contains($"Generated{separator}Models{separator}"))
                 {
                     var fileName = Path.GetRelativePath(Path.Combine("src", "Generated", "Models"),
                         type.RelativeFilePath);

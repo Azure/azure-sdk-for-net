@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="radiusClientRootCertificates"> Radius client root certificate of VpnServerConfiguration. </param>
         /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for VpnServerConfiguration. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </param>
-        /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. </param>
+        /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets. </param>
         /// <param name="radiusServers"> Multiple Radius Server configuration for VpnServerConfiguration. </param>
         /// <param name="aadAuthenticationParameters"> The set of aad vpn authentication parameters. </param>
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. </param>
@@ -75,34 +75,49 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> VPN protocols for the VpnServerConfiguration. </summary>
+        [WirePath("properties.vpnProtocols")]
         public IList<VpnGatewayTunnelingProtocol> VpnProtocols { get; }
         /// <summary> VPN authentication types for the VpnServerConfiguration. </summary>
+        [WirePath("properties.vpnAuthenticationTypes")]
         public IList<VpnAuthenticationType> VpnAuthenticationTypes { get; }
         /// <summary> VPN client root certificate of VpnServerConfiguration. </summary>
+        [WirePath("properties.vpnClientRootCertificates")]
         public IList<VpnServerConfigVpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VPN client revoked certificate of VpnServerConfiguration. </summary>
+        [WirePath("properties.vpnClientRevokedCertificates")]
         public IList<VpnServerConfigVpnClientRevokedCertificate> VpnClientRevokedCertificates { get; }
         /// <summary> Radius Server root certificate of VpnServerConfiguration. </summary>
+        [WirePath("properties.radiusServerRootCertificates")]
         public IList<VpnServerConfigRadiusServerRootCertificate> RadiusServerRootCertificates { get; }
         /// <summary> Radius client root certificate of VpnServerConfiguration. </summary>
+        [WirePath("properties.radiusClientRootCertificates")]
         public IList<VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get; }
         /// <summary> VpnClientIpsecPolicies for VpnServerConfiguration. </summary>
+        [WirePath("properties.vpnClientIpsecPolicies")]
         public IList<IPsecPolicy> VpnClientIPsecPolicies { get; }
         /// <summary> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </summary>
+        [WirePath("properties.radiusServerAddress")]
         public string RadiusServerAddress { get; set; }
-        /// <summary> The radius secret property of the VpnServerConfiguration resource for point to site client connection. </summary>
+        /// <summary> The radius secret property of the VpnServerConfiguration resource for point to site client connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets. </summary>
+        [WirePath("properties.radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
         /// <summary> Multiple Radius Server configuration for VpnServerConfiguration. </summary>
+        [WirePath("properties.radiusServers")]
         public IList<RadiusServer> RadiusServers { get; }
         /// <summary> The set of aad vpn authentication parameters. </summary>
+        [WirePath("properties.aadAuthenticationParameters")]
         public AadAuthenticationParameters AadAuthenticationParameters { get; set; }
         /// <summary> The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> List of references to P2SVpnGateways. </summary>
+        [WirePath("properties.p2SVpnGateways")]
         public IReadOnlyList<P2SVpnGatewayData> P2SVpnGateways { get; }
         /// <summary> List of all VpnServerConfigurationPolicyGroups. </summary>
+        [WirePath("properties.configurationPolicyGroups")]
         public IList<VpnServerConfigurationPolicyGroupData> ConfigurationPolicyGroups { get; }
     }
 }

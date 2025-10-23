@@ -1,9 +1,42 @@
 # Release History
 
-## 1.11.0 (2025-07-25)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.12.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-04-01'
+- Added `VirtualMachineScaleSet.ScaleOut` Operation.
+- Added `Tags` to `VirtualMachineScaleSetNetworkConfiguration`, `VirtualMachineScaleSetIPConfiguration`, `VirtualMachineScaleSetPublicIPAddressConfiguration` and `VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings` classes.
+- Added `Placement` property to `VirtualMachineScaleSet` class.
+- Added `ZoneAllocationPolicy` property to `ResiliencyPolicy` class.
+- Added `MaxInstancePercentPerZonePolicy` property to `AutomaticZoneRebalancingPolicy` class.
+- Added `ReservationType` property to `CapacityReservationGroup` class.
+- Added `ScheduleProfile` property to `CapacityReservation` class.
+- Added `AddProxyAgentExtension` property to `ProxyAgentSettings` class.
+- Added `ScriptShellTypes` enum to `RunCommandScriptSource` class.
+- Added `GalleryScriptReferenceId` property to `RunCommandScriptSource` class.
+- Added `AllInstancesDown` property to `ScheduledEventsPolicy` class.
+- Added `ScheduledEventsApiVersion` property to `EventGridAndResourceGraph` class.
+- Added `AutomaticZoneRebalancing` property to `OrchetrationServiceNames` class.
+- Added `highSpeedInterconnectPlacement` property to `VirtualMachineScaleSetProperties` class.
+- Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
+
+
+## 1.11.0 (2025-08-12)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Compute` AOT-compatible
 - Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f03ae6d4107a964b20a48aa87fa520052750bb9/specification/compute/resource-manager/readme.md.
   - Added new classes: `SupportedSecurityOption`, `AvailabilityPolicyDiskDelay`, `SnapshotAccessState`, `AvailabilityPolicy`.
   - Added `SecurityMetadataUri` and `InstantAccessDurationMinutes` properties to `DiskCreationData` class.

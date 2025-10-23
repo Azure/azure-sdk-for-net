@@ -1,11 +1,5 @@
 namespace Azure.Security.KeyVault.Administration
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.GetSettingsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultPermission))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultSetting))]
     public partial class AzureSecurityKeyVaultAdministrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSecurityKeyVaultAdministrationContext() { }
@@ -66,7 +60,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2025_07_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -76,6 +70,7 @@ namespace Azure.Security.KeyVault.Administration
             V7_4 = 3,
             V7_5 = 4,
             V7_6 = 5,
+            V2025_07_01 = 6,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -183,6 +178,7 @@ namespace Azure.Security.KeyVault.Administration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultDataAction left, Azure.Security.KeyVault.Administration.KeyVaultDataAction right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultDataAction (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultDataAction? (string value) { throw null; }
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultDataAction left, Azure.Security.KeyVault.Administration.KeyVaultDataAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -295,6 +291,7 @@ namespace Azure.Security.KeyVault.Administration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType left, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? (string value) { throw null; }
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType left, Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -314,6 +311,7 @@ namespace Azure.Security.KeyVault.Administration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultRoleScope left, Azure.Security.KeyVault.Administration.KeyVaultRoleScope right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleScope (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleScope? (string value) { throw null; }
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultRoleScope left, Azure.Security.KeyVault.Administration.KeyVaultRoleScope right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -332,6 +330,7 @@ namespace Azure.Security.KeyVault.Administration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultRoleType left, Azure.Security.KeyVault.Administration.KeyVaultRoleType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleType (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleType? (string value) { throw null; }
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultRoleType left, Azure.Security.KeyVault.Administration.KeyVaultRoleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -402,6 +401,7 @@ namespace Azure.Security.KeyVault.Administration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultSettingType left, Azure.Security.KeyVault.Administration.KeyVaultSettingType right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultSettingType (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultSettingType? (string value) { throw null; }
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultSettingType left, Azure.Security.KeyVault.Administration.KeyVaultSettingType right) { throw null; }
         public override string ToString() { throw null; }
     }

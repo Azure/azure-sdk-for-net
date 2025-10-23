@@ -4,10 +4,7 @@
 #if !AZURE_OPENAI_GA
 
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Net.WebSockets;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Realtime;
@@ -25,8 +22,10 @@ internal partial class AzureRealtimeSession : RealtimeSession
         AzureRealtimeClient parentClient,
         Uri endpoint,
         ApiKeyCredential credential,
-        string userAgent)
-            : this(parentClient, endpoint, userAgent)
+        string userAgent,
+        string deploymentName,
+        string intent)
+            : this(parentClient, endpoint, userAgent, deploymentName, intent)
     {
         _keyCredential = credential;
     }
@@ -36,15 +35,17 @@ internal partial class AzureRealtimeSession : RealtimeSession
         Uri endpoint,
         TokenCredential credential,
         IEnumerable<string> tokenAuthorizationScopes,
-        string userAgent)
-            : this(parentClient, endpoint, userAgent)
+        string userAgent,
+        string deploymentName,
+        string intent)
+            : this(parentClient, endpoint, userAgent, deploymentName, intent)
     {
         _tokenCredential = credential;
         _tokenAuthorizationScopes = tokenAuthorizationScopes;
     }
 
-    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent)
-        : base(parentClient, endpoint, credential: new("placeholder"))
+    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent, string deploymentName, string intent)
+        : base(credential: new("placeholder"), parentClient, endpoint, deploymentName, intent)
     {
         _endpoint = endpoint;
         _userAgent = userAgent;

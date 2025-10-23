@@ -41,13 +41,13 @@ namespace Azure.Security.KeyVault.Administration
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Content);
             if (Optional.IsDefined(SettingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SettingType.Value.ToString());
             }
-            writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Content);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -91,14 +91,19 @@ namespace Azure.Security.KeyVault.Administration
                 return null;
             }
             string name = default;
-            KeyVaultSettingType? settingType = default;
             string content = default;
+            KeyVaultSettingType? settingType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    content = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -110,17 +115,12 @@ namespace Azure.Security.KeyVault.Administration
                     settingType = new KeyVaultSettingType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
-                {
-                    content = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyVaultSetting(name, settingType, content, additionalBinaryDataProperties);
+            return new KeyVaultSetting(name, content, settingType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

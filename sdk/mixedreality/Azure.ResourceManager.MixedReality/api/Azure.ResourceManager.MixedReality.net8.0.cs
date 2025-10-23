@@ -1,14 +1,5 @@
 namespace Azure.ResourceManager.MixedReality
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeyRegenerateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.Models.MixedRealityAccountKeys))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.Models.MixedRealitySku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.RemoteRenderingAccountData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource))]
     public partial class AzureResourceManagerMixedRealityContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMixedRealityContext() { }

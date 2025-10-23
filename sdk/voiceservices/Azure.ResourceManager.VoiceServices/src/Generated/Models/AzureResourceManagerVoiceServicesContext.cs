@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
 {
@@ -13,6 +15,20 @@ namespace Azure.ResourceManager.VoiceServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesCheckNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesCheckNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesCommunicationsGatewayData))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesCommunicationsGatewayListResult))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesCommunicationsGatewayPatch))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesCommunicationsGatewayResource))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesPrimaryRegionProperties))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesServiceRegionProperties))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesTestLineData))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesTestLineListResult))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesTestLinePatch))]
+    [ModelReaderWriterBuildable(typeof(VoiceServicesTestLineResource))]
     public partial class AzureResourceManagerVoiceServicesContext : ModelReaderWriterContext
     {
     }

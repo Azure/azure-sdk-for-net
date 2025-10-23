@@ -47,7 +47,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
         [SpectorTest]
         public Task Azure_Core_Basic_list() => Test(async (host) =>
         {
-            AsyncPageable<User> allPages = new BasicClient(host, null).GetAsync(5, 10, null, new[] {"id"}, "id lt 10", new[] {"id", "orders", "etag"}, new[] {"orders"});
+            AsyncPageable<User> allPages = new BasicClient(host, null).GetAllAsync(5, 10, null, new[] {"id"}, "id lt 10", new[] {"id", "orders", "etag"}, new[] {"orders"});
             await foreach (Page<User> page in allPages.AsPages())
             {
                 User firstUser = page.Values.First();
@@ -96,7 +96,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
         [SpectorTest]
         public void Azure_Core_basic_RenameListMethod()
         {
-            var getUsersMethod = typeof(BasicClient).GetMethod("GetAsync", new[] { typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(CancellationToken) });
+            var getUsersMethod = typeof(BasicClient).GetMethod("GetAllAsync", new[] { typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(CancellationToken) });
             var listMethod = typeof(BasicClient).GetMethod("List", new[] { typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(CancellationToken) });
             Assert.IsNull(listMethod);
             Assert.IsNotNull(getUsersMethod);

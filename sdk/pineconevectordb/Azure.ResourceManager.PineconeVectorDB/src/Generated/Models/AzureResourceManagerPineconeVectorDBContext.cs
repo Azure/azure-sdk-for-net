@@ -6,13 +6,28 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PineconeVectorDB.Models;
 
 namespace Azure.ResourceManager.PineconeVectorDB
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBMarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBOfferDetails))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBPartnerProperties))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBSingleSignOnPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBUserDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPineconeVectorDBContext : ModelReaderWriterContext
     {
     }

@@ -4,9 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-preview-2024-05
-require: https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317a5961138fd058ed78401/specification/sql/resource-manager/readme.md
-#package-preview-2024-05
+tag: package-preview-2024-11-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/0d68729fe5000a0e7dcdccd2c5f5e6e712f901a9/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -115,6 +114,7 @@ prepend-rp-prefix:
   - DatabaseSecurityAlertPolicy
   - TimeZone
   - Server
+  - ServerCreateMode
   - Database
   - DayOfWeek
   - MetricType
@@ -383,6 +383,7 @@ rename-mapping:
   ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
   ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
   ErrorType: SqlInstancePoolOperationErrorType
+  InaccessibilityReason: ManagedDatabaseInaccessibilityReason 
 
 prompted-enum-values:
   - Default
@@ -677,7 +678,23 @@ directive:
               'Registering',
               'TimedOut'
           ];
-          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState'
+          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState';
+    - from: ManagedInstanceOperations.json
+      where: $.definitions.UpsertManagedServerOperationStepWithEstimatesAndDuration.properties.status
+      transform: >
+          $['enum'] = [
+              'NotStarted',
+              'InProgress',
+              'SlowedDown',
+              'Completed',
+              'Failed',
+              'Canceled'
+          ];
+          $['readOnly'] = true;
+          $['x-ms-enum'] = {
+            "name": "ManagementOperationStepState",
+            "modelAsString": true
+          };
     - from: DatabaseSecurityAlertPolicies.json
       where: $.paths
       transform: >

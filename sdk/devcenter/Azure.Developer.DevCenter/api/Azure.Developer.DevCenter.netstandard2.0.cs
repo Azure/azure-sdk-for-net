@@ -1,23 +1,5 @@
 namespace Azure.Developer.DevCenter
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBox))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxAction))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxActionDelayResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxHardwareProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxImageReference))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxNextAction))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxPool))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxSchedule))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevBoxStorageProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevCenterCatalog))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevCenterEnvironment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevCenterEnvironmentType))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.DevCenterProject))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.EnvironmentDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.OSDisk))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.RemoteConnection))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration))]
     public partial class AzureDeveloperDevCenterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDeveloperDevCenterContext() { }

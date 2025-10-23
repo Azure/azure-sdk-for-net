@@ -1,4 +1,4 @@
-# Azure.Provisioning.ServiceBus client library for .NET
+# Azure Provisioning ServiceBus client library for .NET
 
 Azure.Provisioning.ServiceBus simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,50 @@ dotnet add package Azure.Provisioning.ServiceBus
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Service Bus Queue
+
+This example demonstrates how to create a Service Bus namespace with a queue for reliable messaging scenarios.
+
+```C# Snippet:ServiceBusBasic
+Infrastructure infra = new();
+
+ProvisioningParameter queueName =
+    new(nameof(queueName), typeof(string))
+    {
+        Value = "orders",
+        Description = "The name of the SB queue."
+    };
+infra.Add(queueName);
+
+ServiceBusNamespace sb =
+    new(nameof(sb), ServiceBusNamespace.ResourceVersions.V2021_11_01)
+    {
+        Sku = new ServiceBusSku { Name = ServiceBusSkuName.Standard },
+    };
+infra.Add(sb);
+
+ServiceBusQueue queue =
+    new(nameof(queue), ServiceBusNamespace.ResourceVersions.V2021_11_01)
+    {
+        Parent = sb,
+        Name = queueName,
+        LockDuration = TimeSpan.FromMinutes(5),
+        MaxSizeInMegabytes = 1024,
+        RequiresDuplicateDetection = false,
+        RequiresSession = false,
+        DefaultMessageTimeToLive = TimeSpan.MaxValue,
+        DeadLetteringOnMessageExpiration = false,
+        DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(10),
+        MaxDeliveryCount = 10,
+        AutoDeleteOnIdle = TimeSpan.MaxValue,
+        EnablePartitioning = false,
+        EnableExpress = false
+    };
+infra.Add(queue);
+```
 
 ## Troubleshooting
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,11 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentAzureOpenAIModel"/>. </summary>
         /// <param name="kind"> The type of AI model. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure OpenAI model endpoint. </param>
-        internal KnowledgeAgentAzureOpenAIModel(KnowledgeAgentModelKind kind, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind)
+        internal KnowledgeAgentAzureOpenAIModel(KnowledgeAgentModelKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureOpenAIVectorizerParameters azureOpenAIParameters) : base(kind, serializedAdditionalRawData)
         {
             AzureOpenAIParameters = azureOpenAIParameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentAzureOpenAIModel"/> for deserialization. </summary>
+        internal KnowledgeAgentAzureOpenAIModel()
+        {
         }
 
         /// <summary> Contains the parameters specific to Azure OpenAI model endpoint. </summary>

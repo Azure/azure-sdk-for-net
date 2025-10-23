@@ -22,25 +22,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         public static Azure.AI.Vision.ImageAnalysis.SmartCropsResult SmartCropsResult(System.Collections.Generic.IEnumerable<Azure.AI.Vision.ImageAnalysis.CropRegion> values = null) { throw null; }
         public static Azure.AI.Vision.ImageAnalysis.TagsResult TagsResult(System.Collections.Generic.IEnumerable<Azure.AI.Vision.ImageAnalysis.DetectedTag> values = null) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.CaptionResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.CropRegion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DenseCaption))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedObject))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedPerson))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTag))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTextBlock))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTextLine))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTextWord))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImageBoundingBox))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImageMetadata))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImagePoint))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ObjectsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.PeopleResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ReadResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.SmartCropsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.TagsResult))]
     public partial class AzureAIVisionImageAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIVisionImageAnalysisContext() { }
@@ -52,7 +33,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal CaptionResult() { }
         public float Confidence { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.CaptionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.CaptionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.CaptionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.CaptionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.CaptionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.CaptionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.CaptionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -64,7 +48,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal CropRegion() { }
         public float AspectRatio { get { throw null; } }
         public Azure.AI.Vision.ImageAnalysis.ImageBoundingBox BoundingBox { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.CropRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.CropRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.CropRegion System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.CropRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.CropRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.CropRegion System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.CropRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -77,7 +64,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         public Azure.AI.Vision.ImageAnalysis.ImageBoundingBox BoundingBox { get { throw null; } }
         public float Confidence { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DenseCaption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DenseCaption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DenseCaption System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DenseCaption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DenseCaption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DenseCaption System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DenseCaption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -88,7 +78,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal DenseCaptionsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DenseCaption> Values { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -100,7 +93,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal DetectedObject() { }
         public Azure.AI.Vision.ImageAnalysis.ImageBoundingBox BoundingBox { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedTag> Tags { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DetectedObject System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DetectedObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DetectedObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -112,7 +108,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal DetectedPerson() { }
         public Azure.AI.Vision.ImageAnalysis.ImageBoundingBox BoundingBox { get { throw null; } }
         public float Confidence { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedPerson JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedPerson PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DetectedPerson System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedPerson>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedPerson>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DetectedPerson System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DetectedPerson>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -124,7 +123,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal DetectedTag() { }
         public float Confidence { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DetectedTag System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DetectedTag System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DetectedTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -135,7 +137,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal DetectedTextBlock() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedTextLine> Lines { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTextBlock JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTextBlock PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DetectedTextBlock System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTextBlock>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTextBlock>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DetectedTextBlock System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DetectedTextBlock>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -148,7 +153,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.ImagePoint> BoundingPolygon { get { throw null; } }
         public string Text { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedTextWord> Words { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTextLine JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTextLine PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DetectedTextLine System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTextLine>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTextLine>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DetectedTextLine System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DetectedTextLine>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -161,7 +169,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.ImagePoint> BoundingPolygon { get { throw null; } }
         public float Confidence { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTextWord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.DetectedTextWord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.DetectedTextWord System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTextWord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.DetectedTextWord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.DetectedTextWord System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.DetectedTextWord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -211,7 +222,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         public Azure.AI.Vision.ImageAnalysis.ReadResult Read { get { throw null; } }
         public Azure.AI.Vision.ImageAnalysis.SmartCropsResult SmartCrops { get { throw null; } }
         public Azure.AI.Vision.ImageAnalysis.TagsResult Tags { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult (Azure.Response result) { throw null; }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -225,7 +240,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         public int Width { get { throw null; } }
         public int X { get { throw null; } }
         public int Y { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImageBoundingBox JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImageBoundingBox PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ImageBoundingBox System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.ImageBoundingBox System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.ImageBoundingBox>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -238,7 +256,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal ImageMetadata() { }
         public int Height { get { throw null; } }
         public int Width { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImageMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImageMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ImageMetadata System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.ImageMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.ImageMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -250,7 +271,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal ImagePoint() { }
         public int X { get { throw null; } }
         public int Y { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImagePoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ImagePoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ImagePoint System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImagePoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImagePoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.ImagePoint System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.ImagePoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -262,7 +286,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal ObjectsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedObject> Values { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ObjectsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ObjectsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ObjectsResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ObjectsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ObjectsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.ObjectsResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.ObjectsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -273,7 +300,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal PeopleResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedPerson> Values { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.PeopleResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.PeopleResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.PeopleResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.PeopleResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.PeopleResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.PeopleResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.PeopleResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -284,7 +314,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal ReadResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedTextBlock> Blocks { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ReadResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.ReadResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ReadResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ReadResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ReadResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.ReadResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.ReadResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -295,7 +328,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal SmartCropsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.CropRegion> Values { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.SmartCropsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.SmartCropsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.SmartCropsResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.SmartCropsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.SmartCropsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.SmartCropsResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.SmartCropsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -306,7 +342,10 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         internal TagsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.ImageAnalysis.DetectedTag> Values { get { throw null; } }
+        protected virtual Azure.AI.Vision.ImageAnalysis.TagsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Vision.ImageAnalysis.TagsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.TagsResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.TagsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.TagsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.ImageAnalysis.TagsResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.TagsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

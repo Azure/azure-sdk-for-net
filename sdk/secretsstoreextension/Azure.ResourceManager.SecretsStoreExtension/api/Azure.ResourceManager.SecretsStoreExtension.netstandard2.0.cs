@@ -1,18 +1,5 @@
 namespace Azure.ResourceManager.SecretsStoreExtension
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.SecretSyncData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.SecretSyncResource))]
     public partial class AzureResourceManagerSecretsStoreExtensionContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSecretsStoreExtensionContext() { }
@@ -351,7 +338,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     {
         public SecretSyncUpdateProperties() { }
         public string ForceSynchronization { get { throw null; } set { } }
-        public Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType? KubernetesSecretType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> ObjectSecretMapping { get { throw null; } }
         public string SecretProviderClassName { get { throw null; } set { } }
         public string ServiceAccountName { get { throw null; } set { } }

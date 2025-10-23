@@ -20,9 +20,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal HttpMessage CreateReceiveRequest(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/topics/", false);
@@ -33,22 +30,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxEvents != null)
             {
-                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents, null), true);
+                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents), true);
             }
             if (maxWaitTime != null)
             {
-                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, "%s"), true);
+                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, SerializationFormat.Duration_Seconds), true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateAcknowledgeRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/topics/", false);
@@ -57,7 +54,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":acknowledge", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -66,9 +66,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal HttpMessage CreateReleaseRequest(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/topics/", false);
@@ -81,7 +78,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 uri.AppendQuery("releaseDelayInSeconds", releaseDelayInSeconds, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -90,9 +90,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal HttpMessage CreateRejectRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/topics/", false);
@@ -101,7 +98,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":reject", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -110,9 +110,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal HttpMessage CreateRenewLocksRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/topics/", false);
@@ -121,7 +118,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":renewLock", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

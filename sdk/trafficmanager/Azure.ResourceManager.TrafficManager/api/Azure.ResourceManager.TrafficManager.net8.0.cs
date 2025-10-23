@@ -1,30 +1,5 @@
 namespace Azure.ResourceManager.TrafficManager
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerProfileData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource))]
     public partial class AzureResourceManagerTrafficManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerTrafficManagerContext() { }
@@ -201,6 +176,7 @@ namespace Azure.ResourceManager.TrafficManager
         public long? MaxReturn { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig MonitorConfig { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus? ProfileStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType? RecordType { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -583,6 +559,25 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficManagerProfileRecordType : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficManagerProfileRecordType(string value) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType A { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType Aaaa { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType Cname { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

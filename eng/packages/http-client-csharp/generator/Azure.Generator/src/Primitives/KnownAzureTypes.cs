@@ -13,6 +13,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -21,7 +22,7 @@ namespace Azure.Generator.Primitives
     internal static class KnownAzureTypes
     {
         public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
-        public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
+        public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
 
         private const string UuidId = "Azure.Core.uuid";
         private const string IPv4AddressId = "Azure.Core.ipV4Address";
@@ -35,22 +36,37 @@ namespace Azure.Generator.Primitives
         private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => writer.WriteStringValue(value);
 
-        private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
         private static MethodBodyStatement SerializeTypeWithToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => writer.WriteStringValue(value.InvokeToString());
 
-        private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => Static(valueType).Invoke("Parse", element.GetString());
 
         private static MethodBodyStatement SerializeResponseError(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-            => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), writer, value).Terminate();
+        {
+            var asJsonModel = value.CastTo(typeof(IJsonModel<ResponseError>));
+            return asJsonModel.Invoke(nameof(IJsonModel<ResponseError>.Write), writer, options).Terminate();
+        }
 
-        private static ValueExpression DeserializeResponseError(CSharpType valueType,
+        private static ValueExpression DeserializeResponseError(
+            CSharpType valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
+            ScopedApi<ModelReaderWriterOptions> options,
             SerializationFormat format)
-            => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), arguments: [element.GetRawText()], typeArguments: [valueType], callAsAsync: false);
+        {
+            var serializedData = New.Instance(
+                typeof(BinaryData),
+                Static(typeof(Encoding)).Property(nameof(Encoding.UTF8)).Invoke(nameof(Encoding.UTF8.GetBytes), element.GetRawText()));
+            // ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, Context.Default);
+            return Static(typeof(ModelReaderWriter)).Invoke(
+                nameof(ModelReaderWriter.Read),
+                [serializedData, options, ModelReaderWriterContextSnippets.Default],
+                [typeof(ResponseError)]);
+        }
 
         private static readonly IReadOnlyDictionary<string, Type> _idToTypes = new Dictionary<string, Type>
         {
@@ -64,7 +80,7 @@ namespace Azure.Generator.Primitives
             [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
-        private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
             [typeof(Guid)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(IPAddress)] = SerializeTypeWithToString,
@@ -74,7 +90,7 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = SerializeResponseError,
         };
 
-        private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
             [typeof(Guid)] = DeserializeNewInstanceStringLikeType,
             [typeof(IPAddress)] = DeserializeParsableStringLikeType,
@@ -86,8 +102,8 @@ namespace Azure.Generator.Primitives
 
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
-        public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
-        public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
     }
 }

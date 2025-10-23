@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A string describing the resource name. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> A localized string describing the resource name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

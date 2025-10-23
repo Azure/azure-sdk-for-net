@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the storage account to save the packet capture session. Required if no localPath or filePath is provided. </summary>
+        [WirePath("storageId")]
         public ResourceIdentifier StorageId { get; set; }
         /// <summary> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </summary>
+        [WirePath("storagePath")]
         public string StoragePath { get; set; }
         /// <summary> This path is invalid if 'Continuous Capture' is provided with 'true' or 'false'. A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </summary>
+        [WirePath("filePath")]
         public string FilePath { get; set; }
         /// <summary> This path is valid if 'Continuous Capture' is provided with 'true' or 'false' and required if no storage ID is provided, otherwise optional. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. </summary>
+        [WirePath("localPath")]
         public string LocalPath { get; set; }
     }
 }

@@ -2,24 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.PostgreSql.Tests;
 
-public class BasicPostgreSqlTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicPostgreSqlTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.dbforpostgresql/flexible-postgresql-with-aad/main.bicep")]
-    public async Task CreateFlexibleServer()
+    internal static Trycep CreateFlexibleServerTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:PostgreSqlBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter adminLogin =
@@ -99,10 +95,18 @@ public class BasicPostgreSqlTests(bool async)
                         PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
                     };
                 infra.Add(admin);
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.dbforpostgresql/flexible-postgresql-with-aad/main.bicep")]
+    public async Task CreateFlexibleServer()
+    {
+        await using Trycep test = CreateFlexibleServerTest();
+        test.Compare(
             """
             @description('The administrator username of the server.')
             param adminLogin string
@@ -159,8 +163,42 @@ public class BasicPostgreSqlTests(bool async)
               }
               parent: server
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
+    }
+
+    // this test is only a unit test that validates the "convenience property" StorageSizeInGB would not override the actual
+    // storage.storageSizeInGB property if both are set.
+    [Test]
+    public async Task TestStorageSizeInGB()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var server = new PostgreSqlFlexibleServer("testServer", "2024-08-01");
+                server.StorageSizeInGB = 100;
+                server.Storage.StorageSizeInGB = 64;
+                server.Storage.AutoGrow = StorageAutoGrow.Disabled;
+
+                infra.Add(server);
+                return infra;
+            })
+            .Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
+            resource testServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
+              name: take('testserver-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                storage: {
+                  storageSizeGB: 64
+                  autoGrow: 'Disabled'
+                }
+              }
+            }
+            """);
     }
 }

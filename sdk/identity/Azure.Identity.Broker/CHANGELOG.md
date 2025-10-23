@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.5 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-09-04)
+
+### Breaking Changes
+
+- Deprecated `SharedTokenCacheCredentialBrokerOptions`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead.
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.76.0
+- Updated `Azure.Identity` dependency to version 1.15.0
 
 ## 1.3.0-beta.4 (2025-07-11)
 

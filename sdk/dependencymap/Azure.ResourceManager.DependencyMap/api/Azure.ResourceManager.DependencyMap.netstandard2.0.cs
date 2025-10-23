@@ -1,20 +1,5 @@
 namespace Azure.ResourceManager.DependencyMap
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapDiscoverySourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapDiscoverySourceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourcePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetConnectionsWithConnectedMachineForFocusedMachineContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForFocusedMachineContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.OffAzureDiscoverySourceProperties))]
     public partial class AzureResourceManagerDependencyMapContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDependencyMapContext() { }
@@ -123,8 +108,8 @@ namespace Azure.ResourceManager.DependencyMap
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mapName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult> ExportDependencies(Azure.WaitUntil waitUntil, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>> ExportDependenciesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DependencyMap.DependencyMapResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DependencyMap.DependencyMapResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation GetConnectionsForProcessOnFocusedMachine(Azure.WaitUntil waitUntil, Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -178,7 +163,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public static Azure.ResourceManager.DependencyMap.DependencyMapData DependencyMapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState? dependencyMapProvisioningState = default(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DependencyMap.DependencyMapDiscoverySourceData DependencyMapDiscoverySourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState? provisioningState = default(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState?), string sourceType = null, Azure.Core.ResourceIdentifier sourceId = null) { throw null; }
-        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent ExportDependenciesContent(Azure.Core.ResourceIdentifier focusedMachineId = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
+        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult ExportDependenciesOperationResult(string id = null, string name = null, string status = null, Azure.ResponseError error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties ExportDependenciesResultProperties(string exportedDataSasUri = null, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode? statusCode = default(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode?), int? additionalInfoAvailableDaysCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent GetConnectionsForProcessOnFocusedMachineContent(Azure.Core.ResourceIdentifier focusedMachineId = null, string processIdOnFocusedMachine = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetConnectionsWithConnectedMachineForFocusedMachineContent GetConnectionsWithConnectedMachineForFocusedMachineContent(Azure.Core.ResourceIdentifier focusedMachineId = null, Azure.Core.ResourceIdentifier connectedMachineId = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForFocusedMachineContent GetDependencyViewForFocusedMachineContent(Azure.Core.ResourceIdentifier focusedMachineId = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
@@ -297,15 +283,65 @@ namespace Azure.ResourceManager.DependencyMap.Models
     }
     public partial class ExportDependenciesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>
     {
-        public ExportDependenciesContent(Azure.Core.ResourceIdentifier focusedMachineId) { }
+        public ExportDependenciesContent() { }
+        public System.Collections.Generic.IList<string> ApplianceNameList { get { throw null; } }
         public Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter Filters { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier FocusedMachineId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier FocusedMachineId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExportDependenciesOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>
+    {
+        internal ExportDependenciesOperationResult() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties Properties { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExportDependenciesResultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>
+    {
+        internal ExportDependenciesResultProperties() { }
+        public int? AdditionalInfoAvailableDaysCount { get { throw null; } }
+        public string ExportedDataSasUri { get { throw null; } }
+        public Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode? StatusCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ExportDependenciesStatusCode : System.IEquatable<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ExportDependenciesStatusCode(string value) { throw null; }
+        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode CompleteMatch { get { throw null; } }
+        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode NoMatch { get { throw null; } }
+        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode PartialMatch { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode left, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode left, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class GetConnectionsForProcessOnFocusedMachineContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent>
     {
