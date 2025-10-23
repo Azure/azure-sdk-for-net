@@ -1,8 +1,8 @@
 ---
-description: 'Check if the package pr checks and/or validation has passed for the SDK package.'
+description: 'Check if the package validation checks have passed for the SDK package.'
 ---
 ## Goal
-Check the PR and Validation checks for the SDK package by collecting the required information from the user and executing the run_check command.
+Check the validation checks for the SDK package by collecting the required information from the user and executing the run_check command.
 
 ## Instructions
 1. **Collect Required Information**:
@@ -15,14 +15,19 @@ Check the PR and Validation checks for the SDK package by collecting the require
       - Go
     - Prompt the user to select the check type to run (default to "all" if not specified):
       - all
+      - changelog
+      - dependency
+      - readme
+      - cspell
+      - snippets
       - linting
       - format
-      - changelog
-      - cspell
-      - readme
+      - checkaotcompat
+      - generatedcodechecks
+      - samples
 
 
-2. **Execute Readiness Check**:
+2. **Execute Check**:
     - Use the `azsdk_package_run_check` tool with the package path and check type.
     - If the package path is not provided, use the package name and language to determine the package path for each language and prompt the user to confirm the path before proceeding.
 
