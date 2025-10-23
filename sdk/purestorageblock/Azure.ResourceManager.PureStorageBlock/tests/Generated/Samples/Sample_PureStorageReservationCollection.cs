@@ -9,20 +9,20 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DisconnectedOperations.Models;
+using Azure.ResourceManager.PureStorageBlock.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.DisconnectedOperations.Samples
+namespace Azure.ResourceManager.PureStorageBlock.Samples
 {
-    public partial class Sample_DisconnectedOperationCollection
+    public partial class Sample_PureStorageReservationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_DisconnectedOperationsCreateOrUpdate()
+        public async Task CreateOrUpdate_ReservationsCreate()
         {
-            // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "DisconnectedOperation_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Reservations_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "Reservation_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,40 +31,59 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "51DB5DE7-A66C-4789-BFFF-9F75C95A0201";
-            string resourceGroupName = "rgdisconnectedOperations";
+            string subscriptionId = "BC47D6CC-AA80-4374-86F8-19D94EC70666";
+            string resourceGroupName = "rgpurestorage";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DisconnectedOperationResource
-            DisconnectedOperationCollection collection = resourceGroupResource.GetDisconnectedOperations();
+            // get the collection of this PureStorageReservationResource
+            PureStorageReservationCollection collection = resourceGroupResource.GetPureStorageReservations();
 
             // invoke the operation
-            string name = "demo-resource";
-            DisconnectedOperationData data = new DisconnectedOperationData(new AzureLocation("eastus"))
+            string reservationName = "storagePoolname";
+            PureStorageReservationData data = new PureStorageReservationData(new AzureLocation("jynnbjysbc"))
             {
-                Properties = new DisconnectedOperationProperties(null, DisconnectedOperationsBillingModel.Capacity, DisconnectedOperationsConnectionIntent.Disconnected),
+                Properties = new PureStorageReservationProperties(new PureStorageMarketplaceDetails(new PureStorageOfferDetails("vejockfhoavaqjvhtwvctdnaefvw", "efojrbphbimq", "caj")
+                {
+                    PlanName = "lvvzchm",
+                    TermUnit = "ose",
+                    TermId = "ucyvzkedohfjazifxweylhnbcmeza",
+                })
+                {
+                    SubscriptionStatus = PureStorageMarketplaceSubscriptionStatus.PendingFulfillmentStart,
+                }, new PureStorageUserDetails("bucysqbbclhwxrzig", "fnsvxlop", "abc@example.com")
+                {
+                    Upn = "ekqbqgpdylggddusuiifrnjcwiefay",
+                    PhoneNumber = "jglihtgsacdxocc",
+                    CompanyDetails = new PureStorageCompanyDetails("nrndfzmrakk")
+                    {
+                        Address = new PureStorageAddressDetails("f", "qxzhxjoatyuajoljfkd", "dnusygshfvmebpmcjsd", "nuexbknolfphlfguyzq", "yjzqichkfffbdtcswzolmrl")
+                        {
+                            AddressLine2 = "gycfosmknj",
+                        },
+                    },
+                }),
                 Tags =
 {
-["key1"] = "value1"
+["key1110"] = "euhfdmtfpucwurtu"
 },
             };
-            ArmOperation<DisconnectedOperationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            DisconnectedOperationResource result = lro.Value;
+            ArmOperation<PureStorageReservationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, reservationName, data);
+            PureStorageReservationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DisconnectedOperationData resourceData = result.Data;
+            PureStorageReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_DisconnectedOperationsGet()
+        public async Task Get_ReservationsGet()
         {
-            // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DisconnectedOperation_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Reservations_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Reservation_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -73,31 +92,31 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
-            string resourceGroupName = "rgdisconnectedoperations";
+            string subscriptionId = "BC47D6CC-AA80-4374-86F8-19D94EC70666";
+            string resourceGroupName = "rgpurestorage";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DisconnectedOperationResource
-            DisconnectedOperationCollection collection = resourceGroupResource.GetDisconnectedOperations();
+            // get the collection of this PureStorageReservationResource
+            PureStorageReservationCollection collection = resourceGroupResource.GetPureStorageReservations();
 
             // invoke the operation
-            string name = "demo-resource";
-            DisconnectedOperationResource result = await collection.GetAsync(name);
+            string reservationName = "storagePoolname";
+            PureStorageReservationResource result = await collection.GetAsync(reservationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DisconnectedOperationData resourceData = result.Data;
+            PureStorageReservationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_DisconnectedOperationsListByResourceGroup()
+        public async Task GetAll_ReservationsListByResourceGroup()
         {
-            // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "DisconnectedOperation_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Reservations_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "Reservation_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,20 +125,20 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
-            string resourceGroupName = "rgdisconnectedoperations";
+            string subscriptionId = "BC47D6CC-AA80-4374-86F8-19D94EC70666";
+            string resourceGroupName = "rgpurestorage";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DisconnectedOperationResource
-            DisconnectedOperationCollection collection = resourceGroupResource.GetDisconnectedOperations();
+            // get the collection of this PureStorageReservationResource
+            PureStorageReservationCollection collection = resourceGroupResource.GetPureStorageReservations();
 
             // invoke the operation and iterate over the result
-            await foreach (DisconnectedOperationResource item in collection.GetAllAsync())
+            await foreach (PureStorageReservationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DisconnectedOperationData resourceData = item.Data;
+                PureStorageReservationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -129,10 +148,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_DisconnectedOperationsGet()
+        public async Task Exists_ReservationsGet()
         {
-            // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DisconnectedOperation_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Reservations_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Reservation_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -141,27 +160,27 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
-            string resourceGroupName = "rgdisconnectedoperations";
+            string subscriptionId = "BC47D6CC-AA80-4374-86F8-19D94EC70666";
+            string resourceGroupName = "rgpurestorage";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DisconnectedOperationResource
-            DisconnectedOperationCollection collection = resourceGroupResource.GetDisconnectedOperations();
+            // get the collection of this PureStorageReservationResource
+            PureStorageReservationCollection collection = resourceGroupResource.GetPureStorageReservations();
 
             // invoke the operation
-            string name = "demo-resource";
-            bool result = await collection.ExistsAsync(name);
+            string reservationName = "storagePoolname";
+            bool result = await collection.ExistsAsync(reservationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_DisconnectedOperationsGet()
+        public async Task GetIfExists_ReservationsGet()
         {
-            // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DisconnectedOperation_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Reservations_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Reservation_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -170,18 +189,18 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "301DCB09-82EC-4777-A56C-6FFF26BCC814";
-            string resourceGroupName = "rgdisconnectedoperations";
+            string subscriptionId = "BC47D6CC-AA80-4374-86F8-19D94EC70666";
+            string resourceGroupName = "rgpurestorage";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DisconnectedOperationResource
-            DisconnectedOperationCollection collection = resourceGroupResource.GetDisconnectedOperations();
+            // get the collection of this PureStorageReservationResource
+            PureStorageReservationCollection collection = resourceGroupResource.GetPureStorageReservations();
 
             // invoke the operation
-            string name = "demo-resource";
-            NullableResponse<DisconnectedOperationResource> response = await collection.GetIfExistsAsync(name);
-            DisconnectedOperationResource result = response.HasValue ? response.Value : null;
+            string reservationName = "storagePoolname";
+            NullableResponse<PureStorageReservationResource> response = await collection.GetIfExistsAsync(reservationName);
+            PureStorageReservationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -191,7 +210,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DisconnectedOperationData resourceData = result.Data;
+                PureStorageReservationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
