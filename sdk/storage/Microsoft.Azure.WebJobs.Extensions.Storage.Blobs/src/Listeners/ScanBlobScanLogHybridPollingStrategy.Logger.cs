@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Extensions.Logging;
 
