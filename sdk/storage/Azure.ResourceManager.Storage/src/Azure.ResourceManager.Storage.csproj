@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.6.0-beta.1</Version>
+    <Version>1.6.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Storage</PackageId>
@@ -8,5 +8,6 @@
     <PackageTags>azure;management;storage</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

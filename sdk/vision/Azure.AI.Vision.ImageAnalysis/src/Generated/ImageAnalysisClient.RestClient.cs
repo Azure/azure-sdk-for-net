@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.AppendQuery("api-version", _apiVersion, true);
             if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("features", visualFeatures, ",", null, true);
+                uri.AppendQueryDelimited("features", visualFeatures, ",", escape: true);
             }
             if (language != null)
             {
@@ -35,11 +35,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             if (genderNeutralCaption != null)
             {
-                uri.AppendQuery("gender-neutral-caption", TypeFormatters.ConvertToString(genderNeutralCaption, null), true);
+                uri.AppendQuery("gender-neutral-caption", TypeFormatters.ConvertToString(genderNeutralCaption), true);
             }
             if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", null, true);
+                uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", escape: true);
             }
             if (modelVersion != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.AppendQuery("api-version", _apiVersion, true);
             if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("features", visualFeatures, ",", null, true);
+                uri.AppendQueryDelimited("features", visualFeatures, ",", escape: true);
             }
             if (language != null)
             {
@@ -72,11 +72,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             if (genderNeutralCaption != null)
             {
-                uri.AppendQuery("gender-neutral-caption", TypeFormatters.ConvertToString(genderNeutralCaption, null), true);
+                uri.AppendQuery("gender-neutral-caption", TypeFormatters.ConvertToString(genderNeutralCaption), true);
             }
             if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", null, true);
+                uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", escape: true);
             }
             if (modelVersion != null)
             {

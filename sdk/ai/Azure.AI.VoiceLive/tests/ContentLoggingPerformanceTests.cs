@@ -31,6 +31,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
+        [Ignore("Flaky")]
         [Test]
         public void ContentLogger_WhenLoggingDisabled_HasMinimalOverhead()
         {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> something. </summary>
+        [WirePath("something")]
         public string Something { get; set; }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue { get; set; }
     }
 }

@@ -8,90 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryAssetResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryAssetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DeviceRegistryAssetCollection"/> instance call the GetDeviceRegistryAssets method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DeviceRegistryAssetResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DeviceRegistryAssetCollection"/> instance call the GetDeviceRegistryAssets method from an instance of the parent resource.
     /// </summary>
     public partial class DeviceRegistryAssetCollection : ArmCollection, IEnumerable<DeviceRegistryAssetResource>, IAsyncEnumerable<DeviceRegistryAssetResource>
     {
-        private readonly ClientDiagnostics _deviceRegistryAssetAssetsClientDiagnostics;
-        private readonly AssetsRestOperations _deviceRegistryAssetAssetsRestClient;
+        private readonly ClientDiagnostics _assetsClientDiagnostics;
+        private readonly Assets _assetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryAssetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistryAssetCollection for mocking. </summary>
         protected DeviceRegistryAssetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryAssetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistryAssetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceRegistryAssetAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceRegistryAssetResource.ResourceType, out string deviceRegistryAssetAssetsApiVersion);
-            _deviceRegistryAssetAssetsRestClient = new AssetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryAssetAssetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DeviceRegistryAssetResource.ResourceType, out string deviceRegistryAssetApiVersion);
+            _assetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetResource.ResourceType.Namespace, Diagnostics);
+            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Create a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_CreateOrReplace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a Asset. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DeviceRegistryAssetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetName, DeviceRegistryAssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryAssetAssetsRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, assetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation<DeviceRegistryAssetResource>(new DeviceRegistryAssetOperationSource(Client), _deviceRegistryAssetAssetsClientDiagnostics, Pipeline, _deviceRegistryAssetAssetsRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, DeviceRegistryAssetData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DeviceRegistryArmOperation<DeviceRegistryAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryAssetResource>(
+                    new DeviceRegistryAssetOperationSource(Client),
+                    _assetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,46 +97,39 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Create a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_CreateOrReplace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a Asset. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DeviceRegistryAssetResource> CreateOrUpdate(WaitUntil waitUntil, string assetName, DeviceRegistryAssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deviceRegistryAssetAssetsRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, assetName, data, cancellationToken);
-                var operation = new DeviceRegistryArmOperation<DeviceRegistryAssetResource>(new DeviceRegistryAssetOperationSource(Client), _deviceRegistryAssetAssetsClientDiagnostics, Pipeline, _deviceRegistryAssetAssetsRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, DeviceRegistryAssetData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DeviceRegistryArmOperation<DeviceRegistryAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryAssetResource>(
+                    new DeviceRegistryAssetOperationSource(Client),
+                    _assetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,42 +139,30 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Asset. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DeviceRegistryAssetResource>> GetAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Get");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryAssetAssetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceRegistryAssetData> response = Response.FromValue(DeviceRegistryAssetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,42 +172,30 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Asset. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DeviceRegistryAssetResource> Get(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Get");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceRegistryAssetAssetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceRegistryAssetData> response = Response.FromValue(DeviceRegistryAssetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +205,62 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// List Asset resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Asset resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceRegistryAssetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceRegistryAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryAssetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceRegistryAssetAssetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceRegistryAssetAssetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetResource(Client, DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(e)), _deviceRegistryAssetAssetsClientDiagnostics, Pipeline, "DeviceRegistryAssetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetByResourceGroupAsyncCollectionResultOfT(_assetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetResource(Client, data));
         }
 
-        /// <summary>
-        /// List Asset resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Asset resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryAssetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceRegistryAssetAssetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceRegistryAssetAssetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetResource(Client, DeviceRegistryAssetData.DeserializeDeviceRegistryAssetData(e)), _deviceRegistryAssetAssetsClientDiagnostics, Pipeline, "DeviceRegistryAssetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetByResourceGroupCollectionResultOfT(_assetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Exists");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryAssetAssetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceRegistryAssetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistryAssetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistryAssetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,40 +270,38 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Exists");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceRegistryAssetAssetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceRegistryAssetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistryAssetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistryAssetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,42 +311,42 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DeviceRegistryAssetResource>> GetIfExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.GetIfExists");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryAssetAssetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceRegistryAssetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistryAssetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistryAssetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceRegistryAssetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,42 +356,42 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DeviceRegistryAssetResource> GetIfExists(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
-            using var scope = _deviceRegistryAssetAssetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.GetIfExists");
+            using DiagnosticScope scope = _assetsClientDiagnostics.CreateScope("DeviceRegistryAssetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceRegistryAssetAssetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceRegistryAssetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistryAssetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistryAssetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceRegistryAssetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +411,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DeviceRegistryAssetResource> IAsyncEnumerable<DeviceRegistryAssetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
