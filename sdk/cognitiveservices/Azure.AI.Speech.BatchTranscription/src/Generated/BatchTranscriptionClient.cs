@@ -65,6 +65,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='StartTranscriptionAsync(TranscriptionJob,CancellationToken)']/*" />
         public virtual async Task<Response<TranscriptionJob>> StartTranscriptionAsync(TranscriptionJob resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resource, nameof(resource));
@@ -79,6 +80,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='StartTranscription(TranscriptionJob,CancellationToken)']/*" />
         public virtual Response<TranscriptionJob> StartTranscription(TranscriptionJob resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resource, nameof(resource));
@@ -109,6 +111,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='StartTranscriptionAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> StartTranscriptionAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -147,6 +150,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='StartTranscription(RequestContent,RequestContext)']/*" />
         public virtual Response StartTranscription(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -170,6 +174,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TranscriptionJob>> GetTranscriptionAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -184,6 +189,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscription(string,CancellationToken)']/*" />
         public virtual Response<TranscriptionJob> GetTranscription(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -214,6 +220,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTranscriptionAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -253,6 +260,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscription(string,RequestContext)']/*" />
         public virtual Response GetTranscription(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -288,6 +296,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='DeleteTranscriptionAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTranscriptionAsync(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -323,6 +332,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='DeleteTranscription(string,RequestContext)']/*" />
         public virtual Response DeleteTranscription(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -346,6 +356,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionsAsync(int?,int?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<TranscriptionJob> GetTranscriptionsAsync(int? maxCount = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -359,6 +370,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptions(int?,int?,string,CancellationToken)']/*" />
         public virtual Pageable<TranscriptionJob> GetTranscriptions(int? maxCount = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -388,6 +400,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionsAsync(int?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTranscriptionsAsync(int? maxCount, int? skip, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTranscriptionsRequest(maxCount, skip, filter, context);
@@ -416,6 +429,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptions(int?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTranscriptions(int? maxCount, int? skip, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTranscriptionsRequest(maxCount, skip, filter, context);
@@ -431,6 +445,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionFilesAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<TranscriptionFile> GetTranscriptionFilesAsync(string id, int? maxCount = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -449,6 +464,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionFiles(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Pageable<TranscriptionFile> GetTranscriptionFiles(string id, int? maxCount = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -483,6 +499,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionFilesAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTranscriptionFilesAsync(string id, int? maxCount, int? skip, string filter, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -516,6 +533,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchTranscriptionClient.xml" path="doc/members/member[@name='GetTranscriptionFiles(string,int?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTranscriptionFiles(string id, int? maxCount, int? skip, string filter, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
