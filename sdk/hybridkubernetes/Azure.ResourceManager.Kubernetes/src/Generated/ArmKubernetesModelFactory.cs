@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
         /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
-        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, BinaryData identity = default, ConnectedClusterKind? kind = default)
+        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Dell.Storage;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -38,14 +39,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Identity);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Identity))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                SerializeIdentity(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -110,7 +104,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             {
                 return null;
             }
-            BinaryData identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             DellFileSystemPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -118,11 +112,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             {
                 if (prop.NameEquals("identity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = BinaryData.FromString(prop.Value.GetRawText());
+                    DeserializeIdentity(prop, ref identity);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

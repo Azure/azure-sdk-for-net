@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.ResourceManager.Dell.Storage;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -29,41 +29,13 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemPatch(BinaryData identity, IDictionary<string, string> tags, DellFileSystemPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DellFileSystemPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, DellFileSystemPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// The managed service identities assigned to this resource.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
