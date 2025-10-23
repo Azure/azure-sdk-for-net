@@ -1289,9 +1289,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="rules"> The storage account object replication rules. </param>
         /// <param name="isMetricsEnabled"> Optional. The object replication policy metrics feature options. </param>
-        /// <param name="priorityReplicationEnabled"> Optional. The object replication policy priority replication feature options. </param>
+        /// <param name="isPriorityReplicationEnabled"> Optional. The object replication policy priority replication feature options. </param>
         /// <returns> A new <see cref="Storage.ObjectReplicationPolicyData"/> instance for mocking. </returns>
-        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string policyId = null, DateTimeOffset? enabledOn = null, string sourceAccount = null, string destinationAccount = null, IEnumerable<ObjectReplicationPolicyRule> rules = null, bool? isMetricsEnabled = null, bool? priorityReplicationEnabled = null)
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string policyId = null, DateTimeOffset? enabledOn = null, string sourceAccount = null, string destinationAccount = null, IEnumerable<ObjectReplicationPolicyRule> rules = null, bool? isMetricsEnabled = null, bool? isPriorityReplicationEnabled = null)
         {
             rules ??= new List<ObjectReplicationPolicyRule>();
 
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.Storage.Models
                 destinationAccount,
                 rules?.ToList(),
                 isMetricsEnabled != null ? new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, serializedAdditionalRawData: null) : null,
-                priorityReplicationEnabled != null ? new ObjectReplicationPolicyPropertiesPriorityReplication(priorityReplicationEnabled, serializedAdditionalRawData: null) : null,
+                isPriorityReplicationEnabled != null ? new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -1806,7 +1806,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled)
         {
-            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, priorityReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.Models.StorageSkuInformation" />. </summary>
@@ -1982,7 +1982,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
         {
-            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, priorityReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent" />. </summary>

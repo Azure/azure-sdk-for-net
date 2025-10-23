@@ -193,9 +193,9 @@ rename-mapping:
     Name: LastAccessTimeTrackingPolicyName
     NetworkRuleSet: StorageAccountNetworkRuleSet
     ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
+    ObjectReplicationPolicyPropertiesPriorityReplication.enabled: IsPriorityReplicationEnabled
     ObjectType: BlobInventoryPolicyObjectType
     Permissions: StorageAccountSasPermission
-    PriorityReplicationEnabled: IsPriorityReplicationEnabled
     PrivateLinkResource: StoragePrivateLinkResourceData
     ProtocolSettings: FileServiceProtocolSettings
     ProtocolSettings.smb: SmbSetting

@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 IsMetricsEnabled = true,
                 PriorityReplication = new ObjectReplicationPolicyPropertiesPriorityReplication()
                 {
-                    Enabled = true,
+                    IsPriorityReplicationEnabled = true,
                 },
                 Rules =
                 {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
-            Assert.AreEqual(objectReplicationPolicy.Data.PriorityReplication.Enabled, true);
+            Assert.AreEqual(objectReplicationPolicy.Data.PriorityReplication.IsPriorityReplicationEnabled, true);
 
             //get policy
             List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
-            Assert.AreEqual(objectReplicationPolicy.Data.PriorityReplication.Enabled, true);
+            Assert.AreEqual(objectReplicationPolicy.Data.PriorityReplication.IsPriorityReplicationEnabled, true);
 
             //delete policy
             await objectReplicationPolicy.DeleteAsync(WaitUntil.Completed);

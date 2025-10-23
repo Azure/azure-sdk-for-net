@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Storage
         internal ObjectReplicationPolicyPropertiesPriorityReplication PriorityReplication { get; set; }
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
         [WirePath("properties.priorityReplication.enabled")]
-        public bool? PriorityReplicationEnabled
+        public bool? IsPriorityReplicationEnabled
         {
-            get => PriorityReplication is null ? default : PriorityReplication.Enabled;
+            get => PriorityReplication is null ? default : PriorityReplication.IsPriorityReplicationEnabled;
             set
             {
                 if (PriorityReplication is null)
                     PriorityReplication = new ObjectReplicationPolicyPropertiesPriorityReplication();
-                PriorityReplication.Enabled = value;
+                PriorityReplication.IsPriorityReplicationEnabled = value;
             }
         }
     }

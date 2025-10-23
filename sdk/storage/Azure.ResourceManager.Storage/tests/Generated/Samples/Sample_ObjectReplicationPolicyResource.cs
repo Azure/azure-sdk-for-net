@@ -108,7 +108,7 @@ PrefixMatch = {"blobA", "blobB"},
 },
 }},
                 IsMetricsEnabled = true,
-                PriorityReplicationEnabled = true,
+                IsPriorityReplicationEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await objectReplicationPolicy.UpdateAsync(WaitUntil.Completed, data);
             ObjectReplicationPolicyResource result = lro.Value;
@@ -156,7 +156,7 @@ MinCreationTime = "2020-02-19T16:05:00Z",
 },
 }},
                 IsMetricsEnabled = true,
-                PriorityReplicationEnabled = true,
+                IsPriorityReplicationEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await objectReplicationPolicy.UpdateAsync(WaitUntil.Completed, data);
             ObjectReplicationPolicyResource result = lro.Value;
@@ -203,7 +203,7 @@ PrefixMatch = {"blobA", "blobB"},
 },
 }, new ObjectReplicationPolicyRule("scont179", "dcont179")},
                 IsMetricsEnabled = true,
-                PriorityReplicationEnabled = true,
+                IsPriorityReplicationEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await objectReplicationPolicy.UpdateAsync(WaitUntil.Completed, data);
             ObjectReplicationPolicyResource result = lro.Value;
@@ -253,7 +253,7 @@ PrefixMatch = {"blobA", "blobB"},
 RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 }},
                 IsMetricsEnabled = true,
-                PriorityReplicationEnabled = true,
+                IsPriorityReplicationEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await objectReplicationPolicy.UpdateAsync(WaitUntil.Completed, data);
             ObjectReplicationPolicyResource result = lro.Value;

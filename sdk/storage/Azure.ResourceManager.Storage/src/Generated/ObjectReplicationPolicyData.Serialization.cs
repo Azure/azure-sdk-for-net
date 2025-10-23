@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PriorityReplicationEnabled", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsPriorityReplicationEnabled", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    priorityReplication: ");
