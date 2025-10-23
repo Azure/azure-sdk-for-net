@@ -67,7 +67,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// Durations larger than 2^53-1 are not supported to ensure compatibility with JavaScript integers.
         /// </param>
         /// <param name="channels"> A collection of the requested channel numbers. In the default case, the channels 0 and 1 are considered. </param>
-        /// <param name="destinationContainer">
+        /// <param name="destinationContainerUrl">
         /// The requested destination container.
         ///
         /// Remarks
@@ -87,21 +87,21 @@ namespace Azure.AI.Speech.BatchTranscription
         /// </param>
         /// <param name="error"> EntityError. </param>
         /// <param name="diarization"> Speaker Diarization. </param>
-        /// <param name="languageIdentificationProperties"> LanguageIdentificationProperties. </param>
+        /// <param name="languageIdentification"> LanguageIdentificationProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionProperties(bool? wordLevelTimestampsEnabled, bool? displayFormWordLevelTimestampsEnabled, int? durationMilliseconds, IList<int> channels, Uri destinationContainer, PunctuationMode? punctuationMode, ProfanityFilterMode? profanityFilterMode, int timeToLiveHours, EntityError error, DiarizationProperties diarization, LanguageIdentificationProperties languageIdentificationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionProperties(bool? wordLevelTimestampsEnabled, bool? displayFormWordLevelTimestampsEnabled, int? durationMilliseconds, IList<int> channels, Uri destinationContainerUrl, PunctuationMode? punctuationMode, ProfanityFilterMode? profanityFilterMode, int timeToLiveHours, EntityError error, DiarizationProperties diarization, LanguageIdentificationProperties languageIdentification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WordLevelTimestampsEnabled = wordLevelTimestampsEnabled;
             DisplayFormWordLevelTimestampsEnabled = displayFormWordLevelTimestampsEnabled;
             DurationMilliseconds = durationMilliseconds;
             Channels = channels;
-            DestinationContainer = destinationContainer;
+            DestinationContainerUrl = destinationContainerUrl;
             PunctuationMode = punctuationMode;
             ProfanityFilterMode = profanityFilterMode;
             TimeToLiveHours = timeToLiveHours;
             Error = error;
             Diarization = diarization;
-            LanguageIdentificationProperties = languageIdentificationProperties;
+            LanguageIdentification = languageIdentification;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -125,7 +125,7 @@ namespace Azure.AI.Speech.BatchTranscription
         ///
         /// To support automatic cleanup, either configure blob lifetimes on the container, or use "Bring your own Storage (BYOS)" instead of destinationContainerUrl, where blobs can be cleaned up.
         /// </summary>
-        public Uri DestinationContainer { get; set; }
+        public Uri DestinationContainerUrl { get; set; }
         /// <summary> The mode used for punctuation. </summary>
         public PunctuationMode? PunctuationMode { get; set; }
         /// <summary> Mode of profanity filtering. </summary>
@@ -135,6 +135,6 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <summary> Speaker Diarization. </summary>
         public DiarizationProperties Diarization { get; set; }
         /// <summary> LanguageIdentificationProperties. </summary>
-        public LanguageIdentificationProperties LanguageIdentificationProperties { get; set; }
+        public LanguageIdentificationProperties LanguageIdentification { get; set; }
     }
 }

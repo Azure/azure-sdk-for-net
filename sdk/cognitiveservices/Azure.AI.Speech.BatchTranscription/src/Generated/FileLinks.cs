@@ -46,21 +46,21 @@ namespace Azure.AI.Speech.BatchTranscription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FileLinks"/>. </summary>
-        /// <param name="content"> The url to retrieve the content of this file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal FileLinks(Uri content)
+        /// <param name="contentUrl"> The url to retrieve the content of this file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentUrl"/> is null. </exception>
+        internal FileLinks(Uri contentUrl)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(contentUrl, nameof(contentUrl));
 
-            Content = content;
+            ContentUrl = contentUrl;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileLinks"/>. </summary>
-        /// <param name="content"> The url to retrieve the content of this file. </param>
+        /// <param name="contentUrl"> The url to retrieve the content of this file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileLinks(Uri content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileLinks(Uri contentUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Content = content;
+            ContentUrl = contentUrl;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,6 +70,6 @@ namespace Azure.AI.Speech.BatchTranscription
         }
 
         /// <summary> The url to retrieve the content of this file. </summary>
-        public Uri Content { get; }
+        public Uri ContentUrl { get; }
     }
 }

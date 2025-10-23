@@ -46,19 +46,19 @@ namespace Azure.AI.Speech.BatchTranscription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionFile"/>. </summary>
-        /// <param name="created"> The creation time of this file. The time stamp is encoded as ISO 8601 date and time format (see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations). </param>
+        /// <param name="createdDateTime"> The creation time of this file. The time stamp is encoded as ISO 8601 date and time format (see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations). </param>
         /// <param name="kind"> FileKind. </param>
         /// <param name="links"> FileLinks. </param>
         /// <param name="displayName"> The name of this file. </param>
         /// <param name="properties"> FileProperties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="links"/>, <paramref name="displayName"/> or <paramref name="properties"/> is null. </exception>
-        internal TranscriptionFile(DateTimeOffset created, FileKind kind, FileLinks links, string displayName, FileProperties properties)
+        internal TranscriptionFile(DateTimeOffset createdDateTime, FileKind kind, FileLinks links, string displayName, FileProperties properties)
         {
             Argument.AssertNotNull(links, nameof(links));
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(properties, nameof(properties));
 
-            Created = created;
+            CreatedDateTime = createdDateTime;
             Kind = kind;
             Links = links;
             DisplayName = displayName;
@@ -66,16 +66,16 @@ namespace Azure.AI.Speech.BatchTranscription
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionFile"/>. </summary>
-        /// <param name="created"> The creation time of this file. The time stamp is encoded as ISO 8601 date and time format (see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations). </param>
+        /// <param name="createdDateTime"> The creation time of this file. The time stamp is encoded as ISO 8601 date and time format (see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations). </param>
         /// <param name="kind"> FileKind. </param>
         /// <param name="links"> FileLinks. </param>
         /// <param name="displayName"> The name of this file. </param>
         /// <param name="properties"> FileProperties. </param>
         /// <param name="self"> The location of this entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionFile(DateTimeOffset created, FileKind kind, FileLinks links, string displayName, FileProperties properties, Uri self, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionFile(DateTimeOffset createdDateTime, FileKind kind, FileLinks links, string displayName, FileProperties properties, Uri self, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Created = created;
+            CreatedDateTime = createdDateTime;
             Kind = kind;
             Links = links;
             DisplayName = displayName;
@@ -90,7 +90,7 @@ namespace Azure.AI.Speech.BatchTranscription
         }
 
         /// <summary> The creation time of this file. The time stamp is encoded as ISO 8601 date and time format (see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations). </summary>
-        public DateTimeOffset Created { get; }
+        public DateTimeOffset CreatedDateTime { get; }
         /// <summary> FileKind. </summary>
         public FileKind Kind { get; }
         /// <summary> FileLinks. </summary>

@@ -57,7 +57,7 @@ namespace Azure.AI.Speech.BatchTranscription
             Argument.AssertNotNull(displayName, nameof(displayName));
 
             Properties = properties;
-            Contents = new ChangeTrackingList<Uri>();
+            ContentUrls = new ChangeTrackingList<Uri>();
             Locale = locale;
             DisplayName = displayName;
             CustomProperties = new ChangeTrackingDictionary<string, string>();
@@ -70,11 +70,11 @@ namespace Azure.AI.Speech.BatchTranscription
         /// <param name="self"> The location of this entity. </param>
         /// <param name="model"> EntityReference. </param>
         /// <param name="dataset"> EntityReference. </param>
-        /// <param name="contents">
+        /// <param name="contentUrls">
         /// A list of content urls to get audio files to transcribe. Up to 1000 urls are allowed.
         /// This property will not be returned in a response.
         /// </param>
-        /// <param name="sourceContainer">
+        /// <param name="contentContainerUrl">
         /// A URL for an Azure blob container that contains the audio files. A container is allowed to have a maximum size of 5GB and a maximum number of 10000 blobs.
         /// The maximum size for a blob is 2.5GB.
         /// Container SAS should contain 'r' (read) and 'l' (list) permissions.
@@ -93,13 +93,13 @@ namespace Azure.AI.Speech.BatchTranscription
         /// ("YYYY-MM-DDThh:mm:ssZ", see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations).
         /// </param>
         /// <param name="status"> The status of the object. </param>
-        /// <param name="created">
+        /// <param name="createdDateTime">
         /// The time-stamp when the object was created.
         /// The time stamp is encoded as ISO 8601 date and time format
         /// ("YYYY-MM-DDThh:mm:ssZ", see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations).
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionJob(TranscriptionLinks links, TranscriptionProperties properties, string id, Uri self, EntityReference model, EntityReference dataset, IList<Uri> contents, Uri sourceContainer, string locale, string displayName, string description, IDictionary<string, string> customProperties, DateTimeOffset? lastActionDateTime, TranscriptionStatus status, DateTimeOffset? created, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionJob(TranscriptionLinks links, TranscriptionProperties properties, string id, Uri self, EntityReference model, EntityReference dataset, IList<Uri> contentUrls, Uri contentContainerUrl, string locale, string displayName, string description, IDictionary<string, string> customProperties, DateTimeOffset? lastActionDateTime, TranscriptionStatus status, DateTimeOffset? createdDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Links = links;
             Properties = properties;
@@ -107,15 +107,15 @@ namespace Azure.AI.Speech.BatchTranscription
             Self = self;
             Model = model;
             Dataset = dataset;
-            Contents = contents;
-            SourceContainer = sourceContainer;
+            ContentUrls = contentUrls;
+            ContentContainerUrl = contentContainerUrl;
             Locale = locale;
             DisplayName = displayName;
             Description = description;
             CustomProperties = customProperties;
             LastActionDateTime = lastActionDateTime;
             Status = status;
-            Created = created;
+            CreatedDateTime = createdDateTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -133,14 +133,14 @@ namespace Azure.AI.Speech.BatchTranscription
         /// A list of content urls to get audio files to transcribe. Up to 1000 urls are allowed.
         /// This property will not be returned in a response.
         /// </summary>
-        public IList<Uri> Contents { get; }
+        public IList<Uri> ContentUrls { get; }
         /// <summary>
         /// A URL for an Azure blob container that contains the audio files. A container is allowed to have a maximum size of 5GB and a maximum number of 10000 blobs.
         /// The maximum size for a blob is 2.5GB.
         /// Container SAS should contain 'r' (read) and 'l' (list) permissions.
         /// This property will not be returned in a response.
         /// </summary>
-        public Uri SourceContainer { get; set; }
+        public Uri ContentContainerUrl { get; set; }
         /// <summary> The locale of the contained data. If Language Identification is used, this locale is used to transcribe speech for which no language could be detected. </summary>
         public string Locale { get; set; }
         /// <summary> The display name of the object. </summary>
@@ -165,6 +165,6 @@ namespace Azure.AI.Speech.BatchTranscription
         /// The time stamp is encoded as ISO 8601 date and time format
         /// ("YYYY-MM-DDThh:mm:ssZ", see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations).
         /// </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedDateTime { get; }
     }
 }

@@ -24,11 +24,11 @@ namespace Azure.AI.Speech.BatchTranscription
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTranscription.FileLinks"/>. </summary>
-        /// <param name="content"> The url to retrieve the content of this file. </param>
+        /// <param name="contentUrl"> The url to retrieve the content of this file. </param>
         /// <returns> A new <see cref="BatchTranscription.FileLinks"/> instance for mocking. </returns>
-        public static FileLinks FileLinks(Uri content = null)
+        public static FileLinks FileLinks(Uri contentUrl = null)
         {
-            return new FileLinks(content, serializedAdditionalRawData: null);
+            return new FileLinks(contentUrl, serializedAdditionalRawData: null);
         }
     }
 }

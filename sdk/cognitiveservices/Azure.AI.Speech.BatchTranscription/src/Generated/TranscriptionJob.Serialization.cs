@@ -61,11 +61,11 @@ namespace Azure.AI.Speech.BatchTranscription
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset, options);
             }
-            if (Optional.IsCollectionDefined(Contents))
+            if (Optional.IsCollectionDefined(ContentUrls))
             {
                 writer.WritePropertyName("contentUrls"u8);
                 writer.WriteStartArray();
-                foreach (var item in Contents)
+                foreach (var item in ContentUrls)
                 {
                     if (item == null)
                     {
@@ -76,10 +76,10 @@ namespace Azure.AI.Speech.BatchTranscription
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceContainer))
+            if (Optional.IsDefined(ContentContainerUrl))
             {
                 writer.WritePropertyName("contentContainerUrl"u8);
-                writer.WriteStringValue(SourceContainer.AbsoluteUri);
+                writer.WriteStringValue(ContentContainerUrl.AbsoluteUri);
             }
             writer.WritePropertyName("locale"u8);
             writer.WriteStringValue(Locale);
@@ -111,10 +111,10 @@ namespace Azure.AI.Speech.BatchTranscription
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
