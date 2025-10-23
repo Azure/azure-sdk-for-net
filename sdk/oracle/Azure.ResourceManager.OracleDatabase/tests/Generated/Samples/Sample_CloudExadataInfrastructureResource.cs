@@ -18,6 +18,297 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetExadataInfrastructureGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            CloudExadataInfrastructureResource result = await cloudExadataInfrastructure.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudExadataInfrastructureData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetExadataInfrastructureGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            CloudExadataInfrastructureResource result = await cloudExadataInfrastructure.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudExadataInfrastructureData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_CloudExadataInfrastructuresGet()
+        {
+            // Generated from example definition: 2025-09-01/exaInfra_get.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudexadatainfrastructurename = "infra1";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            CloudExadataInfrastructureResource result = await cloudExadataInfrastructure.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudExadataInfrastructureData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteExadataInfrastructureGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            await cloudExadataInfrastructure.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteExadataInfrastructureGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            await cloudExadataInfrastructure.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CloudExadataInfrastructuresDelete()
+        {
+            // Generated from example definition: 2025-09-01/exaInfra_delete.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudexadatainfrastructurename = "infra1";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            await cloudExadataInfrastructure.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchExadataInfrastructureGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "cloudexaInfra1";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            CloudExadataInfrastructurePatch patch = new CloudExadataInfrastructurePatch
+            {
+                Zones = { "wl" },
+                Tags =
+{
+["key831"] = "mymrssvjc"
+},
+                Properties = new CloudExadataInfrastructureUpdateProperties
+                {
+                    ComputeCount = 9,
+                    StorageCount = 4,
+                    MaintenanceWindow = new OracleDatabaseMaintenanceWindow
+                    {
+                        Preference = MaintenancePreference.NoPreference,
+                        Months = { new MaintenanceMonth(MaintenanceMonthName.January) },
+                        WeeksOfMonth = { 0 },
+                        DaysOfWeek = { new OracleDatabaseDayOfWeek(OracleDatabaseDayOfWeekName.Monday) },
+                        HoursOfDay = { 0 },
+                        LeadTimeInWeeks = 10,
+                        PatchingMode = MaintenancePatchingMode.Rolling,
+                        CustomActionTimeoutInMins = 120,
+                        IsCustomActionTimeoutEnabled = true,
+                        IsMonthlyPatchingEnabled = true,
+                    },
+                    CustomerContacts = { new OracleCustomerContact("dummyemail@microsoft.com") },
+                    DisplayName = "displayName",
+                },
+            };
+            ArmOperation<CloudExadataInfrastructureResource> lro = await cloudExadataInfrastructure.UpdateAsync(WaitUntil.Completed, patch);
+            CloudExadataInfrastructureResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudExadataInfrastructureData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchExadataInfrastructureGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_Update_MinimumSet_Gen.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "cloudexainfra1";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            CloudExadataInfrastructurePatch patch = new CloudExadataInfrastructurePatch();
+            ArmOperation<CloudExadataInfrastructureResource> lro = await cloudExadataInfrastructure.UpdateAsync(WaitUntil.Completed, patch);
+            CloudExadataInfrastructureResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudExadataInfrastructureData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CloudExadataInfrastructuresUpdate()
+        {
+            // Generated from example definition: 2025-09-01/exaInfra_patch.json
+            // this example is just showing the usage of "CloudExadataInfrastructure_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
+            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudexadatainfrastructurename = "infra1";
+            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
+
+            // invoke the operation
+            CloudExadataInfrastructurePatch patch = new CloudExadataInfrastructurePatch();
+            ArmOperation<CloudExadataInfrastructureResource> lro = await cloudExadataInfrastructure.UpdateAsync(WaitUntil.Completed, patch);
+            CloudExadataInfrastructureResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudExadataInfrastructureData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddStorageCapacity_PerformAddStorageCapacityOnExadataInfraGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2025-09-01/CloudExadataInfrastructures_AddStorageCapacity_MaximumSet_Gen.json

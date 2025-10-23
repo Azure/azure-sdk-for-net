@@ -9,20 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
-    public partial class Sample_OracleGIVersionCollection
+    public partial class Sample_AutonomousDatabaseNationalCharacterSetCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAGiVersionByNameGeneratedByMaximumSetRule()
+        public async Task Get_GetAutonomousDbNationalCharacterSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,27 +34,27 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "giversion1";
-            OracleGIVersionResource result = await collection.GetAsync(giversionname);
+            string adbsncharsetname = "Replace this value with a string matching RegExp .*";
+            AutonomousDatabaseNationalCharacterSetResource result = await collection.GetAsync(adbsncharsetname);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OracleGIVersionData resourceData = result.Data;
+            AutonomousDatabaseNationalCharacterSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAGiVersionByNameGeneratedByMinimumSetRule()
+        public async Task Get_GetAutonomousDbNationalCharacterSetGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -68,27 +67,27 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "Replace this value with a string matching RegExp .*";
-            OracleGIVersionResource result = await collection.GetAsync(giversionname);
+            string adbsncharsetname = "Replace this value with a string matching RegExp .*";
+            AutonomousDatabaseNationalCharacterSetResource result = await collection.GetAsync(adbsncharsetname);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OracleGIVersionData resourceData = result.Data;
+            AutonomousDatabaseNationalCharacterSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GiVersionsGet()
+        public async Task Get_AutonomousDatabaseNationalCharacterSetsGet()
         {
-            // Generated from example definition: 2025-09-01/giVersions_get.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/autonomousDatabaseNationalCharacterSet_get.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -101,27 +100,27 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "19.0.0.0";
-            OracleGIVersionResource result = await collection.GetAsync(giversionname);
+            string adbsncharsetname = "NATIONAL";
+            AutonomousDatabaseNationalCharacterSetResource result = await collection.GetAsync(adbsncharsetname);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OracleGIVersionData resourceData = result.Data;
+            AutonomousDatabaseNationalCharacterSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GiVersionsListByLocationMaximumSet()
+        public async Task GetAll_ListAutonomousDbNationalCharacterSetsByLocationGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_ListByLocation_MaximumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_ListByLocation_MaximumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,18 +133,16 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation and iterate over the result
-            OracleDatabaseSystemShape? shape = OracleDatabaseSystemShape.ExadataX9M;
-            string zone = "hpzuyaemum";
-            await foreach (OracleGIVersionResource item in collection.GetAllAsync(shape: shape, zone: zone))
+            await foreach (AutonomousDatabaseNationalCharacterSetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OracleGIVersionData resourceData = item.Data;
+                AutonomousDatabaseNationalCharacterSetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -155,10 +152,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GiVersionsListByLocationMinimumSet()
+        public async Task GetAll_ListAutonomousDbNationalCharacterSetsByLocationGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_ListByLocation_MinimumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_ListByLocation_MinimumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -171,16 +168,16 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation and iterate over the result
-            await foreach (OracleGIVersionResource item in collection.GetAllAsync())
+            await foreach (AutonomousDatabaseNationalCharacterSetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OracleGIVersionData resourceData = item.Data;
+                AutonomousDatabaseNationalCharacterSetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -190,10 +187,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAGiVersionByNameGeneratedByMaximumSetRule()
+        public async Task GetAll_AutonomousDatabaseNationalCharacterSetsListByLocation()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/autonomousDatabaseNationalCharacterSet_listByLocation.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -206,23 +203,58 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
+
+            // invoke the operation and iterate over the result
+            await foreach (AutonomousDatabaseNationalCharacterSetResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutonomousDatabaseNationalCharacterSetData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAutonomousDbNationalCharacterSetGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
+            AzureLocation location = new AzureLocation("eastus");
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "giversion1";
-            bool result = await collection.ExistsAsync(giversionname);
+            string adbsncharsetname = "Replace this value with a string matching RegExp .*";
+            bool result = await collection.ExistsAsync(adbsncharsetname);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAGiVersionByNameGeneratedByMinimumSetRule()
+        public async Task Exists_GetAutonomousDbNationalCharacterSetGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -235,23 +267,23 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "Replace this value with a string matching RegExp .*";
-            bool result = await collection.ExistsAsync(giversionname);
+            string adbsncharsetname = "Replace this value with a string matching RegExp .*";
+            bool result = await collection.ExistsAsync(adbsncharsetname);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GiVersionsGet()
+        public async Task Exists_AutonomousDatabaseNationalCharacterSetsGet()
         {
-            // Generated from example definition: 2025-09-01/giVersions_get.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/autonomousDatabaseNationalCharacterSet_get.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -264,23 +296,23 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "19.0.0.0";
-            bool result = await collection.ExistsAsync(giversionname);
+            string adbsncharsetname = "NATIONAL";
+            bool result = await collection.ExistsAsync(adbsncharsetname);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAGiVersionByNameGeneratedByMaximumSetRule()
+        public async Task GetIfExists_GetAutonomousDbNationalCharacterSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -293,14 +325,14 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "giversion1";
-            NullableResponse<OracleGIVersionResource> response = await collection.GetIfExistsAsync(giversionname);
-            OracleGIVersionResource result = response.HasValue ? response.Value : null;
+            string adbsncharsetname = "Replace this value with a string matching RegExp .*";
+            NullableResponse<AutonomousDatabaseNationalCharacterSetResource> response = await collection.GetIfExistsAsync(adbsncharsetname);
+            AutonomousDatabaseNationalCharacterSetResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -310,7 +342,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OracleGIVersionData resourceData = result.Data;
+                AutonomousDatabaseNationalCharacterSetData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -318,10 +350,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAGiVersionByNameGeneratedByMinimumSetRule()
+        public async Task GetIfExists_GetAutonomousDbNationalCharacterSetGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: 2025-09-01/GiVersions_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/AutonomousDatabaseNationalCharacterSets_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -334,14 +366,14 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "Replace this value with a string matching RegExp .*";
-            NullableResponse<OracleGIVersionResource> response = await collection.GetIfExistsAsync(giversionname);
-            OracleGIVersionResource result = response.HasValue ? response.Value : null;
+            string adbsncharsetname = "Replace this value with a string matching RegExp .*";
+            NullableResponse<AutonomousDatabaseNationalCharacterSetResource> response = await collection.GetIfExistsAsync(adbsncharsetname);
+            AutonomousDatabaseNationalCharacterSetResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OracleGIVersionData resourceData = result.Data;
+                AutonomousDatabaseNationalCharacterSetData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -359,10 +391,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GiVersionsGet()
+        public async Task GetIfExists_AutonomousDatabaseNationalCharacterSetsGet()
         {
-            // Generated from example definition: 2025-09-01/giVersions_get.json
-            // this example is just showing the usage of "GiVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/autonomousDatabaseNationalCharacterSet_get.json
+            // this example is just showing the usage of "AutonomousDatabaseNationalCharacterSet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -375,14 +407,14 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this OracleGIVersionResource
+            // get the collection of this AutonomousDatabaseNationalCharacterSetResource
             AzureLocation location = new AzureLocation("eastus");
-            OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
+            AutonomousDatabaseNationalCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseNationalCharacterSets(location);
 
             // invoke the operation
-            string giversionname = "19.0.0.0";
-            NullableResponse<OracleGIVersionResource> response = await collection.GetIfExistsAsync(giversionname);
-            OracleGIVersionResource result = response.HasValue ? response.Value : null;
+            string adbsncharsetname = "NATIONAL";
+            NullableResponse<AutonomousDatabaseNationalCharacterSetResource> response = await collection.GetIfExistsAsync(adbsncharsetname);
+            AutonomousDatabaseNationalCharacterSetResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -392,7 +424,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OracleGIVersionData resourceData = result.Data;
+                AutonomousDatabaseNationalCharacterSetData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

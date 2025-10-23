@@ -122,37 +122,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ValidateBackupProperties_CloudHsmClusterValidateBackupValidationMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmCluster_Create_Backup_MaximumSet_Gen_ValidateBackupProperties.json
-            // this example is just showing the usage of "CloudHsmClusters_ValidateBackupProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            CloudHsmClusterBackupContent content = new CloudHsmClusterBackupContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
-            {
-                Token = "se=2018-02-01T00%3A00Z&spr=https&sv=2017-04-17&sr=b&sig=REDACTED",
-            };
-            ArmOperation<CloudHsmClusterBackupResult> lro = await cloudHsmCluster.ValidateBackupPropertiesAsync(WaitUntil.Completed, content: content);
-            CloudHsmClusterBackupResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Backup_CloudHsmClusterCreateBackupMaximumSetGen()
         {
             // Generated from example definition: 2025-03-31/CloudHsmCluster_CreateOrValidate_Backup_MaximumSet_Gen.json
@@ -184,34 +153,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ValidateRestoreProperties_CloudHsmClusterValidateRestoreMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmCluster_RequestOrValidate_Restore_MaximumSet_Gen_ValidateRestoreProperties.json
-            // this example is just showing the usage of "CloudHsmClusters_ValidateRestoreProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            CloudHsmClusterRestoreContent content = new CloudHsmClusterRestoreContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
-            ArmOperation<CloudHsmClusterRestoreResult> lro = await cloudHsmCluster.ValidateRestorePropertiesAsync(WaitUntil.Completed, content: content);
-            CloudHsmClusterRestoreResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Restore_CloudHsmClusterRestoreMaximumSetGen()
         {
             // Generated from example definition: 2025-03-31/CloudHsmCluster_RequestOrValidate_Restore_MaximumSet_Gen.json
@@ -236,35 +177,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterRestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCloudHsmClusterPrivateLinkResources_CloudHsmClusterPrivateLinkResourcesListByResourceMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmClusterPrivateLinkResource_ListByCloudHsmCluster_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_ListByCloudHsmCluster" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CloudHsmClusterPrivateLinkData item in cloudHsmCluster.GetCloudHsmClusterPrivateLinkResourcesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }
