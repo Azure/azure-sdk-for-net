@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -143,11 +144,11 @@ namespace Azure.AI.Agents.Persistent
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetThreadsRequest(
-                limit:limit,
+                limit: limit,
                 order: order?.ToString(),
                 after: continuationToken,
                 before: before,
-                context:context);
+                context: context);
             return new ContinuationTokenPageableAsync<PersistentAgentThread>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e),
@@ -243,6 +244,22 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetThreadsRequest(limit, order, after, before, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadsClient.GetThreads", "data", null, context);
+        }
+
+        /// <summary> Creates a new thread. Threads contain messages and can be run by agents. </summary>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
+        /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
+        /// a list of vector store IDs.
+        /// </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="requestContext"> The request context to use. </param>
+        internal async Task<Response<PersistentAgentThread>> CreateThreadAsync(IEnumerable<ThreadMessageOptions> messages, ToolResources toolResources, IReadOnlyDictionary<string, string> metadata, RequestContext requestContext)
+        {
+            CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            Response response = await CreateThreadAsync(createThreadRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
+            return Response.FromValue(PersistentAgentThread.FromResponse(response), response);
         }
     }
 }
