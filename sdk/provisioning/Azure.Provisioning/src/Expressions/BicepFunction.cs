@@ -49,7 +49,9 @@ public static class BicepFunction
     public static BicepValue<string> GetUniqueString(params BicepValue<string>[] values)
     {
         if (values.Length < 1)
-        { throw new ArgumentException($"{nameof(GetUniqueString)} requires at least one value.", nameof(values)); }
+        {
+            throw new ArgumentException($"{nameof(GetUniqueString)} requires at least one value.", nameof(values));
+        }
         return BicepSyntax.Call("uniqueString", values.Select(v => v.Compile()).ToArray());
     }
 
