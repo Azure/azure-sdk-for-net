@@ -278,22 +278,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 throw new ObjectDisposedException(null);
             }
         }
-
-        private async Task<bool> CheckLoggingEnabledAsync(BlobServiceClient blobClient, CancellationToken cancellationToken)
-        {
-            BlobServiceProperties serviceProperties = await blobClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
-
-            // Retrieve the logging settings.
-            BlobAnalyticsLogging loggingProperties = serviceProperties.Logging;
-
-            if (!loggingProperties.Write)
-            {
-                // Log an error if logging is not enabled.
-                Logger.LoggingNotEnabledOnTargetAccount(_logger, blobClient.Uri.AbsoluteUri);
-                return false;
-            }
-            // Logging is enabled.
-            return true;
-        }
     }
 }
