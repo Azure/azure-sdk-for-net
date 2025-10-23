@@ -45,7 +45,7 @@
     "@azure-tools/typespec-azure-core": "0.61.0",
     "@azure-tools/typespec-azure-resource-manager": "0.61.0",
     "@azure-tools/typespec-azure-rulesets": "0.61.0",
-    "@azure-tools/typespec-client-generator-core": "0.61.0",
+    "@azure-tools/typespec-client-generator-core": "0.61.2",
     "@azure-tools/typespec-liftr-base": "0.11.0",
     "@eslint/js": "^9.2.0",
     "@types/node": "~22.12.0",
