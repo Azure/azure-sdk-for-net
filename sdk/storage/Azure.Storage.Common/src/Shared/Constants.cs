@@ -602,6 +602,8 @@ namespace Azure.Storage
                 public const string KeyServiceUpper = "SKS";
                 public const string KeyVersion = "skv";
                 public const string KeyVersionUpper = "SKV";
+                public const string KeyDelegatedUserTenantId = "skdutid";
+                public const string KeyDelegatedUserTenantIdUpper = "SKDUTID";
                 public const string CacheControl = "rscc";
                 public const string CacheControlUpper = "RSCC";
                 public const string ContentDisposition = "rscd";
@@ -624,8 +626,6 @@ namespace Azure.Storage
                 public const string EncryptionScopeUpper = "SES";
                 public const string DelegatedUserObjectId = "sduoid";
                 public const string DelegatedUserObjectIdUpper = "SDUOID";
-                public const string DelegatedUserTenantId = "skdutid";
-                public const string DelegatedUserTenantIdUpper = "SKDUTID";
             }
 
             internal static class Resource

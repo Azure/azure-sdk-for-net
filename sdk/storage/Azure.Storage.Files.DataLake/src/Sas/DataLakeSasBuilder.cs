@@ -513,7 +513,7 @@ namespace Azure.Storage.Sas
                 directoryDepth: _directoryDepth,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                delegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
             return p;
         }
 

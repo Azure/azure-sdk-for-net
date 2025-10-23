@@ -771,7 +771,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobGetUserDelegationKeyOptions
     {
         public BlobGetUserDelegationKeyOptions() { }
-        public string DelegatedUserTid { get { throw null; } set { } }
+        public string DelegatedUserTenantId { get { throw null; } set { } }
         public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     public partial class BlobHierarchyItem
@@ -1599,7 +1599,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
-        public string SignedDelegatedUserTid { get { throw null; } }
+        public string SignedDelegatedUserTenantId { get { throw null; } }
         public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
         public string SignedObjectId { get { throw null; } }
         public string SignedService { get { throw null; } }
@@ -2009,7 +2009,6 @@ namespace Azure.Storage.Sas
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
         public string DelegatedUserObjectId { get { throw null; } set { } }
-        public string DelegatedUserTenantId { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
@@ -2061,6 +2060,7 @@ namespace Azure.Storage.Sas
     {
         internal BlobSasQueryParameters() { }
         public static new Azure.Storage.Sas.BlobSasQueryParameters Empty { get { throw null; } }
+        public string KeyDelegatedUserTenantId { get { throw null; } }
         public System.DateTimeOffset KeyExpiresOn { get { throw null; } }
         public string KeyObjectId { get { throw null; } }
         public string KeyService { get { throw null; } }

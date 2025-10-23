@@ -51,6 +51,11 @@ namespace Azure.Storage.Sas
         /// </summary>
         public string KeyVersion => KeyProperties?.Version;
 
+        /// <summary>
+        /// Gets the delegated user tenant id.
+        /// </summary>
+        public string KeyDelegatedUserTenantId => KeyProperties?.DelegatedUserTenantId;
+
         internal ShareSasQueryParameters() : base()
         {
         }
@@ -82,7 +87,7 @@ namespace Azure.Storage.Sas
             string contentLanguage = default,
             string contentType = default,
             string delegatedUserObjectId = default,
-            string delegatedUserTenantId = default)
+            string keyDelegatedUserTenantId = default)
             : base(
                 version,
                 services,
@@ -115,7 +120,7 @@ namespace Azure.Storage.Sas
                 ExpiresOn = keyExpiry,
                 Service = keyService,
                 Version = keyVersion,
-                SignedDelegatedUserTenantId = delegatedUserTenantId
+                DelegatedUserTenantId = keyDelegatedUserTenantId
             };
         }
 

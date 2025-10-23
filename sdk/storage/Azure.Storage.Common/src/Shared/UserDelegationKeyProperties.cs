@@ -34,7 +34,7 @@ namespace Azure.Storage.Sas
         internal string Version { get; set; }
 
         // skdutid
-        public string SignedDelegatedUserTenantId { get; set; }
+        public string DelegatedUserTenantId { get; set; }
 
         /// <summary>
         /// Builds up the UserDelegationKey portion of the SAS query parameter string.
@@ -71,9 +71,9 @@ namespace Azure.Storage.Sas
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyVersion, Version);
             }
 
-            if (!string.IsNullOrWhiteSpace(SignedDelegatedUserTenantId))
+            if (!string.IsNullOrWhiteSpace(DelegatedUserTenantId))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.DelegatedUserTenantId, SignedDelegatedUserTenantId);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyDelegatedUserTenantId, DelegatedUserTenantId);
             }
         }
     }

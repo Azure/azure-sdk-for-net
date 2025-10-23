@@ -493,7 +493,7 @@ namespace Azure.Storage.Sas
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                delegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
             return p;
         }
 

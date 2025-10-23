@@ -429,7 +429,7 @@ namespace Azure.Storage.Sas
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                delegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
             return p;
         }
 

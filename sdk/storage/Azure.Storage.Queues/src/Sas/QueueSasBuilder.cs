@@ -346,7 +346,7 @@ namespace Azure.Storage.Sas
                 keyService: userDelegationKey.SignedService,
                 keyVersion: userDelegationKey.SignedVersion,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                delegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
                 signature: signature);
             return p;
         }
