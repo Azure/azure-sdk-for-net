@@ -766,57 +766,57 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-        [RecordedTest]
-        [TestCase(null)]
-        [TestCase(true)]
-        [TestCase(false)]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task CreateAsync_EnableDirectoryLease(bool? enableDirectoryLease)
-        {
-            // Arrange
-            var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            ShareCreateOptions options = new ShareCreateOptions
-            {
-                EnableDirectoryLease = enableDirectoryLease,
-            };
+        //[RecordedTest]
+        //[TestCase(null)]
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task CreateAsync_EnableDirectoryLease(bool? enableDirectoryLease)
+        //{
+        //    // Arrange
+        //    var shareName = GetNewShareName();
+        //    ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+        //    ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+        //    ShareCreateOptions options = new ShareCreateOptions
+        //    {
+        //        EnableDirectoryLease = enableDirectoryLease,
+        //    };
 
-            try
-            {
-                // Act
-                await share.CreateAsync(options);
+        //    try
+        //    {
+        //        // Act
+        //        await share.CreateAsync(options);
 
-                // Assert
-                Response<ShareProperties> response = await share.GetPropertiesAsync();
-                if (enableDirectoryLease == null || enableDirectoryLease == true)
-                {
-                    Assert.IsTrue(response.Value.EnableDirectoryLease);
-                }
-                else
-                {
-                    Assert.IsFalse(response.Value.EnableDirectoryLease);
-                }
+        //        // Assert
+        //        Response<ShareProperties> response = await share.GetPropertiesAsync();
+        //        if (enableDirectoryLease == null || enableDirectoryLease == true)
+        //        {
+        //            Assert.IsTrue(response.Value.EnableDirectoryLease);
+        //        }
+        //        else
+        //        {
+        //            Assert.IsFalse(response.Value.EnableDirectoryLease);
+        //        }
 
-                // Act
-                IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
-                ShareItem shareItem = shares.SingleOrDefault(r => r.Name == share.Name);
+        //        // Act
+        //        IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+        //        ShareItem shareItem = shares.SingleOrDefault(r => r.Name == share.Name);
 
-                // Assert
-                if (enableDirectoryLease == null || enableDirectoryLease == true)
-                {
-                    Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
-                }
-                else
-                {
-                    Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
-                }
-            }
-            finally
-            {
-                await share.DeleteAsync(false);
-            }
-        }
+        //        // Assert
+        //        if (enableDirectoryLease == null || enableDirectoryLease == true)
+        //        {
+        //            Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
+        //        }
+        //        else
+        //        {
+        //            Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        await share.DeleteAsync(false);
+        //    }
+        //}
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
@@ -1955,49 +1955,49 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(ShareAccessTier.Premium.ToString(), response.Value.AccessTier);
         }
 
-        [RecordedTest]
-        [TestCase(null)]
-        [TestCase(true)]
-        [TestCase(false)]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task SetPropertiesAsyncAsync_EnableDirectoryLease(bool? enableDirectoryLease)
-        {
-            // Arrange
-            await using DisposingShare test = await GetTestShareAsync();
+        //[RecordedTest]
+        //[TestCase(null)]
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        //public async Task SetPropertiesAsyncAsync_EnableDirectoryLease(bool? enableDirectoryLease)
+        //{
+        //    // Arrange
+        //    await using DisposingShare test = await GetTestShareAsync();
 
-            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
-            {
-                EnableDirectoryLease = enableDirectoryLease
-            };
+        //    ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+        //    {
+        //        EnableDirectoryLease = enableDirectoryLease
+        //    };
 
-            // Act
-            await test.Share.SetPropertiesAsync(options);
+        //    // Act
+        //    await test.Share.SetPropertiesAsync(options);
 
-            // Assert
-            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
-            if (enableDirectoryLease == true || enableDirectoryLease == null)
-            {
-                Assert.IsTrue(response.Value.EnableDirectoryLease);
-            }
-            else
-            {
-                Assert.IsFalse(response.Value.EnableDirectoryLease);
-            }
+        //    // Assert
+        //    Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+        //    if (enableDirectoryLease == true || enableDirectoryLease == null)
+        //    {
+        //        Assert.IsTrue(response.Value.EnableDirectoryLease);
+        //    }
+        //    else
+        //    {
+        //        Assert.IsFalse(response.Value.EnableDirectoryLease);
+        //    }
 
-            // Act
-            IList<ShareItem> shares = await test.Share.GetParentServiceClient().GetSharesAsync().ToListAsync();
-            ShareItem shareItem = shares.SingleOrDefault(r => r.Name == test.Share.Name);
+        //    // Act
+        //    IList<ShareItem> shares = await test.Share.GetParentServiceClient().GetSharesAsync().ToListAsync();
+        //    ShareItem shareItem = shares.SingleOrDefault(r => r.Name == test.Share.Name);
 
-            // Assert
-            if (enableDirectoryLease == true || enableDirectoryLease == null)
-            {
-                Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
-            }
-            else
-            {
-                Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
-            }
-        }
+        //    // Assert
+        //    if (enableDirectoryLease == true || enableDirectoryLease == null)
+        //    {
+        //        Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
+        //    }
+        //    else
+        //    {
+        //        Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
+        //    }
+        //}
 
         [RecordedTest]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/17262")]

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The DateTime of the Timeseries data point in UTC. </summary>
+        [WirePath("dateTimeUTC")]
         public DateTimeOffset? DateTimeUtc { get; set; }
         /// <summary> The Value of the Timeseries data point. </summary>
+        [WirePath("value")]
         public float? Value { get; set; }
     }
 }

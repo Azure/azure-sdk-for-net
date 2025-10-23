@@ -175,9 +175,6 @@
 # ServiceLabel: %Blueprint
 # ServiceOwners:                                                   @alex-frankel @filizt
 
-# ServiceLabel: %Bot Service
-# ServiceOwners:                                                   @sgellock
-
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                                              @conhua @mengaims @juaduan @moreOver0
 
@@ -634,28 +631,31 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @harsimar @trask @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @harsimar @mattsains-msft @xiang17
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @harsimar @trask @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @harsimar @mattsains-msft @xiang17
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @trask @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @mattsains-msft @xiang17
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @harsimar @trask @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @harsimar @mattsains-msft @xiang17
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @trask @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @mattsains-msft @xiang17
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17 @trask @harsimar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17 @mattsains-msft @harsimar
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17 @trask @harsimar
+# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17 @mattsains-msft @harsimar
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Query.Logs/                             @Azure/azure-sdk-write-monitor-query-logs
+
+# PRLabel: %Monitor - Query
+/sdk/monitor/Azure.Monitor.Query.Metrics/                          @Azure/azure-sdk-write-monitor-query-metrics
 
 # ServiceLabel: %Monitor - Query
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA @ToddKingMSFT
@@ -941,10 +941,7 @@
 # ServiceOwners:                                                   @alexyaang
 
 # PRLabel: %Arize AI %Mgmt
-/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
-
-# ServiceLabel: %Arize AI %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
+/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %ARM
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
@@ -1037,10 +1034,7 @@
 # ServiceOwners:                                                   @apmehrotra
 
 # PRLabel: %LambdaTest HyperExecute
-/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw
-
-# ServiceLabel: %LambdaTest HyperExecute %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
+/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @ArcturusZhang @ArthurMa1978
@@ -1109,10 +1103,7 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Pinecone
-/sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
-
-# ServiceLabel: %Pinecone %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
+/sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978
@@ -1121,10 +1112,7 @@
 # ServiceOwners:                                                   @shaktichetan23
 
 # PRLabel: %PureStorage
-/sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
-
-# ServiceLabel: %PureStorage %Mgmt
-# ServiceOwners:                                                   @deepakmauryams
+/sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
@@ -1163,18 +1151,13 @@
 # ServiceOwners:                                                   @jchavaherrera
 
 # PRLabel: %Weights & Biases
-/sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
-
-# ServiceLabel: %Weights & Biases %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
+/sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Workload Orchestration
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
 
 # ServiceLabel: %Workload Orchestration %Mgmt
 # ServiceOwners:                                                   @atharvau
-
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

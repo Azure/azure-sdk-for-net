@@ -641,7 +641,10 @@
         "cnames",
         "easm",
         "nxdomain",
-        "whois"
+        "whois",
+        "cisa",
+        "cves",
+        "remediations"
       ]
     },
     {
@@ -1214,6 +1217,7 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
+        "dsts",
         "regionality"
       ]
     },

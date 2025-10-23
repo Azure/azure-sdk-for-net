@@ -8,82 +8,73 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Playwright.Models;
 
 namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightWorkspaceQuotaResource"/> and their operations.
-    /// Each <see cref="PlaywrightWorkspaceQuotaResource"/> in the collection will belong to the same instance of <see cref="PlaywrightWorkspaceResource"/>.
-    /// To get a <see cref="PlaywrightWorkspaceQuotaCollection"/> instance call the GetPlaywrightWorkspaceQuotas method from an instance of <see cref="PlaywrightWorkspaceResource"/>.
+    /// Each <see cref="PlaywrightWorkspaceQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="PlaywrightWorkspaceQuotaCollection"/> instance call the GetPlaywrightWorkspaceQuotas method from an instance of the parent resource.
     /// </summary>
     public partial class PlaywrightWorkspaceQuotaCollection : ArmCollection, IEnumerable<PlaywrightWorkspaceQuotaResource>, IAsyncEnumerable<PlaywrightWorkspaceQuotaResource>
     {
-        private readonly ClientDiagnostics _playwrightWorkspaceQuotaClientDiagnostics;
-        private readonly PlaywrightWorkspaceQuotasRestOperations _playwrightWorkspaceQuotaRestClient;
+        private readonly ClientDiagnostics _playwrightWorkspaceQuotasClientDiagnostics;
+        private readonly PlaywrightWorkspaceQuotas _playwrightWorkspaceQuotasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotaCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PlaywrightWorkspaceQuotaCollection for mocking. </summary>
         protected PlaywrightWorkspaceQuotaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceQuotaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PlaywrightWorkspaceQuotaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _playwrightWorkspaceQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceQuotaResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PlaywrightWorkspaceQuotaResource.ResourceType, out string playwrightWorkspaceQuotaApiVersion);
-            _playwrightWorkspaceQuotaRestClient = new PlaywrightWorkspaceQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightWorkspaceQuotaApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _playwrightWorkspaceQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceQuotaResource.ResourceType.Namespace, Diagnostics);
+            _playwrightWorkspaceQuotasRestClient = new PlaywrightWorkspaceQuotas(_playwrightWorkspaceQuotasClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceQuotaApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PlaywrightWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PlaywrightWorkspaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PlaywrightWorkspaceResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlaywrightWorkspaceQuotaResource>> GetAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Get");
+            using DiagnosticScope scope = _playwrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceQuotaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PlaywrightWorkspaceQuotaData> response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -93,38 +84,26 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PlaywrightWorkspaceQuotaResource> Get(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Get");
+            using DiagnosticScope scope = _playwrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Get");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceQuotaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PlaywrightWorkspaceQuotaData> response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,96 +113,58 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Lists quota resources for a given Playwright workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_ListByPlaywrightWorkspace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightWorkspaceQuotaRestClient.CreateListByPlaywrightWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightWorkspaceQuotaRestClient.CreateListByPlaywrightWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightWorkspaceQuotaResource(Client, PlaywrightWorkspaceQuotaData.DeserializePlaywrightWorkspaceQuotaData(e)), _playwrightWorkspaceQuotaClientDiagnostics, Pipeline, "PlaywrightWorkspaceQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceAsyncCollectionResultOfT(_playwrightWorkspaceQuotasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PlaywrightWorkspaceQuotaResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists quota resources for a given Playwright workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_ListByPlaywrightWorkspace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceQuotaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightWorkspaceQuotaRestClient.CreateListByPlaywrightWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightWorkspaceQuotaRestClient.CreateListByPlaywrightWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightWorkspaceQuotaResource(Client, PlaywrightWorkspaceQuotaData.DeserializePlaywrightWorkspaceQuotaData(e)), _playwrightWorkspaceQuotaClientDiagnostics, Pipeline, "PlaywrightWorkspaceQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceCollectionResultOfT(_playwrightWorkspaceQuotasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PlaywrightWorkspaceQuotaResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Exists");
+            using DiagnosticScope scope = _playwrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceQuotaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceQuotaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceQuotaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,36 +174,34 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Exists");
+            using DiagnosticScope scope = _playwrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceQuotaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceQuotaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceQuotaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,38 +211,38 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<PlaywrightWorkspaceQuotaResource>> GetIfExistsAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.GetIfExists");
+            using DiagnosticScope scope = _playwrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceQuotaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceQuotaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceQuotaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PlaywrightWorkspaceQuotaResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -313,38 +252,38 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaceQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<PlaywrightWorkspaceQuotaResource> GetIfExists(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.GetIfExists");
+            using DiagnosticScope scope = _playwrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceQuotaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceQuotaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceQuotaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PlaywrightWorkspaceQuotaResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,6 +303,7 @@ namespace Azure.ResourceManager.Playwright
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PlaywrightWorkspaceQuotaResource> IAsyncEnumerable<PlaywrightWorkspaceQuotaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
