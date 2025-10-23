@@ -54,6 +54,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
                 writer.WriteObjectValue(ScriptUriManagedIdentity, options);
             }
+            if (Optional.IsDefined(ScriptShell))
+            {
+                writer.WritePropertyName("scriptShell"u8);
+                writer.WriteStringValue(ScriptShell.Value.ToString());
+            }
+            if (Optional.IsDefined(GalleryScriptReferenceId))
+            {
+                writer.WritePropertyName("galleryScriptReferenceId"u8);
+                writer.WriteStringValue(GalleryScriptReferenceId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,6 +105,8 @@ namespace Azure.ResourceManager.Compute.Models
             Uri scriptUri = default;
             string commandId = default;
             RunCommandManagedIdentity scriptUriManagedIdentity = default;
+            ScriptShellType? scriptShell = default;
+            string galleryScriptReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,13 +139,34 @@ namespace Azure.ResourceManager.Compute.Models
                     scriptUriManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("scriptShell"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptShell = new ScriptShellType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("galleryScriptReferenceId"u8))
+                {
+                    galleryScriptReferenceId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineRunCommandScriptSource(script, scriptUri, commandId, scriptUriManagedIdentity, serializedAdditionalRawData);
+            return new VirtualMachineRunCommandScriptSource(
+                script,
+                scriptUri,
+                commandId,
+                scriptUriManagedIdentity,
+                scriptShell,
+                galleryScriptReferenceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandScriptSource>.Write(ModelReaderWriterOptions options)

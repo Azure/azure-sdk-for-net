@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@azure-tools/typespec-client-generator-cli": "0.29.0"
+  }
+}

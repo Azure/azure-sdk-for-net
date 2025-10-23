@@ -8,89 +8,85 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
     /// A class representing a collection of <see cref="TrustedSigningCertificateProfileResource"/> and their operations.
-    /// Each <see cref="TrustedSigningCertificateProfileResource"/> in the collection will belong to the same instance of <see cref="TrustedSigningAccountResource"/>.
-    /// To get a <see cref="TrustedSigningCertificateProfileCollection"/> instance call the GetTrustedSigningCertificateProfiles method from an instance of <see cref="TrustedSigningAccountResource"/>.
+    /// Each <see cref="TrustedSigningCertificateProfileResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="TrustedSigningCertificateProfileCollection"/> instance call the GetTrustedSigningCertificateProfiles method from an instance of the parent resource.
     /// </summary>
     public partial class TrustedSigningCertificateProfileCollection : ArmCollection, IEnumerable<TrustedSigningCertificateProfileResource>, IAsyncEnumerable<TrustedSigningCertificateProfileResource>
     {
-        private readonly ClientDiagnostics _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics;
-        private readonly CertificateProfilesRestOperations _trustedSigningCertificateProfileCertificateProfilesRestClient;
+        private readonly ClientDiagnostics _certificateProfilesClientDiagnostics;
+        private readonly CertificateProfiles _certificateProfilesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TrustedSigningCertificateProfileCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TrustedSigningCertificateProfileCollection for mocking. </summary>
         protected TrustedSigningCertificateProfileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TrustedSigningCertificateProfileCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificateProfileCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrustedSigningCertificateProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrustedSigning", TrustedSigningCertificateProfileResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TrustedSigningCertificateProfileResource.ResourceType, out string trustedSigningCertificateProfileCertificateProfilesApiVersion);
-            _trustedSigningCertificateProfileCertificateProfilesRestClient = new CertificateProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, trustedSigningCertificateProfileCertificateProfilesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(TrustedSigningCertificateProfileResource.ResourceType, out string trustedSigningCertificateProfileApiVersion);
+            _certificateProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrustedSigning", TrustedSigningCertificateProfileResource.ResourceType.Namespace, Diagnostics);
+            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Endpoint, trustedSigningCertificateProfileApiVersion ?? "2025-10-13");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TrustedSigningAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TrustedSigningAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrustedSigningAccountResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Create a certificate profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a certificate profile. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="data"> Parameters to create the certificate profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<TrustedSigningCertificateProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string profileName, TrustedSigningCertificateProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new TrustedSigningArmOperation<TrustedSigningCertificateProfileResource>(new TrustedSigningCertificateProfileOperationSource(Client), _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics, Pipeline, _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, TrustedSigningCertificateProfileData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                TrustedSigningArmOperation<TrustedSigningCertificateProfileResource> operation = new TrustedSigningArmOperation<TrustedSigningCertificateProfileResource>(
+                    new TrustedSigningCertificateProfileOperationSource(Client),
+                    _certificateProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -100,46 +96,39 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Create a certificate profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a certificate profile. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="data"> Parameters to create the certificate profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<TrustedSigningCertificateProfileResource> CreateOrUpdate(WaitUntil waitUntil, string profileName, TrustedSigningCertificateProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _trustedSigningCertificateProfileCertificateProfilesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken);
-                var operation = new TrustedSigningArmOperation<TrustedSigningCertificateProfileResource>(new TrustedSigningCertificateProfileOperationSource(Client), _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics, Pipeline, _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, TrustedSigningCertificateProfileData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                TrustedSigningArmOperation<TrustedSigningCertificateProfileResource> operation = new TrustedSigningArmOperation<TrustedSigningCertificateProfileResource>(
+                    new TrustedSigningCertificateProfileOperationSource(Client),
+                    _certificateProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -149,42 +138,30 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Get details of a certificate profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get details of a certificate profile. </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<TrustedSigningCertificateProfileResource>> GetAsync(string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Get");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _trustedSigningCertificateProfileCertificateProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TrustedSigningCertificateProfileData> response = Response.FromValue(TrustedSigningCertificateProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningCertificateProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,42 +171,30 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Get details of a certificate profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get details of a certificate profile. </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<TrustedSigningCertificateProfileResource> Get(string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Get");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _trustedSigningCertificateProfileCertificateProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TrustedSigningCertificateProfileData> response = Response.FromValue(TrustedSigningCertificateProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningCertificateProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,100 +204,62 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// List certificate profiles under a trusted signing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_ListByCodeSigningAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List certificate profiles under a trusted signing account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrustedSigningCertificateProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateListByCodeSigningAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateListByCodeSigningAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrustedSigningCertificateProfileResource(Client, TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(e)), _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics, Pipeline, "TrustedSigningCertificateProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
-        /// <summary>
-        /// List certificate profiles under a trusted signing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_ListByCodeSigningAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List certificate profiles under a trusted signing account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrustedSigningCertificateProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateListByCodeSigningAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trustedSigningCertificateProfileCertificateProfilesRestClient.CreateListByCodeSigningAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrustedSigningCertificateProfileResource(Client, TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(e)), _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics, Pipeline, "TrustedSigningCertificateProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Exists");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _trustedSigningCertificateProfileCertificateProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TrustedSigningCertificateProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningCertificateProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningCertificateProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,40 +269,38 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Exists");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = _trustedSigningCertificateProfileCertificateProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TrustedSigningCertificateProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningCertificateProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningCertificateProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,42 +310,42 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<TrustedSigningCertificateProfileResource>> GetIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _trustedSigningCertificateProfileCertificateProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TrustedSigningCertificateProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningCertificateProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningCertificateProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TrustedSigningCertificateProfileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningCertificateProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,42 +355,42 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningCertificateProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<TrustedSigningCertificateProfileResource> GetIfExists(string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
-            using var scope = _trustedSigningCertificateProfileCertificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _certificateProfilesClientDiagnostics.CreateScope("TrustedSigningCertificateProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _trustedSigningCertificateProfileCertificateProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TrustedSigningCertificateProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningCertificateProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningCertificateProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TrustedSigningCertificateProfileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningCertificateProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +410,7 @@ namespace Azure.ResourceManager.TrustedSigning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<TrustedSigningCertificateProfileResource> IAsyncEnumerable<TrustedSigningCertificateProfileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

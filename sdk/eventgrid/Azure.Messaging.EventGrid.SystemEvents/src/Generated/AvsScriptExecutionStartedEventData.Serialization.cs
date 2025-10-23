@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionStarted event. </summary>
     [JsonConverter(typeof(AvsScriptExecutionStartedEventDataConverter))]
-    public partial class AvsScriptExecutionStartedEventData : IJsonModel<AvsScriptExecutionStartedEventData>
+    public partial class AvsScriptExecutionStartedEventData : AvsScriptExecutionEventData, IJsonModel<AvsScriptExecutionStartedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionStartedEventData"/> for deserialization. </summary>
         internal AvsScriptExecutionStartedEventData()

@@ -69,6 +69,9 @@ namespace Azure.Identity
             // copy ISupportsAdditionallyAllowedTenants
             CloneIfImplemented<ISupportsAdditionallyAllowedTenants>(this, clone, (o, c) => CloneListItems(o.AdditionallyAllowedTenants, c.AdditionallyAllowedTenants));
 
+            // copy ISupportsTenantId
+            CloneIfImplemented<ISupportsTenantId>(this, clone, (o, c) => c.TenantId = o.TenantId);
+
             // copy base ClientOptions properties, this would be replaced by a similar method on the base class
 
             // only copy transport if the original has changed from the default so as not to set IsCustomTransportSet unintentionally

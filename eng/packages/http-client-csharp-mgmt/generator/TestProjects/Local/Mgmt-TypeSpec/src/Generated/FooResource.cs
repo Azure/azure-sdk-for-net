@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a Foo along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace MgmtTypeSpec
         internal FooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _foosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -163,7 +163,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -192,7 +192,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -225,7 +225,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _foosClientDiagnostics,
                     Pipeline,
@@ -264,7 +264,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _foosClientDiagnostics,
                     Pipeline,
@@ -314,9 +314,14 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    FooData patch = new FooData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -357,9 +362,14 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = Get(cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    FooData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    FooData patch = new FooData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -399,9 +409,10 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    FooData patch = new FooData();
+                    patch.Tags.ReplaceWith(tags);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -441,9 +452,10 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = Get(cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    FooData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    FooData patch = new FooData();
+                    patch.Tags.ReplaceWith(tags);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -482,9 +494,14 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    FooData patch = new FooData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -523,9 +540,14 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    FooData current = Get(cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    FooData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    FooData patch = new FooData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -541,6 +563,32 @@ namespace MgmtTypeSpec
         public virtual BarCollection GetBars()
         {
             return GetCachedClient(client => new BarCollection(client, Id));
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
+
+            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
+
+            return GetBars().Get(barName, cancellationToken);
         }
     }
 }

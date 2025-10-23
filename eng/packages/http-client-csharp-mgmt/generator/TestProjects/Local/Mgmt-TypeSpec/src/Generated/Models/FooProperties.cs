@@ -7,8 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooProperties. </summary>
     public partial class FooProperties
@@ -17,8 +20,20 @@ namespace MgmtTypeSpec.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
-        public FooProperties()
+        /// <param name="something"> something. </param>
+        /// <param name="prop1"></param>
+        /// <param name="nestedProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedProperty"/> is null. </exception>
+        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, NestedFooModel nestedProperty)
         {
+            Argument.AssertNotNull(something, nameof(something));
+            Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(nestedProperty, nameof(nestedProperty));
+
+            Something = something;
+            Prop1 = prop1.ToList();
+            Prop2 = new ChangeTrackingList<int>();
+            NestedProperty = nestedProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
@@ -27,30 +42,67 @@ namespace MgmtTypeSpec.Models
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
         /// <param name="doubleValue"> double value. </param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <param name="nestedProperty"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
             BoolValue = boolValue;
             FloatValue = floatValue;
             DoubleValue = doubleValue;
+            Prop1 = prop1;
+            Prop2 = prop2;
+            NestedProperty = nestedProperty;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the service url. </summary>
+        [WirePath("serviceUrl")]
         public Uri ServiceUri { get; set; }
 
         /// <summary> something. </summary>
-        public string Something { get; set; }
+        [WirePath("something")]
+        public ManagedServiceIdentity Something { get; set; }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue { get; set; }
 
         /// <summary> float value. </summary>
+        [WirePath("floatValue")]
         public float? FloatValue { get; set; }
 
         /// <summary> double value. </summary>
+        [WirePath("doubleValue")]
         public double? DoubleValue { get; set; }
+
+        /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
+        public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Gets the Prop2. </summary>
+        [WirePath("prop2")]
+        public IList<int> Prop2 { get; } = new ChangeTrackingList<int>();
+
+        /// <summary> Gets or sets the NestedProperty. </summary>
+        [WirePath("nestedProperty")]
+        internal NestedFooModel NestedProperty { get; set; }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("nestedProperty.properties")]
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return NestedProperty is null ? default : NestedProperty.Properties;
+            }
+            set
+            {
+                NestedProperty = new NestedFooModel(value);
+            }
+        }
     }
 }

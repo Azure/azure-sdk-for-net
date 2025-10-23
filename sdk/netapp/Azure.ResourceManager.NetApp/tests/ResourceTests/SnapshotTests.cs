@@ -144,6 +144,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Check deletion
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(20000);
+
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName2));
             snapshotList = await _snapshotCollection.GetAllAsync().ToEnumerableAsync();
             snapshotList.Should().HaveCount(1);

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,16 @@
 
 ### Bugs Fixed
 
+- Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
+- Fixed exception when output variable has a type of array or object.
+
 ### Other Changes
+
+## 1.4.0-beta.1 (2025-09-03)
+
+### Features Added
+
+- Added a new protected API in `ProvisionableConstruct` to support a `ProvisionableResource` as property of another `ProvisionableConstruct`.
 
 ## 1.3.0 (2025-08-01)
 

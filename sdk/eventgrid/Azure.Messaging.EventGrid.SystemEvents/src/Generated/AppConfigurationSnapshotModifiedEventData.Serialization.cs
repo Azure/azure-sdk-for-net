@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
     [JsonConverter(typeof(AppConfigurationSnapshotModifiedEventDataConverter))]
-    public partial class AppConfigurationSnapshotModifiedEventData : IJsonModel<AppConfigurationSnapshotModifiedEventData>
+    public partial class AppConfigurationSnapshotModifiedEventData : AppConfigurationSnapshotEventData, IJsonModel<AppConfigurationSnapshotModifiedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/> for deserialization. </summary>
         internal AppConfigurationSnapshotModifiedEventData()

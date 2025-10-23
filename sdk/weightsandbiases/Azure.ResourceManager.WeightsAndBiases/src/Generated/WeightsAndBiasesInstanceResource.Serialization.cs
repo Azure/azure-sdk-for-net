@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WeightsAndBiases
 {
+    /// <summary></summary>
     public partial class WeightsAndBiasesInstanceResource : IJsonModel<WeightsAndBiasesInstanceData>
     {
-        private static WeightsAndBiasesInstanceData s_dataDeserializationInstance;
-        private static WeightsAndBiasesInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WeightsAndBiasesInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WeightsAndBiasesInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WeightsAndBiasesInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WeightsAndBiasesInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WeightsAndBiasesInstanceData>)Data).Write(writer, options);
 
-        WeightsAndBiasesInstanceData IJsonModel<WeightsAndBiasesInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WeightsAndBiasesInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WeightsAndBiasesInstanceData IJsonModel<WeightsAndBiasesInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WeightsAndBiasesInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WeightsAndBiasesInstanceData>(Data, options, AzureResourceManagerWeightsAndBiasesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WeightsAndBiasesInstanceData IPersistableModel<WeightsAndBiasesInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(data, options, AzureResourceManagerWeightsAndBiasesContext.Default);
 
-        string IPersistableModel<WeightsAndBiasesInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WeightsAndBiasesInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WeightsAndBiasesInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

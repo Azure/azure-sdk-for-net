@@ -1,14 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageTags>Azure, Cloud, Playwright, Playwright Service, Playwright Testing</PackageTags>
+    <PackageTags>Azure, Cloud, Playwright, Playwright Workspaces, Playwright Testing</PackageTags>
     <Description>
       Package to integrate your Playwright test suite with Azure Playwright.
     </Description>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <IsClientLibrary>true</IsClientLibrary>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

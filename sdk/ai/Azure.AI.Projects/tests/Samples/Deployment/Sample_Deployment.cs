@@ -85,13 +85,13 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 #endif
 
         Console.WriteLine("List all deployments:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
+        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
@@ -126,13 +126,13 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 #endif
 
         Console.WriteLine("List all deployments:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+        await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+        await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }

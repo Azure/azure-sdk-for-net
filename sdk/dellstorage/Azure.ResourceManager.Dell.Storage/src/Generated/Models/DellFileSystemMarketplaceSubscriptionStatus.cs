@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     public readonly partial struct DellFileSystemMarketplaceSubscriptionStatus : IEquatable<DellFileSystemMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Fulfillment has not started. </summary>
+        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
+        /// <summary> Marketplace offer is subscribed. </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary> Marketplace offer is suspended because of non payment. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Marketplace offer is unsubscribed. </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DellFileSystemMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary> Fulfillment has not started. </summary>
         public static DellFileSystemMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new DellFileSystemMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+
         /// <summary> Marketplace offer is subscribed. </summary>
         public static DellFileSystemMarketplaceSubscriptionStatus Subscribed { get; } = new DellFileSystemMarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary> Marketplace offer is suspended because of non payment. </summary>
         public static DellFileSystemMarketplaceSubscriptionStatus Suspended { get; } = new DellFileSystemMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Marketplace offer is unsubscribed. </summary>
         public static DellFileSystemMarketplaceSubscriptionStatus Unsubscribed { get; } = new DellFileSystemMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="DellFileSystemMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DellFileSystemMarketplaceSubscriptionStatus left, DellFileSystemMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DellFileSystemMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DellFileSystemMarketplaceSubscriptionStatus left, DellFileSystemMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DellFileSystemMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DellFileSystemMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DellFileSystemMarketplaceSubscriptionStatus(string value) => new DellFileSystemMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DellFileSystemMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DellFileSystemMarketplaceSubscriptionStatus?(string value) => value == null ? null : new DellFileSystemMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DellFileSystemMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DellFileSystemMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

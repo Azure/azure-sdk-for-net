@@ -31,7 +31,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         public ArizeAIObservabilityEvalOrganizationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -99,7 +102,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -123,6 +129,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -135,7 +142,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public string PublisherId { get { throw null; } set { } }
         public string TermId { get { throw null; } set { } }
         public string TermUnit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -146,7 +156,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     {
         public ArizeAIObservabilityEvalOfferPartnerProperties(string description) { }
         public string Description { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -169,6 +182,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -177,7 +191,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public ArizeAIObservabilityEvalOrganizationPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -192,7 +209,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 SingleSignOnProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -207,7 +227,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState? State { get { throw null; } set { } }
         public Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType Type { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -230,6 +253,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -248,6 +272,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType left, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -259,7 +284,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public string Upn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -270,6 +298,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     {
         public static Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails ArizeAIObservabilityEvalMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceSubscriptionStatus?), Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails offerDetails = null) { throw null; }
         public static Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData ArizeAIObservabilityEvalOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch ArizeAIObservabilityEvalOrganizationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties ArizeAIObservabilityEvalOrganizationProperties(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails marketplace = null, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails user = null, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState? provisioningState = default(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferProvisioningState?), string partnerDescription = null, Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
+        public static Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2 ArizeAIObservabilityEvalSingleSignOnPropertiesV2(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType type = default(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnType), Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState? state = default(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnState?), string enterpriseAppId = null, string uri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null) { throw null; }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
@@ -75,6 +75,72 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             return blobs;
+        }
+
+        public async Task<StorageAnalyticsLogEntry> GetFirstLogEntryWithWritesAsync(string containerName, CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
+        {
+            if (hoursWindow <= 0)
+            {
+                return null;
+            }
+
+            DateTime hourCursor = DateTime.UtcNow;
+            BlobContainerClient containerClient = _blobClient.GetBlobContainerClient(LogContainer);
+
+            for (int hourIndex = 0; hourIndex < hoursWindow; hourIndex++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                string prefix = GetSearchPrefix("blob", hourCursor, hourCursor);
+
+                await foreach (BlobItem blob in containerClient
+                    .GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, states: BlobStates.None, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    if (blob.Metadata is not null &&
+                        blob.Metadata.TryGetValue(LogType, out string logType) &&
+                        !string.IsNullOrEmpty(logType) &&
+                        logType.IndexOf("write", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        BlobClient logBlobClient = containerClient.GetBlobClient(blob.Name);
+
+                        using (Stream stream = await logBlobClient.OpenReadAsync(options: default, cancellationToken: cancellationToken).ConfigureAwait(false))
+                        {
+                            using (StreamReader reader = new StreamReader(stream))
+                            {
+                                int lineNumber = 0;
+                                while (!reader.EndOfStream)
+                                {
+                                    cancellationToken.ThrowIfCancellationRequested();
+                                    string line = await reader.ReadLineAsync().ConfigureAwait(false);
+                                    lineNumber++;
+
+                                    if (line != null)
+                                    {
+                                        var entry = _parser.ParseLine(line, logBlobClient.Name, lineNumber.ToString(CultureInfo.InvariantCulture));
+                                        if (entry != null && entry.IsBlobWrite)
+                                        {
+                                            var path = entry.ToBlobPath();
+                                            if (path != null &&
+                                                string.Equals(path.ContainerName, containerName, StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                // If we found a valid write entry, we can stop searching.
+                                                return entry;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                hourCursor = hourCursor.AddHours(-1);
+            }
+
+            return null;
         }
 
         internal static IEnumerable<BlobPath> GetPathsForValidBlobWrites(IEnumerable<StorageAnalyticsLogEntry> entries)
@@ -162,7 +228,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             // List the blobs using the prefix
             BlobContainerClient container = blobClient.GetBlobContainerClient(LogContainer);
-            var blobs = container.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var blobs = container.GetBlobsAsync(
+                traits: BlobTraits.Metadata,
+                states: BlobStates.None,
+                prefix: prefix,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // iterate through each blob and figure the start and end times in the metadata
             // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.

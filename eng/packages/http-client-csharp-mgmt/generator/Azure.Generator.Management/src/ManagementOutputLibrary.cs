@@ -6,6 +6,7 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -30,6 +31,9 @@ namespace Azure.Generator.Management
         private ProviderConstantsProvider? _providerConstants;
         internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
 
+        private WirePathAttributeDefinition? _wirePathAttributeProvider;
+        internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
@@ -51,6 +55,13 @@ namespace Azure.Generator.Management
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
+
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
+        internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
+            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
+                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
+                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
 
         private T GetValue<T>(ref T? field) where T : class
         {
@@ -127,7 +138,8 @@ namespace Azure.Generator.Management
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0)
+                if (scope != ResourceScope.Extension &&
+                    (resourcesInScope.Count > 0 || resourceMethods.Count > 0 || nonResourceMethods.Count > 0))
                 {
                     var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
                     mockableResources.Add(scope, mockableExtension);
@@ -150,6 +162,7 @@ namespace Azure.Generator.Management
                     [ResourceScope.Subscription] = new([], [], []),
                     [ResourceScope.Tenant] = new([], [], []),
                     [ResourceScope.ManagementGroup] = new([], [], []),
+                    [ResourceScope.Extension] = new([], [], [])
                 };
                 foreach (var (metadata, resourceClient) in resourceDict)
                 {
@@ -185,19 +198,51 @@ namespace Azure.Generator.Management
 
         // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
-        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
-        internal HashSet<CSharpType> BuildModelFactoryModels()
+        private HashSet<CSharpType>? _allModelTypes;
+
+        private HashSet<CSharpType> ModelFactoryModels
         {
-            var result = new HashSet<CSharpType>();
+            get
+            {
+                BuildModelTypes();
+                return _modelFactoryModels!;
+            }
+        }
+
+        private HashSet<CSharpType> AllModelTypes
+        {
+            get
+            {
+                BuildModelTypes();
+                return _allModelTypes!;
+            }
+        }
+
+        private void BuildModelTypes()
+        {
+            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            {
+                return; // already built
+            }
+
+            var allModelTypes = new HashSet<CSharpType>();
+            var modelFactoryModels = new HashSet<CSharpType>();
+
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && IsModelFactoryModel(model))
+                if (model is not null)
                 {
-                    result.Add(model.Type);
+                    allModelTypes.Add(model.Type);
+                    if (IsModelFactoryModel(model))
+                    {
+                        modelFactoryModels.Add(model.Type);
+                    }
                 }
             }
-            return result;
+
+            _allModelTypes = allModelTypes;
+            _modelFactoryModels = modelFactoryModels;
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)
@@ -232,6 +277,8 @@ namespace Azure.Generator.Management
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
 
+        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type);
+
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
@@ -253,7 +300,8 @@ namespace Azure.Generator.Management
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 ProviderConstants,

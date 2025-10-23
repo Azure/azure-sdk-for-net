@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1260,7 +1260,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1615,7 +1615,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1624,18 +1624,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1651,7 +1653,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1660,18 +1662,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachines(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1687,7 +1691,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1696,18 +1700,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1723,7 +1729,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1732,18 +1738,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworks(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1759,7 +1767,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1768,18 +1776,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagersAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1795,7 +1805,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1804,18 +1814,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagers(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1831,7 +1843,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1840,18 +1852,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClustersAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1867,7 +1881,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1876,18 +1890,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusters(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1903,7 +1919,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1912,18 +1928,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1939,7 +1957,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1948,18 +1966,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClusters(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1975,7 +1995,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1984,18 +2004,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2NetworksAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2011,7 +2033,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2020,18 +2042,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2Networks(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2047,7 +2071,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2056,18 +2080,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3NetworksAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2083,7 +2109,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2092,18 +2118,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3Networks(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2119,7 +2147,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2128,18 +2156,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacksAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2155,7 +2185,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2164,18 +2194,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacks(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2191,7 +2223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2200,18 +2232,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2227,7 +2261,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2236,18 +2270,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliances(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2263,7 +2299,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2272,18 +2308,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2299,7 +2337,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2308,18 +2346,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworks(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2335,7 +2375,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2344,18 +2384,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2371,7 +2413,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2380,18 +2422,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachines(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2407,7 +2451,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2416,18 +2460,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2443,7 +2489,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2452,18 +2498,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumes(top, skipToken, cancellationToken);
         }
     }
 }

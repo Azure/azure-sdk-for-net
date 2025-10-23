@@ -2544,5 +2544,128 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountCreateSetGetFileSmbOauth()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.None)
+            {
+                IsSmbOAuthEnabled = true,
+            };
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                "centraluseuap"
+                )
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            Assert.AreEqual(account.Data.AzureFilesIdentityBasedAuthentication.IsSmbOAuthEnabled, true);
+
+            // Update storage account to None
+            var updateParameters = new StorageAccountPatch
+            {
+                AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.None)
+                {
+                    IsSmbOAuthEnabled = false,
+                }
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(account.Data.AzureFilesIdentityBasedAuthentication.IsSmbOAuthEnabled, false);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountCreateGetSetZonePlacementPolicy()
+        {
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters1 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.PremiumLrs),
+                StorageKind.FileStorage,
+                "centraluseuap"
+                )
+            {
+                Zones = { "1" },
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
+            Assert.AreEqual(account1.Data.Zones[0], "1");
+
+            string accountName2 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters2 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.PremiumLrs),
+                StorageKind.FileStorage,
+                "centraluseuap"
+                )
+            {
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.Any,
+            };
+            StorageAccountResource account2 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, parameters2)).Value;
+            Assert.AreEqual(account2.Data.ZonePlacementPolicy, StorageAccountZonePlacementPolicy.Any);
+
+            // Update storage account to None
+            var updateParameters1 = new StorageAccountPatch
+            {
+                ZonePlacementPolicy = StorageAccountZonePlacementPolicy.None,
+            };
+
+            account2 = (await account2.UpdateAsync(updateParameters1)).Value;
+            Assert.AreEqual(account2.Data.ZonePlacementPolicy, StorageAccountZonePlacementPolicy.None);
+
+            string accountName3 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters3 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.PremiumLrs),
+                StorageKind.FileStorage,
+                "centraluseuap"
+                );
+            var account3 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName3, parameters3)).Value;
+            Assert.AreEqual(account3.Data.Zones.Count, 0);
+
+            var updateParameters2 = new StorageAccountPatch
+            {
+                Zones = {"1"}
+            };
+            account3 = (await account3.UpdateAsync(updateParameters2)).Value;
+            Assert.AreEqual(account3.Data.Zones[0], "1");
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountCreateUpdateGeoSLA()
+        {
+            //create storage account with GeoPriorityReplicationStatus.IsBlobEnabled = true
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            var parameters1 = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardGrs),
+                StorageKind.StorageV2,
+                "centraluseuap"
+                )
+            {
+                GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus() { IsBlobEnabled = true }
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
+            Assert.AreEqual(account1.Data.GeoPriorityReplicationStatus.IsBlobEnabled, true);
+
+            // Update storage account to GeoPriorityReplicationStatus.IsBlobEnabled = false
+            var updateParameters1 = new StorageAccountPatch
+            {
+                GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus() { IsBlobEnabled = false }
+            };
+
+            account1 = (await account1.UpdateAsync(updateParameters1)).Value;
+            Assert.AreEqual(account1.Data.GeoPriorityReplicationStatus.IsBlobEnabled, false);
+
+            await account1.DeleteAsync(waitUntil: WaitUntil.Started);
+        }
     }
 }

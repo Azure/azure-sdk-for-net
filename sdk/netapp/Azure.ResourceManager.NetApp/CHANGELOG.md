@@ -1,5 +1,22 @@
 # Release History
 
+## 1.13.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.13.0-beta.1 (2025-10-22)
+
+### Features Added
+- Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-07-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c2c7ee70dea80830fe9ea94aed2cec6182c4e9e6/specification/netapp/resource-manager/readme.md.
+- Added `Bucket` resource type
+- Added `GetNetAppResourceQuotaLimitsAccountsAsync` to `NetAppAccountResource`
+
 ## 1.12.0 (2025-08-25)
 
 ### Features Added
@@ -25,7 +42,7 @@
 - Added `DestinationReplications` to `NetAppReplicationObject`
 - Added support for ANF Migration Assistant with operations `PeerExternalCluster`, `AuthorizeExternalReplication`, `FinalizeExternalReplication`, `PerformReplicationTransfer` on `NetAppVolumeResource`
 - Added `IsLargeVolume` to  `NetAppBackupData`
-- `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is now a read only property indicating if volume is being resored 
+- `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is now a read only property indicating if volume is being resored
 
 
 ## 1.9.0 (2025-02-21)
@@ -42,7 +59,7 @@
 
 - Upgraded api-version tag from 'package-2024-03' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f37b54b187bac95237c62478a10b94e9cff236f3/specification/netapp/resource-manager/readme.md.
 - Added support for external migration replication volumes with operations `PeerExternalClusterAsync`, `AuthorizeExternalReplicationAsync`, `PerformReplicationTransferAsync`, `FinalizeExternalReplicationAsync`
-- Added `RemotePath` to `ReplicationObject` 
+- Added `RemotePath` to `ReplicationObject`
 - Added `AvailabilityZone` to `FilePathAvailabilityRequest`
 - Added read-only property `EffectiveNetworkFeatures` to `Volume` `VolumeProperties` and `VolumeGroupVolumeProperties`
 - Exposed `JsonModelWriteCore` for model serialization procedure.

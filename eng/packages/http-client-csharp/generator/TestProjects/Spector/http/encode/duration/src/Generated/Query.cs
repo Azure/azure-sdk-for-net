@@ -60,6 +60,30 @@ namespace Encode.Duration._Query
 
         public virtual Task<Response> Float64SecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
 
+        public virtual Response Int32Milliseconds(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response Int32Milliseconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatMilliseconds(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response FloatMilliseconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Float64Milliseconds(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Float64MillisecondsAsync(TimeSpan input, RequestContext context) => throw null;
+
+        public virtual Response Float64Milliseconds(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Float64MillisecondsAsync(TimeSpan input, CancellationToken cancellationToken = default) => throw null;
+
         public virtual Response Int32SecondsArray(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
 
         public virtual Task<Response> Int32SecondsArrayAsync(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
@@ -67,5 +91,13 @@ namespace Encode.Duration._Query
         public virtual Response Int32SecondsArray(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> Int32SecondsArrayAsync(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Int32MillisecondsArray(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsArrayAsync(IEnumerable<TimeSpan> input, RequestContext context) => throw null;
+
+        public virtual Response Int32MillisecondsArray(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsArrayAsync(IEnumerable<TimeSpan> input, CancellationToken cancellationToken = default) => throw null;
     }
 }

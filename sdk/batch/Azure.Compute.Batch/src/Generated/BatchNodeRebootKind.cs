@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static BatchNodeRebootKind Terminate { get; } = new BatchNodeRebootKind(TerminateValue);
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Restart the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeRebootKind TaskCompletion { get; } = new BatchNodeRebootKind(TaskCompletionValue);
-        /// <summary> Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Restart the Compute Node when all Task retention periods have expired. </summary>
+        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Restart the Compute Node when all Task retention periods have expired. </summary>
         public static BatchNodeRebootKind RetainedData { get; } = new BatchNodeRebootKind(RetainedDataValue);
         /// <summary> Determines if two <see cref="BatchNodeRebootKind"/> values are the same. </summary>
         public static bool operator ==(BatchNodeRebootKind left, BatchNodeRebootKind right) => left.Equals(right);

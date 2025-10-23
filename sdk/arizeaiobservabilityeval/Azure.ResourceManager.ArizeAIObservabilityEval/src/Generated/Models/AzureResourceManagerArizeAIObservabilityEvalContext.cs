@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOfferDetails))]
@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
     [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalUserDetails))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerArizeAIObservabilityEvalContext : ModelReaderWriterContext
