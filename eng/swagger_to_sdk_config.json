@@ -24,6 +24,9 @@
     "packageFolderFromFileSearch": false,
     "buildScript": {
       "command": "dotnet build {packagePath}"
+    },
+    "updateMetadataScript": {
+      "path": "pwsh ./eng/scripts/Automation-Update-Metadata.ps1"
     }
   }
 }
