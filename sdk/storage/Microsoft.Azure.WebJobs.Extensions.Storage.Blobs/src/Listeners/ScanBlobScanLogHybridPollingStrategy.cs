@@ -61,19 +61,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _cancellationTokenSource.Cancel();
         }
 
-        public async Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor, CancellationToken cancellationToken)
+        public async Task RegisterAsync(
+            BlobServiceClient primaryBlobServiceClient,
+            BlobServiceClient targetBlobServiceClient,
+            BlobContainerClient container,
+            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+            CancellationToken cancellationToken)
         {
             // Register and Execute are not concurrency-safe.
             // Avoiding calling Register while Execute is running is the caller's responsibility.
             ThrowIfDisposed();
 
             // Register all in logPolling, there is no problem if we get 2 notifications of the new blob
-            await _pollLogStrategy.RegisterAsync(blobServiceClient, container, triggerExecutor, cancellationToken).ConfigureAwait(false);
+            await _pollLogStrategy.RegisterAsync(
+                primaryBlobServiceClient,
+                targetBlobServiceClient,
+                container,
+                triggerExecutor,
+                cancellationToken).ConfigureAwait(false);
 
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 // First, try to load serialized scanInfo for this container.
-                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
+                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(primaryBlobServiceClient.AccountName, container.Name).ConfigureAwait(false);
 
                 containerScanInfo = new ContainerScanInfo()
                 {

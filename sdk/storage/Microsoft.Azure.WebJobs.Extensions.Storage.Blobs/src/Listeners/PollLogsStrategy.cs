@@ -49,7 +49,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
         }
 
-        public async Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        public async Task RegisterAsync(
+            BlobServiceClient primaryBlobServiceClient,
+            BlobServiceClient targetBlobServiceClient,
+            BlobContainerClient container,
+            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
@@ -76,10 +80,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             containerRegistrations.Add(triggerExecutor);
 
-            if (!_logListeners.ContainsKey(blobServiceClient))
+            if (targetBlobServiceClient == default)
             {
-                BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
-                _logListeners.Add(blobServiceClient, logListener);
+                // If no target client is specified, use the primary.
+                BlobLogListener logListener = await BlobLogListener.CreateAsync(primaryBlobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
+                _logListeners.Add(primaryBlobServiceClient, logListener);
+            }
+            else if (!_logListeners.ContainsKey(targetBlobServiceClient))
+            {
+                try
+                {
+                    BlobLogListener logListener = await BlobLogListener.CreateAsync(targetBlobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
+                    _logListeners.Add(targetBlobServiceClient, logListener);
+                }
+                // TODO: verify if this is the only permissions error code, or other possible permissions errors
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.AuthorizationPermissionMismatch)
+                {
+                    Logger.LoggingNotEnabledOnTargetAccount(_logger, targetBlobServiceClient.Uri.AbsoluteUri);
+
+                    // Fallback to primary client if target client does not have the permissions to be used.
+                    BlobLogListener logListener = await BlobLogListener.CreateAsync(primaryBlobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
+                    _logListeners.Add(primaryBlobServiceClient, logListener);
+                }
             }
         }
 
@@ -255,6 +277,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             {
                 throw new ObjectDisposedException(null);
             }
+        }
+
+        private async Task<bool> CheckLoggingEnabledAsync(BlobServiceClient blobClient, CancellationToken cancellationToken)
+        {
+            BlobServiceProperties serviceProperties = await blobClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+
+            // Retrieve the logging settings.
+            BlobAnalyticsLogging loggingProperties = serviceProperties.Logging;
+
+            if (!loggingProperties.Write)
+            {
+                // Log an error if logging is not enabled.
+                Logger.LoggingNotEnabledOnTargetAccount(_logger, blobClient.Uri.AbsoluteUri);
+                return false;
+            }
+            // Logging is enabled.
+            return true;
         }
     }
 }

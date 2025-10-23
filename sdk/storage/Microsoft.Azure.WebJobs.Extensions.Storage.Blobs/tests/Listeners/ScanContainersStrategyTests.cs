@@ -31,7 +31,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var container = blobServiceClient.GetBlobContainerClient(ContainerName);
             IBlobListenerStrategy product = new ScanContainersStrategy();
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
-            product.Register(blobServiceClient, container, executor);
+            product.Register(
+                blobServiceClient,
+                blobServiceClient,
+                container,
+                executor);
             product.Start();
 
             executor.ExecuteLambda = (_) =>

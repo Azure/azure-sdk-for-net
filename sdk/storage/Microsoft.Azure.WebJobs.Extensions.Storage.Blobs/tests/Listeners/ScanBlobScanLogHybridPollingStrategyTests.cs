@@ -1,15 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -22,6 +13,16 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
@@ -106,7 +107,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var container = _blobContainerMock.Object;
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, _logger);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
-            product.Register(_blobClientMock.Object, container, executor);
+            product.Register(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                container,
+                executor);
             product.Start();
 
             RunExecuterWithExpectedBlobs(new List<string>(), product, executor);
@@ -163,7 +168,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                    .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
                    .SetValue(product, testScanBlobLimitPerPoll);
 
-            product.Register(_blobClientMock.Object, container, executor);
+            product.Register(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                container,
+                executor);
             product.Start();
 
             // populate with 5 blobs
@@ -191,8 +200,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                    .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
                    .SetValue(product, testScanBlobLimitPerPoll);
 
-            product.Register(_blobClientMock.Object, firstContainer, executor);
-            product.Register(_blobClientMock.Object, secondContainer, executor);
+            product.Register(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                firstContainer,
+                executor);
+            product.Register(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                secondContainer,
+                executor);
             product.Start();
 
             // populate first container with 5 blobs > page size and second with 2 blobs < page size
@@ -232,7 +249,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                    .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
                    .SetValue(product, testScanBlobLimitPerPoll);
 
-            product.Register(_blobClientMock.Object, container, executor);
+            product.Register(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                container,
+                executor);
             product.Start();
 
             List<string> expectedNames = new List<string>();
@@ -271,7 +292,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                    .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
                    .SetValue(product, testScanBlobLimitPerPoll);
 
-            product.Register(_blobClientMock.Object, container, executor);
+            product.Register(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                container,
+                executor);
             product.Start();
 
             List<string> expectedNames = new List<string>();
@@ -307,7 +332,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             await Task.Delay(10);
 
             await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
-            await product.RegisterAsync(_blobClientMock.Object, container, executor, CancellationToken.None);
+            await product.RegisterAsync(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                container,
+                executor,
+                CancellationToken.None);
 
             // delay slightly so we guarantee a later timestamp
             await Task.Delay(10);
@@ -334,8 +364,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                   .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
                   .SetValue(product, testScanBlobLimitPerPoll);
 
-            await product.RegisterAsync(_blobClientMock.Object, firstContainer, executor, CancellationToken.None);
-            await product.RegisterAsync(_blobClientMock.Object, secondContainer, executor, CancellationToken.None);
+            await product.RegisterAsync(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                firstContainer,
+                executor,
+                CancellationToken.None);
+            await product.RegisterAsync(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                secondContainer,
+                executor,
+                CancellationToken.None);
 
             var firstExpectedNames = new List<string>();
             for (int i = 0; i < 3; i++)
@@ -383,7 +423,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                   .GetField("_scanBlobLimitPerPoll", BindingFlags.Instance | BindingFlags.NonPublic)
                   .SetValue(product, testScanBlobLimitPerPoll);
 
-            await product.RegisterAsync(_blobClientMock.Object, container, executor, CancellationToken.None);
+            await product.RegisterAsync(
+                _blobClientMock.Object,
+                _blobClientMock.Object,
+                container,
+                executor,
+                CancellationToken.None);
 
             // Induce a failure to make sure the timestamp is earlier than the failure.
             var expectedNames = new List<string>();

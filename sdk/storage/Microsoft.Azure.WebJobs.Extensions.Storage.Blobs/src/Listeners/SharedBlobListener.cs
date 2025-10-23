@@ -44,7 +44,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             get { return _strategy; }
         }
 
-        public Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        public Task RegisterAsync(
+            BlobServiceClient primaryBlobServiceClient,
+            BlobServiceClient targetBlobServiceClient,
+            BlobContainerClient container,
+            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
         {
             if (_started)
@@ -53,7 +57,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     "Registrations may not be added while the shared listener is running.");
             }
 
-            return _strategy.RegisterAsync(blobServiceClient, container, triggerExecutor, cancellationToken);
+            return _strategy.RegisterAsync(
+                primaryBlobServiceClient,
+                targetBlobServiceClient,
+                container,
+                triggerExecutor,
+                cancellationToken);
         }
 
         public Task EnsureAllStartedAsync(CancellationToken cancellationToken)

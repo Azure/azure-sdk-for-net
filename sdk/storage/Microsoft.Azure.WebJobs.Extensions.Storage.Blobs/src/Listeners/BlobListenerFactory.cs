@@ -107,8 +107,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     new SharedBlobListenerFactory(hostId, _hostBlobServiceClient, _exceptionHandler, _blobWrittenWatcherSetter, _loggerFactory.CreateLogger<BlobListener>()));
 
                 // Register the blob container we wish to monitor with the shared blob listener.
-                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, primaryBlobClient,
-                    blobTriggerQueueWriter, cancellationToken).ConfigureAwait(false);
+                await RegisterWithSharedBlobListenerAsync(
+                    hostId,
+                    sharedBlobListener,
+                    primaryBlobClient,
+                    targetBlobClient,
+                    blobTriggerQueueWriter,
+                    cancellationToken).ConfigureAwait(false);
             }
 
             // Create a "bridge" listener that will monitor the blob
@@ -165,14 +170,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private async Task RegisterWithSharedBlobListenerAsync(
             string hostId,
             SharedBlobListener sharedBlobListener,
-            BlobServiceClient blobClient,
+            BlobServiceClient primaryBlobClient,
+            BlobServiceClient targetBlobClient,
             BlobTriggerQueueWriter blobTriggerQueueWriter,
             CancellationToken cancellationToken)
         {
-            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
+            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(primaryBlobClient),
                 blobTriggerQueueWriter, _loggerFactory.CreateLogger<BlobListener>());
 
-            await sharedBlobListener.RegisterAsync(blobClient, _container, triggerExecutor, cancellationToken).ConfigureAwait(false);
+            await sharedBlobListener.RegisterAsync(
+                primaryBlobClient,
+                targetBlobClient,
+                _container,
+                triggerExecutor,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private void RegisterWithSharedBlobQueueListenerAsync(
