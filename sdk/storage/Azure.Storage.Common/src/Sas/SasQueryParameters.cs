@@ -251,7 +251,6 @@ namespace Azure.Storage.Sas
         /// issued to the user specified in this value.
         /// </summary>
         public string DelegatedUserObjectId => _delegatedUserObjectId ?? string.Empty;
-
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
         /// fields that must be verified in order to authenticate the request.
