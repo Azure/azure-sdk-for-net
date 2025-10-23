@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            IReadOnlyList<InsightData> value = default;
+            IReadOnlyList<ImpactInsightData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<InsightData> array = new List<InsightData>();
+                    List<ImpactInsightData> array = new List<ImpactInsightData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InsightData.DeserializeInsightData(item, options));
+                        array.Add(ImpactInsightData.DeserializeImpactInsightData(item, options));
                     }
                     value = array;
                     continue;

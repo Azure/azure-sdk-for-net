@@ -66,41 +66,41 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InsightResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InsightResource.CreateResourceIdentifier" /> to create an <see cref="InsightResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ImpactInsightResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImpactInsightResource.CreateResourceIdentifier" /> to create an <see cref="ImpactInsightResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetInsightResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactInsightResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InsightResource"/> object. </returns>
-        public static InsightResource GetInsightResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImpactInsightResource"/> object. </returns>
+        public static ImpactInsightResource GetImpactInsightResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableImpactReportingArmClient(client).GetInsightResource(id);
+            return GetMockableImpactReportingArmClient(client).GetImpactInsightResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectorResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ImpactConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImpactConnectorResource.CreateResourceIdentifier" /> to create an <see cref="ImpactConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactConnectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
-        public static ConnectorResource GetConnectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImpactConnectorResource"/> object. </returns>
+        public static ImpactConnectorResource GetImpactConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableImpactReportingArmClient(client).GetConnectorResource(id);
+            return GetMockableImpactReportingArmClient(client).GetImpactConnectorResource(id);
         }
 
         /// <summary>
@@ -290,20 +290,20 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets a collection of ConnectorResources in the SubscriptionResource.
+        /// Gets a collection of ImpactConnectorResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetConnectors()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnectors()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ConnectorResources and their operations over a ConnectorResource. </returns>
-        public static ConnectorCollection GetConnectors(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of ImpactConnectorResources and their operations over a ImpactConnectorResource. </returns>
+        public static ImpactConnectorCollection GetImpactConnectors(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableImpactReportingSubscriptionResource(subscriptionResource).GetConnectors();
+            return GetMockableImpactReportingSubscriptionResource(subscriptionResource).GetImpactConnectors();
         }
 
         /// <summary>
@@ -323,12 +323,12 @@ namespace Azure.ResourceManager.ImpactReporting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConnectorResource"/></description>
+        /// <description><see cref="ImpactConnectorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetConnectorAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnectorAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConnectorResource>> GetConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ImpactConnectorResource>> GetImpactConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableImpactReportingSubscriptionResource(subscriptionResource).GetConnectorAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableImpactReportingSubscriptionResource(subscriptionResource).GetImpactConnectorAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,12 +361,12 @@ namespace Azure.ResourceManager.ImpactReporting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConnectorResource"/></description>
+        /// <description><see cref="ImpactConnectorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetConnector(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnector(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ConnectorResource> GetConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
+        public static Response<ImpactConnectorResource> GetImpactConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableImpactReportingSubscriptionResource(subscriptionResource).GetConnector(connectorName, cancellationToken);
+            return GetMockableImpactReportingSubscriptionResource(subscriptionResource).GetImpactConnector(connectorName, cancellationToken);
         }
     }
 }

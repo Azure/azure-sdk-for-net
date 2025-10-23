@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
             return GetImpactCategories().Get(impactCategoryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectorResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ConnectorResources and their operations over a ConnectorResource. </returns>
-        public virtual ConnectorCollection GetConnectors()
+        /// <summary> Gets a collection of ImpactConnectorResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ImpactConnectorResources and their operations over a ImpactConnectorResource. </returns>
+        public virtual ImpactConnectorCollection GetImpactConnectors()
         {
-            return GetCachedClient(client => new ConnectorCollection(client, Id));
+            return GetCachedClient(client => new ImpactConnectorCollection(client, Id));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConnectorResource"/></description>
+        /// <description><see cref="ImpactConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectorResource>> GetConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImpactConnectorResource>> GetImpactConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            return await GetConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetImpactConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConnectorResource"/></description>
+        /// <description><see cref="ImpactConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,9 +235,9 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectorResource> GetConnector(string connectorName, CancellationToken cancellationToken = default)
+        public virtual Response<ImpactConnectorResource> GetImpactConnector(string connectorName, CancellationToken cancellationToken = default)
         {
-            return GetConnectors().Get(connectorName, cancellationToken);
+            return GetImpactConnectors().Get(connectorName, cancellationToken);
         }
     }
 }

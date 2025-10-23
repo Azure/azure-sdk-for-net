@@ -175,22 +175,22 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            ImpactReportingProvisioningState? provisioningState = default;
             DateTimeOffset startDateTime = default;
             DateTimeOffset? endDateTime = default;
-            string impactedResourceId = default;
+            ResourceIdentifier impactedResourceId = default;
             string impactUniqueId = default;
             DateTimeOffset? reportedTimeUtc = default;
             string impactCategory = default;
             string impactDescription = default;
             IList<string> armCorrelationIds = default;
-            IList<Performance> performance = default;
-            Connectivity connectivity = default;
+            IList<ImpactPerformance> performance = default;
+            ImpactConnectivityDetails connectivity = default;
             IDictionary<string, BinaryData> additionalProperties = default;
-            ErrorDetailProperties errorDetails = default;
-            Workload workload = default;
+            ImpactErrorDetails errorDetails = default;
+            ImpactedWorkload workload = default;
             string impactGroupId = default;
-            ConfidenceLevel? confidenceLevel = default;
+            ImpactConfidenceLevel? confidenceLevel = default;
             ClientIncidentDetails clientIncidentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ImpactReportingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startDateTime"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 if (property.NameEquals("impactedResourceId"u8))
                 {
-                    impactedResourceId = property.Value.GetString();
+                    impactedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("impactUniqueId"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    List<Performance> array = new List<Performance>();
+                    List<ImpactPerformance> array = new List<ImpactPerformance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.Performance.DeserializePerformance(item, options));
+                        array.Add(ImpactPerformance.DeserializeImpactPerformance(item, options));
                     }
                     performance = array;
                     continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    connectivity = Connectivity.DeserializeConnectivity(property.Value, options);
+                    connectivity = ImpactConnectivityDetails.DeserializeImpactConnectivityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalProperties"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    errorDetails = ErrorDetailProperties.DeserializeErrorDetailProperties(property.Value, options);
+                    errorDetails = ImpactErrorDetails.DeserializeImpactErrorDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workload"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    workload = Workload.DeserializeWorkload(property.Value, options);
+                    workload = ImpactedWorkload.DeserializeImpactedWorkload(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("impactGroupId"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    confidenceLevel = new ConfidenceLevel(property.Value.GetString());
+                    confidenceLevel = new ImpactConfidenceLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientIncidentDetails"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 impactCategory,
                 impactDescription,
                 armCorrelationIds ?? new ChangeTrackingList<string>(),
-                performance ?? new ChangeTrackingList<Performance>(),
+                performance ?? new ChangeTrackingList<ImpactPerformance>(),
                 connectivity,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 errorDetails,

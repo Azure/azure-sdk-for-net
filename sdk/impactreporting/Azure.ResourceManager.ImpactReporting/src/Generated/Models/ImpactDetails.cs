@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="startOn"> Time at which impact was started according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceId"/> or <paramref name="impactId"/> is null. </exception>
-        public ImpactDetails(string impactedResourceId, DateTimeOffset startOn, string impactId)
+        public ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startOn, ResourceIdentifier impactId)
         {
             Argument.AssertNotNull(impactedResourceId, nameof(impactedResourceId));
             Argument.AssertNotNull(impactId, nameof(impactId));
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="endOn"> Time at which impact was ended according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactDetails(string impactedResourceId, DateTimeOffset startOn, DateTimeOffset? endOn, string impactId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImpactedResourceId = impactedResourceId;
             StartOn = startOn;
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         }
 
         /// <summary> List of impacted Azure resources. </summary>
-        public string ImpactedResourceId { get; set; }
+        public ResourceIdentifier ImpactedResourceId { get; set; }
         /// <summary> Time at which impact was started according to reported impact. </summary>
         public DateTimeOffset StartOn { get; set; }
         /// <summary> Time at which impact was ended according to reported impact. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Azure Id of the impact. </summary>
-        public string ImpactId { get; set; }
+        public ResourceIdentifier ImpactId { get; set; }
     }
 }

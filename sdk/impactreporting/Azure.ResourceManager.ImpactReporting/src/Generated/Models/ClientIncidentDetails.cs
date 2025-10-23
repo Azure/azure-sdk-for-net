@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="clientIncidentId"> Client incident id. ex : id of the incident created to investigate and address the impact if any. </param>
         /// <param name="clientIncidentSource"> Client incident source. ex : source system name where the incident is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientIncidentDetails(string clientIncidentId, IncidentSource? clientIncidentSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientIncidentDetails(string clientIncidentId, ImpactIncidentSource? clientIncidentSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientIncidentId = clientIncidentId;
             ClientIncidentSource = clientIncidentSource;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <summary> Client incident id. ex : id of the incident created to investigate and address the impact if any. </summary>
         public string ClientIncidentId { get; set; }
         /// <summary> Client incident source. ex : source system name where the incident is created. </summary>
-        public IncidentSource? ClientIncidentSource { get; set; }
+        public ImpactIncidentSource? ClientIncidentSource { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            Platform? connectorType = default;
+            ImpactConnectorType? connectorType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    connectorType = new Platform(property.Value.GetString());
+                    connectorType = new ImpactConnectorType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactCategory"> Category of the impact,  details can found from /impactCategories API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceId"/> or <paramref name="impactCategory"/> is null. </exception>
-        public WorkloadImpactProperties(DateTimeOffset startOn, string impactedResourceId, string impactCategory)
+        public WorkloadImpactProperties(DateTimeOffset startOn, ResourceIdentifier impactedResourceId, string impactCategory)
         {
             Argument.AssertNotNull(impactedResourceId, nameof(impactedResourceId));
             Argument.AssertNotNull(impactCategory, nameof(impactCategory));
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             ImpactedResourceId = impactedResourceId;
             ImpactCategory = impactCategory;
             ArmCorrelationIds = new ChangeTrackingList<string>();
-            Performance = new ChangeTrackingList<Performance>();
+            Performance = new ChangeTrackingList<ImpactPerformance>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadImpactProperties(ProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, string impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<Performance> performance, Connectivity connectivity, IDictionary<string, BinaryData> additionalProperties, ErrorDetailProperties errorDetails, Workload workload, string impactGroupId, ConfidenceLevel? confidenceLevel, ClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactedResourceId, string impactUniqueId, DateTimeOffset? reportedTimeUtc, string impactCategory, string impactDescription, IList<string> armCorrelationIds, IList<ImpactPerformance> performance, ImpactConnectivityDetails connectivity, IDictionary<string, BinaryData> additionalProperties, ImpactErrorDetails errorDetails, ImpactedWorkload workload, string impactGroupId, ImpactConfidenceLevel? confidenceLevel, ClientIncidentDetails clientIncidentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StartOn = startOn;
@@ -110,13 +111,13 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         }
 
         /// <summary> Resource provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ImpactReportingProvisioningState? ProvisioningState { get; }
         /// <summary> Time at which impact was observed. </summary>
         public DateTimeOffset StartOn { get; set; }
         /// <summary> Time at which impact has ended. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Azure resource id of the impacted resource. </summary>
-        public string ImpactedResourceId { get; set; }
+        public ResourceIdentifier ImpactedResourceId { get; set; }
         /// <summary> Unique ID of the impact (UUID). </summary>
         public string ImpactUniqueId { get; }
         /// <summary> Time at which impact is reported. </summary>
@@ -128,9 +129,9 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <summary> The ARM correlation ids, this is important field for control plane related impacts. </summary>
         public IList<string> ArmCorrelationIds { get; }
         /// <summary> Details about performance issue. Applicable for performance impacts. </summary>
-        public IList<Performance> Performance { get; }
+        public IList<ImpactPerformance> Performance { get; }
         /// <summary> Details about connectivity issue. Applicable when root resource causing the issue is not identified. For example, when a VM is impacted due to a network issue, the impacted resource is identified as the VM, but the root cause is the network. In such cases, the connectivity field will have the details about the network issue. </summary>
-        public Connectivity Connectivity { get; set; }
+        public ImpactConnectivityDetails Connectivity { get; set; }
         /// <summary>
         /// Additional fields related to impact, applicable fields per resource type are list under /impactCategories API
         /// <para>
@@ -163,13 +164,13 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
         /// <summary> ARM error code and error message associated with the impact. </summary>
-        public ErrorDetailProperties ErrorDetails { get; set; }
+        public ImpactErrorDetails ErrorDetails { get; set; }
         /// <summary> Information about the impacted workload. </summary>
-        public Workload Workload { get; set; }
+        public ImpactedWorkload Workload { get; set; }
         /// <summary> Use this field to group impacts. </summary>
         public string ImpactGroupId { get; set; }
         /// <summary> Degree of confidence on the impact being a platform issue. </summary>
-        public ConfidenceLevel? ConfidenceLevel { get; set; }
+        public ImpactConfidenceLevel? ConfidenceLevel { get; set; }
         /// <summary> Client incident details ex: incidentId , incident source. </summary>
         public ClientIncidentDetails ClientIncidentDetails { get; set; }
     }

@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            string impactedResourceId = default;
+            ResourceIdentifier impactedResourceId = default;
             DateTimeOffset startTime = default;
             DateTimeOffset? endTime = default;
-            string impactId = default;
+            ResourceIdentifier impactId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedResourceId"u8))
                 {
-                    impactedResourceId = property.Value.GetString();
+                    impactedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 if (property.NameEquals("impactId"u8))
                 {
-                    impactId = property.Value.GetString();
+                    impactId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

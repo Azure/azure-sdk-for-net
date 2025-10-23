@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 return null;
             }
             string clientIncidentId = default;
-            IncidentSource? clientIncidentSource = default;
+            ImpactIncidentSource? clientIncidentSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    clientIncidentSource = new IncidentSource(property.Value.GetString());
+                    clientIncidentSource = new ImpactIncidentSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

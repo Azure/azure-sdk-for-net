@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <summary> Initializes a new instance of <see cref="ConnectorUpdateProperties"/>. </summary>
         /// <param name="connectorType"> connector type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorUpdateProperties(Platform? connectorType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectorUpdateProperties(ImpactConnectorType? connectorType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectorType = connectorType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> connector type. </summary>
-        public Platform? ConnectorType { get; set; }
+        public ImpactConnectorType? ConnectorType { get; set; }
     }
 }

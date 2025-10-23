@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="description"> Description of the category. </param>
         /// <param name="requiredImpactProperties"> The workloadImpact properties which are required when reporting with the impact category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactCategoryProperties(ProvisioningState? provisioningState, string categoryId, string parentCategoryId, string description, IReadOnlyList<RequiredImpactProperties> requiredImpactProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState, string categoryId, string parentCategoryId, string description, IReadOnlyList<RequiredImpactProperties> requiredImpactProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CategoryId = categoryId;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         }
 
         /// <summary> Resource provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ImpactReportingProvisioningState? ProvisioningState { get; }
         /// <summary> Unique ID of the category. </summary>
         public string CategoryId { get; }
         /// <summary> Unique ID of the parent category. </summary>

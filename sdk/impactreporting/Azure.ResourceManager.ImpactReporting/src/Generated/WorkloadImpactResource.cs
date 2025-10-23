@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.ImpactReporting
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of InsightResources in the WorkloadImpact. </summary>
-        /// <returns> An object representing collection of InsightResources and their operations over a InsightResource. </returns>
-        public virtual InsightCollection GetInsights()
+        /// <summary> Gets a collection of ImpactInsightResources in the WorkloadImpact. </summary>
+        /// <returns> An object representing collection of ImpactInsightResources and their operations over a ImpactInsightResource. </returns>
+        public virtual ImpactInsightCollection GetImpactInsights()
         {
-            return GetCachedClient(client => new InsightCollection(client, Id));
+            return GetCachedClient(client => new ImpactInsightCollection(client, Id));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InsightResource"/></description>
+        /// <description><see cref="ImpactInsightResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <exception cref="ArgumentNullException"> <paramref name="insightName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="insightName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InsightResource>> GetInsightAsync(string insightName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImpactInsightResource>> GetImpactInsightAsync(string insightName, CancellationToken cancellationToken = default)
         {
-            return await GetInsights().GetAsync(insightName, cancellationToken).ConfigureAwait(false);
+            return await GetImpactInsights().GetAsync(insightName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InsightResource"/></description>
+        /// <description><see cref="ImpactInsightResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <exception cref="ArgumentNullException"> <paramref name="insightName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="insightName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InsightResource> GetInsight(string insightName, CancellationToken cancellationToken = default)
+        public virtual Response<ImpactInsightResource> GetImpactInsight(string insightName, CancellationToken cancellationToken = default)
         {
-            return GetInsights().Get(insightName, cancellationToken);
+            return GetImpactInsights().Get(insightName, cancellationToken);
         }
 
         /// <summary>

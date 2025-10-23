@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
             string workloadImpactName = "impact-002";
             WorkloadImpactData data = new WorkloadImpactData
             {
-                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext", "ArmOperation")
+                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext"), "ArmOperation")
                 {
                     ImpactDescription = "deletion of resource failed",
                     ArmCorrelationIds = { "00000000-0000-0000-0000-000000000000" },
-                    Workload = new Workload
+                    Workload = new ImpactedWorkload
                     {
                         Context = "webapp/scenario1",
-                        Toolset = Toolset.Other,
+                        Toolset = ImpactToolset.Other,
                     },
                     ClientIncidentDetails = new ClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
-                        ClientIncidentSource = IncidentSource.Jira,
+                        ClientIncidentSource = ImpactIncidentSource.Jira,
                     },
                 },
             };
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
             string workloadImpactName = "impact-002";
             WorkloadImpactData data = new WorkloadImpactData
             {
-                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext", "Availability")
+                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext"), "Availability")
                 {
                     ImpactDescription = "read calls failed",
-                    Workload = new Workload
+                    Workload = new ImpactedWorkload
                     {
                         Context = "webapp/scenario1",
-                        Toolset = Toolset.Other,
+                        Toolset = ImpactToolset.Other,
                     },
                     ClientIncidentDetails = new ClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
-                        ClientIncidentSource = IncidentSource.Jira,
+                        ClientIncidentSource = ImpactIncidentSource.Jira,
                     },
                 },
             };
@@ -143,25 +143,25 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
             string workloadImpactName = "impact-001";
             WorkloadImpactData data = new WorkloadImpactData
             {
-                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext", "Resource.Connectivity")
+                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext"), "Resource.Connectivity")
                 {
                     ImpactDescription = "conection failure",
-                    Connectivity = new Connectivity
+                    Connectivity = new ImpactConnectivityDetails
                     {
-                        Protocol = Protocol.TCP,
+                        Protocol = ImpactProtocol.Tcp,
                         Port = 1443,
-                        SourceAzureResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceSub/providers/Microsoft.compute/virtualmachines/vm1",
-                        TargetAzureResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceSub/providers/Microsoft.compute/virtualmachines/vm2",
+                        SourceAzureResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceSub/providers/Microsoft.compute/virtualmachines/vm1"),
+                        TargetAzureResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceSub/providers/Microsoft.compute/virtualmachines/vm2"),
                     },
-                    Workload = new Workload
+                    Workload = new ImpactedWorkload
                     {
                         Context = "webapp/scenario1",
-                        Toolset = Toolset.Other,
+                        Toolset = ImpactToolset.Other,
                     },
                     ClientIncidentDetails = new ClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
-                        ClientIncidentSource = IncidentSource.Jira,
+                        ClientIncidentSource = ImpactIncidentSource.Jira,
                     },
                 },
             };
@@ -200,25 +200,25 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
             string workloadImpactName = "impact-002";
             WorkloadImpactData data = new WorkloadImpactData
             {
-                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext", "Resource.Performance")
+                Properties = new WorkloadImpactProperties(DateTimeOffset.Parse("2022-06-15T05:59:46.6517821Z"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resource-rg/providers/Microsoft.Sql/sqlserver/dbservercontext"), "Resource.Performance")
                 {
                     ImpactDescription = "high cpu utilization",
-                    Performance = {new Performance
+                    Performance = {new ImpactPerformance
 {
 MetricName = "CPU",
 Expected = 60,
 Actual = 90,
-Unit = new MetricUnit("garbage"),
+Unit = new ImpactMetricUnit("garbage"),
 }},
-                    Workload = new Workload
+                    Workload = new ImpactedWorkload
                     {
                         Context = "webapp/scenario1",
-                        Toolset = Toolset.Other,
+                        Toolset = ImpactToolset.Other,
                     },
                     ClientIncidentDetails = new ClientIncidentDetails
                     {
                         ClientIncidentId = "AA123",
-                        ClientIncidentSource = IncidentSource.Jira,
+                        ClientIncidentSource = ImpactIncidentSource.Jira,
                     },
                 },
             };

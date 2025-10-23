@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectorData>> GetAsync(string subscriptionId, string connectorName, CancellationToken cancellationToken = default)
+        public async Task<Response<ImpactConnectorData>> GetAsync(string subscriptionId, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 case 200:
                     {
-                        ConnectorData value = default;
+                        ImpactConnectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectorData.DeserializeConnectorData(document.RootElement);
+                        value = ImpactConnectorData.DeserializeImpactConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectorData)null, message.Response);
+                    return Response.FromValue((ImpactConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectorData> Get(string subscriptionId, string connectorName, CancellationToken cancellationToken = default)
+        public Response<ImpactConnectorData> Get(string subscriptionId, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 case 200:
                     {
-                        ConnectorData value = default;
+                        ImpactConnectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectorData.DeserializeConnectorData(document.RootElement);
+                        value = ImpactConnectorData.DeserializeImpactConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectorData)null, message.Response);
+                    return Response.FromValue((ImpactConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string connectorName, ConnectorData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string connectorName, ImpactConnectorData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ImpactReporting
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string connectorName, ConnectorData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string connectorName, ImpactConnectorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string connectorName, ConnectorData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string connectorName, ImpactConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string connectorName, ConnectorData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string connectorName, ImpactConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ImpactReporting
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string connectorName, ConnectorPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string connectorName, ImpactConnectorPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ImpactReporting
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string connectorName, ConnectorPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string connectorName, ImpactConnectorPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="connectorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectorData>> UpdateAsync(string subscriptionId, string connectorName, ConnectorPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ImpactConnectorData>> UpdateAsync(string subscriptionId, string connectorName, ImpactConnectorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 case 200:
                     {
-                        ConnectorData value = default;
+                        ImpactConnectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectorData.DeserializeConnectorData(document.RootElement);
+                        value = ImpactConnectorData.DeserializeImpactConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="connectorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectorData> Update(string subscriptionId, string connectorName, ConnectorPatch patch, CancellationToken cancellationToken = default)
+        public Response<ImpactConnectorData> Update(string subscriptionId, string connectorName, ImpactConnectorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 case 200:
                     {
-                        ConnectorData value = default;
+                        ImpactConnectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectorData.DeserializeConnectorData(document.RootElement);
+                        value = ImpactConnectorData.DeserializeImpactConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

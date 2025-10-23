@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            IReadOnlyList<ConnectorData> value = default;
+            IReadOnlyList<ImpactConnectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ConnectorData> array = new List<ConnectorData>();
+                    List<ImpactConnectorData> array = new List<ImpactConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorData.DeserializeConnectorData(item, options));
+                        array.Add(ImpactConnectorData.DeserializeImpactConnectorData(item, options));
                     }
                     value = array;
                     continue;

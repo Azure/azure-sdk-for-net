@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InsightResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InsightResource.CreateResourceIdentifier" /> to create an <see cref="InsightResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ImpactInsightResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImpactInsightResource.CreateResourceIdentifier" /> to create an <see cref="ImpactInsightResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InsightResource"/> object. </returns>
-        public virtual InsightResource GetInsightResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImpactInsightResource"/> object. </returns>
+        public virtual ImpactInsightResource GetImpactInsightResource(ResourceIdentifier id)
         {
-            InsightResource.ValidateResourceId(id);
-            return new InsightResource(Client, id);
+            ImpactInsightResource.ValidateResourceId(id);
+            return new ImpactInsightResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectorResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ImpactConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImpactConnectorResource.CreateResourceIdentifier" /> to create an <see cref="ImpactConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
-        public virtual ConnectorResource GetConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImpactConnectorResource"/> object. </returns>
+        public virtual ImpactConnectorResource GetImpactConnectorResource(ResourceIdentifier id)
         {
-            ConnectorResource.ValidateResourceId(id);
-            return new ConnectorResource(Client, id);
+            ImpactConnectorResource.ValidateResourceId(id);
+            return new ImpactConnectorResource(Client, id);
         }
     }
 }

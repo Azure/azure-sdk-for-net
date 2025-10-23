@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            ImpactReportingProvisioningState? provisioningState = default;
             string categoryId = default;
             string parentCategoryId = default;
             string description = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ImpactReportingProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("categoryId"u8))
