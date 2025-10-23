@@ -107,6 +107,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool EnableLiveMetrics { get; set; } = true;
 
         /// <summary>
+        /// Enables or disables the trace-based logs sampler.
+        /// </summary>
+        public bool EnableTraceBasedLogsSampler { get; set; } = true;
+
+        /// <summary>
         /// Internal flag to control if Statsbeat is enabled.
         /// </summary>
         internal bool EnableStatsbeat { get; set; } = true;

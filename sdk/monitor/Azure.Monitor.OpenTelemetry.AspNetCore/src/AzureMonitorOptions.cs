@@ -49,6 +49,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool EnableLiveMetrics { get; set; } = true;
 
         /// <summary>
+        /// Enables or disables the trace-based logs sampler.
+        /// </summary>
+        public bool EnableTraceBasedLogsSampler { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
         /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
         /// The default value is 1.0F, indicating that all telemetry items are sampled.
@@ -86,6 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.TracesPerSecond = TracesPerSecond;
             exporterOptions.StorageDirectory = StorageDirectory;
             exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
+            exporterOptions.EnableTraceBasedLogsSampler = EnableTraceBasedLogsSampler;
             if (Transport != null)
             {
                 exporterOptions.Transport = Transport;
