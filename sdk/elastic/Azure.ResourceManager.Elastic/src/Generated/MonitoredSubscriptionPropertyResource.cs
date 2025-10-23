@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Get</description>
+        /// <description>MonitoredSubscriptionProperties_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Get</description>
+        /// <description>MonitoredSubscriptionProperties_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Delete</description>
+        /// <description>MonitoredSubscriptionProperties_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Delete</description>
+        /// <description>MonitoredSubscriptionProperties_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Update</description>
+        /// <description>MonitoredSubscriptionProperties_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MonitoredSubscriptions_Update</description>
+        /// <description>MonitoredSubscriptionProperties_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

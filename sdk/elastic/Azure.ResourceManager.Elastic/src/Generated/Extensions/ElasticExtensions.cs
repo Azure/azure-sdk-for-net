@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
+        /// <description>ElasticMonitorResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_List</description>
+        /// <description>ElasticMonitorResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ElasticVersions_List</description>
+        /// <description>ElasticVersionsOperationGroup_GetElasticVersions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ElasticVersions_List</description>
+        /// <description>ElasticVersionsOperationGroup_GetElasticVersions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetApiKey</description>
+        /// <description>OrganizationsOperationGroup_GetApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<ElasticUserApiKeyResult>> GetApiKeyAsync(this SubscriptionResource subscriptionResource, ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetApiKey</description>
+        /// <description>OrganizationsOperationGroup_GetApiKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<ElasticUserApiKeyResult> GetApiKey(this SubscriptionResource subscriptionResource, ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
@@ -405,6 +405,8 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
+        /// &gt;;
+        ///   /**
         /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
@@ -413,7 +415,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetElasticToAzureSubscriptionMapping</description>
+        /// <description>OrganizationsOperationGroup_GetElasticToAzureSubscriptionMapping</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -436,6 +438,8 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
+        /// &gt;;
+        ///   /**
         /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
@@ -444,7 +448,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_GetElasticToAzureSubscriptionMapping</description>
+        /// <description>OrganizationsOperationGroup_GetElasticToAzureSubscriptionMapping</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

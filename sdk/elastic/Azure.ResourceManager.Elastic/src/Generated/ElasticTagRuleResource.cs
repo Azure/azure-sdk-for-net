@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <description>MonitoringTagRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <description>MonitoringTagRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_Delete</description>
+        /// <description>MonitoringTagRules_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_Delete</description>
+        /// <description>MonitoringTagRules_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_CreateOrUpdate</description>
+        /// <description>MonitoringTagRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_CreateOrUpdate</description>
+        /// <description>MonitoringTagRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
