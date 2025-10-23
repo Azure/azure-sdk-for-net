@@ -1124,7 +1124,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareUriBuilder roundtripShareUriBuilder = new ShareUriBuilder(originalShareUriBuilder.ToUri());
 
             Assert.AreEqual(originalShareUriBuilder.ToUri(), roundtripShareUriBuilder.ToUri());
-            Assert.AreEqual(originalShareUriBuilder.Sas.ToString(), roundtripShareUriBuilder.Sas.ToString()); // need to fix bug to get this to pass
+            Assert.AreEqual(originalShareUriBuilder.Sas.ToString(), roundtripShareUriBuilder.Sas.ToString());
         }
 
         [RecordedTest]

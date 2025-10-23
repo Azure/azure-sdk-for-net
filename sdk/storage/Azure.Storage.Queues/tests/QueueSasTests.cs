@@ -341,7 +341,7 @@ namespace Azure.Storage.Queues.Test
             QueueUriBuilder roundtripUriBuilder = new QueueUriBuilder(originalUriBuilder.ToUri());
 
             Assert.AreEqual(originalUriBuilder.ToUri(), roundtripUriBuilder.ToUri());
-            Assert.AreEqual(originalUriBuilder.Sas.ToString(), roundtripUriBuilder.Sas.ToString()); // need to fix bug to get this to pass
+            Assert.AreEqual(originalUriBuilder.Sas.ToString(), roundtripUriBuilder.Sas.ToString());
         }
 
         [RecordedTest]
