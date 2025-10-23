@@ -203,7 +203,7 @@ public static class BicepFunction
     /// <remarks>
     /// <para>
     /// The basic format of the resource ID returned by this function is:
-    /// <c>{scope}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{ extensionResourceName}</c>
+    /// <c>{scope}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
     /// The scope segment varies by the resource being extended.
     /// When the extension resource is applied to a resource, the resource ID is returned in the following format:
     /// <c>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseResourceProviderNamespace}/{baseResourceType}/{baseResourceName}/providers/{extensionResourceProviderNamespace}/{extensionResourceType}/{extensionResourceName}</c>
