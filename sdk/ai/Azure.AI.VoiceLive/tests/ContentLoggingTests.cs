@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [SetUp]
-        public override void Setup()
+        public void Setup()
         {
             _capturedEvents.Clear();
             _eventListener = new TestEventListener(_capturedEvents);
@@ -43,7 +43,6 @@ namespace Azure.AI.VoiceLive.Tests
             var endpoint = new Uri("wss://test.example.com");
             var credential = new AzureKeyCredential("test-key");
             _client = InstrumentClient(new VoiceLiveClient(endpoint, credential));
-            base.Setup();
         }
 
         [TearDown]

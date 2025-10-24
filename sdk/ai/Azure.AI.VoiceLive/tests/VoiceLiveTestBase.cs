@@ -41,36 +41,6 @@ namespace Azure.AI.VoiceLive.Tests
             // Force Live mode - WebSocket tests cannot be recorded
         }
 
-        [SetUp]
-        public virtual void Setup()
-        {
-            var root = VoiceLiveTestEnvironment.RepositoryRoot;
-            var assetsPath = base.AssetsJsonPath;
-
-            var assetsJson = JsonDocument.Parse(File.ReadAllText(assetsPath));
-
-            var tag = assetsJson.RootElement.GetProperty("Tag");
-
-            var tagString = tag.ToString();
-
-            string crumb = string.Empty;
-
-            foreach (var breadcrumb in Directory.EnumerateFiles(Path.Combine(root, ".assets", "breadcrumb")))
-            {
-                var contents = File.ReadAllText(breadcrumb);
-                var splitContents = contents.Trim().Split(';');
-                if (3 == splitContents.Length && splitContents[2] == tagString)
-                {
-                    crumb = splitContents[1];
-                    break;
-                }
-            }
-
-            var assetsContentPath = Path.Combine(root, ".assets", crumb, "net", "sdk", "ai", "Azure.AI.VoiceLive");
-
-            AudioPath = Path.Combine(assetsContentPath, "audio");
-        }
-
         [TearDown]
         public virtual async Task Teardown()
         {
