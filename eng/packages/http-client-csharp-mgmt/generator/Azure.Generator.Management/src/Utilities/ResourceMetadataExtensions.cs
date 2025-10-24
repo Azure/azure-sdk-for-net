@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -49,7 +48,7 @@ namespace Azure.Generator.Management.Utilities
             var methodsInResource = new List<ResourceMethod>();
             var methodsInCollection = new List<ResourceMethod>();
             var methodsInExtension = new List<ResourceMethod>();
-            ResourceMethod? updateMethod = null;
+            bool hasUpdateMethod = false;
             ResourceMethod? createMethod = null;
 
             foreach (var method in resourceMetadata.Methods)
@@ -75,7 +74,7 @@ namespace Azure.Generator.Management.Utilities
                         methodsInCollection.Add(method);
                         break;
                     case ResourceOperationKind.Update:
-                        updateMethod = method;
+                        hasUpdateMethod = true;
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.Delete:
@@ -122,8 +121,8 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
 
-            // Check if this is an update operation (PUT or Patch method for non-singleton resource)
-            if (resourceMetadata.SingletonResourceName is null && updateMethod is null && createMethod is not null)
+            // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
+            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null)
             {
                 methodsInResource.Add(createMethod);
             }
