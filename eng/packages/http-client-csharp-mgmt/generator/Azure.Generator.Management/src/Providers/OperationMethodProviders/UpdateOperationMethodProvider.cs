@@ -3,15 +3,28 @@
 
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
-    internal class UpdateOperationMethodProvider(
-        ResourceClientProvider resource,
-        RequestPathPattern contextualPath,
-        RestClientInfo restClientInfo,
-        InputServiceMethod method,
-        bool isAsync) : ResourceOperationMethodProvider(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: $"Update a {resource.ResourceName}.")
+    internal class UpdateOperationMethodProvider : ResourceOperationMethodProvider
     {
+        public UpdateOperationMethodProvider(
+            ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
+            RestClientInfo restClientInfo,
+            InputServiceMethod method,
+            bool isAsync,
+            ResourceOperationKind methodKind)
+            : base(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind))
+        {
+        }
+
+        private static FormattableString? GetDescription(ResourceClientProvider resource, ResourceOperationKind methodKind)
+        {
+            // Only override description if this is a Create operation being used as Update
+            return methodKind == ResourceOperationKind.Create ? FormattableStringFactory.Create("Update a {0}.", resource.ResourceName) : null;
+        }
     }
 }
