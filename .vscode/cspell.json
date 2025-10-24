@@ -785,6 +785,12 @@
       ]
     },
     {
+      "filename": "**/sdk/impactreporting/**/*.cs",
+      "words": [
+        "milli"
+      ]
+    },
+    {
       "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
         "cdie",
