@@ -51,8 +51,6 @@ interface Foos {
 
   delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
-  update is ArmCustomPatchAsync<Foo, Foo>;
-
   list is ArmResourceListByParent<Foo>;
 
   listBySubscription is ArmListBySubscription<Foo>;

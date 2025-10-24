@@ -414,11 +414,6 @@ namespace Azure.Generator.Management.Providers
                 var methodKind = resourceMethod.Kind;
                 var method = resourceMethod.InputMethod;
                 var inputClient = resourceMethod.InputClient;
-                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
-                if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
-                {
-                    continue;
-                }
 
                 var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
 
@@ -442,10 +437,10 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, methodKind);
                     operationMethods.Add(updateAsyncMethodProvider);
 
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodKind);
                     operationMethods.Add(updateMethodProvider);
                 }
                 else
