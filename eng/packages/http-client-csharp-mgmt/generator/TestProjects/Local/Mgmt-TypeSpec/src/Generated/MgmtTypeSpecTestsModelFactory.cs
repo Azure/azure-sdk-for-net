@@ -42,7 +42,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop2"> Gets the Prop2. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="extendedLocation"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
         public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
         {
@@ -77,7 +76,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
         public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default)
         {
@@ -205,7 +203,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="optionalFlattenPropertyRandomCollectionProp"/> is null. </exception>
         /// <returns> A new <see cref="Tests.BarSettingsResourceData"/> instance for mocking. </returns>
         public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
@@ -358,7 +355,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="endpointProp"> Gets or sets the Prop. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointProp"/> is null. </exception>
         /// <returns> A new <see cref="Tests.EndpointResourceData"/> instance for mocking. </returns>
         public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
         {
@@ -376,7 +372,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="selfHelpId"> Gets the SelfHelpId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="selfHelpId"/> is null. </exception>
         /// <returns> A new <see cref="Tests.SelfHelpResourceData"/> instance for mocking. </returns>
         public static SelfHelpResourceData SelfHelpResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string selfHelpId = default)
         {
@@ -423,7 +418,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="jobName"> Gets or sets the JobName. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <returns> A new <see cref="Tests.JobResourceData"/> instance for mocking. </returns>
         public static JobResourceData JobResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jobName = default)
         {
@@ -442,7 +436,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <param name="tags"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <returns> A new <see cref="Models.JobResourcePatch"/> instance for mocking. </returns>
         public static JobResourcePatch JobResourcePatch(string jobName = default, IDictionary<string, string> tags = default)
         {
@@ -456,7 +449,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="hciVmInstanceSku"> Gets the Sku. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hciVmInstanceSku"/> is null. </exception>
         /// <returns> A new <see cref="Tests.HciVmInstanceData"/> instance for mocking. </returns>
         public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
         {
