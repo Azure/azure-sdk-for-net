@@ -6,13 +6,10 @@
 
 - Aligned resource types to Microsoft.DeviceRegistry API version `2025-10-01`.
 - Added `Namespaces`, `NamespaceAssets`, `NamespaceDiscoveredAssets`, `NamespaceDevices`, `NamespaceDiscoveredDevices` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2025-10-01`.
-- Change `Schemas` and `SchemaVersions` DELETE operations to be asynchronous.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Change `Schemas` and `SchemaVersions` DELETE operations to be asynchronous operations, returning 202 HTTP status codes.
 
 ## 1.0.0 (2025-02-28)
 
