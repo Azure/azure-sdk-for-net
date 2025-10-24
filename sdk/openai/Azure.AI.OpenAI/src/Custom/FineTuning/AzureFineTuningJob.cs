@@ -16,6 +16,32 @@ namespace Azure.AI.OpenAI.FineTuning;
 
 internal partial class AzureFineTuningJob : FineTuningJob
 {
+    internal static new AzureFineTuningJob Rehydrate(FineTuningClient client, string jobId, RequestOptions? options)
+    {
+        var azureClient = client as AzureFineTuningClient;
+        if (azureClient == null)
+        {
+            throw new InvalidOperationException("Client must be an AzureFineTuningClient");
+        }
+
+        using PipelineMessage message = azureClient.GetJobPipelineMessage(jobId, options);
+        PipelineResponse response = azureClient.Pipeline.ProcessMessage(message, options);
+        return azureClient.CreateJobFromResponse(response) as AzureFineTuningJob;
+    }
+
+    internal static new async Task<AzureFineTuningJob> RehydrateAsync(FineTuningClient client, string jobId, RequestOptions? options)
+    {
+        var azureClient = client as AzureFineTuningClient;
+        if (azureClient == null)
+        {
+            throw new InvalidOperationException("Client must be an AzureFineTuningClient");
+        }
+
+        using PipelineMessage message = azureClient.GetJobPipelineMessage(jobId, options);
+        PipelineResponse response = await azureClient.Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+        return azureClient.CreateJobFromResponse(response) as AzureFineTuningJob;
+    }
+
     public override AsyncCollectionResult<FineTuningCheckpoint> GetCheckpointsAsync(GetCheckpointsOptions? options = null, CancellationToken cancellationToken = default)
     {
         options ??= new GetCheckpointsOptions();
