@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Hello, World!");
 
             // Assert
-            Assert.AreEqual("'Hello, World!'", result.ToString());
+            TestHelpers.AssertExpression("'Hello, World!'", result);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Value: {variable}");
 
             // Assert
-            Assert.AreEqual("'Value: ${myVar}'", result.ToString());
+            TestHelpers.AssertExpression("'Value: ${myVar}'", result);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Name: {nameVar}, Value: {valueVar}");
 
             // Assert
-            Assert.AreEqual("'Name: ${name}, Value: ${value}'", result.ToString());
+            TestHelpers.AssertExpression("'Name: ${name}, Value: ${value}'", result);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Resource Group: {expression}");
 
             // Assert
-            Assert.AreEqual("'Resource Group: ${resourceGroup}'", result.ToString());
+            TestHelpers.AssertExpression("'Resource Group: ${resourceGroup}'", result);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Static: {bicepValue}");
 
             // Assert - Literal BicepValues get compiled as string literals, not expressions
-            Assert.AreEqual("'Static: test-value'", result.ToString());
+            TestHelpers.AssertExpression("'Static: test-value'", result);
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Prefix-{variable}-{expression}-{bicepValue}");
 
             // Assert - Literal BicepValues get compiled as string literals, not expressions
-            Assert.AreEqual("'Prefix-${location}-${resourceGroup}-suffix'", result.ToString());
+            TestHelpers.AssertExpression("'Prefix-${location}-${resourceGroup}-suffix'", result);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Outer: {nested}");
 
             // Assert
-            Assert.AreEqual("'Outer: nested-${name}'", result.ToString());
+            TestHelpers.AssertExpression("'Outer: nested-${name}'", result);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Value: {nullValue}");
 
             // Assert
-            Assert.AreEqual("'Value: '", result.ToString());
+            TestHelpers.AssertExpression("'Value: '", result);
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Endpoint: {indexExpression}");
 
             // Assert
-            Assert.AreEqual("'Endpoint: ${properties['endpoint']}'", result.ToString());
+            TestHelpers.AssertExpression("'Endpoint: ${properties['endpoint']}'", result);
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate(formattable);
 
             // Assert
-            Assert.AreEqual("'Hello, World!'", result.ToString());
+            TestHelpers.AssertExpression("'Hello, World!'", result);
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate(formattable);
 
             // Assert
-            Assert.AreEqual("'Variable: ${testVar}'", result.ToString());
+            TestHelpers.AssertExpression("'Variable: ${testVar}'", result);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate((FormattableString)$"");
 
             // Assert
-            Assert.AreEqual("''", result.ToString());
+            TestHelpers.AssertExpression("''", result);
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"{variable}");
 
             // Assert
-            Assert.AreEqual("'${onlyVar}'", result.ToString());
+            TestHelpers.AssertExpression("'${onlyVar}'", result);
         }
 
         [Test]
@@ -190,7 +190,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Path: {variable}\\folder\\file.txt");
 
             // Assert
-            Assert.AreEqual("'Path: ${path}\\\\folder\\\\file.txt'", result.ToString());
+            TestHelpers.AssertExpression("'Path: ${path}\\\\folder\\\\file.txt'", result);
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Message: '{variable}' is quoted");
 
             // Assert
-            Assert.AreEqual("'Message: \\'${message}\\' is quoted'", result.ToString());
+            TestHelpers.AssertExpression("'Message: \\'${message}\\' is quoted'", result);
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Count: {variable} x {multiplier}");
 
             // Assert
-            Assert.AreEqual("'Count: ${count} x 2'", result.ToString());
+            TestHelpers.AssertExpression("'Count: ${count} x 2'", result);
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate(formattable);
 
             // Assert
-            Assert.AreEqual("'RG: ${rgName} in ${location}'", result.ToString());
+            TestHelpers.AssertExpression("'RG: ${rgName} in ${location}'", result);
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Dynamic: {bicepValue}");
 
             // Assert
-            Assert.AreEqual("'Dynamic: ${dynamicValue}'", result.ToString());
+            TestHelpers.AssertExpression("'Dynamic: ${dynamicValue}'", result);
         }
 
         [Test]
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Hello {myVariable}!");
 
             // Assert
-            Assert.AreEqual("'Hello ${myVariable}!'", result.ToString());
+            TestHelpers.AssertExpression("'Hello ${myVariable}!'", result);
         }
 
         [Test]
@@ -274,7 +274,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"{prefix}-{suffix}");
 
             // Assert
-            Assert.AreEqual("'${prefix}-${suffix}'", result.ToString());
+            TestHelpers.AssertExpression("'${prefix}-${suffix}'", result);
         }
 
         [Test]
@@ -288,7 +288,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Creating resource '{resourceName}' in location '{location}'");
 
             // Assert
-            Assert.AreEqual("'Creating resource \\'${resourceName}\\' in location \\'${location}\\''", result.ToString());
+            TestHelpers.AssertExpression("'Creating resource \\'${resourceName}\\' in location \\'${location}\\''", result);
         }
 
         [Test]
@@ -302,7 +302,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Server running on port {port} with timeout {timeout}s");
 
             // Assert
-            Assert.AreEqual("'Server running on port ${port} with timeout 30s'", result.ToString());
+            TestHelpers.AssertExpression("'Server running on port ${port} with timeout 30s'", result);
         }
 
         [Test]
@@ -318,7 +318,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Config: {conditionalExpr}");
 
             // Assert
-            Assert.AreEqual("'Config: ${isDevelopment ? devConfig : prodConfig}'", result.ToString());
+            TestHelpers.AssertExpression("'Config: ${isDevelopment ? devConfig : prodConfig}'", result);
         }
 
         [Test]
@@ -337,7 +337,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate($"Outer: {outerVar} -> {middleFormattable}");
 
             // Assert
-            Assert.AreEqual("'Outer: ${outerVar} -> middle(${middleVar}|inner[${innerVar}])'", result.ToString());
+            TestHelpers.AssertExpression("'Outer: ${outerVar} -> middle(${middleVar}|inner[${innerVar}])'", result);
         }
 
         [Test]
@@ -357,7 +357,7 @@ namespace Azure.Provisioning.Tests.Expressions
             var result = BicepFunction.Interpolate(level1Formattable);
 
             // Assert
-            Assert.AreEqual("'L1:${level1}->L2:${level2}->L3:${level3}'", result.ToString());
+            TestHelpers.AssertExpression("'L1:${level1}->L2:${level2}->L3:${level3}'", result);
         }
     }
 }
