@@ -114,9 +114,10 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var p in methodSignature.Parameters)
             {
-                if (p.Location == ParameterLocation.Body && p.Type.IsModelType())
+                var normalizedName = BodyParameterNameNormalizer.GetNormalizedParameterNameForNonResourceMethod(p);
+                if (normalizedName != null)
                 {
-                    p.Update(name: "content");
+                    p.Update(name: normalizedName);
                 }
             }
 

@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> A list of rules that define a particular Rules Engine Configuration. </summary>
+        [WirePath("properties.rules")]
         public IList<RulesEngineRule> Rules { get; }
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
     }
 }

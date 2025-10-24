@@ -49,6 +49,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("managedByRoleDefinitionId"u8);
                 writer.WriteStringValue(ManagedByRoleDefinitionId);
             }
+            if (Optional.IsDefined(ManagedByAuthorization))
+            {
+                writer.WritePropertyName("managedByAuthorization"u8);
+                writer.WriteObjectValue(ManagedByAuthorization, options);
+            }
+            if (Optional.IsCollectionDefined(AllowedThirdPartyExtensions))
+            {
+                writer.WritePropertyName("allowedThirdPartyExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedThirdPartyExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(GroupingTag))
+            {
+                writer.WritePropertyName("groupingTag"u8);
+                writer.WriteStringValue(GroupingTag);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +109,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string applicationId = default;
             string roleDefinitionId = default;
             string managedByRoleDefinitionId = default;
+            ResourceProviderManagedByAuthorization managedByAuthorization = default;
+            IList<ThirdPartyExtension> allowedThirdPartyExtensions = default;
+            string groupingTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,13 +131,48 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     managedByRoleDefinitionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("managedByAuthorization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedByAuthorization = ResourceProviderManagedByAuthorization.DeserializeResourceProviderManagedByAuthorization(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("allowedThirdPartyExtensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ThirdPartyExtension> array = new List<ThirdPartyExtension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ThirdPartyExtension.DeserializeThirdPartyExtension(item, options));
+                    }
+                    allowedThirdPartyExtensions = array;
+                    continue;
+                }
+                if (property.NameEquals("groupingTag"u8))
+                {
+                    groupingTag = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceProviderAuthorization(applicationId, roleDefinitionId, managedByRoleDefinitionId, serializedAdditionalRawData);
+            return new ResourceProviderAuthorization(
+                applicationId,
+                roleDefinitionId,
+                managedByRoleDefinitionId,
+                managedByAuthorization,
+                allowedThirdPartyExtensions ?? new ChangeTrackingList<ThirdPartyExtension>(),
+                groupingTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderAuthorization>.Write(ModelReaderWriterOptions options)

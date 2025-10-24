@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TrustedSigning.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
@@ -21,8 +20,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATrustedSigningAccount()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Create.json
-            // this example is just showing the usage of "CodeSigningAccounts_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CodeSigningAccounts_Create.json
+            // this example is just showing the usage of "CodeSigningAccount_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,10 +40,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // invoke the operation
             string accountName = "MyAccount";
-            TrustedSigningAccountData data = new TrustedSigningAccountData(new AzureLocation("westus"))
-            {
-                SkuName = TrustedSigningSkuName.Basic,
-            };
+            TrustedSigningAccountData data = new TrustedSigningAccountData(new AzureLocation("westus"));
             ArmOperation<TrustedSigningAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
             TrustedSigningAccountResource result = lro.Value;
 
@@ -59,8 +55,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATrustedSigningAccount()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Get.json
-            // this example is just showing the usage of "CodeSigningAccounts_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CodeSigningAccounts_Get.json
+            // this example is just showing the usage of "CodeSigningAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,8 +88,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsTrustedSigningAccountsWithinAResourceGroup()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_ListByResourceGroup.json
-            // this example is just showing the usage of "CodeSigningAccounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CodeSigningAccounts_ListByResourceGroup.json
+            // this example is just showing the usage of "CodeSigningAccount_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,8 +123,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetATrustedSigningAccount()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Get.json
-            // this example is just showing the usage of "CodeSigningAccounts_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CodeSigningAccounts_Get.json
+            // this example is just showing the usage of "CodeSigningAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -156,8 +152,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetATrustedSigningAccount()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Get.json
-            // this example is just showing the usage of "CodeSigningAccounts_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CodeSigningAccounts_Get.json
+            // this example is just showing the usage of "CodeSigningAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

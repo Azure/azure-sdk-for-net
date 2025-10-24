@@ -130,3 +130,23 @@ interface BarQuotaOperations {
   get is ArmResourceRead<BarQuotaResource>;
   update is ArmCustomPatchAsync<BarQuotaResource, BarQuotaResource>;
 }
+
+/** An Employee resource */
+@parentResource(Bar)
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+@armResourceOperations
+interface Employees {
+  listByParent is ArmResourceListByParent<Employee>;
+}

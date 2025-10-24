@@ -641,7 +641,10 @@
         "cnames",
         "easm",
         "nxdomain",
-        "whois"
+        "whois",
+        "cisa",
+        "cves",
+        "remediations"
       ]
     },
     {
@@ -779,6 +782,12 @@
       "filename": "**/sdk/hybridkubernetes/**/*.cs",
       "words": [
         "kubeconfigs"
+      ]
+    },
+    {
+      "filename": "**/sdk/impactreporting/**/*.cs",
+      "words": [
+        "milli"
       ]
     },
     {
@@ -1214,6 +1223,7 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
+        "dsts",
         "regionality"
       ]
     },

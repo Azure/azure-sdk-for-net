@@ -30,10 +30,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
         /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
-        internal DevOpsAzureOrganizationProfile(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile) : base(kind, serializedAdditionalRawData)
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
+        internal DevOpsAzureOrganizationProfile(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile, string @alias) : base(kind, serializedAdditionalRawData)
         {
             Organizations = organizations;
             PermissionProfile = permissionProfile;
+            Alias = @alias;
             Kind = kind ?? "AzureDevOps";
         }
 
@@ -46,5 +48,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public IList<DevOpsOrganization> Organizations { get; }
         /// <summary> The type of permission which determines which accounts are admins on the Azure DevOps pool. </summary>
         public DevOpsAzurePermissionProfile PermissionProfile { get; set; }
+        /// <summary> An alias to reference the Azure DevOps pool name. </summary>
+        public string Alias { get; set; }
     }
 }

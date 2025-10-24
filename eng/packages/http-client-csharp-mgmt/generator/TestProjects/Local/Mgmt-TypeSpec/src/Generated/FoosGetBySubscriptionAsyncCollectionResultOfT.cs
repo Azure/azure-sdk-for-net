@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using MgmtTypeSpec.Models;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class FoosGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<FooData>
     {
@@ -62,7 +62,7 @@ namespace MgmtTypeSpec
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.GetFoos");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos");
             scope.Start();
             try
             {

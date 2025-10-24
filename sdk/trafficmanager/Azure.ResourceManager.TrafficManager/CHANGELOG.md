@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2025-10-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-04' to 'package-preview-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ff99df7c551a54d3a3e9e395cb5cf6c62c8c53f7/specification/trafficmanager/resource-manager/readme.md.
+- Make `Azure.ResourceManager.TrafficManager` AOT-compatible.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
 
 ## 1.1.3 (2025-03-11)
 
