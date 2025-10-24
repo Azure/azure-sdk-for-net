@@ -97,54 +97,74 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         }
 
         /// <summary>
-        /// Builds enhanced XML documentation description with operation metadata.
+        /// Builds enhanced XML documentation description with operation metadata using structured XmlDocStatement objects.
         /// </summary>
-        /// <remarks>
-        /// NOTE: The TypeSpec generator's CodeWriter.WriteXmlDocs currently HTML-encodes XML tags in FormattableString descriptions.
-        /// This means the generated output will contain &amp;lt;list&amp;gt; instead of &lt;list&gt;, etc.
-        /// This is a known limitation that requires enhancement to Microsoft.TypeSpec.Generator to support raw XML markup.
-        /// </remarks>
         private static FormattableString? BuildEnhancedDescription(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType)
         {
+            // This method is kept for backward compatibility but is now superseded by BuildEnhancedXmlDocs
+            // which creates proper XmlDocStatement structures instead of raw strings
+            return baseDescription;
+        }
+
+        /// <summary>
+        /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
+        /// </summary>
+        private static XmlDocProvider? BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
+        {
+            if (existingXmlDocs == null)
+            {
+                return null;
+            }
+
             var operation = serviceMethod.Operation;
 
-            // Find API version parameter if it exists
+            // Build list items for the operation metadata
+            var listItems = new List<XmlDocStatement>();
+
+            // Request Path item
+            listItems.Add(new XmlDocStatement("item", [],
+                new XmlDocStatement("term", [$"Request Path"]),
+                new XmlDocStatement("description", [$"{operation.Path}"])));
+
+            // Operation Id item
+            listItems.Add(new XmlDocStatement("item", [],
+                new XmlDocStatement("term", [$"Operation Id"]),
+                new XmlDocStatement("description", [$"{operation.Name}"])));
+
+            // API Version item (if available)
             var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
-            var apiVersionItem = apiVersionParam != null && apiVersionParam.DefaultValue?.Value != null
-                ? $@"
-<item>
-<term>Default Api Version</term>
-<description>{apiVersionParam.DefaultValue.Value}</description>
-</item>"
-                : "";
+            if (apiVersionParam != null && apiVersionParam.DefaultValue?.Value != null)
+            {
+                listItems.Add(new XmlDocStatement("item", [],
+                    new XmlDocStatement("term", [$"Default Api Version"]),
+                    new XmlDocStatement("description", [$"{apiVersionParam.DefaultValue.Value}"])));
+            }
 
-            // Build resource item if the enclosing type is a ResourceClientProvider
-            var resourceItem = enclosingType is ResourceClientProvider resourceClient
-                ? $@"
-<item>
-<term>Resource</term>
-<description>{resourceClient.Type:C}</description>
-</item>"
-                : "";
+            // Resource item (if enclosing type is a ResourceClientProvider)
+            if (enclosingType is ResourceClientProvider resourceClient)
+            {
+                listItems.Add(new XmlDocStatement("item", [],
+                    new XmlDocStatement("term", [$"Resource"]),
+                    new XmlDocStatement("description", [$"{resourceClient.Type:C}"])));
+            }
 
-            // Combine all items into a single formattable string
-            FormattableString metadataList = (FormattableString)$@"<list type=""bullet"">
-<item>
-<term>Request Path</term>
-<description>{operation.Path}</description>
-</item>
-<item>
-<term>Operation Id</term>
-<description>{operation.Name}</description>
-</item>{apiVersionItem}{resourceItem}
-</list>";
+            // Create the list statement
+            var listStatement = new XmlDocStatement($"<list type=\"bullet\">", $"</list>", [], innerStatements: listItems.ToArray());
 
-            // Combine base description with metadata
+            // Build the complete summary with base description and metadata list
+            var summaryContent = new List<FormattableString>();
             if (baseDescription != null)
             {
-                return (FormattableString)$"{baseDescription}{Environment.NewLine}{metadataList}";
+                summaryContent.Add(baseDescription);
             }
-            return metadataList;
+
+            // Create summary statement with the list as inner content
+            var summaryStatement = new XmlDocSummaryStatement(summaryContent, listStatement);
+
+            // Update the XmlDocs with the new summary
+            existingXmlDocs.Update(summary: summaryStatement);
+
+            return existingXmlDocs;
         }
 
         private static void InitializeLroFlags(
@@ -183,10 +203,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
                 resourceOperationMethodProvider._enclosingType);
+
+            // Add enhanced XML documentation with structured tags
+            BuildEnhancedXmlDocs(
+                resourceOperationMethodProvider._serviceMethod,
+                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
