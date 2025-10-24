@@ -41,8 +41,7 @@ namespace Azure.Generator.Management.Visitors
             if (method.XmlDocs != null)
             {
                 // Clear exceptions to remove ArgumentNullException documentation
-                var emptyExceptions = new List<XmlDocExceptionStatement>();
-                method.XmlDocs.Update(exceptions: emptyExceptions);
+                method.XmlDocs.Update(exceptions: Enumerable.Empty<XmlDocExceptionStatement>());
             }
         }
     }
