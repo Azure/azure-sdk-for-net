@@ -145,7 +145,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update the endpoint to the target resource. </summary>
+        /// <summary> Update a EndpointResource. </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -177,7 +177,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update the endpoint to the target resource. </summary>
+        /// <summary> Update a EndpointResource. </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>

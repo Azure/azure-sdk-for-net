@@ -11,7 +11,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         RequestPathPattern contextualPath,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        bool isAsync) : ResourceOperationMethodProvider(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update")
+        bool isAsync) : ResourceOperationMethodProvider(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: $"Update a {resource.ResourceName}.")
     {
     }
 }
