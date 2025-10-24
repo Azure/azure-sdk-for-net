@@ -99,6 +99,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <summary>
         /// Builds enhanced XML documentation description with operation metadata.
         /// </summary>
+        /// <remarks>
+        /// NOTE: The TypeSpec generator's CodeWriter.WriteXmlDocs currently HTML-encodes XML tags in FormattableString descriptions.
+        /// This means the generated output will contain &amp;lt;list&amp;gt; instead of &lt;list&gt;, etc.
+        /// This is a known limitation that requires enhancement to Microsoft.TypeSpec.Generator to support raw XML markup.
+        /// </remarks>
         private static FormattableString? BuildEnhancedDescription(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType)
         {
             var operation = serviceMethod.Operation;
