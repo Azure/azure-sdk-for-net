@@ -6,8 +6,3 @@ extends:
     ServiceDirectory: ai
     SupportedClouds: 'Public'
     Location: 'East US'
-    TestSetupSteps:
-      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
-        parameters:
-          PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
-          Restore: true
