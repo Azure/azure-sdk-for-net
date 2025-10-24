@@ -856,9 +856,14 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions()
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: getUserDelegationKeyOptions);
 
             Uri sasUri = share.GenerateUserDelegationSasUri(
                 ShareSasPermissions.All,
@@ -885,9 +890,14 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions()
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: getUserDelegationKeyOptions);
 
             ShareSasBuilder builder = new ShareSasBuilder(
                 permissions: ShareSasPermissions.All,
@@ -914,9 +924,14 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(service);
             ShareFileClient file = test.File;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions()
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: getUserDelegationKeyOptions);
 
             Uri sasUri = file.GenerateUserDelegationSasUri(
                 ShareFileSasPermissions.All,
@@ -943,9 +958,14 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(service);
             ShareFileClient file = test.File;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions()
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: getUserDelegationKeyOptions);
 
             ShareSasBuilder builder = new ShareSasBuilder(
                 permissions: ShareFileSasPermissions.All,
@@ -1137,9 +1157,14 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions()
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: getUserDelegationKeyOptions);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -1185,9 +1210,14 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
+            ShareGetUserDelegationKeyOptions getUserDelegationKeyOptions = new ShareGetUserDelegationKeyOptions()
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: getUserDelegationKeyOptions);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;

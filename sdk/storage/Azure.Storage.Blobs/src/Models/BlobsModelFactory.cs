@@ -1978,14 +1978,14 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new UserDelegationKey instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
-            string signedObjectId,
-            string signedTenantId,
-            string signedService,
-            string signedVersion,
-            string value,
-            DateTimeOffset signedExpiresOn,
-            DateTimeOffset signedStartsOn,
-            string DelegatedUserObjectId)
+            string signedObjectId = default,
+            string signedTenantId = default,
+            string signedService = default,
+            string signedVersion = default,
+            string value = default,
+            DateTimeOffset signedExpiresOn = default,
+            DateTimeOffset signedStartsOn = default,
+            string DelegatedUserObjectId = default)
         {
             return new UserDelegationKey(
                 signedObjectId,
@@ -2035,27 +2035,6 @@ namespace Azure.Storage.Blobs.Models
         /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
         public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string delegatedUserObjectId = null, string value = null)
         {
-            if (signedObjectId == null)
-            {
-                throw new ArgumentNullException(nameof(signedObjectId));
-            }
-            if (signedTenantId == null)
-            {
-                throw new ArgumentNullException(nameof(signedTenantId));
-            }
-            if (signedService == null)
-            {
-                throw new ArgumentNullException(nameof(signedService));
-            }
-            if (signedVersion == null)
-            {
-                throw new ArgumentNullException(nameof(signedVersion));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
             return new UserDelegationKey(
                 signedObjectId,
                 signedTenantId,

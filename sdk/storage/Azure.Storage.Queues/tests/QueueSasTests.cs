@@ -133,7 +133,6 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
@@ -162,7 +161,6 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
@@ -354,7 +352,6 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             // We need to get the object ID from the token credential used to authenticate the request
@@ -403,7 +400,6 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             // We need to get the object ID from the token credential used to authenticate the request

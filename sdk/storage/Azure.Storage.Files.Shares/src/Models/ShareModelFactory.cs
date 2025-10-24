@@ -702,13 +702,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserDelegationKey UserDelegationKey(
-            string signedObjectId = default,
-            string signedTenantId = default,
-            DateTimeOffset signedStartsOn = default,
-            DateTimeOffset signedExpiresOn = default,
-            string signedService = default,
-            string signedVersion = default,
-            string value = default)
+            string signedObjectId,
+            string signedTenantId,
+            DateTimeOffset signedStartsOn,
+            DateTimeOffset signedExpiresOn,
+            string signedService,
+            string signedVersion,
+            string value)
         {
             return new UserDelegationKey()
             {

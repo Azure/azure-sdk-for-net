@@ -448,7 +448,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -492,7 +491,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -525,7 +523,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -587,7 +584,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -629,7 +625,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -662,7 +657,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -704,7 +698,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -738,7 +731,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -782,7 +774,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 

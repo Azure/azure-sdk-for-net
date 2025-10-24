@@ -569,7 +569,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateAsync();
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             // We need to get the object ID from the token credential used to authenticate the request
@@ -619,7 +618,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateAsync();
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             // We need to get the object ID from the token credential used to authenticate the request

@@ -1668,7 +1668,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(fileName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeFileClient identitySasFile = InstrumentClient(
@@ -1736,7 +1735,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(fileName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeFileClient identitySasFile = InstrumentClient(
@@ -2221,7 +2219,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(fileName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeFileClient identitySasFile = InstrumentClient(
@@ -2283,7 +2280,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(fileName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeFileClient identitySasFile = InstrumentClient(
@@ -5799,7 +5795,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             Uri sasUri = file.GenerateUserDelegationSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey);
@@ -5826,7 +5821,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             Uri fileSystemSasUri = test.FileSystem.GenerateUserDelegationSasUri(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey);
@@ -6763,7 +6757,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions()));
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -6810,7 +6803,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -6849,7 +6841,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions()));
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -6914,7 +6905,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -6962,7 +6952,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -6997,7 +6986,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7045,7 +7033,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7081,7 +7068,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7133,7 +7119,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 

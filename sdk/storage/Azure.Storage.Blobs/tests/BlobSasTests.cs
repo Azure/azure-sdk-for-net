@@ -64,7 +64,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
@@ -129,7 +128,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -199,7 +197,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
@@ -263,7 +260,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
@@ -466,7 +462,6 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             // We need to get the object ID from the token credential used to authenticate the request
@@ -515,7 +510,6 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             // We need to get the object ID from the token credential used to authenticate the request

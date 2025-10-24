@@ -555,7 +555,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             BlobSasBuilder BlobSasBuilder = new BlobSasBuilder
@@ -592,7 +591,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder
@@ -628,9 +626,13 @@ namespace Azure.Storage.Blobs.Test
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
 
+            BlobGetUserDelegationKeyOptions userDelegationKeyOptions = new BlobGetUserDelegationKeyOptions
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                expiresOn: Recording.UtcNow.AddHours(1),
+                options: userDelegationKeyOptions);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder
             {

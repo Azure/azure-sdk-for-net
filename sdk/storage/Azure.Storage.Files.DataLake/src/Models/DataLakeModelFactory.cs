@@ -914,14 +914,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="UserDelegationKey(string, string, DateTimeOffset, DateTimeOffset, string, string, string, string)"/> instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
-            string signedObjectId,
-            string signedTenantId,
-            DateTimeOffset signedStart,
-            DateTimeOffset signedExpiry,
-            string signedService,
-            string signedVersion,
-            string signedDelegatedUserTenantId,
-            string value)
+            string signedObjectId = default,
+            string signedTenantId = default,
+            DateTimeOffset signedStart = default,
+            DateTimeOffset signedExpiry = default,
+            string signedService = default,
+            string signedVersion = default,
+            string signedDelegatedUserTenantId = default,
+            string value = default)
             => new UserDelegationKey()
             {
                 SignedObjectId = signedObjectId,

@@ -1586,10 +1586,12 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,
@@ -1631,10 +1633,12 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,

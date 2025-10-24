@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                             await blobClient.CreateIfNotExistsAsync();
                             await blobClient.GetPropertiesAsync();
 
-                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(startsOn: null, expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
                             var sasBuilder = new BlobSasBuilder(BlobSasPermissions.All, DateTimeOffset.UtcNow.AddHours(1))
                             {
                                 BlobContainerName = containerName,
@@ -83,7 +83,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                             await fileClient.AppendAsync(new MemoryStream(new byte[] { 1 }), 0);
                             await fileClient.GetAccessControlAsync();
 
-                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(startsOn: null, expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
                             var sasBuilder = new DataLakeSasBuilder(DataLakeSasPermissions.All, DateTimeOffset.UtcNow.AddHours(1))
                             {
                                 FileSystemName = fileSystemName,

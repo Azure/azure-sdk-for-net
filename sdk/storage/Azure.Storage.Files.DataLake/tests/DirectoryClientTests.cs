@@ -913,7 +913,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             Response<UserDelegationKey> userDelegationKey = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             string directoryName = GetNewDirectoryName();
@@ -1763,7 +1762,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
@@ -1824,7 +1822,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
@@ -2260,7 +2257,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -2329,7 +2325,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -2410,7 +2405,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -2516,7 +2510,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -2607,7 +2600,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -2964,7 +2956,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3042,7 +3033,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3118,7 +3108,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3224,7 +3213,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3315,7 +3303,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3674,7 +3661,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3741,7 +3727,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3822,7 +3807,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -3927,7 +3911,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -4018,7 +4001,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Create a User Delegation SAS that delegates an owner when creating files
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             DataLakeUriBuilder dataLakeUriBuilderOwner1 = new DataLakeUriBuilder(directory.Uri)
             {
@@ -4352,7 +4334,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
@@ -4455,7 +4436,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             DataLakeDirectoryClient identitySasDirectory = InstrumentClient(
@@ -6268,7 +6248,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             Uri sasUri = directory.GenerateUserDelegationSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey);
@@ -6295,7 +6274,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             Uri fileSystemSasUri = test.FileSystem.GenerateUserDelegationSasUri(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey);
@@ -6920,7 +6898,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -6972,7 +6949,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7014,7 +6990,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             string stringToSign = null;
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7083,7 +7058,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7133,7 +7107,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7169,7 +7142,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7219,7 +7191,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7255,7 +7226,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -7304,7 +7274,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
