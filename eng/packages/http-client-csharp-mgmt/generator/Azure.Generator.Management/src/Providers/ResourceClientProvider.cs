@@ -414,11 +414,6 @@ namespace Azure.Generator.Management.Providers
                 var methodKind = resourceMethod.Kind;
                 var method = resourceMethod.InputMethod;
                 var inputClient = resourceMethod.InputClient;
-                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
-                if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
-                {
-                    continue;
-                }
 
                 var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
 
