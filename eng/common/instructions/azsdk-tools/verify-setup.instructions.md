@@ -12,9 +12,9 @@ Your goal is to identify the project repo root, and pass in the `packagePath` to
 - in `azure-sdk-for-python`, run `azsdk_verify_setup` with `(langs=python, packagePath=<path>/azure-sdk-for-python, venvPath=<path-to-venv>)`.
 
 ## Parameter Requirements
-When Python is included in `langs`, BEFORE RUNNING `azsdk_verify_setup`, you MUST ASK THE USER TO SPECIFY WHICH virtual environment they want to check. DO NOT ASSUME THE VENV WITHOUT ASKING THE USER. After obtaining the `venvPath`, you can run the tool.
+WHENEVER Python is included in `langs`, BEFORE RUNNING `azsdk_verify_setup`, you MUST ASK THE USER TO SPECIFY WHICH virtual environment they want to check. DO NOT ASSUME THE VENV WITHOUT ASKING THE USER. After obtaining the `venvPath`, you can run the tool.
 
-The user can specify multiple languages to check. If the user wants to check all languages, pass in all supported languages. Passing in no languages will only check the core requirements.
+The user can specify multiple languages to check. If the user wants to check all languages, pass in ALL supported languages and STILL ASK for a `venvPath`. Passing in no languages will only check the core requirements.
 
 ## Output
 Display results in a user-friendly and concise format, highlighting any missing dependencies that need to be addressed.
