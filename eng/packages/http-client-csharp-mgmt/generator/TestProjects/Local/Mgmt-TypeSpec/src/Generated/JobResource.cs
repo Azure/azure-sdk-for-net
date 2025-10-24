@@ -93,7 +93,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets information about the specified job. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.JobResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<JobResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
@@ -122,7 +142,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets information about the specified job. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.JobResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<JobResource> Get(string expand = default, CancellationToken cancellationToken = default)
@@ -151,7 +191,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update a JobResource. </summary>
+        /// <summary>
+        /// Update a JobResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Update&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.JobResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,7 +250,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update a JobResource. </summary>
+        /// <summary>
+        /// Update a JobResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Update&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.JobResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

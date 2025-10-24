@@ -102,7 +102,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Delete a Bar. </summary>
+        /// <summary>
+        /// Delete a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Delete&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.BarResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -131,7 +151,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Delete a Bar. </summary>
+        /// <summary>
+        /// Delete a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Delete&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.BarResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -160,7 +200,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a Bar. </summary>
+        /// <summary>
+        /// Get a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.BarResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -188,7 +248,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a Bar. </summary>
+        /// <summary>
+        /// Get a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.BarResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarResource> Get(CancellationToken cancellationToken = default)
         {
@@ -216,7 +296,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update a Bar. </summary>
+        /// <summary>
+        /// Update a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Update&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.BarResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -248,7 +348,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update a Bar. </summary>
+        /// <summary>
+        /// Update a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Update&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Resource&lt;/term&gt;
+        /// &lt;description&gt;global::Azure.Generator.MgmtTypeSpec.Tests.BarResource&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -604,7 +724,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetCachedClient(client => new BarQuotaResourceCollection(client, Id));
         }
 
-        /// <summary> Get a BarQuotaResource. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -613,7 +749,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetBarQuotaResources().GetAsync(barQuotaResourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a BarQuotaResource. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]

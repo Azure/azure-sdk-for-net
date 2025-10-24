@@ -52,7 +52,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a SelfHelpResource. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>
@@ -85,7 +101,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a SelfHelpResource. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>

@@ -62,7 +62,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Create a Bar. </summary>
+        /// <summary>
+        /// Create a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;CreateOrUpdate&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -104,7 +120,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Create a Bar. </summary>
+        /// <summary>
+        /// Create a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;CreateOrUpdate&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -146,7 +178,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a Bar. </summary>
+        /// <summary>
+        /// Get a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
@@ -179,7 +227,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a Bar. </summary>
+        /// <summary>
+        /// Get a Bar
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>

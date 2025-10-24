@@ -18,6 +18,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -83,7 +84,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _isFakeLongRunningOperation);
             IsLongRunningOperation = isLongRunningOperation;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
-            _description = description ?? _convenienceMethod.Signature.Description;
+            _description = description ?? BuildEnhancedDescription(_serviceMethod, _convenienceMethod.Signature.Description, enclosingType);
             InitializeTypeInfo(
                 _serviceMethod,
                 ref _originalBodyType,
@@ -93,6 +94,52 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
+        }
+
+        /// <summary>
+        /// Builds enhanced XML documentation description with operation metadata.
+        /// </summary>
+        private static FormattableString? BuildEnhancedDescription(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType)
+        {
+            var operation = serviceMethod.Operation;
+
+            // Find API version parameter if it exists
+            var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
+            var apiVersionItem = apiVersionParam != null && apiVersionParam.DefaultValue?.Value != null
+                ? $@"
+<item>
+<term>Default Api Version</term>
+<description>{apiVersionParam.DefaultValue.Value}</description>
+</item>"
+                : "";
+
+            // Build resource item if the enclosing type is a ResourceClientProvider
+            var resourceItem = enclosingType is ResourceClientProvider resourceClient
+                ? $@"
+<item>
+<term>Resource</term>
+<description>{resourceClient.Type:C}</description>
+</item>"
+                : "";
+
+            // Combine all items into a single formattable string
+            FormattableString metadataList = (FormattableString)$@"<list type=""bullet"">
+<item>
+<term>Request Path</term>
+<description>{operation.Path}</description>
+</item>
+<item>
+<term>Operation Id</term>
+<description>{operation.Name}</description>
+</item>{apiVersionItem}{resourceItem}
+</list>";
+
+            // Combine base description with metadata
+            if (baseDescription != null)
+            {
+                return (FormattableString)$"{baseDescription}{Environment.NewLine}{metadataList}";
+            }
+            return metadataList;
         }
 
         private static void InitializeLroFlags(

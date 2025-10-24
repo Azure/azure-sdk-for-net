@@ -110,7 +110,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new EndpointResourceCollection(Client, scope);
         }
 
-        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <summary>
+        /// Gets the endpoint to the resource.
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,7 +140,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetEndpointResources(scope).Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <summary>
+        /// Gets the endpoint to the resource.
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,7 +187,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SelfHelpResourceCollection(Client, scope);
         }
 
-        /// <summary> Get a SelfHelpResource. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +217,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetSelfHelpResources(scope).Get(selfHelpName, cancellationToken);
         }
 
-        /// <summary> Get a SelfHelpResource. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// &lt;list type="bullet"&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Request Path&lt;/term&gt;
+        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Operation Id&lt;/term&gt;
+        /// &lt;description&gt;Get&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;item&gt;
+        /// &lt;term&gt;Default Api Version&lt;/term&gt;
+        /// &lt;description&gt;2024-05-01&lt;/description&gt;
+        /// &lt;/item&gt;
+        /// &lt;/list&gt;
+        /// </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
