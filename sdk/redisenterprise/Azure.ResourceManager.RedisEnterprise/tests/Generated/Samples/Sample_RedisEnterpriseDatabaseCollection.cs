@@ -145,7 +145,7 @@ Args = "RETENTION_POLICY 20",
                 Port = 10000,
                 ClusteringPolicy = RedisEnterpriseClusteringPolicy.EnterpriseCluster,
                 EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
-                GeoReplication = new DatabaseCommonPropertiesGeoReplication
+                GeoReplication = new RedisEnterpriseDatabaseGeoReplication
                 {
                     GroupNickname = "groupName",
                     LinkedDatabases = {new RedisEnterpriseLinkedDatabase

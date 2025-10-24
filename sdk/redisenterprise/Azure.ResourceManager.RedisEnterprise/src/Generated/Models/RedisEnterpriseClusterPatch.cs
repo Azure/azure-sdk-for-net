@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterCommonPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [WirePath("properties.minimumTlsVersion")]
         public RedisEnterpriseTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Encryption-at-rest configuration for the cluster. </summary>
-        internal ClusterCommonPropertiesEncryption Encryption { get; set; }
+        internal ClusterPropertiesEncryption Encryption { get; set; }
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
         [WirePath("properties.encryption.customerManagedKeyEncryption")]
-        public ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
             set
             {
                 if (Encryption is null)
-                    Encryption = new ClusterCommonPropertiesEncryption();
+                    Encryption = new ClusterPropertiesEncryption();
                 Encryption.CustomerManagedKeyEncryption = value;
             }
         }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="deferUpgrade"> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </param>
         /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, DatabaseCommonPropertiesGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication, string redisVersion, DeferUpgradeSetting? deferUpgrade, AccessKeysAuthentication? accessKeysAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientProtocol = clientProtocol;
             Port = port;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public IList<RedisEnterpriseModule> Modules { get; }
         /// <summary> Optional set of properties to configure geo replication for this database. </summary>
         [WirePath("properties.geoReplication")]
-        public DatabaseCommonPropertiesGeoReplication GeoReplication { get; set; }
+        public RedisEnterpriseDatabaseGeoReplication GeoReplication { get; set; }
         /// <summary> Version of Redis the database is running on, e.g. '6.0'. </summary>
         [WirePath("properties.redisVersion")]
         public string RedisVersion { get; }

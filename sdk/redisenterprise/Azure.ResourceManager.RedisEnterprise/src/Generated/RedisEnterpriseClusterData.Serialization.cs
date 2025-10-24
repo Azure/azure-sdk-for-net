@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             SystemData systemData = default;
             RedisEnterpriseHighAvailability? highAvailability = default;
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
-            ClusterCommonPropertiesEncryption encryption = default;
+            ClusterPropertiesEncryption encryption = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            encryption = ClusterCommonPropertiesEncryption.DeserializeClusterCommonPropertiesEncryption(property0.Value, options);
+                            encryption = ClusterPropertiesEncryption.DeserializeClusterPropertiesEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

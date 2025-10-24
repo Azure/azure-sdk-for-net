@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class DatabaseCommonPropertiesGeoReplication : IUtf8JsonSerializable, IJsonModel<DatabaseCommonPropertiesGeoReplication>
+    public partial class RedisEnterpriseDatabaseGeoReplication : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDatabaseGeoReplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseCommonPropertiesGeoReplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseGeoReplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DatabaseCommonPropertiesGeoReplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseDatabaseGeoReplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseCommonPropertiesGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseCommonPropertiesGeoReplication)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseGeoReplication)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(GroupNickname))
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        DatabaseCommonPropertiesGeoReplication IJsonModel<DatabaseCommonPropertiesGeoReplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisEnterpriseDatabaseGeoReplication IJsonModel<RedisEnterpriseDatabaseGeoReplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseCommonPropertiesGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseCommonPropertiesGeoReplication)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseGeoReplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatabaseCommonPropertiesGeoReplication(document.RootElement, options);
+            return DeserializeRedisEnterpriseDatabaseGeoReplication(document.RootElement, options);
         }
 
-        internal static DatabaseCommonPropertiesGeoReplication DeserializeDatabaseCommonPropertiesGeoReplication(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisEnterpriseDatabaseGeoReplication DeserializeRedisEnterpriseDatabaseGeoReplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DatabaseCommonPropertiesGeoReplication(groupNickname, linkedDatabases ?? new ChangeTrackingList<RedisEnterpriseLinkedDatabase>(), serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseGeoReplication(groupNickname, linkedDatabases ?? new ChangeTrackingList<RedisEnterpriseLinkedDatabase>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DatabaseCommonPropertiesGeoReplication>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisEnterpriseDatabaseGeoReplication>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseCommonPropertiesGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -194,26 +194,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseCommonPropertiesGeoReplication)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseGeoReplication)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DatabaseCommonPropertiesGeoReplication IPersistableModel<DatabaseCommonPropertiesGeoReplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisEnterpriseDatabaseGeoReplication IPersistableModel<RedisEnterpriseDatabaseGeoReplication>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseCommonPropertiesGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseGeoReplication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatabaseCommonPropertiesGeoReplication(document.RootElement, options);
+                        return DeserializeRedisEnterpriseDatabaseGeoReplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseCommonPropertiesGeoReplication)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseGeoReplication)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DatabaseCommonPropertiesGeoReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseDatabaseGeoReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
