@@ -66,23 +66,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
         }
 
-        /// <summary>
-        /// Get subscription-level location-based Playwright quota resource by name.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,23 +76,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get subscription-level location-based Playwright quota resource by name.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,23 +158,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new PageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
         }
 
-        /// <summary>
-        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/previewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;PreviewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,23 +191,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             }
         }
 
-        /// <summary>
-        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/previewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;PreviewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

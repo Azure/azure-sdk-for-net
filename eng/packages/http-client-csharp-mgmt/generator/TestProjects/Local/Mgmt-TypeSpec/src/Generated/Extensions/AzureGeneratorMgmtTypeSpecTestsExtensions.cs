@@ -152,23 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResources(scope);
         }
 
-        /// <summary>
-        /// Gets the endpoint to the resource.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Gets the endpoint to the resource. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
@@ -182,23 +166,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets the endpoint to the resource.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/{resourceUri}/providers/MgmtTypeSpec/endpoints/{endpointName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Gets the endpoint to the resource. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
@@ -236,23 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResources(scope);
         }
 
-        /// <summary>
-        /// Get a SelfHelpResource
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a SelfHelpResource. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
@@ -266,23 +218,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
         }
 
-        /// <summary>
-        /// Get a SelfHelpResource
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a SelfHelpResource. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
@@ -367,23 +303,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFoos();
         }
 
-        /// <summary>
-        /// Get a Foo
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a Foo. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -396,23 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a Foo
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a Foo. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -447,23 +351,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBazs();
         }
 
-        /// <summary>
-        /// Get a Baz
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a Baz. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="bazName"> The name of the Baz. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -476,23 +364,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBazAsync(bazName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a Baz
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a Baz. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="bazName"> The name of the Baz. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -516,23 +388,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZoos();
         }
 
-        /// <summary>
-        /// Get a Zoo
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a Zoo. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="zooName"> The name of the Zoo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -545,23 +401,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZooAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a Zoo
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get a Zoo. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="zooName"> The name of the Zoo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -585,23 +425,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResources();
         }
 
-        /// <summary>
-        /// Gets information about the specified job.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Gets information about the specified job. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
@@ -615,23 +439,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResourceAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets information about the specified job.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Gets information about the specified job. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
@@ -657,23 +465,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
         }
 
-        /// <summary>
-        /// Get subscription-level location-based Playwright quota resource by name.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
@@ -687,23 +479,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get subscription-level location-based Playwright quota resource by name.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
@@ -789,23 +565,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
         }
 
-        /// <summary>
-        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/previewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;PreviewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
@@ -818,23 +578,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/previewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;PreviewActions&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
@@ -859,23 +603,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatuses(managementGroupId);
         }
 
-        /// <summary>
-        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
@@ -889,23 +617,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatusAsync(managementGroupId, requestId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
@@ -919,19 +631,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatus(managementGroupId, requestId, cancellationToken);
         }
 
-        /// <summary>
-        /// Starts a failed runtime resource
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;StartFailedServerlessRuntime&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Starts a failed runtime resource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
@@ -942,19 +642,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).StartFailedServerlessRuntimeAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Starts a failed runtime resource
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;StartFailedServerlessRuntime&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
-        /// </summary>
+        /// <summary> Starts a failed runtime resource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>

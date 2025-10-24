@@ -54,20 +54,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary>
         /// Get a SelfHelpResource
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,20 +103,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary>
         /// Get a SelfHelpResource
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,7 +150,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>
@@ -191,7 +207,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>
@@ -232,7 +264,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>
@@ -277,7 +325,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a SelfHelpResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selfHelpName"/> is null. </exception>

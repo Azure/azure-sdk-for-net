@@ -62,20 +62,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary>
         /// Get subscription-level location-based Playwright quota resource by name.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,20 +107,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary>
         /// Get subscription-level location-based Playwright quota resource by name.
-        /// &lt;list type="bullet"&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Request Path&lt;/term&gt;
-        /// &lt;description&gt;/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Operation Id&lt;/term&gt;
-        /// &lt;description&gt;Get&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;item&gt;
-        /// &lt;term&gt;Default Api Version&lt;/term&gt;
-        /// &lt;description&gt;2024-05-01&lt;/description&gt;
-        /// &lt;/item&gt;
-        /// &lt;/list&gt;
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,7 +174,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get subscription-level location-based Playwright quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -211,7 +227,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get subscription-level location-based Playwright quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -248,7 +280,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get subscription-level location-based Playwright quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<PlaywrightQuotaResource>> GetIfExistsAsync(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -289,7 +337,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get subscription-level location-based Playwright quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<PlaywrightQuotaResource> GetIfExists(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
