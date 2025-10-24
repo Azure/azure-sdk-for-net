@@ -817,10 +817,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> Resource Tag. </param>
+        /// <param name="eTag"> Resource Tag. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string etag = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string eTag = default, DeviceRegistryExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 extendedLocation);
         }
 
