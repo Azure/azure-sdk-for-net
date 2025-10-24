@@ -205,6 +205,70 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
+        /// <summary> Update a DeviceRegistrySchema. </summary>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<DeviceRegistrySchemaResource>> UpdateAsync(DeviceRegistrySchemaData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("DeviceRegistrySchemaResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemasRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistrySchemaData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceRegistrySchemaData> response = Response.FromValue(DeviceRegistrySchemaData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DeviceRegistrySchemaResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a DeviceRegistrySchema. </summary>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<DeviceRegistrySchemaResource> Update(DeviceRegistrySchemaData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("DeviceRegistrySchemaResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemasRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistrySchemaData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceRegistrySchemaData> response = Response.FromValue(DeviceRegistrySchemaData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DeviceRegistrySchemaResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets a collection of DeviceRegistrySchemaVersions in the <see cref="DeviceRegistrySchemaResource"/>. </summary>
         /// <returns> An object representing collection of DeviceRegistrySchemaVersions and their operations over a DeviceRegistrySchemaVersionResource. </returns>
         public virtual DeviceRegistrySchemaVersionCollection GetDeviceRegistrySchemaVersions()
