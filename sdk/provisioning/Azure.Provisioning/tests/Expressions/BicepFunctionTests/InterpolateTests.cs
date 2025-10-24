@@ -5,7 +5,7 @@ using System;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
 
-namespace Azure.Provisioning.Tests.Expressions.BicepFunctionTests;
+namespace Azure.Provisioning.Tests.Expressions.BicepFunctions;
 
 public class InterpolateTests
 {
