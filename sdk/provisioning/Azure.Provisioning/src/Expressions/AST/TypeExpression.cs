@@ -11,5 +11,5 @@ public class TypeExpression(Type type) : BicepExpression
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.Append(
             BicepTypeMapping.GetBicepTypeName(Type) ??
-            throw new NotSupportedException($"Failed to automatically map {Type.FullName} into a {nameof(TypeExpression)}. Please explicitly choose a primitive type like bool, int, string, object, array, etc."));
+            throw new NotSupportedException($"Failed to automatically map {Type.FullName} into a {nameof(TypeExpression)}.  Please explicitly choose a primitive type like bool, int, string, object, array, etc.");
 }
