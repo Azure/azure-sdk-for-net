@@ -129,12 +129,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
-        public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
+        public static implicit operator ServiceMethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            return new MethodProvider(
+            return new ServiceMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._enclosingType,
+                null);
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
