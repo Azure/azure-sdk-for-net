@@ -79,7 +79,7 @@ namespace Azure.Generator.Management.Utilities
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.List:
-                        // list method goes to resource if the resource scope matches
+                        // list method goes to resource if the method's resource scope matches the resource's ID pattern
                         if (method.ResourceScope == resourceMetadata.ResourceIdPattern)
                         {
                             methodsInResource.Add(method);
