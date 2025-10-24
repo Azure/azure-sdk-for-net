@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DeviceRegistry
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Etag))
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             DeviceRegistryNamespaceDeviceProperties properties = default;
-            string etag = default;
+            string eTag = default;
             DeviceRegistryExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    etag = prop.Value.GetString();
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                etag,
+                eTag,
                 extendedLocation);
         }
 
