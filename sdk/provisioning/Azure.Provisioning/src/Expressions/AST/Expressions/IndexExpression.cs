@@ -8,12 +8,12 @@ public class IndexExpression(BicepExpression value, BicepExpression index) : Bic
     public BicepExpression Value { get; } = value;
     public BicepExpression Index { get; } = index;
     internal override BicepWriter Write(BicepWriter writer) =>
-    writer.Append(Value).Append('[').Append(Index).Append(']');
+        writer.Append(Value).Append('[').Append(Index).Append(']');
 }
 
 public class SafeIndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
 {
- public BicepExpression Value { get; } = value;
+    public BicepExpression Value { get; } = value;
     public BicepExpression Index { get; } = index;
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.Append(Value).Append("[?").Append(Index).Append(']');
