@@ -1,7 +1,7 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20251022.1"
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20251023.3"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.61.0",
@@ -12,7 +12,7 @@
     "@azure-tools/typespec-liftr-base": "0.11.0",
     "@typespec/compiler": "1.5.0",
     "@typespec/http": "1.5.0",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20251017.1",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20251022.4",
     "@typespec/openapi": "1.5.0",
     "@typespec/rest": "0.75.0",
     "@typespec/versioning": "0.75.0"
