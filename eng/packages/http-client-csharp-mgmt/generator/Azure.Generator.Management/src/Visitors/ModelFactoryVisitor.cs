@@ -4,6 +4,7 @@
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,7 +42,7 @@ namespace Azure.Generator.Management.Visitors
             if (method.XmlDocs != null)
             {
                 // Clear exceptions to remove ArgumentNullException documentation
-                method.XmlDocs.Update(exceptions: Enumerable.Empty<XmlDocExceptionStatement>());
+                method.XmlDocs.Update(exceptions: Array.Empty<XmlDocExceptionStatement>());
             }
         }
     }
