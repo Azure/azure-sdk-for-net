@@ -426,6 +426,7 @@ namespace Azure.Generator.Management.Providers
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
+                    // If the method's resource scope matches the contextual path, we use the original method name
                     operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: resourceMethod.ResourceScope == _contextualPath ? null : ResourceHelpers.GetOperationMethodName(methodKind, true)));
                     operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: resourceMethod.ResourceScope == _contextualPath ? null : ResourceHelpers.GetOperationMethodName(methodKind, false)));
 
@@ -447,7 +448,6 @@ namespace Azure.Generator.Management.Providers
                 {
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
                     operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
-                    // If the method's resource scope matches the contextual path, we use the original method name
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
                     operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                 }
