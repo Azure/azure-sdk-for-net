@@ -153,6 +153,7 @@ export async function updateClients(
 
   // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
+    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
     if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
       resourceModelToMetadataMap.get(metadata.parentResourceModelId)?.methods.push(
         ...metadata.methods
