@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Enabled resource metrics export by default.
+  ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the status config error properties. </summary>
     public partial class DeviceRegistryStatusError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryStatusError"/>. </summary>
         internal DeviceRegistryStatusError()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="code"> Error code for classification of errors (ex: '400', '404', '500', etc.). </param>
         /// <param name="message"> Human-readable helpful error message to provide additional context for error (e.g.,: “Capability ID 'foo' does not exist”). </param>
         /// <param name="details"> Array of error details that describe the status of each error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryStatusError(string code, string message, IReadOnlyList<DeviceRegistryErrorDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryStatusError(string code, string message, IReadOnlyList<DeviceRegistryErrorDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Details = details;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Error code for classification of errors (ex: '400', '404', '500', etc.). </summary>
         public string Code { get; }
+
         /// <summary> Human-readable helpful error message to provide additional context for error (e.g.,: “Capability ID 'foo' does not exist”). </summary>
         public string Message { get; }
+
         /// <summary> Array of error details that describe the status of each error. </summary>
         public IReadOnlyList<DeviceRegistryErrorDetails> Details { get; }
     }

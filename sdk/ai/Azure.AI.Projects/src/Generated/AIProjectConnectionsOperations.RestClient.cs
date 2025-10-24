@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
             }
             if (defaultConnection != null)
             {
-                uri.AppendQuery("defaultConnection", TypeFormatters.ConvertToString(defaultConnection, null), true);
+                uri.AppendQuery("defaultConnection", TypeFormatters.ConvertToString(defaultConnection), true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
