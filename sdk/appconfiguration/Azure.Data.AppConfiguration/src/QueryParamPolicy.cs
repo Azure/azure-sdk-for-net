@@ -42,11 +42,11 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    // Use char[] overload for .NET Standard 2.0 compatibility
-                    // The Split(char, int) overload is only available in .NET Standard 2.1+
-                    string[] parts = entry.Split(new[] { '=' }, 2);
-                    string name = parts[0];
-                    string value = parts.Length > 1 ? parts[1] : string.Empty;
+
+                    int equalsIndex = entry.IndexOf('=');
+                    string name = equalsIndex >= 0 ? entry.Substring(0, equalsIndex) : entry;
+                    string value = equalsIndex >= 0 ? entry.Substring(equalsIndex + 1) : string.Empty;
+
                     segments.Add(new QueryParameterEntry
                     {
                         LowerName = name.ToLower(),
