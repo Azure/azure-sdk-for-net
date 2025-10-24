@@ -12,6 +12,7 @@
 		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
+		<PackageReference Include="NUnit" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">

@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers.Samples;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
@@ -131,11 +132,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator ServiceMethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            return new ServiceMethodProvider(
+            var method = new ServiceMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType,
-                null);
+                resourceOperationMethodProvider._enclosingType);
+            method.Sample = new ResourceOperationSample(resourceOperationMethodProvider._enclosingType, method, resourceOperationMethodProvider._serviceMethod.Operation);
+            return method;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()

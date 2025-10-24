@@ -12,17 +12,19 @@ namespace Azure.Generator.Management.Primitives;
 
 internal class ServiceMethodProvider : MethodProvider
 {
-    public ResourceOperationSample? Sample { get; }
-
-    public ServiceMethodProvider(MethodSignature signature, MethodBodyStatement bodyStatements, TypeProvider enclosingType, ResourceOperationSample? sample, XmlDocProvider? xmlDocProvider = null, IEnumerable<SuppressionStatement>? suppressions = null)
-        : base(signature, bodyStatements, enclosingType, xmlDocProvider, suppressions)
+    public ResourceOperationSample? Sample
     {
-        Sample = sample;
+        get;
+        internal set; // we need to include this MethodProvider instance in the sample instance in order to call it, therefore we must make this settable to resolve the cyclic reference.
     }
 
-    public ServiceMethodProvider(MethodSignature signature, ValueExpression bodyExpression, TypeProvider enclosingType, ResourceOperationSample? sample, XmlDocProvider? xmlDocProvider = null, IEnumerable<SuppressionStatement>? suppressions = null)
+    public ServiceMethodProvider(MethodSignature signature, MethodBodyStatement bodyStatements, TypeProvider enclosingType, XmlDocProvider? xmlDocProvider = null, IEnumerable<SuppressionStatement>? suppressions = null)
+        : base(signature, bodyStatements, enclosingType, xmlDocProvider, suppressions)
+    {
+    }
+
+    public ServiceMethodProvider(MethodSignature signature, ValueExpression bodyExpression, TypeProvider enclosingType, XmlDocProvider? xmlDocProvider = null, IEnumerable<SuppressionStatement>? suppressions = null)
         : base(signature, bodyExpression, enclosingType, xmlDocProvider, suppressions)
     {
-        Sample = sample;
     }
 }

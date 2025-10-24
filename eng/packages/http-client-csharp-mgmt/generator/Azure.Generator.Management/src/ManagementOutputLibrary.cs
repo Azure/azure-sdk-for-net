@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Providers.Samples;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -147,7 +148,7 @@ namespace Azure.Generator.Management
             }
 
             _mockableResourcesByScopeDict = mockableResources;
-            _mockableResources = [mockableArmClientResource, ..mockableResources.Values];
+            _mockableResources = [mockableArmClientResource, .. mockableResources.Values];
             _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
@@ -282,22 +283,28 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
+            var samples = new List<TypeProvider>();
             // we need to add the clients (including resources, collections, mockable resources and extension static class)
             // to the types to keep
             // otherwise, they will be trimmed off or internalized by the post processor
             foreach (var resource in ResourceProviders)
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
+                var s = new ManagementSampleProvider(resource);
+                samples.Add(s);
+                ManagementClientGenerator.Instance.AddTypeToKeep(s.Name);
             }
             foreach (var collection in ResourceCollectionProviders)
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+                samples.Add(new ManagementSampleProvider(collection));
             }
             foreach (var mockableResource in MockableResourceProviders)
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
             }
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
+            samples.Add(new ManagementSampleProvider(ExtensionProvider));
 
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
@@ -312,7 +319,9 @@ namespace Azure.Generator.Management
                 PageableWrapper,
                 AsyncPageableWrapper,
                 .. ResourceProviders.Select(r => r.Source),
-                .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+                .. ResourceProviders.SelectMany(r => r.SerializationProviders),
+                // TODO -- maybe we need a filter to filter those empty ones
+                .. samples];
         }
 
         internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);

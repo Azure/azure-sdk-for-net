@@ -231,6 +231,8 @@
     <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageReference Update="Azure.Generator" Version="[$(AzureGeneratorVersion)]" />
     <PackageReference Update="Humanizer.Core" Version="2.14.1" />
+    <PackageReference Update="NUnit" Version="3.13.2" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
   </ItemGroup>
 
   <!--
