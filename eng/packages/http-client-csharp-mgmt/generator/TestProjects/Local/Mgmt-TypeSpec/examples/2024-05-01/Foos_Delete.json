@@ -1,0 +1,20 @@
+{
+  "title": "Delete a Foo resource",
+  "operationId": "Foos_Delete",
+  "description": "This example shows how to delete a specific Foo resource.",
+  "parameters": {
+    "subscriptionId": "00000000-1111-2222-3333-444444444444",
+    "resourceGroupName": "myResourceGroup",
+    "fooName": "myFooResource",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "202": {
+      "headers": {
+        "Location": "https://management.azure.com/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/MgmtTypeSpec/foos/myFooResource/operationStatuses/12345678-1234-1234-1234-123456789012?api-version=2024-05-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/MgmtTypeSpec/foos/myFooResource/operationResults/12345678-1234-1234-1234-123456789012?api-version=2024-05-01"
+      }
+    },
+    "204": {}
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "title": "List Foo resources by subscription",
+  "operationId": "Foos_ListBySubscription",
+  "description": "This example shows how to list all Foo resources within a subscription across all resource groups.",
+  "parameters": {
+    "subscriptionId": "00000000-1111-2222-3333-444444444444",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup1/providers/MgmtTypeSpec/foos/fooResource1",
+            "name": "fooResource1",
+            "type": "MgmtTypeSpec/foos",
+            "location": "East US",
+            "tags": {
+              "environment": "production",
+              "department": "engineering",
+              "project": "project-alpha"
+            },
+            "extendedLocation": {
+              "type": "EdgeZone",
+              "name": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup1/providers/Microsoft.ExtendedLocation/customLocations/customLocation1"
+            },
+            "systemData": {
+              "createdBy": "user1@contoso.com",
+              "createdByType": "User",
+              "createdAt": "2024-10-24T09:00:00.0000000Z",
+              "lastModifiedBy": "user1@contoso.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-10-24T13:00:00.0000000Z"
+            },
+            "properties": {
+              "serviceUrl": "https://service-alpha.contoso.com/api/v1",
+              "something": "alpha-resource-value",
+              "boolValue": true,
+              "floatValue": 100.25,
+              "doubleValue": 200.123456,
+              "prop1": ["alpha1", "alpha2"],
+              "prop2": [10, 20],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://nested-alpha.contoso.com/api/v2",
+                  "something": "nested-alpha-value",
+                  "boolValue": false,
+                  "floatValue": 50.75,
+                  "doubleValue": 75.987654,
+                  "prop1": ["nestedAlpha1"],
+                  "prop2": [5],
+                  "nestedProperty": {
+                    "properties": {
+                      "something": "deep-alpha",
+                      "prop1": [],
+                      "nestedProperty": null
+                    }
+                  }
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup2/providers/MgmtTypeSpec/foos/fooResource2",
+            "name": "fooResource2",
+            "type": "MgmtTypeSpec/foos",
+            "location": "West US",
+            "tags": {
+              "environment": "staging",
+              "department": "marketing",
+              "project": "project-beta"
+            },
+            "systemData": {
+              "createdBy": "user2@contoso.com",
+              "createdByType": "User",
+              "createdAt": "2024-10-24T10:30:00.0000000Z",
+              "lastModifiedBy": "user2@contoso.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-10-24T14:30:00.0000000Z"
+            },
+            "properties": {
+              "serviceUrl": "https://service-beta.contoso.com/api/v1",
+              "something": "beta-resource-value",
+              "boolValue": false,
+              "floatValue": 300.50,
+              "doubleValue": 400.654321,
+              "prop1": ["beta1", "beta2", "beta3"],
+              "prop2": [30, 40, 50],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://nested-beta.contoso.com/api/v2",
+                  "something": "nested-beta-value",
+                  "boolValue": true,
+                  "floatValue": 25.25,
+                  "doubleValue": 35.456789,
+                  "prop1": ["nestedBeta1", "nestedBeta2"],
+                  "prop2": [15, 25],
+                  "nestedProperty": {
+                    "properties": {
+                      "something": "deep-beta",
+                      "prop1": ["deepBeta"],
+                      "nestedProperty": null
+                    }
+                  }
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup3/providers/MgmtTypeSpec/foos/fooResource3",
+            "name": "fooResource3",
+            "type": "MgmtTypeSpec/foos",
+            "location": "Central US",
+            "tags": {
+              "environment": "development",
+              "department": "research",
+              "project": "project-gamma"
+            },
+            "systemData": {
+              "createdBy": "user3@contoso.com",
+              "createdByType": "User",
+              "createdAt": "2024-10-24T11:45:00.0000000Z",
+              "lastModifiedBy": "user3@contoso.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-10-24T15:45:00.0000000Z"
+            },
+            "properties": {
+              "serviceUrl": "https://service-gamma.contoso.com/api/v1",
+              "something": "gamma-resource-value",
+              "boolValue": true,
+              "floatValue": 777.88,
+              "doubleValue": 888.999111,
+              "prop1": ["gamma1", "gamma2", "gamma3", "gamma4"],
+              "prop2": [70, 80, 90, 100],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://nested-gamma.contoso.com/api/v2",
+                  "something": "nested-gamma-value",
+                  "boolValue": false,
+                  "floatValue": 44.55,
+                  "doubleValue": 66.777888,
+                  "prop1": ["nestedGamma1"],
+                  "prop2": [35],
+                  "nestedProperty": {
+                    "properties": {
+                      "something": "deep-gamma",
+                      "prop1": ["deepGamma1", "deepGamma2"],
+                      "nestedProperty": null
+                    }
+                  }
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup1/providers/MgmtTypeSpec/foos/fooResource4",
+            "name": "fooResource4",
+            "type": "MgmtTypeSpec/foos",
+            "location": "North Europe",
+            "tags": {
+              "environment": "test",
+              "department": "qa",
+              "project": "project-delta"
+            },
+            "systemData": {
+              "createdBy": "user4@contoso.com",
+              "createdByType": "User",
+              "createdAt": "2024-10-24T13:15:00.0000000Z",
+              "lastModifiedBy": "user4@contoso.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-10-24T17:15:00.0000000Z"
+            },
+            "properties": {
+              "serviceUrl": "https://service-delta.contoso.com/api/v1",
+              "something": "delta-resource-value",
+              "boolValue": false,
+              "floatValue": 555.66,
+              "doubleValue": 666.333222,
+              "prop1": ["delta1"],
+              "prop2": [110],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://nested-delta.contoso.com/api/v2",
+                  "something": "nested-delta-value",
+                  "boolValue": true,
+                  "floatValue": 77.88,
+                  "doubleValue": 99.111222,
+                  "prop1": ["nestedDelta1", "nestedDelta2", "nestedDelta3"],
+                  "prop2": [45, 55, 65],
+                  "nestedProperty": {
+                    "properties": {
+                      "something": "deep-delta",
+                      "prop1": ["deepDelta"],
+                      "nestedProperty": null
+                    }
+                  }
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup2/providers/MgmtTypeSpec/foos/fooResource5",
+            "name": "fooResource5",
+            "type": "MgmtTypeSpec/foos",
+            "location": "Southeast Asia",
+            "tags": {
+              "environment": "production",
+              "department": "operations",
+              "project": "project-epsilon"
+            },
+            "systemData": {
+              "createdBy": "user5@contoso.com",
+              "createdByType": "User",
+              "createdAt": "2024-10-24T14:00:00.0000000Z",
+              "lastModifiedBy": "user5@contoso.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-10-24T18:00:00.0000000Z"
+            },
+            "properties": {
+              "serviceUrl": "https://service-epsilon.contoso.com/api/v1",
+              "something": "epsilon-resource-value",
+              "boolValue": true,
+              "floatValue": 222.33,
+              "doubleValue": 333.444555,
+              "prop1": ["epsilon1", "epsilon2"],
+              "prop2": [120, 130],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://nested-epsilon.contoso.com/api/v2",
+                  "something": "nested-epsilon-value",
+                  "boolValue": false,
+                  "floatValue": 11.22,
+                  "doubleValue": 22.333444,
+                  "prop1": ["nestedEpsilon1"],
+                  "prop2": [75],
+                  "nestedProperty": {
+                    "properties": {
+                      "something": "deep-epsilon",
+                      "prop1": [],
+                      "nestedProperty": null
+                    }
+                  }
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        ],
+        "nextLink": "https://management.azure.com/subscriptions/00000000-1111-2222-3333-444444444444/providers/MgmtTypeSpec/foos?api-version=2024-05-01&$skiptoken=skiptoken456"
+      }
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "title": "Update a Foo resource",
+  "operationId": "Foos_Update",
+  "description": "This example shows how to partially update a Foo resource using PATCH operation.",
+  "parameters": {
+    "subscriptionId": "00000000-1111-2222-3333-444444444444",
+    "resourceGroupName": "myResourceGroup",
+    "fooName": "myFooResource",
+    "api-version": "2024-05-01",
+    "body": {
+      "tags": {
+        "environment": "staging",
+        "department": "engineering",
+        "project": "updated-project",
+        "newTag": "newValue"
+      },
+      "properties": {
+        "serviceUrl": "https://updated-service.contoso.com/api/v2",
+        "something": "updated-string-value",
+        "boolValue": false,
+        "floatValue": 456.78,
+        "doubleValue": 123.987654,
+        "prop1": ["updatedFirstItem", "updatedSecondItem"],
+        "prop2": [500, 600],
+        "nestedProperty": {
+          "properties": {
+            "serviceUrl": "https://updated-nested-service.contoso.com/api/v3",
+            "something": "updated-nested-string-value",
+            "boolValue": true,
+            "floatValue": 99.99,
+            "doubleValue": 888.777666,
+            "prop1": ["updatedNestedItem"],
+            "prop2": [50],
+            "nestedProperty": {
+              "properties": {
+                "serviceUrl": "https://updated-deeply-nested-service.contoso.com/api/v4",
+                "something": "updated-deeply-nested-value",
+                "boolValue": false,
+                "floatValue": 33.44,
+                "doubleValue": 55.666777,
+                "prop1": ["updatedDeeplyNestedItem"],
+                "prop2": [25],
+                "nestedProperty": {
+                  "properties": {
+                    "serviceUrl": "https://updated-final-nested-service.contoso.com/api/v5",
+                    "something": "updated-final-nested-value",
+                    "boolValue": true,
+                    "floatValue": 1.5,
+                    "doubleValue": 2.345678,
+                    "prop1": ["updatedFinalItem"],
+                    "prop2": [75],
+                    "nestedProperty": {
+                      "properties": {
+                        "serviceUrl": "https://updated-terminating-service.contoso.com/api/v6",
+                        "something": "updated-terminating-value",
+                        "prop1": ["updatedTerminatingItem"],
+                        "nestedProperty": {
+                          "properties": {
+                            "something": "updated-base-case",
+                            "prop1": ["updatedBaseItem"],
+                            "nestedProperty": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/MgmtTypeSpec/foos/myFooResource",
+        "name": "myFooResource",
+        "type": "MgmtTypeSpec/foos",
+        "location": "East US",
+        "tags": {
+          "environment": "staging",
+          "department": "engineering",
+          "project": "updated-project",
+          "newTag": "newValue"
+        },
+        "extendedLocation": {
+          "type": "EdgeZone",
+          "name": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/myCustomLocation"
+        },
+        "systemData": {
+          "createdBy": "user@contoso.com",
+          "createdByType": "User",
+          "createdAt": "2024-10-24T10:30:00.0000000Z",
+          "lastModifiedBy": "admin@contoso.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-10-24T16:20:00.0000000Z"
+        },
+        "properties": {
+          "serviceUrl": "https://updated-service.contoso.com/api/v2",
+          "something": "updated-string-value",
+          "boolValue": false,
+          "floatValue": 456.78,
+          "doubleValue": 123.987654,
+          "prop1": ["updatedFirstItem", "updatedSecondItem"],
+          "prop2": [500, 600],
+          "nestedProperty": {
+            "properties": {
+              "serviceUrl": "https://updated-nested-service.contoso.com/api/v3",
+              "something": "updated-nested-string-value",
+              "boolValue": true,
+              "floatValue": 99.99,
+              "doubleValue": 888.777666,
+              "prop1": ["updatedNestedItem"],
+              "prop2": [50],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://updated-deeply-nested-service.contoso.com/api/v4",
+                  "something": "updated-deeply-nested-value",
+                  "boolValue": false,
+                  "floatValue": 33.44,
+                  "doubleValue": 55.666777,
+                  "prop1": ["updatedDeeplyNestedItem"],
+                  "prop2": [25],
+                  "nestedProperty": {
+                    "properties": {
+                      "serviceUrl": "https://updated-final-nested-service.contoso.com/api/v5",
+                      "something": "updated-final-nested-value",
+                      "boolValue": true,
+                      "floatValue": 1.5,
+                      "doubleValue": 2.345678,
+                      "prop1": ["updatedFinalItem"],
+                      "prop2": [75],
+                      "nestedProperty": {
+                        "properties": {
+                          "serviceUrl": "https://updated-terminating-service.contoso.com/api/v6",
+                          "something": "updated-terminating-value",
+                          "prop1": ["updatedTerminatingItem"],
+                          "nestedProperty": {
+                            "properties": {
+                              "something": "updated-base-case",
+                              "prop1": ["updatedBaseItem"],
+                              "nestedProperty": null
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    "202": {
+      "headers": {
+        "Location": "https://management.azure.com/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/MgmtTypeSpec/foos/myFooResource/operationStatuses/87654321-4321-4321-4321-210987654321?api-version=2024-05-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/MgmtTypeSpec/foos/myFooResource/operationResults/87654321-4321-4321-4321-210987654321?api-version=2024-05-01"
+      }
+    }
+  }
+}

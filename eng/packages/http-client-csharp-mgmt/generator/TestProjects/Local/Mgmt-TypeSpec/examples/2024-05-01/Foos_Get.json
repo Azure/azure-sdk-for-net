@@ -1,0 +1,95 @@
+{
+  "title": "Get a Foo resource",
+  "operationId": "Foos_Get",
+  "description": "This example shows how to retrieve a specific Foo resource.",
+  "parameters": {
+    "subscriptionId": "00000000-1111-2222-3333-444444444444",
+    "resourceGroupName": "myResourceGroup",
+    "fooName": "myFooResource",
+    "api-version": "2024-05-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/MgmtTypeSpec/foos/myFooResource",
+        "name": "myFooResource",
+        "type": "MgmtTypeSpec/foos",
+        "location": "East US",
+        "tags": {
+          "environment": "production",
+          "department": "engineering",
+          "project": "sample-project"
+        },
+        "extendedLocation": {
+          "type": "EdgeZone",
+          "name": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/myCustomLocation"
+        },
+        "systemData": {
+          "createdBy": "user@contoso.com",
+          "createdByType": "User",
+          "createdAt": "2024-10-24T10:30:00.0000000Z",
+          "lastModifiedBy": "user@contoso.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-10-24T14:45:00.0000000Z"
+        },
+        "properties": {
+          "serviceUrl": "https://example-service.contoso.com/api/v1",
+          "something": "example-string-value",
+          "boolValue": true,
+          "floatValue": 123.45,
+          "doubleValue": 987.654321,
+          "prop1": ["firstArrayItem", "secondArrayItem", "thirdArrayItem"],
+          "prop2": [100, 200, 300],
+          "nestedProperty": {
+            "properties": {
+              "serviceUrl": "https://nested-service.contoso.com/api/v2",
+              "something": "nested-string-value",
+              "boolValue": false,
+              "floatValue": 67.89,
+              "doubleValue": 456.123789,
+              "prop1": ["nestedFirstItem", "nestedSecondItem"],
+              "prop2": [10, 20],
+              "nestedProperty": {
+                "properties": {
+                  "serviceUrl": "https://deeply-nested-service.contoso.com/api/v3",
+                  "something": "deeply-nested-value",
+                  "boolValue": true,
+                  "floatValue": 11.22,
+                  "doubleValue": 33.444555,
+                  "prop1": ["deeplyNestedItem"],
+                  "prop2": [5],
+                  "nestedProperty": {
+                    "properties": {
+                      "serviceUrl": "https://final-nested-service.contoso.com/api/v4",
+                      "something": "final-nested-value",
+                      "boolValue": false,
+                      "floatValue": 0.1,
+                      "doubleValue": 0.123456,
+                      "prop1": [],
+                      "prop2": [],
+                      "nestedProperty": {
+                        "properties": {
+                          "serviceUrl": "https://terminating-service.contoso.com/api/v5",
+                          "something": "terminating-value",
+                          "prop1": [],
+                          "nestedProperty": {
+                            "properties": {
+                              "something": "base-case",
+                              "prop1": [],
+                              "nestedProperty": null
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  }
+}
