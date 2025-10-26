@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -11,73 +11,126 @@ namespace Azure.Data.AppConfiguration
 {
     internal class QueryParamPolicy : HttpPipelineSynchronousPolicy
     {
-        private class QueryParameterEntry
+        private struct QueryParameterEntry
         {
-            public string LowerName { get; set; }
-            public string Value { get; set; }
+            public ReadOnlyMemory<char> Name { get; set; }
+            public ReadOnlyMemory<char> Value { get; set; }
             public int Index { get; set; }
         }
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            try
+            Uri originalUri = message.Request.Uri.ToUri();
+            string queryString = originalUri.Query;
+
+            if (string.IsNullOrEmpty(queryString))
             {
-                Uri originalUri = message.Request.Uri.ToUri();
-                string queryString = originalUri.Query;
+                return;
+            }
 
-                if (string.IsNullOrEmpty(queryString))
-                {
-                    return;
-                }
+            ReadOnlyMemory<char> queryMemory = queryString.AsMemory();
 
-                if (queryString.StartsWith("?"))
-                {
-                    queryString = queryString.Substring(1);
-                }
+            if (queryMemory.Span[0] == '?')
+            {
+                queryMemory = queryMemory.Slice(1);
+            }
 
-                var segments = new List<QueryParameterEntry>();
-                foreach (string entry in queryString.Split('&'))
+            var segments = new List<QueryParameterEntry>();
+            int startIndex = 0;
+
+            // Parse query parameters using memory slicing
+            for (int i = 0; i < queryMemory.Length; i++)
+            {
+                if (queryMemory.Span[i] == '&')
                 {
-                    if (string.IsNullOrEmpty(entry))
+                    if (i > startIndex)
                     {
-                        continue;
+                        AddParameter(queryMemory.Slice(startIndex, i - startIndex), segments);
                     }
-
-                    int equalsIndex = entry.IndexOf('=');
-                    string name = equalsIndex >= 0 ? entry.Substring(0, equalsIndex) : entry;
-                    string value = equalsIndex >= 0 ? entry.Substring(equalsIndex + 1) : string.Empty;
-
-                    segments.Add(new QueryParameterEntry
-                    {
-                        LowerName = name.ToLower(),
-                        Value = value,
-                        Index = segments.Count
-                    });
-                }
-
-                // List<T>.Sort method is not stable. See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort
-                // Sort by lowercase name, preserving relative order for duplicates
-                segments.Sort((a, b) =>
-                {
-                    var nameComparison = string.Compare(a.LowerName, b.LowerName, StringComparison.Ordinal);
-                    if (nameComparison != 0)
-                        return nameComparison;
-                    return a.Index.CompareTo(b.Index); // stability for duplicates
-                });
-
-                string normalizedQuery = "?" + string.Join("&", segments.Select(e => $"{e.LowerName}={e.Value}"));
-
-                string newUrl = $"{originalUri.Scheme}://{originalUri.Host}{originalUri.AbsolutePath}{normalizedQuery}{originalUri.Fragment}";
-
-                if (newUrl != message.Request.Uri.ToString())
-                {
-                    message.Request.Uri.Reset(new Uri(newUrl));
+                    startIndex = i + 1;
                 }
             }
-            catch (Exception ex)
+
+            // Add the last parameter
+            if (startIndex < queryMemory.Length)
             {
-                System.Diagnostics.Debug.WriteLine($"QueryParamPolicy failed to normalize the request query parameters: {ex}");
+                AddParameter(queryMemory.Slice(startIndex), segments);
             }
+
+            // List<T>.Sort method is not stable. See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort
+            // Sort by lowercase name, preserving relative order for duplicates
+            segments.Sort((a, b) =>
+            {
+                var nameComparison = MemoryExtensions.CompareTo(
+                    a.Name.Span,
+                    b.Name.Span,
+                    StringComparison.OrdinalIgnoreCase);
+
+                if (nameComparison != 0)
+                {
+                    return nameComparison;
+                }
+                return a.Index.CompareTo(b.Index);
+            });
+
+            var sb = new StringBuilder();
+            sb.Append(originalUri.Scheme);
+            sb.Append("://");
+            sb.Append(originalUri.Host);
+            if (!originalUri.IsDefaultPort)
+            {
+                sb.Append(':');
+                sb.Append(originalUri.Port);
+            }
+            sb.Append(originalUri.AbsolutePath);
+            sb.Append('?');
+
+            for (int i = 0; i < segments.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append('&');
+                }
+
+                sb.Append(segments[i].Name.ToString().ToLowerInvariant());
+                sb.Append('=');
+                sb.Append(segments[i].Value);
+            }
+
+            if (!string.IsNullOrEmpty(originalUri.Fragment))
+            {
+                sb.Append(originalUri.Fragment);
+            }
+
+            string newUrl = sb.ToString();
+
+            if (newUrl != message.Request.Uri.ToString())
+            {
+                message.Request.Uri.Reset(new Uri(newUrl));
+            }
+        }
+
+        private static void AddParameter(ReadOnlyMemory<char> parameter, List<QueryParameterEntry> segments)
+        {
+            if (parameter.IsEmpty)
+            {
+                return;
+            }
+
+            int equalsIndex = parameter.Span.IndexOf('=');
+
+            ReadOnlyMemory<char> name;
+            ReadOnlyMemory<char> value;
+
+            name = equalsIndex >= 0 ? parameter.Slice(0, equalsIndex) : parameter;
+            value = equalsIndex >= 0 ? parameter.Slice(equalsIndex + 1) : ReadOnlyMemory<char>.Empty;
+
+            segments.Add(new QueryParameterEntry
+            {
+                Name = name,
+                Value = value,
+                Index = segments.Count
+            });
         }
     }
 }
