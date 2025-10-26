@@ -38,7 +38,6 @@ namespace Azure.Data.AppConfiguration
             var segments = new List<QueryParameterEntry>();
             int startIndex = 0;
 
-            // Parse query parameters using memory slicing
             for (int i = 0; i < queryMemory.Length; i++)
             {
                 if (queryMemory.Span[i] == '&')
