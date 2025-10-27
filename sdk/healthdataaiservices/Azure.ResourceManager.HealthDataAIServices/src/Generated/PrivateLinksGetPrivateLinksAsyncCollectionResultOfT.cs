@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinksRequest(nextLink, _subscriptionId, _resourceGroupName, _deidServiceName, _context) : _client.CreateGetPrivateLinksRequest(_subscriptionId, _resourceGroupName, _deidServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidServiceResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidServiceResource.GetPrivateLinks");
             scope.Start();
             try
             {
