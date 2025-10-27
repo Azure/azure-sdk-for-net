@@ -39,3 +39,4 @@ enum Versions {
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
 
 @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
+@@clientName(Employees.listByParent, "GetEmployees", "csharp");
