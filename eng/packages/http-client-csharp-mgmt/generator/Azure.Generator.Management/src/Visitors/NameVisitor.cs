@@ -116,6 +116,7 @@ internal class NameVisitor : ScmLibraryVisitor
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
+        DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -193,6 +194,20 @@ internal class NameVisitor : ScmLibraryVisitor
                 var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
                 propertyProvider.Update(name: newPropertyName);
             }
+        }
+    }
+
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
+        {
+            {"Etag", "ETag"}
+        };
+
+    private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && _propertyNameRenamingMap.TryGetValue(propertyProvider.Name, out var newPropertyName))
+        {
+            propertyProvider.Update(name: newPropertyName);
         }
     }
 

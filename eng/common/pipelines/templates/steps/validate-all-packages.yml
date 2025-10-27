@@ -1,14 +1,23 @@
 parameters:
-  ArtifactPath: $(Build.ArtifactStagingDirectory)
-  Artifacts: []
-  ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ConfigFileDir
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: PackageInfoFiles
+    type: object
+    default: []
 
 steps:
  - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))) }}:
     - pwsh: |
         echo "##vso[task.setvariable variable=SetAsReleaseBuild]false"
       displayName: "Set as release build"
-      condition: and(succeeded(), eq(variables['SetAsReleaseBuild'], ''))
+      condition: and(succeededOrFailed(), eq(variables['SetAsReleaseBuild'], ''))
 
     - task: AzureCLI@2
       inputs:
@@ -24,7 +33,8 @@ steps:
             -ConfigFileDir '${{ parameters.ConfigFileDir }}' `
             -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
             -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
-            -IsReleaseBuild $$(SetAsReleaseBuild)
+            -IsReleaseBuild $$(SetAsReleaseBuild) `
+            -PackageInfoFiles ('${{ convertToJson(parameters.PackageInfoFiles) }}' | ConvertFrom-Json -NoEnumerate)
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
       continueOnError: true

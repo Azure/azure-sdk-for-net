@@ -51,13 +51,15 @@ namespace Azure.Generator.Management.Utilities
         /// </summary>
         /// <param name="operationKind">The kind of resource operation.</param>
         /// <param name="isAsync">Whether this is an async method.</param>
+        /// <param name="isResourceCollection">Whether this is used for resource collection.</param>
         /// <returns>The method name to use, or null if no override is needed.</returns>
-        public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync)
+        public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync, bool isResourceCollection)
         {
             return operationKind switch
             {
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
-                ResourceOperationKind.List => isAsync ? "GetAllAsync" : "GetAll",
+                // For List operation, only resource collections have GetAll or GetAllAsync methods.
+                ResourceOperationKind.List => !isResourceCollection ? null : isAsync ? "GetAllAsync" : "GetAll",
                 _ => null
             };
         }

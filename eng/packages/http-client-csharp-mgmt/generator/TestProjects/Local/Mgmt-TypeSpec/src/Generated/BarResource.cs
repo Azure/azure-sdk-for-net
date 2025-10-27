@@ -30,6 +30,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Bars _barsRestClient;
         private readonly ClientDiagnostics _barClientDiagnostics;
         private readonly Bar _barRestClient;
+        private readonly ClientDiagnostics _employeesClientDiagnostics;
+        private readonly Employees _employeesRestClient;
         private readonly BarData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/bars";
@@ -58,6 +60,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -274,6 +278,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> List Employee resources by Bar. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Employee> GetEmployeesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EmployeesGetEmployeesAsyncCollectionResultOfT(
+                _employeesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary> List Employee resources by Bar. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Employee> GetEmployees(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EmployeesGetEmployeesCollectionResultOfT(
+                _employeesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>
