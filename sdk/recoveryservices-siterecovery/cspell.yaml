@@ -5,10 +5,7 @@ overrides:
     words:
       - ahub
       - bcdr
-      - bcdr
       - dras
-      - dras
-      - esxi
       - esxi
       - mware
       - nics
