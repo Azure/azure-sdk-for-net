@@ -84,7 +84,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _isFakeLongRunningOperation);
             IsLongRunningOperation = isLongRunningOperation;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
-            _description = description ?? BuildEnhancedDescription(_serviceMethod, _convenienceMethod.Signature.Description, enclosingType);
+            _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
                 _serviceMethod,
                 ref _originalBodyType,
@@ -97,23 +97,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         }
 
         /// <summary>
-        /// Builds enhanced XML documentation description with operation metadata using structured XmlDocStatement objects.
-        /// </summary>
-        private static FormattableString? BuildEnhancedDescription(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType)
-        {
-            // This method is kept for backward compatibility but is now superseded by BuildEnhancedXmlDocs
-            // which creates proper XmlDocStatement structures instead of raw strings
-            return baseDescription;
-        }
-
-        /// <summary>
         /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
         /// </summary>
-        private static XmlDocProvider? BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
+        private static void BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
         {
             if (existingXmlDocs == null)
             {
-                return null;
+                return;
             }
 
             var operation = serviceMethod.Operation;
@@ -163,8 +153,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             // Update the XmlDocs with the new summary
             existingXmlDocs.Update(summary: summaryStatement);
-
-            return existingXmlDocs;
         }
 
         private static void InitializeLroFlags(
