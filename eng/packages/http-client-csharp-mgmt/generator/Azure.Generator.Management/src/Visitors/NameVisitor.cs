@@ -46,7 +46,6 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
@@ -90,12 +89,6 @@ internal class NameVisitor : ScmLibraryVisitor
             newName = $"{enclosingResourceName}Patch";
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
-
-            _resourceUpdateModelTypes.Add(type.Type);
-            foreach (var serializationProvider in type.SerializationProviders)
-            {
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
-            }
         }
         return base.PreVisitModel(model, type);
     }
