@@ -59,7 +59,6 @@ namespace Azure.Generator.Management.Visitors
         private void UpdateParameterNames(MethodProvider method)
         {
             bool updated = false;
-            var xmlParameterDocs = new List<XmlDocParamStatement>();
 
             // Check if any parameter needs to be renamed based on the property name mapping
             foreach (var parameter in method.Signature.Parameters)
@@ -71,15 +70,12 @@ namespace Azure.Generator.Management.Visitors
                     parameter.Update(name: newName);
                     updated = true;
                 }
-
-                // Add updated XML doc for this parameter
-                xmlParameterDocs.Add(new XmlDocParamStatement(parameter));
             }
 
-            // Update the method XML docs if any parameter was renamed
-            if (updated && method.XmlDocs != null)
+            if (updated)
             {
-                method.XmlDocs.Update(parameters: xmlParameterDocs);
+                // Update the method signature to refresh documentation
+                method.Update(signature: method.Signature);
             }
         }
     }
