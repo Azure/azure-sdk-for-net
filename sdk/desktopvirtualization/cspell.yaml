@@ -1,0 +1,17 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization/api/Azure.ResourceManager.DesktopVirtualization.net8.0.cs'
+    words:
+      - Adfs
+      - Logix
+      - Msix
+      - Redirector
+      - msix
+  - filename: '**/sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization/api/Azure.ResourceManager.DesktopVirtualization.netstandard2.0.cs'
+    words:
+      - Adfs
+      - Logix
+      - Msix
+      - Redirector
+      - msix

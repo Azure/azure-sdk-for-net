@@ -7,10 +7,8 @@ Invokes cspell using dependencies defined in adjacent ./package*.json
 .PARAMETER JobType
 Maps to cspell command (e.g. `lint`, `trace`, etc.). Default is `lint`
 
-.PARAMETER ScanGlobs
-List of glob expressions to be scanned. This list is not constrained by
-npx/cmd's upper limit on command line length as the globs are inserted into the
-cspell config's `files` property.
+.PARAMETER FileList
+List of file paths to be scanned. This is piped into cspell via stdin.
 
 .PARAMETER CSpellConfigPath
 Location of cspell.json file to use when scanning. Defaults to
@@ -30,19 +28,10 @@ calls to Invoke-Cspell.ps1 to prevent creating multiple working directories and
 redundant calls `npm ci`.
 
 .EXAMPLE
-./eng/common/scripts/Invoke-Cspell.ps1 -ScanGlobs 'sdk/*/*/PublicAPI/**/*.md'
-
-This will run spell check with the given globs
+./eng/common/scripts/Invoke-Cspell.ps1 -FileList @('./README.md', 'file2.txt')
 
 .EXAMPLE
-./eng/common/scripts/Invoke-Cspell.ps1 -ScanGlobs @('sdk/storage/**', 'sdk/keyvault/**')
-
-This will run spell check against multiple globs
-
-.EXAMPLE
-./eng/common/scripts/Invoke-Cspell.ps1 -ScanGlobs './README.md'
-
-This will run spell check against a single file
+git diff main --name-only | ./eng/common/spelling/Invoke-Cspell.ps1
 
 #>
 [CmdletBinding()]
@@ -50,8 +39,8 @@ param(
   [Parameter()]
   [string] $JobType = 'lint',
 
-  [Parameter()]
-  [array]$ScanGlobs = '**',
+  [Parameter(ValueFromPipeline)]
+  [array]$FileList,
 
   [Parameter()]
   [string] $CSpellConfigPath = (Resolve-Path "$PSScriptRoot/../../../.vscode/cspell.json"),
@@ -60,7 +49,7 @@ param(
   [string] $SpellCheckRoot = (Resolve-Path "$PSScriptRoot/../../.."),
 
   [Parameter()]
-  [string] $PackageInstallCache = (Join-Path ([System.IO.Path]::GetTempPath()) "cspell-tool-path"),
+  [string] $PackageInstallCache = (Join-Path ([System.IO.Path]::GetTempPath()) "cspell-tool-path-upgraded"),
 
   [Parameter()]
   [switch] $LeavePackageInstallCache
@@ -92,76 +81,20 @@ if (!(Test-Path "$PackageInstallCache/package-lock.json")) {
   Copy-Item "$PSScriptRoot/package-lock.json" $PackageInstallCache
 }
 
-$deleteNotExcludedFile = $false
-$notExcludedFile = ""
-if (Test-Path "$SpellCheckRoot/LICENSE") {
-  $notExcludedFile = "$SpellCheckRoot/LICENSE"
-} elseif (Test-Path "$SpellCheckRoot/LICENSE.txt") {
-  $notExcludedFile = "$SpellCheckRoot/LICENSE.txt"
-} else {
-  # If there is no LICENSE file, fall back to creating a temporary file
-  # The "files" list must always contain a file which exists, is not empty, and is
-  # not excluded in ignorePaths. In this case it will be a file with the contents
-  # "1" (no spelling errors will be detected)
-  $notExcludedFile = Join-Path $SpellCheckRoot ([System.IO.Path]::GetRandomFileName())
-  "1" >> $notExcludedFile
-  $deleteNotExcludedFile = $true
-}
-$ScanGlobs += $notExcludedFile
+npm --prefix $PackageInstallCache ci | Write-Host
 
-$cspellConfigContent = Get-Content $CSpellConfigPath -Raw
-$cspellConfig = ConvertFrom-Json $cspellConfigContent
-
-# If the config has no "files" property this adds it. If the config has a
-# "files" property this sets the value, overwriting the existing value. In this
-# case, spell checking is only intended to check files from $ScanGlobs so
-# preexisting entries in "files" will be overwritten.
-Add-Member `
-  -MemberType NoteProperty `
-  -InputObject $cspellConfig `
-  -Name "files" `
-  -Value $ScanGlobs `
-  -Force
-
-# Set the temporary config file with the mutated configuration. The temporary
-# location is used to configure the command and the original file remains
-# unchanged.
-Write-Host "Setting config in: $CSpellConfigPath"
-Set-Content `
-  -Path $CSpellConfigPath `
-  -Value (ConvertTo-Json $cspellConfig -Depth 100)
-
-# Before changing the run location, resolve paths specified in parameters
-$CSpellConfigPath = Resolve-Path $CSpellConfigPath
-$SpellCheckRoot = Resolve-Path $SpellCheckRoot
-
-$originalLocation = Get-Location
-
-try {
-  Set-Location $PackageInstallCache
-  npm ci | Write-Host
-
-  # Use the mutated configuration file when calling cspell
-  $command = "npm exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
-  Write-Host $command
-  $cspellOutput = npm exec  `
-    --no `
-    -- `
-    cspell `
-    $JobType `
-    --config $CSpellConfigPath `
-    --no-must-find-files `
-    --root $SpellCheckRoot `
-    --relative
-} finally {
-  Set-Location $originalLocation
-
-  Write-Host "cspell run complete, restoring original configuration and removing temp file."
-  Set-Content -Path $CSpellConfigPath -Value $cspellConfigContent -NoNewLine
-
-  if ($deleteNotExcludedFile) {
-    Remove-Item -Path $notExcludedFile
-  }
-}
+$command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list stdin"
+Write-Host $command
+$cspellOutput = $FileList | npm --prefix $PackageInstallCache `
+  exec  `
+  --no `
+  -- `
+  cspell `
+  $JobType `
+  --config $CSpellConfigPath `
+  --no-must-find-files `
+  --root $SpellCheckRoot `
+  --no-show-suggestions `
+  --file-list stdin
 
 return $cspellOutput

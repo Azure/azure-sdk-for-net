@@ -1,0 +1,27 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere/api/Azure.ResourceManager.ConnectedVMwarevSphere.net8.0.cs'
+    words:
+      - Ctlr
+      - Lsilogic
+      - Lsilogicsas
+      - Mware
+      - Nic
+      - Pcnet
+      - Pmem
+      - Pvscsi
+      - Sesparse
+      - Vm
+  - filename: '**/sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere/api/Azure.ResourceManager.ConnectedVMwarevSphere.netstandard2.0.cs'
+    words:
+      - Ctlr
+      - Lsilogic
+      - Lsilogicsas
+      - Mware
+      - Nic
+      - Pcnet
+      - Pmem
+      - Pvscsi
+      - Sesparse
+      - Vm
