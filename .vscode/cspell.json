@@ -33,6 +33,7 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
+    "cspell.yaml",
     "assets.json",
     "eng/Packages.Data.props",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
@@ -55,8 +56,7 @@
     "sdk/videoanalyzer/*/api/*.cs",
     "sdk/newrelicobservability/*/api/*.cs",
     "sdk/paloaltonetworks.ngfw/*/api/*.cs",
-    "sdk/servicefabricmanagedclusters/*/api/*.cs",
-    "cspell.yaml"
+    "sdk/servicefabricmanagedclusters/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
