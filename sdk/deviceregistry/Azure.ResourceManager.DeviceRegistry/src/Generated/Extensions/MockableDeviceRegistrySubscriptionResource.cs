@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
 
         private ClientDiagnostics AssetsClientDiagnostics => _assetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Assets AssetsRestClient => _assetsRestClient ??= new Assets(AssetsClientDiagnostics, Pipeline, Endpoint, "2025-10-01");
+        private Assets AssetsRestClient => _assetsRestClient ??= new Assets(AssetsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         private ClientDiagnostics AssetEndpointProfilesClientDiagnostics => _assetEndpointProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AssetEndpointProfiles AssetEndpointProfilesRestClient => _assetEndpointProfilesRestClient ??= new AssetEndpointProfiles(AssetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, "2025-10-01");
+        private AssetEndpointProfiles AssetEndpointProfilesRestClient => _assetEndpointProfilesRestClient ??= new AssetEndpointProfiles(AssetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2025-10-01");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         private ClientDiagnostics SchemaRegistriesClientDiagnostics => _schemaRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SchemaRegistries SchemaRegistriesRestClient => _schemaRegistriesRestClient ??= new SchemaRegistries(SchemaRegistriesClientDiagnostics, Pipeline, Endpoint, "2025-10-01");
+        private SchemaRegistries SchemaRegistriesRestClient => _schemaRegistriesRestClient ??= new SchemaRegistries(SchemaRegistriesClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
         /// <summary> Gets a collection of DeviceRegistryBillingContainers in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeviceRegistryBillingContainers and their operations over a DeviceRegistryBillingContainerResource. </returns>
