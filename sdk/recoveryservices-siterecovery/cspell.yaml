@@ -1,35 +1,19 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery/api/Azure.ResourceManager.RecoveryServicesSiteRecovery.net8.0.cs'
+  - filename: '**/sdk/recoveryservices-siterecovery/**/*.cs'
     words:
-      - Ahub
-      - Bcdr
-      - Dras
-      - Esxi
-      - Mware
-      - Nics
-      - Orignal
-      - Payg
-      - Reassociate
-      - Reprotect
-      - Seleted
+      - ahub
+      - bcdr
       - bcdr
       - dras
-      - esxi
-  - filename: '**/sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery/api/Azure.ResourceManager.RecoveryServicesSiteRecovery.netstandard2.0.cs'
-    words:
-      - Ahub
-      - Bcdr
-      - Dras
-      - Esxi
-      - Mware
-      - Nics
-      - Orignal
-      - Payg
-      - Reassociate
-      - Reprotect
-      - Seleted
-      - bcdr
       - dras
       - esxi
+      - esxi
+      - mware
+      - nics
+      - orignal
+      - payg
+      - reassociate
+      - reprotect
+      - seleted

@@ -1,15 +1,9 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/api/Azure.ResourceManager.RecoveryServicesDataReplication.net8.0.cs'
+  - filename: '**/sdk/recoveryservices-datareplication/**/*.cs'
     words:
-      - Mware
-      - Nics
-      - Reprotect
+      - mware
       - nics
-  - filename: '**/sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/api/Azure.ResourceManager.RecoveryServicesDataReplication.netstandard2.0.cs'
-    words:
-      - Mware
-      - Nics
-      - Reprotect
+      - reprotect
       - nics

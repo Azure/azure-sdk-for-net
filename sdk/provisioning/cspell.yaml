@@ -1,17 +1,7 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/provisioning/Azure.Provisioning.PostgreSql/api/Azure.Provisioning.PostgreSql.net8.0.cs'
+  - filename: '**/sdk/provisioning/**/*.cs'
     words:
-      - AWSEC
-      - Postgre
-  - filename: '**/sdk/provisioning/Azure.Provisioning.PostgreSql/api/Azure.Provisioning.PostgreSql.netstandard2.0.cs'
-    words:
-      - AWSEC
-      - Postgre
-  - filename: '**/sdk/provisioning/Azure.Provisioning.Storage/api/Azure.Provisioning.Storage.net8.0.cs'
-    words:
-      - Mibps
-  - filename: '**/sdk/provisioning/Azure.Provisioning.Storage/api/Azure.Provisioning.Storage.netstandard2.0.cs'
-    words:
-      - Mibps
+      - awsec
+      - postgre

@@ -1,19 +1,10 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/Azure.ResourceManager.ResourceConnector.net8.0.cs'
+  - filename: '**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs'
     words:
-      - Capi
-      - Kubeconfig
-      - Kubeconfigs
-      - Kvaio
-      - Scvmm
+      - capi
+      - kubeconfig
       - kubeconfigs
-  - filename: '**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/Azure.ResourceManager.ResourceConnector.netstandard2.0.cs'
-    words:
-      - Capi
-      - Kubeconfig
-      - Kubeconfigs
-      - Kvaio
-      - Scvmm
-      - kubeconfigs
+      - kvaio
+      - scvmm
