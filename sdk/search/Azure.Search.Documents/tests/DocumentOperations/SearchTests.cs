@@ -646,6 +646,48 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(4, second.Count);
         }
 
+        [Test]
+        [Ignore("Metrics facets are only supported in preview. Enable this test when they are GA'd.")]
+        public async Task MetricFacets()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    "*",
+                    new SearchOptions
+                    {
+                        Facets = new[]
+                        {
+                            "rooms/baseRate,metric:sum",
+                            "rooms/baseRate,metric:avg",
+                            "rooms/baseRate,metric:min",
+                            "rooms/baseRate,metric:max, default:0",
+                            "rooms/sleepsCount, metric:cardinality, precisionThreshold: 10"
+                        }
+                    });
+            await AssertKeysContains(
+                response,
+                h => h.Document.HotelId,
+                SearchResources.TestDocuments.Select(h => h.HotelId).ToArray());
+            var test = GetFacetsForField(response.Value.Facets, "rooms/baseRate", 4).ToList();
+
+            Assert.AreEqual(4, test.Count);
+            Assert.IsTrue(AreApproximatelyEqual(27.91, test[0].Sum.Value));
+            Assert.IsTrue(AreApproximatelyEqual(6.9775, test[1].Avg.Value));
+            Assert.IsTrue(AreApproximatelyEqual(2.44, test[2].Min.Value));
+            Assert.IsTrue(AreApproximatelyEqual(9.69, test[3].Max.Value));
+
+            var sleepsCountFacets = GetFacetsForField(response.Value.Facets, "rooms/sleepsCount", 1).ToList();
+            Assert.AreEqual(1, sleepsCountFacets.Count);
+            Assert.AreEqual(sleepsCountFacets[0].Cardinality, 1);
+
+            static bool AreApproximatelyEqual(double expected, double actual, double tolerance = 0.001)
+            {
+                var delta = Math.Abs(expected - actual);
+                return Math.Abs(expected - actual) < tolerance;
+            }
+        }
+
         public class FacetKeyValuePair
         {
             public FacetKeyValuePair() { }

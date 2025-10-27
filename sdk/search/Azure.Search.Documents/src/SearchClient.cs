@@ -1271,6 +1271,9 @@ namespace Azure.Search.Documents
         /// Token identifying the user for which the query is being executed.
         /// This token is used to enforce security restrictions on documents.
         /// </param>
+        /// <param name="enableElevatedRead">
+        /// A value that enables elevated read that bypass document level permission checks for the query operation.
+        /// </param>
         /// <param name="options">
         /// Options that allow specifying filtering, sorting, faceting, paging,
         /// and other search query behaviors.
@@ -1306,12 +1309,13 @@ namespace Azure.Search.Documents
         public virtual Response<SearchResults<T>> Search<T>(
             string searchText,
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options = null,
             CancellationToken cancellationToken = default) =>
             SearchInternal<T>(
                 searchText,
                 querySourceAuthorization,
-                enableElevatedRead: null,
+                enableElevatedRead,
                 options,
                 async: false,
                 cancellationToken)
@@ -1334,6 +1338,9 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization">
         /// Token identifying the user for which the query is being executed.
         /// This token is used to enforce security restrictions on documents.
+        /// </param>
+        /// <param name="enableElevatedRead">
+        /// A value that enables elevated read that bypass document level permission checks for the query operation.
         /// </param>
         /// <param name="options">
         /// Options that allow specifying filtering, sorting, faceting, paging,
@@ -1370,12 +1377,13 @@ namespace Azure.Search.Documents
         public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
             string searchText,
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SearchInternal<T>(
                 searchText,
                 querySourceAuthorization,
-                enableElevatedRead: null,
+                enableElevatedRead,
                 options,
                 async: true,
                 cancellationToken)

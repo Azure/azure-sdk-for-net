@@ -252,6 +252,10 @@ namespace Azure.Search.Documents.Models
                             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
                             long? facetCount = null;
                             double? facetSum = null;
+                            double? facetAvg = null;
+                            double? facetMin = null;
+                            double? facetMax = null;
+                            long? facetCardinality = null;
                             foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
                                 if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
@@ -266,6 +270,34 @@ namespace Azure.Search.Documents.Models
                                     if (facetProperty.Value.ValueKind != JsonValueKind.Null)
                                     {
                                         facetSum = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.AvgKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetAvg = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.MinKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetMin = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.MaxKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetMax = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.CardinalityKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetCardinality = facetProperty.Value.GetInt64();
                                     }
                                 }
                                 else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
@@ -300,7 +332,7 @@ namespace Azure.Search.Documents.Models
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, avg: null, min: null, max: null, facetSum, cardinality: null, searchFacets, facetValues));
+                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;

@@ -29,8 +29,8 @@ namespace Azure.Search.Documents.Indexes
         );
 
         #region KnowledgeBases Operations
-        /// <summary> Creates a new agent. </summary>
-        /// <param name="KnowledgeBase"> The definition of the agent to create. </param>
+        /// <summary> Creates a new knowledge base. </summary>
+        /// <param name="KnowledgeBase"> The definition of the knowledge base to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="KnowledgeBase"/> is null. </exception>
         public virtual Response<KnowledgeBase> CreateKnowledgeBase(KnowledgeBase KnowledgeBase, CancellationToken cancellationToken = default)
@@ -48,8 +48,8 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Creates a new agent. </summary>
-        /// <param name="KnowledgeBase"> The definition of the agent to create. </param>
+        /// <summary> Creates a new knowledge base. </summary>
+        /// <param name="KnowledgeBase"> The definition of the knowledge base to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="KnowledgeBase"/> is null. </exception>
         public virtual async Task<Response<KnowledgeBase>> CreateKnowledgeBaseAsync(KnowledgeBase KnowledgeBase, CancellationToken cancellationToken = default)
@@ -67,8 +67,8 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Creates a new agent or updates an agent if it already exists. </summary>
-        /// <param name="KnowledgeBase"> The definition of the agent to create or update. </param>
+        /// <summary> Creates a new knowledge base or updates an knowledge base if it already exists. </summary>
+        /// <param name="KnowledgeBase"> The definition of the knowledge base to create or update. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeBase.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
@@ -97,8 +97,8 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Creates a new agent or updates an agent if it already exists. </summary>
-        /// <param name="KnowledgeBase"> The definition of the agent to create or update. </param>
+        /// <summary> Creates a new knowledge base or updates an knowledge base if it already exists. </summary>
+        /// <param name="KnowledgeBase"> The definition of the knowledge base to create or update. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeBase.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
@@ -127,24 +127,24 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Deletes an existing agent. </summary>
-        /// <param name="agentName"> The name of the agent to delete. </param>
+        /// <summary> Deletes an existing knowledge base. </summary>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public virtual Response DeleteKnowledgeBase(string agentName, CancellationToken cancellationToken = default) =>
-            DeleteKnowledgeBase(agentName, null, false, cancellationToken);
+        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        public virtual Response DeleteKnowledgeBase(string knowledgeBaseName, CancellationToken cancellationToken = default) =>
+            DeleteKnowledgeBase(knowledgeBaseName, null, false, cancellationToken);
 
-        //// <summary> Deletes an existing agent. </summary>
-        /// <param name="agentName"> The name of the agent to delete. </param>
+        //// <summary> Deletes an existing knowledge base. </summary>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public virtual async Task<Response> DeleteKnowledgeBaseAsync(string agentName, CancellationToken cancellationToken = default) =>
-            await DeleteKnowledgeBaseAsync(agentName, null, false, cancellationToken).ConfigureAwait(false);
+        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        public virtual async Task<Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, CancellationToken cancellationToken = default) =>
+            await DeleteKnowledgeBaseAsync(knowledgeBaseName, null, false, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Deletes an existing agent. </summary>
-        /// <param name="KnowledgeBase"> The definition of the agent to delete. </param>
+        /// <summary> Deletes an existing knowledge base. </summary>
+        /// <param name="KnowledgeBase"> The definition of the knowledge base to delete. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeBase.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
@@ -163,8 +163,8 @@ namespace Azure.Search.Documents.Indexes
                 cancellationToken);
         }
 
-        /// <summary> Deletes an existing agent. </summary>
-        /// <param name="KnowledgeBase"> The definition of the agent to delete. </param>
+        /// <summary> Deletes an existing knowledge base. </summary>
+        /// <param name="KnowledgeBase"> The definition of the knowledge base to delete. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeBase.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
@@ -184,14 +184,14 @@ namespace Azure.Search.Documents.Indexes
                 .ConfigureAwait(false);
         }
 
-        private Response DeleteKnowledgeBase(string agentName, string etag, bool onlyIfUnchanged, CancellationToken cancellationToken)
+        private Response DeleteKnowledgeBase(string knowledgeBaseName, string etag, bool onlyIfUnchanged, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteKnowledgeBase)}");
             scope.Start();
             try
             {
                 return KnowledgeBasesClient.Delete(
-                    agentName,
+                    knowledgeBaseName,
                     onlyIfUnchanged ? etag : null,
                     null,
                     cancellationToken);
@@ -203,14 +203,14 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        private async Task<Response> DeleteKnowledgeBaseAsync(string agentName, string etag, bool onlyIfUnchanged, CancellationToken cancellationToken)
+        private async Task<Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, string etag, bool onlyIfUnchanged, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteKnowledgeBase)}");
             scope.Start();
             try
             {
                 return await KnowledgeBasesClient.DeleteAsync(
-                    agentName,
+                    knowledgeBaseName,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -223,17 +223,17 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Retrieves an agent definition. </summary>
-        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <summary> Retrieves an knowledge base definition. </summary>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public virtual Response<KnowledgeBase> GetKnowledgeBase(string agentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        public virtual Response<KnowledgeBase> GetKnowledgeBase(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeBase)}");
             scope.Start();
             try
             {
-                return KnowledgeBasesClient.Get(agentName, cancellationToken);
+                return KnowledgeBasesClient.Get(knowledgeBaseName, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -242,17 +242,17 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Retrieves an agent definition. </summary>
-        /// <param name="agentName"> The name of the agent to retrieve. </param>
+        /// <summary> Retrieves an knowledge base definition. </summary>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public virtual async Task<Response<KnowledgeBase>> GetKnowledgeBaseAsync(string agentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        public virtual async Task<Response<KnowledgeBase>> GetKnowledgeBaseAsync(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeBase)}");
             scope.Start();
             try
             {
-                return await KnowledgeBasesClient.GetAsync(agentName, cancellationToken).ConfigureAwait(false);
+                return await KnowledgeBasesClient.GetAsync(knowledgeBaseName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -261,7 +261,7 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Lists all agents available for a search service. </summary>
+        /// <summary> Lists all knowledge bases available for a search service. </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="KnowledgeBase"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
@@ -290,7 +290,7 @@ namespace Azure.Search.Documents.Indexes
             });
         }
 
-        /// <summary> Lists all agents available for a search service. </summary>
+        /// <summary> Lists all knowledge bases available for a search service. </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="KnowledgeBase"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
