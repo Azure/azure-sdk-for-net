@@ -24,58 +24,6 @@ namespace Azure.AI.Speech.Transcription
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnhancedModeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EnhancedModeProperties)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(Task))
-            {
-                writer.WritePropertyName("task"u8);
-                writer.WriteStringValue(Task);
-            }
-            if (Optional.IsDefined(TargetLanguage))
-            {
-                writer.WritePropertyName("targetLanguage"u8);
-                writer.WriteStringValue(TargetLanguage);
-            }
-            if (Optional.IsCollectionDefined(Prompt))
-            {
-                writer.WritePropertyName("prompt"u8);
-                writer.WriteStartArray();
-                foreach (var item in Prompt)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         EnhancedModeProperties IJsonModel<EnhancedModeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EnhancedModeProperties>)this).GetFormatFromOptions(options) : options.Format;

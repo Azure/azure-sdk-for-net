@@ -106,7 +106,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 DiarizationOptions = new TranscriptionDiarizationOptions
                 {
-                    Enabled = true,
+                    // Enabled is automatically set to true when MaxSpeakers is specified
                     MaxSpeakers = 4 // Expect up to 4 speakers in the conversation
                 }
             };
@@ -273,7 +273,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 ProfanityFilterMode = ProfanityFilterMode.Masked,
                 DiarizationOptions = new TranscriptionDiarizationOptions
                 {
-                    Enabled = true,
+                    // Enabled is automatically set to true when MaxSpeakers is specified
                     MaxSpeakers = 5
                 },
                 PhraseList = new PhraseListProperties

@@ -52,7 +52,7 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> Initializes a new instance of <see cref="EnhancedModeProperties"/>. </summary>
-        /// <param name="enabled"> Enable enhanced mode for transcription. </param>
+        /// <param name="enabled"> Enable enhanced mode for transcription. This is automatically set to true when task, targetLanguage, or prompt are specified. </param>
         /// <param name="task"> Task type for enhanced mode. </param>
         /// <param name="targetLanguage"> Target language for enhanced mode. </param>
         /// <param name="prompt"> A list of user prompts. </param>
@@ -66,8 +66,8 @@ namespace Azure.AI.Speech.Transcription
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enable enhanced mode for transcription. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary> Enable enhanced mode for transcription. This is automatically set to true when task, targetLanguage, or prompt are specified. </summary>
+        public bool? Enabled { get; }
         /// <summary> Task type for enhanced mode. </summary>
         public string Task { get; set; }
         /// <summary> Target language for enhanced mode. </summary>

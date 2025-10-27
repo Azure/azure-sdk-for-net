@@ -281,7 +281,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 {
                     DiarizationOptions = new()
                     {
-                        Enabled = true,
+                        // Enabled is automatically set to true when MaxSpeakers is specified
                         MaxSpeakers = 2
                     }
                 };

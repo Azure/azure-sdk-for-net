@@ -41,5 +41,27 @@ namespace Azure.AI.Speech.Transcription
                 phraseList,
                 serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Transcription.TranscriptionDiarizationOptions"/>. </summary>
+        /// <param name="enabled"> Enable speaker diarization. This is automatically set to true when maxSpeakers is specified. </param>
+        /// <param name="maxSpeakers"> Gets or sets a hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </param>
+        /// <returns> A new <see cref="Transcription.TranscriptionDiarizationOptions"/> instance for mocking. </returns>
+        public static TranscriptionDiarizationOptions TranscriptionDiarizationOptions(bool? enabled = null, int? maxSpeakers = null)
+        {
+            return new TranscriptionDiarizationOptions(enabled, maxSpeakers, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Transcription.EnhancedModeProperties"/>. </summary>
+        /// <param name="enabled"> Enable enhanced mode for transcription. This is automatically set to true when task, targetLanguage, or prompt are specified. </param>
+        /// <param name="task"> Task type for enhanced mode. </param>
+        /// <param name="targetLanguage"> Target language for enhanced mode. </param>
+        /// <param name="prompt"> A list of user prompts. </param>
+        /// <returns> A new <see cref="Transcription.EnhancedModeProperties"/> instance for mocking. </returns>
+        public static EnhancedModeProperties EnhancedModeProperties(bool? enabled = null, string task = null, string targetLanguage = null, IEnumerable<string> prompt = null)
+        {
+            prompt ??= new List<string>();
+
+            return new EnhancedModeProperties(enabled, task, targetLanguage, prompt?.ToList(), serializedAdditionalRawData: null);
+        }
     }
 }
