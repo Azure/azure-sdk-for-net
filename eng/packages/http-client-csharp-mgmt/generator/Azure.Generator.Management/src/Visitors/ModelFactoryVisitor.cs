@@ -63,9 +63,10 @@ namespace Azure.Generator.Management.Visitors
             // Check if any parameter needs to be renamed based on the property name mapping
             foreach (var parameter in method.Signature.Parameters)
             {
-                // Check if the parameter is associated with a property
+                // Check if the parameter is associated with a property and needs renaming
                 if (parameter.Property != null &&
-                    PropertyToParameterNameMap.TryGetValue(parameter.Property.Name, out var newName))
+                    PropertyToParameterNameMap.TryGetValue(parameter.Property.Name, out var newName) &&
+                    parameter.Name != newName)
                 {
                     parameter.Update(name: newName);
                     updated = true;
