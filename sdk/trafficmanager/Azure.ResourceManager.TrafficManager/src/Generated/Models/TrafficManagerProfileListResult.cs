@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    /// <summary> The list Traffic Manager profiles operation response. </summary>
+    /// <summary> The response of a Profile list operation. </summary>
     internal partial class TrafficManagerProfileListResult
     {
         /// <summary>
@@ -46,21 +47,34 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/>. </summary>
-        internal TrafficManagerProfileListResult()
+        /// <param name="value"> The Profile items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal TrafficManagerProfileListResult(IEnumerable<TrafficManagerProfileData> value)
         {
-            Value = new ChangeTrackingList<TrafficManagerProfileData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/>. </summary>
-        /// <param name="value"> Gets the list of Traffic manager profiles. </param>
+        /// <param name="value"> The Profile items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficManagerProfileListResult(IReadOnlyList<TrafficManagerProfileData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrafficManagerProfileListResult(IReadOnlyList<TrafficManagerProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the list of Traffic manager profiles. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/> for deserialization. </summary>
+        internal TrafficManagerProfileListResult()
+        {
+        }
+
+        /// <summary> The Profile items on this page. </summary>
         public IReadOnlyList<TrafficManagerProfileData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

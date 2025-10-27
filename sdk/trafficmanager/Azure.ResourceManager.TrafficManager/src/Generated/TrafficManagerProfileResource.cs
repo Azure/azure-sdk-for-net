@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
+        /// <param name="heatMapType"> The type of the heatmap. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
+        /// <param name="heatMapType"> The type of the heatmap. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

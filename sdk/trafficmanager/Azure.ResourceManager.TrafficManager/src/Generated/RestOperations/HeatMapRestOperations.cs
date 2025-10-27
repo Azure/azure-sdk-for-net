@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
             uri.AppendPath(heatMapType.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (topLeft != null && !(topLeft is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 uri.AppendQueryDelimited("botRight", botRight, ",", true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
             uri.AppendPath(heatMapType.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (topLeft != null && !(topLeft is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
@@ -84,7 +85,6 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 uri.AppendQueryDelimited("botRight", botRight, ",", true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
+        /// <param name="heatMapType"> The type of the heatmap. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
-        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
+        /// <param name="heatMapType"> The type of the heatmap. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
