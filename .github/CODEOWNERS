@@ -380,7 +380,7 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# ServiceOwners:                                                   @toddysm @shizhMSFT
+# ServiceOwners:                                                   @toddysm @Azure/azsdk-acr
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
