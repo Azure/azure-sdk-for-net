@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01-preview";
+            _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

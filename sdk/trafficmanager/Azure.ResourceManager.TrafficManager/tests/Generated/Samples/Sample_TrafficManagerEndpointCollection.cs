@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EndpointPUTExternalWithAlwaysServe()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-PUT-External-WithAlwaysServe.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-PUT-External-WithAlwaysServe.json
             // this example is just showing the usage of "Endpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EndpointPUTExternalWithCustomHeaders()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-PUT-External-WithCustomHeaders.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-PUT-External-WithCustomHeaders.json
             // this example is just showing the usage of "Endpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ Value = "value-2",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EndpointPUTExternalWithGeoMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-PUT-External-WithGeoMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-PUT-External-WithGeoMapping.json
             // this example is just showing the usage of "Endpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ Value = "value-2",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EndpointPUTExternalWithLocation()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-PUT-External-WithLocation.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-PUT-External-WithLocation.json
             // this example is just showing the usage of "Endpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +207,7 @@ Value = "value-2",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EndpointPUTExternalWithSubnetMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-PUT-External-WithSubnetMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-PUT-External-WithSubnetMapping.json
             // this example is just showing the usage of "Endpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointGETExternalWithGeoMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithGeoMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithGeoMapping.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -294,7 +294,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointGETExternalWithLocation()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithLocation.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithLocation.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -329,7 +329,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointGETExternalWithSubnetMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithSubnetMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithSubnetMapping.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -364,7 +364,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_EndpointGETExternalWithGeoMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithGeoMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithGeoMapping.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -395,7 +395,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_EndpointGETExternalWithLocation()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithLocation.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithLocation.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -426,7 +426,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_EndpointGETExternalWithSubnetMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithSubnetMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithSubnetMapping.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -457,7 +457,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_EndpointGETExternalWithGeoMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithGeoMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithGeoMapping.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -500,7 +500,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_EndpointGETExternalWithLocation()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithLocation.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithLocation.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -543,7 +543,7 @@ Last = IPAddress.Parse("29.30.31.32"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_EndpointGETExternalWithSubnetMapping()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Endpoint-GET-External-WithSubnetMapping.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithSubnetMapping.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

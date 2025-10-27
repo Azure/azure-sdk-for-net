@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="trafficViewEnrollmentStatus"> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </param>
         /// <param name="allowedEndpointRecordTypes"> The list of allowed endpoint record types. </param>
         /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
-        /// <param name="recordType"> When record type is set, a traffic manager profile will allow only endpoints that match this type. </param>
-        internal TrafficManagerProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, AzureLocation? location, TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointData> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn, TrafficManagerProfileRecordType? recordType) : base(id, name, resourceType, serializedAdditionalRawData, tags, location)
+        internal TrafficManagerProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, AzureLocation? location, TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointData> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn) : base(id, name, resourceType, serializedAdditionalRawData, tags, location)
         {
             ProfileStatus = profileStatus;
             TrafficRoutingMethod = trafficRoutingMethod;
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.TrafficManager
             TrafficViewEnrollmentStatus = trafficViewEnrollmentStatus;
             AllowedEndpointRecordTypes = allowedEndpointRecordTypes;
             MaxReturn = maxReturn;
-            RecordType = recordType;
         }
 
         /// <summary> The status of the Traffic Manager profile. </summary>
@@ -70,7 +68,5 @@ namespace Azure.ResourceManager.TrafficManager
         public IList<AllowedEndpointRecordType> AllowedEndpointRecordTypes { get; }
         /// <summary> Maximum number of endpoints to be returned for MultiValue routing type. </summary>
         public long? MaxReturn { get; set; }
-        /// <summary> When record type is set, a traffic manager profile will allow only endpoints that match this type. </summary>
-        public TrafficManagerProfileRecordType? RecordType { get; set; }
     }
 }
