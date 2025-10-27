@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="billingContainerProvisioningState"> Provisioning state of the resource. </param>
-        /// <param name="etag"> Resource ETag. </param>
+        /// <param name="eTag"> Resource ETag. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/> instance for mocking. </returns>
-        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? etag = default)
+        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? eTag = default)
         {
             return new DeviceRegistryBillingContainerData(
                 id,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, new Dictionary<string, BinaryData>()),
-                etag);
+                eTag);
         }
 
         /// <summary> Namespace definition. </summary>

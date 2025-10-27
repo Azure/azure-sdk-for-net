@@ -12,6 +12,12 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class ModelFactoryVisitor : ScmLibraryVisitor
     {
+        // Dictionary mapping property names to their preferred parameter names
+        private static readonly Dictionary<string, string> PropertyToParameterNameMap = new()
+        {
+            { "ETag", "etag" }
+        };
+
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelFactoryProvider modelFactory)
@@ -25,6 +31,10 @@ namespace Azure.Generator.Management.Visitors
                         // Fix ArgumentNullException XML documentation for parameters that are nullable
                         // Model factory methods should allow all parameters to be null for mocking purposes
                         FixArgumentNullExceptionXmlDoc(method);
+
+                        // Update parameter names for specific properties
+                        UpdateParameterNames(method);
+
                         updatedMethods.Add(method);
                     }
                 }
@@ -43,6 +53,33 @@ namespace Azure.Generator.Management.Visitors
             {
                 // Clear exceptions to remove ArgumentNullException documentation
                 method.XmlDocs.Update(exceptions: Array.Empty<XmlDocExceptionStatement>());
+            }
+        }
+
+        private void UpdateParameterNames(MethodProvider method)
+        {
+            bool updated = false;
+            var xmlParameterDocs = new List<XmlDocParamStatement>();
+
+            // Check if any parameter needs to be renamed based on the property name mapping
+            foreach (var parameter in method.Signature.Parameters)
+            {
+                // Check if the parameter is associated with a property
+                if (parameter.Property != null &&
+                    PropertyToParameterNameMap.TryGetValue(parameter.Property.Name, out var newName))
+                {
+                    parameter.Update(name: newName);
+                    updated = true;
+                }
+
+                // Add updated XML doc for this parameter
+                xmlParameterDocs.Add(new XmlDocParamStatement(parameter));
+            }
+
+            // Update the method XML docs if any parameter was renamed
+            if (updated && method.XmlDocs != null)
+            {
+                method.XmlDocs.Update(parameters: xmlParameterDocs);
             }
         }
     }

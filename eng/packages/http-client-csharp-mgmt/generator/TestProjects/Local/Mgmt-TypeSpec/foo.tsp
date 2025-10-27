@@ -1,10 +1,12 @@
 import "@azure-tools/typespec-client-generator-core";
 import "@azure-tools/typespec-liftr-base";
+import "@azure-tools/typespec-azure-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
+using Azure.Core;
 using LiftrBase;
 
 namespace MgmtTypeSpec;
@@ -37,6 +39,9 @@ model FooProperties {
   prop2?: int32[];
 
   nestedProperty: NestedFooModel;
+
+  /** ETag property for testing etag parameter name generation */
+  eTag?: Azure.Core.eTag;
 }
 
 model NestedFooModel {
