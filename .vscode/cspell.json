@@ -82,6 +82,7 @@
     "deserializes",
     "diagnoser",
     "dicom",
+    "Diarization",
     "diffie",
     "distro",
     "dmarc",
@@ -785,12 +786,6 @@
       ]
     },
     {
-      "filename": "**/sdk/impactreporting/**/*.cs",
-      "words": [
-        "milli"
-      ]
-    },
-    {
       "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
         "cdie",
@@ -1223,7 +1218,6 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
-        "dsts",
         "regionality"
       ]
     },
