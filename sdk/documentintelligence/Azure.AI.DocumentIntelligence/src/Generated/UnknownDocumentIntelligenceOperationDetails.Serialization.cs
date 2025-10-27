@@ -9,14 +9,18 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    internal partial class UnknownDocumentIntelligenceOperationDetails : IUtf8JsonSerializable, IJsonModel<DocumentIntelligenceOperationDetails>
+    internal partial class UnknownDocumentIntelligenceOperationDetails : DocumentIntelligenceOperationDetails, IJsonModel<DocumentIntelligenceOperationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentIntelligenceOperationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UnknownDocumentIntelligenceOperationDetails"/> for deserialization. </summary>
+        internal UnknownDocumentIntelligenceOperationDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentIntelligenceOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +32,35 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentIntelligenceOperationDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        DocumentIntelligenceOperationDetails IJsonModel<DocumentIntelligenceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentIntelligenceOperationDetails IJsonModel<DocumentIntelligenceOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DocumentIntelligenceOperationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentIntelligenceOperationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDocumentIntelligenceOperationDetails(document.RootElement, options);
         }
 
-        internal static UnknownDocumentIntelligenceOperationDetails DeserializeUnknownDocumentIntelligenceOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownDocumentIntelligenceOperationDetails DeserializeUnknownDocumentIntelligenceOperationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,108 +68,116 @@ namespace Azure.AI.DocumentIntelligence
             string operationId = default;
             DocumentIntelligenceOperationStatus status = default;
             int? percentCompleted = default;
-            DateTimeOffset createdDateTime = default;
-            DateTimeOffset lastUpdatedDateTime = default;
-            OperationKind kind = "Unknown";
+            DateTimeOffset createdOn = default;
+            DateTimeOffset lastUpdatedOn = default;
+            OperationKind kind = default;
             Uri resourceLocation = default;
             string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
             DocumentIntelligenceError error = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"u8))
+                if (prop.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetString();
+                    operationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = new DocumentIntelligenceOperationStatus(property.Value.GetString());
+                    status = new DocumentIntelligenceOperationStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("percentCompleted"u8))
+                if (prop.NameEquals("percentCompleted"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentCompleted = property.Value.GetInt32();
+                    percentCompleted = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"u8))
+                if (prop.NameEquals("createdDateTime"u8))
                 {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedDateTime"u8))
+                if (prop.NameEquals("lastUpdatedDateTime"u8))
                 {
-                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = new OperationKind(property.Value.GetString());
+                    kind = new OperationKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"u8))
+                if (prop.NameEquals("resourceLocation"u8))
                 {
-                    resourceLocation = new Uri(property.Value.GetString());
+                    resourceLocation = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiVersion"u8))
+                if (prop.NameEquals("apiVersion"u8))
                 {
-                    apiVersion = property.Value.GetString();
+                    apiVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
+                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownDocumentIntelligenceOperationDetails(
                 operationId,
                 status,
                 percentCompleted,
-                createdDateTime,
-                lastUpdatedDateTime,
+                createdOn,
+                lastUpdatedOn,
                 kind,
                 resourceLocation,
                 apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 error,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DocumentIntelligenceOperationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentIntelligenceOperationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -171,15 +187,20 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        DocumentIntelligenceOperationDetails IPersistableModel<DocumentIntelligenceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentIntelligenceOperationDetails IPersistableModel<DocumentIntelligenceOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DocumentIntelligenceOperationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentIntelligenceOperationDetails(document.RootElement, options);
                     }
                 default:
@@ -187,22 +208,7 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DocumentIntelligenceOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownDocumentIntelligenceOperationDetails FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUnknownDocumentIntelligenceOperationDetails(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentIntelligenceOperationDetails>(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

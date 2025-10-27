@@ -26,7 +26,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AuthorizeClassifierCopyAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ClassifierCopyAuthorization.FromResponse(response), response);

@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class AddressValue : IUtf8JsonSerializable, IJsonModel<AddressValue>
+    /// <summary> Address field value. </summary>
+    public partial class AddressValue : IJsonModel<AddressValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AddressValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AddressValue)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(HouseNumber))
             {
                 writer.WritePropertyName("houseNumber"u8);
@@ -104,15 +103,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,22 +120,27 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        AddressValue IJsonModel<AddressValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AddressValue IJsonModel<AddressValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AddressValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AddressValue)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAddressValue(document.RootElement, options);
         }
 
-        internal static AddressValue DeserializeAddressValue(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AddressValue DeserializeAddressValue(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,86 +159,84 @@ namespace Azure.AI.DocumentIntelligence
             string suburb = default;
             string house = default;
             string level = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("houseNumber"u8))
+                if (prop.NameEquals("houseNumber"u8))
                 {
-                    houseNumber = property.Value.GetString();
+                    houseNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poBox"u8))
+                if (prop.NameEquals("poBox"u8))
                 {
-                    poBox = property.Value.GetString();
+                    poBox = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("road"u8))
+                if (prop.NameEquals("road"u8))
                 {
-                    road = property.Value.GetString();
+                    road = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"u8))
+                if (prop.NameEquals("city"u8))
                 {
-                    city = property.Value.GetString();
+                    city = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    state = property.Value.GetString();
+                    state = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"u8))
+                if (prop.NameEquals("postalCode"u8))
                 {
-                    postalCode = property.Value.GetString();
+                    postalCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryRegion"u8))
+                if (prop.NameEquals("countryRegion"u8))
                 {
-                    countryRegion = property.Value.GetString();
+                    countryRegion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress"u8))
+                if (prop.NameEquals("streetAddress"u8))
                 {
-                    streetAddress = property.Value.GetString();
+                    streetAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString();
+                    unit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cityDistrict"u8))
+                if (prop.NameEquals("cityDistrict"u8))
                 {
-                    cityDistrict = property.Value.GetString();
+                    cityDistrict = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateDistrict"u8))
+                if (prop.NameEquals("stateDistrict"u8))
                 {
-                    stateDistrict = property.Value.GetString();
+                    stateDistrict = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suburb"u8))
+                if (prop.NameEquals("suburb"u8))
                 {
-                    suburb = property.Value.GetString();
+                    suburb = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("house"u8))
+                if (prop.NameEquals("house"u8))
                 {
-                    house = property.Value.GetString();
+                    house = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"u8))
+                if (prop.NameEquals("level"u8))
                 {
-                    level = property.Value.GetString();
+                    level = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AddressValue(
                 houseNumber,
                 poBox,
@@ -250,13 +252,16 @@ namespace Azure.AI.DocumentIntelligence
                 suburb,
                 house,
                 level,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AddressValue>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AddressValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -266,15 +271,20 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        AddressValue IPersistableModel<AddressValue>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AddressValue IPersistableModel<AddressValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AddressValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAddressValue(document.RootElement, options);
                     }
                 default:
@@ -282,22 +292,7 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AddressValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AddressValue FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAddressValue(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

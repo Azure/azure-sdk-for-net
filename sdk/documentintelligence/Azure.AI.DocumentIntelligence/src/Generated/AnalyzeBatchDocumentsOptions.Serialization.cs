@@ -13,10 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class AnalyzeBatchDocumentsOptions : IUtf8JsonSerializable, IJsonModel<AnalyzeBatchDocumentsOptions>
+    /// <summary> Batch document analysis parameters. </summary>
+    public partial class AnalyzeBatchDocumentsOptions : IJsonModel<AnalyzeBatchDocumentsOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeBatchDocumentsOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/> for deserialization. </summary>
+        internal AnalyzeBatchDocumentsOptions()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeBatchDocumentsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,21 +34,20 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeBatchDocumentsOptions)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(BlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue<BlobContentSource>(BlobSource, options);
+                writer.WriteObjectValue(BlobSource, options);
             }
             if (Optional.IsDefined(BlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue<BlobFileListContentSource>(BlobFileListSource, options);
+                writer.WriteObjectValue(BlobFileListSource, options);
             }
             writer.WritePropertyName("resultContainerUrl"u8);
             writer.WriteStringValue(ResultContainerUri.AbsoluteUri);
@@ -56,15 +61,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("overwriteExisting"u8);
                 writer.WriteBooleanValue(OverwriteExisting.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,91 +78,97 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        AnalyzeBatchDocumentsOptions IJsonModel<AnalyzeBatchDocumentsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeBatchDocumentsOptions IJsonModel<AnalyzeBatchDocumentsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AnalyzeBatchDocumentsOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeBatchDocumentsOptions)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAnalyzeBatchDocumentsOptions(document.RootElement, options);
         }
 
-        internal static AnalyzeBatchDocumentsOptions DeserializeAnalyzeBatchDocumentsOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AnalyzeBatchDocumentsOptions DeserializeAnalyzeBatchDocumentsOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BlobContentSource azureBlobSource = default;
-            BlobFileListContentSource azureBlobFileListSource = default;
-            Uri resultContainerUrl = default;
+            BlobContentSource blobSource = default;
+            BlobFileListContentSource blobFileListSource = default;
+            Uri resultContainerUri = default;
             string resultPrefix = default;
             bool? overwriteExisting = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("azureBlobSource"u8))
+                if (prop.NameEquals("azureBlobSource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureBlobSource = BlobContentSource.DeserializeBlobContentSource(property.Value, options);
+                    blobSource = BlobContentSource.DeserializeBlobContentSource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("azureBlobFileListSource"u8))
+                if (prop.NameEquals("azureBlobFileListSource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureBlobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(property.Value, options);
+                    blobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resultContainerUrl"u8))
+                if (prop.NameEquals("resultContainerUrl"u8))
                 {
-                    resultContainerUrl = new Uri(property.Value.GetString());
+                    resultContainerUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resultPrefix"u8))
+                if (prop.NameEquals("resultPrefix"u8))
                 {
-                    resultPrefix = property.Value.GetString();
+                    resultPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overwriteExisting"u8))
+                if (prop.NameEquals("overwriteExisting"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overwriteExisting = property.Value.GetBoolean();
+                    overwriteExisting = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AnalyzeBatchDocumentsOptions(
-                azureBlobSource,
-                azureBlobFileListSource,
-                resultContainerUrl,
+                blobSource,
+                blobFileListSource,
+                resultContainerUri,
                 resultPrefix,
                 overwriteExisting,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AnalyzeBatchDocumentsOptions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeBatchDocumentsOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -167,15 +178,20 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        AnalyzeBatchDocumentsOptions IPersistableModel<AnalyzeBatchDocumentsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeBatchDocumentsOptions IPersistableModel<AnalyzeBatchDocumentsOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AnalyzeBatchDocumentsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchDocumentsOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnalyzeBatchDocumentsOptions(document.RootElement, options);
                     }
                 default:
@@ -183,21 +199,18 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AnalyzeBatchDocumentsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeBatchDocumentsOptions FromResponse(Response response)
+        /// <param name="analyzeBatchDocumentsOptions"> The <see cref="AnalyzeBatchDocumentsOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnalyzeBatchDocumentsOptions analyzeBatchDocumentsOptions)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAnalyzeBatchDocumentsOptions(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (analyzeBatchDocumentsOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeBatchDocumentsOptions, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
