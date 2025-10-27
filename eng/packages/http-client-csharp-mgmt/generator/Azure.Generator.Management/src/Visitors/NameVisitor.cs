@@ -213,14 +213,6 @@ internal class NameVisitor : ScmLibraryVisitor
 
     protected override MethodProvider? VisitMethod(MethodProvider method)
     {
-        var parameterUpdated = false;
-
-        if (parameterUpdated)
-        {
-            // This is required as a workaround to update documentation for the method signature
-            method.Update(signature: method.Signature);
-        }
-
         // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
         if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
         {
