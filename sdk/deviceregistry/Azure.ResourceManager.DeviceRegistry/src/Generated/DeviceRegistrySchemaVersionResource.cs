@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Create a SchemaVersion. </summary>
+        /// <summary> Update a DeviceRegistrySchemaVersion. </summary>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Create a SchemaVersion. </summary>
+        /// <summary> Update a DeviceRegistrySchemaVersion. </summary>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
