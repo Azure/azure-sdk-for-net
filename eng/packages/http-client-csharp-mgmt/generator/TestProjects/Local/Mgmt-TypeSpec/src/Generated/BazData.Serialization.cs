@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BazProperties properties = default;
@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -177,7 +177,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new BazData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,

@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PlaywrightQuotaProperties properties = default;
@@ -99,7 +99,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -128,7 +128,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new PlaywrightQuotaData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
@@ -156,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotaData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

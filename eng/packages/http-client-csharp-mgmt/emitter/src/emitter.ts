@@ -53,6 +53,8 @@ function setFlattenProperty(
 function updateTrackedResourceWithOptionalLocation(codeModel: CodeModel): void {
   // Find models that have tags, location, and properties fields directly in the model (not inherited)
   // and extend Resource. This is the pattern for TrackedResourceWithOptionalLocation.
+  let trackedResourceWithOptionalLocationModel = null;
+  
   for (const model of codeModel.models) {
     if (model.baseModel?.crossLanguageDefinitionId === "Azure.ResourceManager.CommonTypes.Resource") {
       // Check if this model has tags, location, and properties directly in its property list
@@ -62,8 +64,15 @@ function updateTrackedResourceWithOptionalLocation(codeModel: CodeModel): void {
       
       if (hasTags && hasLocation && hasProperties) {
         // This is a model that extends TrackedResourceWithOptionalLocation
-        // Update the cross-language definition ID directly
-        model.baseModel.crossLanguageDefinitionId = "Azure.ResourceManager.Legacy.TrackedResourceWithOptionalLocation";
+        // Create a new base model object to avoid affecting other models
+        if (!trackedResourceWithOptionalLocationModel) {
+          const originalBaseModel = model.baseModel;
+          trackedResourceWithOptionalLocationModel = Object.assign({}, originalBaseModel);
+          trackedResourceWithOptionalLocationModel.crossLanguageDefinitionId = "Azure.ResourceManager.Legacy.TrackedResourceWithOptionalLocation";
+          // Add the base model to the models array so it gets processed by the generator
+          codeModel.models.push(trackedResourceWithOptionalLocationModel);
+        }
+        model.baseModel = trackedResourceWithOptionalLocationModel;
       }
     }
   }
