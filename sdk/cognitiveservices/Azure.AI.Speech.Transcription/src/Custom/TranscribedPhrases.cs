@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.AI.Speech.Transcription;
 
-/// <summary> TranscribedPhrases. </summary>
-public partial class TranscribedPhrases
+namespace Azure.AI.Speech.Transcription
 {
+    /// <summary> TranscribedPhrases. </summary>
+    public partial class TranscribedPhrases
+    {
     /// <summary>
     /// Initializes a new instance of the <see cref="TranscribedPhrases"/> class.
     /// </summary>
@@ -29,4 +30,5 @@ public partial class TranscribedPhrases
     /// <summary> The transcription results segmented into phrases. </summary>
 
     public IEnumerable<TranscribedPhrase> Phrases;
+    }
 }
