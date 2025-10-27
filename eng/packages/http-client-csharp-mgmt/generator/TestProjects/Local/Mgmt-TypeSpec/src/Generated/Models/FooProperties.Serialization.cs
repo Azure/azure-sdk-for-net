@@ -92,7 +92,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             writer.WriteObjectValue(NestedProperty, options);
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag"u8);
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -226,7 +226,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("eTag"u8))
+                if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

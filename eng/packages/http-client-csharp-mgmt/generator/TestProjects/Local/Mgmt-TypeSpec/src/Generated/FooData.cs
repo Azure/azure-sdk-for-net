@@ -163,7 +163,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> ETag property for testing etag parameter name generation. </summary>
-        [WirePath("properties.eTag")]
+        [WirePath("properties.etag")]
         public ETag? ETag
         {
             get

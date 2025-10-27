@@ -95,7 +95,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         internal NestedFooModel NestedProperty { get; set; }
 
         /// <summary> ETag property for testing etag parameter name generation. </summary>
-        [WirePath("eTag")]
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
 
         /// <summary> Gets or sets the Properties. </summary>

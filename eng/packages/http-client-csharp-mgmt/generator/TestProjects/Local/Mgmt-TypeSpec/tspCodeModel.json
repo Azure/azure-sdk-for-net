@@ -4350,8 +4350,8 @@
               {
                 "$id": "387",
                 "kind": "property",
-                "name": "eTag",
-                "serializedName": "eTag",
+                "name": "etag",
+                "serializedName": "etag",
                 "doc": "ETag property for testing etag parameter name generation",
                 "type": {
                   "$id": "388",
@@ -4372,10 +4372,10 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties.eTag",
+                "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties.etag",
                 "serializationOptions": {
                   "json": {
-                    "name": "eTag"
+                    "name": "etag"
                   }
                 },
                 "isHttpMetadata": false

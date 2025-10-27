@@ -41,7 +41,7 @@ model FooProperties {
   nestedProperty: NestedFooModel;
 
   /** ETag property for testing etag parameter name generation */
-  eTag?: Azure.Core.eTag;
+  etag?: Azure.Core.eTag;
 }
 
 model NestedFooModel {
