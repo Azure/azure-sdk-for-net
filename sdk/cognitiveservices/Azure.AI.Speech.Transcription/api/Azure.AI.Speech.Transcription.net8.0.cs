@@ -9,6 +9,7 @@ namespace Azure.AI.Speech.Transcription
 {
     public static partial class AISpeechTranscriptionModelFactory
     {
+        public static Azure.AI.Speech.Transcription.TranscriptionOptions TranscriptionOptions(System.Uri audioUri = null, System.Collections.Generic.IEnumerable<string> locales = null, System.Collections.Generic.IDictionary<string, System.Uri> models = null, Azure.AI.Speech.Transcription.ProfanityFilterMode? profanityFilterMode = default(Azure.AI.Speech.Transcription.ProfanityFilterMode?), Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions diarizationOptions = null, System.Collections.Generic.IEnumerable<int> activeChannels = null, Azure.AI.Speech.Transcription.EnhancedModeProperties enhancedMode = null, Azure.AI.Speech.Transcription.PhraseListProperties phraseList = null) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscriptionResult TranscriptionResult(int durationMilliseconds = 0) { throw null; }
     }
     public partial class AzureAISpeechTranscriptionContext : System.ClientModel.Primitives.ModelReaderWriterContext
@@ -93,18 +94,6 @@ namespace Azure.AI.Speech.Transcription
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribedWord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribedWord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TranscribeRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>
-    {
-        public TranscribeRequestContent() { }
-        public System.IO.Stream Audio { get { throw null; } set { } }
-        public Azure.AI.Speech.Transcription.TranscriptionOptions Options { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Speech.Transcription.TranscribeRequestContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Speech.Transcription.TranscribeRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribeRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TranscriptionClient
     {
         protected TranscriptionClient() { }
@@ -113,10 +102,7 @@ namespace Azure.AI.Speech.Transcription
         public TranscriptionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public TranscriptionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Speech.Transcription.TranscriptionResult> Transcribe(Azure.AI.Speech.Transcription.TranscribeRequestContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Transcribe(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Speech.Transcription.TranscriptionResult>> TranscribeAsync(Azure.AI.Speech.Transcription.TranscribeRequestContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TranscribeAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Speech.Transcription.TranscriptionResult>> TranscribeAsync(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TranscriptionClientOptions : Azure.Core.ClientOptions
     {
@@ -141,8 +127,10 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionOptions>
     {
         public TranscriptionOptions() { }
+        public TranscriptionOptions(System.IO.Stream audioStream) { }
+        public TranscriptionOptions(System.Uri audioUri) { }
         public System.Collections.Generic.IList<int> ActiveChannels { get { throw null; } }
-        public System.Uri AudioUrl { get { throw null; } set { } }
+        public System.Uri AudioUri { get { throw null; } }
         public Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions DiarizationOptions { get { throw null; } set { } }
         public Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } }
