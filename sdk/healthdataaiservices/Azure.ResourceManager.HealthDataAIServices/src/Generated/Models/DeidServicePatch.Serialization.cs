@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                SerializeIdentity(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -133,11 +133,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    DeserializeIdentity(prop, ref identity);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
