@@ -26,7 +26,7 @@ internal partial class AzureFineTuningJob : FineTuningJob
 
         using PipelineMessage message = azureClient.GetJobPipelineMessage(jobId, options);
         PipelineResponse response = azureClient.Pipeline.ProcessMessage(message, options);
-        return azureClient.CreateJobFromResponse(response) as AzureFineTuningJob;
+        return (azureClient.CreateJobFromResponse(response) as AzureFineTuningJob)!;
     }
 
     internal static new async Task<AzureFineTuningJob> RehydrateAsync(FineTuningClient client, string jobId, RequestOptions? options)
@@ -39,7 +39,7 @@ internal partial class AzureFineTuningJob : FineTuningJob
 
         using PipelineMessage message = azureClient.GetJobPipelineMessage(jobId, options);
         PipelineResponse response = await azureClient.Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return azureClient.CreateJobFromResponse(response) as AzureFineTuningJob;
+        return (azureClient.CreateJobFromResponse(response) as AzureFineTuningJob)!;
     }
 
     public override AsyncCollectionResult<FineTuningCheckpoint> GetCheckpointsAsync(GetCheckpointsOptions? options = null, CancellationToken cancellationToken = default)
