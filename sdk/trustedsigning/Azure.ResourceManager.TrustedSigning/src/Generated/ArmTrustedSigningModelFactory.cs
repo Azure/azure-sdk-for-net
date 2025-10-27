@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityValidationId"/> is null. </exception>
         /// <returns> A new <see cref="TrustedSigning.TrustedSigningCertificateProfileData"/> instance for mocking. </returns>
         public static TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CertificateProfileType? profileType = default, bool? includeStreetAddress = default, bool? includeCity = default, bool? includeState = default, bool? includeCountry = default, bool? includePostalCode = default, string identityValidationId = default, TrustedSigningProvisioningState? provisioningState = default, CertificateProfileStatus? status = default, IReadOnlyList<TrustedSigningCertificate> certificates = default)
         {

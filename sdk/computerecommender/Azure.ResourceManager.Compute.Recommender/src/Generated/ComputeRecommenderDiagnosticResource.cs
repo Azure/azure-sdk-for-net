@@ -91,7 +91,27 @@ namespace Azure.ResourceManager.Compute.Recommender
             }
         }
 
-        /// <summary> Gets Spot Placement Scores metadata. </summary>
+        /// <summary>
+        /// Gets Spot Placement Scores metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ComputeRecommenderDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -119,7 +139,27 @@ namespace Azure.ResourceManager.Compute.Recommender
             }
         }
 
-        /// <summary> Gets Spot Placement Scores metadata. </summary>
+        /// <summary>
+        /// Gets Spot Placement Scores metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ComputeRecommenderDiagnosticResource> Get(CancellationToken cancellationToken = default)
         {
@@ -147,7 +187,27 @@ namespace Azure.ResourceManager.Compute.Recommender
             }
         }
 
-        /// <summary> Generates placement scores for Spot VM skus. </summary>
+        /// <summary>
+        /// Generates placement scores for Spot VM skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="spotPlacementScoresInput"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spotPlacementScoresInput"/> is null. </exception>
@@ -179,7 +239,27 @@ namespace Azure.ResourceManager.Compute.Recommender
             }
         }
 
-        /// <summary> Generates placement scores for Spot VM skus. </summary>
+        /// <summary>
+        /// Generates placement scores for Spot VM skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Generate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="spotPlacementScoresInput"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spotPlacementScoresInput"/> is null. </exception>
