@@ -14958,7 +14958,7 @@
             {
               "$id": "1105",
               "kind": "paging",
-              "name": "listByParent",
+              "name": "GetEmployees",
               "accessibility": "public",
               "apiVersions": [
                 "2024-05-01"
@@ -14966,7 +14966,7 @@
               "doc": "List Employee resources by Bar",
               "operation": {
                 "$id": "1106",
-                "name": "listByParent",
+                "name": "GetEmployees",
                 "resourceName": "Employee",
                 "doc": "List Employee resources by Bar",
                 "accessibility": "public",

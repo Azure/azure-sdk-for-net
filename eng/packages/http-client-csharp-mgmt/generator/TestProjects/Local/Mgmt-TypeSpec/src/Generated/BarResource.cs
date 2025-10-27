@@ -283,13 +283,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> List Employee resources by Bar. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Employee> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Employee> GetEmployeesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EmployeesGetByParentAsyncCollectionResultOfT(
+            return new EmployeesGetEmployeesAsyncCollectionResultOfT(
                 _employeesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -301,13 +301,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> List Employee resources by Bar. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Employee> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<Employee> GetEmployees(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EmployeesGetByParentCollectionResultOfT(
+            return new EmployeesGetEmployeesCollectionResultOfT(
                 _employeesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

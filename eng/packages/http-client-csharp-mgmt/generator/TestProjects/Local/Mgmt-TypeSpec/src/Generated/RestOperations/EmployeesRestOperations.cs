@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context)
+        internal HttpMessage CreateGetEmployeesRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -63,7 +63,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return message;
         }
 
-        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context)
+        internal HttpMessage CreateNextGetEmployeesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
