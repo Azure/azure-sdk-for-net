@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     internal class MultipartFormDataRequestContent : RequestContent
     {

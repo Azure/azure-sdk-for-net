@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     internal static class Argument
     {

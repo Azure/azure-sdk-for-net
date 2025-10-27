@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     internal static class Optional
     {

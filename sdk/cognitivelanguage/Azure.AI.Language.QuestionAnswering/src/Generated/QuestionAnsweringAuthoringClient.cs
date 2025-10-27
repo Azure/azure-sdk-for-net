@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
@@ -19,6 +20,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -38,7 +41,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringAuthoringClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringAuthoringClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new QuestionAnsweringAuthoringClientOptions())
         {
         }
 
@@ -47,17 +58,63 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options)
+        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringAuthoringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new QuestionAnsweringClientOptions();
+            options ??= new QuestionAnsweringAuthoringClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringAuthoringClient(Uri endpoint, TokenCredential credential, QuestionAnsweringAuthoringClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new QuestionAnsweringAuthoringClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Get the requested project metadata. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringProject>> GetProjectDetailsAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetProjectDetailsAsync(projectName, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringProject.FromResponse(response), response);
+        }
+
+        /// <summary> Get the requested project metadata. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringProject> GetProjectDetails(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetProjectDetails(projectName, context);
+            return Response.FromValue(QuestionAnsweringProject.FromResponse(response), response);
         }
 
         /// <summary>
@@ -68,16 +125,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectDetailsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjectDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context = null)
+        public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -103,16 +164,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectDetails(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjectDetails(string,RequestContext)']/*" />
-        public virtual Response GetProjectDetails(string projectName, RequestContext context = null)
+        public virtual Response GetProjectDetails(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -140,14 +205,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='CreateProjectAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -177,14 +241,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='CreateProject(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -204,6 +267,34 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <summary> Gets the status of a Project delete job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringAuthoringProjectDeletionJobState>> GetDeleteStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeleteStatusAsync(jobId, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringAuthoringProjectDeletionJobState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of a Project delete job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringAuthoringProjectDeletionJobState> GetDeleteStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeleteStatus(jobId, context);
+            return Response.FromValue(QuestionAnsweringAuthoringProjectDeletionJobState.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets the status of a Project delete job.
         /// <list type="bullet">
@@ -212,16 +303,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeleteStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeleteStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -247,16 +342,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeleteStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeleteStatus(string,RequestContext)']/*" />
-        public virtual Response GetDeleteStatus(string jobId, RequestContext context = null)
+        public virtual Response GetDeleteStatus(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -275,24 +374,67 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the status of an Export job, once job completes, returns the project metadata, and assets.
+        /// Gets the status of an Export job, once job completes, returns the project
+        /// metadata, and assets.
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringAuthoringExportJobState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetExportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringAuthoringExportJobState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets the status of an Export job, once job completes, returns the project
+        /// metadata, and assets.
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringAuthoringExportJobState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetExportStatus(projectName, jobId, context);
+            return Response.FromValue(QuestionAnsweringAuthoringExportJobState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an Export job, once job completes, returns the project
+        /// metadata, and assets.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -312,24 +454,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the status of an Export job, once job completes, returns the project metadata, and assets.
+        /// [Protocol Method] Gets the status of an Export job, once job completes, returns the project
+        /// metadata, and assets.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetExportStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -346,6 +493,38 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the status of an Import job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringAuthoringImportJobState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetImportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringAuthoringImportJobState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an Import job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringAuthoringImportJobState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetImportStatus(projectName, jobId, context);
+            return Response.FromValue(QuestionAnsweringAuthoringImportJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -356,17 +535,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetImportStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -393,17 +576,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetImportStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetImportStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -420,6 +607,42 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the status of a Deploy job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="deploymentName"> Name of the deployment. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringAuthoringProjectDeploymentJobState>> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeployStatusAsync(projectName, deploymentName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringAuthoringProjectDeploymentJobState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of a Deploy job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="deploymentName"> Name of the deployment. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringAuthoringProjectDeploymentJobState> GetDeployStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeployStatus(projectName, deploymentName, jobId, context);
+            return Response.FromValue(QuestionAnsweringAuthoringProjectDeploymentJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -430,18 +653,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeployStatusAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="deploymentName"> Name of the deployment. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeployStatusAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -469,18 +696,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeployStatus(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="deploymentName"> Name of the deployment. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeployStatus(string,string,string,RequestContext)']/*" />
-        public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -498,6 +729,40 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Updates all the synonyms of a project. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> All the synonyms of a project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> UpdateSynonymsAsync(string projectName, SynonymAssets body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateSynonymsAsync(projectName, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Updates all the synonyms of a project. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> All the synonyms of a project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response UpdateSynonyms(string projectName, SynonymAssets body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateSynonyms(projectName, content, context);
+            return response;
         }
 
         /// <summary>
@@ -506,6 +771,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateSynonymsAsync(string,SynonymAssets,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -517,7 +787,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSynonymsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -545,6 +814,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateSynonyms(string,SynonymAssets,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
@@ -554,7 +828,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSynonyms(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateSynonyms(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -574,6 +847,38 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <summary> Gets the status of update sources job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringAuthoringUpdateSourcesJobState>> GetUpdateSourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUpdateSourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringAuthoringUpdateSourcesJobState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of update sources job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringAuthoringUpdateSourcesJobState> GetUpdateSourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUpdateSourcesStatus(projectName, jobId, context);
+            return Response.FromValue(QuestionAnsweringAuthoringUpdateSourcesJobState.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets the status of update sources job.
         /// <list type="bullet">
@@ -582,17 +887,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUpdateSourcesStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateSourcesStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -619,17 +928,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUpdateSourcesStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateSourcesStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -648,6 +961,38 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <summary> Gets the status of update QnAs job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuestionAnsweringAuthoringUpdateQnasJobState>> GetUpdateQnasStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUpdateQnasStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(QuestionAnsweringAuthoringUpdateQnasJobState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of update QnAs job. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuestionAnsweringAuthoringUpdateQnasJobState> GetUpdateQnasStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUpdateQnasStatus(projectName, jobId, context);
+            return Response.FromValue(QuestionAnsweringAuthoringUpdateQnasJobState.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets the status of update QnAs job.
         /// <list type="bullet">
@@ -656,17 +1001,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUpdateQnasStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateQnasStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -693,17 +1042,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUpdateQnasStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="jobId"> Job ID. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateQnasStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -722,12 +1075,51 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <summary> Update Active Learning feedback. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Feedback for Active Learning. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddFeedbackAsync(string projectName, ActiveLearningFeedback body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddFeedbackAsync(projectName, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Update Active Learning feedback. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Feedback for Active Learning. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddFeedback(string projectName, ActiveLearningFeedback body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddFeedback(projectName, content, context);
+            return response;
+        }
+
         /// <summary>
-        /// [Protocol Method] Add Active Learning feedback
+        /// [Protocol Method] Update Active Learning feedback.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddFeedbackAsync(string,ActiveLearningFeedback,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -739,7 +1131,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='AddFeedbackAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -760,11 +1151,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Add Active Learning feedback
+        /// [Protocol Method] Update Active Learning feedback.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddFeedback(string,ActiveLearningFeedback,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -776,7 +1172,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='AddFeedback(string,RequestContent,RequestContext)']/*" />
         public virtual Response AddFeedback(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -796,25 +1191,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Gets all projects for a user.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjectsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context = null)
+        /// <summary> Gets all projects for a user. </summary>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuestionAnsweringProject.DeserializeQuestionAnsweringProject(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all projects for a user. </summary>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<QuestionAnsweringProject> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuestionAnsweringProject.DeserializeQuestionAnsweringProject(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -825,17 +1225,88 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectsAsync(int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets all projects for a user.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjects(int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjects(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetProjects(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> List all deployments of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<ProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectDeployment.DeserializeProjectDeployment(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> List all deployments of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<ProjectDeployment> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectDeployment.DeserializeProjectDeployment(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -846,22 +1317,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -872,22 +1350,65 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeployments(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all the synonyms of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<WordAlterations> GetSynonymsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WordAlterations.DeserializeWordAlterations(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all the synonyms of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<WordAlterations> GetSynonyms(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WordAlterations.DeserializeWordAlterations(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -898,22 +1419,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSynonymsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSynonymsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -924,22 +1452,65 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSynonyms(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSynonyms(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSynonyms(string projectName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all the sources of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<QnaSourceRecord> GetSourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QnaSourceRecord.DeserializeQnaSourceRecord(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all the sources of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<QnaSourceRecord> GetSources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QnaSourceRecord.DeserializeQnaSourceRecord(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -950,22 +1521,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSourcesAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSourcesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -976,22 +1554,67 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSources(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSources(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSources(string projectName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all the QnAs of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="source"> Source of the QnA. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<RetrieveQnaRecord> GetQnasAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, string source = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, maxCount, skip, pageSizeHint, source, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, source, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RetrieveQnaRecord.DeserializeRetrieveQnaRecord(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets all the QnAs of a project. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="source"> Source of the QnA. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<RetrieveQnaRecord> GetQnas(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, string source = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, maxCount, skip, pageSizeHint, source, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, source, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RetrieveQnaRecord.DeserializeRetrieveQnaRecord(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -1002,23 +1625,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetQnasAsync(string,int?,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetQnasAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, source, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, maxCount, skip, pageSizeHint, source, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, source, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -1029,25 +1659,33 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetQnas(string,int?,int?,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="source"> Source of the QnA. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetQnas(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetQnas(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, source, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, maxCount, skip, pageSizeHint, source, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, source, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", maxpagesize, context);
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete the project.
         /// <list type="bullet">
@@ -1065,7 +1703,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1075,7 +1712,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1084,6 +1721,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete the project.
         /// <list type="bullet">
@@ -1101,7 +1739,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1111,7 +1748,81 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Export project metadata and assets. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, Format? fileFormat = null, AssestKind? assetKind = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ExportAsync(waitUntil, projectName, fileFormat?.ToString(), assetKind?.ToString(), context).ConfigureAwait(false);
+        }
+
+        /// <summary> Export project metadata and assets. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, Format? fileFormat = null, AssestKind? assetKind = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Export(waitUntil, projectName, fileFormat?.ToString(), assetKind?.ToString(), context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Export project metadata and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,Format?,AssestKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
+        /// <param name="assetKind"> Kind of the asset of the project. Allowed values: "qnas" | "synonyms". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, string fileFormat, string assetKind, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Export");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateExportRequest(projectName, fileFormat, assetKind, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1128,19 +1839,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Export(WaitUntil,string,Format?,AssestKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="format"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: "qnas" | "synonyms". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, string fileFormat, string assetKind, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1148,8 +1863,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateExportRequest(projectName, fileFormat, assetKind, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1158,36 +1873,77 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        /// <summary> Import project assets. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Project assets the needs to be imported. </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = null, Format? fileFormat = null, AssestKind? assetKind = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using RequestContent content = body?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ImportAsync(waitUntil, projectName, content, fileFormat?.ToString(), assetKind?.ToString(), context).ConfigureAwait(false);
+        }
+
+        /// <summary> Import project assets. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Project assets the needs to be imported. </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = null, Format? fileFormat = null, AssestKind? assetKind = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using RequestContent content = body?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Import(waitUntil, projectName, content, fileFormat?.ToString(), assetKind?.ToString(), context);
+        }
+
         /// <summary>
-        /// [Protocol Method] Export project metadata and assets.
+        /// [Protocol Method] Import project assets.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,string,ImportJobOptions,Format?,AssestKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="format"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: "qnas" | "synonyms". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='Export(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string fileFormat = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Export");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Import");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateImportRequest(projectName, content, fileFormat, assetKind, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1204,20 +1960,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Import(WaitUntil,string,ImportJobOptions,Format?,AssestKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
+        /// <param name="fileFormat"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: "qnas" | "synonyms". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,RequestContent,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string fileFormat = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1225,8 +1985,88 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateImportRequest(projectName, content, fileFormat, assetKind, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Import project assets from file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Collection of files containing project assets the needs to be imported. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ImportFromFilesAsync(WaitUntil waitUntil, string projectName, ImportFiles body, AssestKind? assetKind = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ImportFromFilesAsync(waitUntil, projectName, content, content.ContentType, assetKind?.ToString(), context).ConfigureAwait(false);
+        }
+
+        /// <summary> Import project assets from file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Collection of files containing project assets the needs to be imported. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation ImportFromFiles(WaitUntil waitUntil, string projectName, ImportFiles body, AssestKind? assetKind = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return ImportFromFiles(waitUntil, projectName, content, content.ContentType, assetKind?.ToString(), context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Import project assets from file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportFromFilesAsync(WaitUntil,string,ImportFiles,AssestKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> This request has a multi-part body. Allowed values: "multipart/form-data". </param>
+        /// <param name="assetKind"> Kind of the asset of the project. Allowed values: "qnas" | "synonyms". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> ImportFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.ImportFromFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1236,11 +2076,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Import project assets.
+        /// [Protocol Method] Import project assets from file.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportFromFiles(WaitUntil,string,ImportFiles,AssestKind?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1248,24 +2093,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format"> Knowledge base Import or Export format. Allowed values: "json" | "tsv" | "excel". </param>
+        /// <param name="contentType"> This request has a multi-part body. Allowed values: "multipart/form-data". </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: "qnas" | "synonyms". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='Import(WaitUntil,string,RequestContent,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation ImportFromFiles(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Import");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.ImportFromFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1274,6 +2119,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deploy project to production.
         /// <list type="bullet">
@@ -1292,8 +2138,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -1303,7 +2148,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1312,6 +2157,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deploy project to production.
         /// <list type="bullet">
@@ -1330,8 +2176,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeployProject(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -1341,7 +2186,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1367,9 +2212,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="AsyncPageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<AsyncPageable<BinaryData>>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1378,9 +2222,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await GeneratorPageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1406,9 +2249,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="Pageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSources(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual Operation<Pageable<BinaryData>> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1417,9 +2259,84 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return GeneratorPageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the sources of a project from files.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> This request has a multi-part body. Allowed values: "multipart/form-data". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> UpdateSourcesFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates the sources of a project from files.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> This request has a multi-part body. Allowed values: "multipart/form-data". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation UpdateSourcesFromFiles(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1445,9 +2362,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="AsyncPageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateQnasAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<AsyncPageable<BinaryData>>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1456,9 +2372,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await GeneratorPageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1484,9 +2399,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="Pageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateQnas(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual Operation<Pageable<BinaryData>> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1495,9 +2409,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             scope.Start();
             try
             {
-                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return GeneratorPageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1506,7 +2419,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1514,8 +2427,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1529,7 +2454,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1545,7 +2470,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1563,11 +2488,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1579,7 +2503,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/deletion-jobs/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1587,28 +2511,27 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateExportRequest(string projectName, string format, string assetKind, RequestContext context)
+        internal HttpMessage CreateExportRequest(string projectName, string fileFormat, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:export", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (format != null)
+            if (fileFormat != null)
             {
-                uri.AppendQuery("format", format, true);
+                uri.AppendQuery("format", fileFormat, true);
             }
             if (assetKind != null)
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1620,7 +2543,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/export/jobs/", false);
             uri.AppendPath(jobId, true);
@@ -1630,29 +2553,50 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, string assetKind, RequestContext context)
+        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string fileFormat, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (format != null)
+            if (fileFormat != null)
             {
-                uri.AppendQuery("format", format, true);
+                uri.AppendQuery("format", fileFormat, true);
             }
             if (assetKind != null)
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateImportFromFilesRequest(string projectName, RequestContent content, string contentType, string assetKind, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (assetKind != null)
+            {
+                uri.AppendQuery("assetKind", assetKind, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }
@@ -1665,7 +2609,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/import/jobs/", false);
             uri.AppendPath(jobId, true);
@@ -1677,19 +2621,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1701,7 +2644,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
@@ -1713,7 +2656,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1721,16 +2664,28 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsRequest(string projectName, RequestContext context)
+        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1738,10 +2693,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1755,18 +2722,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesRequest(string projectName, RequestContext context)
+        internal HttpMessage CreateGetSourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1774,10 +2740,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1785,19 +2763,36 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         internal HttpMessage CreateUpdateSourcesRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateSourcesFromFilesRequest(string projectName, RequestContent content, string contentType, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/sources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }
@@ -1810,7 +2805,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources/jobs/", false);
             uri.AppendPath(jobId, true);
@@ -1820,7 +2815,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasRequest(string projectName, string source, RequestContext context)
+        internal HttpMessage CreateGetQnasRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1828,10 +2823,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             if (source != null)
             {
                 uri.AppendQuery("source", source, true);
@@ -1843,18 +2850,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         internal HttpMessage CreateUpdateQnasRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1868,7 +2874,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas/jobs/", false);
             uri.AppendPath(jobId, true);
@@ -1886,18 +2892,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/feedback", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1911,7 +2916,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1925,7 +2930,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, RequestContext context)
+        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1939,7 +2944,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, RequestContext context)
+        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1953,7 +2958,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, RequestContext context)
+        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1967,32 +2972,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateUpdateSourcesNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
 
-        internal HttpMessage CreateUpdateQnasNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;
@@ -2001,8 +2989,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier200202;
-        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }

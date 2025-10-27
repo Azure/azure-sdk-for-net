@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {
