@@ -178,7 +178,7 @@ public partial class FrontDoorWebApplicationFirewallPolicy : ProvisionableResour
     /// </param>
     /// <param name="resourceVersion">Version of the FrontDoorWebApplicationFirewallPolicy.</param>
     public FrontDoorWebApplicationFirewallPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies", resourceVersion ?? "2025-03-01")
+        : base(bicepIdentifier, "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -211,6 +211,11 @@ public partial class FrontDoorWebApplicationFirewallPolicy : ProvisionableResour
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-03-01.
         /// </summary>

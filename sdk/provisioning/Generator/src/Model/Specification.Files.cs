@@ -183,11 +183,9 @@ public abstract partial class Specification : ModelBase
                     <NoWarn>CS1591</NoWarn>
                   </PropertyGroup>
 
-                  <!-- TODO: Consider adding DataPlane dependencies here like:
                   <ItemGroup>
-                    <PackageReference Include="Azure.Storage.Blobs" />
+                    <PackageReference Include="Azure.Provisioning" />
                   </ItemGroup>
-                  -->
 
                 </Project>
                 """);

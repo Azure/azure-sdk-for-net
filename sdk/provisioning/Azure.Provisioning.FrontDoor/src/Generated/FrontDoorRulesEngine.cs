@@ -87,7 +87,7 @@ public partial class FrontDoorRulesEngine : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the FrontDoorRulesEngine.</param>
     public FrontDoorRulesEngine(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/frontDoors/rulesEngines", resourceVersion ?? "2021-06-01")
+        : base(bicepIdentifier, "Microsoft.Network/frontDoors/rulesEngines", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -110,6 +110,11 @@ public partial class FrontDoorRulesEngine : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2021-06-01.
         /// </summary>
