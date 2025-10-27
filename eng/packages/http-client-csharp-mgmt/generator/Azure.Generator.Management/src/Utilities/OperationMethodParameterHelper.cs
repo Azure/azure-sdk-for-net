@@ -57,17 +57,12 @@ namespace Azure.Generator.Management.Utilities
 
                 // Rename body parameters for resource/resourcecollection operations
                 if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider) &&
-                    outputParameter.Location == ParameterLocation.Body &&
-                    parameter.Type is InputModelType bodyModelType &&
-                    !ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(bodyModelType))
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
-                    if (serviceMethod.Operation.HttpMethod == "PUT")
+                    var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
+                    if (normalizedName != null)
                     {
-                        outputParameter.Update(name: "content");
-                    }
-                    else if (serviceMethod.Operation.HttpMethod == "PATCH")
-                    {
-                        outputParameter.Update(name: "patch");
+                        outputParameter.Update(name: normalizedName);
                     }
                 }
 
