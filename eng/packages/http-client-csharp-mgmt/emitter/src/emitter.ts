@@ -28,6 +28,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   ): CodeModel {
     updateClients(codeModel, sdkContext);
     setFlattenProperty(codeModel, sdkContext);
+    updateTrackedResourceWithOptionalLocation(codeModel);
     return codeModel;
   }
 }
@@ -44,6 +45,25 @@ function setFlattenProperty(
           arguments: {}
         };
         property.decorators.push(flattenPropertyMetadataDecorator);
+      }
+    }
+  }
+}
+
+function updateTrackedResourceWithOptionalLocation(codeModel: CodeModel): void {
+  // Find models that have tags, location, and properties fields directly in the model (not inherited)
+  // and extend Resource. This is the pattern for TrackedResourceWithOptionalLocation.
+  for (const model of codeModel.models) {
+    if (model.baseModel?.crossLanguageDefinitionId === "Azure.ResourceManager.CommonTypes.Resource") {
+      // Check if this model has tags, location, and properties directly in its property list
+      const hasTags = model.properties?.some(p => p.name === "tags");
+      const hasLocation = model.properties?.some(p => p.name === "location");
+      const hasProperties = model.properties?.some(p => p.name === "properties");
+      
+      if (hasTags && hasLocation && hasProperties) {
+        // This is a model that extends TrackedResourceWithOptionalLocation
+        // Update the cross-language definition ID directly
+        model.baseModel.crossLanguageDefinitionId = "Azure.ResourceManager.Legacy.TrackedResourceWithOptionalLocation";
       }
     }
   }
