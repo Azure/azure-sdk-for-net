@@ -146,7 +146,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     {
         DiarizationOptions = new()
         {
-            Enabled = true,
+            // Enabled is automatically set to true when MaxSpeakers is specified
             MaxSpeakers = 2
         }
     };

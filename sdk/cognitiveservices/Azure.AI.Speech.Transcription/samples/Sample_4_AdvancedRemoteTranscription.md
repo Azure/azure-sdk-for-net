@@ -92,7 +92,7 @@ TranscriptionOptions options = new TranscriptionOptions(audioUrl)
     ProfanityFilterMode = ProfanityFilterMode.Masked,
     DiarizationOptions = new TranscriptionDiarizationOptions
     {
-        Enabled = true,
+        // Enabled is automatically set to true when MaxSpeakers is specified
         MaxSpeakers = 2
     }
 };
