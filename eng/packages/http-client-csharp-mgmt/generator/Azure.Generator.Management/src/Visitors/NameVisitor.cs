@@ -214,14 +214,6 @@ internal class NameVisitor : ScmLibraryVisitor
     protected override MethodProvider? VisitMethod(MethodProvider method)
     {
         var parameterUpdated = false;
-        foreach (var parameter in method.Signature.Parameters)
-        {
-            if (_resourceUpdateModelTypes.Contains(parameter.Type))
-            {
-                parameter.Update(name: "patch");
-                parameterUpdated = true;
-            }
-        }
 
         if (parameterUpdated)
         {
