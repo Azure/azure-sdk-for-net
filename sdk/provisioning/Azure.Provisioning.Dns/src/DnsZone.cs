@@ -3,7 +3,9 @@
 
 #nullable enable
 
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
@@ -62,6 +64,9 @@ public partial class DnsZone : ProvisionableResource
     }
     private SystemData? _systemData;
 
+    /// <summary>
+    /// A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private.
+    /// </summary>
     public BicepList<WritableSubResource> RegistrationVirtualNetworks
     {
         get { Initialize(); return _registrationVirtualNetworks!; }
@@ -69,6 +74,9 @@ public partial class DnsZone : ProvisionableResource
     }
     private BicepList<WritableSubResource>? _registrationVirtualNetworks;
 
+    /// <summary>
+    /// A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private.
+    /// </summary>
     public BicepList<WritableSubResource> ResolutionVirtualNetworks
     {
         get { Initialize(); return _resolutionVirtualNetworks!; }
@@ -76,12 +84,50 @@ public partial class DnsZone : ProvisionableResource
     }
     private BicepList<WritableSubResource>? _resolutionVirtualNetworks;
 
+    /// <summary>
+    /// The type of this DNS zone (Public or Private).
+    /// </summary>
     public BicepValue<DnsZoneType> ZoneType
     {
         get { Initialize(); return _zoneType!; }
         set { Initialize(); _zoneType!.Assign(value); }
     }
     private BicepValue<DnsZoneType>? _zoneType;
+
+    /// <summary> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </summary>
+    public BicepValue<long> MaxNumberOfRecords
+    {
+        get { Initialize(); return _maxNumberOfRecords!; }
+    }
+    private BicepValue<long>? _maxNumberOfRecords;
+
+    /// <summary> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </summary>
+    public BicepValue<long> MaxNumberOfRecordsPerRecord
+    {
+        get { Initialize(); return _maxNumberOfRecordsPerRecord!; }
+    }
+    private BicepValue<long>? _maxNumberOfRecordsPerRecord;
+
+    /// <summary> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </summary>
+    public BicepValue<long> NumberOfRecords
+    {
+        get { Initialize(); return _numberOfRecords!; }
+    }
+    private BicepValue<long>? _numberOfRecords;
+
+    /// <summary> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
+    public BicepList<string> NameServers
+    {
+        get { Initialize(); return _nameServers!; }
+    }
+    private BicepList<string>? _nameServers;
+
+    /// <summary> The list of signing keys. </summary>
+    public BicepList<DnsSigningKey> SigningKeys
+    {
+        get { Initialize(); return _signingKeys!; }
+    }
+    private BicepList<DnsSigningKey>? _signingKeys;
 
     /// <summary>
     /// Creates a new DnsZone.
@@ -112,6 +158,11 @@ public partial class DnsZone : ProvisionableResource
         _registrationVirtualNetworks = DefineListProperty<WritableSubResource>("RegistrationVirtualNetworks", ["properties", "registrationVirtualNetworks"]);
         _resolutionVirtualNetworks = DefineListProperty<WritableSubResource>("ResolutionVirtualNetworks", ["properties", "resolutionVirtualNetworks"]);
         _zoneType = DefineProperty<DnsZoneType>("ZoneType", ["properties", "zoneType"]);
+        _maxNumberOfRecords = DefineProperty<long>("MaxNumberOfRecords", ["properties", "maxNumberOfRecordSets"], isOutput: true);
+        _maxNumberOfRecordsPerRecord = DefineProperty<long>("MaxNumberOfRecordsPerRecord", ["properties", "maxNumberOfRecordsPerRecordSet"], isOutput: true);
+        _numberOfRecords = DefineProperty<long>("NumberOfRecords", ["properties", "numberOfRecordSets"], isOutput: true);
+        _nameServers = DefineListProperty<string>("NameServers", ["properties", "nameServers"], isOutput: true);
+        _signingKeys = DefineListProperty<DnsSigningKey>("SigningKeys", ["properties", "signingKeys"], isOutput: true);
     }
 
     /// <summary>
@@ -144,7 +195,7 @@ public partial class DnsZone : ProvisionableResource
     /// Creates a reference to an existing DnsZone.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the DnsZone resource.  This can be
+    /// The the Bicep identifier name of the DnsZone resource.This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.

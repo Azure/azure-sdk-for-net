@@ -1,4 +1,4 @@
-# System.String[] client library for .NET
+# Azure Provisioning Dns client library for .NET
 
 Azure.Provisioning.Dns simplifies declarative resource provisioning in .NET.
 

@@ -1,5 +1,13 @@
 namespace Azure.Provisioning.Dns
 {
+    public partial class DelegationSignerInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DelegationSignerInfo() { }
+        public Azure.Provisioning.BicepValue<int> DigestAlgorithmType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DigestValue { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Record { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DnsAaaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsAaaaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -228,6 +236,17 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<string> DnsPtrDomainName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class DnsSigningKey : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSigningKey() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DelegationSignerInfo> DelegationSignerInfo { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> Flags { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> KeyTag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> Protocol { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PublicKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> SecurityAlgorithmType { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DnsSoaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsSoaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -345,9 +364,14 @@ namespace Azure.Provisioning.Dns
         public DnsZone(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> MaxNumberOfRecords { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> MaxNumberOfRecordsPerRecord { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> NameServers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> NumberOfRecords { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RegistrationVirtualNetworks { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ResolutionVirtualNetworks { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSigningKey> SigningKeys { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Dns.DnsZoneType> ZoneType { get { throw null; } set { } }
