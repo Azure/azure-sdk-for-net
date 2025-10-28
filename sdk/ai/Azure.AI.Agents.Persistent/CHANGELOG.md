@@ -4,6 +4,12 @@
 
 ### Breaking Changes
 - The `trust` parameter for `MCPApproval` constructor was renamed to `requireApproval`.
+- Expand AIFunction support to also include any AIFunctionDeclaration.
+- Add an extension AsAITool method that makes it easy to add any persistent ToolDefinition to ChatOptions.Tools.
+- Add HostedMcpServerTool support for `PersistentAgentsChatClient`.
+
+### Bugs Fixed
+- Relax the validation of previous conversation in the `PersistentAgentsChatClient`.
 
 ## 1.2.0-beta.6 (2025-10-10)
 
