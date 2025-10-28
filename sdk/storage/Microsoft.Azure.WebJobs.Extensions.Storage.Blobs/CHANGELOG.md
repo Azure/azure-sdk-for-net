@@ -5,7 +5,7 @@
 ### Features Added
 - The following optimizations were added to Blob Trigger processing:
   - Exclude containers that are not intended for monitoring.
-  - Container(s) detected during the initial write log, do not perform unnecessary scanning
+  - Do not perform unnecessary scanning for container(s) detected during the initial write log.
   - Cache recently found write entry to avoid analyzing log blobs again.
   - Migrate ScaleMonitor to TargetScaler.
 
