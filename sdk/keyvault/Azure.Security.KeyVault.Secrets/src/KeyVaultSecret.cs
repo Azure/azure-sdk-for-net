@@ -43,6 +43,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public string Name => Properties.Name;
 
+        public string ImpropppppperlySepledProperyyyy => "This is a test property with improper spelling";
+
         /// <summary>
         /// Gets additional properties of the <see cref="KeyVaultSecret"/>.
         /// </summary>
