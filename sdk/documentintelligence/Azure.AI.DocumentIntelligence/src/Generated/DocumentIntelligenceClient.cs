@@ -216,34 +216,6 @@ namespace Azure.AI.DocumentIntelligence
             return await this.AnalyzeDocumentAsync(waitUntil, modelId, analyzeRequest, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), output, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
-        /// <summary> Mark the result of document analysis for deletion. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="resultId"> Analyze operation result ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteAnalyzeResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            return this.DeleteAnalyzeResult(modelId, resultId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Mark the result of document analysis for deletion. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="resultId"> Analyze operation result ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAnalyzeResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            return await this.DeleteAnalyzeResultAsync(modelId, resultId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
         /// <summary> Analyzes batch documents with document model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="modelId"> Unique document model name. </param>
@@ -454,34 +426,6 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Mark the batch document analysis result for deletion. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="resultId"> Analyze batch operation result ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteAnalyzeBatchResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            return this.DeleteAnalyzeBatchResult(modelId, resultId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Mark the batch document analysis result for deletion. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="resultId"> Analyze batch operation result ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAnalyzeBatchResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            return await this.DeleteAnalyzeBatchResultAsync(modelId, resultId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary> Classifies document with document classifier. </summary>
