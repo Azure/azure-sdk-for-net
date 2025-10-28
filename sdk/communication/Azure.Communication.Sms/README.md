@@ -2,16 +2,16 @@
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
-> [!IMPORTANT]
-> **The `SmsClient` class is deprecated and will be removed in a future version.**
->
-> **For new development, use `TelcoMessagingClient` instead**, which provides:
+> [!NOTE]
+> **We recommend using `TelcoMessagingClient` for new development**, which provides:
 >
 > - Better organization through dedicated sub-clients (`Sms`, `OptOuts`, `DeliveryReports`)
 > - Access to delivery reports functionality
 > - Improved API design and maintainability
 >
-> See the [migration guide](#migration-from-smsclient-to-telcomessagingclient) below for details on how to migrate your existing code.
+> The existing `SmsClient` continues to be fully supported and remains available for existing applications.
+>
+> See the [migration guide](#migration-from-smsclient-to-telcomessagingclient) below for details on how to upgrade your existing code.
 
 [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 ## Getting started
@@ -30,12 +30,12 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 
 ### Key concepts
 
-**Recommended**: `TelcoMessagingClient` provides the functionality to send messages between phone numbers through organized sub-clients:
+**Recommended for new development**: `TelcoMessagingClient` provides the functionality to send messages between phone numbers through organized sub-clients:
 - `TelcoMessagingClient.Sms` - for sending SMS messages
 - `TelcoMessagingClient.OptOuts` - for managing opt-out preferences
 - `TelcoMessagingClient.DeliveryReports` - for retrieving message delivery status
 
-**Will be deprecated soon**: `SmsClient` provides the functionality to send messages between phone numbers. This class will be deprecated in an upcoming release and removed in a future version. Please migrate to `TelcoMessagingClient` for all new development.
+**Fully supported**: `SmsClient` provides the functionality to send messages between phone numbers. This client continues to be fully supported and is suitable for existing applications.
 
 ### Using statements
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
@@ -286,10 +286,10 @@ foreach (var result in optOutRemoveResults.Value)
 
 ### Migration from SmsClient to TelcoMessagingClient
 
-If you're migrating from the `SmsClient` (which will be deprecated soon) to the new `TelcoMessagingClient`, here are the key changes:
+If you're upgrading from `SmsClient` to the recommended `TelcoMessagingClient`, here are the key changes:
 
 ```csharp
-// OLD - SmsClient (will be deprecated soon)
+// EXISTING - SmsClient (fully supported)
 var smsClient = new SmsClient(connectionString);
 await smsClient.SendAsync(from, to, message);
 await smsClient.OptOuts.CheckAsync(from, to);
@@ -339,7 +339,7 @@ catch (RequestFailedException ex)
 
 ## Migration from SmsClient to TelcoMessagingClient
 
-The `SmsClient` class is deprecated and will be removed in a future version. Here's how to migrate your existing code to use the new `TelcoMessagingClient`:
+For new development, we recommend using `TelcoMessagingClient` which provides enhanced features. Here's how to upgrade your existing code to use the new `TelcoMessagingClient`:
 
 ### Client Initialization
 

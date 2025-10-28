@@ -50,7 +50,7 @@ namespace Azure.Communication.Sms.Samples
             var client = new TelcoMessagingClient(connectionString);
 
             // Get delivery report using the DeliveryReports sub-client
-            var messageId = "sample-message-id";
+            var messageId = "11111111-1111-1111-1111-111111111111";
             var deliveryReport = await client.DeliveryReports.GetAsync(messageId);
 
             Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");

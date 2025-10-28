@@ -11,6 +11,7 @@
 - Added `DeliveryReportsClient` for getting delivery reports of sent messages
 - Added comprehensive samples demonstrating the new `TelcoMessagingClient` functionality
 - Enhanced `DeliveryReport` model with `MessagingConnectPartnerMessageId` property for tracking partner-generated message IDs
+- Added documentation remarks to `SmsClient` methods guiding users to consider `TelcoMessagingClient` for new development
 
 ### Breaking Changes
 
@@ -18,10 +19,6 @@
   - Constructor changed from `MessagingConnectOptions(string apiKey, string partner)` to `MessagingConnectOptions(string partner, object partnerParams)`
   - Property `ApiKey` replaced with `PartnerParams` to support various partner-specific parameters
   - Customers should now pass partner parameters as: `new MessagingConnectOptions("PartnerName", new { ApiKey = "your-api-key" })`
-
-### Deprecations
-
-- **`SmsClient` class is now deprecated**: The `SmsClient` class and its methods are marked as deprecated with `[Obsolete]` attributes. While still functional in this release, it will be removed in a future version. Use `TelcoMessagingClient` for all new development.
 
 ### Other Changes
 

@@ -59,16 +59,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = await OptOutsRestClient.CheckAsync(from, recipients, cancellationToken).ConfigureAwait(false);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var optOutResponse = (OptOutResponse)response.Value;
@@ -103,16 +96,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = OptOutsRestClient.Check(from, recipients, cancellationToken);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var optOutResponse = (OptOutResponse)response.Value;
@@ -146,16 +132,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = await OptOutsRestClient.AddAsync(from, recipients, cancellationToken).ConfigureAwait(false);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var optOutResponse = (OptOutResponse)response.Value;
@@ -191,25 +170,9 @@ namespace Azure.Communication.Sms
                 IEnumerable<OptOutRecipient> recipients = to.Select(x => new OptOutRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to))));
                 Response<object> response = OptOutsRestClient.Add(from, recipients, cancellationToken);
 
-                // Handle error responses based on status code
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        var errorMessage = badRequestError.Error?.Message ?? "Bad Request";
-                        var errorCode = badRequestError.Error?.Code;
-                        if (!string.IsNullOrEmpty(errorCode))
-                            errorMessage = errorCode;
-                        throw new RequestFailedException(response.GetRawResponse().Status, errorMessage);
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        var errorMessage = standardError.Error?.Message ?? "Unauthorized";
-                        var errorCode = standardError.Error?.Code;
-                        if (!string.IsNullOrEmpty(errorCode))
-                            errorMessage = errorCode;
-                        throw new RequestFailedException(response.GetRawResponse().Status, errorMessage);
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var optOutResponse = (OptOutResponse)response.Value;
@@ -245,25 +208,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = await OptOutsRestClient.RemoveAsync(from, recipients, cancellationToken).ConfigureAwait(false);
 
-                // Handle error responses based on status code
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        var errorMessage = badRequestError.Error?.Message ?? "Bad Request";
-                        var errorCode = badRequestError.Error?.Code;
-                        if (!string.IsNullOrEmpty(errorCode))
-                            errorMessage = errorCode;
-                        throw new RequestFailedException(response.GetRawResponse().Status, errorMessage);
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        var errorMessage = standardError.Error?.Message ?? "Unauthorized";
-                        var errorCode = standardError.Error?.Code;
-                        if (!string.IsNullOrEmpty(errorCode))
-                            errorMessage = errorCode;
-                        throw new RequestFailedException(response.GetRawResponse().Status, errorMessage);
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var optOutResponse = (OptOutResponse)response.Value;
@@ -299,25 +246,9 @@ namespace Azure.Communication.Sms
                 IEnumerable<OptOutRecipient> recipients = to.Select(x => new OptOutRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to))));
                 Response<object> response = OptOutsRestClient.Remove(from, recipients, cancellationToken);
 
-                // Handle error responses based on status code
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        var errorMessage = badRequestError.Error?.Message ?? "Bad Request";
-                        var errorCode = badRequestError.Error?.Code;
-                        if (!string.IsNullOrEmpty(errorCode))
-                            errorMessage = errorCode;
-                        throw new RequestFailedException(response.GetRawResponse().Status, errorMessage);
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        var errorMessage = standardError.Error?.Message ?? "Unauthorized";
-                        var errorCode = standardError.Error?.Code;
-                        if (!string.IsNullOrEmpty(errorCode))
-                            errorMessage = errorCode;
-                        throw new RequestFailedException(response.GetRawResponse().Status, errorMessage);
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var optOutResponse = (OptOutResponse)response.Value;

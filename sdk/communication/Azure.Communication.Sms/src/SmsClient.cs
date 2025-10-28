@@ -18,10 +18,9 @@ namespace Azure.Communication.Sms
     /// The Azure Communication Services SMS client.
     /// </summary>
     /// <remarks>
-    /// This class is deprecated as of version 1.1.0. For new development, use <see cref="TelcoMessagingClient"/> instead,
-    /// which provides a more comprehensive API with sub-clients for SMS messaging, opt-out management, and delivery reports.
+    /// For new development, consider using <see cref="TelcoMessagingClient"/> instead,
+    /// which provides enhanced capabilities with dedicated sub-clients for SMS messaging, opt-out management, and delivery reports.
     /// </remarks>
-    [Obsolete("SmsClient is deprecated as of version 1.1.0. Use TelcoMessagingClient instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
     public class SmsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -104,7 +103,9 @@ namespace Azure.Communication.Sms
         /// <summary>
         /// Opt Out management client.
         /// </summary>
-        [Obsolete("SmsClient.OptOuts is deprecated as of version 1.1.0. Use TelcoMessagingClient.OptOuts instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
+        /// <remarks>
+        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
+        /// </remarks>
         public virtual OptOutsClient OptOuts { get; private set; }
 
         /// <summary>
@@ -119,7 +120,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        [Obsolete("SmsClient.SendAsync is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.SendAsync instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
+        /// <remarks>
+        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
+        /// </remarks>
         public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
@@ -140,7 +143,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        [Obsolete("SmsClient.Send is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.Send instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
+        /// <remarks>
+        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
+        /// </remarks>
         public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
@@ -159,7 +164,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        [Obsolete("SmsClient.SendAsync is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.SendAsync instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
+        /// <remarks>
+        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
+        /// </remarks>
         public virtual async Task<Response<IReadOnlyList<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
@@ -177,16 +184,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var smsSendResponse = (SmsSendResponse)response.Value;
@@ -209,7 +209,9 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        [Obsolete("SmsClient.Send is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.Send instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
+        /// <remarks>
+        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
+        /// </remarks>
         public virtual Response<IReadOnlyList<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
@@ -228,16 +230,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = RestClient.Send(from, recipients, message, options, cancellationToken);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var smsSendResponse = (SmsSendResponse)response.Value;

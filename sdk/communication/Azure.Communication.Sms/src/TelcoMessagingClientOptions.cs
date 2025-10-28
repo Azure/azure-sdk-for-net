@@ -14,7 +14,7 @@ namespace Azure.Communication.Sms
         /// <summary>
         /// The latest version of the Telco Messaging service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_08_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_01_23;
 
         internal string ApiVersion { get; }
 

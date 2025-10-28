@@ -101,16 +101,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var smsSendResponse = (SmsSendResponse)response.Value;
@@ -151,16 +144,9 @@ namespace Azure.Communication.Sms
 
                 Response<object> response = RestClient.Send(from, recipients, message, options, cancellationToken);
 
-                if (response.GetRawResponse().Status >= 400)
+                if (response.Value is BadRequestErrorResponse || response.Value is StandardErrorResponse)
                 {
-                    if (response.Value is BadRequestErrorResponse badRequestError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
-                    if (response.Value is StandardErrorResponse standardError)
-                    {
-                        throw new RequestFailedException(response.GetRawResponse());
-                    }
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
 
                 var smsSendResponse = (SmsSendResponse)response.Value;
