@@ -22,15 +22,14 @@ namespace Azure.Data.AppConfiguration
         {
             try
             {
-                Uri originalUri = message.Request.Uri.ToUri();
-                string queryString = originalUri.Query;
+                string originalQuery = message.Request.Uri.Query;
 
-                if (string.IsNullOrEmpty(queryString))
+                if (string.IsNullOrEmpty(originalQuery))
                 {
                     return;
                 }
 
-                ReadOnlyMemory<char> queryMemory = queryString.AsMemory();
+                ReadOnlyMemory<char> queryMemory = originalQuery.AsMemory();
 
                 if (queryMemory.Span[0] == '?')
                 {
@@ -62,7 +61,7 @@ namespace Azure.Data.AppConfiguration
                 // Sort by lowercase name, preserving relative order for duplicates
                 segments.Sort((a, b) =>
                 {
-                    var nameComparison = MemoryExtensions.CompareTo(
+                    int nameComparison = MemoryExtensions.CompareTo(
                         a.Name.Span,
                         b.Name.Span,
                         StringComparison.OrdinalIgnoreCase);
@@ -75,15 +74,6 @@ namespace Azure.Data.AppConfiguration
                 });
 
                 var sb = new StringBuilder();
-                sb.Append(originalUri.Scheme);
-                sb.Append("://");
-                sb.Append(originalUri.Host);
-                if (!originalUri.IsDefaultPort)
-                {
-                    sb.Append(':');
-                    sb.Append(originalUri.Port);
-                }
-                sb.Append(originalUri.AbsolutePath);
                 sb.Append('?');
 
                 for (int i = 0; i < segments.Count; i++)
@@ -93,21 +83,20 @@ namespace Azure.Data.AppConfiguration
                         sb.Append('&');
                     }
 
-                    sb.Append(segments[i].Name.ToString().ToLowerInvariant());
+                    ReadOnlySpan<char> nameSpan = segments[i].Name.Span;
+                    for (int c = 0; c < nameSpan.Length; c++)
+                    {
+                        sb.Append(char.ToLowerInvariant(nameSpan[c]));
+                    }
                     sb.Append('=');
                     sb.Append(segments[i].Value);
                 }
 
-                if (!string.IsNullOrEmpty(originalUri.Fragment))
-                {
-                    sb.Append(originalUri.Fragment);
-                }
+                string newQuery = sb.ToString();
 
-                string newUrl = sb.ToString();
-
-                if (newUrl != message.Request.Uri.ToString())
+                if (!newQuery.Equals(originalQuery))
                 {
-                    message.Request.Uri.Reset(new Uri(newUrl));
+                    message.Request.Uri.Query = newQuery;
                 }
             }
             catch (UriFormatException ex)
