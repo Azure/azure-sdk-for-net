@@ -496,6 +496,13 @@ namespace Azure.Test.Perf
             Console.WriteLine($"=== {header} ===");
             var sortedLatencies = latencies.SelectMany(l => l).ToArray();
             Array.Sort(sortedLatencies);
+            if (sortedLatencies.Length == 0)
+            {
+                Console.WriteLine("No latency results.");
+                Console.WriteLine();
+                return;
+            }
+
             var percentiles = new double[] { 0.5, 0.75, 0.9, 0.99, 0.999, 0.9999, 0.99999, 1.0 };
             foreach (var percentile in percentiles)
             {

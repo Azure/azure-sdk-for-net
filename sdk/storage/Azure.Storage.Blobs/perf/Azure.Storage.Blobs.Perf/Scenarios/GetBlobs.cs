@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Test.Perf;
@@ -23,12 +24,24 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
         {
             await base.GlobalSetupAsync();
 
-            var uploadTasks = new Task[Options.Count];
-            for (var i = 0; i < uploadTasks.Length; i++)
-            {
-                var blobName = $"Azure.Storage.Blobs.Perf.Scenarios.DownloadBlob-{Guid.NewGuid()}";
-                uploadTasks[i] = BlobContainerClient.GetBlobClient(blobName).UploadAsync(Stream.Null, overwrite: true);
-            }
+            int maxConcurrent = 500;
+            using var semaphore = new SemaphoreSlim(maxConcurrent, maxConcurrent);
+
+            var uploadTasks = Enumerable.Range(0, Options.Count)
+                .Select(async i =>
+                {
+                    await semaphore.WaitAsync();
+                    try
+                    {
+                        string blobName = Guid.NewGuid().ToString();
+                        await BlobContainerClient.GetBlobClient(blobName).UploadAsync(Stream.Null, overwrite: true);
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+                });
+
             await Task.WhenAll(uploadTasks);
         }
 
