@@ -177,6 +177,10 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    public static partial class ConfigurationManagerExtensions
+    {
+        public static System.ClientModel.Primitives.ClientConnection GetAzureConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
+    }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
         protected CredentialUnavailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
@@ -283,6 +287,10 @@ namespace Azure.Identity
         public EnvironmentCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+    }
+    public static partial class HostBuilderExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddAzureCredential(this Microsoft.Extensions.Hosting.IHostBuilder host, string sectionName) { throw null; }
     }
     public static partial class IdentityModelFactory
     {

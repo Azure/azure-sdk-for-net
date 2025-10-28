@@ -48,7 +48,7 @@ namespace Azure.Identity
         /// <summary>
         /// Gets or sets the kind of credential to use.
         /// </summary>
-        public string CredentialSource
+        internal string CredentialSource
         {
             get => _credentialSource;
             set

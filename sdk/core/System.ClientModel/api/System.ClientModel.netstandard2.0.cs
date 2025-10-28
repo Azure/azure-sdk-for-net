@@ -63,6 +63,11 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public static partial class ConfigurationManagerExtensions
+    {
+        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationSection section) { throw null; }
+    }
     public partial class ContinuationToken
     {
         protected ContinuationToken() { }
@@ -125,6 +130,8 @@ namespace System.ClientModel.Primitives
         public ClientConnection(string id, string locator) { throw null; }
         public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
         public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
+        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata, Microsoft.Extensions.Configuration.IConfigurationSection? configurationSection) { throw null; }
+        public Microsoft.Extensions.Configuration.IConfiguration? Configuration { get { throw null; } }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }

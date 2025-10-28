@@ -137,6 +137,11 @@ namespace Azure.ResourceManager
         public BicepModelReaderWriterOptions() : base (default(string)) { }
         public System.Collections.Generic.IDictionary<object, System.Collections.Generic.IDictionary<string, string>> PropertyOverrides { get { throw null; } }
     }
+    public static partial class ClientConnectionExtensions
+    {
+        public static Azure.ResourceManager.ArmClient CreateArmClient(this System.ClientModel.Primitives.ClientConnection connection) { throw null; }
+        public static Azure.ResourceManager.ArmClient CreateArmClient(this System.ClientModel.Primitives.ClientConnection connection, System.Action<Azure.ResourceManager.ArmClientOptions> configure) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.ManagementGroups
 {

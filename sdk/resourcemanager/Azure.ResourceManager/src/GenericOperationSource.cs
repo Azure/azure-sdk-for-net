@@ -13,6 +13,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager
 {
+    [RequiresDynamicCode("Uses Activator.CreateInstance which is not compatible with AOT compilation.")]
+    [RequiresUnreferencedCode("Uses Activator.CreateInstance which is not compatible with trimming.")]
     internal class GenericOperationSource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
