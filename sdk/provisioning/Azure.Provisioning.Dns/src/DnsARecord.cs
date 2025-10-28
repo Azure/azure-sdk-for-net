@@ -42,12 +42,25 @@ public partial class DnsARecord : ProvisionableResource
     }
     private SystemData? _systemData;
 
+    /// <summary>
+    /// The list of A records in the record set.
+    /// </summary>
     public BicepList<DnsARecordInfo> ARecords
     {
         get { Initialize(); return _aRecords!; }
         set { Initialize(); _aRecords!.Assign(value); }
     }
     private BicepList<DnsARecordInfo>? _aRecords;
+
+    /// <summary>
+    /// The TTL (time-to-live) of the records in the record set.
+    /// </summary>
+    public BicepValue<long> TtlInSeconds
+    {
+        get { Initialize(); return _ttlInSeconds!; }
+        set { Initialize(); _ttlInSeconds!.Assign(value); }
+    }
+    private BicepValue<long>? _ttlInSeconds;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -85,6 +98,7 @@ public partial class DnsARecord : ProvisionableResource
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
         _aRecords = DefineListProperty<DnsARecordInfo>("ARecords", ["properties", "ARecords"]);
+        _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), ["properties", "TTL"]);
     }
 
     /// <summary>

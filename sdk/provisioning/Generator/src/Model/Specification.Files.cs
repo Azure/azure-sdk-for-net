@@ -110,7 +110,7 @@ public abstract partial class Specification : ModelBase
                 """);
         File.WriteAllText(Path.Combine(path, "README.md"),
             $"""
-                # {Namespace!.Split('.')} client library for .NET
+                # {string.Join(' ', Namespace!.Split('.'))} client library for .NET
 
                 {Namespace} simplifies declarative resource provisioning in .NET.
 

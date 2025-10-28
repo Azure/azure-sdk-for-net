@@ -22,6 +22,50 @@ dotnet add package Azure.Provisioning.Dns --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a DNS Zone
+
+This template shows how to create a DNS zone within Azure DNS and how to add some record sets to it.
+
+```C# Snippet:CreateAzureDnsNewZone
+Infrastructure infra = new();
+
+ProvisioningParameter zoneName = new(nameof(zoneName), typeof(string))
+{
+    Description = "The name of the DNS zone to be created.  Must have at least 2 segments, e.g. hostname.org",
+    Value = BicepFunction.Interpolate($"{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}.azurequickstart.org")
+};
+infra.Add(zoneName);
+
+ProvisioningParameter recordName = new(nameof(recordName), typeof(string))
+{
+    Description = "The name of the DNS record to be created.  The name is relative to the zone, not the FQDN.",
+    Value = "www"
+};
+infra.Add(recordName);
+
+DnsZone zone = new(nameof(zone), DnsZone.ResourceVersions.V2018_05_01)
+{
+    Name = zoneName,
+    Location = new AzureLocation("global")
+};
+infra.Add(zone);
+
+DnsARecord aRecord = new(nameof(aRecord), DnsARecord.ResourceVersions.V2018_05_01)
+{
+    Parent = zone,
+    Name = recordName,
+    TtlInSeconds = 3600,
+    ARecords =
+    {
+        new DnsARecordInfo() { Ipv4Addresses = IPAddress.Parse("203.0.113.1") },
+        new DnsARecordInfo() { Ipv4Addresses = IPAddress.Parse("203.0.113.2") }
+    }
+};
+infra.Add(aRecord);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
