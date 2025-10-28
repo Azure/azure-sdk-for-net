@@ -41,6 +41,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                HighAvailability = RedisEnterpriseHighAvailability.Enabled,
+                PublicNetworkAccess = PublicNetworkAccess.Enabled,
                 Zones = { "1", "2", "3" }
             };
 
@@ -122,7 +124,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-                HighAvailability = RedisEnterpriseHighAvailability.Disabled
+                HighAvailability = RedisEnterpriseHighAvailability.Disabled,
+                PublicNetworkAccess = PublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
@@ -144,11 +147,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
                 ClusteringPolicy = RedisEnterpriseClusteringPolicy.OssCluster,
                 EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
-                Persistence = new RedisPersistenceSettings()
-                {
-                    IsAofEnabled = true,
-                    AofFrequency = PersistenceSettingAofFrequency.OneSecond
-                },
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
@@ -187,82 +185,82 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.IsFalse(falseResult);
         }
 
-        // This test is commented out because the scenario that this test is testing for is introduced in preview version, the stable version does not support it
-        //[Test]
-        //public async Task CreateUpdateTestWithNoClusterPolicy()
-        //{
-        //    await SetCollectionsAsync();
+       [Test]
+        public async Task CreateUpdateTestWithNoClusterPolicy()
+        {
+            await SetCollectionsAsync();
 
-        //    string redisEnterpriseCacheName = Recording.GenerateAssetName("RedisEnterpriseBegin");
-        //    var data = new RedisEnterpriseClusterData(
-        //        DefaultLocation,
-        //        new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
-        //    {
-        //        MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-        //        HighAvailability = RedisEnterpriseHighAvailability.Disabled
-        //    };
+            string redisEnterpriseCacheName = Recording.GenerateAssetName("RedisEnterpriseBegin");
+            var data = new RedisEnterpriseClusterData(
+                DefaultLocation,
+                new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
+            {
+                MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                HighAvailability = RedisEnterpriseHighAvailability.Enabled,
+                PublicNetworkAccess = PublicNetworkAccess.Enabled
+            };
 
-        //    var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-        //    Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
-        //    Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
-        //    Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-        //    Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
+            Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
 
-        //    clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-        //    Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
-        //    Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
-        //    Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-        //    Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
+            Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
 
-        //    var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
-        //    string databaseName = "default";
-        //    var databaseData = new RedisEnterpriseDatabaseData()
-        //    {
-        //        ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
-        //        ClusteringPolicy = RedisEnterpriseClusteringPolicy.NoCluster,
-        //        EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
-        //        Persistence = new RedisPersistenceSettings()
-        //        {
-        //            IsAofEnabled = true,
-        //            AofFrequency = PersistenceSettingAofFrequency.OneSecond
-        //        },
-        //    };
+            var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
+            string databaseName = "default";
+            var databaseData = new RedisEnterpriseDatabaseData()
+            {
+                ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
+                ClusteringPolicy = RedisEnterpriseClusteringPolicy.NoCluster,
+                EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
+                Persistence = new RedisPersistenceSettings()
+                {
+                    IsAofEnabled = true,
+                    AofFrequency = PersistenceSettingAofFrequency.OneSecond
+                },
+            };
 
-        //    var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-        //    Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-        //    Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-        //    Assert.AreEqual(RedisEnterpriseClusteringPolicy.NoCluster, databaseResponse.Data.ClusteringPolicy);
-        //    Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
+            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.NoCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
 
-        //    databaseResponse = await databaseCollection.GetAsync(databaseName);
-        //    Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-        //    Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-        //    Assert.AreEqual(RedisEnterpriseClusteringPolicy.NoCluster, databaseResponse.Data.ClusteringPolicy);
-        //    Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            databaseResponse = await databaseCollection.GetAsync(databaseName);
+            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.NoCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
 
-        //    // Updating Cluster policy
-        //    databaseData.ClusteringPolicy = RedisEnterpriseClusteringPolicy.EnterpriseCluster;
+            // Updating Cluster policy
+            databaseData.ClusteringPolicy = RedisEnterpriseClusteringPolicy.EnterpriseCluster;
 
-        //    databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-        //    Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-        //    Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-        //    Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse.Data.ClusteringPolicy);
-        //    Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
+            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
 
-        //    databaseResponse = await databaseCollection.GetAsync(databaseName);
-        //    Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-        //    Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-        //    Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse.Data.ClusteringPolicy);
-        //    Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            databaseResponse = await databaseCollection.GetAsync(databaseName);
+            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
+            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
 
-        //    // Delete database and cluster
-        //    await databaseResponse.DeleteAsync(WaitUntil.Completed);
-        //    var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;
-        //    Assert.IsFalse(falseResult);
+            // Delete database and cluster
+            await databaseResponse.DeleteAsync(WaitUntil.Completed);
+            var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;
+            Assert.IsFalse(falseResult);
 
-        //    await clusterResponse.DeleteAsync(WaitUntil.Completed);
-        //    falseResult = (await Collection.ExistsAsync(redisEnterpriseCacheName)).Value;
-        //    Assert.IsFalse(falseResult);
-        //}
+            await clusterResponse.DeleteAsync(WaitUntil.Completed);
+            falseResult = (await Collection.ExistsAsync(redisEnterpriseCacheName)).Value;
+            Assert.IsFalse(falseResult);
+        }
     }
 }
