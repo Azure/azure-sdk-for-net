@@ -55,6 +55,16 @@ public partial class DnsCnameRecord : ProvisionableResource
     private BicepValue<string>? _cname;
 
     /// <summary>
+    /// The TTL (time-to-live) of the records in the record set.
+    /// </summary>
+    public BicepValue<long> TtlInSeconds
+    {
+        get { Initialize(); return _ttlInSeconds!; }
+        set { Initialize(); _ttlInSeconds!.Assign(value); }
+    }
+    private BicepValue<long>? _ttlInSeconds;
+
+    /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
     /// </summary>
     public DnsZone? Parent
@@ -90,6 +100,7 @@ public partial class DnsCnameRecord : ProvisionableResource
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
         _cname = DefineProperty<string>("Cname", ["CNAMERecord", "cname"]);
+        _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), ["properties", "TTL"]);
     }
 
     /// <summary>

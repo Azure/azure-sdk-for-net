@@ -51,6 +51,16 @@ public partial class DnsTxtRecord : ProvisionableResource
     private BicepList<DnsTxtRecordInfo>? _txtRecords;
 
     /// <summary>
+    /// The TTL (time-to-live) of the records in the record set.
+    /// </summary>
+    public BicepValue<long> TtlInSeconds
+    {
+        get { Initialize(); return _ttlInSeconds!; }
+        set { Initialize(); _ttlInSeconds!.Assign(value); }
+    }
+    private BicepValue<long>? _ttlInSeconds;
+
+    /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
     /// </summary>
     public DnsZone? Parent
@@ -86,6 +96,7 @@ public partial class DnsTxtRecord : ProvisionableResource
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _txtRecords = DefineListProperty<DnsTxtRecordInfo>("TxtRecords", ["properties", "TXTRecords"]);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
+        _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), ["properties", "TTL"]);
     }
 
     /// <summary>
