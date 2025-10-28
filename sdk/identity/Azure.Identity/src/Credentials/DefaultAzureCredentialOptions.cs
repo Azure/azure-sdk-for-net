@@ -44,6 +44,25 @@ namespace Azure.Identity
         private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
 
+        private string _credentialSource;
+        /// <summary>
+        /// Gets or sets the kind of credential to use.
+        /// </summary>
+        public string CredentialSource
+        {
+            get => _credentialSource;
+            set
+            {
+                _credentialSource = ConvertCredentialSource(value);
+            }
+        }
+
+        private static string ConvertCredentialSource(string value) => value switch
+        {
+            "AzureCli" => "azureclicredential",
+            _ => value,
+        };
+
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
         /// </summary>
@@ -327,6 +346,7 @@ namespace Azure.Identity
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
+                dacClone.CredentialSource = CredentialSource;
             }
 
             return clone;

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Extensions.Configuration;
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -51,6 +53,21 @@ public readonly struct ClientConnection
     /// <param name="credentialKind">The kind of connection used by the client</param>
     /// <param name="metadata">The connection metadata.</param>
     public ClientConnection(string id, string locator, object? credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
+        : this(id, locator, credential, credentialKind, metadata, configurationSection: null)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
+    /// It is only for the JSON serializer.
+    /// </summary>
+    /// <param name="id">The identifier for the connection.</param>
+    /// <param name="locator">The endpoint or resource identifier.</param>
+    /// <param name="credential">The client credential.</param>
+    /// <param name="credentialKind">The kind of connection used by the client</param>
+    /// <param name="metadata">The connection metadata.</param>
+    /// <param name="configurationSection">The <see cref="IConfigurationSection"/> used to construct this instance.</param>
+    public ClientConnection(string id, string locator, object? credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata, IConfigurationSection? configurationSection)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -74,6 +91,7 @@ public readonly struct ClientConnection
         Locator = locator;
         Credential = credential;
         CredentialKind = credentialKind;
+        Configuration = configurationSection;
     }
 
     /// <summary>
@@ -95,6 +113,11 @@ public readonly struct ClientConnection
     /// Gets the kind of connection used by the client.
     /// </summary>
     public CredentialKind CredentialKind { get; }
+
+    /// <summary>
+    /// Gets the configuration section associated with this instance.
+    /// </summary>
+    public IConfiguration? Configuration { get; }
 
     /// <summary>
     /// Tries to convert the connection locator to a URI.

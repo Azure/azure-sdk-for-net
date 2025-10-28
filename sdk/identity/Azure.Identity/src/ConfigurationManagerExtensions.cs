@@ -1,0 +1,72 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
+namespace Azure.Identity
+{
+    /// <summary>
+    /// .
+    /// </summary>
+    public static class ConfigurationManagerExtensions
+    {
+        private static readonly HashSet<string> FirstClassProperties = new() { "CredentialSource", "Key", "KEY", "Endpoint" };
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="sectionName"></param>
+        /// <returns></returns>
+        public static ClientConnection GetAzureConnection(this IConfigurationManager configuration, string sectionName)
+        {
+            IConfigurationSection section = configuration.GetSection(sectionName);
+            var credential = CreateCredentials(section.GetSection("Credential"));
+            Dictionary<string, string> metadata = null;
+            foreach (var child in section.GetChildren())
+            {
+                if (!FirstClassProperties.Contains(child.Key) && !string.IsNullOrEmpty(child.Value))
+                {
+                    metadata ??= new Dictionary<string, string>();
+                    metadata[child.Key] = child.Value!;
+                }
+            }
+            return new ClientConnection(section.Key, section["Endpoint"] ?? "$auto", credential.Credential, credential.Kind, metadata, section);
+        }
+
+        private static (object Credential, CredentialKind Kind) CreateCredentials(IConfigurationSection credentialSection)
+        {
+            CredentialKind credentialKind;
+            object credential = default;
+            if (credentialSection["CredentialSource"] is null)
+            {
+                credentialKind = CredentialKind.None;
+            }
+            else if (credentialSection["CredentialSource"].Equals("ApiKey", StringComparison.Ordinal))
+            {
+                credentialKind = CredentialKind.ApiKeyString;
+                credential = credentialSection["Key"];
+            }
+            else
+            {
+                credentialKind = CredentialKind.TokenCredential;
+                DefaultAzureCredentialOptions dacOptions = new();
+                ConfigureDefaultAzureCredentialOptions(credentialSection, dacOptions);
+                credential = new DefaultAzureCredential(dacOptions);
+            }
+
+            return (credential, credentialKind);
+        }
+
+        internal static void ConfigureDefaultAzureCredentialOptions(IConfigurationSection section, DefaultAzureCredentialOptions options)
+        {
+            if (section["CredentialSource"] is string credentialSource)
+            {
+                options.CredentialSource = credentialSource;
+            }
+        }
+    }
+}

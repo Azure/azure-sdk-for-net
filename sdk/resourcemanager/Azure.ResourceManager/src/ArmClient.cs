@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.ResourceManager
 {
@@ -86,6 +87,17 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+        }
+
+        internal void RegisterConfigReload(IConfiguration configuration)
+        {
+            configuration.GetReloadToken().RegisterChangeCallback(state =>
+            {
+                var newDefaultSubscription = configuration["DefaultSubscriptionId"];
+                _defaultSubscription = newDefaultSubscription is null
+                    ? null
+                    : new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(newDefaultSubscription));
+            }, null);
         }
 
         internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)

@@ -267,7 +267,8 @@
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="$(RepoRoot)sdk\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="$(RepoRoot)sdk\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />

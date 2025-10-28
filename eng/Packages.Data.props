@@ -183,6 +183,8 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.7.0" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
