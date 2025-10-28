@@ -54,6 +54,9 @@ public class BasicDnsTests
                 };
                 infra.Add(aRecord);
                 #endregion
+                // TODO -- we omitted an output variable here for nameServers because we had a bug in Azure.Provisioning
+                // when the type of an output is an array. This was fixed, but we did not release a stable version yet
+                // we need to add the output once the fix was released in the next stable version.
 
                 return infra;
             });
