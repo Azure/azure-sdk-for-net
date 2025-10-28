@@ -22,19 +22,13 @@ namespace Azure.Communication.Sms.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PendingValue = "Pending";
         private const string DeliveredValue = "Delivered";
         private const string FailedValue = "Failed";
-        private const string UnknownValue = "Unknown";
 
-        /// <summary> Pending. </summary>
-        public static DeliveryReportDeliveryStatus Pending { get; } = new DeliveryReportDeliveryStatus(PendingValue);
         /// <summary> Delivered. </summary>
         public static DeliveryReportDeliveryStatus Delivered { get; } = new DeliveryReportDeliveryStatus(DeliveredValue);
         /// <summary> Failed. </summary>
         public static DeliveryReportDeliveryStatus Failed { get; } = new DeliveryReportDeliveryStatus(FailedValue);
-        /// <summary> Unknown. </summary>
-        public static DeliveryReportDeliveryStatus Unknown { get; } = new DeliveryReportDeliveryStatus(UnknownValue);
         /// <summary> Determines if two <see cref="DeliveryReportDeliveryStatus"/> values are the same. </summary>
         public static bool operator ==(DeliveryReportDeliveryStatus left, DeliveryReportDeliveryStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryReportDeliveryStatus"/> values are not the same. </summary>

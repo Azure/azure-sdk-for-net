@@ -19,7 +19,7 @@ namespace Azure.Communication.Sms
 
         internal DeliveryReportsRestClient DeliveryReportsRestClient;
 
-        internal DeliveryReportsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-08-01-preview")
+        internal DeliveryReportsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2026-01-23")
         {
             Argument.CheckNotNull(clientDiagnostics, nameof(clientDiagnostics));
             Argument.CheckNotNull(pipeline, nameof(pipeline));

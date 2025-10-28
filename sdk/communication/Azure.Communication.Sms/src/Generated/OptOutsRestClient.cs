@@ -32,7 +32,7 @@ namespace Azure.Communication.Sms
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public OptOutsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-08-01-preview")
+        public OptOutsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2026-01-23")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -64,7 +64,7 @@ namespace Azure.Communication.Sms
         /// <param name="recipients"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="OptOutRecipient"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="recipients"/> is null. </exception>
-        public async Task<Response<OptOutResponse>> AddAsync(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> AddAsync(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -84,7 +84,21 @@ namespace Azure.Communication.Sms
                         OptOutResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OptOutResponse.DeserializeOptOutResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -96,7 +110,7 @@ namespace Azure.Communication.Sms
         /// <param name="recipients"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="OptOutRecipient"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="recipients"/> is null. </exception>
-        public Response<OptOutResponse> Add(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
+        public Response<object> Add(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -116,7 +130,21 @@ namespace Azure.Communication.Sms
                         OptOutResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OptOutResponse.DeserializeOptOutResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -147,7 +175,7 @@ namespace Azure.Communication.Sms
         /// <param name="recipients"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="OptOutRecipient"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="recipients"/> is null. </exception>
-        public async Task<Response<OptOutResponse>> RemoveAsync(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> RemoveAsync(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -167,7 +195,21 @@ namespace Azure.Communication.Sms
                         OptOutResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OptOutResponse.DeserializeOptOutResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -179,7 +221,7 @@ namespace Azure.Communication.Sms
         /// <param name="recipients"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="OptOutRecipient"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="recipients"/> is null. </exception>
-        public Response<OptOutResponse> Remove(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
+        public Response<object> Remove(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -199,7 +241,21 @@ namespace Azure.Communication.Sms
                         OptOutResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OptOutResponse.DeserializeOptOutResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -230,7 +286,7 @@ namespace Azure.Communication.Sms
         /// <param name="recipients"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="OptOutRecipient"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="recipients"/> is null. </exception>
-        public async Task<Response<OptOutResponse>> CheckAsync(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> CheckAsync(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -250,7 +306,21 @@ namespace Azure.Communication.Sms
                         OptOutResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OptOutResponse.DeserializeOptOutResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -262,7 +332,7 @@ namespace Azure.Communication.Sms
         /// <param name="recipients"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="OptOutRecipient"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/> or <paramref name="recipients"/> is null. </exception>
-        public Response<OptOutResponse> Check(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
+        public Response<object> Check(string @from, IEnumerable<OptOutRecipient> recipients, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -282,7 +352,21 @@ namespace Azure.Communication.Sms
                         OptOutResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OptOutResponse.DeserializeOptOutResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

@@ -26,7 +26,7 @@ namespace Azure.Communication.Sms
             ApiVersion = version switch
             {
                 ServiceVersion.V2021_03_07 => "2021-03-07",
-                ServiceVersion.V2025_08_01_Preview => "2025-08-01-preview",
+                ServiceVersion.V2025_08_01_Preview => "2026-01-23",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -42,7 +42,7 @@ namespace Azure.Communication.Sms
             /// </summary>
             V2021_03_07 = 1,
             /// <summary>
-            /// The "2025-08-01-preview" of the Telco Messaging service.
+            /// The "2026-01-23" of the Telco Messaging service.
             /// </summary>
             V2025_08_01_Preview = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores

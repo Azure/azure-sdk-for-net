@@ -24,6 +24,7 @@ namespace Azure.Communication.Sms.Models
             IReadOnlyList<DeliveryAttempt> deliveryAttempts = default;
             DateTimeOffset? receivedTimestamp = default;
             string tag = default;
+            string messagingConnectPartnerMessageId = default;
             string messageId = default;
             string @from = default;
             string to = default;
@@ -67,6 +68,11 @@ namespace Azure.Communication.Sms.Models
                     tag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("messagingConnectPartnerMessageId"u8))
+                {
+                    messagingConnectPartnerMessageId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
@@ -89,6 +95,7 @@ namespace Azure.Communication.Sms.Models
                 deliveryAttempts ?? new ChangeTrackingList<DeliveryAttempt>(),
                 receivedTimestamp,
                 tag,
+                messagingConnectPartnerMessageId,
                 messageId,
                 @from,
                 to);

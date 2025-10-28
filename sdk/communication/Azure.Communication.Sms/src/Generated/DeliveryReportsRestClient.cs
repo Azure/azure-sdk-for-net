@@ -30,7 +30,7 @@ namespace Azure.Communication.Sms
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DeliveryReportsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-08-01-preview")
+        public DeliveryReportsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2026-01-23")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -56,12 +56,12 @@ namespace Azure.Communication.Sms
         /// <summary> Gets delivery report for a specific outgoing message. </summary>
         /// <param name="outgoingMessageId"> The identifier of the outgoing message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outgoingMessageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outgoingMessageId"/> is null, empty, or whitespace. </exception>
         public async Task<Response<object>> GetAsync(string outgoingMessageId, CancellationToken cancellationToken = default)
         {
-            if (outgoingMessageId == null)
+            if (string.IsNullOrWhiteSpace(outgoingMessageId))
             {
-                throw new ArgumentNullException(nameof(outgoingMessageId));
+                throw new ArgumentException("Message ID cannot be null, empty, or whitespace.", nameof(outgoingMessageId));
             }
 
             using var message = CreateGetRequest(outgoingMessageId);
@@ -90,12 +90,12 @@ namespace Azure.Communication.Sms
         /// <summary> Gets delivery report for a specific outgoing message. </summary>
         /// <param name="outgoingMessageId"> The identifier of the outgoing message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outgoingMessageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outgoingMessageId"/> is null, empty, or whitespace. </exception>
         public Response<object> Get(string outgoingMessageId, CancellationToken cancellationToken = default)
         {
-            if (outgoingMessageId == null)
+            if (string.IsNullOrWhiteSpace(outgoingMessageId))
             {
-                throw new ArgumentNullException(nameof(outgoingMessageId));
+                throw new ArgumentException("Message ID cannot be null, empty, or whitespace.", nameof(outgoingMessageId));
             }
 
             using var message = CreateGetRequest(outgoingMessageId);

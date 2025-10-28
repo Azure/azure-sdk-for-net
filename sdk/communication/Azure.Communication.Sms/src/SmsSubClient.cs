@@ -99,8 +99,22 @@ namespace Azure.Communication.Sms
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
-                Response<SmsSendResponse> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                Response<object> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
+
+                if (response.GetRawResponse().Status >= 400)
+                {
+                    if (response.Value is BadRequestErrorResponse badRequestError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                    if (response.Value is StandardErrorResponse standardError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                }
+
+                var smsSendResponse = (SmsSendResponse)response.Value;
+                return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -135,8 +149,22 @@ namespace Azure.Communication.Sms
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
-                Response<SmsSendResponse> response = RestClient.Send(from, recipients, message, options, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                Response<object> response = RestClient.Send(from, recipients, message, options, cancellationToken);
+
+                if (response.GetRawResponse().Status >= 400)
+                {
+                    if (response.Value is BadRequestErrorResponse badRequestError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                    if (response.Value is StandardErrorResponse standardError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                }
+
+                var smsSendResponse = (SmsSendResponse)response.Value;
+                return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {

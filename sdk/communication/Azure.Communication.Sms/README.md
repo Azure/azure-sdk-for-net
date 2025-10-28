@@ -2,7 +2,16 @@
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
-> **Important**: The `SmsClient` class will be deprecated soon and removed in a future version. Please migrate to the new `TelcoMessagingClient` for all new development, which provides better organization through sub-clients and access to delivery reports functionality.
+> [!IMPORTANT]
+> **The `SmsClient` class is deprecated and will be removed in a future version.**
+>
+> **For new development, use `TelcoMessagingClient` instead**, which provides:
+>
+> - Better organization through dedicated sub-clients (`Sms`, `OptOuts`, `DeliveryReports`)
+> - Access to delivery reports functionality
+> - Improved API design and maintainability
+>
+> See the [migration guide](#migration-from-smsclient-to-telcomessagingclient) below for details on how to migrate your existing code.
 
 [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 ## Getting started
@@ -149,6 +158,46 @@ if (deliveryReport.DeliveryAttempts != null)
     }
 }
 ```
+
+The delivery report also includes a `MessagingConnectPartnerMessageId` property when messages are sent through Messaging Connect partners, which contains the partner-specific message identifier.
+
+### Messaging Connect Integration
+
+#### Send SMS through Messaging Connect Partners
+To send SMS messages through Messaging Connect partners, provide partner-specific configuration in the `MessagingConnect` options:
+
+**Using TelcoMessagingClient:**
+```csharp
+var response = await telcoMessagingClient.Sms.SendAsync(
+    from: "<from-phone-number>",
+    to: new string[] { "<to-phone-number>" },
+    message: "Hello via partner!",
+    options: new SmsSendOptions(enableDeliveryReport: true)
+    {
+        MessagingConnect = new MessagingConnectOptions(
+            partner: "YourPartnerName",
+            partnerParams: new {
+                ApiKey = "your-partner-api-key"
+            }
+        )
+    });
+```
+
+**Using SmsClient (deprecated):**
+```csharp
+var response = await smsClient.SendAsync(
+    from: "<from-phone-number>",
+    to: new string[] { "<to-phone-number>" },
+    message: "Hello via partner!",
+    options: new SmsSendOptions(enableDeliveryReport: true)
+    {
+        MessagingConnect = new MessagingConnectOptions(
+            partner: "YourPartnerName",
+            partnerParams: new { ApiKey = "your-partner-api-key" }
+        )
+    });
+```
+
 ### Opt Out Management
 
 #### Check if a list of recipients is in the Opt Out list
@@ -287,6 +336,95 @@ catch (RequestFailedException ex)
     Console.WriteLine(ex.Message);
 }
 ```
+
+## Migration from SmsClient to TelcoMessagingClient
+
+The `SmsClient` class is deprecated and will be removed in a future version. Here's how to migrate your existing code to use the new `TelcoMessagingClient`:
+
+### Client Initialization
+
+**Before (SmsClient):**
+```csharp
+using Azure.Communication.Sms;
+
+var connectionString = "<connection_string>";
+SmsClient smsClient = new SmsClient(connectionString);
+```
+
+**After (TelcoMessagingClient):**
+```csharp
+using Azure.Communication.Sms;
+
+var connectionString = "<connection_string>";
+TelcoMessagingClient telcoClient = new TelcoMessagingClient(connectionString);
+```
+
+### Sending SMS Messages
+
+**Before (SmsClient):**
+```csharp
+// Single recipient
+var result = await smsClient.SendAsync(from, to, message);
+
+// Multiple recipients
+var results = await smsClient.SendAsync(from, recipientList, message);
+```
+
+**After (TelcoMessagingClient):**
+```csharp
+// Single recipient
+var result = await telcoClient.Sms.SendAsync(from, to, message);
+
+// Multiple recipients
+var results = await telcoClient.Sms.SendAsync(from, recipientList, message);
+```
+
+### Opt-Out Management
+
+**Before (SmsClient):**
+```csharp
+// Check opt-out status
+var response = await smsClient.OptOuts.CheckAsync(from, to);
+
+// Add to opt-out list
+await smsClient.OptOuts.AddAsync(from, to);
+
+// Remove from opt-out list
+await smsClient.OptOuts.RemoveAsync(from, to);
+```
+
+**After (TelcoMessagingClient):**
+```csharp
+// Check opt-out status
+var response = await telcoClient.OptOuts.CheckAsync(from, to);
+
+// Add to opt-out list
+await telcoClient.OptOuts.AddAsync(from, to);
+
+// Remove from opt-out list
+await telcoClient.OptOuts.RemoveAsync(from, to);
+```
+
+### New Functionality - Delivery Reports
+
+The `TelcoMessagingClient` provides access to delivery reports, which is not available in `SmsClient`:
+
+```csharp
+// Send message and get message ID
+var sendResult = await telcoClient.Sms.SendAsync(from, to, message);
+string messageId = sendResult.Value.MessageId;
+
+// Get delivery report for the message
+var deliveryReport = await telcoClient.DeliveryReports.GetAsync(messageId);
+Console.WriteLine($"Message status: {deliveryReport.Value}");
+```
+
+### Key Benefits of Migration
+
+- **Better Organization**: Functionality is organized into dedicated sub-clients (`Sms`, `OptOuts`, `DeliveryReports`)
+- **New Features**: Access to delivery reports functionality
+- **Future-Proof**: Continued support and new feature development
+- **Improved API Design**: More intuitive and maintainable API surface
 
 ## Next steps
 - [Read more about SMS in Azure Communication Services][nextsteps]

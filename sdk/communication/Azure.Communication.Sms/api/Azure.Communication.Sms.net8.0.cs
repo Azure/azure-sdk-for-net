@@ -2,9 +2,9 @@ namespace Azure.Communication.Sms
 {
     public partial class MessagingConnectOptions
     {
-        public MessagingConnectOptions(string apiKey, string partner) { }
-        public string ApiKey { get { throw null; } }
+        public MessagingConnectOptions(string partner, object partnerParams) { }
         public string Partner { get { throw null; } }
+        public object PartnerParams { get { throw null; } }
     }
     public partial class OptOutsClient
     {

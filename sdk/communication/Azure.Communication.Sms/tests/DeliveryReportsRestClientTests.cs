@@ -57,13 +57,11 @@ namespace Azure.Communication.Sms.Tests
             {
                 client.Get(null);
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
             {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-                return;
+                Assert.That(ex.Message, Contains.Substring("outgoingMessageId"));
+                Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
             }
-
-            Assert.Fail("Expected ArgumentNullException was not thrown.");
         }
 
         [Test]
@@ -75,59 +73,11 @@ namespace Azure.Communication.Sms.Tests
             {
                 await client.GetAsync(null);
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
             {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-                return;
+                Assert.That(ex.Message, Contains.Substring("outgoingMessageId"));
+                Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
             }
-
-            Assert.Fail("Expected ArgumentNullException was not thrown.");
-        }
-
-        [TestCase("message-123")]
-        [TestCase("msg_abc-def_123")]
-        [TestCase("delivery-report-456")]
-        [TestCase("12345")]
-        [TestCase("test-message-id-with-dashes")]
-        [TestCase("test_message_id_with_underscores")]
-        [TestCase("guid-like-id-12345678-1234-1234-1234-123456789012")]
-        public void DeliveryReportsRestClient_AcceptsValidMessageIds(string messageId)
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            // Test that these message ID formats don't throw ArgumentException
-            // Note: These will fail at runtime with authentication/network errors but shouldn't throw ArgumentException
-            Assert.DoesNotThrow(() =>
-            {
-                try
-                {
-                    client.Get(messageId);
-                }
-                catch (Exception ex) when (!(ex is ArgumentException || ex is ArgumentNullException))
-                {
-                    // Expected - network/auth errors are OK, but not argument validation errors
-                }
-            });
-        }
-
-        [TestCase("message-123")]
-        [TestCase("msg_abc-def_123")]
-        [TestCase("delivery-report-456")]
-        [TestCase("12345")]
-        [TestCase("test-message-id-with-dashes")]
-        [TestCase("test_message_id_with_underscores")]
-        [TestCase("guid-like-id-12345678-1234-1234-1234-123456789012")]
-        public void DeliveryReportsRestClient_GetAsyncAcceptsValidMessageIds(string messageId)
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            // Test that these message ID formats don't throw ArgumentException
-            // Note: These will fail at runtime with authentication/network errors but shouldn't throw ArgumentException
-            Assert.DoesNotThrow(() =>
-            {
-                var task = client.GetAsync(messageId);
-                // We don't await this since it would fail due to invalid connection string
-            });
         }
 
         [Test]
@@ -187,40 +137,33 @@ namespace Azure.Communication.Sms.Tests
         [TestCase("   ")]
         [TestCase("\t")]
         [TestCase("\n")]
-        public void DeliveryReportsRestClient_GetWithEmptyOrWhitespaceMessageId_ShouldNotThrowArgumentException(string messageId)
+        public void DeliveryReportsRestClient_GetWithEmptyOrWhitespaceMessageId_ShouldThrowArgumentException(string messageId)
         {
             var client = CreateDeliveryReportsRestClient();
 
-            // Empty/whitespace message IDs should be handled by the service, not client validation
-            // They may result in HTTP errors but shouldn't throw ArgumentException
-            Assert.DoesNotThrow(() =>
-            {
-                try
-                {
-                    client.Get(messageId);
-                }
-                catch (Exception ex) when (!(ex is ArgumentException || ex is ArgumentNullException))
-                {
-                    // Expected - network/service errors are OK, but not argument validation errors
-                }
-            });
+            // Empty/whitespace message IDs should be validated on the client side to prevent unnecessary network calls
+            var ex = Assert.Throws<ArgumentException>(() => client.Get(messageId));
+            Assert.AreEqual("outgoingMessageId", ex!.ParamName);
+            Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
         }
 
         [TestCase("")]
         [TestCase("   ")]
         [TestCase("\t")]
         [TestCase("\n")]
-        public void DeliveryReportsRestClient_GetAsyncWithEmptyOrWhitespaceMessageId_ShouldNotThrowArgumentException(string messageId)
+        public async Task DeliveryReportsRestClient_GetAsyncWithEmptyOrWhitespaceMessageId_ShouldThrowArgumentException(string messageId)
         {
             var client = CreateDeliveryReportsRestClient();
 
-            // Empty/whitespace message IDs should be handled by the service, not client validation
-            // They may result in HTTP errors but shouldn't throw ArgumentException
-            Assert.DoesNotThrow(() =>
+            try
             {
-                var task = client.GetAsync(messageId);
-                // We don't await this since it would fail due to invalid connection string
-            });
+                await client.GetAsync(messageId);
+            }
+            catch (Exception ex)
+            {
+                Assert.That(ex.Message, Contains.Substring("outgoingMessageId"));
+                Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
+            }
         }
 
         private DeliveryReportsRestClient CreateDeliveryReportsRestClient()

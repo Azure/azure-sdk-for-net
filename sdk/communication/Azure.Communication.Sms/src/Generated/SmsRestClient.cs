@@ -32,7 +32,7 @@ namespace Azure.Communication.Sms
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-08-01-preview")
+        public SmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2026-01-23")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -69,7 +69,7 @@ namespace Azure.Communication.Sms
         /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
-        public async Task<Response<SmsSendResponse>> SendAsync(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> SendAsync(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -93,7 +93,21 @@ namespace Azure.Communication.Sms
                         SmsSendResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
-                        return Response.FromValue(value, message0.Response);
+                        return Response.FromValue<object>(value, message0.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message0.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message0.Response);
                     }
                 default:
                     throw new RequestFailedException(message0.Response);
@@ -107,7 +121,7 @@ namespace Azure.Communication.Sms
         /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
-        public Response<SmsSendResponse> Send(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
+        public Response<object> Send(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
             {
@@ -131,7 +145,21 @@ namespace Azure.Communication.Sms
                         SmsSendResponse value = default;
                         using var document = JsonDocument.Parse(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
-                        return Response.FromValue(value, message0.Response);
+                        return Response.FromValue<object>(value, message0.Response);
+                    }
+                case 400:
+                    {
+                        BadRequestErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BadRequestErrorResponse.DeserializeBadRequestErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message0.Response);
+                    }
+                case 401:
+                    {
+                        StandardErrorResponse value = default;
+                        using var document = JsonDocument.Parse(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StandardErrorResponse.DeserializeStandardErrorResponse(document.RootElement);
+                        return Response.FromValue<object>(value, message0.Response);
                     }
                 default:
                     throw new RequestFailedException(message0.Response);

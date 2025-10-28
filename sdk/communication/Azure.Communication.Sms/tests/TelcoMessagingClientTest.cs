@@ -158,14 +158,14 @@ namespace Azure.Communication.Sms.Tests
             Assert.AreEqual("2021-03-07", options1.ApiVersion);
 
             var options2 = new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2025_08_01_Preview);
-            Assert.AreEqual("2025-08-01-preview", options2.ApiVersion);
+            Assert.AreEqual("2026-01-23", options2.ApiVersion);
         }
 
         [Test]
         public void TelcoMessagingClient_UsesLatestApiVersionByDefault()
         {
             var options = new TelcoMessagingClientOptions();
-            Assert.AreEqual("2025-08-01-preview", options.ApiVersion);
+            Assert.AreEqual("2026-01-23", options.ApiVersion);
         }
 
         [Test]

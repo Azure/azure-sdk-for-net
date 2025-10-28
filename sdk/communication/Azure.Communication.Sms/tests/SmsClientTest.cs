@@ -171,21 +171,6 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
-        public void SendingSmsWithNullMessagingConnectApiKeyShouldThrow()
-        {
-            SmsClient client = new SmsClient(TestConnectionString);
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(
-                from: "+14255550123",
-                to: "+14255550234",
-                message: "Hi",
-                options: new SmsSendOptions(true)
-                {
-                    MessagingConnect = new MessagingConnectOptions(null, "partner")
-                }));
-        }
-
-        [Test]
         public void SendingSmsWithNullMessagingConnectPartnerShouldThrow()
         {
             SmsClient client = new SmsClient(TestConnectionString);
@@ -196,7 +181,22 @@ namespace Azure.Communication.Sms.Tests
                 message: "Hi",
                 options: new SmsSendOptions(true)
                 {
-                    MessagingConnect = new MessagingConnectOptions("apiKey", null)
+                    MessagingConnect = new MessagingConnectOptions(null, new { ApiKey = "test" })
+                }));
+        }
+
+        [Test]
+        public void SendingSmsWithNullMessagingConnectPartnerParamsShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(
+                from: "+14255550123",
+                to: "+14255550234",
+                message: "Hi",
+                options: new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions("partner", null)
                 }));
         }
 

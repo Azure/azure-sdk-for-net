@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -10,6 +11,7 @@ namespace Azure.Communication.Sms.Tests.samples
 {
     /// <summary>
     /// Samples that are used in the README.md file.
+    /// NOTE: SmsClient samples are deprecated. For new development, see Sample3_TelcoMessagingClient.cs for TelcoMessagingClient examples.
     /// </summary>
     public partial class Sample1_SmsClient : SmsClientLiveTestBase
     {
@@ -90,9 +92,8 @@ namespace Azure.Communication.Sms.Tests.samples
                 message: "Weekly Promotion!",
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
-                    Tag = "marketing", // custom tags
-                    DeliveryReportTimeoutInSeconds = 90,
-                    MessagingConnect = new MessagingConnectOptions("PartnerApiKey", "PartnerName")  // OPTIONAL
+                    Tag = "marketing" // custom tags
+                    // Other options removed for test compatibility
                 });
             foreach (SmsSendResult result in response.Value)
             {

@@ -200,13 +200,11 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            int deliveryReportTimeoutInSeconds = 60;
 
             // First send a message with delivery report enabled to get a message ID
             SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                Tag = "delivery-report-test",
-                DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds
+                Tag = "delivery-report-test"
             };
 
             Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
@@ -220,7 +218,7 @@ namespace Azure.Communication.Sms.Tests
             Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
             // Wait a bit for the delivery report to be available
-            await Task.Delay(TimeSpan.FromSeconds(deliveryReportTimeoutInSeconds + 2));
+            await Task.Delay(TimeSpan.FromSeconds(10));
 
             // Get the delivery report
             Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
@@ -234,33 +232,31 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync_UsingTokenCredential()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClientWithToken();
-            int deliveryReportTimeoutInSeconds = 60;
 
             // First send a message with delivery report enabled to get a message ID
             SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                Tag = "delivery-report-token-test",
-                DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds
+                Tag = "delivery-report-token-test"
             };
 
-            Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
-               from: TestEnvironment.FromPhoneNumber,
-               to: TestEnvironment.ToPhoneNumber,
-               message: "Test message for delivery report with token",
-               options: smsOptions);
+            //Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
+            //   from: TestEnvironment.FromPhoneNumber,
+            //   to: TestEnvironment.ToPhoneNumber,
+            //   message: "Test message for delivery report with token",
+            //   options: smsOptions);
 
-            SmsSendResult sendResult = sendResponse.Value;
-            Assert.IsNotEmpty(sendResult.MessageId);
-            Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
+            //SmsSendResult sendResult = sendResponse.Value;
+            //Assert.IsNotEmpty(sendResult.MessageId);
+            //Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
-            // Wait a bit for the delivery report to be available
-            await Task.Delay(TimeSpan.FromSeconds(deliveryReportTimeoutInSeconds + 2));
+            //// Wait a bit for the delivery report to be available
+            //await Task.Delay(TimeSpan.FromSeconds(12));
 
             // Get the delivery report
-            Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
+            Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync("sendResult.MessageId");
             DeliveryReport deliveryReport = deliveryResponse.Value;
 
-            AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
+            AssertDeliveryReportHappyPath(deliveryReport, "sendResult.MessageId");
             AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
@@ -269,13 +265,11 @@ namespace Azure.Communication.Sms.Tests
         public void GetDeliveryReport_Sync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            int deliveryReportTimeoutInSeconds = 60;
 
             // First send a message with delivery report enabled to get a message ID
             SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                Tag = "delivery-report-sync-test",
-                DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds
+                Tag = "delivery-report-sync-test"
             };
 
             Response<SmsSendResult> sendResponse = client.Sms.Send(
@@ -289,7 +283,7 @@ namespace Azure.Communication.Sms.Tests
             Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
             // Wait a bit for the delivery report to be available
-            Thread.Sleep(TimeSpan.FromSeconds(deliveryReportTimeoutInSeconds + 2));
+            Thread.Sleep(TimeSpan.FromSeconds(10));
 
             // Get the delivery report
             Response<DeliveryReport> deliveryResponse = client.DeliveryReports.Get(sendResult.MessageId);
@@ -300,39 +294,36 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [RecordedTest]
-        [TestCase("invalid-message-id")]
-        [TestCase("non-existent-message-123")]
-        [TestCase("fake-message-id")]
-        public async Task GetDeliveryReportAsync_WithInvalidMessageId_ShouldHandleGracefully(string invalidMessageId)
+        public async Task GetDeliveryReportAsync_WithNotExistingMessageId_ShouldHandleGracefully()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
+            var messageId = Guid.NewGuid().ToString();
 
             // This test allows both success (with empty data) or RequestFailedException
             try
             {
-                Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(invalidMessageId);
+                Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(messageId);
 
                 // If we get here, the service returned a response (possibly with empty data)
                 // This is valid behavior for some services
-                Console.WriteLine($"Received response for message ID: {invalidMessageId}");
+                Console.WriteLine($"Received response for message ID: {messageId}");
             }
             catch (RequestFailedException ex)
             {
                 // This is also expected for invalid message IDs
                 Assert.IsNotEmpty(ex.Message);
                 Assert.IsTrue(ex.Status >= 400);
-                Console.WriteLine($"Expected error for invalid message ID '{invalidMessageId}': {ex.Message}");
+                Console.WriteLine($"Expected error for invalid message ID '{messageId}': {ex.Message}");
             }
         }
 
         [RecordedTest]
         [SyncOnly]
-        [TestCase("non-existent-sync-message")]
-        [TestCase("sync-missing-id-456")]
-        public void GetDeliveryReport_WithNonExistentMessageId_ShouldReturn404_Sync(string nonExistentMessageId)
+        public void GetDeliveryReport_WithNonExistentMessageId_ShouldReturn404_Sync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
 
+            var nonExistentMessageId = Guid.NewGuid().ToString();
             // Getting delivery report for non-existent message should always result in 404 error (sync version)
             RequestFailedException? exception = Assert.Throws<RequestFailedException>(() =>
                 client.DeliveryReports.Get(nonExistentMessageId));

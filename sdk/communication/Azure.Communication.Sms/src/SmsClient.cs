@@ -18,9 +18,10 @@ namespace Azure.Communication.Sms
     /// The Azure Communication Services SMS client.
     /// </summary>
     /// <remarks>
-    /// This class will be deprecated in an upcoming release. For new development, use <see cref="TelcoMessagingClient"/> instead,
+    /// This class is deprecated as of version 1.1.0. For new development, use <see cref="TelcoMessagingClient"/> instead,
     /// which provides a more comprehensive API with sub-clients for SMS messaging, opt-out management, and delivery reports.
     /// </remarks>
+    [Obsolete("SmsClient is deprecated as of version 1.1.0. Use TelcoMessagingClient instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
     public class SmsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -103,6 +104,7 @@ namespace Azure.Communication.Sms
         /// <summary>
         /// Opt Out management client.
         /// </summary>
+        [Obsolete("SmsClient.OptOuts is deprecated as of version 1.1.0. Use TelcoMessagingClient.OptOuts instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
         public virtual OptOutsClient OptOuts { get; private set; }
 
         /// <summary>
@@ -117,6 +119,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
+        [Obsolete("SmsClient.SendAsync is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.SendAsync instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
         public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
@@ -137,6 +140,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
+        [Obsolete("SmsClient.Send is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.Send instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
         public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
@@ -155,6 +159,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
+        [Obsolete("SmsClient.SendAsync is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.SendAsync instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
         public virtual async Task<Response<IReadOnlyList<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
@@ -170,8 +175,22 @@ namespace Azure.Communication.Sms
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
-                Response<SmsSendResponse> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                Response<object> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
+
+                if (response.GetRawResponse().Status >= 400)
+                {
+                    if (response.Value is BadRequestErrorResponse badRequestError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                    if (response.Value is StandardErrorResponse standardError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                }
+
+                var smsSendResponse = (SmsSendResponse)response.Value;
+                return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -190,6 +209,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
+        [Obsolete("SmsClient.Send is deprecated as of version 1.1.0. Use TelcoMessagingClient.Sms.Send instead for new development. See https://aka.ms/azsdk/net/migrate-sms for migration guidance.", false)]
         public virtual Response<IReadOnlyList<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
@@ -206,8 +226,22 @@ namespace Azure.Communication.Sms
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
-                Response<SmsSendResponse> response = RestClient.Send(from, recipients, message, options, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                Response<object> response = RestClient.Send(from, recipients, message, options, cancellationToken);
+
+                if (response.GetRawResponse().Status >= 400)
+                {
+                    if (response.Value is BadRequestErrorResponse badRequestError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                    if (response.Value is StandardErrorResponse standardError)
+                    {
+                        throw new RequestFailedException(response.GetRawResponse());
+                    }
+                }
+
+                var smsSendResponse = (SmsSendResponse)response.Value;
+                return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {

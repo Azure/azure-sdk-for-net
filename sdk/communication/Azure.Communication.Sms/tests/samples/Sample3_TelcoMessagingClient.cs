@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -10,6 +11,7 @@ namespace Azure.Communication.Sms.Tests.samples
 {
     /// <summary>
     /// Samples that demonstrate TelcoMessagingClient usage for README.md file.
+    /// RECOMMENDED: TelcoMessagingClient is the preferred client for new development as it provides better organization and access to all SMS features.
     /// </summary>
     public partial class Sample3_TelcoMessagingClient : SmsClientLiveTestBase
     {
@@ -175,6 +177,13 @@ namespace Azure.Communication.Sms.Tests.samples
             var deliveryReport = await telcoMessagingClient.DeliveryReports.GetAsync(/*@@*/sendResult.MessageId);
             //@@ var deliveryReport = await telcoMessagingClient.DeliveryReports.GetAsync("<message-id>");
             Console.WriteLine($"Message {deliveryReport.Value.MessageId} delivery status: {deliveryReport.Value.DeliveryStatus}");
+
+            // Display Messaging Connect Partner Message ID if available
+            if (!string.IsNullOrEmpty(deliveryReport.Value.MessagingConnectPartnerMessageId))
+            {
+                Console.WriteLine($"Partner Message ID: {deliveryReport.Value.MessagingConnectPartnerMessageId}");
+            }
+
             if (deliveryReport.Value.DeliveryAttempts != null)
             {
                 foreach (var attempt in deliveryReport.Value.DeliveryAttempts)
@@ -197,10 +206,19 @@ namespace Azure.Communication.Sms.Tests.samples
                 to: TestEnvironment.ToPhoneNumber,
                 message: "Test message for delivery report");
 
+            Thread.Sleep(5000);
+
             #region Snippet:Azure_Communication_Sms_Tests_DeliveryReports_Get
             var deliveryReport = telcoMessagingClient.DeliveryReports.Get(/*@@*/sendResult.MessageId);
             //@@ var deliveryReport = telcoMessagingClient.DeliveryReports.Get("<message-id>");
             Console.WriteLine($"Message {deliveryReport.Value.MessageId} delivery status: {deliveryReport.Value.DeliveryStatus}");
+
+            // Display Messaging Connect Partner Message ID if available
+            if (!string.IsNullOrEmpty(deliveryReport.Value.MessagingConnectPartnerMessageId))
+            {
+                Console.WriteLine($"Partner Message ID: {deliveryReport.Value.MessagingConnectPartnerMessageId}");
+            }
+
             if (deliveryReport.Value.DeliveryAttempts != null)
             {
                 foreach (var attempt in deliveryReport.Value.DeliveryAttempts)
