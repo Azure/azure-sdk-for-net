@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-08-01";
+            _apiVersion = apiVersion ?? "2025-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data)
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, string serverName, MigrationNameAvailability migrationNameAvailability)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -45,14 +45,324 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/checkMigrationNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string serverName, MigrationNameAvailability migrationNameAvailability)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/checkMigrationNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(migrationNameAvailability, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Checks if a proposed migration name is valid and available. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationNameAvailability"> Parameters required to check if a migration name is valid and available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationNameAvailability"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string serverName, MigrationNameAvailability migrationNameAvailability, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(migrationNameAvailability, nameof(migrationNameAvailability));
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, serverName, migrationNameAvailability);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MigrationNameAvailability value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = MigrationNameAvailability.DeserializeMigrationNameAvailability(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Checks if a proposed migration name is valid and available. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationNameAvailability"> Parameters required to check if a migration name is valid and available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationNameAvailability"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationNameAvailability> CheckNameAvailability(string subscriptionId, string resourceGroupName, string serverName, MigrationNameAvailability migrationNameAvailability, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(migrationNameAvailability, nameof(migrationNameAvailability));
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, serverName, migrationNameAvailability);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MigrationNameAvailability value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = MigrationNameAvailability.DeserializeMigrationNameAvailability(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByTargetServerRequestUri(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/migrations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (migrationListFilter != null)
+            {
+                uri.AppendQuery("migrationListFilter", migrationListFilter.Value.ToString(), true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByTargetServerRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/migrations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (migrationListFilter != null)
+            {
+                uri.AppendQuery("migrationListFilter", migrationListFilter.Value.ToString(), true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all migrations of a target flexible server. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationListFilter"> Migration list filter. Indicates if the request should retrieve only active migrations or all migrations. Defaults to Active. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationList>> ListByTargetServerAsync(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
+            using var message = CreateListByTargetServerRequest(subscriptionId, resourceGroupName, serverName, migrationListFilter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MigrationList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = MigrationList.DeserializeMigrationList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all migrations of a target flexible server. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationListFilter"> Migration list filter. Indicates if the request should retrieve only active migrations or all migrations. Defaults to Active. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationList> ListByTargetServer(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
+            using var message = CreateListByTargetServerRequest(subscriptionId, resourceGroupName, serverName, migrationListFilter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MigrationList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = MigrationList.DeserializeMigrationList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string migrationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
             uri.AppendPath("/migrations/", false);
             uri.AppendPath(migrationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string migrationName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/migrations/", false);
+            uri.AppendPath(migrationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets information about a migration. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, migrationName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MigrationData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((MigrationData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets information about a migration. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationData> Get(string subscriptionId, string resourceGroupName, string serverName, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, migrationName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MigrationData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((MigrationData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/migrations/", false);
+            uri.AppendPath(migrationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +374,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath(serverName, true);
             uri.AppendPath("/migrations/", false);
             uri.AppendPath(migrationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -79,32 +389,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Creates a new migration. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="data"> The required parameters for creating a migration. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="data"> Parameters required for creating a migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationData>> CreateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationData>> CreateAsync(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, serverName, migrationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        PostgreSqlMigrationData value = default;
+                        MigrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,32 +423,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Creates a new migration. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="data"> The required parameters for creating a migration. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="data"> Parameters required for creating a migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationData> Create(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationData> Create(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, serverName, migrationName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        PostgreSqlMigrationData value = default;
+                        MigrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +456,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -155,118 +465,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath(serverName, true);
             uri.AppendPath("/migrations/", false);
             uri.AppendPath(migrationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
-            uri.AppendPath("/migrations/", false);
-            uri.AppendPath(migrationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets details of a migration. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationData>> GetAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
-            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PostgreSqlMigrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PostgreSqlMigrationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets details of a migration. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationData> Get(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
-            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PostgreSqlMigrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PostgreSqlMigrationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
-            uri.AppendPath("/migrations/", false);
-            uri.AppendPath(migrationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -278,7 +484,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath(serverName, true);
             uri.AppendPath("/migrations/", false);
             uri.AppendPath(migrationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -293,31 +499,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Updates an existing migration. The request body can contain one to many of the mutable properties present in the migration definition. Certain property updates initiate migration state transitions. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="patch"> The required parameters for updating a migration. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="patch"> Parameters required to update an existing migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="migrationName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, migrationName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlMigrationData value = default;
+                        MigrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,31 +532,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Updates an existing migration. The request body can contain one to many of the mutable properties present in the migration definition. Certain property updates initiate migration state transitions. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="patch"> The required parameters for updating a migration. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="patch"> Parameters required to update an existing migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationData> Update(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="migrationName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationData> Update(string subscriptionId, string resourceGroupName, string serverName, string migrationName, MigrationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, migrationName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlMigrationData value = default;
+                        MigrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,7 +564,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string serverName, string migrationName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -367,14 +573,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath(serverName, true);
             uri.AppendPath("/migrations/", false);
             uri.AppendPath(migrationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
+        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string serverName, string migrationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -386,7 +592,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath(serverName, true);
             uri.AppendPath("/migrations/", false);
             uri.AppendPath(migrationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -396,165 +602,73 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        /// <summary> Deletes a migration. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
+        /// <summary> Cancels an active migration. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationData>> CancelAsync(string subscriptionId, string resourceGroupName, string serverName, string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a migration. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
-            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByTargetServerRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
-            uri.AppendPath("/migrations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (migrationListFilter != null)
-            {
-                uri.AppendQuery("migrationListFilter", migrationListFilter.Value.ToString(), true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByTargetServerRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
-            uri.AppendPath(targetDbServerName, true);
-            uri.AppendPath("/migrations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (migrationListFilter != null)
-            {
-                uri.AppendQuery("migrationListFilter", migrationListFilter.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List all the migrations on a given target server. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
-
-            using var message = CreateListByTargetServerRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
+            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, migrationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlMigrationResourceListResult value = default;
+                        MigrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 204:
+                    return Response.FromValue((MigrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> List all the migrations on a given target server. </summary>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
+        /// <summary> Cancels an active migration. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationName"> Name of migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationResourceListResult> ListByTargetServer(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationData> Cancel(string subscriptionId, string resourceGroupName, string serverName, string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var message = CreateListByTargetServerRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
+            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, migrationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlMigrationResourceListResult value = default;
+                        MigrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
+                        value = MigrationData.DeserializeMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 204:
+                    return Response.FromValue((MigrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListByTargetServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
+        internal RequestUriBuilder CreateListByTargetServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -562,7 +676,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateListByTargetServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
+        internal HttpMessage CreateListByTargetServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -576,31 +690,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        /// <summary> List all the migrations on a given target server. </summary>
+        /// <summary> Lists all migrations of a target flexible server. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationListFilter"> Migration list filter. Indicates if the request should retrieve only active migrations or all migrations. Defaults to Active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MigrationList>> ListByTargetServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            using var message = CreateListByTargetServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
+            using var message = CreateListByTargetServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, migrationListFilter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlMigrationResourceListResult value = default;
+                        MigrationList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
+                        value = MigrationList.DeserializeMigrationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -608,31 +722,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> List all the migrations on a given target server. </summary>
+        /// <summary> Lists all migrations of a target flexible server. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
-        /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
-        /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="migrationListFilter"> Migration list filter. Indicates if the request should retrieve only active migrations or all migrations. Defaults to Active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationResourceListResult> ListByTargetServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MigrationList> ListByTargetServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            using var message = CreateListByTargetServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
+            using var message = CreateListByTargetServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, migrationListFilter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlMigrationResourceListResult value = default;
+                        MigrationList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostgreSqlMigrationResourceListResult.DeserializePostgreSqlMigrationResourceListResult(document.RootElement);
+                        value = MigrationList.DeserializeMigrationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

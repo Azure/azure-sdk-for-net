@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The mode to create a new PostgreSQL server. </summary>
+    /// <summary> Creation mode of a new server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerCreateMode : IEquatable<PostgreSqlFlexibleServerCreateMode>
     {
         private readonly string _value;

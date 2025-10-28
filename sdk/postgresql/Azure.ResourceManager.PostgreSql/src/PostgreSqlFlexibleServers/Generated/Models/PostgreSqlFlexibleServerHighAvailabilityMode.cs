@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The HA mode for the server. </summary>
+    /// <summary> High availability mode for a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerHighAvailabilityMode : IEquatable<PostgreSqlFlexibleServerHighAvailabilityMode>
     {
         private readonly string _value;

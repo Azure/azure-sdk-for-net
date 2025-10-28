@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Gets the replication state of a replica server. This property is returned only for replicas api call. Supported values are Active, Catchup, Provisioning, Updating, Broken, Reconfiguring. </summary>
+    /// <summary> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating. </summary>
     public readonly partial struct PostgreSqlFlexibleServersReplicationState : IEquatable<PostgreSqlFlexibleServersReplicationState>
     {
         private readonly string _value;
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string BrokenValue = "Broken";
         private const string ReconfiguringValue = "Reconfiguring";
 
-        /// <summary> Active. </summary>
+        /// <summary> The read replica server is fully synchronized and actively replicating data from the primary server. </summary>
         public static PostgreSqlFlexibleServersReplicationState Active { get; } = new PostgreSqlFlexibleServersReplicationState(ActiveValue);
-        /// <summary> Catchup. </summary>
+        /// <summary> The read replica server is behind the primary server and is currently catching up with pending changes. </summary>
         public static PostgreSqlFlexibleServersReplicationState Catchup { get; } = new PostgreSqlFlexibleServersReplicationState(CatchupValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary> The read replica server is being created and is in process of getting initialized. </summary>
         public static PostgreSqlFlexibleServersReplicationState Provisioning { get; } = new PostgreSqlFlexibleServersReplicationState(ProvisioningValue);
-        /// <summary> Updating. </summary>
+        /// <summary> The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
         public static PostgreSqlFlexibleServersReplicationState Updating { get; } = new PostgreSqlFlexibleServersReplicationState(UpdatingValue);
-        /// <summary> Broken. </summary>
+        /// <summary> Replication has failed or been interrupted. </summary>
         public static PostgreSqlFlexibleServersReplicationState Broken { get; } = new PostgreSqlFlexibleServersReplicationState(BrokenValue);
-        /// <summary> Reconfiguring. </summary>
+        /// <summary> The read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
         public static PostgreSqlFlexibleServersReplicationState Reconfiguring { get; } = new PostgreSqlFlexibleServersReplicationState(ReconfiguringValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersReplicationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersReplicationState left, PostgreSqlFlexibleServersReplicationState right) => left.Equals(right);

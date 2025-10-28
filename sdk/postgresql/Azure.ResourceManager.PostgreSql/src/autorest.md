@@ -13,10 +13,19 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2024-08-01
+  - tag: package-flexibleserver-2025-08-01
 enable-bicep-serialization: true
+
+no-property-type-replacement:
+  - ServerForPatch
+  - PostgreSqlFlexibleServerPatch
+  - UserAssignedIdentity
+
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -156,10 +165,10 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2024-08-01'
+``` yaml $(tag) == 'package-flexibleserver-2025-08-01'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/441142c0e20d1d14a022fced9d2837128ba81ca6/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -219,7 +228,7 @@ rename-mapping:
   Sku: PostgreSqlFlexibleServerSku
   Network: PostgreSqlFlexibleServerNetwork
   HighAvailability: PostgreSqlFlexibleServerHighAvailability
-  HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
+  HighAvailabilityMode: PostgreSqlFlexibleServerComputeHighAvailabilityMode
   ServerListResult: PostgreSqlFlexibleServerListResult
   ServerState: PostgreSqlFlexibleServerState
   FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
@@ -311,26 +320,28 @@ rename-mapping:
   LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
   LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
   MigrationResource: PostgreSqlMigration
+  AdministratorMicrosoftEntra.properties.objectId: -|uuid
+  DataEncryption.primaryUserAssignedIdentityId: -|arm-id
+  AdvancedThreatProtectionSettingsModel: ServerThreatProtectionSettingsModel
+  AdministratorMicrosoftEntra: PostgreSqlFlexibleServerActiveDirectoryAdministrator
+  TuningOption: FooTuningOption
+
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
   CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
   LogFiles_ListByServer: GetPostgreSqlFlexibleServerLogFiles
+
 directive:
-  - from: Administrators.json
-    where: $.definitions
+  - from: swagger-document
+    where: $.definitions.ServerPropertiesForPatch
     transform: >
-      $.AdministratorProperties.properties.objectId['format'] = 'uuid'
-  - from: FlexibleServers.json
-    where: $.definitions
+      $.properties.location = {"type": "string", "description": "The location the resource resides in."};
+  - from: swagger-document
+    where: $.definitions.CheckNameAvailabilityRequest
     transform: >
-      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id';
-      $.ServerForUpdate.properties.location = {"type": "string", "description": "The location the resource resides in."}
-  - from: types.json
-    where: $.definitions
-    transform: >
-      $.CheckNameAvailabilityRequest.required = ['name']
-  - from: Configuration.json
+       $.required = ['name'];
+  - from: openapi.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/configurations/{configurationName}"].patch
     transform: >
       const parameters = $.parameters;

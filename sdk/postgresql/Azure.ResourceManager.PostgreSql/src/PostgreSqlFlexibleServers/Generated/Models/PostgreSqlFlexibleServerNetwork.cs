@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNetwork"/>. </summary>
-        /// <param name="publicNetworkAccess"> public network access is enabled or not. </param>
-        /// <param name="delegatedSubnetResourceId"> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
-        /// <param name="privateDnsZoneArmResourceId"> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
+        /// <param name="publicNetworkAccess"> Indicates if public network access is enabled or not. This is only supported for servers that are not integrated into a virtual network which is owned and provided by customer when server is deployed. </param>
+        /// <param name="delegatedSubnetResourceId"> Resource identifier of the delegated subnet. Required during creation of a new server, in case you want the server to be integrated into your own virtual network. For an update operation, you only have to provide this property if you want to change the value assigned for the private DNS zone. </param>
+        /// <param name="privateDnsZoneArmResourceId"> Identifier of the private DNS zone. Required during creation of a new server, in case you want the server to be integrated into your own virtual network. For an update operation, you only have to provide this property if you want to change the value assigned for the private DNS zone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerNetwork(PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> public network access is enabled or not. </summary>
+        /// <summary> Indicates if public network access is enabled or not. This is only supported for servers that are not integrated into a virtual network which is owned and provided by customer when server is deployed. </summary>
         [WirePath("publicNetworkAccess")]
         public PostgreSqlFlexibleServerPublicNetworkAccessState? PublicNetworkAccess { get; set; }
-        /// <summary> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </summary>
+        /// <summary> Resource identifier of the delegated subnet. Required during creation of a new server, in case you want the server to be integrated into your own virtual network. For an update operation, you only have to provide this property if you want to change the value assigned for the private DNS zone. </summary>
         [WirePath("delegatedSubnetResourceId")]
         public ResourceIdentifier DelegatedSubnetResourceId { get; set; }
-        /// <summary> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </summary>
+        /// <summary> Identifier of the private DNS zone. Required during creation of a new server, in case you want the server to be integrated into your own virtual network. For an update operation, you only have to provide this property if you want to change the value assigned for the private DNS zone. </summary>
         [WirePath("privateDnsZoneArmResourceId")]
         public ResourceIdentifier PrivateDnsZoneArmResourceId { get; set; }
     }

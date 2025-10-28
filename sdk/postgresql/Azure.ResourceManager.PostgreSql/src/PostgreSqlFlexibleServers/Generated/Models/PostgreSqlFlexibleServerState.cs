@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A state of a server that is visible to user. </summary>
+    /// <summary> Possible states of a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerState : IEquatable<PostgreSqlFlexibleServerState>
     {
         private readonly string _value;
@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string StoppingValue = "Stopping";
         private const string StoppedValue = "Stopped";
         private const string UpdatingValue = "Updating";
+        private const string RestartingValue = "Restarting";
+        private const string InaccessibleValue = "Inaccessible";
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Ready. </summary>
         public static PostgreSqlFlexibleServerState Ready { get; } = new PostgreSqlFlexibleServerState(ReadyValue);
@@ -44,6 +47,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerState Stopped { get; } = new PostgreSqlFlexibleServerState(StoppedValue);
         /// <summary> Updating. </summary>
         public static PostgreSqlFlexibleServerState Updating { get; } = new PostgreSqlFlexibleServerState(UpdatingValue);
+        /// <summary> Restarting. </summary>
+        public static PostgreSqlFlexibleServerState Restarting { get; } = new PostgreSqlFlexibleServerState(RestartingValue);
+        /// <summary> Inaccessible. </summary>
+        public static PostgreSqlFlexibleServerState Inaccessible { get; } = new PostgreSqlFlexibleServerState(InaccessibleValue);
+        /// <summary> Provisioning. </summary>
+        public static PostgreSqlFlexibleServerState Provisioning { get; } = new PostgreSqlFlexibleServerState(ProvisioningValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are not the same. </summary>

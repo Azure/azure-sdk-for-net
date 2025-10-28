@@ -77,6 +77,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFeatures))
+            {
+                writer.WritePropertyName("supportedFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFeatures)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteStringValue(SecurityProfile);
+            }
         }
 
         PostgreSqlFlexibleServerSkuCapability IJsonModel<PostgreSqlFlexibleServerSkuCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -104,7 +119,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             int? supportedIops = default;
             long? supportedMemoryPerVcoreMb = default;
             IReadOnlyList<string> supportedZones = default;
-            IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
+            IReadOnlyList<PostgreSqlFlexibleServerComputeHighAvailabilityMode> supportedHaMode = default;
+            IReadOnlyList<SupportedFeature> supportedFeatures = default;
+            string securityProfile = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -163,12 +180,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerHAMode> array = new List<PostgreSqlFlexibleServerHAMode>();
+                    List<PostgreSqlFlexibleServerComputeHighAvailabilityMode> array = new List<PostgreSqlFlexibleServerComputeHighAvailabilityMode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new PostgreSqlFlexibleServerHAMode(item.GetString()));
+                        array.Add(new PostgreSqlFlexibleServerComputeHighAvailabilityMode(item.GetString()));
                     }
                     supportedHaMode = array;
+                    continue;
+                }
+                if (property.NameEquals("supportedFeatures"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SupportedFeature> array = new List<SupportedFeature>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SupportedFeature.DeserializeSupportedFeature(item, options));
+                    }
+                    supportedFeatures = array;
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    securityProfile = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -200,7 +236,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedIops,
                 supportedMemoryPerVcoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
-                supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>());
+                supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerComputeHighAvailabilityMode>(),
+                supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
+                securityProfile);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -337,6 +375,52 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             builder.AppendLine($"    '{item.ToString()}'");
                         }
                         builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFeatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedFeatures))
+                {
+                    if (SupportedFeatures.Any())
+                    {
+                        builder.Append("  supportedFeatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFeatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFeatures: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  securityProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecurityProfile))
+                {
+                    builder.Append("  securityProfile: ");
+                    if (SecurityProfile.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecurityProfile}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecurityProfile}'");
                     }
                 }
             }

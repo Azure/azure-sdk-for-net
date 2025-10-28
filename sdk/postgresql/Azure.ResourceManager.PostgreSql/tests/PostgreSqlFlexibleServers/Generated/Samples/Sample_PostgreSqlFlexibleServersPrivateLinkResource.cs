@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAPrivateLinkResourceForPostgreSQL()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PrivateLinkResourcesGet.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/PrivateLinkResourcesGet.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServersPrivateLinkResource created on azure
             // for more information of creating PostgreSqlFlexibleServersPrivateLinkResource, please refer to the document of PostgreSqlFlexibleServersPrivateLinkResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "Default";
-            string serverName = "test-svr";
-            string groupName = "plr";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            string groupName = "exampleprivatelink";
             ResourceIdentifier postgreSqlFlexibleServersPrivateLinkResourceId = PostgreSqlFlexibleServersPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, groupName);
             PostgreSqlFlexibleServersPrivateLinkResource postgreSqlFlexibleServersPrivateLinkResource = client.GetPostgreSqlFlexibleServersPrivateLinkResource(postgreSqlFlexibleServersPrivateLinkResourceId);
 

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Data type of the configuration. </summary>
+    /// <summary> Data type of the configuration (also known as server parameter). </summary>
     public readonly partial struct PostgreSqlFlexibleServerConfigurationDataType : IEquatable<PostgreSqlFlexibleServerConfigurationDataType>
     {
         private readonly string _value;
@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string NumericValue = "Numeric";
         private const string IntegerValue = "Integer";
         private const string EnumerationValue = "Enumeration";
+        private const string StringValue = "String";
+        private const string SetValue = "Set";
 
         /// <summary> Boolean. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Boolean { get; } = new PostgreSqlFlexibleServerConfigurationDataType(BooleanValue);
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerConfigurationDataType Integer { get; } = new PostgreSqlFlexibleServerConfigurationDataType(IntegerValue);
         /// <summary> Enumeration. </summary>
         public static PostgreSqlFlexibleServerConfigurationDataType Enumeration { get; } = new PostgreSqlFlexibleServerConfigurationDataType(EnumerationValue);
+        /// <summary> String. </summary>
+        public static PostgreSqlFlexibleServerConfigurationDataType String { get; } = new PostgreSqlFlexibleServerConfigurationDataType(StringValue);
+        /// <summary> Set. </summary>
+        public static PostgreSqlFlexibleServerConfigurationDataType Set { get; } = new PostgreSqlFlexibleServerConfigurationDataType(SetValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerConfigurationDataType left, PostgreSqlFlexibleServerConfigurationDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerConfigurationDataType"/> values are not the same. </summary>

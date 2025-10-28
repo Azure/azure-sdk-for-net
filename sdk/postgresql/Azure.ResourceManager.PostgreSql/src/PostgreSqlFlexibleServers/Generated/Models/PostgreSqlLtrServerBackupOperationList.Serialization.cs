@@ -36,20 +36,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 throw new FormatException($"The model {nameof(PostgreSqlLtrServerBackupOperationList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,29 +85,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value = default;
-            string nextLink = default;
+            IReadOnlyList<BackupsLongTermRetentionOperationData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PostgreSqlLtrServerBackupOperationData> array = new List<PostgreSqlLtrServerBackupOperationData>();
+                    List<BackupsLongTermRetentionOperationData> array = new List<BackupsLongTermRetentionOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(item, options));
+                        array.Add(BackupsLongTermRetentionOperationData.DeserializeBackupsLongTermRetentionOperationData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlLtrServerBackupOperationList(value ?? new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>(), nextLink, serializedAdditionalRawData);
+            return new PostgreSqlLtrServerBackupOperationList(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -167,15 +164,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 if (Optional.IsDefined(NextLink))
                 {
                     builder.Append("  nextLink: ");
-                    if (NextLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextLink}'");
-                    }
+                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
                 }
             }
 

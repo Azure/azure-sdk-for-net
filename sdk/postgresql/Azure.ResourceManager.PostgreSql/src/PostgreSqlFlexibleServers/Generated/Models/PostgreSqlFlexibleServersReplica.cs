@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersReplica"/>. </summary>
-        /// <param name="role"> Used to indicate role of the server in replication set. </param>
-        /// <param name="capacity"> Replicas allowed for a server. </param>
-        /// <param name="replicationState"> Gets the replication state of a replica server. This property is returned only for replicas api call. Supported values are Active, Catchup, Provisioning, Updating, Broken, Reconfiguring. </param>
-        /// <param name="promoteMode"> Sets the promote mode for a replica server. This is a write only property. </param>
-        /// <param name="promoteOption"> Sets the promote options for a replica server. This is a write only property. </param>
+        /// <param name="role"> Role of the server in a replication set. </param>
+        /// <param name="capacity"> Maximum number of read replicas allowed for a server. </param>
+        /// <param name="replicationState"> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating. </param>
+        /// <param name="promoteMode"> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </param>
+        /// <param name="promoteOption"> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role, int? capacity, PostgreSqlFlexibleServersReplicationState? replicationState, ReadReplicaPromoteMode? promoteMode, ReplicationPromoteOption? promoteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role, int? capacity, PostgreSqlFlexibleServersReplicationState? replicationState, ReadReplicaPromoteMode? promoteMode, ReadReplicaPromoteOption? promoteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Capacity = capacity;
@@ -67,20 +67,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Used to indicate role of the server in replication set. </summary>
+        /// <summary> Role of the server in a replication set. </summary>
         [WirePath("role")]
         public PostgreSqlFlexibleServerReplicationRole? Role { get; set; }
-        /// <summary> Replicas allowed for a server. </summary>
+        /// <summary> Maximum number of read replicas allowed for a server. </summary>
         [WirePath("capacity")]
         public int? Capacity { get; }
-        /// <summary> Gets the replication state of a replica server. This property is returned only for replicas api call. Supported values are Active, Catchup, Provisioning, Updating, Broken, Reconfiguring. </summary>
+        /// <summary> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating. </summary>
         [WirePath("replicationState")]
         public PostgreSqlFlexibleServersReplicationState? ReplicationState { get; }
-        /// <summary> Sets the promote mode for a replica server. This is a write only property. </summary>
+        /// <summary> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </summary>
         [WirePath("promoteMode")]
         public ReadReplicaPromoteMode? PromoteMode { get; set; }
-        /// <summary> Sets the promote options for a replica server. This is a write only property. </summary>
+        /// <summary> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </summary>
         [WirePath("promoteOption")]
-        public ReplicationPromoteOption? PromoteOption { get; set; }
+        public ReadReplicaPromoteOption? PromoteOption { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents an Active Directory administrator. </summary>
+    /// <summary> Server administrator associated to a Microsoft Entra principal. </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent
     {
         /// <summary>
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
-        /// <param name="principalType"> The principal type used to represent the type of Active Directory Administrator. </param>
-        /// <param name="principalName"> Active Directory administrator principal name. </param>
-        /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
+        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
+        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
+        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The principal type used to represent the type of Active Directory Administrator. </summary>
+        /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
         [WirePath("properties.principalType")]
         public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
-        /// <summary> Active Directory administrator principal name. </summary>
+        /// <summary> Name of the Microsoft Entra principal. </summary>
         [WirePath("properties.principalName")]
         public string PrincipalName { get; set; }
-        /// <summary> The tenantId of the Active Directory administrator. </summary>
+        /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
     }

@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(KeyType))
+            if (Optional.IsDefined(DataEncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(KeyType.Value.ToString());
+                writer.WriteStringValue(DataEncryptionType.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
+            if (options.Format != "W" && Optional.IsDefined(PrimaryEncryptionKeyStatus))
             {
                 writer.WritePropertyName("primaryEncryptionKeyStatus"u8);
                 writer.WriteStringValue(PrimaryEncryptionKeyStatus.Value.ToString());
             }
-            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus))
+            if (options.Format != "W" && Optional.IsDefined(GeoBackupEncryptionKeyStatus))
             {
                 writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
                 writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             ResourceIdentifier primaryUserAssignedIdentityId = default;
             Uri geoBackupKeyUri = default;
             string geoBackupUserAssignedIdentityId = default;
-            PostgreSqlFlexibleServerKeyType? type = default;
-            PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
-            PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
+            DataEncryptionType? type = default;
+            EncryptionKeyStatus? primaryEncryptionKeyStatus = default;
+            EncryptionKeyStatus? geoBackupEncryptionKeyStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    type = new PostgreSqlFlexibleServerKeyType(property.Value.GetString());
+                    type = new DataEncryptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryEncryptionKeyStatus"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    primaryEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
+                    primaryEncryptionKeyStatus = new EncryptionKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("geoBackupEncryptionKeyStatus"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    geoBackupEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
+                    geoBackupEncryptionKeyStatus = new EncryptionKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataEncryptionType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                if (Optional.IsDefined(KeyType))
+                if (Optional.IsDefined(DataEncryptionType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{KeyType.Value.ToString()}'");
+                    builder.AppendLine($"'{DataEncryptionType.Value.ToString()}'");
                 }
             }
 

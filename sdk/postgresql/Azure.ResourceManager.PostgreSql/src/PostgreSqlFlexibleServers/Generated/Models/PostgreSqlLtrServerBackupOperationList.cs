@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
-        internal PostgreSqlLtrServerBackupOperationList()
+        /// <param name="value"> The BackupsLongTermRetentionOperation items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PostgreSqlLtrServerBackupOperationList(IEnumerable<BackupsLongTermRetentionOperationData> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
-        /// <param name="value"> The list of long term retention server backup operations. </param>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
+        /// <param name="value"> The BackupsLongTermRetentionOperation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<BackupsLongTermRetentionOperationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of long term retention server backup operations. </summary>
-        public IReadOnlyList<PostgreSqlLtrServerBackupOperationData> Value { get; }
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/> for deserialization. </summary>
+        internal PostgreSqlLtrServerBackupOperationList()
+        {
+        }
+
+        /// <summary> The BackupsLongTermRetentionOperation items on this page. </summary>
+        public IReadOnlyList<BackupsLongTermRetentionOperationData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

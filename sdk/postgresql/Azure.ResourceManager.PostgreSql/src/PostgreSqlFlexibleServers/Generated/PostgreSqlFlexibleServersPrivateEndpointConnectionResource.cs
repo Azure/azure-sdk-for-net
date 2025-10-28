@@ -35,8 +35,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         private readonly ClientDiagnostics _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnectionsRestOperations _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
-        private readonly ClientDiagnostics _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics;
-        private readonly PrivateEndpointConnectionRestOperations _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient;
         private readonly PostgreSqlFlexibleServersPrivateEndpointConnectionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -64,9 +62,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
             _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-            _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionApiVersion);
-            _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient = new PrivateEndpointConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +141,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -174,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Deletes a private endpoint connection with a given name.
+        /// Deletes a private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,11 +177,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Delete</description>
+        /// <description>PrivateEndpointConnections_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,12 +193,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Delete");
+            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Deletes a private endpoint connection with a given name.
+        /// Deletes a private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -224,11 +219,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Delete</description>
+        /// <description>PrivateEndpointConnections_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -240,12 +235,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Delete");
+            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -258,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Approve or reject a private endpoint connection with a given name.
+        /// Approves or rejects a private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,11 +261,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Update</description>
+        /// <description>PrivateEndpointConnections_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,21 +274,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The required parameters for updating private endpoint connection. </param>
+        /// <param name="data"> Parameters required to update a private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlFlexibleServersPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, PostgreSqlFlexibleServersPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Update");
+            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(new PostgreSqlFlexibleServersPrivateEndpointConnectionOperationSource(Client), _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -304,7 +299,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Approve or reject a private endpoint connection with a given name.
+        /// Approves or rejects a private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -312,11 +307,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Update</description>
+        /// <description>PrivateEndpointConnections_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -325,21 +320,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The required parameters for updating private endpoint connection. </param>
+        /// <param name="data"> Parameters required to update a private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, PostgreSqlFlexibleServersPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, PostgreSqlFlexibleServersPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Update");
+            using var scope = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServersPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(new PostgreSqlFlexibleServersPrivateEndpointConnectionOperationSource(Client), _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _postgreSqlFlexibleServersPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

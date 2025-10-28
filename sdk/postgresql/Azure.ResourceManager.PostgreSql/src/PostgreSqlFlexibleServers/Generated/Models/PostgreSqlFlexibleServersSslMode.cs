@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Supported SSL modes for migration. VerifyFull is the recommended SSL mode for Single server migration. Prefer, Require are recommended SSL modes for other source types. </summary>
+    /// <summary> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </summary>
     public readonly partial struct PostgreSqlFlexibleServersSslMode : IEquatable<PostgreSqlFlexibleServersSslMode>
     {
         private readonly string _value;

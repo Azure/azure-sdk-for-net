@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-08-01";
+            _apiVersion = apiVersion ?? "2025-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateExecuteRequestUri(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateExecuteRequest(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,27 +72,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        /// <summary> Get virtual network subnet usage for a given vNet resource id. </summary>
+        /// <summary> Lists the virtual network subnet usage for a given virtual network. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteAsync(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkSubnetUsageModel>> ListAsync(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using var message = CreateExecuteRequest(subscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            using var message = CreateListRequest(subscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult value = default;
+                        VirtualNetworkSubnetUsageModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult.DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(document.RootElement);
+                        value = VirtualNetworkSubnetUsageModel.DeserializeVirtualNetworkSubnetUsageModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,27 +100,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> Get virtual network subnet usage for a given vNet resource id. </summary>
+        /// <summary> Lists the virtual network subnet usage for a given virtual network. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> Execute(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public Response<VirtualNetworkSubnetUsageModel> List(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using var message = CreateExecuteRequest(subscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            using var message = CreateListRequest(subscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult value = default;
+                        VirtualNetworkSubnetUsageModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult.DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(document.RootElement);
+                        value = VirtualNetworkSubnetUsageModel.DeserializeVirtualNetworkSubnetUsageModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

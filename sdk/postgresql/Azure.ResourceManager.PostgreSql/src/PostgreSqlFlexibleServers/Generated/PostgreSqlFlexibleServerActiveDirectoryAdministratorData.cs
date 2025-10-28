@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServerActiveDirectoryAdministrator data model.
-    /// Represents an Active Directory administrator.
+    /// Server administrator associated to a Microsoft Entra principal.
     /// </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : ResourceData
     {
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="principalType"> The principal type used to represent the type of Active Directory Administrator. </param>
-        /// <param name="principalName"> Active Directory administrator principal name. </param>
-        /// <param name="objectId"> The objectId of the Active Directory administrator. </param>
-        /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
+        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
+        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
+        /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
+        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The principal type used to represent the type of Active Directory Administrator. </summary>
+        /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
         [WirePath("properties.principalType")]
         public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
-        /// <summary> Active Directory administrator principal name. </summary>
+        /// <summary> Name of the Microsoft Entra principal. </summary>
         [WirePath("properties.principalName")]
         public string PrincipalName { get; set; }
-        /// <summary> The objectId of the Active Directory administrator. </summary>
+        /// <summary> Object identifier of the Microsoft Entra principal. </summary>
         [WirePath("properties.objectId")]
         public Guid? ObjectId { get; set; }
-        /// <summary> The tenantId of the Active Directory administrator. </summary>
+        /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
     }

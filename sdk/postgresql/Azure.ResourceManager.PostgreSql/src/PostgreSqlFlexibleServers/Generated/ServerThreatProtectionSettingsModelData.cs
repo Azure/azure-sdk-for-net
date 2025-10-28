@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A class representing the ServerThreatProtectionSettingsModel data model.
-    /// Server's Advanced Threat Protection settings.
+    /// Advanced threat protection settings of the server.
     /// </summary>
     public partial class ServerThreatProtectionSettingsModelData : ResourceData
     {
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific server. </param>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <param name="state"> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </param>
+        /// <param name="createdOn"> Specifies the creation time (UTC) of the policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerThreatProtectionSettingsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatProtectionState? state, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the state of the Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific server. </summary>
+        /// <summary> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </summary>
         [WirePath("properties.state")]
         public ThreatProtectionState? State { get; set; }
-        /// <summary> Specifies the UTC creation time of the policy. </summary>
+        /// <summary> Specifies the creation time (UTC) of the policy. </summary>
         [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; }
     }

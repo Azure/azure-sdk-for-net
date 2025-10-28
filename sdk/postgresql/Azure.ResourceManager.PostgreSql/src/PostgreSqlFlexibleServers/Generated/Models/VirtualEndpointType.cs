@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The endpoint type for the virtual endpoint. </summary>
+    /// <summary> Type of endpoint for the virtual endpoints. </summary>
     public readonly partial struct VirtualEndpointType : IEquatable<VirtualEndpointType>
     {
         private readonly string _value;

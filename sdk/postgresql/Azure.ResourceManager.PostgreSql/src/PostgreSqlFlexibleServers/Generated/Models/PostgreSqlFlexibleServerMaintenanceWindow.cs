@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/>. </summary>
-        /// <param name="customWindow"> indicates whether custom window is enabled or disabled. </param>
-        /// <param name="startHour"> start hour for maintenance window. </param>
-        /// <param name="startMinute"> start minute for maintenance window. </param>
-        /// <param name="dayOfWeek"> day of week for maintenance window. </param>
+        /// <param name="customWindow"> Indicates whether custom window is enabled or disabled. </param>
+        /// <param name="startHour"> Start hour to be used for maintenance window. </param>
+        /// <param name="startMinute"> Start minute to be used for maintenance window. </param>
+        /// <param name="dayOfWeek"> Day of the week to be used for maintenance window. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> indicates whether custom window is enabled or disabled. </summary>
+        /// <summary> Indicates whether custom window is enabled or disabled. </summary>
         [WirePath("customWindow")]
         public string CustomWindow { get; set; }
-        /// <summary> start hour for maintenance window. </summary>
+        /// <summary> Start hour to be used for maintenance window. </summary>
         [WirePath("startHour")]
         public int? StartHour { get; set; }
-        /// <summary> start minute for maintenance window. </summary>
+        /// <summary> Start minute to be used for maintenance window. </summary>
         [WirePath("startMinute")]
         public int? StartMinute { get; set; }
-        /// <summary> day of week for maintenance window. </summary>
+        /// <summary> Day of the week to be used for maintenance window. </summary>
         [WirePath("dayOfWeek")]
         public int? DayOfWeek { get; set; }
     }

@@ -10,27 +10,30 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Sku capability. </summary>
+    /// <summary> Capabilities in terms of compute. </summary>
     public partial class PostgreSqlFlexibleServerSkuCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
         internal PostgreSqlFlexibleServerSkuCapability()
         {
             SupportedZones = new ChangeTrackingList<string>();
-            SupportedHaMode = new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>();
+            SupportedHaMode = new ChangeTrackingList<PostgreSqlFlexibleServerComputeHighAvailabilityMode>();
+            SupportedFeatures = new ChangeTrackingList<SupportedFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Sku name. </param>
-        /// <param name="vCores"> Supported vCores. </param>
-        /// <param name="supportedIops"> Supported IOPS. </param>
-        /// <param name="supportedMemoryPerVcoreMb"> Supported memory per vCore in MB. </param>
-        /// <param name="supportedZones"> List of supported Availability Zones. E.g. "1", "2", "3". </param>
-        /// <param name="supportedHaMode"> Supported high availability mode. </param>
-        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="name"> Name of the compute (SKU). </param>
+        /// <param name="vCores"> vCores available for this compute. </param>
+        /// <param name="supportedIops"> Maximum IOPS supported by this compute. </param>
+        /// <param name="supportedMemoryPerVcoreMb"> Supported memory (in MB) per virtual core assigned to this compute. </param>
+        /// <param name="supportedZones"> List of supported availability zones. E.g. '1', '2', '3'. </param>
+        /// <param name="supportedHaMode"> Modes of high availability supported for this compute. </param>
+        /// <param name="supportedFeatures"> Features supported. </param>
+        /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
+        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerComputeHighAvailabilityMode> supportedHaMode, IReadOnlyList<SupportedFeature> supportedFeatures, string securityProfile) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             VCores = vCores;
@@ -38,25 +41,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedMemoryPerVcoreMb = supportedMemoryPerVcoreMb;
             SupportedZones = supportedZones;
             SupportedHaMode = supportedHaMode;
+            SupportedFeatures = supportedFeatures;
+            SecurityProfile = securityProfile;
         }
 
-        /// <summary> Sku name. </summary>
+        /// <summary> Name of the compute (SKU). </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Supported vCores. </summary>
+        /// <summary> vCores available for this compute. </summary>
         [WirePath("vCores")]
         public int? VCores { get; }
-        /// <summary> Supported IOPS. </summary>
+        /// <summary> Maximum IOPS supported by this compute. </summary>
         [WirePath("supportedIops")]
         public int? SupportedIops { get; }
-        /// <summary> Supported memory per vCore in MB. </summary>
+        /// <summary> Supported memory (in MB) per virtual core assigned to this compute. </summary>
         [WirePath("supportedMemoryPerVcoreMb")]
         public long? SupportedMemoryPerVcoreMb { get; }
-        /// <summary> List of supported Availability Zones. E.g. "1", "2", "3". </summary>
+        /// <summary> List of supported availability zones. E.g. '1', '2', '3'. </summary>
         [WirePath("supportedZones")]
         public IReadOnlyList<string> SupportedZones { get; }
-        /// <summary> Supported high availability mode. </summary>
+        /// <summary> Modes of high availability supported for this compute. </summary>
         [WirePath("supportedHaMode")]
-        public IReadOnlyList<PostgreSqlFlexibleServerHAMode> SupportedHaMode { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerComputeHighAvailabilityMode> SupportedHaMode { get; }
+        /// <summary> Features supported. </summary>
+        [WirePath("supportedFeatures")]
+        public IReadOnlyList<SupportedFeature> SupportedFeatures { get; }
+        /// <summary> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </summary>
+        [WirePath("securityProfile")]
+        public string SecurityProfile { get; }
     }
 }

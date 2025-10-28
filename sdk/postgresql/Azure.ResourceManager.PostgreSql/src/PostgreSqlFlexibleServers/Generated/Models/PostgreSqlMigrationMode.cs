@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> There are two types of migration modes Online and Offline. </summary>
+    /// <summary> Mode used to perform the migration: Online or Offline. </summary>
     public readonly partial struct PostgreSqlMigrationMode : IEquatable<PostgreSqlMigrationMode>
     {
         private readonly string _value;

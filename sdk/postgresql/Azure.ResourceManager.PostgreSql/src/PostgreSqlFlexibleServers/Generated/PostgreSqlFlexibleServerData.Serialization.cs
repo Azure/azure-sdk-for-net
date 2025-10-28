@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -161,6 +161,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Cluster))
+            {
+                writer.WritePropertyName("cluster"u8);
+                writer.WriteObjectValue(Cluster, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -185,7 +190,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 return null;
             }
             PostgreSqlFlexibleServerSku sku = default;
-            PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             SystemData systemData = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            PostgreSqlFlexibleServerVersion? version = default;
+            PostgresMajorVersion? version = default;
             string minorVersion = default;
             PostgreSqlFlexibleServerState? state = default;
             string fullyQualifiedDomainName = default;
@@ -213,6 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerCreateMode? createMode = default;
             IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
+            Cluster cluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerPostgreSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -303,7 +309,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            version = new PostgreSqlFlexibleServerVersion(property0.Value.GetString());
+                            version = new PostgresMajorVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minorVersion"u8))
@@ -461,6 +467,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("cluster"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cluster = Cluster.DeserializeCluster(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -500,6 +515,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 replica,
                 createMode,
                 privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(),
+                cluster,
                 serializedAdditionalRawData);
         }
 
@@ -1009,6 +1025,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cluster), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    cluster: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cluster))
+                {
+                    builder.Append("    cluster: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cluster, options, 4, false, "    cluster: ");
                 }
             }
 

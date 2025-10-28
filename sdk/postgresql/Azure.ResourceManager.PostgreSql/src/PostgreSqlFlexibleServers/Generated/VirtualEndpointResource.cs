@@ -16,10 +16,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a VirtualEndpointResource along with the instance operations that can be performed on it.
+    /// A Class representing a VirtualEndpoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualEndpointResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetVirtualEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetVirtualEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetVirtualEndpoint method.
     /// </summary>
     public partial class VirtualEndpointResource : ArmResource
     {
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _virtualEndpointResourceVirtualEndpointsClientDiagnostics;
-        private readonly VirtualEndpointsRestOperations _virtualEndpointResourceVirtualEndpointsRestClient;
-        private readonly VirtualEndpointResourceData _data;
+        private readonly ClientDiagnostics _virtualEndpointClientDiagnostics;
+        private readonly VirtualEndpointsRestOperations _virtualEndpointRestClient;
+        private readonly VirtualEndpointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Initializes a new instance of the <see cref="VirtualEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualEndpointResource(ArmClient client, VirtualEndpointResourceData data) : this(client, data.Id)
+        internal VirtualEndpointResource(ArmClient client, VirtualEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualEndpointResourceVirtualEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string virtualEndpointResourceVirtualEndpointsApiVersion);
-            _virtualEndpointResourceVirtualEndpointsRestClient = new VirtualEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointResourceVirtualEndpointsApiVersion);
+            _virtualEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string virtualEndpointApiVersion);
+            _virtualEndpointRestClient = new VirtualEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VirtualEndpointResourceData Data
+        public virtual VirtualEndpointData Data
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a virtual endpoint.
+        /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResource.Get");
+            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a virtual endpoint.
+        /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResource.Get");
+            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _virtualEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Deletes a virtual endpoint.
+        /// Deletes a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResource.Delete");
+            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointClientDiagnostics, Pipeline, _virtualEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Deletes a virtual endpoint.
+        /// Deletes a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResource.Delete");
+            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointClientDiagnostics, Pipeline, _virtualEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Updates an existing virtual endpoint. The request body can contain one to many of the properties present in the normal virtual endpoint definition.
+        /// Updates a pair of virtual endpoints for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,21 +275,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The required parameters for updating a server. </param>
+        /// <param name="patch"> Parameters required to update a pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualEndpointResource>> UpdateAsync(WaitUntil waitUntil, VirtualEndpointResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, VirtualEndpointPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResource.Update");
+            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<VirtualEndpointResource>(new VirtualEndpointResourceOperationSource(Client), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointClientDiagnostics, Pipeline, _virtualEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Updates an existing virtual endpoint. The request body can contain one to many of the properties present in the normal virtual endpoint definition.
+        /// Updates a pair of virtual endpoints for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,21 +321,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The required parameters for updating a server. </param>
+        /// <param name="patch"> Parameters required to update a pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<VirtualEndpointResource> Update(WaitUntil waitUntil, VirtualEndpointResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, VirtualEndpointPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResource.Update");
+            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new FlexibleServersArmOperation<VirtualEndpointResource>(new VirtualEndpointResourceOperationSource(Client), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointClientDiagnostics, Pipeline, _virtualEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

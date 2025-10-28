@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents capability of a storage tier. </summary>
+    /// <summary> Capability of a storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Name to represent Storage tier capability. </param>
-        /// <param name="iops"> Supported IOPS for this storage tier. </param>
+        /// <param name="name"> Name of the storage tier. </param>
+        /// <param name="iops"> Supported IOPS for the storage tier. </param>
         internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? iops) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             Iops = iops;
         }
 
-        /// <summary> Name to represent Storage tier capability. </summary>
+        /// <summary> Name of the storage tier. </summary>
         [WirePath("name")]
         public string Name { get; }
     }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Migration state. </summary>
+    /// <summary> State of migration. </summary>
     public readonly partial struct PostgreSqlMigrationState : IEquatable<PostgreSqlMigrationState>
     {
         private readonly string _value;

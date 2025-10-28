@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Supported types of migration request include Validate, Migrate and ValidateAndMigrate. </summary>
+    /// <summary> Supported option for a migration. </summary>
     public readonly partial struct MigrationOption : IEquatable<MigrationOption>
     {
         private readonly string _value;

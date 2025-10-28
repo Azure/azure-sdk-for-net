@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS, and default is Premium_LRS if not specified. </summary>
+    /// <summary> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </summary>
     public readonly partial struct PostgreSqlFlexibleServersStorageType : IEquatable<PostgreSqlFlexibleServersStorageType>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         private const string PremiumLRSValue = "Premium_LRS";
         private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        private const string UltraSSDLRSValue = "UltraSSD_LRS";
 
         /// <summary> Premium_LRS. </summary>
         public static PostgreSqlFlexibleServersStorageType PremiumLRS { get; } = new PostgreSqlFlexibleServersStorageType(PremiumLRSValue);
         /// <summary> PremiumV2_LRS. </summary>
         public static PostgreSqlFlexibleServersStorageType PremiumV2LRS { get; } = new PostgreSqlFlexibleServersStorageType(PremiumV2LRSValue);
+        /// <summary> UltraSSD_LRS. </summary>
+        public static PostgreSqlFlexibleServersStorageType UltraSSDLRS { get; } = new PostgreSqlFlexibleServersStorageType(UltraSSDLRSValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersStorageType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersStorageType left, PostgreSqlFlexibleServersStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersStorageType"/> values are not the same. </summary>

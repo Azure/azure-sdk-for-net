@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Used to indicate role of the server in replication set. </summary>
+    /// <summary> Role of the server in a replication set. </summary>
     public readonly partial struct PostgreSqlFlexibleServerReplicationRole : IEquatable<PostgreSqlFlexibleServerReplicationRole>
     {
         private readonly string _value;

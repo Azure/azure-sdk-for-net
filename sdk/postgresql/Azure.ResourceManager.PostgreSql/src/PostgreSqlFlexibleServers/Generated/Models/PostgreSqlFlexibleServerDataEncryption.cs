@@ -52,46 +52,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDataEncryption"/>. </summary>
-        /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
-        /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
-        /// <param name="geoBackupKeyUri"> URI for the key in keyvault for data encryption for geo-backup of server. </param>
-        /// <param name="geoBackupUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption for geo-backup of server. </param>
-        /// <param name="keyType"> Data encryption type to depict if it is System Managed vs Azure Key vault. </param>
-        /// <param name="primaryEncryptionKeyStatus"> Primary encryption key status for Data encryption enabled server. </param>
-        /// <param name="geoBackupEncryptionKeyStatus"> Geo-backup encryption key status for Data encryption enabled server. </param>
+        /// <param name="primaryKeyUri"> URI of the key in Azure Key Vault used for data encryption of the primary storage associated to a server. </param>
+        /// <param name="primaryUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the primary storage associated to a server. </param>
+        /// <param name="geoBackupKeyUri"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
+        /// <param name="geoBackupUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
+        /// <param name="dataEncryptionType"> Data encryption type used by a server. </param>
+        /// <param name="primaryEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </param>
+        /// <param name="geoBackupEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, DataEncryptionType? dataEncryptionType, EncryptionKeyStatus? primaryEncryptionKeyStatus, EncryptionKeyStatus? geoBackupEncryptionKeyStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
             GeoBackupKeyUri = geoBackupKeyUri;
             GeoBackupUserAssignedIdentityId = geoBackupUserAssignedIdentityId;
-            KeyType = keyType;
+            DataEncryptionType = dataEncryptionType;
             PrimaryEncryptionKeyStatus = primaryEncryptionKeyStatus;
             GeoBackupEncryptionKeyStatus = geoBackupEncryptionKeyStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> URI for the key in keyvault for data encryption of the primary server. </summary>
+        /// <summary> URI of the key in Azure Key Vault used for data encryption of the primary storage associated to a server. </summary>
         [WirePath("primaryKeyURI")]
         public Uri PrimaryKeyUri { get; set; }
-        /// <summary> Resource Id for the User assigned identity to be used for data encryption of the primary server. </summary>
+        /// <summary> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the primary storage associated to a server. </summary>
         [WirePath("primaryUserAssignedIdentityId")]
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
-        /// <summary> URI for the key in keyvault for data encryption for geo-backup of server. </summary>
+        /// <summary> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </summary>
         [WirePath("geoBackupKeyURI")]
         public Uri GeoBackupKeyUri { get; set; }
-        /// <summary> Resource Id for the User assigned identity to be used for data encryption for geo-backup of server. </summary>
+        /// <summary> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </summary>
         [WirePath("geoBackupUserAssignedIdentityId")]
         public string GeoBackupUserAssignedIdentityId { get; set; }
-        /// <summary> Data encryption type to depict if it is System Managed vs Azure Key vault. </summary>
+        /// <summary> Data encryption type used by a server. </summary>
         [WirePath("type")]
-        public PostgreSqlFlexibleServerKeyType? KeyType { get; set; }
-        /// <summary> Primary encryption key status for Data encryption enabled server. </summary>
+        public DataEncryptionType? DataEncryptionType { get; set; }
+        /// <summary> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </summary>
         [WirePath("primaryEncryptionKeyStatus")]
-        public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus { get; set; }
-        /// <summary> Geo-backup encryption key status for Data encryption enabled server. </summary>
+        public EncryptionKeyStatus? PrimaryEncryptionKeyStatus { get; }
+        /// <summary> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </summary>
         [WirePath("geoBackupEncryptionKeyStatus")]
-        public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus { get; set; }
+        public EncryptionKeyStatus? GeoBackupEncryptionKeyStatus { get; }
     }
 }

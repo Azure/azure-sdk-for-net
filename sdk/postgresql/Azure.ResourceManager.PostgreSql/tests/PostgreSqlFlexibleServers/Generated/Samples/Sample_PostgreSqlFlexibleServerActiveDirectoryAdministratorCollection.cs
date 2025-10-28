@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_AddsAnActiveDIrectoryAdministratorForTheServer()
+        public async Task CreateOrUpdate_AddAServerAdministratorAssociatedToAMicrosoftEntraPrincipal()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/AdministratorAdd.json
-            // this example is just showing the usage of "Administrators_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdministratorsMicrosoftEntraAdd.json
+            // this example is just showing the usage of "AdministratorsMicrosoftEntra_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -44,25 +44,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent content = new PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent
             {
                 PrincipalType = PostgreSqlFlexibleServerPrincipalType.User,
-                PrincipalName = "testuser1@microsoft.com",
+                PrincipalName = "exampleuser@contoso.com",
                 TenantId = Guid.Parse("tttttttt-tttt-tttt-tttt-tttttttttttt"),
             };
-            ArmOperation<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, objectId, content);
-            PostgreSqlFlexibleServerActiveDirectoryAdministratorResource result = lro.Value;
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, objectId, content);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerActiveDirectoryAdministratorData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ServerGet()
+        public async Task Get_GetInformationAboutAServerAdministratorAssociatedToAMicrosoftEntraPrincipal()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/AdministratorGet.json
-            // this example is just showing the usage of "Administrators_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdministratorsMicrosoftEntraGet.json
+            // this example is just showing the usage of "AdministratorsMicrosoftEntra_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -72,8 +67,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc1";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -93,10 +88,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_AdministratorsListByServer()
+        public async Task GetAll_ListInformationAboutAllServerAdministratorsAssociatedToMicrosoftEntraPrincipals()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/AdministratorsListByServer.json
-            // this example is just showing the usage of "Administrators_ListByServer" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdministratorsMicrosoftEntraListByServer.json
+            // this example is just showing the usage of "AdministratorsMicrosoftEntra_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,8 +101,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc1";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -129,10 +124,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ServerGet()
+        public async Task Exists_GetInformationAboutAServerAdministratorAssociatedToAMicrosoftEntraPrincipal()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/AdministratorGet.json
-            // this example is just showing the usage of "Administrators_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdministratorsMicrosoftEntraGet.json
+            // this example is just showing the usage of "AdministratorsMicrosoftEntra_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -142,8 +137,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc1";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -159,10 +154,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ServerGet()
+        public async Task GetIfExists_GetInformationAboutAServerAdministratorAssociatedToAMicrosoftEntraPrincipal()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/AdministratorGet.json
-            // this example is just showing the usage of "Administrators_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdministratorsMicrosoftEntraGet.json
+            // this example is just showing the usage of "AdministratorsMicrosoftEntra_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -172,8 +167,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc1";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 

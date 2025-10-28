@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Server admin credentials. </summary>
+    /// <summary> Credentials of administrator users for source and target servers. </summary>
     public partial class PostgreSqlMigrationAdminCredentials
     {
         /// <summary>
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
-        /// <param name="sourceServerPassword"> Password for source server. </param>
-        /// <param name="targetServerPassword"> Password for target server. </param>
+        /// <param name="sourceServerPassword"> Password for the user of the source server. </param>
+        /// <param name="targetServerPassword"> Password for the user of the target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerPassword"/> or <paramref name="targetServerPassword"/> is null. </exception>
         public PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword)
         {
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
-        /// <param name="sourceServerPassword"> Password for source server. </param>
-        /// <param name="targetServerPassword"> Password for target server. </param>
+        /// <param name="sourceServerPassword"> Password for the user of the source server. </param>
+        /// <param name="targetServerPassword"> Password for the user of the target server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary> Password for source server. </summary>
+        /// <summary> Password for the user of the source server. </summary>
         [WirePath("sourceServerPassword")]
         public string SourceServerPassword { get; set; }
-        /// <summary> Password for target server. </summary>
+        /// <summary> Password for the user of the target server. </summary>
         [WirePath("targetServerPassword")]
         public string TargetServerPassword { get; set; }
     }

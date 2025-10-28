@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Create</description>
+        /// <description>Servers_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="data"> The required parameters for creating or updating a server. </param>
+        /// <param name="data"> Parameters required to create a new server or to update an existing server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, PostgreSqlFlexibleServerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, PostgreSqlFlexibleServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(data, nameof(data));
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _postgreSqlFlexibleServerServersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Create</description>
+        /// <description>Servers_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="data"> The required parameters for creating or updating a server. </param>
+        /// <param name="data"> Parameters required to create a new server or to update an existing server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, PostgreSqlFlexibleServerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string serverName, PostgreSqlFlexibleServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(data, nameof(data));
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _postgreSqlFlexibleServerServersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the servers in a given resource group.
+        /// Lists all servers in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the servers in a given resource group.
+        /// Lists all servers in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the replicas for a given server.
+        /// Lists all read replicas of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,11 +331,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerCollection.GetReplicas", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicasRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, serverName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerCollection.GetReplicas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List all the replicas for a given server.
+        /// Lists all read replicas of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -347,7 +348,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +362,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerCollection.GetReplicas", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicasRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, serverName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerResource(Client, PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerCollection.GetReplicas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -377,7 +379,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +422,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,7 +465,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,7 +510,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

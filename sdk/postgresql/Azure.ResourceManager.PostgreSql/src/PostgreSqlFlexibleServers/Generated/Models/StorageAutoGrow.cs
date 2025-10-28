@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
+    /// <summary> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
     public readonly partial struct StorageAutoGrow : IEquatable<StorageAutoGrow>
     {
         private readonly string _value;

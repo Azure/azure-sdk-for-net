@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Storage edition capability. </summary>
+    /// <summary> Capabilities in terms of storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageEditionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Storage edition name. </param>
-        /// <param name="defaultStorageSizeMb"> Default storage size in MB for storage edition. </param>
-        /// <param name="supportedStorageCapabilities"> Flexible server supported storage range in MB. </param>
+        /// <param name="name"> Name of storage tier. </param>
+        /// <param name="defaultStorageSizeMb"> Default storage size (in MB) for this storage tier. </param>
+        /// <param name="supportedStorageCapabilities"> Configurations of storage supported for this storage tier. </param>
         internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedStorageCapabilities = supportedStorageCapabilities;
         }
 
-        /// <summary> Storage edition name. </summary>
+        /// <summary> Name of storage tier. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Default storage size in MB for storage edition. </summary>
+        /// <summary> Default storage size (in MB) for this storage tier. </summary>
         [WirePath("defaultStorageSizeMb")]
         public long? DefaultStorageSizeMb { get; }
-        /// <summary> Flexible server supported storage range in MB. </summary>
+        /// <summary> Configurations of storage supported for this storage tier. </summary>
         [WirePath("supportedStorageMb")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
     }

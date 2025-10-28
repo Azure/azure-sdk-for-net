@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> public network access is enabled or not. </summary>
+    /// <summary> Indicates if public network access is enabled or not. </summary>
     public readonly partial struct PostgreSqlFlexibleServerPublicNetworkAccessState : IEquatable<PostgreSqlFlexibleServerPublicNetworkAccessState>
     {
         private readonly string _value;

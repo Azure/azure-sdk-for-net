@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -53,30 +54,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
-        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <param name="location"> The location the resource resides in. </param>
-        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is trying to switch to password authentication and does not have default administrator login. </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
-        /// <param name="version"> PostgreSQL Server version. Version 16 is currently not supported for MVU. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
         /// <param name="storage"> Storage properties of a server. </param>
         /// <param name="backup"> Backup properties of a server. </param>
         /// <param name="highAvailability"> High availability properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="authConfig"> AuthConfig properties of a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
         /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="createMode"> The mode to update a new PostgreSQL server. </param>
-        /// <param name="replicationRole"> Replication role of the server. </param>
-        /// <param name="replica"> Replica properties of a server. These Replica properties are required to be passed only in case you want to Promote a server. </param>
-        /// <param name="network"> Network properties of a server. These are required to be passed only in case if server is a private access server. </param>
+        /// <param name="createMode"> Update mode of an existing server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <param name="location"> The location the resource resides in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgresMajorVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, CreateModeForPatch? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
             Tags = tags;
-            Location = location;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
@@ -90,59 +91,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             ReplicationRole = replicationRole;
             Replica = replica;
             Network = network;
+            Cluster = cluster;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The SKU (pricing tier) of the server. </summary>
+        /// <summary> Compute tier and size of a server. </summary>
         [WirePath("sku")]
-        public PostgreSqlFlexibleServerSku Sku { get; set; }
+        public SkuForPatch Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
         [WirePath("identity")]
-        public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The location the resource resides in. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
-        /// <summary> The administrator's login name of a server. Can only be specified when the server is trying to switch to password authentication and does not have default administrator login. </summary>
+        /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
         [WirePath("properties.administratorLogin")]
-        public string AdministratorLogin { get; set; }
-        /// <summary> The password of the administrator login. </summary>
+        public string AdministratorLogin { get; }
+        /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
         [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
-        /// <summary> PostgreSQL Server version. Version 16 is currently not supported for MVU. </summary>
+        /// <summary> Major version of PostgreSQL database engine. </summary>
         [WirePath("properties.version")]
-        public PostgreSqlFlexibleServerVersion? Version { get; set; }
+        public PostgresMajorVersion? Version { get; set; }
         /// <summary> Storage properties of a server. </summary>
         [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup properties of a server. </summary>
         [WirePath("properties.backup")]
-        public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
+        public BackupForPatch Backup { get; set; }
         /// <summary> High availability properties of a server. </summary>
         [WirePath("properties.highAvailability")]
-        public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
+        public HighAvailabilityForPatch HighAvailability { get; set; }
         /// <summary> Maintenance window properties of a server. </summary>
         [WirePath("properties.maintenanceWindow")]
-        public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary> AuthConfig properties of a server. </summary>
+        public MaintenanceWindowForPatch MaintenanceWindow { get; set; }
+        /// <summary> Authentication configuration properties of a server. </summary>
         [WirePath("properties.authConfig")]
-        public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
+        public AuthConfigForPatch AuthConfig { get; set; }
         /// <summary> Data encryption properties of a server. </summary>
         [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
-        /// <summary> The mode to update a new PostgreSQL server. </summary>
+        /// <summary> Update mode of an existing server. </summary>
         [WirePath("properties.createMode")]
-        public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
-        /// <summary> Replication role of the server. </summary>
+        public CreateModeForPatch? CreateMode { get; set; }
+        /// <summary> Role of the server in a replication set. </summary>
         [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary> Replica properties of a server. These Replica properties are required to be passed only in case you want to Promote a server. </summary>
+        /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
         [WirePath("properties.replica")]
         public PostgreSqlFlexibleServersReplica Replica { get; set; }
-        /// <summary> Network properties of a server. These are required to be passed only in case if server is a private access server. </summary>
+        /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
         [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
+        /// <summary> Cluster properties of a server. </summary>
+        [WirePath("properties.cluster")]
+        public Cluster Cluster { get; set; }
+        /// <summary> The location the resource resides in. </summary>
+        [WirePath("properties.location")]
+        public AzureLocation? Location { get; set; }
     }
 }
