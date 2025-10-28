@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual async Task<Response<VirtualNetworkSubnetUsageModel>> GetVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> GetVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual Response<VirtualNetworkSubnetUsageModel> GetVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> GetVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IDictionary<string, string> tags = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            PostgresMajorVersion? version = default;
+            PostgreSqlFlexibleServerVersion? version = default;
             PostgreSqlFlexibleServerStorage storage = default;
             BackupForPatch backup = default;
             HighAvailabilityForPatch highAvailability = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            version = new PostgresMajorVersion(property0.Value.GetString());
+                            version = new PostgreSqlFlexibleServerVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storage"u8))

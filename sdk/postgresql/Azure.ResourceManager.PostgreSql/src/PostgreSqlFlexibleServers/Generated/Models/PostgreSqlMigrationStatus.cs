@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="error"> Error message, if any, for the migration state. </param>
         /// <param name="currentSubStateDetails"> Current migration sub state details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, MigrationSubstateDetails currentSubStateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, PostgreSqlMigrationSubStateDetails currentSubStateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Error = error;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string Error { get; }
         /// <summary> Current migration sub state details. </summary>
         [WirePath("currentSubStateDetails")]
-        public MigrationSubstateDetails CurrentSubStateDetails { get; }
+        public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
     }
 }

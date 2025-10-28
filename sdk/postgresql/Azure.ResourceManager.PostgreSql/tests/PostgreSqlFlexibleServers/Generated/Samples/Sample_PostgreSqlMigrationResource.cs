@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlMigrationPatch patch = new PostgreSqlMigrationPatch
             {
-                SetupLogicalReplicationOnSourceDbIfNeeded = LogicalReplicationOnSourceServer.True,
+                SetupLogicalReplicationOnSourceDbIfNeeded = PostgreSqlMigrationLogicalReplicationOnSourceDb.True,
             };
             PostgreSqlMigrationResource result = await postgreSqlMigration.UpdateAsync(patch);
 

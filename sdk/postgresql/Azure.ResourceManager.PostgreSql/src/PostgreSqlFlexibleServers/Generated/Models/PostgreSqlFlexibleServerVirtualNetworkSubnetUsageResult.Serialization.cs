@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class VirtualNetworkSubnetUsageModel : IUtf8JsonSerializable, IJsonModel<VirtualNetworkSubnetUsageModel>
+    public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkSubnetUsageModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VirtualNetworkSubnetUsageModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkSubnetUsageModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkSubnetUsageModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsCollectionDefined(DelegatedSubnetsUsage))
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        VirtualNetworkSubnetUsageModel IJsonModel<VirtualNetworkSubnetUsageModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkSubnetUsageModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkSubnetUsageModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualNetworkSubnetUsageModel(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(document.RootElement, options);
         }
 
-        internal static VirtualNetworkSubnetUsageModel DeserializeVirtualNetworkSubnetUsageModel(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualNetworkSubnetUsageModel(delegatedSubnetsUsage ?? new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>(), location, subscriptionId, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(delegatedSubnetsUsage ?? new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>(), location, subscriptionId, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<VirtualNetworkSubnetUsageModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkSubnetUsageModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -224,26 +224,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkSubnetUsageModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VirtualNetworkSubnetUsageModel IPersistableModel<VirtualNetworkSubnetUsageModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkSubnetUsageModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualNetworkSubnetUsageModel(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkSubnetUsageModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VirtualNetworkSubnetUsageModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

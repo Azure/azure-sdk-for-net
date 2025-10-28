@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="location"> The location the resource resides in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgresMajorVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, CreateModeForPatch? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, CreateModeForPatch? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string AdministratorLoginPassword { get; set; }
         /// <summary> Major version of PostgreSQL database engine. </summary>
         [WirePath("properties.version")]
-        public PostgresMajorVersion? Version { get; set; }
+        public PostgreSqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage properties of a server. </summary>
         [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }

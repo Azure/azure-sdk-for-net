@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
         /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesAndPermission? migrateRoles, StartDataMigration? startDataMigration, TriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, Cancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesAndPermission? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             SourceDbServerResourceId = sourceDbServerResourceId;
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
         [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
-        public LogicalReplicationOnSourceServer? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
+        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         [WirePath("properties.overwriteDbsInTarget")]
-        public OverwriteDatabasesOnTargetServer? OverwriteDbsInTarget { get; set; }
+        public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
         /// <summary> Start time (UTC) for migration window. </summary>
         [WirePath("properties.migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public MigrateRolesAndPermission? MigrateRoles { get; set; }
         /// <summary> Indicates if data migration must start right away. </summary>
         [WirePath("properties.startDataMigration")]
-        public StartDataMigration? StartDataMigration { get; set; }
+        public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
         /// <summary> Indicates if cutover must be triggered for the entire migration. </summary>
         [WirePath("properties.triggerCutover")]
-        public TriggerCutover? TriggerCutover { get; set; }
+        public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
         /// <summary> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
         [WirePath("properties.dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn { get; }
         /// <summary> Indicates if cancel must be triggered for the entire migration. </summary>
         [WirePath("properties.cancel")]
-        public Cancel? Cancel { get; set; }
+        public PostgreSqlMigrationCancel? Cancel { get; set; }
         /// <summary> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
         [WirePath("properties.dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn { get; }

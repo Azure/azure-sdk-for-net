@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 VirtualNetworkArmResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.Network/virtualNetworks/examplevirtualnetwork"),
             };
-            VirtualNetworkSubnetUsageModel result = await subscriptionResource.GetVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult result = await subscriptionResource.GetVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
 
             Console.WriteLine($"Succeeded: {result}");
         }

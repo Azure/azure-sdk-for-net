@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, ResourceIdentifier migrationInstanceResourceId, PostgreSqlMigrationMode? migrationMode, MigrationOption? migrationOption, PostgreSqlFlexibleServersSourceType? sourceType, PostgreSqlFlexibleServersSslMode? sslMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, MigrateRolesAndPermission? migrateRoles, StartDataMigration? startDataMigration, TriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, Cancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, ResourceIdentifier migrationInstanceResourceId, PostgreSqlMigrationMode? migrationMode, MigrationOption? migrationOption, PostgreSqlFlexibleServersSourceType? sourceType, PostgreSqlFlexibleServersSslMode? sslMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, MigrateRolesAndPermission? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             MigrationId = migrationId;
             CurrentStatus = currentStatus;
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
         [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
-        public LogicalReplicationOnSourceServer? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
+        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         [WirePath("properties.overwriteDbsInTarget")]
-        public OverwriteDatabasesOnTargetServer? OverwriteDbsInTarget { get; set; }
+        public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
         /// <summary> Start time (UTC) for migration window. </summary>
         [WirePath("properties.migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
@@ -190,16 +190,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public MigrateRolesAndPermission? MigrateRoles { get; set; }
         /// <summary> Indicates if data migration must start right away. </summary>
         [WirePath("properties.startDataMigration")]
-        public StartDataMigration? StartDataMigration { get; set; }
+        public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
         /// <summary> Indicates if cutover must be triggered for the entire migration. </summary>
         [WirePath("properties.triggerCutover")]
-        public TriggerCutover? TriggerCutover { get; set; }
+        public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
         /// <summary> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
         [WirePath("properties.dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn { get; }
         /// <summary> Indicates if cancel must be triggered for the entire migration. </summary>
         [WirePath("properties.cancel")]
-        public Cancel? Cancel { get; set; }
+        public PostgreSqlMigrationCancel? Cancel { get; set; }
         /// <summary> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
         [WirePath("properties.dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn { get; }

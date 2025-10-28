@@ -225,15 +225,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             string targetDbServerFullyQualifiedDomainName = default;
             PostgreSqlMigrationSecretParameters secretParameters = default;
             IList<string> dbsToMigrate = default;
-            LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded = default;
-            OverwriteDatabasesOnTargetServer? overwriteDbsInTarget = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
             DateTimeOffset? migrationWindowStartTimeInUtc = default;
             DateTimeOffset? migrationWindowEndTimeInUtc = default;
             MigrateRolesAndPermission? migrateRoles = default;
-            StartDataMigration? startDataMigration = default;
-            TriggerCutover? triggerCutover = default;
+            PostgreSqlMigrationStartDataMigration? startDataMigration = default;
+            PostgreSqlMigrationTriggerCutover? triggerCutover = default;
             IList<string> dbsToTriggerCutoverOn = default;
-            Cancel? cancel = default;
+            PostgreSqlMigrationCancel? cancel = default;
             IList<string> dbsToCancelMigrationOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            setupLogicalReplicationOnSourceDbIfNeeded = new LogicalReplicationOnSourceServer(property0.Value.GetString());
+                            setupLogicalReplicationOnSourceDbIfNeeded = new PostgreSqlMigrationLogicalReplicationOnSourceDb(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("overwriteDbsInTarget"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            overwriteDbsInTarget = new OverwriteDatabasesOnTargetServer(property0.Value.GetString());
+                            overwriteDbsInTarget = new PostgreSqlMigrationOverwriteDbsInTarget(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("migrationWindowStartTimeInUtc"u8))
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            startDataMigration = new StartDataMigration(property0.Value.GetString());
+                            startDataMigration = new PostgreSqlMigrationStartDataMigration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("triggerCutover"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            triggerCutover = new TriggerCutover(property0.Value.GetString());
+                            triggerCutover = new PostgreSqlMigrationTriggerCutover(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dbsToTriggerCutoverOn"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            cancel = new Cancel(property0.Value.GetString());
+                            cancel = new PostgreSqlMigrationCancel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dbsToCancelMigrationOn"u8))

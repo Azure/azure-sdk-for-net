@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(MigrationList))]
     [ModelReaderWriterBuildable(typeof(MigrationNameAvailability))]
     [ModelReaderWriterBuildable(typeof(MigrationSecretParametersForPatch))]
-    [ModelReaderWriterBuildable(typeof(MigrationSubstateDetails))]
     [ModelReaderWriterBuildable(typeof(NameAvailabilityModel))]
     [ModelReaderWriterBuildable(typeof(NameProperty))]
     [ModelReaderWriterBuildable(typeof(ObjectRecommendation))]
@@ -100,6 +99,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServersValidationDetails))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServersValidationMessage))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter))]
+    [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlLtrServerBackupOperationList))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlLtrServerBackupOperationResource))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlLtrServerBackupOperationResourceData))]
@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationResource))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationSecretParameters))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationStatus))]
+    [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationSubStateDetails))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlServerMetadata))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
@@ -131,7 +132,6 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(VirtualEndpointResourceData))]
     [ModelReaderWriterBuildable(typeof(VirtualEndpointResourcePatch))]
     [ModelReaderWriterBuildable(typeof(VirtualEndpointsList))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkSubnetUsageModel))]
     public partial class AzureResourceManagerPostgreSqlContext : ModelReaderWriterContext
     {
     }

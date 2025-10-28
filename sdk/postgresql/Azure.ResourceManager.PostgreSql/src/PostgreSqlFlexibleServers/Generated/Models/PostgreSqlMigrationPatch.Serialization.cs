@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string targetDbServerFullyQualifiedDomainName = default;
             MigrationSecretParametersForPatch secretParameters = default;
             IList<string> dbsToMigrate = default;
-            LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded = default;
-            OverwriteDatabasesOnTargetServer? overwriteDbsInTarget = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
             DateTimeOffset? migrationWindowStartTimeInUtc = default;
             MigrateRolesAndPermission? migrateRoles = default;
-            StartDataMigration? startDataMigration = default;
-            TriggerCutover? triggerCutover = default;
+            PostgreSqlMigrationStartDataMigration? startDataMigration = default;
+            PostgreSqlMigrationTriggerCutover? triggerCutover = default;
             IList<string> dbsToTriggerCutoverOn = default;
-            Cancel? cancel = default;
+            PostgreSqlMigrationCancel? cancel = default;
             IList<string> dbsToCancelMigrationOn = default;
             PostgreSqlMigrationMode? migrationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            setupLogicalReplicationOnSourceDbIfNeeded = new LogicalReplicationOnSourceServer(property0.Value.GetString());
+                            setupLogicalReplicationOnSourceDbIfNeeded = new PostgreSqlMigrationLogicalReplicationOnSourceDb(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("overwriteDbsInTarget"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            overwriteDbsInTarget = new OverwriteDatabasesOnTargetServer(property0.Value.GetString());
+                            overwriteDbsInTarget = new PostgreSqlMigrationOverwriteDbsInTarget(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("migrationWindowStartTimeInUtc"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            startDataMigration = new StartDataMigration(property0.Value.GetString());
+                            startDataMigration = new PostgreSqlMigrationStartDataMigration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("triggerCutover"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            triggerCutover = new TriggerCutover(property0.Value.GetString());
+                            triggerCutover = new PostgreSqlMigrationTriggerCutover(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dbsToTriggerCutoverOn"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            cancel = new Cancel(property0.Value.GetString());
+                            cancel = new PostgreSqlMigrationCancel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dbsToCancelMigrationOn"u8))

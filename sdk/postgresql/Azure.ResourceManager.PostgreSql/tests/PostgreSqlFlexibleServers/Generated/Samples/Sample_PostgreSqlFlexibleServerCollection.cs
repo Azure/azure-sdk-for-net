@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "examplelogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Sixteen,
+                Version = PostgreSqlFlexibleServerVersion.Sixteen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 256,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P15,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P15,
                 },
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -405,12 +405,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 AuthConfig = new PostgreSqlFlexibleServerAuthConfig
                 {
@@ -480,12 +480,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
@@ -553,12 +553,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {

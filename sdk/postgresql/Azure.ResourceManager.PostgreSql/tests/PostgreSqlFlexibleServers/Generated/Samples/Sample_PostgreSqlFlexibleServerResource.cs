@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 CreateMode = CreateModeForPatch.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 {
                     StorageSizeInGB = 1024,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P30,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
                 },
                 Backup = new BackupForPatch
                 {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 {
                     StorageSizeInGB = 1024,
                     AutoGrow = StorageAutoGrow.Enabled,
-                    Tier = AzureManagedDiskPerformanceTier.P30,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
                 },
                 Backup = new BackupForPatch
                 {

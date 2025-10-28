@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBForPostgreSql/servers/examplesource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("examplesourcepassword", "exampletargetpassword")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
-                OverwriteDbsInTarget = OverwriteDatabasesOnTargetServer.True,
+                OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 TargetDbServerFullyQualifiedDomainName = "exampletarget.contoso.com",
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
-                OverwriteDbsInTarget = OverwriteDatabasesOnTargetServer.True,
+                OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SourceDbServerResourceId = new ResourceIdentifier("examplesource:5432@exampleuser"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("examplesourcepassword", "exampletargetpassword")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
-                OverwriteDbsInTarget = OverwriteDatabasesOnTargetServer.True,
+                OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBForPostgreSql/servers/examplesource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("examplesourcepassword", "exampletargetpassword")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
-                OverwriteDbsInTarget = OverwriteDatabasesOnTargetServer.True,
+                OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBForPostgreSql/servers/examplesource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("examplesourcepassword", "exampletargetpassword")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
-                OverwriteDbsInTarget = OverwriteDatabasesOnTargetServer.True,
+                OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
                 MigrateRoles = MigrateRolesAndPermission.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBForPostgreSql/servers/examplesource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("examplesourcepassword", "exampletargetpassword")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
-                OverwriteDbsInTarget = OverwriteDatabasesOnTargetServer.True,
+                OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;

@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             SystemData systemData = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            PostgresMajorVersion? version = default;
+            PostgreSqlFlexibleServerVersion? version = default;
             string minorVersion = default;
             PostgreSqlFlexibleServerState? state = default;
             string fullyQualifiedDomainName = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            version = new PostgresMajorVersion(property0.Value.GetString());
+                            version = new PostgreSqlFlexibleServerVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minorVersion"u8))

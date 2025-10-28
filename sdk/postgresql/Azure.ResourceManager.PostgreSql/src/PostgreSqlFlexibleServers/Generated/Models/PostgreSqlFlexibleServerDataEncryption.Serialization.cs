@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Uri geoBackupKeyUri = default;
             string geoBackupUserAssignedIdentityId = default;
             DataEncryptionType? type = default;
-            EncryptionKeyStatus? primaryEncryptionKeyStatus = default;
-            EncryptionKeyStatus? geoBackupEncryptionKeyStatus = default;
+            PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
+            PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    primaryEncryptionKeyStatus = new EncryptionKeyStatus(property.Value.GetString());
+                    primaryEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("geoBackupEncryptionKeyStatus"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    geoBackupEncryptionKeyStatus = new EncryptionKeyStatus(property.Value.GetString());
+                    geoBackupEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

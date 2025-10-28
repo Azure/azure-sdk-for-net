@@ -221,7 +221,7 @@ rename-mapping:
   Database: PostgreSqlFlexibleServerDatabase
   FirewallRule: PostgreSqlFlexibleServerFirewallRule
   Server: PostgreSqlFlexibleServer
-  ServerVersion: PostgreSqlFlexibleServerVersion
+  PostgresMajorVersion: PostgreSqlFlexibleServerVersion
   MaintenanceWindow: PostgreSqlFlexibleServerMaintenanceWindow
   Backup: PostgreSqlFlexibleServerBackupProperties
   Storage: PostgreSqlFlexibleServerStorage
@@ -236,7 +236,7 @@ rename-mapping:
   ConfigurationListResult: PostgreSqlFlexibleServerConfigurationListResult
   VirtualNetworkSubnetUsageParameter: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
   DelegatedSubnetUsage: PostgreSqlFlexibleServerDelegatedSubnetUsage
-  VirtualNetworkSubnetUsageResult: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
+  VirtualNetworkSubnetUsageModel: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
   ServerVersionCapability: PostgreSqlFlexibleServerServerVersionCapability
   ServerVersionCapability.supportedVcores: SupportedVCores
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
@@ -276,11 +276,11 @@ rename-mapping:
   AdminCredentials: PostgreSqlMigrationAdminCredentials
   BackupSettings: PostgreSqlFlexibleServerBackupSettings
   BackupStoreDetails: PostgreSqlFlexibleServerBackupStoreDetails
-  CancelEnum: PostgreSqlMigrationCancel
-  LogicalReplicationOnSourceDbEnum: PostgreSqlMigrationLogicalReplicationOnSourceDb
-  OverwriteDbsInTargetEnum: PostgreSqlMigrationOverwriteDbsInTarget
-  StartDataMigrationEnum: PostgreSqlMigrationStartDataMigration
-  TriggerCutoverEnum: PostgreSqlMigrationTriggerCutover
+  Cancel: PostgreSqlMigrationCancel
+  LogicalReplicationOnSourceServer: PostgreSqlMigrationLogicalReplicationOnSourceDb
+  OverwriteDatabasesOnTargetServer: PostgreSqlMigrationOverwriteDbsInTarget
+  StartDataMigration: PostgreSqlMigrationStartDataMigration
+  TriggerCutover: PostgreSqlMigrationTriggerCutover
   CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
   DbServerMetadata: PostgreSqlServerMetadata
   FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupported
@@ -290,16 +290,16 @@ rename-mapping:
   LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
   GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupported
   HaMode: PostgreSqlFlexibleServerHAMode
-  ZoneRedundantHaSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaSupported
-  ZoneRedundantHaAndGeoBackupSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
+  ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
+  ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
   StorageAutoGrowthSupportedEnum: PostgreSqlFlexibleServerStorageAutoGrowthSupported
   OnlineResizeSupportedEnum: PostgreSqlFlexibleServerOnlineResizeSupported
-  RestrictedEnum: PostgreSqlFlexibleServerZoneRedundantRestricted
+  LocationRestricted: PostgreSqlFlexibleServerZoneRedundantRestricted
   ServerSkuCapability: PostgreSqlFlexibleServerSkuCapability
   CapabilityBase.status: CapabilityStatus
   CapabilityBase: PostgreSqlBaseCapability
   ExecutionStatus: PostgreSqlExecutionStatus
-  KeyStatusEnum: PostgreSqlKeyStatus
+  EncryptionKeyStatus: PostgreSqlKeyStatus
   LtrBackupResponse: PostgreSqlFlexibleServerLtrBackupResult
   LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
   LtrServerBackupOperation: PostgreSqlLtrServerBackupOperation
@@ -313,10 +313,10 @@ rename-mapping:
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus
-  MigrationSubState: PostgreSqlMigrationSubState
-  MigrationSubStateDetails: PostgreSqlMigrationSubStateDetails
+  MigrationSubstate: PostgreSqlMigrationSubState
+  MigrationSubstateDetails: PostgreSqlMigrationSubStateDetails
   BackupRequestBase: PostgreSqlBackupContent
-  AzureManagedDiskPerformanceTiers: PostgreSqlManagedDiskPerformanceTier
+  AzureManagedDiskPerformanceTier: PostgreSqlManagedDiskPerformanceTier
   LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
   LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
   Migration: PostgreSqlMigration

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="primaryEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </param>
         /// <param name="geoBackupEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, DataEncryptionType? dataEncryptionType, EncryptionKeyStatus? primaryEncryptionKeyStatus, EncryptionKeyStatus? geoBackupEncryptionKeyStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, DataEncryptionType? dataEncryptionType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public DataEncryptionType? DataEncryptionType { get; set; }
         /// <summary> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </summary>
         [WirePath("primaryEncryptionKeyStatus")]
-        public EncryptionKeyStatus? PrimaryEncryptionKeyStatus { get; }
+        public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus { get; }
         /// <summary> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </summary>
         [WirePath("geoBackupEncryptionKeyStatus")]
-        public EncryptionKeyStatus? GeoBackupEncryptionKeyStatus { get; }
+        public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus { get; }
     }
 }

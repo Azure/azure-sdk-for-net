@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class MigrationSubstateDetails : IUtf8JsonSerializable, IJsonModel<MigrationSubstateDetails>
+    public partial class PostgreSqlMigrationSubStateDetails : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationSubStateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationSubstateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationSubStateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MigrationSubstateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlMigrationSubStateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSubstateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSubStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationSubstateDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationSubStateDetails)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(CurrentSubState))
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        MigrationSubstateDetails IJsonModel<MigrationSubstateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlMigrationSubStateDetails IJsonModel<PostgreSqlMigrationSubStateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSubstateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSubStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationSubstateDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationSubStateDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationSubstateDetails(document.RootElement, options);
+            return DeserializePostgreSqlMigrationSubStateDetails(document.RootElement, options);
         }
 
-        internal static MigrationSubstateDetails DeserializeMigrationSubstateDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlMigrationSubStateDetails DeserializePostgreSqlMigrationSubStateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            MigrationSubstate? currentSubState = default;
+            PostgreSqlMigrationSubState? currentSubState = default;
             IReadOnlyDictionary<string, DatabaseMigrationState> dbDetails = default;
             PostgreSqlFlexibleServersValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubState = new MigrationSubstate(property.Value.GetString());
+                    currentSubState = new PostgreSqlMigrationSubState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbDetails"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MigrationSubstateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DatabaseMigrationState>(), validationDetails, serializedAdditionalRawData);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DatabaseMigrationState>(), validationDetails, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<MigrationSubstateDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlMigrationSubStateDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSubstateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSubStateDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -222,26 +222,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationSubstateDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSubStateDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MigrationSubstateDetails IPersistableModel<MigrationSubstateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlMigrationSubStateDetails IPersistableModel<PostgreSqlMigrationSubStateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSubstateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSubStateDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrationSubstateDetails(document.RootElement, options);
+                        return DeserializePostgreSqlMigrationSubStateDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationSubstateDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSubStateDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrationSubstateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlMigrationSubStateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
