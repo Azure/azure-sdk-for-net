@@ -20,29 +20,53 @@ sdk\<service name>\<package name>\<package name>.sln
 
 We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton for SDKs generated from TypeSpec.
 
-You can run `eng\scripts\automation\Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
+### Option 1: Using tsp-client init (Recommended)
 
-```powershell
-eng/scripts/automation/Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -typespecSpecDirectory <relativeTypeSpecProjectFolderPath> -commit <commitId> [-repo <specRepo>] [-additionalSubDirectories <relativeFolders>]
+You can use the `tsp-client init` command to create the initial project structure and configuration. This tool automatically sets up the correct emitter path for new services:
+
+```bash
+npx -y @azure-tools/typespec-client-generator-cli@latest init
 ```
 
-e.g.
-Use git url
+This will guide you through an interactive process to set up your TypeSpec client configuration.
 
-```powershell
-pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector -typespecSpecDirectory specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
+### Option 2: Manual Setup
+
+Alternatively, you can manually create the `tsp-location.yaml` file in your SDK package folder:
+
+1. Create your SDK package folder structure under `sdk/<service name>/<package name>/`
+2. Create a `tsp-location.yaml` file with the following structure:
+
+```yaml
+directory: specification/<service>/<typespec-project-folder>
+commit: <commit-hash>
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
+
+# Optional: if your TypeSpec project depends on shared libraries
+additionalDirectories:
+- specification/<shared-library-path>/
 ```
+
+**Example tsp-location.yaml:**
+
+```yaml
+directory: specification/cognitiveservices/AnomalyDetector
+commit: ac8e06a2ed0fc1c54663c98f12c8a073f8026b90
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
+```
+
+For new data plane services, you **must** set the `emitterPackageJsonPath` property to `eng/azure-typespec-http-client-csharp-emitter-package.json` to use the new emitter path.
 
 **Note**:
 
-- `-sdkFolder` take the address of the sdk folder in azure-sdk-for-net repo. e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector. [Required]
-- `-typespecSpecDirectory` takes the relative path of the typespec project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector [Required]
-- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the typespec project, such as share library folder, separated by semicolon if there is more than one folder. [Optional]
-- `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90) [Required]
-- `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs), [Optional], default is `Azure/azure-rest-api-specs`
+- `directory` - The relative path of the TypeSpec project folder in the spec repo (e.g., `specification/cognitiveservices/AnomalyDetector`)
+- `commit` - The git commit hash from the spec repo (e.g., `ac8e06a2ed0fc1c54663c98f12c8a073f8026b90`)
+- `repo` - The `<owner>/<repo>` of the REST API specification repository (default: `Azure/azure-rest-api-specs`)
+- `emitterPackageJsonPath` - Path to the emitter package.json file (required for new services: `eng/azure-typespec-http-client-csharp-emitter-package.json`)
+- `additionalDirectories` - Optional list of additional directories needed by the TypeSpec project (e.g., shared library folders)
 
-When you run `eng\scripts\automation\Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1`, it will:
+These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
 
-- Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
-
-    These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
+For more information on code generation, see the [Azure SDK Code Generation Quickstart Tutorial](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md).
