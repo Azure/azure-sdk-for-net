@@ -3,11 +3,7 @@
 
 #nullable enable
 
-using System;
-using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
@@ -47,12 +43,12 @@ public partial class DnsPtrRecord : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary> The list of PTR records in the record set. </summary>
-    public BicepList<DnsPtrRecordInfo> DnsPtrRecords
+    public BicepList<DnsPtrRecordInfo> PtrRecords
     {
-        get { Initialize(); return _dnsPtrRecords!; }
-        set { Initialize(); _dnsPtrRecords!.Assign(value); }
+        get { Initialize(); return _ptrRecords!; }
+        set { Initialize(); _ptrRecords!.Assign(value); }
     }
-    private BicepList<DnsPtrRecordInfo>? _dnsPtrRecords;
+    private BicepList<DnsPtrRecordInfo>? _ptrRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -88,7 +84,7 @@ public partial class DnsPtrRecord : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _dnsPtrRecords = DefineListProperty<DnsPtrRecordInfo>("DnsPtrRecords", ["properties", "PTRRecords"]);
+        _ptrRecords = DefineListProperty<DnsPtrRecordInfo>("PtrRecords", ["properties", "PTRRecords"]);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
     }
 

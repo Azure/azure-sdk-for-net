@@ -3,11 +3,9 @@
 
 #nullable enable
 
-using Azure;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using System;
 
 namespace Azure.Provisioning.Dns;
 
@@ -44,12 +42,12 @@ public partial class DnsAaaaRecord : ProvisionableResource
     }
     private SystemData? _systemData;
 
-    public BicepList<DnsAaaaRecordInfo> DnsAaaaRecords
+    public BicepList<DnsAaaaRecordInfo> AaaaRecords
     {
-        get { Initialize(); return _dnsAaaaRecords!; }
-        set { Initialize(); _dnsAaaaRecords!.Assign(value); }
+        get { Initialize(); return _aaaaRecords!; }
+        set { Initialize(); _aaaaRecords!.Assign(value); }
     }
-    private BicepList<DnsAaaaRecordInfo>? _dnsAaaaRecords;
+    private BicepList<DnsAaaaRecordInfo>? _aaaaRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -86,7 +84,7 @@ public partial class DnsAaaaRecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _dnsAaaaRecords = DefineListProperty<DnsAaaaRecordInfo>("DnsAaaaRecords", ["properties", "AAAARecords"]);
+        _aaaaRecords = DefineListProperty<DnsAaaaRecordInfo>("AaaaRecords", ["properties", "AAAARecords"]);
     }
 
     /// <summary>

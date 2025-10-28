@@ -43,12 +43,12 @@ public partial class DnsTxtRecord : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary> The list of TXT records in the record set. </summary>
-    public BicepList<DnsTxtRecordInfo> DnsTxtRecords
+    public BicepList<DnsTxtRecordInfo> TxtRecords
     {
-        get { Initialize(); return _dnsTxtRecords!; }
-        set { Initialize(); _dnsTxtRecords!.Assign(value); }
+        get { Initialize(); return _txtRecords!; }
+        set { Initialize(); _txtRecords!.Assign(value); }
     }
-    private BicepList<DnsTxtRecordInfo>? _dnsTxtRecords;
+    private BicepList<DnsTxtRecordInfo>? _txtRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -84,7 +84,7 @@ public partial class DnsTxtRecord : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _dnsTxtRecords = DefineListProperty<DnsTxtRecordInfo>("DnsTxtRecords", ["properties", "TXTRecords"]);
+        _txtRecords = DefineListProperty<DnsTxtRecordInfo>("TxtRecords", ["properties", "TXTRecords"]);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
     }
 

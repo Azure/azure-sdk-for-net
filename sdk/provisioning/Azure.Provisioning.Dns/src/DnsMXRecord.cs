@@ -45,12 +45,12 @@ public partial class DnsMXRecord : ProvisionableResource
     /// <summary>
     /// The list of MX records in the record set.
     /// </summary>
-    public BicepList<DnsMXRecordInfo> DnsMxRecords
+    public BicepList<DnsMXRecordInfo> MxRecords
     {
-        get { Initialize(); return _dnsMxRecords!; }
-        set { Initialize(); _dnsMxRecords!.Assign(value); }
+        get { Initialize(); return _mxRecords!; }
+        set { Initialize(); _mxRecords!.Assign(value); }
     }
-    private BicepList<DnsMXRecordInfo>? _dnsMxRecords;
+    private BicepList<DnsMXRecordInfo>? _mxRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -87,7 +87,7 @@ public partial class DnsMXRecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _dnsMxRecords = DefineListProperty<DnsMXRecordInfo>("DnsMxRecords", ["properties", "mxRecords"]);
+        _mxRecords = DefineListProperty<DnsMXRecordInfo>("MxRecords", ["properties", "mxRecords"]);
     }
 
     /// <summary>

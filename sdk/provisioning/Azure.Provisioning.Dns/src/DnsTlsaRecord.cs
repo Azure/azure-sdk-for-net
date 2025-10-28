@@ -43,12 +43,12 @@ public partial class DnsTlsaRecord : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary> The list of Tlsa records in the record set. </summary>
-    public BicepList<DnsTlsaRecordInfo> DnsTlsaRecords
+    public BicepList<DnsTlsaRecordInfo> TlsaRecords
     {
-        get { Initialize(); return _dnsTlsaRecords!; }
-        set { Initialize(); _dnsTlsaRecords!.Assign(value); }
+        get { Initialize(); return _tlsaRecords!; }
+        set { Initialize(); _tlsaRecords!.Assign(value); }
     }
-    private BicepList<DnsTlsaRecordInfo>? _dnsTlsaRecords;
+    private BicepList<DnsTlsaRecordInfo>? _tlsaRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -84,7 +84,7 @@ public partial class DnsTlsaRecord : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _dnsTlsaRecords = DefineListProperty<DnsTlsaRecordInfo>("DnsTlsaRecords", ["properties", "TLSARecords"]);
+        _tlsaRecords = DefineListProperty<DnsTlsaRecordInfo>("TlsaRecords", ["properties", "TLSARecords"]);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
     }
 

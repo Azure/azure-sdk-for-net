@@ -4,7 +4,6 @@
 #nullable enable
 
 using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
@@ -85,7 +84,7 @@ public partial class DnsSoaRecord : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _soaRecord = DefineModelProperty<DnsSoaRecordInfo>("DnsSoaRecord", ["properties", "SOARecord"]);
+        _soaRecord = DefineModelProperty<DnsSoaRecordInfo>("SoaRecord", ["properties", "SOARecord"]);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
     }
 

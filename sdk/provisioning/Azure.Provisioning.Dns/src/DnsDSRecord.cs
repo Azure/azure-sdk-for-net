@@ -45,12 +45,12 @@ public partial class DnsDSRecord : ProvisionableResource
     /// <summary>
     /// The list of DS records in the record set.
     /// </summary>
-    public BicepList<DnsDSRecordInfo> DnsDsRecords
+    public BicepList<DnsDSRecordInfo> DsRecords
     {
-        get { Initialize(); return _dnsDsRecords!; }
-        set { Initialize(); _dnsDsRecords!.Assign(value); }
+        get { Initialize(); return _dsRecords!; }
+        set { Initialize(); _dsRecords!.Assign(value); }
     }
-    private BicepList<DnsDSRecordInfo>? _dnsDsRecords;
+    private BicepList<DnsDSRecordInfo>? _dsRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -87,7 +87,7 @@ public partial class DnsDSRecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _dnsDsRecords = DefineListProperty<DnsDSRecordInfo>("DnsDsRecords", ["properties", "DSRecords"]);
+        _dsRecords = DefineListProperty<DnsDSRecordInfo>("DsRecords", ["properties", "DSRecords"]);
     }
 
     /// <summary>

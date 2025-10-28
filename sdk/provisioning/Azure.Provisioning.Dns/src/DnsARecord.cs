@@ -42,12 +42,12 @@ public partial class DnsARecord : ProvisionableResource
     }
     private SystemData? _systemData;
 
-    public BicepList<DnsARecordInfo> DnsARecords
+    public BicepList<DnsARecordInfo> ARecords
     {
-        get { Initialize(); return _dnsARecords!; }
-        set { Initialize(); _dnsARecords!.Assign(value); }
+        get { Initialize(); return _aRecords!; }
+        set { Initialize(); _aRecords!.Assign(value); }
     }
-    private BicepList<DnsARecordInfo>? _dnsARecords;
+    private BicepList<DnsARecordInfo>? _aRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -84,7 +84,7 @@ public partial class DnsARecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _dnsARecords = DefineListProperty<DnsARecordInfo>("DnsARecords", ["properties", "ARecords"]);
+        _aRecords = DefineListProperty<DnsARecordInfo>("ARecords", ["properties", "ARecords"]);
     }
 
     /// <summary>

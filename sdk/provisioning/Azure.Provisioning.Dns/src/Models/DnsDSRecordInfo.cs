@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns;

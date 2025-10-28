@@ -3,7 +3,7 @@ namespace Azure.Provisioning.Dns
     public partial class DnsAaaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsAaaaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsAaaaRecordInfo> DnsAaaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsAaaaRecordInfo> AaaaRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Dns
     public partial class DnsARecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsARecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsARecordInfo> DnsARecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsARecordInfo> ARecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.Dns
     public partial class DnsCaaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsCaaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsCaaRecordInfo> DnsCaaRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsCaaRecordInfo> CaaRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Dns
     public partial class DnsDSRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsDSRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsDSRecordInfo> DnsDsRecords { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsDSRecordInfo> DsRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
@@ -120,8 +120,8 @@ namespace Azure.Provisioning.Dns
     public partial class DnsMXRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsMXRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsMXRecordInfo> DnsMxRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsMXRecordInfo> MxRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -145,9 +145,9 @@ namespace Azure.Provisioning.Dns
     public partial class DnsNaptrRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsNaptrRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNaptrRecordInfo> DnsNaptrRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNaptrRecordInfo> NaptrRecords { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -174,9 +174,9 @@ namespace Azure.Provisioning.Dns
     public partial class DnsNSRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsNSRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNSRecordInfo> DnsNSRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsNSRecordInfo> NSRecords { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -198,10 +198,10 @@ namespace Azure.Provisioning.Dns
     public partial class DnsPtrRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsPtrRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsPtrRecordInfo> DnsPtrRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsPtrRecordInfo> PtrRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsPtrRecord FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -252,10 +252,10 @@ namespace Azure.Provisioning.Dns
     public partial class DnsSrvRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsSrvRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSrvRecordInfo> DnsSrvRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSrvRecordInfo> SrvRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsSrvRecord FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -279,11 +279,11 @@ namespace Azure.Provisioning.Dns
     public partial class DnsTlsaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsTlsaRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTlsaRecordInfo> DnsTlsaRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTlsaRecordInfo> TlsaRecords { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsTlsaRecord FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -306,11 +306,11 @@ namespace Azure.Provisioning.Dns
     public partial class DnsTxtRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsTxtRecord(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTxtRecordInfo> DnsTxtRecords { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsZone? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTxtRecordInfo> TxtRecords { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsTxtRecord FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions

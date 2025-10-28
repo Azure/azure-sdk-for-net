@@ -43,12 +43,12 @@ public partial class DnsSrvRecord : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary> The list of SRV records in the record set. </summary>
-    public BicepList<DnsSrvRecordInfo> DnsSrvRecords
+    public BicepList<DnsSrvRecordInfo> SrvRecords
     {
-        get { Initialize(); return _dnsSrvRecords!; }
-        set { Initialize(); _dnsSrvRecords!.Assign(value); }
+        get { Initialize(); return _srvRecords!; }
+        set { Initialize(); _srvRecords!.Assign(value); }
     }
-    private BicepList<DnsSrvRecordInfo>? _dnsSrvRecords;
+    private BicepList<DnsSrvRecordInfo>? _srvRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -84,7 +84,7 @@ public partial class DnsSrvRecord : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _dnsSrvRecords = DefineListProperty<DnsSrvRecordInfo>("DnsSrvRecords", ["properties", "SRVRecords"]);
+        _srvRecords = DefineListProperty<DnsSrvRecordInfo>("SrvRecords", ["properties", "SRVRecords"]);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
     }
 

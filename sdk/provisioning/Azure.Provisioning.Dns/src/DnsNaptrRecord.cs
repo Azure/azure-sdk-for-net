@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -44,12 +43,12 @@ public partial class DnsNaptrRecord : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary> The list of Naptr records in the record set. </summary>
-    public BicepList<DnsNaptrRecordInfo> DnsNaptrRecords
+    public BicepList<DnsNaptrRecordInfo> NaptrRecords
     {
-        get { Initialize(); return _dnsNaptrRecords!; }
-        set { Initialize(); _dnsNaptrRecords!.Assign(value); }
+        get { Initialize(); return _naptrRecords!; }
+        set { Initialize(); _naptrRecords!.Assign(value); }
     }
-    private BicepList<DnsNaptrRecordInfo>? _dnsNaptrRecords;
+    private BicepList<DnsNaptrRecordInfo>? _naptrRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -86,7 +85,7 @@ public partial class DnsNaptrRecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _dnsNaptrRecords = DefineListProperty<DnsNaptrRecordInfo>("DnsNaptrRecords", ["properties", "naptrRecords"]);
+        _naptrRecords = DefineListProperty<DnsNaptrRecordInfo>("NaptrRecords", ["properties", "naptrRecords"]);
     }
 
     /// <summary>

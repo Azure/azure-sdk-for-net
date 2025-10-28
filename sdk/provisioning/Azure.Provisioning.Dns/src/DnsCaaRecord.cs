@@ -42,12 +42,12 @@ public partial class DnsCaaRecord : ProvisionableResource
     }
     private SystemData? _systemData;
 
-    public BicepList<DnsCaaRecordInfo> DnsCaaRecords
+    public BicepList<DnsCaaRecordInfo> CaaRecords
     {
-        get { Initialize(); return _dnsCaaRecords!; }
-        set { Initialize(); _dnsCaaRecords!.Assign(value); }
+        get { Initialize(); return _caaRecords!; }
+        set { Initialize(); _caaRecords!.Assign(value); }
     }
-    private BicepList<DnsCaaRecordInfo>? _dnsCaaRecords;
+    private BicepList<DnsCaaRecordInfo>? _caaRecords;
 
     /// <summary>
     /// Gets or sets a reference to the parent DnsZone.
@@ -84,7 +84,7 @@ public partial class DnsCaaRecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _dnsCaaRecords = DefineListProperty<DnsCaaRecordInfo>("DnsCaaRecords", ["properties", "caaRecords"]);
+        _caaRecords = DefineListProperty<DnsCaaRecordInfo>("CaaRecords", ["properties", "caaRecords"]);
     }
 
     /// <summary>
