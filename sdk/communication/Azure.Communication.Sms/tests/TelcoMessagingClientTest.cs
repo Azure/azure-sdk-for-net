@@ -148,7 +148,7 @@ namespace Azure.Communication.Sms.Tests
         {
             // Test each valid service version
             Assert.DoesNotThrow(() => new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2021_03_07));
-            Assert.DoesNotThrow(() => new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2025_08_01_Preview));
+            Assert.DoesNotThrow(() => new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2026_01_23));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Azure.Communication.Sms.Tests
             var options1 = new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2021_03_07);
             Assert.AreEqual("2021-03-07", options1.ApiVersion);
 
-            var options2 = new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2025_08_01_Preview);
+            var options2 = new TelcoMessagingClientOptions(TelcoMessagingClientOptions.ServiceVersion.V2026_01_23);
             Assert.AreEqual("2026-01-23", options2.ApiVersion);
         }
 
