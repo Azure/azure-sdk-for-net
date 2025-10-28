@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="operatingSystemVersion"> Device operating system version. </param>
         /// <param name="endpoints"> Property bag containing the device's unassigned and assigned endpoints. </param>
         /// <param name="attributes"> A set of key-value pairs that contain custom attributes set by the customer. </param>
+        /// <param name="policy"> Policy used to issue device certificates. </param>
         /// <param name="enabled"> Indicates if the resource and identity are enabled or not. A disabled device cannot authenticate with Microsoft Entra ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceDeviceUpdateProperties(string operatingSystemVersion, MessagingEndpoints endpoints, IDictionary<string, BinaryData> attributes, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamespaceDeviceUpdateProperties(string operatingSystemVersion, MessagingEndpoints endpoints, IDictionary<string, BinaryData> attributes, DeviceCredentialPolicy policy, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatingSystemVersion = operatingSystemVersion;
             Endpoints = endpoints;
             Attributes = attributes;
+            Policy = policy;
             Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -73,7 +76,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         public IDictionary<string, BinaryData> Attributes { get; }
 
+        /// <summary> Policy used to issue device certificates. </summary>
+        internal DeviceCredentialPolicy Policy { get; set; }
+
         /// <summary> Indicates if the resource and identity are enabled or not. A disabled device cannot authenticate with Microsoft Entra ID. </summary>
         public bool? Enabled { get; set; }
+
+        /// <summary> Resource Id of the Policy. </summary>
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Policy is null ? default : Policy.ResourceId;
+            }
+            set
+            {
+                if (Policy is null)
+                {
+                    Policy = new DeviceCredentialPolicy();
+                }
+                Policy.ResourceId = value;
+            }
+        }
     }
 }
