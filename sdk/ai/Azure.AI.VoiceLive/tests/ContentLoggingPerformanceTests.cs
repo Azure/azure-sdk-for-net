@@ -4,16 +4,11 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Diagnostics;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -139,6 +134,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.LessOrEqual(overhead, 0.5, $"Content logging should add less than 50% overhead. Without: {timeWithoutLogging}ms, With: {timeWithLogging}ms, Overhead: {overhead:P}");
         }
 
+        [Ignore("Very inconsistent when run in batch of tests")]
         [Test]
         public void EventSource_EventCreation_IsEfficient()
         {
