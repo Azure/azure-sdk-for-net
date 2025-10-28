@@ -54,12 +54,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
@@ -70,7 +69,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -86,15 +84,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze batch request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
+            Operation<BinaryData> result = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeBatchResult)response, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
@@ -102,12 +99,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze batch request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(WaitUntil waitUntil, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = AnalyzeBatchDocuments(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
@@ -118,15 +114,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Classify request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
+            Operation<BinaryData> result = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeResult)response, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
@@ -134,7 +129,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Classify request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
