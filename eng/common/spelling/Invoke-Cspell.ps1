@@ -49,52 +49,65 @@ param(
   [string] $SpellCheckRoot = (Resolve-Path "$PSScriptRoot/../../.."),
 
   [Parameter()]
-  [string] $PackageInstallCache = (Join-Path ([System.IO.Path]::GetTempPath()) "cspell-tool-path-upgraded"),
+  [string] $PackageInstallCache = (Join-Path ([System.IO.Path]::GetTempPath()) "cspell-tool-path"),
 
   [Parameter()]
   [switch] $LeavePackageInstallCache
 )
 
-Set-StrictMode -Version 3.0
+begin { 
+  Set-StrictMode -Version 3.0
 
-if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
-  LogError "Could not locate npm. Install NodeJS (includes npm) https://nodejs.org/en/download/"
-  exit 1
+  if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
+    LogError "Could not locate npm. Install NodeJS (includes npm) https://nodejs.org/en/download/"
+    exit 1
+  }
+
+  if (!(Test-Path $CSpellConfigPath)) {
+    LogError "Could not locate config file $CSpellConfigPath"
+    exit 1
+  }
+
+  # Prepare the working directory if it does not already have requirements in
+  # place.
+  if (!(Test-Path $PackageInstallCache)) {
+    New-Item -ItemType Directory -Path $PackageInstallCache | Out-Null
+  }
+
+  if (!(Test-Path "$PackageInstallCache/package.json")) {
+    Copy-Item "$PSScriptRoot/package.json" $PackageInstallCache
+  }
+
+  if (!(Test-Path "$PackageInstallCache/package-lock.json")) {
+    Copy-Item "$PSScriptRoot/package-lock.json" $PackageInstallCache
+  }
+
+
+  $filesToCheck = @()
+ }
+process { 
+  $filesToCheck += $FileList
+ }
+end { 
+  npm --prefix $PackageInstallCache ci | Write-Host
+
+  $command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list stdin"
+  Write-Host $command
+  $cspellOutput = $filesToCheck | npm --prefix $PackageInstallCache `
+    exec  `
+    --no `
+    -- `
+    cspell `
+    $JobType `
+    --config $CSpellConfigPath `
+    --no-must-find-files `
+    --root $SpellCheckRoot `
+    --file-list stdin
+
+  if (!$LeavePackageInstallCache) {
+    Write-Host "Cleaning up package install cache at $PackageInstallCache"
+    Remove-Item -Path $PackageInstallCache -Recurse -Force | Out-Null
+  }
+
+  return $cspellOutput
 }
-
-if (!(Test-Path $CSpellConfigPath)) {
-  LogError "Could not locate config file $CSpellConfigPath"
-  exit 1
-}
-
-# Prepare the working directory if it does not already have requirements in
-# place.
-if (!(Test-Path $PackageInstallCache)) {
-  New-Item -ItemType Directory -Path $PackageInstallCache | Out-Null
-}
-
-if (!(Test-Path "$PackageInstallCache/package.json")) {
-  Copy-Item "$PSScriptRoot/package.json" $PackageInstallCache
-}
-
-if (!(Test-Path "$PackageInstallCache/package-lock.json")) {
-  Copy-Item "$PSScriptRoot/package-lock.json" $PackageInstallCache
-}
-
-npm --prefix $PackageInstallCache ci | Write-Host
-
-$command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list stdin"
-Write-Host $command
-$cspellOutput = $FileList | npm --prefix $PackageInstallCache `
-  exec  `
-  --no `
-  -- `
-  cspell `
-  $JobType `
-  --config $CSpellConfigPath `
-  --no-must-find-files `
-  --root $SpellCheckRoot `
-  --no-show-suggestions `
-  --file-list stdin
-
-return $cspellOutput
