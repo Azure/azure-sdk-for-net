@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (Optional.IsDefined(FileUploadOptions))
             {
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            string vmName = default;
+            string virtualMachineName = default;
             IList<DevTestLabParameter> parameters = default;
-            AzureLocation? location = default;
+            string location = default;
             DevTestLabFileUploadOption? fileUploadOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (property.NameEquals("virtualMachineName"u8))
                 {
-                    vmName = property.Value.GetString();
+                    virtualMachineName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -125,11 +125,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fileUploadOptions"u8))
@@ -147,7 +143,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevTestLabArtifactGenerateArmTemplateContent(vmName, parameters ?? new ChangeTrackingList<DevTestLabParameter>(), location, fileUploadOptions, serializedAdditionalRawData);
+            return new DevTestLabArtifactGenerateArmTemplateContent(virtualMachineName, parameters ?? new ChangeTrackingList<DevTestLabParameter>(), location, fileUploadOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactGenerateArmTemplateContent>.Write(ModelReaderWriterOptions options)

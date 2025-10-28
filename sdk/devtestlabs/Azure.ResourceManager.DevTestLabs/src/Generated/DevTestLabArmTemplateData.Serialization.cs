@@ -38,6 +38,22 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
@@ -60,17 +76,28 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (options.Format != "W" && Optional.IsDefined(Contents))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Contents);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Contents, ModelSerializationExtensions.JsonDocumentOptions))
+                writer.WriteStartObject();
+                foreach (var item in Contents)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -115,8 +142,8 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -125,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string description = default;
             string publisher = default;
             string icon = default;
-            BinaryData contents = default;
+            IReadOnlyDictionary<string, BinaryData> contents = default;
             DateTimeOffset? createdDate = default;
             IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default;
             bool? enabled = default;
@@ -149,7 +176,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -211,7 +238,19 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            contents = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            contents = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -260,16 +299,16 @@ namespace Azure.ResourceManager.DevTestLabs
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 displayName,
                 description,
                 publisher,
                 icon,
-                contents,
+                contents ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 createdDate,
                 parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(),
                 enabled,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 serializedAdditionalRawData);
         }
 

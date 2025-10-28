@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Delete</description>
+        /// <description>DtlEnvironment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Delete</description>
+        /// <description>DtlEnvironment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Update</description>
+        /// <description>DtlEnvironment_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Update</description>
+        /// <description>DtlEnvironment_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
+        /// <description>DtlEnvironment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Delete</description>
+        /// <description>NotificationChannel_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Delete</description>
+        /// <description>NotificationChannel_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Update</description>
+        /// <description>NotificationChannel_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Update</description>
+        /// <description>NotificationChannel_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationChannels_Get</description>
+        /// <description>NotificationChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -17,54 +17,55 @@ using Azure.ResourceManager.DevTestLabs.Models;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A Class representing a DevTestLabVmSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabVmScheduleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabVmScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabVmResource"/> using the GetDevTestLabVmSchedule method.
+    /// A Class representing a LabUserServicefabricSchedule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabUserServicefabricScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLabUserServicefabricScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabServiceFabricResource"/> using the GetLabUserServicefabricSchedule method.
     /// </summary>
-    public partial class DevTestLabVmScheduleResource : ArmResource
+    public partial class LabUserServicefabricScheduleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DevTestLabVmScheduleResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LabUserServicefabricScheduleResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="labName"> The labName. </param>
-        /// <param name="vmName"> The vmName. </param>
+        /// <param name="userName"> The userName. </param>
+        /// <param name="serviceFabricName"> The serviceFabricName. </param>
         /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string vmName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _devTestLabVmScheduleVmSchedulesClientDiagnostics;
-        private readonly VirtualMachineSchedulesRestOperations _devTestLabVmScheduleVmSchedulesRestClient;
+        private readonly ClientDiagnostics _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics;
+        private readonly ServiceFabricSchedulesRestOperations _labUserServicefabricScheduleServiceFabricSchedulesRestClient;
         private readonly DevTestLabScheduleData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualmachines/schedules";
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/servicefabrics/schedules";
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmScheduleResource"/> class for mocking. </summary>
-        protected DevTestLabVmScheduleResource()
+        /// <summary> Initializes a new instance of the <see cref="LabUserServicefabricScheduleResource"/> class for mocking. </summary>
+        protected LabUserServicefabricScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabUserServicefabricScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevTestLabVmScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
+        internal LabUserServicefabricScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabUserServicefabricScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DevTestLabVmScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LabUserServicefabricScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devTestLabVmScheduleVmSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string devTestLabVmScheduleVmSchedulesApiVersion);
-            _devTestLabVmScheduleVmSchedulesRestClient = new VirtualMachineSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVmScheduleVmSchedulesApiVersion);
+            _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string labUserServicefabricScheduleServiceFabricSchedulesApiVersion);
+            _labUserServicefabricScheduleServiceFabricSchedulesRestClient = new ServiceFabricSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, labUserServicefabricScheduleServiceFabricSchedulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -108,22 +109,22 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserServicefabricScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Get");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Get");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,11 +138,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -149,22 +150,22 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DevTestLabVmScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserServicefabricScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Get");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Get");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,11 +179,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Delete</description>
+        /// <description>Schedule_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,12 +199,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Delete");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _devTestLabVmScheduleVmSchedulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new DevTestLabsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -222,11 +223,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Delete</description>
+        /// <description>Schedule_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,12 +243,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Delete");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Delete");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _devTestLabVmScheduleVmSchedulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new DevTestLabsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -266,11 +267,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Update</description>
+        /// <description>Schedule_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,23 +279,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> UpdateAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserServicefabricScheduleResource>> UpdateAsync(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Update");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Update");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                var response = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,11 +309,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Update</description>
+        /// <description>Schedule_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -320,23 +321,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DevTestLabVmScheduleResource> Update(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserServicefabricScheduleResource> Update(DevTestLabSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Update");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Update");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                var response = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new LabUserServicefabricScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,11 +351,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}/execute</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}/execute</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Execute</description>
+        /// <description>ServiceFabricSchedules_Execute</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,12 +371,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Execute");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Execute");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.ExecuteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmScheduleVmSchedulesClientDiagnostics, Pipeline, _devTestLabVmScheduleVmSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.ExecuteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation(_labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics, Pipeline, _labUserServicefabricScheduleServiceFabricSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -392,11 +393,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}/execute</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}/execute</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Execute</description>
+        /// <description>ServiceFabricSchedules_Execute</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -404,7 +405,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,12 +413,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Execute(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.Execute");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Execute");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Execute(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(_devTestLabVmScheduleVmSchedulesClientDiagnostics, Pipeline, _devTestLabVmScheduleVmSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Execute(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DevTestLabsArmOperation(_labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics, Pipeline, _labUserServicefabricScheduleServiceFabricSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -434,11 +435,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -446,7 +447,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,12 +455,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserServicefabricScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.AddTag");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -468,8 +469,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabVmScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LabUserServicefabricScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -496,11 +497,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -508,7 +509,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,12 +517,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DevTestLabVmScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserServicefabricScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.AddTag");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -530,8 +531,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabVmScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
+                    return Response.FromValue(new LabUserServicefabricScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -558,11 +559,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -570,18 +571,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserServicefabricScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.SetTags");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -591,8 +592,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabVmScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LabUserServicefabricScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -615,11 +616,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -627,18 +628,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DevTestLabVmScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserServicefabricScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.SetTags");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -648,8 +649,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabVmScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
+                    return Response.FromValue(new LabUserServicefabricScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -672,11 +673,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -684,18 +685,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserServicefabricScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.RemoveTag");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -704,8 +705,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabVmScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _labUserServicefabricScheduleServiceFabricSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LabUserServicefabricScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -732,11 +733,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -744,18 +745,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DevTestLabVmScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserServicefabricScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleResource.RemoveTag");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -764,8 +765,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabVmScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _labUserServicefabricScheduleServiceFabricSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
+                    return Response.FromValue(new LabUserServicefabricScheduleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {

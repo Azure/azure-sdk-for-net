@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DisksGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Get.json
-            // this example is just showing the usage of "Disks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Disks_Get.json
+            // this example is just showing the usage of "Disk_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DisksDelete()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Delete.json
-            // this example is just showing the usage of "Disks_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Disks_Delete.json
+            // this example is just showing the usage of "Disk_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DisksUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Update.json
-            // this example is just showing the usage of "Disks_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Disks_Update.json
+            // this example is just showing the usage of "Disk_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Attach_DisksAttach()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Attach.json
+            // Generated from example definition: 2018-09-15/Disks_Attach.json
             // this example is just showing the usage of "Disks_Attach" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Detach_DisksDetach()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Detach.json
+            // Generated from example definition: 2018-09-15/Disks_Detach.json
             // this example is just showing the usage of "Disks_Detach" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

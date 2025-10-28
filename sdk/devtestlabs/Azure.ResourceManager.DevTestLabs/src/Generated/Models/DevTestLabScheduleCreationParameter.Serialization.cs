@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             string name = default;
-            AzureLocation? location = default;
+            string location = default;
             IDictionary<string, string> tags = default;
             DevTestLabEnableStatus? status = default;
             string taskType = default;
@@ -157,11 +157,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -261,9 +257,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabScheduleCreationParameter(
-                name,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 status,
                 taskType,
                 weeklyRecurrence,
@@ -272,6 +265,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 timeZoneId,
                 notificationSettings,
                 targetResourceId,
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

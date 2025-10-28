@@ -14,30 +14,30 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
-    public partial class Sample_DevTestLabGlobalScheduleResource
+    public partial class Sample_ScheduleResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GlobalSchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Get.json
-            // this example is just showing the usage of "GlobalSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/GlobalSchedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabGlobalScheduleResource created on azure
-            // for more information of creating DevTestLabGlobalScheduleResource, please refer to the document of DevTestLabGlobalScheduleResource
+            // this example assumes you already have this ScheduleResource created on azure
+            // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string name = "labvmautostart";
-            ResourceIdentifier devTestLabGlobalScheduleResourceId = DevTestLabGlobalScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            DevTestLabGlobalScheduleResource devTestLabGlobalSchedule = client.GetDevTestLabGlobalScheduleResource(devTestLabGlobalScheduleResourceId);
+            ResourceIdentifier scheduleResourceId = ScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            ScheduleResource schedule = client.GetScheduleResource(scheduleResourceId);
 
             // invoke the operation
-            DevTestLabGlobalScheduleResource result = await devTestLabGlobalSchedule.GetAsync();
+            ScheduleResource result = await schedule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_GlobalSchedulesDelete()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Delete.json
-            // this example is just showing the usage of "GlobalSchedules_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/GlobalSchedules_Delete.json
+            // this example is just showing the usage of "Schedule_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabGlobalScheduleResource created on azure
-            // for more information of creating DevTestLabGlobalScheduleResource, please refer to the document of DevTestLabGlobalScheduleResource
+            // this example assumes you already have this ScheduleResource created on azure
+            // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string name = "labvmautostart";
-            ResourceIdentifier devTestLabGlobalScheduleResourceId = DevTestLabGlobalScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            DevTestLabGlobalScheduleResource devTestLabGlobalSchedule = client.GetDevTestLabGlobalScheduleResource(devTestLabGlobalScheduleResourceId);
+            ResourceIdentifier scheduleResourceId = ScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            ScheduleResource schedule = client.GetScheduleResource(scheduleResourceId);
 
             // invoke the operation
-            await devTestLabGlobalSchedule.DeleteAsync(WaitUntil.Completed);
+            await schedule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -76,21 +76,21 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_GlobalSchedulesUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Update.json
-            // this example is just showing the usage of "GlobalSchedules_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/GlobalSchedules_Update.json
+            // this example is just showing the usage of "Schedule_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabGlobalScheduleResource created on azure
-            // for more information of creating DevTestLabGlobalScheduleResource, please refer to the document of DevTestLabGlobalScheduleResource
+            // this example assumes you already have this ScheduleResource created on azure
+            // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string name = "labvmautostart";
-            ResourceIdentifier devTestLabGlobalScheduleResourceId = DevTestLabGlobalScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            DevTestLabGlobalScheduleResource devTestLabGlobalSchedule = client.GetDevTestLabGlobalScheduleResource(devTestLabGlobalScheduleResourceId);
+            ResourceIdentifier scheduleResourceId = ScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            ScheduleResource schedule = client.GetScheduleResource(scheduleResourceId);
 
             // invoke the operation
             DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 ["tagName1"] = "tagValue1"
 },
             };
-            DevTestLabGlobalScheduleResource result = await devTestLabGlobalSchedule.UpdateAsync(patch);
+            ScheduleResource result = await schedule.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_GlobalSchedulesExecute()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Execute.json
+            // Generated from example definition: 2018-09-15/GlobalSchedules_Execute.json
             // this example is just showing the usage of "GlobalSchedules_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabGlobalScheduleResource created on azure
-            // for more information of creating DevTestLabGlobalScheduleResource, please refer to the document of DevTestLabGlobalScheduleResource
+            // this example assumes you already have this ScheduleResource created on azure
+            // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string name = "labvmautostart";
-            ResourceIdentifier devTestLabGlobalScheduleResourceId = DevTestLabGlobalScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            DevTestLabGlobalScheduleResource devTestLabGlobalSchedule = client.GetDevTestLabGlobalScheduleResource(devTestLabGlobalScheduleResourceId);
+            ResourceIdentifier scheduleResourceId = ScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            ScheduleResource schedule = client.GetScheduleResource(scheduleResourceId);
 
             // invoke the operation
-            await devTestLabGlobalSchedule.ExecuteAsync(WaitUntil.Completed);
+            await schedule.ExecuteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Retarget_GlobalSchedulesRetarget()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Retarget.json
+            // Generated from example definition: 2018-09-15/GlobalSchedules_Retarget.json
             // this example is just showing the usage of "GlobalSchedules_Retarget" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabGlobalScheduleResource created on azure
-            // for more information of creating DevTestLabGlobalScheduleResource, please refer to the document of DevTestLabGlobalScheduleResource
+            // this example assumes you already have this ScheduleResource created on azure
+            // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string name = "{scheduleName}";
-            ResourceIdentifier devTestLabGlobalScheduleResourceId = DevTestLabGlobalScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            DevTestLabGlobalScheduleResource devTestLabGlobalSchedule = client.GetDevTestLabGlobalScheduleResource(devTestLabGlobalScheduleResourceId);
+            ResourceIdentifier scheduleResourceId = ScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            ScheduleResource schedule = client.GetScheduleResource(scheduleResourceId);
 
             // invoke the operation
             DevTestLabGlobalScheduleRetargetContent content = new DevTestLabGlobalScheduleRetargetContent
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
                 CurrentResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{targetLab}"),
                 TargetResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{currentLab}"),
             };
-            await devTestLabGlobalSchedule.RetargetAsync(WaitUntil.Completed, content);
+            await schedule.RetargetAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }

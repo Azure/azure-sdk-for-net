@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VirtualMachinesCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_CreateOrUpdate.json
-            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_CreateOrUpdate.json
+            // this example is just showing the usage of "LabVirtualMachine_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,22 +42,6 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             string name = "{vmName}";
             DevTestLabVmData data = new DevTestLabVmData(new AzureLocation("{location}"))
             {
-                Size = "Standard_A2_v2",
-                UserName = "{userName}",
-                Password = "{userPassword}",
-                LabSubnetName = "{virtualNetworkName}Subnet",
-                LabVirtualNetworkId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}/virtualnetworks/{virtualNetworkName}"),
-                DisallowPublicIPAddress = true,
-                GalleryImageReference = new DevTestLabGalleryImageReference
-                {
-                    Offer = "UbuntuServer",
-                    Publisher = "Canonical",
-                    Sku = "16.04-LTS",
-                    OSType = "Linux",
-                    Version = "Latest",
-                },
-                AllowClaim = true,
-                StorageType = "Standard",
                 Tags =
 {
 ["tagName1"] = "tagValue1"
@@ -78,8 +61,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachinesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_Get.json
+            // this example is just showing the usage of "LabVirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -112,8 +95,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachinesList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_List.json
-            // this example is just showing the usage of "VirtualMachines_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_List.json
+            // this example is just showing the usage of "LabVirtualMachine_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -148,8 +131,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VirtualMachinesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_Get.json
+            // this example is just showing the usage of "LabVirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -178,8 +161,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VirtualMachinesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachines_Get.json
+            // this example is just showing the usage of "LabVirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

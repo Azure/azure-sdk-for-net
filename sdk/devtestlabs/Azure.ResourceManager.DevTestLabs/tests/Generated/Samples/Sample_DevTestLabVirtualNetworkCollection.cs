@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VirtualNetworksCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_CreateOrUpdate.json
-            // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualNetworks_CreateOrUpdate.json
+            // this example is just showing the usage of "VirtualNetwork_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,12 +42,6 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             string name = "{virtualNetworkName}";
             DevTestLabVirtualNetworkData data = new DevTestLabVirtualNetworkData(new AzureLocation("{location}"))
             {
-                AllowedSubnets = {new DevTestLabSubnet
-{
-ResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{virtualNetworkName}Subnet"),
-LabSubnetName = "{virtualNetworkName}Subnet",
-AllowPublicIP = DevTestLabUsagePermissionType.Allow,
-}},
                 Tags =
 {
 ["tagName1"] = "tagValue1"
@@ -68,8 +61,8 @@ AllowPublicIP = DevTestLabUsagePermissionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualNetworksGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_Get.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualNetworks_Get.json
+            // this example is just showing the usage of "VirtualNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -102,8 +95,8 @@ AllowPublicIP = DevTestLabUsagePermissionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualNetworksList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_List.json
-            // this example is just showing the usage of "VirtualNetworks_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualNetworks_List.json
+            // this example is just showing the usage of "VirtualNetwork_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -138,8 +131,8 @@ AllowPublicIP = DevTestLabUsagePermissionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VirtualNetworksGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_Get.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualNetworks_Get.json
+            // this example is just showing the usage of "VirtualNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -168,8 +161,8 @@ AllowPublicIP = DevTestLabUsagePermissionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VirtualNetworksGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualNetworks_Get.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualNetworks_Get.json
+            // this example is just showing the usage of "VirtualNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

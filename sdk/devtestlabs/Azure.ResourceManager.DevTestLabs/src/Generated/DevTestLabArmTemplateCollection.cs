@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_List</description>
+        /// <description>ArmTemplate_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_List</description>
+        /// <description>ArmTemplate_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

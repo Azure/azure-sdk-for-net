@@ -39,17 +39,28 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(ParametersValueInfo))
+            if (Optional.IsCollectionDefined(ParametersValueInfo))
             {
                 writer.WritePropertyName("parametersValueInfo"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ParametersValueInfo);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ParametersValueInfo, ModelSerializationExtensions.JsonDocumentOptions))
+                writer.WriteStartObject();
+                foreach (var item in ParametersValueInfo)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             string fileName = default;
-            BinaryData parametersValueInfo = default;
+            IReadOnlyDictionary<string, BinaryData> parametersValueInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +116,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    parametersValueInfo = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    parametersValueInfo = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +137,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo, serializedAdditionalRawData);
+            return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabParametersValueFileInfo>.Write(ModelReaderWriterOptions options)

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ArmTemplatesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArmTemplates_Get.json
-            // this example is just showing the usage of "ArmTemplates_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArmTemplates_Get.json
+            // this example is just showing the usage of "ArmTemplate_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ArmTemplatesList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArmTemplates_List.json
-            // this example is just showing the usage of "ArmTemplates_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArmTemplates_List.json
+            // this example is just showing the usage of "ArmTemplate_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ArmTemplatesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArmTemplates_Get.json
-            // this example is just showing the usage of "ArmTemplates_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArmTemplates_Get.json
+            // this example is just showing the usage of "ArmTemplate_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ArmTemplatesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArmTemplates_Get.json
-            // this example is just showing the usage of "ArmTemplates_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArmTemplates_Get.json
+            // this example is just showing the usage of "ArmTemplate_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

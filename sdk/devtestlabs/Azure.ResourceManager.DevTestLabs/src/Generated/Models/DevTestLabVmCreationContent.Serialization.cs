@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             string name = default;
-            AzureLocation? location = default;
+            string location = default;
             IDictionary<string, string> tags = default;
             BulkCreationParameters bulkCreationParameters = default;
             string notes = default;
@@ -268,11 +268,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -491,9 +487,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabVmCreationContent(
-                name,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 bulkCreationParameters,
                 notes,
                 ownerObjectId,
@@ -518,6 +511,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 environmentId,
                 dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>(),
                 scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>(),
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

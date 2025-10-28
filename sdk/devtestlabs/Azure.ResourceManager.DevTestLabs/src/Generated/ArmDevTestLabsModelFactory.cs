@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -107,6 +108,46 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
+        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
+        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
+        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
+        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
+        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
+        /// <param name="name"> The name of the virtual machine or environment. </param>
+        /// <param name="location"> The location of the new virtual machine or environment. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
+        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status = null, string taskType = null, DevTestLabWeekDetails weeklyRecurrence = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = null, string timeZoneId = null, DevTestLabNotificationSettings notificationSettings = null, ResourceIdentifier targetResourceId = null, string name = null, string location = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DevTestLabScheduleCreationParameter(
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime, serializedAdditionalRawData: null) : null,
+                hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute, serializedAdditionalRawData: null) : null,
+                timeZoneId,
+                notificationSettings,
+                targetResourceId,
+                name,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGenerateUploadUriResult"/>. </summary>
+        /// <param name="uploadUri"> The upload URI for the VHD. </param>
+        /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
+        public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(string uploadUri = null)
+        {
+            return new DevTestLabGenerateUploadUriResult(uploadUri, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -200,8 +241,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="displayName"> The display name of the ARM template. </param>
         /// <param name="description"> The description of the ARM template. </param>
         /// <param name="publisher"> The publisher of the ARM template. </param>
@@ -210,19 +249,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="createdOn"> The creation date of the armTemplate. </param>
         /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
         /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArmTemplateData"/> instance for mocking. </returns>
-        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, string description = null, string publisher = null, string icon = null, BinaryData contents = null, DateTimeOffset? createdOn = null, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = null, bool? isEnabled = null)
+        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, string publisher = null, string icon = null, IReadOnlyDictionary<string, BinaryData> contents = null, DateTimeOffset? createdOn = null, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = null, bool? isEnabled = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
-            tags ??= new Dictionary<string, string>();
+            contents ??= new Dictionary<string, BinaryData>();
             parametersValueFilesInfo ??= new List<DevTestLabParametersValueFileInfo>();
+            tags ??= new Dictionary<string, string>();
 
             return new DevTestLabArmTemplateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 displayName,
                 description,
                 publisher,
@@ -231,6 +271,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 createdOn,
                 parametersValueFilesInfo?.ToList(),
                 isEnabled,
+                tags,
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -238,8 +280,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         /// <returns> A new <see cref="Models.DevTestLabParametersValueFileInfo"/> instance for mocking. </returns>
-        public static DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, BinaryData parametersValueInfo = null)
+        public static DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, IReadOnlyDictionary<string, BinaryData> parametersValueInfo = null)
         {
+            parametersValueInfo ??= new Dictionary<string, BinaryData>();
+
             return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo, serializedAdditionalRawData: null);
         }
 
@@ -248,8 +292,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="title"> The artifact's title. </param>
         /// <param name="description"> The artifact's description. </param>
         /// <param name="publisher"> The artifact's publisher. </param>
@@ -258,8 +300,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="targetOSType"> The artifact's target OS. </param>
         /// <param name="parameters"> The artifact's parameters. </param>
         /// <param name="createdOn"> The artifact's creation date. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactData"/> instance for mocking. </returns>
-        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOSType = null, BinaryData parameters = null, DateTimeOffset? createdOn = null)
+        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOSType = null, BinaryData parameters = null, DateTimeOffset? createdOn = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -268,8 +312,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 title,
                 description,
                 publisher,
@@ -278,6 +320,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 targetOSType,
                 parameters,
                 createdOn,
+                tags,
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -367,38 +411,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 resourceStatus,
                 resourceId,
                 externalResourceId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
-        /// <param name="name"> The name of the virtual machine or environment. </param>
-        /// <param name="location"> The location of the new virtual machine or environment. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
-        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
-        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
-        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
-        /// <param name="notificationSettings"> Notification settings. </param>
-        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
-        /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, DevTestLabEnableStatus? status = null, string taskType = null, DevTestLabWeekDetails weeklyRecurrence = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = null, string timeZoneId = null, DevTestLabNotificationSettings notificationSettings = null, ResourceIdentifier targetResourceId = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DevTestLabScheduleCreationParameter(
-                name,
-                location,
-                tags,
-                status,
-                taskType,
-                weeklyRecurrence,
-                dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime, serializedAdditionalRawData: null) : null,
-                hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute, serializedAdditionalRawData: null) : null,
-                timeZoneId,
-                notificationSettings,
-                targetResourceId,
                 serializedAdditionalRawData: null);
         }
 
@@ -492,8 +504,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="author"> The author of the gallery image. </param>
         /// <param name="createdOn"> The creation date of the gallery image. </param>
         /// <param name="description"> The description of the gallery image. </param>
@@ -502,8 +512,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="isEnabled"> Indicates whether this gallery image is enabled. </param>
         /// <param name="planId"> The third party plan that applies to this image. </param>
         /// <param name="isPlanAuthorized"> Indicates if the plan has been authorized for programmatic deployment. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.DevTestLabGalleryImage"/> instance for mocking. </returns>
-        public static DevTestLabGalleryImage DevTestLabGalleryImage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string author = null, DateTimeOffset? createdOn = null, string description = null, DevTestLabGalleryImageReference imageReference = null, string icon = null, bool? isEnabled = null, string planId = null, bool? isPlanAuthorized = null)
+        public static DevTestLabGalleryImage DevTestLabGalleryImage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string author = null, DateTimeOffset? createdOn = null, string description = null, DevTestLabGalleryImageReference imageReference = null, string icon = null, bool? isEnabled = null, string planId = null, bool? isPlanAuthorized = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -512,8 +524,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 author,
                 createdOn,
                 description,
@@ -522,15 +532,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 isEnabled,
                 planId,
                 isPlanAuthorized,
+                tags,
+                location,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGenerateUploadUriResult"/>. </summary>
-        /// <param name="uploadUri"> The upload URI for the VHD. </param>
-        /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
-        public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(Uri uploadUri = null)
-        {
-            return new DevTestLabGenerateUploadUriResult(uploadUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabNotificationChannelData"/>. </summary>
@@ -572,36 +576,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabEvaluatePoliciesResult"/>. </summary>
-        /// <param name="results"> Results of evaluating a policy set. </param>
-        /// <returns> A new <see cref="Models.DevTestLabEvaluatePoliciesResult"/> instance for mocking. </returns>
-        public static DevTestLabEvaluatePoliciesResult DevTestLabEvaluatePoliciesResult(IEnumerable<DevTestLabPolicySetResult> results = null)
-        {
-            results ??= new List<DevTestLabPolicySetResult>();
-
-            return new DevTestLabEvaluatePoliciesResult(results?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicySetResult"/>. </summary>
-        /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
-        /// <param name="policyViolations"> The list of policy violations. </param>
-        /// <returns> A new <see cref="Models.DevTestLabPolicySetResult"/> instance for mocking. </returns>
-        public static DevTestLabPolicySetResult DevTestLabPolicySetResult(bool? hasError = null, IEnumerable<DevTestLabPolicyViolation> policyViolations = null)
-        {
-            policyViolations ??= new List<DevTestLabPolicyViolation>();
-
-            return new DevTestLabPolicySetResult(hasError, policyViolations?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicyViolation"/>. </summary>
-        /// <param name="code"> The code of the policy violation. </param>
-        /// <param name="message"> The message of the policy violation. </param>
-        /// <returns> A new <see cref="Models.DevTestLabPolicyViolation"/> instance for mocking. </returns>
-        public static DevTestLabPolicyViolation DevTestLabPolicyViolation(string code = null, string message = null)
-        {
-            return new DevTestLabPolicyViolation(code, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -640,6 +614,36 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 provisioningState,
                 uniqueIdentifier,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabEvaluatePoliciesResult"/>. </summary>
+        /// <param name="results"> Results of evaluating a policy set. </param>
+        /// <returns> A new <see cref="Models.DevTestLabEvaluatePoliciesResult"/> instance for mocking. </returns>
+        public static DevTestLabEvaluatePoliciesResult DevTestLabEvaluatePoliciesResult(IEnumerable<DevTestLabPolicySetResult> results = null)
+        {
+            results ??= new List<DevTestLabPolicySetResult>();
+
+            return new DevTestLabEvaluatePoliciesResult(results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicySetResult"/>. </summary>
+        /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
+        /// <param name="policyViolations"> The list of policy violations. </param>
+        /// <returns> A new <see cref="Models.DevTestLabPolicySetResult"/> instance for mocking. </returns>
+        public static DevTestLabPolicySetResult DevTestLabPolicySetResult(bool? hasError = null, IEnumerable<DevTestLabPolicyViolation> policyViolations = null)
+        {
+            policyViolations ??= new List<DevTestLabPolicyViolation>();
+
+            return new DevTestLabPolicySetResult(hasError, policyViolations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicyViolation"/>. </summary>
+        /// <param name="code"> The code of the policy violation. </param>
+        /// <param name="message"> The message of the policy violation. </param>
+        /// <returns> A new <see cref="Models.DevTestLabPolicyViolation"/> instance for mocking. </returns>
+        public static DevTestLabPolicyViolation DevTestLabPolicyViolation(string code = null, string message = null)
+        {
+            return new DevTestLabPolicyViolation(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabServiceRunnerData"/>. </summary>
@@ -841,12 +845,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="labVmsShutdown"> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </param>
         /// <param name="labVmsStartup"> The auto-startup schedule, if one has been set at the lab or lab resource level. </param>
         /// <returns> A new <see cref="Models.DevTestLabApplicableSchedule"/> instance for mocking. </returns>
-        public static DevTestLabApplicableSchedule DevTestLabApplicableSchedule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DevTestLabScheduleData labVmsShutdown = null, DevTestLabScheduleData labVmsStartup = null)
+        public static DevTestLabApplicableSchedule DevTestLabApplicableSchedule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, DevTestLabScheduleData labVmsShutdown = null, DevTestLabScheduleData labVmsStartup = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -855,8 +859,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
                 location,
+                tags,
                 labVmsShutdown,
                 labVmsStartup,
                 serializedAdditionalRawData: null);

@@ -53,9 +53,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
-        /// <param name="name"> The name of the virtual machine or environment. </param>
-        /// <param name="location"> The location of the new virtual machine or environment. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
         /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
         /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
@@ -64,12 +61,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
+        /// <param name="name"> The name of the virtual machine or environment. </param>
+        /// <param name="location"> The location of the new virtual machine or environment. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabScheduleCreationParameter(string name, AzureLocation? location, IDictionary<string, string> tags, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, string name, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Location = location;
-            Tags = tags;
             Status = status;
             TaskType = taskType;
             WeeklyRecurrence = weeklyRecurrence;
@@ -78,15 +75,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             TimeZoneId = timeZoneId;
             NotificationSettings = notificationSettings;
             TargetResourceId = targetResourceId;
+            Name = name;
+            Location = location;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the virtual machine or environment. </summary>
-        public string Name { get; set; }
-        /// <summary> The location of the new virtual machine or environment. </summary>
-        public AzureLocation? Location { get; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The status of the schedule (i.e. Enabled, Disabled). </summary>
         public DevTestLabEnableStatus? Status { get; set; }
         /// <summary> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </summary>
@@ -127,5 +121,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabNotificationSettings NotificationSettings { get; set; }
         /// <summary> The resource ID to which the schedule belongs. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
+        /// <summary> The name of the virtual machine or environment. </summary>
+        public string Name { get; set; }
+        /// <summary> The location of the new virtual machine or environment. </summary>
+        public string Location { get; }
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

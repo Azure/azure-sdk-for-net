@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(UploadUri))
             {
                 writer.WritePropertyName("uploadUri"u8);
-                writer.WriteStringValue(UploadUri.AbsoluteUri);
+                writer.WriteStringValue(UploadUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,18 +76,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Uri uploadUri = default;
+            string uploadUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uploadUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uploadUri = new Uri(property.Value.GetString());
+                    uploadUri = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class LabVmList : IUtf8JsonSerializable, IJsonModel<LabVmList>
+    internal partial class LabVirtualMachineList : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVmList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LabVmList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LabVirtualMachineList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVmList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVmList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineList)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        LabVmList IJsonModel<LabVmList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LabVirtualMachineList IJsonModel<LabVirtualMachineList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVmList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVmList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLabVmList(document.RootElement, options);
+            return DeserializeLabVirtualMachineList(document.RootElement, options);
         }
 
-        internal static LabVmList DeserializeLabVmList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LabVirtualMachineList DeserializeLabVirtualMachineList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LabVmList(value, nextLink, serializedAdditionalRawData);
+            return new LabVirtualMachineList(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LabVmList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LabVirtualMachineList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVmList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LabVmList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LabVmList IPersistableModel<LabVmList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LabVirtualMachineList IPersistableModel<LabVirtualMachineList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LabVmList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLabVmList(document.RootElement, options);
+                        return DeserializeLabVirtualMachineList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVmList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LabVmList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LabVirtualMachineList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

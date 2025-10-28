@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DevTestLabVmScheduleResources in the DevTestLabVm. </summary>
-        /// <returns> An object representing collection of DevTestLabVmScheduleResources and their operations over a DevTestLabVmScheduleResource. </returns>
-        public virtual DevTestLabVmScheduleCollection GetDevTestLabVmSchedules()
+        /// <summary> Gets a collection of LabVirtualmachineScheduleResources in the DevTestLabVm. </summary>
+        /// <returns> An object representing collection of LabVirtualmachineScheduleResources and their operations over a LabVirtualmachineScheduleResource. </returns>
+        public virtual LabVirtualmachineScheduleCollection GetLabVirtualmachineSchedules()
         {
-            return GetCachedClient(client => new DevTestLabVmScheduleCollection(client, Id));
+            return GetCachedClient(client => new LabVirtualmachineScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,19 +114,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabVirtualmachineScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetDevTestLabVmScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabVirtualmachineScheduleResource>> GetLabVirtualmachineScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetDevTestLabVmSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetLabVirtualmachineSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -146,19 +146,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="LabVirtualmachineScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabVmScheduleResource> GetDevTestLabVmSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<LabVirtualmachineScheduleResource> GetLabVirtualmachineSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetDevTestLabVmSchedules().Get(name, expand, cancellationToken);
+            return GetLabVirtualmachineSchedules().Get(name, expand, cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Delete</description>
+        /// <description>LabVirtualMachine_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Delete</description>
+        /// <description>LabVirtualMachine_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Update</description>
+        /// <description>LabVirtualMachine_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Update</description>
+        /// <description>LabVirtualMachine_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1590,7 +1590,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1709,7 +1709,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1766,7 +1766,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1826,7 +1826,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>LabVirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

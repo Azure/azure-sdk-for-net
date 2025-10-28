@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServiceRunnersCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_CreateOrUpdate.json
-            // this example is just showing the usage of "ServiceRunners_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceRunners_CreateOrUpdate.json
+            // this example is just showing the usage of "ServiceRunner_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             {
                 Identity = new DevTestLabManagedIdentity
                 {
-                    ManagedIdentityType = "{identityType}",
+                    Type = "{identityType}",
                     PrincipalId = Guid.Parse("{identityPrincipalId}"),
-                    TenantId = Guid.Parse("{identityTenantId}"),
-                    ClientSecretUri = new Uri("{identityClientSecretUrl}"),
+                    TenantId = "{identityTenantId}",
+                    ClientSecretUri = "{identityClientSecretUrl}",
                 },
                 Tags =
 {
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ServiceRunnersGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_Get.json
-            // this example is just showing the usage of "ServiceRunners_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceRunners_Get.json
+            // this example is just showing the usage of "ServiceRunner_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ServiceRunnersGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_Get.json
-            // this example is just showing the usage of "ServiceRunners_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceRunners_Get.json
+            // this example is just showing the usage of "ServiceRunner_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ServiceRunnersGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceRunners_Get.json
-            // this example is just showing the usage of "ServiceRunners_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceRunners_Get.json
+            // this example is just showing the usage of "ServiceRunner_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

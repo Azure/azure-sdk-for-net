@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_CreateOrUpdate</description>
+        /// <description>Lab_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_CreateOrUpdate</description>
+        /// <description>Lab_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ListByResourceGroup</description>
+        /// <description>Lab_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ListByResourceGroup</description>
+        /// <description>Lab_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

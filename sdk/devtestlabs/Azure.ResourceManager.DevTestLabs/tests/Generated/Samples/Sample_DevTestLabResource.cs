@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_LabsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_Get.json
-            // this example is just showing the usage of "Labs_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Labs_Get.json
+            // this example is just showing the usage of "Lab_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_LabsDelete()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_Delete.json
-            // this example is just showing the usage of "Labs_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Labs_Delete.json
+            // this example is just showing the usage of "Lab_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_LabsUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_Update.json
-            // this example is just showing the usage of "Labs_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Labs_Update.json
+            // this example is just showing the usage of "Lab_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ClaimAnyVm_LabsClaimAnyVm()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_ClaimAnyVm.json
+            // Generated from example definition: 2018-09-15/Labs_ClaimAnyVm.json
             // this example is just showing the usage of "Labs_ClaimAnyVm" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateEnvironment_LabsCreateEnvironment()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_CreateEnvironment.json
+            // Generated from example definition: 2018-09-15/Labs_CreateEnvironment.json
             // this example is just showing the usage of "Labs_CreateEnvironment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,27 +154,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVmCreationContent content = new DevTestLabVmCreationContent
             {
                 Name = "{vmName}",
-                Location = new AzureLocation("{location}"),
+                Location = "{location}",
                 Tags =
 {
 ["tagName1"] = "tagValue1"
 },
-                Size = "Standard_A2_v2",
-                UserName = "{userName}",
-                Password = "{userPassword}",
-                LabSubnetName = "{virtualnetwork-subnet-name}",
-                LabVirtualNetworkId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}/virtualnetworks/{virtualNetworkName}"),
-                DisallowPublicIPAddress = true,
-                GalleryImageReference = new DevTestLabGalleryImageReference
-                {
-                    Offer = "UbuntuServer",
-                    Publisher = "Canonical",
-                    Sku = "16.04-LTS",
-                    OSType = "Linux",
-                    Version = "Latest",
-                },
-                AllowClaim = true,
-                StorageType = "Standard",
             };
             await devTestLab.CreateEnvironmentAsync(WaitUntil.Completed, content);
 
@@ -185,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ExportResourceUsage_LabsExportResourceUsage()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_ExportResourceUsage.json
+            // Generated from example definition: 2018-09-15/Labs_ExportResourceUsage.json
             // this example is just showing the usage of "Labs_ExportResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateUploadUri_LabsGenerateUploadUri()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_GenerateUploadUri.json
+            // Generated from example definition: 2018-09-15/Labs_GenerateUploadUri.json
             // this example is just showing the usage of "Labs_GenerateUploadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -246,7 +230,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ImportVm_LabsImportVirtualMachine()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_ImportVirtualMachine.json
+            // Generated from example definition: 2018-09-15/Labs_ImportVirtualMachine.json
             // this example is just showing the usage of "Labs_ImportVm" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -265,8 +249,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // invoke the operation
             DevTestLabImportVmContent content = new DevTestLabImportVmContent
             {
-                SourceVmResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{otherResourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
-                DestinationVmName = "{vmName}",
+                SourceVirtualMachineResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{otherResourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
+                DestinationVirtualMachineName = "{vmName}",
             };
             await devTestLab.ImportVmAsync(WaitUntil.Completed, content);
 
@@ -277,7 +261,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVhds_LabsListVhds()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_ListVhds.json
+            // Generated from example definition: 2018-09-15/Labs_ListVhds.json
             // this example is just showing the usage of "Labs_ListVhds" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -306,8 +290,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetGalleryImages_GalleryImagesList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GalleryImages_List.json
-            // this example is just showing the usage of "GalleryImages_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/GalleryImages_List.json
+            // this example is just showing the usage of "GalleryImage_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -335,7 +319,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task EvaluatePolicies_PolicySetsEvaluatePolicies()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/PolicySets_EvaluatePolicies.json
+            // Generated from example definition: 2018-09-15/PolicySets_EvaluatePolicies.json
             // this example is just showing the usage of "PolicySets_EvaluatePolicies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

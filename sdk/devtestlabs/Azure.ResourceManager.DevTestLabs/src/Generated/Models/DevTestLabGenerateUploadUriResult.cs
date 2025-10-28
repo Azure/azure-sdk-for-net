@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriResult"/>. </summary>
         /// <param name="uploadUri"> The upload URI for the VHD. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabGenerateUploadUriResult(Uri uploadUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabGenerateUploadUriResult(string uploadUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UploadUri = uploadUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The upload URI for the VHD. </summary>
-        public Uri UploadUri { get; }
+        public string UploadUri { get; }
     }
 }

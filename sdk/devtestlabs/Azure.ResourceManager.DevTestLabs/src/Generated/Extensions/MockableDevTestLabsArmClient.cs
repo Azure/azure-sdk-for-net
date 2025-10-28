@@ -47,51 +47,51 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabGlobalScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabGlobalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabGlobalScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource"/> object. </returns>
-        public virtual DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScheduleResource"/> object. </returns>
+        public virtual ScheduleResource GetScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabGlobalScheduleResource.ValidateResourceId(id);
-            return new DevTestLabGlobalScheduleResource(Client, id);
+            ScheduleResource.ValidateResourceId(id);
+            return new ScheduleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LabScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabScheduleResource"/> object. </returns>
-        public virtual DevTestLabScheduleResource GetDevTestLabScheduleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabScheduleResource"/> object. </returns>
+        public virtual LabScheduleResource GetLabScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabScheduleResource.ValidateResourceId(id);
-            return new DevTestLabScheduleResource(Client, id);
+            LabScheduleResource.ValidateResourceId(id);
+            return new LabScheduleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabServiceFabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LabUserServicefabricScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabUserServicefabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabUserServicefabricScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource"/> object. </returns>
-        public virtual DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabUserServicefabricScheduleResource"/> object. </returns>
+        public virtual LabUserServicefabricScheduleResource GetLabUserServicefabricScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabServiceFabricScheduleResource.ValidateResourceId(id);
-            return new DevTestLabServiceFabricScheduleResource(Client, id);
+            LabUserServicefabricScheduleResource.ValidateResourceId(id);
+            return new LabUserServicefabricScheduleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabVmScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabVmScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LabVirtualmachineScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabVirtualmachineScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualmachineScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevTestLabVmScheduleResource"/> object. </returns>
-        public virtual DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabVirtualmachineScheduleResource"/> object. </returns>
+        public virtual LabVirtualmachineScheduleResource GetLabVirtualmachineScheduleResource(ResourceIdentifier id)
         {
-            DevTestLabVmScheduleResource.ValidateResourceId(id);
-            return new DevTestLabVmScheduleResource(Client, id);
+            LabVirtualmachineScheduleResource.ValidateResourceId(id);
+            return new LabVirtualmachineScheduleResource(Client, id);
         }
 
         /// <summary>

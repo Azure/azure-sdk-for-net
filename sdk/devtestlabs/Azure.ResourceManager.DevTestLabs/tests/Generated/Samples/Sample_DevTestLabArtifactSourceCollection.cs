@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ArtifactSourcesCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArtifactSources_CreateOrUpdate.json
-            // this example is just showing the usage of "ArtifactSources_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArtifactSources_CreateOrUpdate.json
+            // this example is just showing the usage of "ArtifactSource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,14 +42,6 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             string name = "{artifactSourceName}";
             DevTestLabArtifactSourceData data = new DevTestLabArtifactSourceData(default)
             {
-                DisplayName = "{displayName}",
-                Uri = new Uri("{artifactSourceUri}"),
-                SourceType = new DevTestLabSourceControlType("{VsoGit|GitHub|StorageAccount}"),
-                FolderPath = "{folderPath}",
-                ArmTemplateFolderPath = "{armTemplateFolderPath}",
-                BranchRef = "{branchRef}",
-                SecurityToken = "{securityToken}",
-                Status = new DevTestLabEnableStatus("{Enabled|Disabled}"),
                 Tags =
 {
 ["tagName1"] = "tagValue1"
@@ -70,8 +61,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ArtifactSourcesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArtifactSources_Get.json
-            // this example is just showing the usage of "ArtifactSources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArtifactSources_Get.json
+            // this example is just showing the usage of "ArtifactSource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,8 +95,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ArtifactSourcesList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArtifactSources_List.json
-            // this example is just showing the usage of "ArtifactSources_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArtifactSources_List.json
+            // this example is just showing the usage of "ArtifactSource_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -140,8 +131,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ArtifactSourcesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArtifactSources_Get.json
-            // this example is just showing the usage of "ArtifactSources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArtifactSources_Get.json
+            // this example is just showing the usage of "ArtifactSource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -170,8 +161,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ArtifactSourcesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ArtifactSources_Get.json
-            // this example is just showing the usage of "ArtifactSources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ArtifactSources_Get.json
+            // this example is just showing the usage of "ArtifactSource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

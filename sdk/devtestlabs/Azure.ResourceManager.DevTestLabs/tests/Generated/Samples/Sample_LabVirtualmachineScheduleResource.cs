@@ -14,32 +14,32 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
-    public partial class Sample_DevTestLabVmScheduleResource
+    public partial class Sample_LabVirtualmachineScheduleResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachineSchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Get.json
-            // this example is just showing the usage of "VirtualMachineSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachineSchedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabVmScheduleResource created on azure
-            // for more information of creating DevTestLabVmScheduleResource, please refer to the document of DevTestLabVmScheduleResource
+            // this example assumes you already have this LabVirtualmachineScheduleResource created on azure
+            // for more information of creating LabVirtualmachineScheduleResource, please refer to the document of LabVirtualmachineScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
-            string vmName = "{vmName}";
+            string virtualMachineName = "{vmName}";
             string name = "LabVmsShutdown";
-            ResourceIdentifier devTestLabVmScheduleResourceId = DevTestLabVmScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, vmName, name);
-            DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
+            ResourceIdentifier labVirtualmachineScheduleResourceId = LabVirtualmachineScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, virtualMachineName, name);
+            LabVirtualmachineScheduleResource labVirtualmachineSchedule = client.GetLabVirtualmachineScheduleResource(labVirtualmachineScheduleResourceId);
 
             // invoke the operation
-            DevTestLabVmScheduleResource result = await devTestLabVmSchedule.GetAsync();
+            LabVirtualmachineScheduleResource result = await labVirtualmachineSchedule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -52,26 +52,26 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualMachineSchedulesDelete()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Delete.json
-            // this example is just showing the usage of "VirtualMachineSchedules_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachineSchedules_Delete.json
+            // this example is just showing the usage of "Schedule_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabVmScheduleResource created on azure
-            // for more information of creating DevTestLabVmScheduleResource, please refer to the document of DevTestLabVmScheduleResource
+            // this example assumes you already have this LabVirtualmachineScheduleResource created on azure
+            // for more information of creating LabVirtualmachineScheduleResource, please refer to the document of LabVirtualmachineScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
-            string vmName = "{vmName}";
+            string virtualMachineName = "{vmName}";
             string name = "LabVmsShutdown";
-            ResourceIdentifier devTestLabVmScheduleResourceId = DevTestLabVmScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, vmName, name);
-            DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
+            ResourceIdentifier labVirtualmachineScheduleResourceId = LabVirtualmachineScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, virtualMachineName, name);
+            LabVirtualmachineScheduleResource labVirtualmachineSchedule = client.GetLabVirtualmachineScheduleResource(labVirtualmachineScheduleResourceId);
 
             // invoke the operation
-            await devTestLabVmSchedule.DeleteAsync(WaitUntil.Completed);
+            await labVirtualmachineSchedule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -80,23 +80,23 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VirtualMachineSchedulesUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Update.json
-            // this example is just showing the usage of "VirtualMachineSchedules_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/VirtualMachineSchedules_Update.json
+            // this example is just showing the usage of "Schedule_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabVmScheduleResource created on azure
-            // for more information of creating DevTestLabVmScheduleResource, please refer to the document of DevTestLabVmScheduleResource
+            // this example assumes you already have this LabVirtualmachineScheduleResource created on azure
+            // for more information of creating LabVirtualmachineScheduleResource, please refer to the document of LabVirtualmachineScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
-            string vmName = "{vmName}";
+            string virtualMachineName = "{vmName}";
             string name = "LabVmsShutdown";
-            ResourceIdentifier devTestLabVmScheduleResourceId = DevTestLabVmScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, vmName, name);
-            DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
+            ResourceIdentifier labVirtualmachineScheduleResourceId = LabVirtualmachineScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, virtualMachineName, name);
+            LabVirtualmachineScheduleResource labVirtualmachineSchedule = client.GetLabVirtualmachineScheduleResource(labVirtualmachineScheduleResourceId);
 
             // invoke the operation
             DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 ["tagName1"] = "tagValue1"
 },
             };
-            DevTestLabVmScheduleResource result = await devTestLabVmSchedule.UpdateAsync(patch);
+            LabVirtualmachineScheduleResource result = await labVirtualmachineSchedule.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_VirtualMachineSchedulesExecute()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachineSchedules_Execute.json
+            // Generated from example definition: 2018-09-15/VirtualMachineSchedules_Execute.json
             // this example is just showing the usage of "VirtualMachineSchedules_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,18 +127,18 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DevTestLabVmScheduleResource created on azure
-            // for more information of creating DevTestLabVmScheduleResource, please refer to the document of DevTestLabVmScheduleResource
+            // this example assumes you already have this LabVirtualmachineScheduleResource created on azure
+            // for more information of creating LabVirtualmachineScheduleResource, please refer to the document of LabVirtualmachineScheduleResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
-            string vmName = "{vmName}";
+            string virtualMachineName = "{vmName}";
             string name = "LabVmsShutdown";
-            ResourceIdentifier devTestLabVmScheduleResourceId = DevTestLabVmScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, vmName, name);
-            DevTestLabVmScheduleResource devTestLabVmSchedule = client.GetDevTestLabVmScheduleResource(devTestLabVmScheduleResourceId);
+            ResourceIdentifier labVirtualmachineScheduleResourceId = LabVirtualmachineScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, virtualMachineName, name);
+            LabVirtualmachineScheduleResource labVirtualmachineSchedule = client.GetLabVirtualmachineScheduleResource(labVirtualmachineScheduleResourceId);
 
             // invoke the operation
-            await devTestLabVmSchedule.ExecuteAsync(WaitUntil.Completed);
+            await labVirtualmachineSchedule.ExecuteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }

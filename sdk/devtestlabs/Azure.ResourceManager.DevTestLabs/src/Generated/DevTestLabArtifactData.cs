@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// A class representing the DevTestLabArtifact data model.
     /// An artifact.
     /// </summary>
-    public partial class DevTestLabArtifactData : TrackedResourceData
+    public partial class DevTestLabArtifactData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public DevTestLabArtifactData(AzureLocation location) : base(location)
+        internal DevTestLabArtifactData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/>. </summary>
@@ -61,8 +61,6 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="title"> The artifact's title. </param>
         /// <param name="description"> The artifact's description. </param>
         /// <param name="publisher"> The artifact's publisher. </param>
@@ -71,8 +69,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="targetOSType"> The artifact's target OS. </param>
         /// <param name="parameters"> The artifact's parameters. </param>
         /// <param name="createdOn"> The artifact's creation date. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn, IReadOnlyDictionary<string, string> tags, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Title = title;
             Description = description;
@@ -82,12 +82,9 @@ namespace Azure.ResourceManager.DevTestLabs
             TargetOSType = targetOSType;
             Parameters = parameters;
             CreatedOn = createdOn;
+            Tags = tags;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactData"/> for deserialization. </summary>
-        internal DevTestLabArtifactData()
-        {
         }
 
         /// <summary> The artifact's title. </summary>
@@ -135,5 +132,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public BinaryData Parameters { get; }
         /// <summary> The artifact's creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing the DevTestLabUser data model.
-    /// Profile of a lab user.
+    /// A user profile.
     /// </summary>
     public partial class DevTestLabUserData : TrackedResourceData
     {

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Delete</description>
+        /// <description>VirtualNetwork_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Delete</description>
+        /// <description>VirtualNetwork_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Update</description>
+        /// <description>VirtualNetwork_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Update</description>
+        /// <description>VirtualNetwork_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <description>VirtualNetwork_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

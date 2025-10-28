@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FormulasCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_CreateOrUpdate.json
-            // this example is just showing the usage of "Formulas_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Formulas_CreateOrUpdate.json
+            // this example is just showing the usage of "Formula_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,44 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // invoke the operation
             string name = "{formulaName}";
-            DevTestLabFormulaData data = new DevTestLabFormulaData(new AzureLocation("{location}"))
-            {
-                Description = "Formula using a Linux base",
-                FormulaContent = new DevTestLabVmCreationContent
-                {
-                    Location = new AzureLocation("{location}"),
-                    Notes = "Ubuntu Server 20.10",
-                    Size = "Standard_B1ms",
-                    UserName = "user",
-                    IsAuthenticationWithSshKey = false,
-                    LabSubnetName = "Dtl{labName}Subnet",
-                    LabVirtualNetworkId = new ResourceIdentifier("/virtualnetworks/dtl{labName}"),
-                    DisallowPublicIPAddress = true,
-                    Artifacts = {new DevTestLabArtifactInstallInfo
-{
-ArtifactId = "/artifactsources/{artifactSourceName}/artifacts/linux-install-nodejs",
-Parameters = {},
-}},
-                    GalleryImageReference = new DevTestLabGalleryImageReference
-                    {
-                        Offer = "0001-com-ubuntu-server-groovy",
-                        Publisher = "canonical",
-                        Sku = "20_10",
-                        OSType = "Linux",
-                        Version = "latest",
-                    },
-                    NetworkInterface = new DevTestLabNetworkInterface
-                    {
-                        SharedPublicIPAddressInboundNatRules = {new DevTestLabInboundNatRule
-{
-TransportProtocol = DevTestLabTransportProtocol.Tcp,
-BackendPort = 22,
-}},
-                    },
-                    AllowClaim = false,
-                    StorageType = "Standard",
-                },
-            };
+            DevTestLabFormulaData data = new DevTestLabFormulaData(new AzureLocation("{location}"));
             ArmOperation<DevTestLabFormulaResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             DevTestLabFormulaResource result = lro.Value;
 
@@ -93,8 +55,8 @@ BackendPort = 22,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FormulasGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_Get.json
-            // this example is just showing the usage of "Formulas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Formulas_Get.json
+            // this example is just showing the usage of "Formula_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,8 +89,8 @@ BackendPort = 22,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FormulasList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_List.json
-            // this example is just showing the usage of "Formulas_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Formulas_List.json
+            // this example is just showing the usage of "Formula_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,8 +125,8 @@ BackendPort = 22,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_FormulasGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_Get.json
-            // this example is just showing the usage of "Formulas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Formulas_Get.json
+            // this example is just showing the usage of "Formula_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -193,8 +155,8 @@ BackendPort = 22,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FormulasGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Formulas_Get.json
-            // this example is just showing the usage of "Formulas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Formulas_Get.json
+            // this example is just showing the usage of "Formula_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
