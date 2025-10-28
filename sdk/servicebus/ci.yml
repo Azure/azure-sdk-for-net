@@ -34,7 +34,3 @@ extends:
     Artifacts:
     - name: Azure.Messaging.ServiceBus
       safeName: AzureMessagingServiceBus
-    CheckAotCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Messaging.ServiceBus
-      ExpectedWarningsFilepath: Azure.Messaging.ServiceBus/tests/aotcompatibility/ExpectedWarnings.txt

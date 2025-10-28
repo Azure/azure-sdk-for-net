@@ -49,7 +49,7 @@ public class ResourceExtensionsTests
 
         Assert.StartsWith("unknown_service", azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
-        if (envVarValue == "true")
+        if (envVarValue == "true" || envVarValue == null)
         {
             Assert.Equal(instrumentationKey != null, azMonResource?.MonitorBaseData != null);
         }
@@ -338,7 +338,7 @@ public class ResourceExtensionsTests
         var resource = ResourceBuilder.CreateDefault().Build();
         var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform(enableResourceMetric: envVarValue), instrumentationKey: InstrumentationKey);
 
-        if (envVarValue == "true")
+        if (envVarValue == "true" || envVarValue == null)
         {
             Assert.NotNull(azMonResource?.MonitorBaseData);
         }

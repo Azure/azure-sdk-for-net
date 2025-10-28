@@ -1,9 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
     <PackageId>Azure.ResourceManager.Resources.Bicep</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Bicep.</Description>
     <PackageTags>azure;management;arm;resource manager;bicep</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

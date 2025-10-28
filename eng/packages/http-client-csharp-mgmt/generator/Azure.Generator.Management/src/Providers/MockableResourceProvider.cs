@@ -205,9 +205,10 @@ namespace Azure.Generator.Management.Providers
                     var updated = false;
                     foreach (var p in m.Signature.Parameters)
                     {
-                        if (p.Location == ParameterLocation.Body && p.Type.IsModelType())
+                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
+                        if (normalizedName != null)
                         {
-                            p.Update(name: "content");
+                            p.Update(name: normalizedName);
                             updated = true;
                         }
                     }

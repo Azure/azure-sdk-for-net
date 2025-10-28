@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class HciVmInstanceResource : IJsonModel<HciVmInstanceData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         HciVmInstanceData IJsonModel<HciVmInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmInstanceData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<HciVmInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmInstanceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmInstanceData IPersistableModel<HciVmInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmInstanceData>(data, options, MgmtTypeSpecContext.Default);
+        HciVmInstanceData IPersistableModel<HciVmInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmInstanceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

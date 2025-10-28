@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The updatable properties of the FooSettings. </summary>
-    internal partial class FooSettingsUpdateProperties
+    public partial class FooSettingsUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,15 +23,28 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FooSettingsUpdateProperties"/>. </summary>
+        /// <param name="marketplace"> Marketplace details of the resource. </param>
+        /// <param name="user"> Details of the user. </param>
         /// <param name="accessControlEnabled"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooSettingsUpdateProperties(bool? accessControlEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooSettingsUpdateProperties(MarketplaceDetails marketplace, UserDetails user, bool? accessControlEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Marketplace = marketplace;
+            User = user;
             AccessControlEnabled = accessControlEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Marketplace details of the resource. </summary>
+        [WirePath("marketplace")]
+        public MarketplaceDetails Marketplace { get; set; }
+
+        /// <summary> Details of the user. </summary>
+        [WirePath("user")]
+        public UserDetails User { get; set; }
+
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("accessControlEnabled")]
         public bool? AccessControlEnabled { get; set; }
     }
 }
