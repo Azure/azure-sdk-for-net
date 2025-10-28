@@ -42,6 +42,9 @@ public partial class DnsAaaaRecord : ProvisionableResource
     }
     private SystemData? _systemData;
 
+    /// <summary>
+    /// The list of AAAA records in the record set.
+    /// </summary>
     public BicepList<DnsAaaaRecordInfo> AaaaRecords
     {
         get { Initialize(); return _aaaaRecords!; }

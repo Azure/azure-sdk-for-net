@@ -42,6 +42,9 @@ public partial class DnsCaaRecord : ProvisionableResource
     }
     private SystemData? _systemData;
 
+    /// <summary>
+    /// The list of CAA records in the record set.
+    /// </summary>
     public BicepList<DnsCaaRecordInfo> CaaRecords
     {
         get { Initialize(); return _caaRecords!; }
