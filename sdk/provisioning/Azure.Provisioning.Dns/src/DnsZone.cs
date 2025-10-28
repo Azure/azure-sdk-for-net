@@ -195,7 +195,7 @@ public partial class DnsZone : ProvisionableResource
     /// Creates a reference to an existing DnsZone.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the DnsZone resource.This can be
+    /// The the Bicep identifier name of the DnsZone resource. This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
