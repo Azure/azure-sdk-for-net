@@ -1,15 +1,9 @@
 # Release History
 
-## 1.2.0-beta.7 (Unreleased)
-
-### Features Added
+## 1.2.0-beta.7 (2025-10-28)
 
 ### Breaking Changes
 - The `trust` parameter for `MCPApproval` constructor was renamed to `requireApproval`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.6 (2025-10-10)
 
