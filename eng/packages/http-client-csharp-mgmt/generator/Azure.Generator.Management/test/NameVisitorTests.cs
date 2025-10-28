@@ -116,5 +116,29 @@ namespace Azure.Generator.Mgmt.Tests
             var updatedSkuModelName = $"{resourceProviderName}{enumName}";
             Assert.AreEqual(type?.Name, updatedSkuModelName);
         }
+
+        [Test]
+        public void TestTransformEtagToETag()
+        {
+            const string testModelName = "TestModel";
+            const string testPropertyName = "Etag";
+            var modelProperty = InputFactory.Property(testPropertyName, InputPrimitiveType.String, serializedName: "etag", isRequired: true);
+            var model = InputFactory.Model(testModelName, properties: [modelProperty]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
+
+            // PreVisitModel is called during the model creation
+            var type = plugin.Object.TypeFactory.CreateModel(model);
+            Assert.That(type?.Properties[0].Name, Is.EqualTo("ETag"));
+        }
     }
 }

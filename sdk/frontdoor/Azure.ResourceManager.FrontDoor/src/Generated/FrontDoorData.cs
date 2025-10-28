@@ -111,32 +111,46 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> A friendly name for the frontDoor. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Routing rules associated with this Front Door. </summary>
+        [WirePath("properties.routingRules")]
         public IList<RoutingRuleData> RoutingRules { get; }
         /// <summary> Load balancing settings associated with this Front Door instance. </summary>
+        [WirePath("properties.loadBalancingSettings")]
         public IList<FrontDoorLoadBalancingSettingsData> LoadBalancingSettings { get; }
         /// <summary> Health probe settings associated with this Front Door instance. </summary>
+        [WirePath("properties.healthProbeSettings")]
         public IList<FrontDoorHealthProbeSettingsData> HealthProbeSettings { get; }
         /// <summary> Backend pools available to routing rules. </summary>
+        [WirePath("properties.backendPools")]
         public IList<FrontDoorBackendPool> BackendPools { get; }
         /// <summary> Frontend endpoints available to routing rules. </summary>
+        [WirePath("properties.frontendEndpoints")]
         public IList<FrontendEndpointData> FrontendEndpoints { get; }
         /// <summary> Settings for all backendPools. </summary>
+        [WirePath("properties.backendPoolsSettings")]
         public BackendPoolsSettings BackendPoolsSettings { get; set; }
         /// <summary> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.enabledState")]
         public FrontDoorEnabledState? EnabledState { get; set; }
         /// <summary> Resource status of the Front Door. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
         /// <summary> Provisioning state of the Front Door. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> The host that each frontendEndpoint must CNAME to. </summary>
+        [WirePath("properties.cname")]
         public string Cname { get; }
         /// <summary> The Id of the frontdoor. </summary>
+        [WirePath("properties.frontdoorId")]
         public string FrontdoorId { get; }
         /// <summary> Rules Engine Configurations available to routing rules. </summary>
+        [WirePath("properties.rulesEngines")]
         public IReadOnlyList<FrontDoorRulesEngineData> RulesEngines { get; }
         /// <summary> Key-Value pair representing additional properties for frontdoor. </summary>
+        [WirePath("properties.extendedProperties")]
         public IReadOnlyDictionary<string, string> ExtendedProperties { get; }
     }
 }

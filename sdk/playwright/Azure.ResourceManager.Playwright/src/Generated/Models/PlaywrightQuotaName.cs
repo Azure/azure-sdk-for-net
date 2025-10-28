@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Playwright.Models
     public readonly partial struct PlaywrightQuotaName : IEquatable<PlaywrightQuotaName>
     {
         private readonly string _value;
+        /// <summary> Quota for execution duration in minutes. </summary>
+        private const string ExecutionMinutesValue = "ExecutionMinutes";
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightQuotaName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlaywrightQuotaName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExecutionMinutesValue = "ExecutionMinutes";
+            _value = value;
+        }
 
         /// <summary> Quota for execution duration in minutes. </summary>
         public static PlaywrightQuotaName ExecutionMinutes { get; } = new PlaywrightQuotaName(ExecutionMinutesValue);
+
         /// <summary> Determines if two <see cref="PlaywrightQuotaName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlaywrightQuotaName left, PlaywrightQuotaName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlaywrightQuotaName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlaywrightQuotaName left, PlaywrightQuotaName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlaywrightQuotaName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlaywrightQuotaName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlaywrightQuotaName(string value) => new PlaywrightQuotaName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlaywrightQuotaName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlaywrightQuotaName?(string value) => value == null ? null : new PlaywrightQuotaName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlaywrightQuotaName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlaywrightQuotaName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

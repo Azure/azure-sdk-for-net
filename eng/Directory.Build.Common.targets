@@ -21,6 +21,10 @@
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+  </PropertyGroup>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
   <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
@@ -216,7 +220,7 @@
     <ExcludeMgmtCoreShared Condition="'$(ExcludeMgmtCoreShared)' == ''">false</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(ExcludeMgmtCoreShared)' == 'false'">
+  <ItemGroup Condition="('$(IsGeneratorLibraryGenerationTest)' == 'true' or ('$(IsMgmtSubLibrary)' == 'true' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true')) and '$(ExcludeMgmtCoreShared)' == 'false'">
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  LinkBase="Shared/Management" />
   </ItemGroup>
@@ -265,7 +269,7 @@
   </ItemGroup>
 
     <!-- *********** Management Client Library Override section ************* -->
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
+  <ItemGroup Condition="('$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true') or '$(IsGeneratorLibraryGenerationTest)' == 'true'" >
 
     <ProjectReference Include="$(RepoRoot)sdk\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="$(RepoRoot)sdk\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
@@ -382,9 +386,9 @@
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
-      
+
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">

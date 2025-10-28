@@ -51,6 +51,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
+            if (Optional.IsDefined(OpenAccess))
+            {
+                writer.WritePropertyName("openAccess"u8);
+                writer.WriteBooleanValue(OpenAccess.Value);
+            }
+            if (Optional.IsDefined(Alias))
+            {
+                writer.WritePropertyName("alias"u8);
+                writer.WriteStringValue(Alias);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,6 +101,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Uri url = default;
             IList<string> projects = default;
             int? parallelism = default;
+            bool? openAccess = default;
+            string @alias = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,13 +135,33 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     parallelism = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("openAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openAccess = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("alias"u8))
+                {
+                    @alias = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevOpsOrganization(url, projects ?? new ChangeTrackingList<string>(), parallelism, serializedAdditionalRawData);
+            return new DevOpsOrganization(
+                url,
+                projects ?? new ChangeTrackingList<string>(),
+                parallelism,
+                openAccess,
+                @alias,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsOrganization>.Write(ModelReaderWriterOptions options)

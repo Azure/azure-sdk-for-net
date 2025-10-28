@@ -27,68 +27,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "Resiliency.ServiceDriven",
-            "doc": "Service versions",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v1",
-                "value": "v1",
-                "doc": "Version 1",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              },
-              {
-                "$id": "7",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v2",
-                "value": "v2",
-                "doc": "Version 2",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Resiliency.ServiceDriven.Versions",
-            "apiVersions": [
-              "v1",
-              "v2"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "Version 1",
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "4",
           "kind": "enumvalue",
           "name": "v2",
           "value": "v2",
@@ -96,7 +41,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "4"
+            "$ref": "1"
           },
           "doc": "Version 2",
           "decorators": []
@@ -114,14 +59,14 @@
   "models": [],
   "clients": [
     {
-      "$id": "9",
+      "$id": "5",
       "kind": "client",
       "name": "ResiliencyServiceDrivenClient",
       "namespace": "Resiliency.ServiceDriven",
       "doc": "Test that we can grow up a service spec and service deployment into a multi-versioned service with full client support.\n\nThere are three concepts that should be clarified:\n1. Client spec version: refers to the spec that the client is generated from. 'v1' is a client generated from old.tsp and 'v2' is a client generated from main.tsp.\n2. Service deployment version: refers to a deployment version of the service. 'v1' represents the initial deployment of the service with a single api version. 'v2' represents the new deployment of a service with multiple api versions\n3. Api version: The initial deployment of the service only supports api version 'v1'. The new deployment of the service supports api versions 'v1' and 'v2'.\n\nWe test the following configurations from this service spec:\n- A client generated from the second service spec can call the second deployment of a service with api version v1\n- A client generated from the second service spec can call the second deployment of a service with api version v2",
       "methods": [
         {
-          "$id": "10",
+          "$id": "6",
           "kind": "basic",
           "name": "addOperation",
           "accessibility": "public",
@@ -130,7 +75,7 @@
           ],
           "doc": "Added operation",
           "operation": {
-            "$id": "11",
+            "$id": "7",
             "name": "addOperation",
             "resourceName": "ServiceDriven",
             "doc": "Added operation",
@@ -162,7 +107,7 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.addOperation"
         },
         {
-          "$id": "12",
+          "$id": "8",
           "kind": "basic",
           "name": "fromNone",
           "accessibility": "public",
@@ -172,20 +117,20 @@
           ],
           "doc": "Test that grew up from accepting no parameters to an optional input parameter",
           "operation": {
-            "$id": "13",
+            "$id": "9",
             "name": "fromNone",
             "resourceName": "AddOptionalParam",
             "doc": "Test that grew up from accepting no parameters to an optional input parameter",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "14",
+                "$id": "10",
                 "kind": "query",
                 "name": "new-parameter",
                 "serializedName": "new-parameter",
                 "doc": "I'm a new input optional parameter",
                 "type": {
-                  "$id": "15",
+                  "$id": "11",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -220,13 +165,13 @@
           },
           "parameters": [
             {
-              "$id": "16",
+              "$id": "12",
               "kind": "method",
               "name": "new-parameter",
               "serializedName": "new-parameter",
               "doc": "I'm a new input optional parameter",
               "type": {
-                "$id": "17",
+                "$id": "13",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -249,7 +194,7 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone"
         },
         {
-          "$id": "18",
+          "$id": "14",
           "kind": "basic",
           "name": "fromOneRequired",
           "accessibility": "public",
@@ -259,20 +204,20 @@
           ],
           "doc": "Operation that grew up from accepting one required parameter to accepting a required parameter and an optional parameter.",
           "operation": {
-            "$id": "19",
+            "$id": "15",
             "name": "fromOneRequired",
             "resourceName": "AddOptionalParam",
             "doc": "Operation that grew up from accepting one required parameter to accepting a required parameter and an optional parameter.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "20",
+                "$id": "16",
                 "kind": "query",
                 "name": "parameter",
                 "serializedName": "parameter",
                 "doc": "I am a required parameter",
                 "type": {
-                  "$id": "21",
+                  "$id": "17",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -287,13 +232,13 @@
                 "readOnly": false
               },
               {
-                "$id": "22",
+                "$id": "18",
                 "kind": "query",
                 "name": "new-parameter",
                 "serializedName": "new-parameter",
                 "doc": "I'm a new input optional parameter",
                 "type": {
-                  "$id": "23",
+                  "$id": "19",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -328,13 +273,13 @@
           },
           "parameters": [
             {
-              "$id": "24",
+              "$id": "20",
               "kind": "method",
               "name": "parameter",
               "serializedName": "parameter",
               "doc": "I am a required parameter",
               "type": {
-                "$id": "25",
+                "$id": "21",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -350,13 +295,13 @@
               "decorators": []
             },
             {
-              "$id": "26",
+              "$id": "22",
               "kind": "method",
               "name": "new-parameter",
               "serializedName": "new-parameter",
               "doc": "I'm a new input optional parameter",
               "type": {
-                "$id": "27",
+                "$id": "23",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -379,7 +324,7 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired"
         },
         {
-          "$id": "28",
+          "$id": "24",
           "kind": "basic",
           "name": "fromOneOptional",
           "accessibility": "public",
@@ -389,20 +334,20 @@
           ],
           "doc": "Tests that we can grow up an operation from accepting one optional parameter to accepting two optional parameters.",
           "operation": {
-            "$id": "29",
+            "$id": "25",
             "name": "fromOneOptional",
             "resourceName": "AddOptionalParam",
             "doc": "Tests that we can grow up an operation from accepting one optional parameter to accepting two optional parameters.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "30",
+                "$id": "26",
                 "kind": "query",
                 "name": "parameter",
                 "serializedName": "parameter",
                 "doc": "I am an optional parameter",
                 "type": {
-                  "$id": "31",
+                  "$id": "27",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -417,13 +362,13 @@
                 "readOnly": false
               },
               {
-                "$id": "32",
+                "$id": "28",
                 "kind": "query",
                 "name": "new-parameter",
                 "serializedName": "new-parameter",
                 "doc": "I'm a new input optional parameter",
                 "type": {
-                  "$id": "33",
+                  "$id": "29",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -458,13 +403,13 @@
           },
           "parameters": [
             {
-              "$id": "34",
+              "$id": "30",
               "kind": "method",
               "name": "parameter",
               "serializedName": "parameter",
               "doc": "I am an optional parameter",
               "type": {
-                "$id": "35",
+                "$id": "31",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -480,13 +425,13 @@
               "decorators": []
             },
             {
-              "$id": "36",
+              "$id": "32",
               "kind": "method",
               "name": "new-parameter",
               "serializedName": "new-parameter",
               "doc": "I'm a new input optional parameter",
               "type": {
-                "$id": "37",
+                "$id": "33",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -511,13 +456,13 @@
       ],
       "parameters": [
         {
-          "$id": "38",
+          "$id": "34",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "39",
+            "$id": "35",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -532,13 +477,13 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint"
         },
         {
-          "$id": "40",
+          "$id": "36",
           "kind": "endpoint",
           "name": "serviceDeploymentVersion",
           "serializedName": "serviceDeploymentVersion",
           "doc": "Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history. 'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions 'v1' and 'v2'.",
           "type": {
-            "$id": "41",
+            "$id": "37",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -554,13 +499,13 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion"
         },
         {
-          "$id": "42",
+          "$id": "38",
           "kind": "endpoint",
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "doc": "Pass in either 'v1' or 'v2'. This represents the API version of a service.",
           "type": {
-            "$id": "43",
+            "$id": "39",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -572,7 +517,7 @@
           "isEndpoint": false,
           "defaultValue": {
             "type": {
-              "$id": "44",
+              "$id": "40",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
