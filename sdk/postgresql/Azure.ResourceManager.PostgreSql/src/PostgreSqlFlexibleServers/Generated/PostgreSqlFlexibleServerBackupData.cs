@@ -14,10 +14,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the VirtualEndpoint data model.
-    /// Pair of virtual endpoints for a server.
+    /// A class representing the PostgreSqlFlexibleServerBackup data model.
+    /// Properties of a backup.
     /// </summary>
-    public partial class VirtualEndpointData : ResourceData
+    public partial class PostgreSqlFlexibleServerBackupData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,38 +51,36 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEndpointData"/>. </summary>
-        public VirtualEndpointData()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupData"/>. </summary>
+        public PostgreSqlFlexibleServerBackupData()
         {
-            Members = new ChangeTrackingList<string>();
-            VirtualEndpoints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
-        /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
-        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
+        /// <param name="backupType"> Type of backup. </param>
+        /// <param name="completedOn"> Time(ISO8601 format) at which the backup was completed. </param>
+        /// <param name="source"> Source of the backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupType? backupType, DateTimeOffset? completedOn, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            EndpointType = endpointType;
-            Members = members;
-            VirtualEndpoints = virtualEndpoints;
+            BackupType = backupType;
+            CompletedOn = completedOn;
+            Source = source;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of endpoint for the virtual endpoints. </summary>
-        [WirePath("properties.endpointType")]
-        public VirtualEndpointType? EndpointType { get; set; }
-        /// <summary> List of servers that one of the virtual endpoints can refer to. </summary>
-        [WirePath("properties.members")]
-        public IList<string> Members { get; }
-        /// <summary> List of virtual endpoints for a server. </summary>
-        [WirePath("properties.virtualEndpoints")]
-        public IReadOnlyList<string> VirtualEndpoints { get; }
+        /// <summary> Type of backup. </summary>
+        [WirePath("properties.backupType")]
+        public BackupType? BackupType { get; set; }
+        /// <summary> Time(ISO8601 format) at which the backup was completed. </summary>
+        [WirePath("properties.completedTime")]
+        public DateTimeOffset? CompletedOn { get; set; }
+        /// <summary> Source of the backup. </summary>
+        [WirePath("properties.source")]
+        public string Source { get; set; }
     }
 }

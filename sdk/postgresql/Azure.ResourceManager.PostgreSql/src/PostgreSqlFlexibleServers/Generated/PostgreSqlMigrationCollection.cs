@@ -19,28 +19,28 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MigrationResource"/> and their operations.
-    /// Each <see cref="MigrationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
-    /// To get a <see cref="MigrationCollection"/> instance call the GetMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// A class representing a collection of <see cref="PostgreSqlMigrationResource"/> and their operations.
+    /// Each <see cref="PostgreSqlMigrationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlMigrationCollection"/> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class MigrationCollection : ArmCollection, IEnumerable<MigrationResource>, IAsyncEnumerable<MigrationResource>
+    public partial class PostgreSqlMigrationCollection : ArmCollection, IEnumerable<PostgreSqlMigrationResource>, IAsyncEnumerable<PostgreSqlMigrationResource>
     {
-        private readonly ClientDiagnostics _migrationClientDiagnostics;
-        private readonly MigrationsRestOperations _migrationRestClient;
+        private readonly ClientDiagnostics _postgreSqlMigrationMigrationsClientDiagnostics;
+        private readonly MigrationsRestOperations _postgreSqlMigrationMigrationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MigrationCollection"/> class for mocking. </summary>
-        protected MigrationCollection()
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlMigrationCollection"/> class for mocking. </summary>
+        protected PostgreSqlMigrationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MigrationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlMigrationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MigrationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PostgreSqlMigrationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _migrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", MigrationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MigrationResource.ResourceType, out string migrationApiVersion);
-            _migrationRestClient = new MigrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, migrationApiVersion);
+            _postgreSqlMigrationMigrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlMigrationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PostgreSqlMigrationResource.ResourceType, out string postgreSqlMigrationMigrationsApiVersion);
+            _postgreSqlMigrationMigrationsRestClient = new MigrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlMigrationMigrationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MigrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string migrationName, MigrationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlMigrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.CreateOrUpdate");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _migrationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _migrationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data);
+                var response = await _postgreSqlMigrationMigrationsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _postgreSqlMigrationMigrationsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new FlexibleServersArmOperation<MigrationResource>(Response.FromValue(new MigrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new FlexibleServersArmOperation<PostgreSqlMigrationResource>(Response.FromValue(new PostgreSqlMigrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MigrationResource> CreateOrUpdate(WaitUntil waitUntil, string migrationName, MigrationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlMigrationResource> CreateOrUpdate(WaitUntil waitUntil, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.CreateOrUpdate");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _migrationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data, cancellationToken);
-                var uri = _migrationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data);
+                var response = _postgreSqlMigrationMigrationsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data, cancellationToken);
+                var uri = _postgreSqlMigrationMigrationsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new FlexibleServersArmOperation<MigrationResource>(Response.FromValue(new MigrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new FlexibleServersArmOperation<PostgreSqlMigrationResource>(Response.FromValue(new PostgreSqlMigrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,18 +179,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        public virtual async Task<Response<MigrationResource>> GetAsync(string migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlMigrationResource>> GetAsync(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.Get");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _migrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlMigrationMigrationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MigrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlMigrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,18 +224,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        public virtual Response<MigrationResource> Get(string migrationName, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlMigrationResource> Get(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.Get");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Get");
             scope.Start();
             try
             {
-                var response = _migrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken);
+                var response = _postgreSqlMigrationMigrationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MigrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlMigrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,18 +261,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationListFilter"> Migration list filter. Indicates if the request should retrieve only active migrations or all migrations. Defaults to Active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MigrationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MigrationResource> GetAllAsync(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlMigrationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlMigrationResource> GetAllAsync(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationResource(Client, MigrationData.DeserializeMigrationData(e)), _migrationClientDiagnostics, Pipeline, "MigrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlMigrationResource(Client, PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(e)), _postgreSqlMigrationMigrationsClientDiagnostics, Pipeline, "PostgreSqlMigrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -292,18 +292,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationListFilter"> Migration list filter. Indicates if the request should retrieve only active migrations or all migrations. Defaults to Active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MigrationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MigrationResource> GetAll(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlMigrationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlMigrationResource> GetAll(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationResource(Client, MigrationData.DeserializeMigrationData(e)), _migrationClientDiagnostics, Pipeline, "MigrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlMigrationResource(Client, PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(e)), _postgreSqlMigrationMigrationsClientDiagnostics, Pipeline, "PostgreSqlMigrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.Exists");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _migrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlMigrationMigrationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.Exists");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _migrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken);
+                var response = _postgreSqlMigrationMigrationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,18 +417,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        public virtual async Task<NullableResponse<MigrationResource>> GetIfExistsAsync(string migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PostgreSqlMigrationResource>> GetIfExistsAsync(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.GetIfExists");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _migrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlMigrationMigrationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<MigrationResource>(response.GetRawResponse());
-                return Response.FromValue(new MigrationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PostgreSqlMigrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlMigrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MigrationResource"/></description>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,18 +462,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        public virtual NullableResponse<MigrationResource> GetIfExists(string migrationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PostgreSqlMigrationResource> GetIfExists(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using var scope = _migrationClientDiagnostics.CreateScope("MigrationCollection.GetIfExists");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _migrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken);
+                var response = _postgreSqlMigrationMigrationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<MigrationResource>(response.GetRawResponse());
-                return Response.FromValue(new MigrationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PostgreSqlMigrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlMigrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        IEnumerator<MigrationResource> IEnumerable<MigrationResource>.GetEnumerator()
+        IEnumerator<PostgreSqlMigrationResource> IEnumerable<PostgreSqlMigrationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MigrationResource> IAsyncEnumerable<MigrationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PostgreSqlMigrationResource> IAsyncEnumerable<PostgreSqlMigrationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

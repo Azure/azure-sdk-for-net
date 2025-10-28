@@ -71,27 +71,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupAutomaticAndOnDemandResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupAutomaticAndOnDemandResource.CreateResourceIdentifier" /> to create a <see cref="BackupAutomaticAndOnDemandResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupAutomaticAndOnDemandResource"/> object. </returns>
-        public virtual BackupAutomaticAndOnDemandResource GetBackupAutomaticAndOnDemandResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerBackupResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServerBackupResource GetPostgreSqlFlexibleServerBackupResource(ResourceIdentifier id)
         {
-            BackupAutomaticAndOnDemandResource.ValidateResourceId(id);
-            return new BackupAutomaticAndOnDemandResource(Client, id);
+            PostgreSqlFlexibleServerBackupResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServerBackupResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationResource"/> object. </returns>
-        public virtual MigrationResource GetMigrationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
+        public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
         {
-            MigrationResource.ValidateResourceId(id);
-            return new MigrationResource(Client, id);
+            PostgreSqlMigrationResource.ValidateResourceId(id);
+            return new PostgreSqlMigrationResource(Client, id);
         }
 
         /// <summary>
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupsLongTermRetentionOperationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupsLongTermRetentionOperationResource.CreateResourceIdentifier" /> to create a <see cref="BackupsLongTermRetentionOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupsLongTermRetentionOperationResource"/> object. </returns>
-        public virtual BackupsLongTermRetentionOperationResource GetBackupsLongTermRetentionOperationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
+        public virtual PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier id)
         {
-            BackupsLongTermRetentionOperationResource.ValidateResourceId(id);
-            return new BackupsLongTermRetentionOperationResource(Client, id);
+            PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
+            return new PostgreSqlLtrServerBackupOperationResource(Client, id);
         }
 
         /// <summary>

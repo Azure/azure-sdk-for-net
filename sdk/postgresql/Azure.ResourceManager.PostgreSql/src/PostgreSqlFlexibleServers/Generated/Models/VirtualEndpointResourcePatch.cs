@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Pair of virtual endpoints for a server. </summary>
-    public partial class VirtualEndpointPatch
+    public partial class VirtualEndpointResourcePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEndpointPatch"/>. </summary>
-        public VirtualEndpointPatch()
+        /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourcePatch"/>. </summary>
+        public VirtualEndpointResourcePatch()
         {
             Members = new ChangeTrackingList<string>();
             VirtualEndpoints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEndpointPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourcePatch"/>. </summary>
         /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
         /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
         /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEndpointPatch(VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualEndpointResourcePatch(VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
             Members = members;

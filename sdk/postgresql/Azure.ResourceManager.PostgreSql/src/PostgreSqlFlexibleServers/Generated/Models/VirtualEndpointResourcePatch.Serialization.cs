@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class VirtualEndpointPatch : IUtf8JsonSerializable, IJsonModel<VirtualEndpointPatch>
+    public partial class VirtualEndpointResourcePatch : IUtf8JsonSerializable, IJsonModel<VirtualEndpointResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEndpointPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEndpointResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VirtualEndpointPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualEndpointResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualEndpointPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEndpointResourcePatch)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        VirtualEndpointPatch IJsonModel<VirtualEndpointPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VirtualEndpointResourcePatch IJsonModel<VirtualEndpointResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualEndpointPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEndpointResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualEndpointPatch(document.RootElement, options);
+            return DeserializeVirtualEndpointResourcePatch(document.RootElement, options);
         }
 
-        internal static VirtualEndpointPatch DeserializeVirtualEndpointPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VirtualEndpointResourcePatch DeserializeVirtualEndpointResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -161,38 +161,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualEndpointPatch(endpointType, members ?? new ChangeTrackingList<string>(), virtualEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VirtualEndpointResourcePatch(endpointType, members ?? new ChangeTrackingList<string>(), virtualEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VirtualEndpointPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VirtualEndpointResourcePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualEndpointPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEndpointResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VirtualEndpointPatch IPersistableModel<VirtualEndpointPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VirtualEndpointResourcePatch IPersistableModel<VirtualEndpointResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualEndpointPatch(document.RootElement, options);
+                        return DeserializeVirtualEndpointResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualEndpointPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEndpointResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VirtualEndpointPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualEndpointResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

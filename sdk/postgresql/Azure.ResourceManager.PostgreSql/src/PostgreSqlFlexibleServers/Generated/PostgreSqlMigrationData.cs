@@ -14,10 +14,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the Migration data model.
+    /// A class representing the PostgreSqlMigration data model.
     /// Properties of a migration.
     /// </summary>
-    public partial class MigrationData : TrackedResourceData
+    public partial class PostgreSqlMigrationData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,16 +51,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public MigrationData(AzureLocation location) : base(location)
+        public PostgreSqlMigrationData(AzureLocation location) : base(location)
         {
             DbsToMigrate = new ChangeTrackingList<string>();
             DbsToTriggerCutoverOn = new ChangeTrackingList<string>();
             DbsToCancelMigrationOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, ResourceIdentifier migrationInstanceResourceId, PostgreSqlMigrationMode? migrationMode, MigrationOption? migrationOption, PostgreSqlFlexibleServersSourceType? sourceType, PostgreSqlFlexibleServersSslMode? sslMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, MigrateRolesAndPermission? migrateRoles, StartDataMigration? startDataMigration, TriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, Cancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, ResourceIdentifier migrationInstanceResourceId, PostgreSqlMigrationMode? migrationMode, MigrationOption? migrationOption, PostgreSqlFlexibleServersSourceType? sourceType, PostgreSqlFlexibleServersSslMode? sslMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, MigrateRolesAndPermission? migrateRoles, StartDataMigration? startDataMigration, TriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, Cancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             MigrationId = migrationId;
             CurrentStatus = currentStatus;
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationData"/> for deserialization. </summary>
-        internal MigrationData()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/> for deserialization. </summary>
+        internal PostgreSqlMigrationData()
         {
         }
 

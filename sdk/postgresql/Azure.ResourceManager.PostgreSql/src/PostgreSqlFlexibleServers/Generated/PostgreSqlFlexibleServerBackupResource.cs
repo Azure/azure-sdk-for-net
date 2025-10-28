@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a BackupAutomaticAndOnDemand along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupAutomaticAndOnDemandResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBackupAutomaticAndOnDemandResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetBackupAutomaticAndOnDemand method.
+    /// A Class representing a PostgreSqlFlexibleServerBackup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlFlexibleServerBackupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlFlexibleServerBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlFlexibleServerBackup method.
     /// </summary>
-    public partial class BackupAutomaticAndOnDemandResource : ArmResource
+    public partial class PostgreSqlFlexibleServerBackupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BackupAutomaticAndOnDemandResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PostgreSqlFlexibleServerBackupResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serverName"> The serverName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics;
-        private readonly BackupsAutomaticAndOnDemandRestOperations _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient;
-        private readonly BackupAutomaticAndOnDemandData _data;
+        private readonly ClientDiagnostics _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics;
+        private readonly BackupsAutomaticAndOnDemandRestOperations _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient;
+        private readonly PostgreSqlFlexibleServerBackupData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/backups";
 
-        /// <summary> Initializes a new instance of the <see cref="BackupAutomaticAndOnDemandResource"/> class for mocking. </summary>
-        protected BackupAutomaticAndOnDemandResource()
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupResource"/> class for mocking. </summary>
+        protected PostgreSqlFlexibleServerBackupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupAutomaticAndOnDemandResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupAutomaticAndOnDemandResource(ArmClient client, BackupAutomaticAndOnDemandData data) : this(client, data.Id)
+        internal PostgreSqlFlexibleServerBackupResource(ArmClient client, PostgreSqlFlexibleServerBackupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupAutomaticAndOnDemandResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BackupAutomaticAndOnDemandResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PostgreSqlFlexibleServerBackupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandApiVersion);
-            _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient = new BackupsAutomaticAndOnDemandRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandApiVersion);
+            _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandApiVersion);
+            _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient = new BackupsAutomaticAndOnDemandRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BackupAutomaticAndOnDemandData Data
+        public virtual PostgreSqlFlexibleServerBackupData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupAutomaticAndOnDemandResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupAutomaticAndOnDemandResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerBackupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("BackupAutomaticAndOnDemandResource.Get");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupResource.Get");
             scope.Start();
             try
             {
-                var response = await _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupAutomaticAndOnDemandResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupAutomaticAndOnDemandResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupAutomaticAndOnDemandResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerBackupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("BackupAutomaticAndOnDemandResource.Get");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupResource.Get");
             scope.Start();
             try
             {
-                var response = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupAutomaticAndOnDemandResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupAutomaticAndOnDemandResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("BackupAutomaticAndOnDemandResource.Delete");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupAutomaticAndOnDemandResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("BackupAutomaticAndOnDemandResource.Delete");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupResource.Delete");
             scope.Start();
             try
             {
-                var response = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupAutomaticAndOnDemandResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("BackupAutomaticAndOnDemandResource.Update");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupResource.Update");
             scope.Start();
             try
             {
-                var response = await _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BackupAutomaticAndOnDemandResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,12 +319,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("BackupAutomaticAndOnDemandResource.Update");
+            using var scope = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupResource.Update");
             scope.Start();
             try
             {
-                var response = _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _backupAutomaticAndOnDemandBackupsAutomaticAndOnDemandRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandClientDiagnostics, Pipeline, _postgreSqlFlexibleServerBackupBackupsAutomaticAndOnDemandRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

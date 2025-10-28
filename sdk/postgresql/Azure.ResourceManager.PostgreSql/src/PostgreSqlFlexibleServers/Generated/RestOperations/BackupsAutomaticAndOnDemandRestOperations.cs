@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupAutomaticAndOnDemandData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServerBackupData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        BackupAutomaticAndOnDemandData value = default;
+                        PostgreSqlFlexibleServerBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BackupAutomaticAndOnDemandData.DeserializeBackupAutomaticAndOnDemandData(document.RootElement);
+                        value = PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupAutomaticAndOnDemandData)null, message.Response);
+                    return Response.FromValue((PostgreSqlFlexibleServerBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupAutomaticAndOnDemandData> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServerBackupData> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        BackupAutomaticAndOnDemandData value = default;
+                        PostgreSqlFlexibleServerBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BackupAutomaticAndOnDemandData.DeserializeBackupAutomaticAndOnDemandData(document.RootElement);
+                        value = PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupAutomaticAndOnDemandData)null, message.Response);
+                    return Response.FromValue((PostgreSqlFlexibleServerBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

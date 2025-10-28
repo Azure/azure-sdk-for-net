@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
         /// <param name="value"> The BackupsLongTermRetentionOperation items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PostgreSqlLtrServerBackupOperationList(IEnumerable<BackupsLongTermRetentionOperationData> value)
+        internal PostgreSqlLtrServerBackupOperationList(IEnumerable<PostgreSqlLtrServerBackupOperationResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="value"> The BackupsLongTermRetentionOperation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<BackupsLongTermRetentionOperationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<PostgreSqlLtrServerBackupOperationResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The BackupsLongTermRetentionOperation items on this page. </summary>
-        public IReadOnlyList<BackupsLongTermRetentionOperationData> Value { get; }
+        public IReadOnlyList<PostgreSqlLtrServerBackupOperationResourceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

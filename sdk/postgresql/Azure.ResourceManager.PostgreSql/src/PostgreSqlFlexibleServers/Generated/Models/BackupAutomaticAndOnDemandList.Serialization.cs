@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<BackupAutomaticAndOnDemandData> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerBackupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<BackupAutomaticAndOnDemandData> array = new List<BackupAutomaticAndOnDemandData>();
+                    List<PostgreSqlFlexibleServerBackupData> array = new List<PostgreSqlFlexibleServerBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupAutomaticAndOnDemandData.DeserializeBackupAutomaticAndOnDemandData(item, options));
+                        array.Add(PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(item, options));
                     }
                     value = array;
                     continue;

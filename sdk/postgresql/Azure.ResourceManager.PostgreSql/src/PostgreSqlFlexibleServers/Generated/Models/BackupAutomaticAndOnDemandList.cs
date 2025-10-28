@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="BackupAutomaticAndOnDemandList"/>. </summary>
         /// <param name="value"> The BackupAutomaticAndOnDemand items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal BackupAutomaticAndOnDemandList(IEnumerable<BackupAutomaticAndOnDemandData> value)
+        internal BackupAutomaticAndOnDemandList(IEnumerable<PostgreSqlFlexibleServerBackupData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="value"> The BackupAutomaticAndOnDemand items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupAutomaticAndOnDemandList(IReadOnlyList<BackupAutomaticAndOnDemandData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupAutomaticAndOnDemandList(IReadOnlyList<PostgreSqlFlexibleServerBackupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The BackupAutomaticAndOnDemand items on this page. </summary>
-        public IReadOnlyList<BackupAutomaticAndOnDemandData> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerBackupData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

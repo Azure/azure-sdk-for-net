@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Standalone,
-                    PromoteOption = ReadReplicaPromoteOption.Forced,
+                    PromoteOption = ReplicationPromoteOption.Forced,
                 },
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Standalone,
-                    PromoteOption = ReadReplicaPromoteOption.Planned,
+                    PromoteOption = ReplicationPromoteOption.Planned,
                 },
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
-                    PromoteOption = ReadReplicaPromoteOption.Forced,
+                    PromoteOption = ReplicationPromoteOption.Forced,
                 },
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
-                    PromoteOption = ReadReplicaPromoteOption.Planned,
+                    PromoteOption = ReplicationPromoteOption.Planned,
                 },
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);

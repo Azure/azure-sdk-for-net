@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="promoteMode"> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </param>
         /// <param name="promoteOption"> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersReplica"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServersReplica PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role = null, int? capacity = null, PostgreSqlFlexibleServersReplicationState? replicationState = null, ReadReplicaPromoteMode? promoteMode = null, ReadReplicaPromoteOption? promoteOption = null)
+        public static PostgreSqlFlexibleServersReplica PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role = null, int? capacity = null, PostgreSqlFlexibleServersReplicationState? replicationState = null, ReadReplicaPromoteMode? promoteMode = null, ReplicationPromoteOption? promoteOption = null)
         {
             return new PostgreSqlFlexibleServersReplica(
                 role,
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.BackupAutomaticAndOnDemandData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -595,10 +595,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="backupType"> Type of backup. </param>
         /// <param name="completedOn"> Time(ISO8601 format) at which the backup was completed. </param>
         /// <param name="source"> Source of the backup. </param>
-        /// <returns> A new <see cref="FlexibleServers.BackupAutomaticAndOnDemandData"/> instance for mocking. </returns>
-        public static BackupAutomaticAndOnDemandData BackupAutomaticAndOnDemandData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerBackupData PostgreSqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null)
         {
-            return new BackupAutomaticAndOnDemandData(
+            return new PostgreSqlFlexibleServerBackupData(
                 id,
                 name,
                 resourceType,
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.BackupsLongTermRetentionOperationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -776,10 +776,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        /// <returns> A new <see cref="FlexibleServers.BackupsLongTermRetentionOperationData"/> instance for mocking. </returns>
-        public static BackupsLongTermRetentionOperationData BackupsLongTermRetentionOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationResourceData"/> instance for mocking. </returns>
+        public static PostgreSqlLtrServerBackupOperationResourceData PostgreSqlLtrServerBackupOperationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new BackupsLongTermRetentionOperationData(
+            return new PostgreSqlLtrServerBackupOperationResourceData(
                 id,
                 name,
                 resourceType,
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLtrPreBackupResult(numberOfContainers, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MigrationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlMigrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -837,15 +837,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
         /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <returns> A new <see cref="FlexibleServers.MigrationData"/> instance for mocking. </returns>
-        public static MigrationData MigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded = null, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesAndPermission? migrateRoles = null, StartDataMigration? startDataMigration = null, TriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, Cancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded = null, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesAndPermission? migrateRoles = null, StartDataMigration? startDataMigration = null, TriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, Cancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
         {
             tags ??= new Dictionary<string, string>();
             dbsToMigrate ??= new List<string>();
             dbsToTriggerCutoverOn ??= new List<string>();
             dbsToCancelMigrationOn ??= new List<string>();
 
-            return new MigrationData(
+            return new PostgreSqlMigrationData(
                 id,
                 name,
                 resourceType,
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.VirtualEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.VirtualEndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1168,13 +1168,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
         /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
         /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
-        /// <returns> A new <see cref="FlexibleServers.VirtualEndpointData"/> instance for mocking. </returns>
-        public static VirtualEndpointData VirtualEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
+        /// <returns> A new <see cref="FlexibleServers.VirtualEndpointResourceData"/> instance for mocking. </returns>
+        public static VirtualEndpointResourceData VirtualEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
         {
             members ??= new List<string>();
             virtualEndpoints ??= new List<string>();
 
-            return new VirtualEndpointData(
+            return new VirtualEndpointResourceData(
                 id,
                 name,
                 resourceType,
@@ -1185,17 +1185,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualEndpointPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEndpointResourcePatch"/>. </summary>
         /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
         /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
         /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
-        /// <returns> A new <see cref="Models.VirtualEndpointPatch"/> instance for mocking. </returns>
-        public static VirtualEndpointPatch VirtualEndpointPatch(VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
+        /// <returns> A new <see cref="Models.VirtualEndpointResourcePatch"/> instance for mocking. </returns>
+        public static VirtualEndpointResourcePatch VirtualEndpointResourcePatch(VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
         {
             members ??= new List<string>();
             virtualEndpoints ??= new List<string>();
 
-            return new VirtualEndpointPatch(endpointType, members?.ToList(), virtualEndpoints?.ToList(), serializedAdditionalRawData: null);
+            return new VirtualEndpointResourcePatch(endpointType, members?.ToList(), virtualEndpoints?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

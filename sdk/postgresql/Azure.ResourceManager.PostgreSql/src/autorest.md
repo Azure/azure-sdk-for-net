@@ -269,7 +269,7 @@ rename-mapping:
   PasswordAuthEnum: PostgreSqlFlexibleServerPasswordAuthEnum
   PrincipalType: PostgreSqlFlexibleServerPrincipalType
   ReplicationRole: PostgreSqlFlexibleServerReplicationRole
-  ServerBackup: PostgreSqlFlexibleServerBackup
+  BackupAutomaticAndOnDemand: PostgreSqlFlexibleServerBackup
   ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
   StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
@@ -319,11 +319,14 @@ rename-mapping:
   AzureManagedDiskPerformanceTiers: PostgreSqlManagedDiskPerformanceTier
   LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
   LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
-  MigrationResource: PostgreSqlMigration
+  Migration: PostgreSqlMigration
   AdministratorMicrosoftEntra.properties.objectId: -|uuid
   DataEncryption.primaryUserAssignedIdentityId: -|arm-id
   AdvancedThreatProtectionSettingsModel: ServerThreatProtectionSettingsModel
   AdministratorMicrosoftEntra: PostgreSqlFlexibleServerActiveDirectoryAdministrator
+  BackupsLongTermRetentionOperation: PostgreSqlLtrServerBackupOperationResource
+  VirtualEndpoint: VirtualEndpointResource
+  ReadReplicaPromoteOption: ReplicationPromoteOption
   TuningOption: FooTuningOption
 
 override-operation-name:

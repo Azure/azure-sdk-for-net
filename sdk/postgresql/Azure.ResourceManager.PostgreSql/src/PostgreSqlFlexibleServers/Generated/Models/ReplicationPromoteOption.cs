@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </summary>
-    public readonly partial struct ReadReplicaPromoteOption : IEquatable<ReadReplicaPromoteOption>
+    public readonly partial struct ReplicationPromoteOption : IEquatable<ReplicationPromoteOption>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ReadReplicaPromoteOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationPromoteOption"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReadReplicaPromoteOption(string value)
+        public ReplicationPromoteOption(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ForcedValue = "Forced";
 
         /// <summary> The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation. </summary>
-        public static ReadReplicaPromoteOption Planned { get; } = new ReadReplicaPromoteOption(PlannedValue);
+        public static ReplicationPromoteOption Planned { get; } = new ReplicationPromoteOption(PlannedValue);
         /// <summary> The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation. </summary>
-        public static ReadReplicaPromoteOption Forced { get; } = new ReadReplicaPromoteOption(ForcedValue);
-        /// <summary> Determines if two <see cref="ReadReplicaPromoteOption"/> values are the same. </summary>
-        public static bool operator ==(ReadReplicaPromoteOption left, ReadReplicaPromoteOption right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ReadReplicaPromoteOption"/> values are not the same. </summary>
-        public static bool operator !=(ReadReplicaPromoteOption left, ReadReplicaPromoteOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReadReplicaPromoteOption"/>. </summary>
-        public static implicit operator ReadReplicaPromoteOption(string value) => new ReadReplicaPromoteOption(value);
+        public static ReplicationPromoteOption Forced { get; } = new ReplicationPromoteOption(ForcedValue);
+        /// <summary> Determines if two <see cref="ReplicationPromoteOption"/> values are the same. </summary>
+        public static bool operator ==(ReplicationPromoteOption left, ReplicationPromoteOption right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ReplicationPromoteOption"/> values are not the same. </summary>
+        public static bool operator !=(ReplicationPromoteOption left, ReplicationPromoteOption right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationPromoteOption"/>. </summary>
+        public static implicit operator ReplicationPromoteOption(string value) => new ReplicationPromoteOption(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReadReplicaPromoteOption other && Equals(other);
+        public override bool Equals(object obj) => obj is ReplicationPromoteOption other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ReadReplicaPromoteOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ReplicationPromoteOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<MigrationData> value = default;
+            IReadOnlyList<PostgreSqlMigrationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MigrationData> array = new List<MigrationData>();
+                    List<PostgreSqlMigrationData> array = new List<PostgreSqlMigrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationData.DeserializeMigrationData(item, options));
+                        array.Add(PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(item, options));
                     }
                     value = array;
                     continue;

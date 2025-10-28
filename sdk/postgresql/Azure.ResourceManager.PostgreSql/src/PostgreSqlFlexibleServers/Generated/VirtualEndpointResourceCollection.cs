@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing a collection of <see cref="VirtualEndpointResource"/> and their operations.
     /// Each <see cref="VirtualEndpointResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
-    /// To get a <see cref="VirtualEndpointCollection"/> instance call the GetVirtualEndpoints method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="VirtualEndpointResourceCollection"/> instance call the GetVirtualEndpointResources method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class VirtualEndpointCollection : ArmCollection, IEnumerable<VirtualEndpointResource>, IAsyncEnumerable<VirtualEndpointResource>
+    public partial class VirtualEndpointResourceCollection : ArmCollection, IEnumerable<VirtualEndpointResource>, IAsyncEnumerable<VirtualEndpointResource>
     {
-        private readonly ClientDiagnostics _virtualEndpointClientDiagnostics;
-        private readonly VirtualEndpointsRestOperations _virtualEndpointRestClient;
+        private readonly ClientDiagnostics _virtualEndpointResourceVirtualEndpointsClientDiagnostics;
+        private readonly VirtualEndpointsRestOperations _virtualEndpointResourceVirtualEndpointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEndpointCollection"/> class for mocking. </summary>
-        protected VirtualEndpointCollection()
+        /// <summary> Initializes a new instance of the <see cref="VirtualEndpointResourceCollection"/> class for mocking. </summary>
+        protected VirtualEndpointResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEndpointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEndpointResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal VirtualEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualEndpointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", VirtualEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualEndpointResource.ResourceType, out string virtualEndpointApiVersion);
-            _virtualEndpointRestClient = new VirtualEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointApiVersion);
+            _virtualEndpointResourceVirtualEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", VirtualEndpointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualEndpointResource.ResourceType, out string virtualEndpointResourceVirtualEndpointsApiVersion);
+            _virtualEndpointResourceVirtualEndpointsRestClient = new VirtualEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointResourceVirtualEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.CreateOrUpdate");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_virtualEndpointClientDiagnostics, Pipeline, _virtualEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.CreateOrUpdate");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_virtualEndpointClientDiagnostics, Pipeline, _virtualEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.Get");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.Get");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken);
+                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> An async collection of <see cref="VirtualEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEndpointRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEndpointRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEndpointResource(Client, VirtualEndpointData.DeserializeVirtualEndpointData(e)), _virtualEndpointClientDiagnostics, Pipeline, "VirtualEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEndpointResource(Client, VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(e)), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, "VirtualEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="VirtualEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEndpointRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEndpointRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEndpointResource(Client, VirtualEndpointData.DeserializeVirtualEndpointData(e)), _virtualEndpointClientDiagnostics, Pipeline, "VirtualEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEndpointResource(Client, VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(e)), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, "VirtualEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.Exists");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.Exists");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _virtualEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken);
+                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.GetIfExists");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<VirtualEndpointResource>(response.GetRawResponse());
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointClientDiagnostics.CreateScope("VirtualEndpointCollection.GetIfExists");
+            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken);
+                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<VirtualEndpointResource>(response.GetRawResponse());
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());

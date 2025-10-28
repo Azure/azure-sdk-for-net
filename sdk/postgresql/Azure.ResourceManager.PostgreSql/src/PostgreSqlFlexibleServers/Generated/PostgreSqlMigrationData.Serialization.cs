@@ -17,11 +17,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class MigrationData : IUtf8JsonSerializable, IJsonModel<MigrationData>
+    public partial class PostgreSqlMigrationData : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MigrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlMigrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -184,19 +184,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        MigrationData IJsonModel<MigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlMigrationData IJsonModel<PostgreSqlMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationData(document.RootElement, options);
+            return DeserializePostgreSqlMigrationData(document.RootElement, options);
         }
 
-        internal static MigrationData DeserializeMigrationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlMigrationData DeserializePostgreSqlMigrationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MigrationData(
+            return new PostgreSqlMigrationData(
                 id,
                 name,
                 type,
@@ -1147,9 +1147,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<MigrationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlMigrationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -1158,26 +1158,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MigrationData IPersistableModel<MigrationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlMigrationData IPersistableModel<PostgreSqlMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrationData(document.RootElement, options);
+                        return DeserializePostgreSqlMigrationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

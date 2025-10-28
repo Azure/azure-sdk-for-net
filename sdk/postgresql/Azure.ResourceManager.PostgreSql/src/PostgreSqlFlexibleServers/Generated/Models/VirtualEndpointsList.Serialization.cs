@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<VirtualEndpointData> value = default;
+            IReadOnlyList<VirtualEndpointResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<VirtualEndpointData> array = new List<VirtualEndpointData>();
+                    List<VirtualEndpointResourceData> array = new List<VirtualEndpointResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualEndpointData.DeserializeVirtualEndpointData(item, options));
+                        array.Add(VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -17,11 +16,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class VirtualEndpointData : IUtf8JsonSerializable, IJsonModel<VirtualEndpointData>
+    public partial class PostgreSqlFlexibleServerBackupData : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VirtualEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,56 +31,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualEndpointData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointType))
+            if (Optional.IsDefined(BackupType))
             {
-                writer.WritePropertyName("endpointType"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WritePropertyName("backupType"u8);
+                writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Members))
+            if (Optional.IsDefined(CompletedOn))
             {
-                writer.WritePropertyName("members"u8);
-                writer.WriteStartArray();
-                foreach (var item in Members)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("completedTime"u8);
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualEndpoints))
+            if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("virtualEndpoints"u8);
-                writer.WriteStartArray();
-                foreach (var item in VirtualEndpoints)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
             }
             writer.WriteEndObject();
         }
 
-        VirtualEndpointData IJsonModel<VirtualEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerBackupData IJsonModel<PostgreSqlFlexibleServerBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualEndpointData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualEndpointData(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerBackupData(document.RootElement, options);
         }
 
-        internal static VirtualEndpointData DeserializeVirtualEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerBackupData DeserializePostgreSqlFlexibleServerBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,9 +82,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            VirtualEndpointType? endpointType = default;
-            IList<string> members = default;
-            IReadOnlyList<string> virtualEndpoints = default;
+            BackupType? backupType = default;
+            DateTimeOffset? completedTime = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,41 +122,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpointType"u8))
+                        if (property0.NameEquals("backupType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            endpointType = new VirtualEndpointType(property0.Value.GetString());
+                            backupType = new BackupType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("members"u8))
+                        if (property0.NameEquals("completedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            members = array;
+                            completedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("virtualEndpoints"u8))
+                        if (property0.NameEquals("source"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            virtualEndpoints = array;
+                            source = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -179,14 +154,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualEndpointData(
+            return new PostgreSqlFlexibleServerBackupData(
                 id,
                 name,
                 type,
                 systemData,
-                endpointType,
-                members ?? new ChangeTrackingList<string>(),
-                virtualEndpoints ?? new ChangeTrackingList<string>(),
+                backupType,
+                completedTime,
+                source,
                 serializedAdditionalRawData);
         }
 
@@ -256,89 +231,56 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupType), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    endpointType: ");
+                builder.Append("    backupType: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(EndpointType))
+                if (Optional.IsDefined(BackupType))
                 {
-                    builder.Append("    endpointType: ");
-                    builder.AppendLine($"'{EndpointType.Value.ToString()}'");
+                    builder.Append("    backupType: ");
+                    builder.AppendLine($"'{BackupType.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Members), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompletedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    members: ");
+                builder.Append("    completedTime: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsCollectionDefined(Members))
+                if (Optional.IsDefined(CompletedOn))
                 {
-                    if (Members.Any())
+                    builder.Append("    completedTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CompletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    source: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    builder.Append("    source: ");
+                    if (Source.Contains(Environment.NewLine))
                     {
-                        builder.Append("    members: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Members)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Source}'''");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualEndpoints), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualEndpoints: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VirtualEndpoints))
-                {
-                    if (VirtualEndpoints.Any())
+                    else
                     {
-                        builder.Append("    virtualEndpoints: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VirtualEndpoints)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
+                        builder.AppendLine($"'{Source}'");
                     }
                 }
             }
@@ -348,9 +290,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<VirtualEndpointData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -359,26 +301,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualEndpointData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VirtualEndpointData IPersistableModel<VirtualEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerBackupData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualEndpointData(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualEndpointData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VirtualEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration. </summary>
-    public partial class MigrationPatch
+    public partial class PostgreSqlMigrationPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationPatch"/>. </summary>
-        public MigrationPatch()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
+        public PostgreSqlMigrationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             DbsToMigrate = new ChangeTrackingList<string>();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             DbsToCancelMigrationOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
         /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
         /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesAndPermission? migrateRoles, StartDataMigration? startDataMigration, TriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, Cancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, LogicalReplicationOnSourceServer? setupLogicalReplicationOnSourceDbIfNeeded, OverwriteDatabasesOnTargetServer? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesAndPermission? migrateRoles, StartDataMigration? startDataMigration, TriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, Cancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             SourceDbServerResourceId = sourceDbServerResourceId;
