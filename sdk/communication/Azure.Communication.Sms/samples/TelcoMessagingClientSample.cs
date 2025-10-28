@@ -40,7 +40,7 @@ namespace Azure.Communication.Sms.Samples
 
             foreach (var optOut in optOutResults.Value)
             {
-                Console.WriteLine($"Phone number {optOut.To} is opted out: {optOut.OptOutStatus}");
+                Console.WriteLine($"Phone number {optOut.To} is opted out: {optOut.IsOptedOut}");
             }
         }
 
