@@ -15,7 +15,7 @@ use-model-reader-writer: true
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2024-08-01
+  - tag: package-flexibleserver-2025-08-01
 enable-bicep-serialization: true
 ```
 
@@ -156,10 +156,10 @@ directive:
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2024-08-01'
+``` yaml $(tag) == 'package-flexibleserver-2025-08-01'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c25a1834c32a6810e9b9408b3a2899ecb7dc66c/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
