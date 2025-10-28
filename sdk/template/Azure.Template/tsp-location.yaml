@@ -1,0 +1,11 @@
+# This is a template tsp-location.yaml file for TypeSpec-based SDK generation
+# Replace the placeholder values with your actual TypeSpec project information
+
+directory: specification/<service-name>/<typespec-project-folder>
+commit: <commit-hash-from-azure-rest-api-specs>
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
+
+# Optional: Add additional directories if your TypeSpec project depends on shared libraries
+# additionalDirectories:
+# - specification/<shared-library-path>/

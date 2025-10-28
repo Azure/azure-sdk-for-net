@@ -16,4 +16,4 @@ Make sure you have a TypeSpec project in the `main` branch of the public API spe
 
 ## Set up SDK Project Folder
 
-You will need to generate the SDK library under an SDK project folder following the repository guidelines.
+You will need to generate the SDK library under an SDK project folder following the repository guidelines. You can use the [Azure.Template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template) as an example.
